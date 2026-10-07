@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from extract_classes import ABILITIES, BOOKS, ROOT, body_text, make_feature, slug, split_sections, table_rows  # noqa: E402
-from pdfdoc import Block, Heading, Para, Table, read_blocks  # noqa: E402
+from pdfdoc import Block, Heading, Para, Table, is_footer, load_items, read_blocks  # noqa: E402
 
 # Page ranges in the v10 handbook.
 PAGES = {
@@ -27,8 +27,21 @@ PAGES = {
         "backgrounds": (20, 51),
         "feats": (52, 65),
         "races": (67, 82),
+        "spell_lists": (211, 217),
+        "custom_spells": (218, 220),
+        # Spirit Surges up to the last Haki page, then Spirit Surge Training. The pages between
+        # (Devil Fruit advancements) are secret and are not read here.
+        "surges": [(221, 236), (241, 241)],
+        # Devil Fruit rules for players; the generation tables after them are secret.
+        "fruit_rules": [(242, 249), (292, 292)],
+        "armory": (255, 291),
     },
     "dndf-8.8": {
+        "spell_lists": (210, 217),
+        "custom_spells": (218, 220),
+        "surges": [(221, 234), (238, 238)],
+        "fruit_rules": [(239, 246), (355, 355)],
+        "armory": (330, 354),
         "rules": [(9, 12), (18, 19), (66, 66)],
         "crew_roles": (13, 17),
         "backgrounds": (20, 51),
@@ -289,6 +302,266 @@ def extract_races(version: str) -> list[dict]:
     return out
 
 
+# --- Spell lists and custom spells ---------------------------------------------------------
+
+SPELL_COLUMNS = [81, 273, 466, 658]
+LEVEL_NAMES = {"cantrips (0 level)": 0, **{f"{n}{'st' if n == 1 else 'nd' if n == 2 else 'rd' if n == 3 else 'th'} level": n for n in range(1, 10)}}
+
+
+def extract_spell_lists(version: str) -> list[dict]:
+    """Each class's spell list: four narrow columns of names under level headings, read down each column in turn."""
+    first, last = PAGES[version]["spell_lists"]
+    items = [i for i in load_items(BOOKS[version]["pdf"], first, last) if not is_footer(i)]
+    out = []
+    current = None
+    for page in range(first, last + 1):
+        column = lambda i: min(range(4), key=lambda c: abs(SPELL_COLUMNS[c] - i.left))
+        on_page = sorted((i for i in items if i.page == page), key=lambda i: (column(i), i.top, i.left))
+        title = " ".join(i.text.strip() for i in sorted((i for i in on_page if i.family.startswith("MrEaves") and i.size == 24), key=lambda i: i.top))
+        if title:
+            name = re.sub(r"\s+", " ", title)
+            current = entry(version, "spellList", slug(name.replace(" Spells", "")), name, page)
+            current["levels"] = {}
+            out.append(current)
+        if current is None:
+            continue
+        level = None
+        for item in on_page:
+            if item.family == "MyFont":
+                level = LEVEL_NAMES.get(item.text.strip().lower())
+                if level is None:
+                    problems.append(f"spell list p{page}: unknown level heading '{item.text}'")
+            elif item.family.startswith("ScalySans") and item.top > 150 and level is not None:
+                current["levels"].setdefault(str(level), []).append(item.text.strip())
+    for item in out:
+        if not item["levels"]:
+            problems.append(f"{item['name']}: no spells found")
+        item["text"] = f"{sum(len(v) for v in item['levels'].values())} spells, by level."
+    return out
+
+
+def extract_custom_spells(version: str) -> list[dict]:
+    first, last = PAGES[version]["custom_spells"]
+    blocks = read_blocks(BOOKS[version]["pdf"], first, last)
+    (chapter, body), = top_sections(blocks)
+    intro, spells = split_sections(body, 2)
+    general = entry(version, "rule", "custom_spells", chapter.text, chapter.page)
+    general["text"] = body_text(intro)
+    out = [general]
+    for heading, spell_blocks in spells:
+        paras = [b for b in spell_blocks if isinstance(b, Para)]
+        spell = entry(version, "spell", slug(heading.text), heading.text, heading.page)
+        m = re.match(r"(\d)(?:st|nd|rd|th)[- ]level (\w+)|(\w+) cantrip", paras[0].text, re.I) if paras else None
+        if m:
+            spell["level"] = int(m.group(1)) if m.group(1) else 0
+            spell["school"] = (m.group(2) or m.group(3)).lower()
+            paras = paras[1:]
+        else:
+            problems.append(f"spell {heading.text}: no level line")
+        rest = []
+        for para in paras:
+            lead = re.match(r"(Casting Time|Range|Components|Duration):\s*(.+)", para.text)
+            if lead and not rest:
+                spell[{"Casting Time": "castingTime", "Range": "range", "Components": "components", "Duration": "duration"}[lead.group(1)]] = lead.group(2)
+            else:
+                rest.append(para.text)
+        spell["text"] = "\n".join(rest)
+        tables = [{"rows": table_rows(b), "page": b.page} for b in spell_blocks if isinstance(b, Table)]
+        if tables:
+            spell["tables"] = tables
+        if len(spell["text"]) < 40 or "castingTime" not in spell:
+            problems.append(f"spell {heading.text}: incomplete")
+        out.append(spell)
+    return out
+
+
+# --- Spirit Surges and Haki ---------------------------------------------------------------
+
+SURGE_KINDS = {"standard": ("surgeAdvancement", None), "armament": ("hakiFeature", "armament"), "observation": ("hakiFeature", "observation"), "king": ("hakiFeature", "supremeKing")}
+RARITIES = ["Common", "Uncommon", "Rare", "Very Rare", "Legendary"]
+
+
+def extract_surges(version: str) -> list[dict]:
+    out = []
+    for first, last in PAGES[version]["surges"]:
+        blocks = read_blocks(BOOKS[version]["pdf"], first, last)
+        for heading, body in top_sections(blocks):
+            intro, options = split_sections(body, 2)
+            typed = [(h, b) for h, b in options if any(isinstance(x, Para) and re.search(r"Advancement,", x.text) for x in b[:1])]
+            if not typed:
+                made = sections_from(body, 2, heading)
+                rule = entry(version, "rule", slug(heading.text), heading.text, heading.page)
+                rule["text"] = made["text"]
+                for key in ("sections", "tables"):
+                    if key in made:
+                        rule[key] = made[key]
+                out.append(rule)
+                continue
+            made = sections_from(intro, 3, heading)
+            group = entry(version, "rule", slug(heading.text), heading.text, heading.page)
+            group["text"] = made["text"]
+            if "sections" in made:
+                group["sections"] = made["sections"]
+            out.append(group)
+            for option, option_blocks in options:
+                type_line = next((b for b in option_blocks if isinstance(b, Para)), None)
+                m = re.match(r"(.+?) Advancement, (.+)$", type_line.text) if type_line else None
+                if not m:
+                    problems.append(f"surge {option.text} (p{option.page}): no type line")
+                    continue
+                # The section says which family it is; "Amateur Haki Advancement" entries sit inside their Color's section.
+                family = next((k for k in SURGE_KINDS if k in heading.text.lower()), None)
+                if family is None or "devil fruit" in type_line.text.lower() or "devil fruit" in heading.text.lower():
+                    # Devil Fruit advancements are secret and must never reach the public data.
+                    raise SystemExit(f"Refusing to extract '{option.text}' (p{option.page}): '{type_line.text}' under '{heading.text}' is not a public advancement")
+                kind, color = SURGE_KINDS[family]
+                made = sections_from([b for b in option_blocks if b is not type_line], 3, option)
+                item = entry(version, kind, slug(option.text), option.text, option.page)
+                rarity = next((r for r in sorted(RARITIES, key=len, reverse=True) if m.group(2).lower().startswith(r.lower())), None)
+                tier = re.search(r"Tier (\d)", m.group(2))
+                item["typeLine"] = type_line.text
+                if color:
+                    item["color"] = color
+                if rarity:
+                    item["rarity"] = rarity
+                else:
+                    problems.append(f"surge {option.text}: rarity not read from '{m.group(2)}'")
+                if tier:
+                    item["tier"] = int(tier.group(1))
+                if "amateur" in m.group(1).lower():
+                    item["amateur"] = True  # doesn't count toward Haki tiers (p221)
+                item["repeatable"] = bool(re.search(r"can be chosen multiple times", made["text"]))
+                item["text"] = made["text"]
+                for key in ("prerequisite", "sections", "tables", "uses", "action", "auto"):
+                    if key in made:
+                        item[key] = made[key]
+                out.append(item)
+    # A Haki prerequisite is a list of other features' names; whatever follows the last name is the
+    # feature's opening line, run on from the line above.
+    names = sorted({e["name"] for e in out if e["kind"] != "rule"} | {"Qualities of a King"}, key=len, reverse=True)
+    for item in out:
+        rest = item.get("prerequisite", "")
+        consumed = 0
+        while True:
+            name = next((n for n in names if rest[consumed:].startswith(n)), None)
+            if not name:
+                break
+            consumed += len(name)
+            if rest[consumed:consumed + 2] == ", ":
+                consumed += 2
+            else:
+                break
+        if 0 < consumed < len(rest) and rest[consumed] == " ":
+            item["prerequisite"] = rest[:consumed]
+            item["text"] = rest[consumed + 1:] + "\n" + item["text"]
+    return out
+
+
+# --- Devil Fruit rules for players, and the armory -------------------------------------------
+
+
+def extract_sections_as_rules(version: str, key: str, prefix: str = "") -> list[dict]:
+    """Every top-level heading in the page ranges becomes a rules entry, smaller headings its sections."""
+    out = []
+    ranges = PAGES[version][key]
+    for first, last in ranges if isinstance(ranges, list) else [ranges]:
+        blocks = read_blocks(BOOKS[version]["pdf"], first, last)
+        for heading, body in top_sections(blocks):
+            made = sections_from(body, 2, heading)
+            name = re.sub(r"\s*\(\s*฿?\s*\)", "", heading.text).strip()
+            rule = entry(version, "rule", prefix + slug(name), name, heading.page)
+            rule["text"] = made["text"]
+            for field in ("sections", "tables"):
+                if field in made:
+                    rule[field] = made[field]
+            out.append(rule)
+    return out
+
+
+def extract_fruit_rules(version: str) -> list[dict]:
+    return extract_sections_as_rules(version, "fruit_rules")
+
+
+def money(text: str) -> int | None:
+    m = re.search(r"฿\s*([\d,]+)", text)
+    return int(m.group(1).replace(",", "")) if m else None
+
+
+def extract_armory(version: str) -> list[dict]:
+    rules = extract_sections_as_rules(version, "armory", "armory_")
+    first, last = PAGES[version]["armory"]
+    blocks = read_blocks(BOOKS[version]["pdf"], first, first + 5)
+    tables = [b for b in blocks if isinstance(b, Table)]
+    items: list[dict] = []
+    # What each armor is, from the bullet under its category ("Dense Coat. Durable fabrics …").
+    blurbs = {b.lead.rstrip(".").lower(): b.text[len(b.lead):].strip() for b in blocks if isinstance(b, Para) and b.listed and b.lead.endswith(".")}
+
+    for table in tables:
+        rows = table.merged()
+        header = [c.lower() for c in rows[0]] if rows else []
+        if header[:2] == ["armor", "cost"]:
+            category = None
+            for row in rows[1:]:
+                if len(row) == 1:
+                    category = row[0].replace(" Armor", "").lower()
+                    continue
+                if len(row) < 6:
+                    problems.append(f"armor row {row}")
+                    continue
+                name, cost, ac, strength, stealth, weight = row[:6]
+                item = entry(version, "item", slug(name) if category != "shield" else "shield", name, table.page)
+                item["itemType"] = "shield" if category == "shield" else "armor"
+                item["category"] = category
+                item["cost"] = money(cost)
+                base = re.match(r"\+?(\d+)", ac)
+                item["ac"] = {"base": int(base.group(1)), "dex": "max2" if "max 2" in ac else "full" if "Dex" in ac else "none"} if category != "shield" else {"bonus": int(base.group(1))}
+                need = re.search(r"Str (\d+)", strength)
+                if need:
+                    item["strength"] = int(need.group(1))
+                item["stealthDisadvantage"] = stealth.lower().startswith("disadv")
+                item["weight"] = weight
+                item["text"] = blurbs.get(name.lower(), f"{name}: AC {ac}.")
+                items.append(item)
+        elif header[:3] == ["weapon", "cost", "damage"]:
+            group = None
+            for row in rows[1:]:
+                if len(row) == 1:
+                    group = row[0].lower()
+                    continue
+                if group is None or len(row) < 3:
+                    continue
+                cells = row + [""] * (5 - len(row))
+                name, cost, damage = cells[0], cells[1], cells[2]
+                # A missing weight leaves the properties one cell early.
+                weight, properties = (cells[3], cells[4]) if re.search(r"lb\.?$|^-$", cells[3]) or not cells[3] else ("-", cells[3])
+                m = re.match(r"(\+?\d*d?\d+) (\w+)", damage)
+                if not m and damage.strip() not in ("-", "—"):
+                    problems.append(f"weapon {name}: damage '{damage}'")
+                    continue
+                item = entry(version, "item", slug(name), name, table.page)
+                item["itemType"] = "weapon"
+                item["category"] = "simple" if group.startswith("simple") else "martial"
+                item["ranged"] = "ranged" in group
+                item["cost"] = money(cost)
+                if m:
+                    item["damage"] = m.group(1)
+                    item["damageType"] = m.group(2)
+                item["weight"] = weight
+                item["properties"] = "" if properties.strip() in ("-", "—") else properties
+                low = properties.lower()
+                for flag, word in (("finesse", "finesse"), ("twoHanded", "two-handed"), ("light", "light"), ("heavy", "heavy"), ("reach", "reach"), ("thrown", "thrown")):
+                    if re.search(rf"\b{word}\b", low):
+                        item[flag] = True
+                versatile = re.search(r"versatile \((\d+d\d+)\)", low)
+                if versatile:
+                    item["versatile"] = versatile.group(1)
+                item["text"] = f"{name}: {damage}." + (f" {properties}." if item["properties"] else "")
+                items.append(item)
+    if not any(i["itemType"] == "armor" for i in items) or sum(i["itemType"] == "weapon" for i in items) < 40:
+        problems.append(f"armory {version}: read {sum(i['itemType'] == 'armor' for i in items)} armors and {sum(i['itemType'] == 'weapon' for i in items)} weapons")
+    return rules + items
+
+
 def write(version: str, name: str, entries: list[dict]) -> None:
     ids = [e["id"] for e in entries]
     for dup in {i for i in ids if ids.count(i) > 1}:
@@ -311,6 +584,10 @@ CHAPTER_FILES = {
     "backgrounds": extract_backgrounds,
     "feats": extract_feats,
     "races": extract_races,
+    "spell_lists": lambda version: extract_spell_lists(version) + extract_custom_spells(version),
+    "spirit_surges": extract_surges,
+    "devil_fruit_rules": extract_fruit_rules,
+    "armory": extract_armory,
 }
 
 

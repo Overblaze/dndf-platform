@@ -1999,7 +1999,7 @@
         },
         {
           "name": "Gambler Personality Traits",
-          "text": "฿",
+          "text": "",
           "page": 31,
           "tables": [
             {
@@ -2009,15 +2009,9 @@
                 ],
                 [
                   "1 I plan for every contingency. Leave nothing to chance!"
-                ]
-              ],
-              "page": 31
-            },
-            {
-              "rows": [
+                ],
                 [
-                  "2 Every hundred Belly (",
-                  ") can become a thousand. Each bet is an opportunity."
+                  "2 Every hundred Belly (฿) can become a thousand. Each bet is an opportunity."
                 ],
                 [
                   "3 I’m one of Lady Luck’s favored. Anything I try is destined to succeed."

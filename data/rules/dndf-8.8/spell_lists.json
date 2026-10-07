@@ -1,0 +1,246 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "spellList.devilforged",
+      "kind": "spellList",
+      "name": "Devilforged Spells",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 211
+      },
+      "levels": {
+        "0": [
+          "Booming Blade",
+          "Chill Touch",
+          "Create Bonfire",
+          "Eldritch Blast",
+          "Friends",
+          "Frostbite",
+          "Green-Flame Blade",
+          "Infestation",
+          "Lightning Lure",
+          "Mage Hand",
+          "Magic Stone",
+          "Mind Sliver",
+          "Minor Illusion",
+          "Poison Spray",
+          "Prestidigitation",
+          "Sword Burst",
+          "Thunderclap",
+          "Toll the Dead",
+          "True Strike"
+        ],
+        "1": [
+          "Armor of Agathys",
+          "Hellish Rebuke",
+          "Hex",
+          "Illusory Script",
+          "Protection from Evil and",
+          "Good",
+          "Witch Bolt"
+        ],
+        "2": [
+          "Cloud of Daggers",
+          "Crown of Madness",
+          "Darkness",
+          "Earthbind",
+          "Enthrall",
+          "Mind Spike",
+          "Mirror Image",
+          "Ray of Enfeeblement",
+          "Shadow Blade",
+          "Shatter",
+          "Suggestion"
+        ],
+        "3": [
+          "Enemies Abound",
+          "Fear",
+          "Major Image",
+          "Thunder Step",
+          "Vampiric Touch"
+        ],
+        "4": [
+          "Banishment",
+          "Blight",
+          "Charm Monster",
+          "Elemental Bane",
+          "Hallucinatory Terrain",
+          "Raulothim’s Psychic Lance",
+          "Shadow of Moil",
+          "Sickening Radiance"
+        ],
+        "5": [
+          "Dream",
+          "Enervation",
+          "Far Step",
+          "Hold Monster",
+          "Negative Energy Flood",
+          "Scrying",
+          "Synaptic Static",
+          "Wall of Light"
+        ],
+        "6": [
+          "Scatter",
+          "Soul Cage"
+        ],
+        "7": [
+          "Crown of Stars",
+          "Forcecage",
+          "Power Word Pain"
+        ],
+        "8": [
+          "Dominate Monster",
+          "Feeblemind",
+          "Glibness",
+          "Maddening Darkness",
+          "Power Word Stun"
+        ],
+        "9": [
+          "Blade of Disaster",
+          "Foresight",
+          "Imprisonment",
+          "Power Word Kill",
+          "Psychic Scream",
+          "Weird"
+        ]
+      },
+      "text": "74 spells, by level."
+    },
+    {
+      "id": "spellList.skald",
+      "kind": "spellList",
+      "name": "Skald Spells",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 216
+      },
+      "levels": {
+        "0": [
+          "Friends",
+          "Light",
+          "Mending",
+          "Message",
+          "Minor Illusion",
+          "Prestidigitation",
+          "Thunderclap",
+          "True Strike",
+          "Vicious Mockery"
+        ],
+        "1": [
+          "Animal Friendship",
+          "Bane",
+          "Charm Person",
+          "Color Spray",
+          "Command",
+          "Cure Wounds",
+          "Disguise Self",
+          "Dissonant Whispers",
+          "Distort Value",
+          "Earth Tremor",
+          "Faerie Fire",
+          "Feather Fall",
+          "Healing Word",
+          "Heroism",
+          "Identify",
+          "Longstrider",
+          "Silent Image"
+        ],
+        "2": [
+          "Aid",
+          "Animal Messenger",
+          "Blindness/Deafness",
+          "Borrowed Knowledge",
+          "Calm Emotions",
+          "Crown of Madness",
+          "Detect Thoughts",
+          "Enhance Ability",
+          "Enthrall",
+          "Gift of Gab",
+          "Heat Metal",
+          "Hold Person",
+          "Kinetic Jaunt",
+          "Lesser Restoration",
+          "Locate Animals or Plants",
+          "Locate Object",
+          "Mirror Image",
+          "Nathair’s Mischief",
+          "Phantasmal Force",
+          "Pyrotechnics",
+          "See Invisibility",
+          "Shatter",
+          "Silence",
+          "Suggestion"
+        ],
+        "3": [
+          "Bestow Curse",
+          "Feign Death",
+          "Glyph of Warding",
+          "Hypnotic Pattern",
+          "Intellect Fortress",
+          "Major Image",
+          "Mass Healing Word",
+          "Motivational Speech",
+          "Nondetection",
+          "Slow",
+          "Stinking Cloud"
+        ],
+        "4": [
+          "Compulsion",
+          "Confusion",
+          "Freedom of Movement",
+          "Hallucinatory Terrain",
+          "Locate Creature",
+          "Phantasmal Killer",
+          "Raulothim’s Psychic Lance"
+        ],
+        "5": [
+          "Dominate Person",
+          "Dream",
+          "Geas",
+          "Greater Restoration",
+          "Hold Monster",
+          "Mass Cure Wounds",
+          "Mislead"
+        ],
+        "6": [
+          "Eyebite",
+          "Find the Path",
+          "Heroes’ Feast",
+          "Mass Suggestion",
+          "Otto’s Irresistible Dance",
+          "True Seeing"
+        ],
+        "7": [
+          "Mirage Arcane",
+          "Prismatic Spray",
+          "Project Image",
+          "Regenerate",
+          "Symbol"
+        ],
+        "8": [
+          "Antipathy/Sympathy",
+          "Dominate Monster",
+          "Feeblemind",
+          "Glibness",
+          "Mind Blank",
+          "Power Word Stun"
+        ],
+        "9": [
+          "Foresight",
+          "Power Word Heal",
+          "Power Word Kill",
+          "Psychic Scream"
+        ]
+      },
+      "text": "96 spells, by level."
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

@@ -263,7 +263,7 @@
           "sections": [
             {
               "name": "Poison Crafting Table",
-              "text": "฿\n฿\n฿\n฿\nAll poisons can be found in Chapter 9: Medical Log",
+              "text": "All poisons can be found in Chapter 9: Medical Log",
               "page": 175,
               "tables": [
                 {
@@ -290,50 +290,29 @@
                       "-",
                       "-",
                       "-"
-                    ]
-                  ],
-                  "page": 175
-                },
-                {
-                  "rows": [
+                    ],
                     [
                       "3rd",
                       "Red Blade Brew,",
-                      "10,000",
+                      "฿10,000",
                       "-",
                       "- Mermaid’s Guilt, Black Spot Poison, or Parrot’s Plague"
-                    ]
-                  ],
-                  "page": 175
-                },
-                {
-                  "rows": [
+                    ],
                     [
                       "9th",
                       "Drunken Siren, Lullaby",
-                      "30,000",
+                      "฿30,000",
                       "3 days",
                       "- of the Deep, Seafire Vapor, Kraken’s Whisper, Desert Strawberry, or Blinding Fog"
-                    ]
-                  ],
-                  "page": 175
-                },
-                {
-                  "rows": [
+                    ],
                     [
                       "13th",
                       "Sea Serpent Venom,",
-                      "100,000 24 hours max 2 Amiudake Extract, or The Captain’s Curse"
-                    ]
-                  ],
-                  "page": 175
-                },
-                {
-                  "rows": [
+                      "฿100,000 24 hours max 2 Amiudake Extract, or The Captain’s Curse"
+                    ],
                     [
                       "17th",
-                      "Puzzle Scorpion Venom",
-                      "200,000 24 hours max 1 or Sea King Venom"
+                      "Puzzle Scorpion Venom ฿200,000 24 hours max 1 or Sea King Venom"
                     ]
                   ],
                   "page": 175

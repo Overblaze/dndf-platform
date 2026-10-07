@@ -1,5 +1,6 @@
 // DnDF rules every character has (v10 p11–12), and Haki / Devil Fruit rows of docs/FORMULAS.md.
 import type { DieRoll } from './bruiser';
+import type { RulesVersion } from './types';
 
 /** Dream Points = level; they reset on level-up. Each adds 1d6 to an attack, check or save after the roll — p11. */
 export function dreamPointsMax(level: number): number {
@@ -38,11 +39,12 @@ export function hakiTier(featuresOfColor: { rarity: string }[]): 0 | 1 | 2 | 3 {
   return featuresOfColor.length > 0 ? 1 : 0;
 }
 
-export const HAKI_PURIST_LEVELS = [4, 10, 16];
+/** Levels that give a Haki Purist pick: 4, 10 and 16 in v10; 4, 8, 12, 16 and 20 in v8.8 — p221 of each. */
+export const HAKI_PURIST_LEVELS: Record<RulesVersion, number[]> = { 'dndf-10': [4, 10, 16], 'dndf-8.8': [4, 8, 12, 16, 20] };
 
-/** Haki Purist picks at levels 4, 10 and 16; all are lost on gaining a Devil Fruit — p221. */
-export function hakiPuristPicks(level: number, hasDevilFruit: boolean): number {
-  return hasDevilFruit ? 0 : HAKI_PURIST_LEVELS.filter((l) => level >= l).length;
+/** Haki Purist picks earned so far; all are lost on gaining a Devil Fruit — p221. */
+export function hakiPuristPicks(level: number, hasDevilFruit: boolean, version: RulesVersion = 'dndf-10'): number {
+  return hasDevilFruit ? 0 : HAKI_PURIST_LEVELS[version].filter((l) => level >= l).length;
 }
 
 export type FruitRarity = 'Common' | 'Uncommon' | 'Rare' | 'Very Rare' | 'Legendary' | 'Infernal';

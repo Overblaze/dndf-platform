@@ -70,6 +70,8 @@ describe('DnDF general rules', () => {
   it('Haki Purist: picks at 4, 10, 16; lost on gaining a Devil Fruit', () => {
     expect([3, 4, 9, 10, 16, 20].map((l) => hakiPuristPicks(l, false))).toEqual([0, 1, 1, 2, 3, 3]);
     expect(hakiPuristPicks(16, true)).toBe(0);
+    // v8.8 gives a pick at 4, 8, 12, 16 and 20.
+    expect([3, 4, 8, 12, 16, 20].map((l) => hakiPuristPicks(l, false, 'dndf-8.8'))).toEqual([0, 1, 2, 3, 4, 5]);
   });
 
   it('Paramecia charges: L1–2: 2, then = level; highest spell level ceil(level / 2), max 9 → L7: 7, 4th', () => {

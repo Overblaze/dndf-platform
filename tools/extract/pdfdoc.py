@@ -93,6 +93,13 @@ def load_items(pdf: str, first: int, last: int) -> list[Item]:
                 continue
             items.append(Item(page, int(top), int(left), int(width), family, size, color, text,
                               bold="Bold" in family or "<b>" in raw, italic="Italic" in family or "<i>" in raw))
+    # The ฿ sign is set in its own font. In a price column it belongs to the table cell beside it.
+    cells = [i for i in items if i.family.startswith("ScalySans")]
+    for item in items:
+        if item.text.strip() != "฿":
+            continue
+        if any(c.page == item.page and abs(c.top - item.top) <= 7 and -3 <= c.left - item.right <= 12 for c in cells):
+            item.family = "ScalySansRemakeRegular"
     return items
 
 
@@ -190,6 +197,17 @@ def reading_order(lines: list[Line]) -> list[Line]:
             if re.fullmatch(r"\d+(st|nd|rd|th)", first.text) and first.left < 140 and any(c.left > GUTTER for c in cells):
                 wide_tops.add(t)
         tops = sorted(table_rows)
+        # A table can also span the page as two halves with nothing crossing the gutter (the weapon
+        # tables put Properties in the right-hand column). The giveaway is rows that line up exactly:
+        # a run of table rows where nearly every row has cells on both sides.
+        run: list[int] = []
+        for t in tops + [10**6]:
+            if run and t - run[-1] > 24:
+                both = [r for r in run if any(c.left < GUTTER for c in table_rows[r]) and any(c.left > GUTTER for c in table_rows[r])]
+                if len(both) >= 5 and len(both) >= 0.8 * len(run):
+                    wide_tops.update(run)
+                run = []
+            run.append(t)
         changed = True
         while changed:
             changed = False

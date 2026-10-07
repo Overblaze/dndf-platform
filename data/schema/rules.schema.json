@@ -517,7 +517,8 @@
             "beast",
             "shipType",
             "shipUpgrade",
-            "rule"
+            "rule",
+            "spellList"
           ]
         },
         "name": {
@@ -711,6 +712,50 @@
           "additionalProperties": {
             "$ref": "#/$defs/source"
           }
+        },
+        "rarity": {
+          "enum": [
+            "Common",
+            "Uncommon",
+            "Rare",
+            "Very Rare",
+            "Legendary"
+          ]
+        },
+        "color": {
+          "description": "Which Color of Haki a feature belongs to.",
+          "enum": [
+            "armament",
+            "observation",
+            "supremeKing"
+          ]
+        },
+        "tier": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "levels": {
+          "description": "A spell list: spell names by level, \"0\" for cantrips.",
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[0-9]$"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "itemType": {
+          "enum": [
+            "armor",
+            "shield",
+            "weapon",
+            "gear"
+          ]
         }
       },
       "allOf": [

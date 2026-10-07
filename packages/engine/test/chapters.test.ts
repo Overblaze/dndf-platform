@@ -63,9 +63,13 @@ describe('chapters 1 and 2 data', () => {
     expect(universal[1]!.text).toContain('roll a d20, on a 12 or higher');
   });
 
-  it('has no Devil Fruit entries and nothing from the DM-only chapter', () => {
+  it('has no Devil Fruit entries and nothing from the secret pages of the v10 book', () => {
     expect(all.filter((e: RuleEntry) => e.kind === 'devilFruit')).toEqual([]);
-    expect(Math.max(...all.map((e) => e.source.page))).toBeLessThan(242);
+    // Secret: Devil Fruit advancements (237–240), fruit generation tables (250–254), the DM-only chapter (305 on).
+    const secret = (page: number) => (page >= 237 && page <= 240) || (page >= 250 && page <= 254) || page >= 305;
+    const pages = (value: unknown): number[] =>
+      Array.isArray(value) ? value.flatMap(pages) : value && typeof value === 'object' ? Object.entries(value).flatMap(([k, v]) => (k === 'sources' ? [] : k === 'page' && typeof v === 'number' ? [v] : pages(v))) : [];
+    for (const entry of all) expect(pages(entry).filter(secret), entry.id).toEqual([]);
   });
 });
 

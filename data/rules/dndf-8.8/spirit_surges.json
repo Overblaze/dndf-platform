@@ -1,0 +1,1799 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "rule.haki_purist",
+      "kind": "rule",
+      "name": "Haki Purist",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 221
+      },
+      "text": "Starting at 4th level, and then again at 8th, 12th, 16th and 20th level, you may choose one of the following Haki improvement effects. You immediately lose access to all of these improvements when your character gains Devil Fruit powers.\nTrain Quality. Increase the amount of dice rolled from your haki features by 1.\nTrain Quantity. Increase the area of effect range of your haki features by 10 feet.\nIf taken at 20th level this instead increases the range of your legendary haki features aoe by double.\nTrain Stamina. Increase the amount of charges for your uncommon and rare haki features by +1.\nIf taken at 12th level onward it also increases your very rare haki features by +1, and at 20th level it also increases your legendary haki features by +1."
+    },
+    {
+      "id": "surgeAdvancement.strengthen_self",
+      "kind": "surgeAdvancement",
+      "name": "Strengthen Self",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 222
+      },
+      "typeLine": "Standard Advancement, Uncommon",
+      "rarity": "Uncommon",
+      "repeatable": true,
+      "text": "Add +2 to a ability stat of your choice (max 20).\nThis advancement can be chosen multiple times."
+    },
+    {
+      "id": "surgeAdvancement.unjustified_reputation",
+      "kind": "surgeAdvancement",
+      "name": "Unjustified Reputation",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 222
+      },
+      "typeLine": "Standard Advancement, Uncommon",
+      "rarity": "Uncommon",
+      "repeatable": false,
+      "text": "Double your current bounty and EVERYONE now knows your face and achievements. If a creature is friendly towards you, you gain advantage on charisma skill roles."
+    },
+    {
+      "id": "surgeAdvancement.multipurpose_weapon",
+      "kind": "surgeAdvancement",
+      "name": "Multipurpose Weapon",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 222
+      },
+      "typeLine": "Standard Advancement, Rare",
+      "rarity": "Rare",
+      "repeatable": true,
+      "text": "You modify your current weapon. Choose another weapon you own (and are proficient with) and merge them together. You may switch between these multipurpose weapon ‘modes’ with a bonus action.\nAdditionally, If you make an attack action, you may use a bonus action after making your attack to switch your multipurpose weapon to a new ‘mode’. Switching to a new mode in this way lets you make an additional multipurpose weapon attack will disadvantage.\nThis advancement can be chosen multiple times on the same multipurpose weapon."
+    },
+    {
+      "id": "surgeAdvancement.borrow_skill",
+      "kind": "surgeAdvancement",
+      "name": "Borrow Skill",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 222
+      },
+      "typeLine": "Standard Advancement, Very Rare",
+      "rarity": "Very Rare",
+      "repeatable": false,
+      "text": "Learn a single feature from a class or subclass of your choice. You cannot pick a feature that is a higher level than your current character level.\nThe class feature and/or subclass feature can not be from any class you currently have levels in and you cannot grab a feature that grants spell slots."
+    },
+    {
+      "id": "surgeAdvancement.muscle_memory",
+      "kind": "surgeAdvancement",
+      "name": "Muscle Memory",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 222
+      },
+      "typeLine": "Standard Advancement, Very Rare",
+      "rarity": "Very Rare",
+      "repeatable": false,
+      "text": "Double the amount of uses of one class feature."
+    },
+    {
+      "id": "hakiFeature.focused_hit",
+      "kind": "hakiFeature",
+      "name": "Focused Hit",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "armament",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You find chips in your opponents defense.\nOnce per turn, your weapon attacks and unarmed strikes deal increased damage. Whenever you roll damage dice for a weapon or unarmed strike, increase each die by one size up to a maximum of d8 (e.g., 1d4’s becomes 1d6’s, 1d6’s become 1d8’s, ect).\nUpgrades to Enhanced Strike when you reach character level 5",
+      "prerequisite": "Character level 1-4"
+    },
+    {
+      "id": "hakiFeature.fortitude",
+      "kind": "hakiFeature",
+      "name": "Fortitude",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "armament",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You instinctively draw upon your inner strength, toughening your body.\nYou can spend an action to gain 1d4 + your character level in temporary hit points. You can use this feature a number of times equal to your proficiency bonus. You cannot use this feature again until you finish a long rest.\nUpgrades to Aura of Life when you reach character level 5",
+      "prerequisite": "Character level 1-4",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.resolve_within",
+      "kind": "hakiFeature",
+      "name": "Resolve Within",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "armament",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You channel an inner resilience that strengthens your physical form.\nAs an action, you can bolster your defenses until the end of your next turn. During this time, you have resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks. Once you use this feature, you cannot use it again until you finish a long rest.\nUpgrades to Vessel of Resilience when you reach character level 5",
+      "prerequisite": "Character level 1-4",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.aura_of_life",
+      "kind": "hakiFeature",
+      "name": "Aura of Life",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Armament Haki Advancement, Uncommon — Tier 1",
+      "color": "armament",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You are able to increase your willpower to bolster the toughness of your body using your spirit.\nYou can spend an action to gain 1d6 + half of your Willpower (rounded up) + your character level in temporary hit points. You can use this feature a number of times equal to your proficiency bonus. You cannot use this feature again until you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.enhanced_strike",
+      "kind": "hakiFeature",
+      "name": "Enhanced Strike",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Armament Haki Advancement, Uncommon — Tier 1",
+      "color": "armament",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You learn how to look for weaknesses in a opponents defense.\nYour weapon attacks and unarmed strikes deal increased damage. Whenever you roll damage dice for a weapon or unarmed strike, increase each die by one size up to a maximum of d12 (e.g., 1d4’s becomes 1d6’s, 1d6’s become 1d8’s, ect)."
+    },
+    {
+      "id": "hakiFeature.soul_armor",
+      "kind": "hakiFeature",
+      "name": "Soul Armor",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Armament Haki Advancement, Uncommon — Tier 1",
+      "color": "armament",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You can form a thin coating of invisible armor around your body using your soul.\nAs an action, you surround your body with this armor, making your AC equal to 10 + your proficiency bonus + half of your Willpower (rounded up), maximum of 20 AC, when you aren’t wearing armor. This armor lasts for 8 hours. You cannot use this feature again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.vessel_of_resilience",
+      "kind": "hakiFeature",
+      "name": "Vessel of Resilience",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Armament Haki Advancement, Uncommon — Tier 1",
+      "color": "armament",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You learn to imbue your spirit with such resilience that it enhances your physical form.\nAs an action, you can bolster your defenses for 1 minute. During this time, you have resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks, and you have advantage on Constitution saving throws. Once you use this feature, you cannot use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.force_of_will",
+      "kind": "hakiFeature",
+      "name": "Force of Will",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 223
+      },
+      "typeLine": "Armament Haki Advancement, Rare — Tier 1",
+      "color": "armament",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your iron-will enables you to unleash devastating shockwaves of Haki energy. As an action, you slam your foot or fist into the ground, releasing a shockwave of spirit energy. Each creature within 30 feet of you must make a Strength saving throw. On a failed save, a creature takes force damage equal to 1d10 + a number of d10s equal to a quarter of your Willpower (rounded up) and is knocked prone. On a successful save, it takes half as much damage and isn’t knocked prone. Structures and nonmagical objects in the area take double damage. Once you use this feature, you can’t use it again until you finish a short or long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.internal_destruction",
+      "kind": "hakiFeature",
+      "name": "Internal Destruction",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 224
+      },
+      "typeLine": "Armament Haki Advancement, Rare — Tier 1",
+      "color": "armament",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your mastery of Haki allows you to let your spirit energy linger, echoing your strikes with unyielding force.\nAs a bonus action when you hit a creature with a melee weapon or unarmed strike, your spirit energy reverberates through the target causing it to take additional force damage equal to a number of d6s equal to a quarter of your Willpower (rounded up) at the start of each of its turns for the next minute. The creature can make a Constitution saving throw at the end of each of its turns, ending the effect early on a success. If you hit the same creature with this effect again before the duration ends, the effect’s damage stacks and the duration resets.\nOnce you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.soul_ravage",
+      "kind": "hakiFeature",
+      "name": "Soul Ravage",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 224
+      },
+      "typeLine": "Armament Haki Advancement, Rare — Tier 1",
+      "color": "armament",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You have learned how to directly channel lethal energy into any living creature, ravaging the powers of Devil Fruit users.\nWhen you hit a devil fruit creature with a melee attack you can choose to subdue it’s powers, it must make a Constitution saving throw. On a failed save, the target is unable to use Devil Fruit abilities, spells, or forms until the end of its next turn. Any Devil Fruit spells that use concentration and any Devil Fruit forms or abilities the creature has active are also ended early, as if it was touched by seastone.\nOnce you use this ability you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.soul_shield",
+      "kind": "hakiFeature",
+      "name": "Soul Shield",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 224
+      },
+      "typeLine": "Armament Haki Advancement, Rare — Tier 1",
+      "color": "armament",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You are capable of coating dense amounts of spirit energy around your body and armor to temporarily protect you from incoming attacks.\nYou can cast the Shield spell on yourself, without expending a spell slot. Once you use this ability a number of times equal to half your proficiency bonus (rounded down), you can’t use it again until you finish a long rest.\nAdditionally, if a creature hits you with a melee attack. It takes 1d8 force damage.",
+      "uses": {
+        "max": "max(1, floor(prof/2))",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.spirit_blast",
+      "kind": "hakiFeature",
+      "name": "Spirit Blast",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 224
+      },
+      "typeLine": "Armament Haki Advancement, Rare — Tier 1",
+      "color": "armament",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You gain the ability to send bursts of energy through your enemies using your spirit.\nWhen you hit a creature with a weapon attack or unarmed strike, you can unleash a surge of spirit energy from your body to deal extra 1d4 force damage to the target, in addition to the attack’s normal damage.\nWhen you reach Willpower 10, this damage is increased to 1d6 force damage."
+    },
+    {
+      "id": "hakiFeature.weapon_hardening",
+      "kind": "hakiFeature",
+      "name": "Weapon Hardening",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 224
+      },
+      "typeLine": "Armament Haki Advancement, Rare — Tier 1",
+      "color": "armament",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You gain the ability to coat your weapons and attacks with your spirit. The heavier the application, the darker the coating is.\nAs a bonus action, you channel haki into your body or a weapon of your choice. If you choose your body, you choose either your unarmed strikes or a natural weapon. For 1 minute, your attacks with the chosen weapon are considered magical with a bonus to Attack rolls and Damage Rolls equal to a quarter of your Willpower (rounded up).\nIf the attack already has a bonus to its attack and damage rolls, this feature replaces the bonus unless it is greater, in which case it does not gain this feature’s benefit.\nThis effect ends early if you fall unconscious, use it again, end it as a bonus action, or start your turn not holding or touching the weapon you coated. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.blackened_fist_of_ruin",
+      "kind": "hakiFeature",
+      "name": "Blackened Fist of Ruin",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 224
+      },
+      "typeLine": "Armament Haki Advancement, Very Rare — Tier 2",
+      "color": "armament",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "Your spiritual energy can focus into a single devastating punch that shatters any defense.\nAs an action, you can make a single melee weapon attack against a creature within reach. If this attack hits, it deals additional force damage equal to 2d10 + a number of d10s equal to half of your Willpower (rounded up), and if the target is a creature, it must succeed on a Strength saving throw or be knocked back 30 feet and knocked prone. Once you use this ability, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.bullet_of_will",
+      "kind": "hakiFeature",
+      "name": "Bullet of Will",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 225
+      },
+      "typeLine": "Armament Haki Advancement, Very Rare — Tier 2",
+      "color": "armament",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "Your control over your Haki extends beyond your body, imbuing your ranged attacks with potent force.\nWhen you make a ranged attack, you can use a bonus action to imbue your projectile with your Haki, causing it to deal an additional force damage equal to 2d8 + a number of d8s equal to a quarter of your Willpower (rounded up). Furthermore, the attack has a maximum range of 1200 feet with no disadvantage due to long- range. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.crippling_blast",
+      "kind": "hakiFeature",
+      "name": "Crippling Blast",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 225
+      },
+      "typeLine": "Armament Haki Advancement, Very Rare — Tier 2",
+      "color": "armament",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "You enhance your ability to send bursts of energy through your attacks and can now physically destroy your enemies from the inside.\nWhen you hit a creature with a weapon attack, you deal extra force damage equal to a number of d8s equal to a quarter of your Willpower (rounded up) and force the target to make a Constitution saving throw. On a failed save, it has disadvantage on attack rolls and ability checks, and can’t take reactions, until the end of its next turn. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.spirit_emission",
+      "kind": "hakiFeature",
+      "name": "Spirit Emission",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 225
+      },
+      "typeLine": "Armament Haki Advancement, Very Rare — Tier 2",
+      "color": "armament",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "You concentrate your Haki into a potent beam of energy, piercing through multiple enemies.\nAs an action, you can fire a beam of energy in a line that is 60 feet long and 5 feet wide. Each creature in the line must make a Dexterity saving throw. A creature takes force damage equal to 2d10 + a number of d10s equal to half of your Willpower (rounded up) on a failed save, or half as much damage on a successful one. This beam penetrates through creatures and objects, potentially hitting multiple targets in its path. Once you use this ability, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.will_redirection",
+      "kind": "hakiFeature",
+      "name": "Will Redirection",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 225
+      },
+      "typeLine": "Armament Haki Advancement, Very Rare — Tier 2",
+      "color": "armament",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "Your spiritual force can now redirect harm to yourself and withstand its damage.\nAs a reaction, when you or a creature within 30 feet of you is targeted by a spell or ability that deals damage, you can use your Haki to intercept the attack. The damage is redirected to you, but you only take half damage (rounded down). Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.abyssal_hole",
+      "kind": "hakiFeature",
+      "name": "Abyssal Hole",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 225
+      },
+      "typeLine": "Armament Haki Advancement, Legendary — Tier 3",
+      "color": "armament",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You’ve refined your Armament Haki to a point where you can channel both its overwhelming force and your intimidating spirit into a single destructive blow, capable of sending foes plummeting into an abyss.\nAs an action, you can make a melee attack against an opponent within reach. If the attack hits, you envelop your hand in concentrated Haki and smash your opponent into the ground, dealing force damage equal to a number of d10s equal to your Willpower and forcing them to make a Strength saving throw. On a failed save, the enemy is sent crashing downwards 50 feet, taking any additional fall damage, and creating a gaping hole in the ground if the area is able to be destroyed, and is knocked prone and stunned until the end of its next turn.\nIf used on a surface not connected to a substantial amount of earth (such as the deck of a ship or a wooden floor), this ability will instead break through a single surface and cause the enemy to fall through to the surface below, dealing the same amount of force damage to any objects hit.\nOnce you use this feature, you cannot use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.dark_armor",
+      "kind": "hakiFeature",
+      "name": "Dark Armor",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 225
+      },
+      "typeLine": "Armament Haki Advancement, Legendary — Tier 3",
+      "color": "armament",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You can create a nearly indestructible coat of Haki that guards you from all harm.\nAs an action, you can envelop yourself in a layer of super-dense Haki. For the next 10 minutes, you gain resistance to all types of damage except force, your Armor Class can’t be less than 5 + your Willpower, regardless of what kind of armor you are wearing, and you are immune to being grappled or restrained. Once you use this ability, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.galaxy_impact",
+      "kind": "hakiFeature",
+      "name": "Galaxy Impact",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 225
+      },
+      "typeLine": "Armament Haki Advancement, Legendary — Tier 3",
+      "color": "armament",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You have reached the pinnacle of Armament Haki, gaining the ability to impose your spirit’s might on the world around you.\nAs an action, you can cause a burst of pure force to radiate from you. All creatures and objects within a 120 ft. radius must make a Constitution saving throw. On a failed save, a creature takes force damage equal to 4d10 + a number of d10s equal to half of your Willpower (rounded up) and is knocked prone. On a successful save, a creature takes half as much damage and isn’t knocked prone. Unworn objects automatically fail their saving throw and take full damage. Once you use this feature, you cannot use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.permanent_black_weapon",
+      "kind": "hakiFeature",
+      "name": "Permanent Black Weapon",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 226
+      },
+      "typeLine": "Armament Haki Advancement, Legendary — Tier 3",
+      "color": "armament",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "or Conqueror’s Coating\nYou coat a weapon with a permanent layer of dark energy that never leaves it.\nChoose a weapon that is separate from your body. You spend 1 hour infusing it with your spirit. It receives the bonuses from Weapon Hardening or Conqueror’s Coating permanently until you end it by spending 1 hour to remove it.\nAdditionally when you reach Willpower 16, you can choose to infuse the weapon with additional power. Choose one of the following damage types: acid, cold, fire, lightning, or thunder. Each of your successful attacks with the weapon deal an extra 4d6 damage of the chosen type.\nOnly one weapon can receive the benefits permanent infusion at a time. If a creature other than you attempts to use this weapon, it must attune to the weapon to gain its benefits. You can still use Weapon Hardening or Conqueror’s Coating normally on separate weapons while this infusion is active.",
+      "prerequisite": "Weapon Hardening"
+    },
+    {
+      "id": "hakiFeature.thunderbolt_volley",
+      "kind": "hakiFeature",
+      "name": "Thunderbolt Volley",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 226
+      },
+      "typeLine": "Armament Haki Advancement, Legendary — Tier 3",
+      "color": "armament",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You have harnessed the strength of your spirit to such a degree that you can channel it into your ranged attacks, causing them to hit with the force of a thunderbolt.\nAs an action, select one target you can see within range and make a ranged weapon attack. You fire a single shot imbued with your Haki, which splits into multiple thundering energy bolts mid-flight. Make a single weapon attack roll. On a hit, the target suffers the normal effects of the weapon attack, and it takes additional force damage equal to 6d10 + a number of d10s equal to half of your Willpower (rounded up).\nThen, up to six other targets of your choice that you can see within 30 feet of the original target each take force damage equal to the additional force damage roll.\nAfter the attack, the force of the unleashed energy causes a thunderous boom that is audible up to 1 mile feet.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.instinctual_awareness",
+      "kind": "hakiFeature",
+      "name": "Instinctual Awareness",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 227
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "observation",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You’ve honed a mysterious intuition, allowing you to sense the presence of beings more efficiently.\nYou gain a +2 bonus to your passive Wisdom (Perception).\nUpgrades to Spirit Sense when you reach character level 5",
+      "prerequisite": "Character level 1-4"
+    },
+    {
+      "id": "hakiFeature.keen_gaze",
+      "kind": "hakiFeature",
+      "name": "Keen Gaze",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 227
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "observation",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You develop a sense for tracking far off objects.\nAs a bonus action, choose one of the following effects to apply to your ranged weapon attack:\nYour attack roll adds an amount equal to your proficiency bonus.\nThe range of your ranged weapon attack is doubled.\nYou cannot use this feature again until you finish a long rest.\nUpgrades to Far Sight when you reach character level 5",
+      "prerequisite": "Character level 1-4",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.lucky_shot",
+      "kind": "hakiFeature",
+      "name": "Lucky Shot",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 227
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "observation",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You’ve developed a knack for making impossible shots.\nWhen you make a ranged weapon attack and miss, you can use your bonus action to reroll the attack against a different creature within range. The fired missile ricochets off a solid surface, such as a wall or a ceiling, before heading towards the new target. You cannot use this feature again until you finish a long rest.\nUpgrades to Echoing Shot when you reach character level 5",
+      "prerequisite": "Character level 1-4",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.aura_detection",
+      "kind": "hakiFeature",
+      "name": "Aura Detection",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 227
+      },
+      "typeLine": "Observation Haki Advancement, Uncommon — Tier 1",
+      "color": "observation",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You begin to see auras around people and objects that allow you to identify devil fruit users and obtain information about them.\nAs an action, you sense the presence of haki and devil fruit users within 120 feet of you, learning if it has Haki and/or a Devil Fruit. After learning its powers, you may additionally determine one of the following properties per creature detected:\nIt’s maximum Haki or Devil Fruit rarity.\nIt’s prominent Haki types.\nIt’s Devil Fruit type.\nIf the Devil Fruit is Awakened."
+    },
+    {
+      "id": "hakiFeature.aura_reading",
+      "kind": "hakiFeature",
+      "name": "Aura Reading",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 227
+      },
+      "typeLine": "Observation Haki Advancement, Uncommon — Tier 1",
+      "color": "observation",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You are able to detect the presence and potential threat level of dangerous creatures or hazards around you.\nYou can cast the Detect Poison and Disease and Find Traps spells without expending a spell slot or material components. Additionally the range of your Detect Poison and Disease is increased to 120 ft. and you can sense the location of traps with Find Traps.\nWhen you reach Willpower 10, you may also cast Detect Thoughts, without expending spell slots or material components. The range of this spell is 60 feet."
+    },
+    {
+      "id": "hakiFeature.echoing_shot",
+      "kind": "hakiFeature",
+      "name": "Echoing Shot",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 227
+      },
+      "typeLine": "Observation Haki Advancement, Uncommon — Tier 1",
+      "color": "observation",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You have learned to channel your Observation Haki into your ranged attacks, enabling your shots to curve mid-air.\nWhen you make a ranged weapon attack and miss, you can use your bonus action to reroll the attack against a different creature within range. The fired missile ricochets off a solid surface, such as a wall or a ceiling, before heading towards the new target. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.far_sight",
+      "kind": "hakiFeature",
+      "name": "Far Sight",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 227
+      },
+      "typeLine": "Observation Haki Advancement, Uncommon — Tier 1",
+      "color": "observation",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your observation haki allows you to perceive threats from a significant distance.\nAs a bonus action, choose one of the following effects to apply to your ranged weapon attack:\nYour attack roll has advantage.\nThe range of your ranged weapon attack is tripled.\nYou can use this feature an amount of times equal to your proficiency bonus, regaining all expended uses when you finish a short or long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.predictive_strike",
+      "kind": "hakiFeature",
+      "name": "Predictive Strike",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Uncommon — Tier 1",
+      "color": "observation",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Through honing your perception, you can predict your opponent’s movements, turning their offense into an opportunity for a counterattack.\nWhen a creature misses you with a melee attack, you can use your reaction to make a melee attack against the creature. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.spirit_sense",
+      "kind": "hakiFeature",
+      "name": "Spirit Sense",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Uncommon — Tier 1",
+      "color": "observation",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You have trained your haki to feel the presence of beings who are invisible, hidden or disguised.\nYou gain a +8 bonus to your passive Wisdom (Perception) and you can see invisible creatures. Additionally, you can sense the location hidden creatures within 30 feet of you.\nWhen you reach Willpower 10, your senses increase to 60 ft. and you can automatically tell if you are looking at an illusion."
+    },
+    {
+      "id": "hakiFeature.echo_of_futures_past",
+      "kind": "hakiFeature",
+      "name": "Echo of Futures Past",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Rare — Tier 1",
+      "color": "observation",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You’ve honed your Observation Haki to a point where you can shortly glimpse into the future, anticipating your enemies defenses.\nWhen you roll for initiative, you gain advantage on all your attack rolls until the end of your first turn.\nAdditionally, you can take the Dodge action as a bonus action instead of an action on your turns."
+    },
+    {
+      "id": "hakiFeature.hawks_gaze",
+      "kind": "hakiFeature",
+      "name": "Hawk’s Gaze",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Rare — Tier 1",
+      "color": "observation",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your Observation Haki gives you sight beyond sight, allowing you to spot distant threats and targets with ease.\nYou gain advantage on Wisdom (Perception) checks that rely on sight. In addition, you can make out details of creatures and objects up to 1 mile away."
+    },
+    {
+      "id": "hakiFeature.imminent_sense",
+      "kind": "hakiFeature",
+      "name": "Imminent Sense",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Rare — Tier 1",
+      "color": "observation",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your ability to predict danger has reached new heights, allowing you to effectively dodge even the deadliest strikes.\nWhen you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail."
+    },
+    {
+      "id": "hakiFeature.predict_outcome",
+      "kind": "hakiFeature",
+      "name": "Predict Outcome",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Rare — Tier 1",
+      "color": "observation",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You can see a tiny glimpse into the future to determine the potential negative outcome of a situation and avoid it.\nWhen you or an ally within 30 ft. of you makes an attack roll, an ability check, or a saving throw, you can choose to reroll the outcome of the d20 as a reaction. You may reroll the die once the outcome of the initial roll is determined.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a short or long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.predictive_shot",
+      "kind": "hakiFeature",
+      "name": "Predictive Shot",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Rare — Tier 1",
+      "color": "observation",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your haki allows you to predict the trajectory of your shots with uncanny precision, even accounting for the slightest movements of your target.\nWhen you make an attack roll, you can choose to use this feature before the attack goes off. The attack ignores cover, the target’s Dexterity Modifier to calculate it’s AC, and critically hits on a roll of 19 or 20. On a hit, the attack deals additional weapon damage equal to a number of d6s equal to a quarter of your Willpower (rounded up).\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.traveling_gaze",
+      "kind": "hakiFeature",
+      "name": "Traveling Gaze",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Rare — Tier 1",
+      "color": "observation",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "By amplifying your vision with your spirit, you are able to see through physical objects.\nYou can cast the Arcane Eye spell, without expending a spell slot or material components an amount of times equal to your proficiency bonus. Regaining all uses when you finish a long rest.\nAdditionally, you and your Arcane Eye gain the ability to see through solid objects to a range of 30 feet. Within that range, you have darkvision if you don’t already have it and cant see through magical darkness, perceiving objects and creatures you can’t see as ghostly, transparent images.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.chronostasis",
+      "kind": "hakiFeature",
+      "name": "Chronostasis",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 228
+      },
+      "typeLine": "Observation Haki Advancement, Very Rare — Tier 2",
+      "color": "observation",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "You perceive time in a unique way, allowing you to analyze your surroundings and react to threats with greater precision.\nYou can take the ‘Ready’ action as a bonus action on your turn."
+    },
+    {
+      "id": "hakiFeature.glimpse_into_the_future",
+      "kind": "hakiFeature",
+      "name": "Glimpse into the Future",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 229
+      },
+      "typeLine": "Observation Haki Advancement, Very Rare — Tier 2",
+      "color": "observation",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "By developing your sixth sense, you can see further into the future.\nWhen you finish a long rest, roll two 1d20s and record the numbers rolled. You can replace any attack roll, saving throw, or ability check made by you or a creature that you can see with one of these foretelling rolls. You must choose to do so before the roll, and you can replace a roll in this way only once per turn.\nEach foretelling roll can be used only once. When you finish a long rest, you lose any unused foretelling rolls."
+    },
+    {
+      "id": "hakiFeature.infinite_sight",
+      "kind": "hakiFeature",
+      "name": "Infinite Sight",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 229
+      },
+      "typeLine": "Observation Haki Advancement, Very Rare — Tier 2",
+      "color": "observation",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "By focusing your spiritual awareness on distant surroundings, you can focus on specific areas to see or hear targets from far away.\nYou can cast the Clairvoyance spell at will, without expending a spell slot or material components. You may have an amount of Clairvoyance spells active equal to your proficiency bonus."
+    },
+    {
+      "id": "hakiFeature.preemptive_strike",
+      "kind": "hakiFeature",
+      "name": "Preemptive Strike",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 229
+      },
+      "typeLine": "Observation Haki Advancement, Very Rare — Tier 2",
+      "color": "observation",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "Your heightened observation skills allow you to react to threats with lightning speed, attacking before your enemy can even strike.\nAs a reaction when a creature you can see within range initiates an attack against you, you can make one weapon attack against the creature. If your attack hits, the creature’s attack is canceled and they lose their action. This feature doesn’t prevent the creature from using a bonus action or reaction.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.soul_gaze",
+      "kind": "hakiFeature",
+      "name": "Soul Gaze",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 229
+      },
+      "typeLine": "Observation Haki Advancement, Very Rare — Tier 2",
+      "color": "observation",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "You’ve refined your Observation Haki to perceive the spirit of people around you and information about them.\nYou gain advantage on all Wisdom (Insight) checks and as an action, you sense the presence of haki and devil fruit users within 120 feet of you, learning all of the following information:\nIt’s current Hit Points.\nIt’s Immunities, Resistances, and Vulnerabilities It’s maximum Haki and Devil Fruit rarities.\nIt’s prominent Haki types.\nIt’s Devil Fruit type.\nIf the Devil Fruit is Awakened.\nThis feature replaces Aura Detection.",
+      "prerequisite": "Aura Detection"
+    },
+    {
+      "id": "hakiFeature.clairvoyant_strike",
+      "kind": "hakiFeature",
+      "name": "Clairvoyant Strike",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 229
+      },
+      "typeLine": "Observation Haki Advancement, Legendary — Tier 3",
+      "color": "observation",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "Your foresight enables you to strike where your enemies are most vulnerable.\nAs a bonus action, for 3 rounds when you make an attack you can give yourself a bonus to your attack rolls equal to your Willpower score. Once you use this feature, you can’t use it again until you finish a short rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.future_sight",
+      "kind": "hakiFeature",
+      "name": "Future Sight",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 229
+      },
+      "typeLine": "Observation Haki Advancement, Legendary — Tier 3",
+      "color": "observation",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You perceive brief flashes of the immediate future, allowing you to evade attacks before they are fully formed.\nAt the start of each round of combat, you gain three Future Sight dodges. When a creature makes an attack roll against you, you can expend one Future Sight dodge to cause that attack to automatically miss. In addition, you have advantage on the first three saving throws you make each round.\nCreatures that also possess Future Sight ignore all benefits of this feat when affecting you."
+    },
+    {
+      "id": "hakiFeature.the_zone",
+      "kind": "hakiFeature",
+      "name": "The Zone",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 229
+      },
+      "typeLine": "Observation Haki Advancement, Legendary — Tier 3",
+      "color": "observation",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "In the heat of battle, you can enter a state of total spatial awareness and the ability to see clearly into the future for a prolonged period of time.\nYou can spend an action to center your focus around your sixth sense and gain the benefits of the Foresight spell for 1 hour. This effect ends early if you fall unconscious or end it as a bonus action.\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.commanding_tone",
+      "kind": "hakiFeature",
+      "name": "Commanding Tone",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 230
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "supremeKing",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "Your words carry an heavy weight, compelling others to follow your lead.\nAs an action, you can speak a command to a creature you can see within 10 feet of you. The command must be a sentence of no more than ten words. The target must succeed on a Wisdom saving throw or follow the command on its next turn to the best of its ability. Once you use this feature, you can’t use it again until you finish a long rest.\nUpgrades to Lord’s Demand when you reach character level 5",
+      "prerequisite": "Qualities of a King, Character level 1-4",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.compelling_tone",
+      "kind": "hakiFeature",
+      "name": "Compelling Tone",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 230
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "supremeKing",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You naturally inspire others and sway their actions, as though born with a quiet authority that draws people to you.\nYou gain proficiency in the Deception and Persuasion skills.\nUpgrades to Voice of Influence when you reach character level 5",
+      "prerequisite": "Qualities of a King, Character level 1-4"
+    },
+    {
+      "id": "hakiFeature.intimidating_look",
+      "kind": "hakiFeature",
+      "name": "Intimidating Look",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 230
+      },
+      "typeLine": "Amateur Haki Advancement, Common — No Tier",
+      "color": "supremeKing",
+      "rarity": "Common",
+      "amateur": true,
+      "repeatable": false,
+      "text": "You emanate a presence that makes others feel an inexplicable sense of helplessness.\nYou gain proficiency in the Intimidation skill.\nUpgrades to Roar of the Monarch when you reach character level 5",
+      "prerequisite": "Qualities of a King, Character level 1-4"
+    },
+    {
+      "id": "hakiFeature.kings_companion",
+      "kind": "hakiFeature",
+      "name": "King’s Companion",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 230
+      },
+      "typeLine": "King’s Haki Advancement, Uncommon — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You are able to influence the souls of tiny magical spirits around you, gaining their assistance and occasional servitude.\nYou can cast the Find Familiar spell as a ritual without using any material components. The familiar must take on one of the stat blocks listed by the spell, but can appear as any tiny creature you desire, perhaps representing your spirit animal.\nAdditionally, when you take the Attack action on your turn, you can forgo one of your own attacks to allow your familiar to make one attack of its own with its reaction.\nWhen you reach Willpower 10, the familiar can be infused with one haki feature you know as an action, storing your power within it. This feature ends when you order the familiar to use it, or when the familiar is dismissed. If the feature requires willpower, it uses your willpower score.",
+      "prerequisite": "Qualities of a King"
+    },
+    {
+      "id": "hakiFeature.kings_resolve",
+      "kind": "hakiFeature",
+      "name": "King’s Resolve",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 230
+      },
+      "typeLine": "King’s Haki Advancement, Uncommon — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your indomitable spirit can overcome even the most dire circumstances.\nAs a reaction when you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. Once you use this ability, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.lords_demand",
+      "kind": "hakiFeature",
+      "name": "Lord’s Demand",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 230
+      },
+      "typeLine": "King’s Haki Advancement, Uncommon — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your haki-infused words compel obedience, manipulating others into doing your bidding.\nAs an action, you can speak a command to a creature you can see within 60 feet of you. The command must be a sentence of no more than ten words. The target must succeed on a Wisdom saving throw or follow the command on its next turn to the best of its ability. Once you use this feature, you can’t use it again until you finish a short or long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.roar_of_the_monarch",
+      "kind": "hakiFeature",
+      "name": "Roar of the Monarch",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 231
+      },
+      "typeLine": "King’s Haki Advancement, Uncommon — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your powerful will resonates through your voice, making it a weapon on its own. You gain proficiency in the Intimidation skill.\nAs an action, you can release a thunderous yell. Each creature within a 15 ft. cone must make a Constitution saving throw or be deafened and frightened of you for 1 minute. Creatures may make the save again at the end of its turns. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.voice_of_influence",
+      "kind": "hakiFeature",
+      "name": "Voice of Influence",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 231
+      },
+      "typeLine": "King’s Haki Advancement, Uncommon — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Uncommon",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Being born with qualities of a king, you find it easy to spread your ideas to others and influence their behavior.\nYou gain proficiency in the Deception and Persuasion skills. You can cast the Charm Person spell, without expending a spell slot or material components. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.command_the_battlefield",
+      "kind": "hakiFeature",
+      "name": "Command the Battlefield",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 231
+      },
+      "typeLine": "King’s Haki Advancement, Rare — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your King’s Haki is so potent that it affects the battlefield, tipping the scales in your favor.\nAs an action, you can issue a command that affects the terrain in a 60 ft. radius centered on you for 1 minute. The effect is determined by the command you choose:\nHold: The ground becomes difficult terrain for your enemies.\nFall: Small fissures appear, causing your enemies to have disadvantage on Dexterity saving throws.\nRise: Small walls of earth provide cover for you and your allies, providing half cover against all ranged attacks.\nFor the duration of this ability, you may spend an additional action during your turn to change the current command to a different one. Once the duration ends, you can’t use this feature again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.kings_radiance",
+      "kind": "hakiFeature",
+      "name": "King’s Radiance",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 231
+      },
+      "typeLine": "King’s Haki Advancement, Rare — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Your spirit’s energy radiates from you, making it difficult for enemies to approach.\nAs an action, you can cause a burst of Haki energy to radiate from you for an extended duration. For 1 minute or until you fall unconscious, you emit a 15 ft. radius of bright light, and when the creature enters the area for the first time in a turn or starts its turn there, it must make a Wisdom saving throw. On a failed save, a creature takes psychic damage equal to a number of d10s equal to a quarter of your Willpower (rounded up) and falls prone. On a successful save, it takes half as much damage and doesn’t fall prone. You must also concentrate on this ability as if it were a spell. Once you use this feature, you can’t use it again until you finish a short or long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "short"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.kings_wrath",
+      "kind": "hakiFeature",
+      "name": "King’s Wrath",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 231
+      },
+      "typeLine": "King’s Haki Advancement, Rare — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "The sheer force of your kingly spirit is enough to harm those who oppose you.\nAs an action, you can unleash a burst of spiritual energy. Each creature of your choice within a 20 ft. radius centered on you must make a Constitution saving throw. On a failed save, a creature takes psychic damage equal to a number of d8s equal to a quarter of your Willpower (rounded up) and is stunned until the end of your next turn. On a successful save, a creature takes half as much damage and isn’t stunned. Once you use this feature, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "action": "action",
+      "auto": [
+        "uses",
+        "action"
+      ]
+    },
+    {
+      "id": "hakiFeature.leader_of_the_animal_kingdom",
+      "kind": "hakiFeature",
+      "name": "Leader of the Animal Kingdom",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 231
+      },
+      "typeLine": "King’s Haki Advancement, Rare — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "Through becoming familiar with various beasts and monsters, you have learned to pacify or influence them with your overwhelming charisma.\nYou can cast the Animal Friendship spell at will, without expending a spell slot or material components.\nYou can also cast the Charm Monster spell, without expending a spell slot once per short or long rest.\nWhen you reach Willpower 16, you can cast the Dominate Monster spell, without expending a spell slot. You can’t use this feature again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.supreme_terror",
+      "kind": "hakiFeature",
+      "name": "Supreme Terror",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 232
+      },
+      "typeLine": "King’s Haki Advancement, Rare — Tier 1",
+      "color": "supremeKing",
+      "rarity": "Rare",
+      "tier": 1,
+      "repeatable": false,
+      "text": "You exert your powerful spirit, inciting an overwhelming sense of fear in those who dare oppose you.\nAs an action, you can force all creatures of your choice within a 60 ft. radius of you to make a Wisdom saving throw. On a failed save, the creature is stunned until the start of your next turn.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.dread_sovereigns_roar",
+      "kind": "hakiFeature",
+      "name": "Dread Sovereign’s Roar",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 232
+      },
+      "typeLine": "King’s Haki Advancement, Very Rare — Tier 2",
+      "color": "supremeKing",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "With a shout imbued with the force of your indomitable spirit, you evoke primal fear in those who dare to oppose you.\nAs an action, you can unleash a powerful roar that resonates with your King’s Haki. All creatures of your choice within 120 ft. of you must succeed on a Wisdom saving throw. On a failed save, the creature takes an amount of force damage equal to a number of d12s equal to half of your Willpower (rounded up) and is stunned until the start of your next turn.\nOnce you use this ability, you can’t use it again until you finish a long rest.\nThis feature replaces Supreme Terror.",
+      "prerequisite": "Qualities of a King, Supreme Terror",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "action": "action",
+      "auto": [
+        "uses",
+        "action"
+      ]
+    },
+    {
+      "id": "hakiFeature.observation_killer",
+      "kind": "hakiFeature",
+      "name": "Observation Killer",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 232
+      },
+      "typeLine": "King’s Haki Advancement, Very Rare — Tier 2",
+      "color": "supremeKing",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "Your supreme will creates an aura that confuses and disorients the senses of others, effectively countering their Observation Haki.\nAs a bonus action, you can create a 30 ft. radius aura centered on you and that follows you. This aura lasts for 1 minute or until you’re incapacitated. While within this aura, no observation haki features may be used by any creature.\nOnce you use this ability, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.sovereigns_resolve",
+      "kind": "hakiFeature",
+      "name": "Sovereign’s Resolve",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 232
+      },
+      "typeLine": "King’s Haki Advancement, Very Rare — Tier 2",
+      "color": "supremeKing",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "Your willpower is so profound that it acts as a bulwark against mental intrusions and manipulation.\nYou have advantage on saving throws against spells and effects that would charm, frighten, or possess you. Moreover, if you succeed on a saving throw against such a spell or effect, the creature who cast the spell or caused the effect must make a Wisdom saving throw or be frightened of you for 1 minute.",
+      "prerequisite": "Qualities of a King"
+    },
+    {
+      "id": "hakiFeature.willpower_ravage",
+      "kind": "hakiFeature",
+      "name": "Willpower Ravage",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 232
+      },
+      "typeLine": "King’s Haki Advancement, Very Rare — Tier 2",
+      "color": "supremeKing",
+      "rarity": "Very Rare",
+      "tier": 2,
+      "repeatable": false,
+      "text": "By focusing all of your willpower and spirit onto a single creature within range, you are able to cripple its mind and soul, including the soul of the devil inside it if it is a Devil Fruit user.\nYou can cast the Phantasmal Killer spell, without expending a spell slot. While a creature is influenced by this spell on a failed save using this feature, it is unable to use Devil Fruit abilities, spells, or forms until the spell ends. Any Devil Fruit spells that use concentration and any Devil Fruit forms or abilities the creature has active are also ended early. You can’t use this feature again until you finish a long rest.",
+      "prerequisite": "Qualities of a King",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.conquerors_bulwark",
+      "kind": "hakiFeature",
+      "name": "Conqueror’s Bulwark",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 232
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You can fortify not just yourself, but also your allies against the crushing force of other conquerors. Your indomitable spirit stands as a testament of your unyielding resolve.\nAfter taking this feat, you are immune to the frightened condition and any effects that can incapacitate or stun you by means of Conqueror’s Haki.\nYou have advantage on saving throws against spells and effects that would charm or possess you and if you succeed on a saving throw against such a spell or effect, the creature who cast the spell or caused the effect must make a Wisdom saving throw or be frightened of you for 1 minute.\nMoreover, as an action, you can extend this powerful protection to your comrades for 1 hour. All allied creatures within a 60 ft. radius of you gain immunity to the frightened condition and the first time they would be incapacitated or stunned by Conqueror’s Haki, they are not.\nOnce you use this ability, you can’t use it again until you finish a long rest.\nThis feature replaces Sovereign’s Resolve.",
+      "prerequisite": "Qualities of a King, Sovereign’s Resolve",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.conquerors_coating",
+      "kind": "hakiFeature",
+      "name": "Conqueror’s Coating",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 233
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "Through rigorous training and self-discovery, you have learned to manifest your Armament and King’s Haki in their most potent form, transforming your weapon into an extension of your indomitable will.\nAs a bonus action, you channel haki into your body or a weapon of your choice. If you choose your body, you choose either your unarmed strikes or a natural weapon. For 1 minute, gain the following effects on your weapon:\nYour attacks with the chosen weapon are considered magical with a bonus to Attack rolls and Damage Rolls equal to a quarter of your Willpower (rounded up).\nYour weapon’s damage type becomes Force.\nYour reach with that weapon increases by 10 feet. When you attack and hit a creature with this weapon, you can choose to push the creature up to 10 feet away from you.\nThe creature must succeed on a Constitution saving throw or is stunned until the start of your next turn.\nIf the attack already has a bonus to its attack and damage rolls, this feature replaces the bonus unless it is greater, in which case it does not gain this feature’s benefit.\nThis effect ends early if you fall unconscious, use it again, end it as a bonus action, or start your turn not holding or touching the weapon you coated. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.\nThis feature replaces Weapon Hardening.",
+      "prerequisite": "Qualities of a King, Weapon Hardening",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.conquerors_infusion",
+      "kind": "hakiFeature",
+      "name": "Conqueror’s Infusion",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 233
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You gain the ability to transfer your conqueror’s haki into mundane items, letting another user use your spirit.\nAfter ten minutes of concentration, You can cast a Color of the Supreme King ability into the object by touching the object as the ability is cast. The object must not be any larger than 20 feet. by 20 feet. The ability has no effect, other than to be stored in the item. If the item already has haki infused into it, it can’t hold another ability. You can infuse an amount of items equal to your proficiency bonus, but you must take a long rest between each cast.\nWhile holding this item, a creature can cast any ability stored within it with an action. The ability uses the Haki save DC and damage of the original infuser, but is otherwise treated as if that creature cast the ability. The ability cast from the object is no longer stored in it.",
+      "prerequisite": "Qualities of a King"
+    },
+    {
+      "id": "hakiFeature.conquerors_maelstrom",
+      "kind": "hakiFeature",
+      "name": "Conqueror’s Maelstrom",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 233
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "Your will is a force of nature, an untamed storm that can bring even the skies to submission. Your potent Haki can resonate with the atmosphere itself, causing the elements to dance to the rhythm of your spirit.\nAs an action, you unleash your full King’s Haki, producing a cataclysmic atmospheric manifestation visible for miles. The moment Conqueror’s Maelstrom is unleashed, every hostile creature within 300 ft. of you must make a Wisdom saving throw. On a failed save, a creature is stunned until the end of your next turn. After the stun ends, the creature is frightened of you for 1 minute. A frightened creature may repeat the saving throw at the end of each of its turns, ending the effect on a success. On a success, the creature is not stunned or frightened.\nAdditionally, choose one of the following effects when you activate this feature, and all creatures within 10 miles will become aware of the your location:\nSky Splitter. You immediately dispel all nonmagical weather in a 1 mile radius centered on you. Magical weather of a spell level lower than your proficiency bonus is also suppressed for the duration. This effect persists for 1 hour, until you fall unconscious, or until you dismiss it (no action required), after which normal weather resumes.\nLightning Dominion. You conjure a Haki-infused lightning storm. The storm cloud appears in the sky 100 feet directly above you with a radius of 300 feet. When the storm first manifests and on each of your turns while it persists, you may use your action to call down Conqueror’s Lightning. When you do so, each hostile creature under the cloud takes an amount of force damage equal to a number of d10s equal to a quarter of your Willpower (rounded up) as lightning strikes down around them. The storm lasts for 1 minute, until you fall unconscious, or until you dismiss it (no action required).\nOnce you use this ability, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King, Unyielding Conqueror’s Wrath",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.conquerors_tether",
+      "kind": "hakiFeature",
+      "name": "Conqueror’s Tether",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 234
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "As an action, you unleash a massive tether of Supreme King Haki in a chosen direction. One creature of your choice within 1 mile of you that you know the location of must succeed on a Wisdom saving throw against your Haki save DC or take an amount of force damage equal to a number of d10s equal to your Willpower and be stunned until the end of your next turn. On a success, the creature takes no damage and is not stunned, it is instead frightened of you for 1 minute. This creature cannot remove the frightened condition from this feature.\nOnce you use this ability you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King, Unyielding Conqueror’s Wrath",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "action": "action",
+      "auto": [
+        "uses",
+        "action"
+      ]
+    },
+    {
+      "id": "hakiFeature.divine_departure",
+      "kind": "hakiFeature",
+      "name": "Divine Departure",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 234
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You have mastered the art of channeling your Haki into an explosive leap, propelling yourself towards your enemy and delivering a devastating blow.\nAs an action, you can choose a point you can see within 60 ft. of you. You leap to that point, and you can make a single melee attack against a creature within 5 feet of your landing spot. This attack is made with advantage, and if the attack hits, it deals an additional amount of force damage equal to a number of d10s equal to your Willpower. The force from your landing also creates a shockwave that spreads out from the point of impact. All creatures within a 15 ft. radius of your landing point must make a Dexterity saving throw. On a failed save, they take force damage equal to a number of d10s equal to half of your Willpower (rounded up) and are knocked prone. On a successful save, they take half as much damage and are not knocked prone.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+      "prerequisite": "Qualities of a King, Conqueror’s Coating",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "hakiFeature.lasting_will",
+      "kind": "hakiFeature",
+      "name": "Lasting Will",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 234
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You are able to nullify any active devil fruit effects by breaking them with your willpower.\nYou can cast the Dispel Magic spell at will, without expending a spell slot. This only works on active spells or effects caused or created by Devil Fruit powers.\nAdditionally while your Conqueror’s Coating is active, if a target is has a trait such as Regeneration or Immortality, it loses those benefits until the start of your next turn and only regains half the hit points granted by magical or nonmagical sources.",
+      "prerequisite": "Qualities of a King, Conqueror’s Coating"
+    },
+    {
+      "id": "hakiFeature.lords_mirror",
+      "kind": "hakiFeature",
+      "name": "Lord’s Mirror",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 234
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "Your strong spirit can be used to deflect harmful effects back to their origin. When you succeed on a saving throw against a spell or other harmful effect that targets only you (not an area effect), you can use your reaction to force the originator to make a saving throw using the same DC. On a failure, the originator is affected by the spell or effect as if they were the original target. After using this feature, you must finish a long rest before using it again.",
+      "prerequisite": "Qualities of a King"
+    },
+    {
+      "id": "hakiFeature.the_voice_of_all_things",
+      "kind": "hakiFeature",
+      "name": "The Voice of All Things",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 234
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "You have learned to use your rare natural talent to tune into the wavelengths of all forms of communication in the world.\nYou can read and understand all languages, written or verbal, including any writing on poneglyphs. You can also cast the Commune with Nature and Speak With Animals spells at will, without expending a spell slots or material components. When using this spell, you can communicate with all types of creatures in the same way you would be able to with a beast.\nAdditionally, you can speak telepathically with any creature within 1 mile of you whether they are in the same dimension as you or not.",
+      "prerequisite": "Qualities of a King"
+    },
+    {
+      "id": "hakiFeature.unyielding_conquerors_wrath",
+      "kind": "hakiFeature",
+      "name": "Unyielding Conqueror’s Wrath",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 234
+      },
+      "typeLine": "King’s Haki Advancement, Legendary — Tier 3",
+      "color": "supremeKing",
+      "rarity": "Legendary",
+      "tier": 3,
+      "repeatable": false,
+      "text": "The sheer force of your indomitable spirit is a deadly tempest that can devastate those who oppose you.\nAs an action, you can release an all-consuming wave of pure willpower that resonates from your very core. All creatures of your choice within 300 ft. of you must succeed on a Wisdom saving throw. On a failed save, the creature takes an amount of force damage equal to a number of d12s equal to your Willpower and is knocked prone and stunned until the start of your next turn. On a successful save, a creature takes half as much damage and isn’t knocked prone or stunned. Beasts with an Intelligence score of 8 or lower automatically fail their saving throw.\nOnce you use this ability, you can’t use it again until you finish a long rest.\nThis feature replaces Dread Sovereign’s Roar.",
+      "prerequisite": "Qualities of a King, Dread Sovereign’s Roar",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "action": "action",
+      "auto": [
+        "uses",
+        "action"
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

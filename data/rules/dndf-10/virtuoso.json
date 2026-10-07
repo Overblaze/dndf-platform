@@ -412,45 +412,7 @@
             {
               "name": "Spirit (Spellcasting) Ability",
               "text": "Charisma is your Spirit (Spellcasting) ability for your virtuoso Spirit Powers. Your power comes from the heart and soul you pour into the Performance of your music or oration. You use your Charisma whenever a spirit power (spell) refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for virtuoso spirit power you cast and when making an Attack roll with one.\nSpirit save DC = 8 + your Proficiency Bonus + your Charisma modifier\nSpirit Attack modifier = your Proficiency Bonus + your Charisma modifier",
-              "page": 194,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chords"
-                    ],
-                    [
-                      "Name",
-                      "Chord Manifestation"
-                    ],
-                    [
-                      "Melody",
-                      "You grant a beneficial effect to an ally, such as a spell"
-                    ],
-                    [
-                      "Chord",
-                      "that buffs, protects, or inspires them."
-                    ],
-                    [
-                      "Rhythm",
-                      "You deal damage to a creature with a weapon attack or"
-                    ],
-                    [
-                      "Chord",
-                      "damaging spell."
-                    ],
-                    [
-                      "Harmony",
-                      "You heal a creature or grant a creature temporary hit"
-                    ],
-                    [
-                      "Chord",
-                      "points."
-                    ]
-                  ],
-                  "page": 194
-                }
-              ]
+              "page": 194
             },
             {
               "name": "Ritual Casting",
@@ -478,24 +440,41 @@
                 {
                   "rows": [
                     [
+                      "Chords"
+                    ],
+                    [
+                      "Name",
+                      "Chord Manifestation",
                       "Chord Performance Effect"
                     ],
                     [
+                      "Melody",
+                      "You grant a beneficial effect to an ally, such as a spell",
                       "The creature adds 1d4 to their next attack roll, saving throw, or"
                     ],
                     [
+                      "Chord",
+                      "that buffs, protects, or inspires them.",
                       "ability check made within 1 minute."
                     ],
                     [
+                      "Rhythm",
+                      "You deal damage to a creature with a weapon attack or",
                       "The creature adds 1d4 to the damage of their next successful"
                     ],
                     [
+                      "Chord",
+                      "damaging spell.",
                       "weapon or spell attack made within 1 minute."
                     ],
                     [
+                      "Harmony",
+                      "You heal a creature or grant a creature temporary hit",
                       "The creature gains temporary hit points equal to 1d4 + your"
                     ],
                     [
+                      "Chord",
+                      "points.",
                       "Charisma modifier for 1 hour."
                     ]
                   ],

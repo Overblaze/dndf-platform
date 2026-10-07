@@ -1041,7 +1041,7 @@
           "sections": [
             {
               "name": "Medicine Table",
-              "text": "฿\n฿\n฿\n฿\nAll medicines can be found in Chapter 9: Medical Log",
+              "text": "All medicines can be found in Chapter 9: Medical Log",
               "page": 99,
               "tables": [
                 {
@@ -1050,46 +1050,26 @@
                       "Chemist Level",
                       "Medicines",
                       "Crafting Cost"
-                    ]
-                  ],
-                  "page": 99
-                },
-                {
-                  "rows": [
+                    ],
                     [
                       "2nd",
                       "Common Medicines",
-                      "100,000"
-                    ]
-                  ],
-                  "page": 99
-                },
-                {
-                  "rows": [
+                      "฿100,000"
+                    ],
                     [
                       "6th",
                       "Uncommon Medicines",
-                      "250,000"
-                    ]
-                  ],
-                  "page": 99
-                },
-                {
-                  "rows": [
+                      "฿250,000"
+                    ],
                     [
                       "10th",
                       "Rare Medicines",
-                      "500,000"
-                    ]
-                  ],
-                  "page": 99
-                },
-                {
-                  "rows": [
+                      "฿500,000"
+                    ],
                     [
                       "14th",
                       "Very Rare Medicines",
-                      "1,000,000"
+                      "฿1,000,000"
                     ]
                   ],
                   "page": 99
