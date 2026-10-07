@@ -1,0 +1,116 @@
+// Where characters are kept: the signed-in player's rows in Supabase, or this
+// browser's storage when nobody is signed in (a try-it-out mode).
+import { normalizeDoc, type CharacterDoc } from '@dndf/engine';
+import { supabase } from './supabase';
+
+export interface StoredCharacter {
+  id: string;
+  doc: CharacterDoc;
+  updatedAt: string;
+}
+
+export interface CharacterStore {
+  /** true when characters only live in this browser. */
+  local: boolean;
+  list(): Promise<StoredCharacter[]>;
+  get(id: string): Promise<StoredCharacter | null>;
+  create(doc: CharacterDoc): Promise<StoredCharacter>;
+  save(id: string, doc: CharacterDoc): Promise<void>;
+  remove(id: string): Promise<void>;
+  /** Adds a line to the character's history. Never fails the action it describes. */
+  log(id: string, summary: string): Promise<void>;
+}
+
+const LOCAL_KEY = 'dndf.characters.v1';
+
+function readLocal(): Record<string, StoredCharacter> {
+  try {
+    return JSON.parse(localStorage.getItem(LOCAL_KEY) ?? '{}') as Record<string, StoredCharacter>;
+  } catch {
+    return {};
+  }
+}
+
+function writeLocal(all: Record<string, StoredCharacter>) {
+  try {
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(all));
+  } catch {
+    // Private windows may refuse storage; the character then lasts until the tab closes.
+  }
+}
+
+const memory: Record<string, StoredCharacter> = readLocal();
+
+const localStore: CharacterStore = {
+  local: true,
+  async list() {
+    return Object.values(memory).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  },
+  async get(id) {
+    return memory[id] ?? null;
+  },
+  async create(doc) {
+    const stored = { id: `local-${crypto.randomUUID()}`, doc, updatedAt: new Date().toISOString() };
+    memory[stored.id] = stored;
+    writeLocal(memory);
+    return stored;
+  },
+  async save(id, doc) {
+    memory[id] = { id, doc, updatedAt: new Date().toISOString() };
+    writeLocal(memory);
+  },
+  async remove(id) {
+    delete memory[id];
+    writeLocal(memory);
+  },
+  async log() {},
+};
+
+interface Row {
+  id: string;
+  doc: unknown;
+  updated_at: string;
+}
+
+function fromRow(row: Row): StoredCharacter | null {
+  const doc = normalizeDoc(row.doc);
+  return doc ? { id: row.id, doc, updatedAt: row.updated_at } : null;
+}
+
+function remoteStore(userId: string): CharacterStore {
+  const db = supabase!;
+  const fail = (what: string, message: string) => new Error(`Could not ${what}: ${message}`);
+  return {
+    local: false,
+    async list() {
+      const { data, error } = await db.from('characters').select('id, doc, updated_at').eq('owner_id', userId).order('updated_at', { ascending: false });
+      if (error) throw fail('load your characters', error.message);
+      return (data as Row[]).flatMap((row) => fromRow(row) ?? []);
+    },
+    async get(id) {
+      const { data, error } = await db.from('characters').select('id, doc, updated_at').eq('id', id).maybeSingle();
+      if (error) throw fail('load this character', error.message);
+      return data ? fromRow(data as Row) : null;
+    },
+    async create(doc) {
+      const { data, error } = await db.from('characters').insert({ rules_version: doc.rulesVersion, doc }).select('id, doc, updated_at').single();
+      if (error) throw fail('create the character', error.message);
+      return fromRow(data as Row)!;
+    },
+    async save(id, doc) {
+      const { error } = await db.from('characters').update({ rules_version: doc.rulesVersion, doc }).eq('id', id);
+      if (error) throw fail('save', error.message);
+    },
+    async remove(id) {
+      const { error } = await db.from('characters').delete().eq('id', id);
+      if (error) throw fail('delete the character', error.message);
+    },
+    async log(id, summary) {
+      await db.from('character_history').insert({ character_id: id, change: { summary } });
+    },
+  };
+}
+
+export function storeFor(userId: string | null): CharacterStore {
+  return userId && supabase ? remoteStore(userId) : localStore;
+}

@@ -1,15 +1,15 @@
-# Phase 1 — Foundation (task list for Claude Code)
+# Phase 2 — Engine + live sheet (task list for Claude Code)
 
-Read CLAUDE.md, docs/SPEC.md, docs/FORMULAS.md and docs/THEME.md first. Work on a branch named `phase-1-foundation` and finish with one pull request. Ask Matt for anything you need instead of guessing (he will paste values into the terminal, never into files you commit).
+Read CLAUDE.md, docs/SPEC.md, docs/FORMULAS.md and docs/THEME.md first. Work on a branch named `phase-2-engine-sheet` and finish with one pull request. Phase 1 (foundation) is merged and live.
 
-1. **Scaffold the monorepo** (npm workspaces): `app/` (Vite + React + TypeScript, base `/dndf-platform/`), `packages/engine/` (TypeScript + Vitest), `data/rules/`, `tools/extract/`, `supabase/migrations/`. Add `.gitignore` covering `node_modules`, `dist`, `.env*` (except `.env.example`), `sources/`, `secret/`, `*.pdf`.
-2. **Theme**: CSS variables and fonts from docs/THEME.md; an app shell with top bar (compass + "DnDF" logo, nav: Sheet, Build, Library, Ship, Crew, DM), parchment grid background, mobile-first.
-3. **Supabase client + Discord sign-in**: `.env.example` with `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`; "Sign in with Discord" via Supabase Auth; show the signed-in Discord name.
-4. **Database migrations** (`supabase/migrations/0001_init.sql` …): profiles (id = auth user, discord_username, display_name), campaigns, campaign_members (role 'player' | 'dm'), characters (owner, campaign, rules_version, doc jsonb, updated_at), character_history (character, actor, change jsonb, at), app_settings (key/value). Row-level security on every table: players read/write their own characters; DMs of a campaign read/write all in it; members read campaign basics. A trigger that creates a profile on sign-up and makes the user DM only if their Discord username equals the `dm_bootstrap_discord_username` row in app_settings. Write the migration and also a short `supabase/README.md` saying to run files in order in the SQL editor and how to set that app_settings row.
-5. **Schema + validator**: JSON Schema for rules entries (see SPEC "Data schema"); a `npm run validate` script that checks everything in `data/rules/`. `data/rules/dndf-10/bruiser.json` must pass.
-6. **Engine start**: in `packages/engine`, implement ability modifier, proficiency bonus, Willpower, Haki/Devil Fruit DCs, and the Bruiser rows of docs/FORMULAS.md for Kaito, with Vitest tests that reproduce every "Kaito" value.
-7. **CI and deploy**: `.github/workflows/ci.yml` (install, typecheck, test, validate, build) on pull requests; `.github/workflows/deploy.yml` building `app/` with repo Actions variables `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` and deploying to GitHub Pages on push to `main`.
-8. **README**: one paragraph on what this is, how to run locally (`npm install`, `npm run dev`), and a link to docs/.
-9. Open the pull request with `gh pr create`; its description lists what to click to test, and reminds Matt to run the SQL migrations in Supabase after merging and to set the bootstrap DM username.
+1. **Every row of docs/FORMULAS.md has an engine test**: Core 5e, DnDF, Bruiser, Rests, Ships and the Devilforged (v8.8) example. Kaito's values come from deriving his saved character, not from calling formulas one by one.
+2. **Character document**: one JSON `doc` per character (saved in `characters.doc`), pinned to a rules version, holding choices, equipment, overrides and play state. `deriveSheet(doc, rules)` in `packages/engine` turns it into every number on the sheet with a line-by-line breakdown.
+3. **Data-driven features**: class tables, resources, toggles, trackers, dice and "when used" effects are read from `data/rules/`; structured fields may be added to `bruiser.json`, book text may not change.
+4. **Live sheet** (phone first), built on the Bruiser: HP and temp HP with damage/heal, AC, initiative, speed, proficiency, Willpower and Haki DC, abilities/saves/skills with one-tap rolls, attacks, actions grouped by Action / Bonus action / Reaction / Special Reaction, resources as pips, toggles that change the numbers, trackers, conditions, exhaustion, death saves (Dream Point rescue, "I Won't Abandon My Dreams"), word-for-word text with page on tap.
+5. **Overrides**: tap any number for its breakdown; set your own value; "use calculated" brings the book value back. Edited values are outlined.
+6. **Rests**: short (hit dice rolled for you, Fury needs the training confirmed), long (all hit dice back by table ruling) and dawn, each with a preview before applying.
+7. **Saving**: signed-in players' characters live in Supabase (`characters`, with a `character_history` line per action); signed-out visitors can try the sheet with characters kept in the browser.
+8. **Creating a character**: a simple Bruiser form and a one-tap sample (Kaito). The book's 12-step builder is phase 4.
+9. Open the pull request with `gh pr create`; its description lists what to click to test.
 
-Out of scope for phase 1: the character sheet UI, extraction of other classes, Devil Fruits, the Discord bot.
+Out of scope for phase 2: other classes and races (phase 3), the builder and level-up wizard (4), the Discord bot (5), Haki features, Spirit Surges and Devil Fruits (6), inventory and spells (7), ships, bounty and the party view (8).

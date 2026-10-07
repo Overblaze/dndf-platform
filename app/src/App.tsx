@@ -14,6 +14,7 @@ export function App() {
           <Route element={<AppShell />}>
             <Route index element={<Navigate to="/sheet" replace />} />
             <Route path="sheet" element={<SheetPage />} />
+            <Route path="sheet/:id" element={<SheetPage />} />
             <Route
               path="build"
               element={
