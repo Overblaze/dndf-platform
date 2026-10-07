@@ -167,6 +167,8 @@ def main() -> int:
     total_old = sum(len(v) for v in old.values())
     print(f"v10: {total_new} entries extracted. v8.8: {total_old} entries extracted.")
     print(f"Identical in both, stored once: {shared}. In both but different: {changed}. Only in v8.8: {only_old}. Only in v10: {total_new - len(same_ids) - changed}.")
+    from structure import unused_subclass_structure
+    classes.problems.extend(f"subclass structure never applied: {u}" for u in unused_subclass_structure())
     for label, items in (("level(s) inferred from position", classes.notes), ("thing(s) to check", classes.problems + chapters.problems)):
         if items:
             print(f"\n{len(items)} {label}:")

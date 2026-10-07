@@ -905,7 +905,13 @@
           "level": 10,
           "name": "Botanist’s Antidote",
           "text": "When you reach 10th level, you can’t be charmed or frightened and you are immune to poison and disease.",
-          "page": 98
+          "page": 98,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Can’t be charmed or frightened; immune to poison and disease"
+            }
+          ]
         },
         {
           "level": 14,
@@ -958,15 +964,38 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "1d6 cold damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
           "level": 10,
           "name": "Full Yeti Transformation",
           "text": "At 10th level, you can fully transform into a Yeti, taking on its monstrous form to unleash your full icy potential. As an action, you can transform into a Yeti Form for up to 1 hour or until you end the transformation as a bonus action. While in this form, you gain the following benefits as well as all benefits from the partial yeti transformation feature:\nYeti Strength: You gain advantage on Strength checks and saving throws, and your unarmed strikes deal 1d8 + your Strength modifier cold damage.\nChilling Presence: As an action, you can unleash a chilling roar that forces all creatures within 15 feet of you to make a Wisdom saving throw against your Chemist spell save DC or be frightened and slowed by 10 ft. until the start of your next turn.\nIcy Breath: As an action, you can exhale a cone of icy wind in a 15-foot cone. Creatures in the area must make a Constitution saving throw, taking 4d6 cold damage on a failed save and having their speed reduced to 0 until the end of their next turn. On a successful save, they take half damage and are not slowed.\nOnce you use Full Yeti Transformation, you cannot do so again until you finish a long rest.",
-          "page": 98
+          "page": 98,
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            },
+            {
+              "label": "4d6 cold damage",
+              "dice": "4d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 14,
@@ -977,8 +1006,21 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "1d4 damage",
+              "dice": "1d4",
+              "kind": "damage"
+            },
+            {
+              "label": "2d6 cold damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         }
       ],
@@ -1009,7 +1051,17 @@
           "level": 2,
           "name": "Combat Mutation",
           "text": "When you choose this study at 2nd level, you gain the ability to use Monster Mutation on your turn as a bonus action, rather than as an action.\nAdditionally, while you are transformed by your Monster Mutation, you can use a bonus action to expend one invention power (spell) slot to regain 1d8 hit points per level of the invention power slot expended.",
-          "page": 99
+          "page": 99,
+          "rolls": [
+            {
+              "label": "1d8 hit points",
+              "dice": "1d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 2,
@@ -1163,7 +1215,17 @@
           "level": 2,
           "name": "Immolation Surge",
           "text": "Starting at 2nd level, you can heat your body to extreme temperatures, turning yourself into a walking inferno. As a bonus action, you activate Immolation Surge, which lasts for 1 minute or until you end it as a bonus action. While Immolation Surge is active, you gain the following effects:\nBlazing Aura: Creatures that start their turn within 5 feet of you take fire damage equal to your Chemist level.\nEnhanced Damage: Your melee attacks, fire-based spells, and pryochemist features deal an additional 1d6 fire damage.\nSelf-Immolation: At the start of each of your turns, you take fire damage equal to half your Chemist level (rounded up).\nYou may end immolation surge with a bonus action.",
-          "page": 100
+          "page": 100,
+          "rolls": [
+            {
+              "label": "1d6 fire damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 2,
@@ -1175,13 +1237,48 @@
           "level": 6,
           "name": "Firebombs",
           "text": "At 6nd level, you can craft volatile firebombs that create fiery explosions. As an action, you can throw a firebomb at a point you can see within 30 feet exploding in a 10- foot radius. Creatures in the radius must make a Dexterity saving throw against your Chemist spell save DC, taking 3d6 fire damage on a failed save and half damage on a success.\nThe damage increases by 1d6 when you reach 10th level (4d6), and 14th level (5d6).\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses after a short or long rest.",
-          "page": 100
+          "page": 100,
+          "rolls": [
+            {
+              "label": "3d6 fire damage",
+              "dice": "3d6",
+              "kind": "damage"
+            },
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            },
+            {
+              "label": "4d6",
+              "dice": "4d6",
+              "kind": "other"
+            },
+            {
+              "label": "5d6",
+              "dice": "5d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 10,
           "name": "Ignition Burst",
           "text": "At 10th level, you can unleash a burst of fiery energy from your body when struck. When a creature hits you with a melee attack, you can use your reaction to release an Ignition Burst, dealing 3d6 fire damage to the attacker and all creatures within 5 feet of you. Creatures in the area must make a Dexterity saving throw or take full damage; on a successful save, they take half damage.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses after a long rest.",
-          "page": 100
+          "page": 100,
+          "rolls": [
+            {
+              "label": "3d6 fire damage",
+              "dice": "3d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 14,
@@ -1192,8 +1289,16 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "8d6 fire damage",
+              "dice": "8d6",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         }
       ],
@@ -1257,7 +1362,22 @@
           "name": "Aquatic Hunter",
           "group": "Morph Splices",
           "text": "Your abomination form adapts to survive in aquatic environments. The abomination form can breathe both air and water, gains a swimming speed equal to it’s walking speed, and gains the bite attack.\nBite. Melee Weapon Attack: reach 5ft., one target. Hit: (1d10 + your Strength modifier) piercing damage. The abomination attaches to the target. While attached, the abomination can’t attack, and at the start of each of the abomination’s turns, the target takes 6 (1d12) necrotic damage. The attached abomination moves with the target whenever the target moves, requiring none of the abomination’s movement. The abomination can detach itself by spending 5 feet of its movement on its turn. A creature, including the target, can use its action to detach the abomination.",
-          "page": 101
+          "page": 101,
+          "rolls": [
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            },
+            {
+              "label": "1d12",
+              "dice": "1d12",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "bite_sized",
@@ -1285,7 +1405,17 @@
           "name": "Enlarged Spines",
           "group": "Morph Splices",
           "text": "The abomination grows spines across it’s body. When a hostile creature attacks you with a melee attack and it hits, the creature takes 1d6 piercing damage. Additionally, you learn the spine launcher attack.\nSpike Launcher. Ranged Weapon Attack: reach 25/50ft., one target. Hit: (1d6 + your Dexterity modifier) piercing damage.",
-          "page": 101
+          "page": 101,
+          "rolls": [
+            {
+              "label": "1d6 piercing damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "frenzy",
@@ -1303,21 +1433,61 @@
           "name": "Great Maw",
           "group": "Morph Splices",
           "text": "Your abomination grows an appetite big enough to swallow a horse. The abomination can make a big bite attack against a target.\nBig Bite. Melee Weapon Attack: reach 5 ft., one target. Hit: (1d10 + your Strength modifier) piercing damage. If the target has a token size smaller than the abomination and the attack hits, the target is swallowed. The swallowed target is blinded and restrained, it has total cover against attacks and other effects outside the abomination, and it takes 3 (1d6) acid damage at the start of each of the abominations’s turns. The abomination can have only one target swallowed at a time. If the abomination form ends, a swallowed creature is no longer restrained by it and is placed in the nearest unoccupied space within 5 ft. of it, exiting prone.",
-          "page": 101
+          "page": 101,
+          "rolls": [
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            },
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "gore_charger",
           "name": "Gore Charger",
           "group": "Morph Splices",
           "text": "Your abomination form grows a horns from its head. If the abomination moves at least 20 ft. straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a Strength saving throw equal to your Invention save DC or be knocked prone. If the target is prone, the abomination can make one stomp attack against it as a bonus action.\nGore. Melee Weapon Attack: reach 5ft., one target. Hit: (1d8 + your Strength modifier) piercing damage.\nStomp. Melee Weapon Attack: reach 5ft., one target. Hit: (1d10 + your Strength modifier) bludgeoning damage.",
-          "page": 102
+          "page": 102,
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            },
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "hugeify",
           "name": "Hugeify",
           "group": "Morph Splices",
           "text": "Your abomination form grows and their muscles bulge with titanic strength. Your size grows to huge and your melee attacks deal an extra 1d10 damage, dealing double damage to structures and objects. While in this form your can carry five times your normal carry weight.\nAdditionally, you can dislodge large rocks from the ground to throw at your enemies.\nRock. Melee Weapon Attack: throw 30/120 ft., one target. Hit: (1d10 + your Strength modifier) bludgeoning damage.",
-          "page": 102
+          "page": 102,
+          "rolls": [
+            {
+              "label": "1d10 damage",
+              "dice": "1d10",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "isolationist",
@@ -1352,14 +1522,34 @@
           "name": "Sky Ward",
           "group": "Morph Splices",
           "text": "Your abomination form grows large wings. Gain a fly speed equal to your abominations walking speed and gains the talons attack.\nTalons. Melee Weapon Attack: reach 5ft., one target. Hit: (1d6 + your Strength modifier) piercing damage.",
-          "page": 102
+          "page": 102,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "sprint_burst",
           "name": "Sprint Burst",
           "group": "Morph Splices",
           "text": "Your abomination forms digitigrade legs able to sprint long distances. Double the abominations walking speed and when they make a melee attack against a creature, they don’t provoke opportunity attacks from that creature for the rest of the turn, whether the abomination hit or not. You also gain the kick attack.\nKick. Melee Weapon Attack: reach 5ft., one target. Hit: (1d6 + your Strength modifier) bludgeoning damage.",
-          "page": 102
+          "page": 102,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "stalker",
@@ -1373,7 +1563,17 @@
           "name": "Subterranean Beast",
           "group": "Morph Splices",
           "text": "Your abomination form adapts to moving underground. Gain a burrow speed equal to your abominations walking speed.\nAdditionally, if you are currently underground, you can use an bonus action to move up to 30 ft. and erupt from beneath a target. The target must make a Dexterity saving throw equal to your Invention save DC or take 1d10 bludgeoing damage and knocked prone into a new unoccupied space within 5 ft. of the abomination. If the target succeeds on their save the abomination cannot burrow again until the start of their next turn.",
-          "page": 102
+          "page": 102,
+          "rolls": [
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "tracker",
@@ -1387,14 +1587,44 @@
           "name": "Venomous Striker",
           "group": "Morph Splices",
           "text": "Your abomination form grows a long segmented tail and stinger gaining the sting attack.\nSting. Melee Weapon Attack: reach 5ft., one target. Hit: (1d6 + your Strength modifier) piercing damage, and the target must make a Constitution saving throw equal to your Invention save DC, taking 5 (1d10) poison damage and becoming poisoned for 1d4 minutes on a failed save, or half as much damage and not poisoned on a successful save. Once a creature succeeds on a saving throw against being poisoned, they are immune to your stingers poison for 24 hours.",
-          "page": 102
+          "page": 102,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            },
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            },
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "acidic_claws",
           "name": "Acidic Claws",
           "group": "Aerostatic Morph Splices",
           "text": "Your abomination form’s claws begin to drip acid from its pores. Gain the acid claws attack.\nAcid Claws. Melee Weapon Attack: reach 5ft., one target. Hit: (1d6) acid damage. The targets AC is reduced by -1 for 1 minute. This effect can stack up to -5 AC.",
-          "page": 103
+          "page": 103,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "adhesive_spit",
@@ -1415,14 +1645,44 @@
           "name": "Venomous Jaws",
           "group": "Aerostatic Morph Splices",
           "text": "Your abominations jaws grow stronger and it grows venomous fangs. Gain the venomous bite attack and when you successfully land a bite, you grapple the target. At the beginning of each turn, deal (1d10) automatic poison damage to the grappled target. You cannot bite again until you or the target ends the grapple.\nVenomous Bite. Melee Weapon Attack: reach 5ft., one target. Hit: (1d6 + your Strength modifier) piercing damage, and the target must make a Constitution saving throw equal to your Invention save DC, taking 5 (1d10) poison damage and becoming poisoned for 1d4 minutes on a failed save, or half as much damage and not poisoned on a successful save.",
-          "page": 103
+          "page": 103,
+          "rolls": [
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            },
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            },
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "floral_regeneration",
           "name": "Floral Regeneration",
           "group": "Botany Morph Splices",
           "text": "Your abomination is infused with DNA that allows it’s body to regenerate from damage. At the beginning of each turn heal 1d4 hit points.",
-          "page": 103
+          "page": 103,
+          "rolls": [
+            {
+              "label": "1d4 hit points",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "serpent_vines",
@@ -1436,28 +1696,78 @@
           "name": "Sleep Pollen",
           "group": "Botany Morph Splices",
           "text": "Your abomination is infused with the ability to disperse pollen from it’s body. As an action, select a point within 60 ft. and roll a 5d8; the total is how many hit points of creatures this pollen can affect. Creatures within 20 feet of a point you choose within range are affected in ascending order of their current hit points (ignoring unconscious creatures). Starting with the creature that has the lowest current hit points, each creature affected by the pollen falls unconscious until the spell ends, the sleeper takes damage, or someone uses an action to shake or slap the sleeper awake. Subtract each creature’s hit points from the total before moving on to the creature with the next lowest hit points. A creature’s hit points must be equal to or less than the remaining total for that creature to be affected.\nAdditionally, when you gain 3d8 additional dice at 5th, 10th, 15th, and 20th levels.",
-          "page": 103
+          "page": 103,
+          "rolls": [
+            {
+              "label": "5d8",
+              "dice": "5d8",
+              "kind": "other"
+            },
+            {
+              "label": "3d8",
+              "dice": "3d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "sun_petals",
           "name": "Sun Petals",
           "group": "Botany Morph Splices",
           "text": "Your abomination form sprouts life during combat. When you cast a spell that requires spell slots in your abomination form, you leave behind a single sun petal flower on your space. If a creature eats this flower with a bonus action, they gain (1d6 x spell level cast) hit point. This spell is not effected by the dice increases at 5th, 10th, 15th, or 20th levels.",
-          "page": 103
+          "page": 103,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "cryo_breath",
           "name": "Cryo Breath",
           "group": "Cryochemist Morph Splices",
           "text": "Your abomination form gains the ability to exhale frigid winds from it’s mouth. As an action, the abomination exhales fire in a 15-foot cone. Each creature in that area must make a Dexterity saving throw equal to your Invention save DC, taking (1d4) cold damage and slowed by 10 ft. on a failed save.\nAdditionally, as an action, you may breath permafrost on a weapon. The weapon’s damage is increased by an additional 1d6 cold damage for 1 minute.",
-          "page": 104
+          "page": 104,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            },
+            {
+              "label": "1d6 cold damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "frigid_aura",
           "name": "Frigid Aura",
           "group": "Cryochemist Morph Splices",
           "text": "A constant mist of frozen air erupts from your abominations body. The first time a creature enters a space or starts within 5 ft. of the abomination on a turn, that creature takes 2 (1d4) cold damage and their movement speed is reduced by 10 ft.",
-          "page": 104
+          "page": 104,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "frozen_trail",
@@ -1471,35 +1781,90 @@
           "name": "Icicle Tomb",
           "group": "Cryochemist Morph Splices",
           "text": "The abomination grows giant icicles down it’s spine. You learn the icicle javelin attack.\nIcicle Javelin. Ranged Weapon Attack: reach 30/60ft., one target. Hit: (1d4) cold damage. If a target is hit, reduce its movement speed by 5 ft. until the end of your next turn. If you land additional javelins, the targets movement speed is reduced by 5 ft. per attack, resetting the timer. If the targets movement speed is reduced by 20 ft. they are encased in an icy tomb, restraining them until the start of your next turn. When they emerge, all icicle javelin movement effects are removed.",
-          "page": 104
+          "page": 104,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "fire_breath",
           "name": "Fire Breath",
           "group": "Pyrochemist Morph Splices",
           "text": "Your abomination form gains the ability to exhale fire from it’s throat. As an action, the abomination exhales fire in a 15-foot cone. Each creature in that area must make a Dexterity saving throw equal to your Invention save DC, taking (2d6) fire damage on a failed save, or half as much damage on a successful one.",
-          "page": 104
+          "page": 104,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "heat_mane",
           "name": "Heat Mane",
           "group": "Pyrochemist Morph Splices",
           "text": "A mane of fire ignites along the abominations spine. The first time a creature enters a space or starts within 5 ft. of the abomination on a turn, that creature takes 3 (1d6) fire damage.",
-          "page": 104
+          "page": 104,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "molten_claws",
           "name": "Molten Claws",
           "group": "Pyrochemist Morph Splices",
           "text": "Your abomination’s claws crack and break as lava begins to drip out of them. Gain the molten claws attack.\nMolten Claws. Melee Weapon Attack: reach 5 ft., one target. Hit: (1d8) fire damage. If the target is a creature or a flammable object, it ignites. Until a creature takes an action to douse the fire, the creature takes 3 (1d6) fire damage at the end of each of its turns.",
-          "page": 104
+          "page": 104,
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            },
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "molten_eruption",
           "name": "Molten Eruption",
           "group": "Pyrochemist Morph Splices",
           "text": "The abomination slams the ground beneath it, turning stone and soil into a molten explosion. As an action, each creature within 5 ft. of the abomination other than itself must make a Dexterity saving throw equal to your Invention save DC, taking (2d6) fire damage on a failed save, or half as much damage on a successful one.",
-          "page": 104
+          "page": 104,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ],
       "sources": {

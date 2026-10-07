@@ -421,7 +421,10 @@
       "amateur": true,
       "repeatable": false,
       "text": "You find chips in your opponents defense.\nOnce per turn, your weapon attacks and unarmed strikes deal increased damage. Whenever you roll damage dice for a weapon or unarmed strike, increase each die by one size up to a maximum of d8 (e.g., 1d4’s becomes 1d6’s, 1d6’s become 1d8’s, ect).\nUpgrades to Enhanced Strike when you reach character level 5\nThis advancement can be chosen once.",
-      "prerequisite": "Character level 1-4"
+      "prerequisite": "Character level 1-4",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "hakiFeature.fortitude",
@@ -446,7 +449,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -497,7 +501,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -516,7 +521,10 @@
       "rarity": "Uncommon",
       "tier": 1,
       "repeatable": false,
-      "text": "You learn how to look for weaknesses in a opponents defense.\nYour weapon attacks and unarmed strikes deal increased damage. Whenever you roll damage dice for a weapon or unarmed strike, increase the base weapon/unarmed strike die by one size up to a maximum of d12 (e.g., 1d4’s becomes 1d6’s, 1d6’s become 1d8’s, ect).\nYou cannot increase the dice size of haki or class feature related dice.\nThis advancement can be chosen once."
+      "text": "You learn how to look for weaknesses in a opponents defense.\nYour weapon attacks and unarmed strikes deal increased damage. Whenever you roll damage dice for a weapon or unarmed strike, increase the base weapon/unarmed strike die by one size up to a maximum of d12 (e.g., 1d4’s becomes 1d6’s, 1d6’s become 1d8’s, ect).\nYou cannot increase the dice size of haki or class feature related dice.\nThis advancement can be chosen once.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "hakiFeature.soul_armor",
@@ -590,7 +598,8 @@
         "recharge": "short"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -665,7 +674,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -684,7 +694,10 @@
       "rarity": "Rare",
       "tier": 1,
       "repeatable": false,
-      "text": "You gain the ability to send bursts of energy through your enemies using your spirit.\nWhen you hit a creature with a weapon attack or unarmed strike, you can unleash a surge of spirit energy from your body to deal extra 1d4 force damage to the target, in addition to the attack’s normal damage.\nThis advancement can be chosen once."
+      "text": "You gain the ability to send bursts of energy through your enemies using your spirit.\nWhen you hit a creature with a weapon attack or unarmed strike, you can unleash a surge of spirit energy from your body to deal extra 1d4 force damage to the target, in addition to the attack’s normal damage.\nThis advancement can be chosen once.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "hakiFeature.weapon_hardening",
@@ -733,7 +746,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -758,7 +772,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -808,7 +823,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -908,7 +924,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {
@@ -928,7 +945,10 @@
       "tier": 3,
       "repeatable": false,
       "text": "or Conqueror’s Coating\nYou coat a weapon with a permanent layer of dark energy that never leaves it.\nChoose a weapon that is separate from your body. You spend 1 hour infusing it with your spirit. It receives the bonuses from Weapon Hardening or Conqueror’s Coating permanently until you end it by spending 1 hour to remove it.\nAdditionally when you reach Willpower 16, you can choose to infuse the weapon with additional power. Choose one of the following damage types: acid, cold, fire, lightning, or thunder. Each of your successful attacks with the weapon deal an extra 4d6 damage of the chosen type.\nOnly one weapon can receive the benefits permanent infusion at a time. If a creature other than you attempts to use this weapon, it must attune to the weapon to gain its benefits. You can still use Weapon Hardening or Conqueror’s Coating normally on separate weapons while this infusion is active.\nThis advancement can be chosen once.",
-      "prerequisite": "Weapon Hardening"
+      "prerequisite": "Weapon Hardening",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "hakiFeature.thunderbolt_volley",
@@ -952,7 +972,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
       ]
     },
     {

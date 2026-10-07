@@ -233,7 +233,6 @@
           "name": "Deflect Projectile",
           "text": "Starting at 3rd level, you can use your reaction to deflect ranged attacks that deal bludgeoning, piercing, or slashing damage. When you do so, the damage you take from the attack is reduced by 1d10 + your Dexterity modifier + your martial artist level.\nIf you reduce the damage to 0, you can spend 1 ki point to redirect the attack toward another creature. If you do so, choose a creature within 60 feet of yourself that isn’t behind Total Cover. That creature must succeed on a Dexterity saving throw or take damage equal to two rolls of your Martial Arts die. The damage is the same type dealt by the attack.",
           "page": 150,
-          "action": "reaction",
           "rolls": [
             {
               "label": "Damage reduced",
@@ -245,7 +244,8 @@
               "dice": "{col.martialArtsDie} + {col.martialArtsDie}",
               "kind": "damage"
             }
-          ]
+          ],
+          "action": "reaction"
         },
         {
           "level": 3,
@@ -421,8 +421,16 @@
             "max": "prof",
             "recharge": "short"
           },
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -444,6 +452,12 @@
           "auto": [
             "uses",
             "action"
+          ],
+          "effects": [
+            {
+              "type": "speed",
+              "value": 10
+            }
           ]
         },
         {
@@ -502,7 +516,17 @@
           "level": 3,
           "name": "Explosive Fist",
           "text": "Starting at 3rd level, when you choose this school, your strikes generate explosive force, intensifying the damage you deal. You gain the following benefits:\nYour unarmed strikes deal 1d6 additional fire damage.\nWhen you score a critical hit with an unarmed strike, the explosion engulfs the target and all hostile creatures within 5 feet, dealing fire damage equal to your Martial Arts die.",
-          "page": 153
+          "page": 153,
+          "rolls": [
+            {
+              "label": "1d6 additional fire damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 3,
@@ -520,7 +544,18 @@
           "level": 11,
           "name": "Toughened Body",
           "text": "Starting at 11th level, through sheer endurance, you’ve trained your body to withstand your own fiery explosions:\nYou gain resistance to fire damage.\nYou add your Constitution modifier to your Unarmored Defense AC.\nIf a creature within 5 feet hits you with a melee attack, you can use your reaction to deal fire damage equal to your Martial Arts die to them.",
-          "page": 153
+          "page": 153,
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "10 + mod.dex + mod.wis + mod.con",
+              "when": "noArmor && noShield"
+            },
+            {
+              "type": "note",
+              "label": "Resistance to fire damage"
+            }
+          ]
         },
         {
           "level": 11,
@@ -719,7 +754,17 @@
           "level": 17,
           "name": "Six King Gun",
           "text": "At 17th level, you learn the secret seventh technique of the Six Powers. When you hit a creature with an Unarmed strike within 5 feet of you, you can spend 3 ki points to force it to make a Constitution saving throw. If it fails, it is reduced to 0 Hit Points. If it succeeds, it takes 10d10 force damage. Until the end of your next turn, you can’t take an Action on your turn, as a wave of lethargy sweeps over you.",
-          "page": 155
+          "page": 155,
+          "rolls": [
+            {
+              "label": "10d10 force damage",
+              "dice": "10d10",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
@@ -743,7 +788,27 @@
           "level": 3,
           "name": "Shadow Budoka",
           "text": "Starting at 3rd level, you are an expert at being unseen, gaining expertise in Stealth.\nIn addition, when you hit a creature with a ranged weapon attack while hidden, you deal an extra 1d6 damage if the creature is unaware of your presence (determined by a successful Stealth check contested by its passive Perception).\nAfter making the attack, you do not immediately reveal your position. However, the target may attempt a Perception check after the attack, contested by your Stealth check. On a success, the target spots you.",
-          "page": 156
+          "page": 156,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ],
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "stealth"
+            },
+            {
+              "type": "expertise",
+              "skill": "stealth"
+            }
+          ]
         },
         {
           "level": 3,
@@ -773,7 +838,17 @@
           "level": 17,
           "name": "Ninpo: Kintama-Tsubushi",
           "text": "At 17th level, you learn a legendary and devastating strike feared by all, this ultimate technique targets an opponent’s most vulnerable point. When you hit a creature with a ranged or melee attack, you can expend 5 ki points to attempt a precise, crippling strike. The target must make a Constitution saving throw against your Ki Save DC. On a failure, they take 8d12 bludgeoning damage and are knocked prone from sheer agony. On a success, they take half damage and remain standing.",
-          "page": 156
+          "page": 156,
+          "rolls": [
+            {
+              "label": "8d12 bludgeoning damage",
+              "dice": "8d12",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ],
       "sources": {

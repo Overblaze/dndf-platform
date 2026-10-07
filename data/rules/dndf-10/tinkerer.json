@@ -693,8 +693,16 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "6d8 radiant damage",
+              "dice": "6d8",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         }
       ],
@@ -731,7 +739,23 @@
           "level": 6,
           "name": "Storm Forecasting",
           "text": "At 6th level, you gain Resistance to lightning and thunder damage while holding your gadget. In addition, whenever you start Casting a Creation Power (Spell) of 1st level or higher that deals lightning or thunder damage, storm clouds emerge from your gadget. This eruption causes creatures of your choice that you can see within 10 feet of you to take lightning or thunder damage (choose each time this ability activates) equal to half your Tinkerer level.\nAt 18th level, you become immune to lightning and thunder damage while holding your gadget.",
-          "page": 186
+          "page": 186,
+          "toggle": {
+            "id": "holding_gadget",
+            "label": "Holding your gadget",
+            "effects": [
+              {
+                "type": "note",
+                "label": "Resistance to lightning and thunder damage",
+                "when": "level<18"
+              },
+              {
+                "type": "note",
+                "label": "Immune to lightning and thunder damage",
+                "when": "level>=18"
+              }
+            ]
+          }
         },
         {
           "level": 10,
@@ -786,7 +810,13 @@
           "level": 2,
           "name": "Tactical Mind",
           "text": "Starting at 2nd Level, your quick wit and tactical thinking allows you to react fast in battle. You gain a bonus to your Initiative rolls equal to your Intelligence modifier.",
-          "page": 186
+          "page": 186,
+          "effects": [
+            {
+              "type": "initiative",
+              "expr": "max(0, mod.int)"
+            }
+          ]
         },
         {
           "level": 6,
@@ -798,7 +828,21 @@
           "level": 10,
           "name": "Durable Tech",
           "text": "Beginning at 10th level, your technology is made to be incredibly tough and difficult to disrupt. While you maintain Concentration on a spell, you have a +2 bonus to AC and all Saving Throws.",
-          "page": 186
+          "page": 186,
+          "toggle": {
+            "id": "durable_tech",
+            "label": "Concentrating on a spell",
+            "effects": [
+              {
+                "type": "ac",
+                "value": 2
+              },
+              {
+                "type": "note",
+                "label": "+2 to all saving throws"
+              }
+            ]
+          }
         },
         {
           "level": 14,
@@ -891,7 +935,13 @@
           "level": 6,
           "name": "Viral Immunity",
           "text": "Starting at 6th level, your continued exposure to pathogens strengthens your resilience and plaguecraft. You are immune to diseases, gain resistance to poison damage, and can spend 1 minute using your gadget to cure any disease affecting yourself or another creature within 5 feet.\nAdditionally, when a creature succeeds on a saving throw against one of your disease effects, you can use your reaction to redirect the disease to another creature within 10 feet.",
-          "page": 187
+          "page": 187,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Immune to diseases; resistance to poison damage"
+            }
+          ]
         },
         {
           "level": 10,

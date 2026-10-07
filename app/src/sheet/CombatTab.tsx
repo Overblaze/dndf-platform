@@ -108,9 +108,9 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
 
   return (
     <>
-      {sheet.toggles.length > 0 && (
+      {(sheet.toggles.length > 0 || sheet.notes.length > 0) && (
         <section className="card">
-          <h2>Toggles</h2>
+          <h2>{sheet.toggles.length > 0 ? 'Toggles' : 'In effect'}</h2>
           {sheet.toggles.map((toggle) => {
             const res = toggle.resource ? sheet.resources.find((r) => r.id === toggle.resource) : undefined;
             const flip = () => {

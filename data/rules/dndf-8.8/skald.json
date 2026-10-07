@@ -596,13 +596,29 @@
           "level": 3,
           "name": "Warrior Chords",
           "text": "Also at 3rd level, you can use your Manifest Chords to empower your allies in the thick of combat. When you expend one or more chords to benefit an ally, no matter the chord expended they gain the following additional benefits:\nOnce before the end of their next turn, when they hit with a weapon attack, they can add an extra 1d4 damage per chord expended.\nThe affected ally gains a +1 bonus to AC per chord expended until the start of your next turn.",
-          "page": 186
+          "page": 186,
+          "rolls": [
+            {
+              "label": "1d4 damage",
+              "dice": "1d4",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
           "name": "Extra Attack",
           "text": "Starting at 6th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn.",
-          "page": 186
+          "page": 186,
+          "effects": [
+            {
+              "type": "attacksPerAction",
+              "value": 2
+            }
+          ]
         },
         {
           "level": 14,
@@ -631,7 +647,32 @@
           "level": 3,
           "name": "Pain-Numbing Chord",
           "text": "When you join the School of Hypnotism at 3rd level, you hypnotize your allies to allow them to ignore pain.\nWhen an ally is hit with a damaging attack, you can use your reaction to expend one of your floating chords (your choice). The target gains all benefits from the chord normally plus temporary hit points equal to 2d6.\nThe temporary hit points increase when you reach certain levels in this class, increasing to 3d6 at 5th level, 5d6 at 10th level, and 8d6 at 15th level.",
-          "page": 186
+          "page": 186,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "3d6",
+              "dice": "3d6",
+              "kind": "other"
+            },
+            {
+              "label": "5d6",
+              "dice": "5d6",
+              "kind": "other"
+            },
+            {
+              "label": "8d6",
+              "dice": "8d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 3,
@@ -706,7 +747,17 @@
           "level": 3,
           "name": "Verbal Sabotage",
           "text": "At 3rd level, your biting remarks can disrupt your enemies’ focus at critical moments. When a creature within 60 feet of you that can hear you makes an attack roll, ability check, or damage roll, you can use your reaction to expend a floating chord (your choice) and force the creature to roll a Charisma saving throw against your Spirit save DC. On a failed save, subtract 1d4 from the triggering roll.",
-          "page": 187
+          "page": 187,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
@@ -850,7 +901,17 @@
           "level": 3,
           "name": "Perfectly Placed Words",
           "text": "At 3rd level, you know exactly what to say to tip any conversation in your favor. You gain expertise in Persuasion.\nAdditionally, when you make a Charisma (Persuasion) or Charisma (Deception) check, you can treat a d20 roll of 9 or lower as a 10.",
-          "page": 189
+          "page": 189,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "persuasion"
+            },
+            {
+              "type": "expertise",
+              "skill": "persuasion"
+            }
+          ]
         },
         {
           "level": 6,

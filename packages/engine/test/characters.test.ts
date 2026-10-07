@@ -2,7 +2,7 @@
 // by hand from the books, plus rules that must hold for any character at all.
 import { describe, expect, it } from 'vitest';
 import { deriveSheet, newCharacter, readSheet, TEST_CHARACTERS, type CharacterDoc, type ClassEntry, type RuleEntry, type RulesVersion, type Sheet, type Stat } from '../src';
-import { loadRules } from './load';
+import { loadRules, subclassHitPoints } from './load';
 
 const rulesFor = { 'dndf-10': loadRules('dndf-10'), 'dndf-8.8': loadRules('dndf-8.8') };
 
@@ -100,6 +100,7 @@ describe('rules that hold for every character', () => {
       doc.classes.forEach((picked, index) => {
         const die = (rules.get(picked.id) as ClassEntry).hitDie;
         expected += index === 0 ? die + (picked.level - 1) * (die / 2 + 1) : picked.level * (die / 2 + 1);
+        expected += subclassHitPoints(rules, picked.subclass, picked.level);
       });
       expect(sheet.maxHp.calculated, label).toBe(expected);
       expect(sheet.hitDice.pool.reduce((sum, p) => sum + p.count, 0), label).toBe(sheet.level);

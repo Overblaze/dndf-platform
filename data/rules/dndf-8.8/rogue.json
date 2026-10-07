@@ -286,7 +286,17 @@
           "level": 17,
           "name": "Ultimate Subterfuge",
           "text": "Beginning at 17th level, your skill in deception and infiltration reaches unparalleled heights. You gain the following benefits:\nWhen you make a Dexterity (Stealth), Charisma (Deception), or Wisdom (Insight) check, treat a roll of 11 or lower as a 12.\nAs an action, you can perfectly mimic a creature you’ve observed for at least 1 minute, replicating their voice, mannerisms, clothing style, and behavior. Creatures must succeed on an Intelligence (Investigation) check against your Charisma (Deception) roll to discern the impersonation. Once per turn, when you attack a creature unaware of your true identity (such as while disguised or hidden), you can deal an additional 4d6 damage.",
-          "page": 178
+          "page": 178,
+          "rolls": [
+            {
+              "label": "4d6 damage",
+              "dice": "4d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
@@ -376,8 +386,16 @@
           "text": "Also at 3rd level, as a bonus action, you can coat a weapon, piece of ammunition, or a 5-foot square surface with a poison from your inventory. The poison remains potent for 1 hour or until triggered. When you hit a creature with a poisoned weapon or piece of ammunition, you gain the following benefits:\nThe creature has disadvantage on its first saving throw made against the poison.\nWhen applied to a surface, the poison is triggered when a creature touches or interacts with it, as determined by the DM.\nOnce you inflict a target with the poison covered weapon, ammunition, or surface, the poison dissipates. Poisons do not stack, and only 1 poison can be on a target at once. If you inflict a creature with a higher severity poison than they currently have, the higher severity poison takes effect.\nAdditionally, if the creature is already poisoned, your Sneak Attack damage increases by an additional 1d6.",
           "page": 179,
           "action": "bonus",
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "action"
+            "action",
+            "rolls"
           ]
         },
         {
@@ -420,6 +438,23 @@
           "name": "Stage of Battle",
           "text": "When you choose this archetype at 3rd level, combat is your stage, and each movement enhances your deadly performance. When you make a melee attack with a finesse weapon, you can use your bonus action to perform a flourish, choosing one of the following effects:\nYou gain a +2 bonus to AC until the start of your next turn.\nYou add an extra 1d6 damage to the attack. This damage increases to 1d8 at 9th level and 1d10 at 17th level.\nYou also gain proficiency in the Performance skill if you don’t already have it.",
           "page": 179,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            },
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            },
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            }
+          ],
           "effects": [
             {
               "type": "proficiency",
@@ -427,6 +462,7 @@
             }
           ],
           "auto": [
+            "rolls",
             "effects"
           ]
         },
@@ -434,7 +470,27 @@
           "level": 3,
           "name": "Vortex Strike",
           "text": "Also at 3rd level, you move like a whirlwind, striking multiple foes with practiced elegance. When you take the Attack action on your turn, you can choose to make a single attack against up to five creatures within 5 feet of you instead of making a normal attack. All attacks are made with disadvantage, but each attack deals an additional 1d6 damage. This extra damage increases to 1d8 at 9th level and 1d10 at 17th level.",
-          "page": 180
+          "page": 180,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            },
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            },
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 9,
@@ -746,7 +802,13 @@
           "level": 3,
           "name": "Rakish Audacity",
           "text": "Starting at 3rd level, your confidence propels you into battle. You can give yourself a bonus to your initiative rolls equal to your Charisma modifier.\nYou also gain an additional way to use your Sneak Attack; you don’t need advantage on the attack roll to use your Sneak Attack against a creature if you are within 5 feet of it, no other creatures are within 5 feet of you, and you don’t have disadvantage on the attack roll. All the other rules for Sneak Attack still apply to you.",
-          "page": 182
+          "page": 182,
+          "effects": [
+            {
+              "type": "initiative",
+              "expr": "max(0, mod.cha)"
+            }
+          ]
         },
         {
           "level": 9,

@@ -601,7 +601,17 @@
           "level": 2,
           "name": "Channel Divinity: Blossom Joy",
           "text": "Starting at 2nd Level, you can use your Channel Divinity to spread joy and protect your allies. As an action, you present your holy symbol and invoke the power of your domain, choosing one of the following effects:\nPetals of Joy. Pink petals swirl around you, filling the air with a sweet cherry aroma. For 1 minute, you gain a +5 bonus to all Charisma (Persuasion) and Charisma (Performance) checks.\nHardened Sap. The hardening sap within a cherry blossom tree inspires you to protect your allies. Each friendly creature within 30 feet of you gains temporary hit points equal to your Wisdom modifier + half your Priest level (minimum of 1).",
-          "page": 167
+          "page": 167,
+          "toggle": {
+            "id": "blossom_joy",
+            "label": "Blossom Joy (1 minute)",
+            "effects": [
+              {
+                "type": "note",
+                "label": "+5 to Charisma (Persuasion) and Charisma (Performance) checks"
+              }
+            ]
+          }
         },
         {
           "level": 6,
@@ -817,13 +827,43 @@
           "level": 8,
           "name": "Hue Strike",
           "text": "At 8th level, you gain the ability to infuse your weapon strikes with the divine essence of your chosen color. Once on each of your turns, when you hit a creature with a weapon attack, you can deal an additional 1d8 damage. The Damage Type corresponds to the color you have chosen from the Color Table.\nWhen you reach 14th level, the additional damage increases to 2d8.",
-          "page": 168
+          "page": 168,
+          "rolls": [
+            {
+              "label": "1d8 damage",
+              "dice": "1d8",
+              "kind": "damage"
+            },
+            {
+              "label": "2d8",
+              "dice": "2d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 17,
           "name": "Color Theory",
           "text": "At 17th level, your mastery of divine artistry allows you to blend multiple colors into your form. You can now pick up to three colors from the Color Table active at the same time on any of your features, gaining the benefits of all three simultaneously. The Hue Strike feature gains an additional 1d8 damage to a total of 3d8, with each 1d8 being a different color if your choose.\nAdditionally, you can now change up to two of your active colors as part of your Artistic Prowess feature.",
-          "page": 168
+          "page": 168,
+          "rolls": [
+            {
+              "label": "1d8 damage",
+              "dice": "1d8",
+              "kind": "damage"
+            },
+            {
+              "label": "3d8",
+              "dice": "3d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ],
       "sources": {
@@ -908,7 +948,22 @@
           "level": 8,
           "name": "Siphoning Strike",
           "text": "At 8th level, the Priest gains the ability to infuse their weapon strikes with necrotic energy. Once on each of the priest’s turns when they hit a creature with a weapon Attack, the Priest can cause the Attack to deal an extra 1d8 necrotic damage to the target. When the Priest reaches 14th level, the extra damage increases to 2d8.",
-          "page": 169
+          "page": 169,
+          "rolls": [
+            {
+              "label": "1d8 necrotic damage",
+              "dice": "1d8",
+              "kind": "damage"
+            },
+            {
+              "label": "2d8",
+              "dice": "2d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 17,
@@ -994,7 +1049,17 @@
           "level": 2,
           "name": "Channel Divinity: Scorching Sun",
           "text": "Starting at 2nd Level, you can use your Channel Divinity to harness scorching sunlight, banishing darkness and dealing radiant damage to your foes.\nAs an action, you present your holy symbol , and any magical darkness within 30 feet of you is dispelled. Additionally, each Hostile creature within 30 feet of you must make a Constitution saving throw. A creature takes radiant damage equal to 2d10 + your Priest level on a failed saving throw, and half as much damage on a successful one. A creature that has total cover from you is not affected.",
-          "page": 169
+          "page": 169,
+          "rolls": [
+            {
+              "label": "2d10",
+              "dice": "2d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
@@ -1079,7 +1144,14 @@
           "level": 1,
           "name": "Fiendish Skin",
           "text": "Also at 1st level, your flesh begins to take on the hardened texture of infernal scales, shielding you from harm. While you are not wearing armor, your AC equals 10 + your proficiency bonus + your Wisdom modifier. You cannot gain additional benefit from the Unarmored Defense class feature while benefitting from this feature.",
-          "page": 169
+          "page": 169,
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "10 + prof + mod.wis",
+              "when": "noArmor"
+            }
+          ]
         },
         {
           "level": 2,
@@ -1091,13 +1163,44 @@
           "level": 6,
           "name": "Diabolic Resilience",
           "text": "At 6th level, your infernal nature grants you resistance to corruption and flame. You gain the following benefits:\nResistance to fire and poison damage.\nAdvantage on saving throws against poisoned, charmed, and frightened conditions.\nAll fire damage you deal with spells gains an additional 1d8 damage.",
-          "page": 170
+          "page": 170,
+          "rolls": [
+            {
+              "label": "1d8 damage",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to fire and poison damage"
+            }
+          ]
         },
         {
           "level": 8,
           "name": "Unholy Strike",
           "text": "At 8th level, your attacks burn with a wrath of hatred. Once on each of your turns, when you hit a creature with a weapon attack, you can cause the attack to deal an additional 1d8 fire damage.\nAt 14th level, this damage is increased to 2d8.",
-          "page": 170
+          "page": 170,
+          "rolls": [
+            {
+              "label": "1d8 fire damage",
+              "dice": "1d8",
+              "kind": "damage"
+            },
+            {
+              "label": "2d8",
+              "dice": "2d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 17,
@@ -1164,7 +1267,13 @@
           "level": 1,
           "name": "Bonus Proficiencies",
           "text": "At 1st level, you gain proficiency with Dials, Martial Weapons, and Heavy Armor, and you gain resistance to thunder and lightning damage.",
-          "page": 170
+          "page": 170,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to thunder and lightning damage"
+            }
+          ]
         },
         {
           "level": 1,
@@ -1175,8 +1284,16 @@
             "max": "max(1, mod.wis)",
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "2d8 lightning or thunder damage",
+              "dice": "2d8",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -1189,19 +1306,50 @@
           "level": 6,
           "name": "Dial Ritual",
           "text": "At 6th level, you may occasionally manufacture Dials of your own. You may spend 24 hours touching and altering a normal shell as a ritual to turn it into a powerful Dial. When the 24 hours are over, roll on the Rare Dial Table in Chapter 5. The shell you are holding becomes that Dial.\nYou cannot perform this ritual again until you reach the 8th, 11th, 14th, or 17th levels. You can only perform this ritual once during each of those levels, and it must be used to transform your current ritually created dial into a new dial by rolling on the Rare Dial Table to change its effects into something different.\nAdditionally, once on each of your turns, when you cast a spell or make a weapon attack that deals lightning or thunder damage, you can empower the attack or spell with storm energy. This causes the attack or spell to deal an extra 1d8 lightning or thunder damage (your choice) to one target you hit.",
-          "page": 170
+          "page": 170,
+          "rolls": [
+            {
+              "label": "1d8 lightning or thunder damage",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 8,
           "name": "Dial Infusion",
           "text": "At 8th level, you gain the ability to combine your weapon strikes with dial-infused power. Once on each of your turns when you hit a creature with a spell or weapon attack, you can cause the Attack to deal an extra 1d8 thunder damage to the target. When you reach 14th level, the extra damage increases to 2d8.\nAdditionally, the target must succeed on a Constitution saving throw equal to your Spell save DC or be pushed back 10 feet or knocked prone (your choice).",
-          "page": 170
+          "page": 170,
+          "rolls": [
+            {
+              "label": "1d8 thunder damage",
+              "dice": "1d8",
+              "kind": "damage"
+            },
+            {
+              "label": "2d8",
+              "dice": "2d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 17,
           "name": "Dial Glide",
           "text": "At 17th level, using your dials, you gain a flying speed equal to double your current walking speed.",
-          "page": 170
+          "page": 170,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Flying speed equal to double your walking speed"
+            }
+          ]
         }
       ],
       "sources": {

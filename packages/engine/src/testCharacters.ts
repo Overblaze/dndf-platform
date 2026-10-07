@@ -124,18 +124,41 @@ export const TEST_CHARACTERS: TestCharacter[] = [
     id: 'hybrid-10',
     name: 'Reiju',
     version: 'dndf-10',
-    checks: 'Hybrid: Close Quarters Training and Power Threshold reading the Hybrid Points held.',
+    checks: 'Hybrid: Close Quarters Training and Power Threshold reading the Hybrid Points held; Germa Combat Exoskeleton armor and hit points.',
     build: make({ name: 'Reiju', classId: 'class.hybrid', level: 10, scores: scores(16, 12, 14, 10, 10, 16), subclass: 'subclass.hybrid.germa' },
       (d) => ({ state: { ...d.state, trackers: { hybrid_points: 7 } } })),
     expected: {
-      maxHp: 84, // 10 + 9 × 6 + Con 2 × 10
-      ac: 12, // 10 + Dex 1 + 1 for 7 points held (one per 5) — EH10 p.132
+      maxHp: 94, // 10 + 9 × 6 + Con 2 × 10, + 1 per hybrid level from Combat Exoskeleton — EH10 p.137
+      ac: 17, // Combat Exoskeleton 13 + Str 3, + 1 for 7 points held (one per 5) — EH10 p.132, p.137
       'attack.Unarmed strike.hit': 9, // Str 3 + prof 4 + 2 (one per 3 points)
       'attack.Unarmed strike.damage': '1d8 + 6', // 1d8, Str 3 + 3 (one per 2 points)
       'formula.Hybrid save DC': 15, // 8 + 4 + Cha 3 — EH10 p.131
       'formula.Hybrid attack modifier': 7,
       'tracker.Hybrid Points.max': 7,
       attacksPerAction: 2,
+    },
+  },
+  {
+    id: 'gunslinger-7',
+    name: 'Van Augur',
+    version: 'dndf-10',
+    checks: 'Subclass numbers: Gunslinger Quick-draw adding Wisdom to initiative and Iron Mind making Wisdom saves proficient.',
+    build: make({ name: 'Van Augur', classId: 'class.marksman', level: 7, scores: scores(10, 18, 14, 10, 16, 8), subclass: 'subclass.marksman.gunslinger' }),
+    expected: {
+      initiative: 7, // Dex 4 + Wis 3 from Quick-draw — EH10 p.145
+      'save.wis': 6, // Wis 3 + prof 3 from Iron Mind — EH10 p.145
+      'save.int': 0, // not proficient
+    },
+  },
+  {
+    id: 'battlehymn-6',
+    name: 'Scratchmen Apoo',
+    version: 'dndf-10',
+    checks: 'Subclass numbers: School of Battlehymn adding twice the virtuoso level to hit points, and its second attack at 6th.',
+    build: make({ name: 'Scratchmen Apoo', classId: 'class.virtuoso', level: 6, scores: scores(10, 14, 14, 10, 10, 18), subclass: 'subclass.virtuoso.battlehymn' }),
+    expected: {
+      maxHp: 57, // 8 + 5 × 5 + Con 2 × 6 = 45, + 2 × 6 from Battle Proficiencies — EH10 p.196
+      attacksPerAction: 2, // Fury of the Battlehym — EH10 p.196
     },
   },
   {

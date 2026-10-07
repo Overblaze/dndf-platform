@@ -723,7 +723,21 @@
           "name": "Liquid Courage",
           "text": "Starting at 3rd level, your fighting style revolves around consuming alcohol to fuel your combat prowess. As a bonus action, you can drink a flask of alcohol. After drinking, you enter a drunken state that lasts for 1 minute. While in this state, you gain one of the following emotional buffs at random, rolling a 1d4 to determine the effect and gaining a number of temp hit points equal to your bruiser level. You lose these temp hit points when you become sober. 1. Drunken Rage (Anger): You gain advantage on Strength-based attack rolls, but attack rolls against you also have advantage. 2. Sorrowful Stagger (Sadness): You gain resistance to all damage, but your movement speed is reduced by 10 feet. 3. Joyous Flurry ( Joy): You can make an additional unarmed strike or bruiser weapon attack whenever you take the Attack action, but all damage you deal is reduced by 1d4. 4. Reckless Frenzy (Madness): You can take the Dash action as a bonus action, but must make a melee attack against the nearest creature at the end of your movement, friend or foe.",
           "page": 90,
-          "action": "bonus"
+          "action": "bonus",
+          "toggle": {
+            "id": "sorrowful_stagger",
+            "label": "Sorrowful Stagger (rolled a 2)",
+            "effects": [
+              {
+                "type": "speed",
+                "value": -10
+              },
+              {
+                "type": "note",
+                "label": "Resistance to all damage"
+              }
+            ]
+          }
         },
         {
           "level": 6,

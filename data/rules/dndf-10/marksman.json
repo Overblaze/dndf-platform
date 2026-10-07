@@ -489,6 +489,16 @@
                 }
               ]
             }
+          ],
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "animal_handling"
+            },
+            {
+              "type": "expertise",
+              "skill": "animal_handling"
+            }
           ]
         },
         {
@@ -593,7 +603,17 @@
           "level": 3,
           "name": "Bounty’s Brand",
           "text": "Starting at 3rd level, you can focus your ire on one foe, increasing the harm you inflict on it. As a bonus action, you designate one creature you can see within 60 feet of you as the target of this feature. The first time each turn that you hit that target with a weapon attack, it takes an extra 1d6 damage from the weapon.\nThis benefit lasts until you finish a short or long rest. It ends early if you designate a different creature.",
-          "page": 145
+          "page": 145,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 3,
@@ -605,7 +625,17 @@
           "level": 7,
           "name": "Stalker’s Caution",
           "text": "At 7th level, you gain extra resilience against your prey’s assaults on your mind and body. Whenever a creature marked by your Bounty’s Brand forces you to make a saving throw and whenever you make an ability check to escape that target’s grapple, add 1d6 to your roll.",
-          "page": 145
+          "page": 145,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 11,
@@ -647,7 +677,23 @@
           "level": 3,
           "name": "Quick-draw",
           "text": "At 3rd level, you master the art of quickly drawing your weapon at the start of battle. You can give yourself a bonus to your initiative rolls equal to your Wisdom modifier.\nAt the start of your first turn of each combat, your walking speed increases by 10 feet, which lasts until the end of that turn. If you take the Attack action with a sling or firearm on turn 1, you can make one additional weapon attack with that weapon as part of the action. If that attack hits, the target takes an extra 2d8 damage of the weapon’s damage type.",
-          "page": 145
+          "page": 145,
+          "rolls": [
+            {
+              "label": "2d8 damage",
+              "dice": "2d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ],
+          "effects": [
+            {
+              "type": "initiative",
+              "expr": "max(0, mod.wis)"
+            }
+          ]
         },
         {
           "level": 3,
@@ -697,7 +743,13 @@
           "level": 7,
           "name": "Iron Mind",
           "text": "At 7th level, you gain proficiency in Wisdom saving throws.",
-          "page": 145
+          "page": 145,
+          "effects": [
+            {
+              "type": "saveProficiency",
+              "ability": "wis"
+            }
+          ]
         },
         {
           "level": 11,
@@ -768,13 +820,29 @@
           "level": 11,
           "name": "Rope Dance",
           "text": "At 11th level, you become a blur of rope-wielding precision, controlling the battlefield effortlessly. You gain the following:\nWhen you take the Attack action, you can make two additional rope attacks as part of the same action. When you use a Rope Trick, you can make a rope weapon attack as a bonus action.\nYou gain advantage on checks and saving throws made to escape grapples or restraints.",
-          "page": 146
+          "page": 146,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on checks and saves to escape grapples or restraints"
+            }
+          ]
         },
         {
           "level": 15,
           "name": "Deckhand’s Tangle",
           "text": "At 15th level, your mastery over ropes reaches its pinnacle. As an action, you can create an area of entangled ropes in a 30-foot radius centered on yourself. The area is difficult terrain for creatures other than you, and any creature other than you that starts its turn in the area or enters it for the first time must make a Strength saving throw equal to your Tactic save DC or become restrained. The area effect lasts for 1 hour or until you dismiss it as a bonus action. You must take a long rest to use this feature again.\nAdditionally, when you restrain a creature with your rope, they take 2d6 bludgeoning damage at the beginning of their turns from the tightening ropes.",
-          "page": 146
+          "page": 146,
+          "rolls": [
+            {
+              "label": "2d6 bludgeoning damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ],
       "sources": {
@@ -809,7 +877,22 @@
           "level": 3,
           "name": "Empowered Bullet",
           "text": "Starting at 3rd level, you learn to craft special bullets using your gunsmithing abilities.\nWhen you hit with a firearm or sling attack, you can expend a Tactic Slot to deal additional damage to a target. The extra damage is equal to 2d6 for a 1st-level Tactic Slot, plus 1d6 for each Tactic Slot higher than 1st.",
-          "page": 147
+          "page": 147,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 7,
@@ -850,7 +933,17 @@
           "level": 3,
           "name": "Snap Trap Specialist",
           "text": "Starting at 3rd level, you can craft and set traps with ease, turning the battlefield into a dangerous maze for your foes. As an action, you can place a snap trap in a unoccupied 5 ft. space within 30 feet of you. The snap trap is hidden and requires a successful Perception check equal to your Tactic save DC to spot if the creature did not see you placing the trap. A creature that enters the trap’s space triggers it. The trap deals 2d6 piercing damage and reduces the target’s movement speed by half until the end of its next turn.\nDuring a short or long rest, you can craft up to three snap traps.",
-          "page": 147
+          "page": 147,
+          "rolls": [
+            {
+              "label": "2d6 piercing damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 3,
@@ -875,13 +968,38 @@
           "level": 7,
           "name": "Tactical Ensnaptrapment",
           "text": "At 7th level, your traps become more versatile, allowing you to manipulate your enemies more effectively. When you create a snap trap, choose one additional effect:\nSticky Snap Trap. The creature is restrained until the end of your next turn.\nPuffing Snap Trap. The trap creates a 20-foot-radius cloud of smoke, heavily obscuring the area for 1 minute.\nBooming Snap Trap. The trap explodes in a 10-foot radius, dealing 1d6 fire damage to all creatures in the area.\nBig Snap Trap. The damage of your snap trap increases by an additional 2d6 damage.\nMagnetic Snap Trap. The creature who steps on this trap must make a Strength saving throw equal to your Tactic save DC. On a failed save the creatures metal weapon and shield is pulled from their hand and is magnetized to the trap. A creature must make an action to remove the weapon from the snap trap.\nDial Snap Trap. You infuse a dial you own into the snap trap. A creature that activates this trap activates the dial you set within it.\nPop Green Snap Trap. You infuse a pop green you own into the snap trap. A creature that activates this trap activates the pop green you set within it.\nBlinding Snap Trap. The creature is blinded until the end of your next turn.\nAdditionally, you can use a bonus action instead of an action to set a trap.",
-          "page": 148
+          "page": 148,
+          "rolls": [
+            {
+              "label": "1d6 fire damage",
+              "dice": "1d6",
+              "kind": "damage"
+            },
+            {
+              "label": "2d6 damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 11,
           "name": "Master Trapper",
           "text": "At 11th level, your traps become deadlier and harder to avoid. You gain the following:\nCreatures have disadvantage on saving throws against finding your snap traps.\nSnap traps you set deal an additional 1d6 damage of your choice, excluding force.\nWhen a creature triggers your snap trap, you can use your reaction to make a ranged weapon attack against that creature.",
-          "page": 148
+          "page": 148,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 15,
