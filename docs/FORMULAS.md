@@ -94,6 +94,52 @@ Sample: level 5 — Dex 14, Cha 18.
 |---|---|---|---|
 | Devilforged save DC / attack | 8 + prof + Int / prof + Int | 14 / +6 | 114 |
 
+## Casters: Chemist, Priest, Tinkerer, Oracle, Marksman (both versions)
+| Number | Formula | Sample | Page (v10) |
+|---|---|---|---|
+| Chemist Invention save DC / attack | 8 + prof + Wis / prof + Wis | level 5, Wis 16: 14 / +6 | 94 |
+| Chemist powers prepared | Wis + level, minimum 1 | 8 | 94 |
+| Chemist abomination form | floor(level / 2) hours; 2 uses per short rest | 2 h | 94 |
+| Priest Spell save DC / attack | 8 + prof + Wis / prof + Wis | level 6, Wis 18: 15 / +7 | 165 |
+| Priest Channel Divinity | 2 uses per short rest; 3 from 6th, 4 from 18th | 3 | 165 |
+| Priest Kami's Will pool (from 3rd) | 5 × level hit points per long rest | 30 | 166 |
+| Tinkerer Creation save DC / attack | 8 + prof + Int / prof + Int | level 4, Int 16: 13 / +5 | 180 |
+| Tinkerer Recharging | once a day, slot levels up to ceil(level / 2) | 2 | 182 |
+| Oracle Spell save DC / attack | 8 + prof + Wis / prof + Wis | level 5, Wis 16: 14 / +6 | 158 |
+| Marksman Tactic save DC / attack | 8 + prof + Wis / prof + Wis | level 6, Wis 14: 13 / +5 | 142 |
+| Marksman Hawk-Eyed | proficiency doubled for Perception (when proficient) | Wis 14, level 6: +8 | 141 |
+| Marksman Lock-On | v10: 2d4, 3d4 at 6th, 4d4 at 14th. v8.8: 1d4, 2d4, 3d4. + Wis from 6th (Greater Lock-On) | level 6: 3d4 + 2 (v8.8 2d4 + 2) | 142 |
+| Marksman Fighting Style (pick 1) | v10: Improved Aiming +3 ranged hit; Sharpened Shot + 2 × prof damage, two-handed ranged; Close Quarters Shooter +1 ranged hit. v8.8: Aiming +2 hit; Sharpened Shot +2 damage, ranged | musket, Dex 18, level 6: +10, or 1d10 + 10 | 142 |
+| Marksman Extra Attack | 2 from 5th; 3 from 14th (v10 only) | — | 143 |
+
+## Conqueror (both versions)
+| Number | Formula | Sample | Page (v10) |
+|---|---|---|---|
+| Leadership Dice | number and die from the table; short rest | level 5: 4 × d8 | 106 |
+| Command Stances, on switching (v10 only) | 1d4 force damage this turn; temporary HP = Wis | Wis 14: 2 temp HP | 106 |
+| Coordinated Assault | costs 2 Leadership Dice | — | 107 |
+
+## Renegade (v10) and Rogue (v8.8)
+| Number | Formula | Sample | Page |
+|---|---|---|---|
+| Renegade Press the Attack (from 5th) | stacks up to ceil(level / 2); +1 hit per stack up to +3; +1d4 damage per stack | level 8, 4 stacks: +3 hit, 4d4 | 172 |
+| Renegade Fast Talker | +1d4 to Persuasion and Deception | — | 172 |
+| Rogue Sneak Attack | dice from the Rogue table | level 1: 2d6; level 20: 12d6 | v8.8 177 |
+| Slippery Mind (15th, both) | proficiency in Wisdom saves | — | 173 |
+
+## Warrior (both versions)
+Sample: Warrior 8 — Str 18, Dex 12.
+| Number | Formula | Sample | Page (v10) |
+|---|---|---|---|
+| Strike save DC (Dashing, Crescent, Hawk Strike) | 8 + prof + the higher of Str and Dex | 15 | 202 |
+| Second Wind | 1d10 + level | 1d10 + 8 | 201 |
+| Action Surge | 1 use per short rest; 2 from 17th | 1 | 201 |
+| Execute | v10: Execute Dice column. v8.8: 2d8. Prof uses per long rest | v10 3d6 | 201 |
+| Dashing Strike / Crescent Strike | 2d8 + Str / 3d6 + higher of Str and Dex | 2d8 + 4 / 3d6 + 4 | 202 |
+| Extra Attack | 2 from 5th, 3 from 11th, 4 from 20th | 2 | 202 |
+| Aura of Endurance (v10) | ceil(prof / 2) to saves | +2 | 202 |
+| Fighting Style (pick 2) | Defense +1 AC in armor; Mariner +1 AC without heavy armor or shield; Aiming +1 ranged hit (v8.8: +2); Close Quarters Shooter +1 ranged hit; Interception 1d10 + prof | chain mail + Defense: AC 17 | 201 |
+
 ## Rests
 - Short: choose HD to spend → roll each + Con → heal; refill short-rest uses, Special Reactions, Healing Surge, Fury (confirm 30 min training).
 - Long: HP = max, temp HP cleared, ALL spent HD back (ruling), all short+long uses, exhaustion −1, Undying Frenzy DC → 10.

@@ -133,7 +133,17 @@
           "level": 1,
           "name": "Conqueror’s Leadership",
           "text": "Starting at 1st level, you have access to a pool of tactical energy called Leadership Dice, which you use to empower your features.\nYour Leadership Dice are d6s. You have a number of Leadership Dice as shown in the Conqueror class table. You regain all expended Leadership Dice when you finish a short or long rest.\nYour Leadership Dice improve as you gain levels in this class, becoming d8s at 5th level, d10s at 10th level, and d12s at 15th level.",
-          "page": 106
+          "page": 106,
+          "rolls": [
+            {
+              "label": "Leadership Die",
+              "dice": "{col.leadershipDie}",
+              "kind": "other"
+            }
+          ],
+          "cost": {
+            "leadership": 1
+          }
         },
         {
           "level": 1,
@@ -174,7 +184,8 @@
               "text": "Active. The first time each allied creature within 30 feet of you moves on their turn, they do not provoking opportunity attacks.\nPassive. When you expend a Leadership Die to benefit an ally, you gain temporary hit points equal to the number rolled.",
               "page": 106
             }
-          ]
+          ],
+          "action": "bonus"
         },
         {
           "level": 3,
@@ -207,7 +218,13 @@
           "level": 5,
           "name": "Extra Attack",
           "text": "At 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
-          "page": 107
+          "page": 107,
+          "effects": [
+            {
+              "type": "attacksPerAction",
+              "value": 2
+            }
+          ]
         },
         {
           "level": 9,
@@ -219,7 +236,11 @@
           "level": 10,
           "name": "Coordinated Assault",
           "text": "At 10th level, you move your allies like pieces on a board. As a bonus action, you can expend 2 Leadership Dice to move any number of friendly creatures within 30 feet of you up to 15 feet to an unoccupied space they can see. This movement does not provoke opportunity attacks.",
-          "page": 107
+          "page": 107,
+          "action": "bonus",
+          "cost": {
+            "leadership": 2
+          }
         },
         {
           "level": 11,

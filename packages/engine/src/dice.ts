@@ -26,7 +26,8 @@ export interface DiceResult {
 
 /** Replaces each {expression} in a rules template: "1{col.scrapperDie} + {level}" → "1d6 + 7". */
 export function fillTemplate(template: string, scope: ExprScope): string {
-  return template.replace(/\{([^}]+)\}/g, (_, expr: string) => String(evaluate(expr, scope)));
+  // "+ -1" (a negative modifier dropped into "1d10 + {mod}") reads as "- 1".
+  return template.replace(/\{([^}]+)\}/g, (_, expr: string) => String(evaluate(expr, scope))).replace(/\+\s*-/g, '- ');
 }
 
 export function parseDice(text: string): DiceSpec {

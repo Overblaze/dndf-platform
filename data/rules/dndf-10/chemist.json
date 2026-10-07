@@ -398,6 +398,13 @@
               "text": "You can use a alchemist’s supplies as a spellcasting focus for your chemist Invention powers.",
               "page": 94
             }
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Powers prepared",
+              "expr": "max(1, mod.wis + level)"
+            }
           ]
         },
         {
@@ -468,7 +475,15 @@
           },
           "auto": [
             "uses"
-          ]
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Hours in abomination form",
+              "expr": "floor(level / 2)"
+            }
+          ],
+          "action": "action"
         },
         {
           "level": 2,
@@ -502,7 +517,17 @@
           "text": "At 20th level, you can use your Monster Mutation an unlimited number of times.\nAdditionally, you can ignore the verbal and somatic components of your chemist invention powers (spells), as well as any material components that lack a cost and aren’t consumed by a invention power (spell). You gain this benefit in both your normal shape and your abomination form.",
           "page": 95
         }
-      ]
+      ],
+      "formulas": {
+        "spellDC": {
+          "label": "Invention save DC",
+          "expr": "8 + prof + mod.wis"
+        },
+        "spellAttack": {
+          "label": "Invention attack modifier",
+          "expr": "prof + mod.wis"
+        }
+      }
     },
     {
       "id": "subclass.chemist.aerostatics",

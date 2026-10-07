@@ -540,7 +540,7 @@ def extract_class(version: str, key: str) -> dict:
             entries.append(group)
 
     entry["features"] = features
-    apply_structure(key, version, entry, problems)
+    entries.extend(apply_structure(key, version, entry, problems))
     return {"$schemaVersion": 1, "entries": entries, "$note": f"Extracted from {book['book']} (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."}
 
 
