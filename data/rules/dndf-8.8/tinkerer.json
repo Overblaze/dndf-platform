@@ -398,13 +398,31 @@
               "text": "Each time you gain a Tinkerer level, you can add two Tinkerer Spells of your choice to your Blueprint (Spellbook) for free. Each of these spells must be of a level for which you have Creation Power (Spell) Slots, as shown on the Tinkerer table. On your Adventures, you might find other Creation Powers (Spells) that you can add to your Blueprints and Gadget.",
               "page": 192
             }
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Powers prepared",
+              "expr": "max(1, mod.int + level)"
+            }
           ]
         },
         {
           "level": 1,
           "name": "Recharging",
           "text": "You have learned how to restore bits of power to your Gadget by recharging it during a rest. Once per day when you finish a Short Rest, you can choose expended Creation Power (Spell) Slots to recover. The Creation Power Slots can have a combined level that is equal to or less than half your Tinkerer level (rounded up), and none of the slots can be 6th level or higher.\nFor example, if you’re a 4th-level Tinkerer, you can recover up to two levels worth of Spell Slots. You can recover either a 2nd-level spell slot or two 1st-level Spell Slots.",
-          "page": 192
+          "page": 192,
+          "effects": [
+            {
+              "type": "display",
+              "label": "Slot levels recovered",
+              "expr": "ceil(level / 2)"
+            }
+          ],
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          }
         },
         {
           "level": 1,
@@ -586,7 +604,17 @@
           "text": "When you reach 20th level, you gain mastery over two powerful Creation Powers (Spells) and can cast them with little effort. Choose two 3rd-level Tinkerer creation powers in your spellbook as your signature creation powers . You always have these creation powers prepared, they don’t count against the number of creation powers you have prepared, and you can cast each of them once at 3rd Level without expending a creation power (spell) slot. When you do so, you can’t do so again until you finish a short or Long Rest.\nIf you want to cast either creation power at a higher level, you must expend a creation power slot as normal.",
           "page": 194
         }
-      ]
+      ],
+      "formulas": {
+        "spellDC": {
+          "label": "Creation save DC",
+          "expr": "8 + prof + mod.int"
+        },
+        "spellAttack": {
+          "label": "Creation attack modifier",
+          "expr": "prof + mod.int"
+        }
+      }
     }
   ],
   "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."

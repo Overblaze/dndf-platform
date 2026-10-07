@@ -393,13 +393,31 @@
               "text": "You can copy a Creation Power from your own Blueprints into another set of Blueprints, such as when creating a backup copy. This process is faster and easier than creating a new power, since you already understand your own notation and design principles. For each level of the copied Creation Power, the process takes 1 hour and costs ฿100,000.\nIf you lose your Blueprints, you can use the same process to transcribe any Creation Powers you currently have prepared into a new set of Blueprints. Any other Creation Powers must be recreated through research and experimentation as normal.\nIf your Gadget is lost or destroyed, you can rebuild it if you have your tools. You must spend at least 1 hour rebuilding your Gadget during a short or long rest before you can use it again. If you do not have your tools, you can purchase a new Power Source instead, which becomes your new Gadget.",
               "page": 181
             }
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Powers prepared",
+              "expr": "max(1, mod.int + level)"
+            }
           ]
         },
         {
           "level": 1,
           "name": "Recharging",
           "text": "You have learned how to restore bits of power to your Gadget by recharging it during a rest. Once per day when you finish a Short Rest, you can choose expended Creation Power (Spell) Slots to recover. The Creation Power Slots can have a combined level that is equal to or less than half your Tinkerer level (rounded up), and none of the slots can be 6th level or higher.\nFor example, if you’re a 4th-level Tinkerer, you can recover up to two levels worth of Spell Slots. You can recover either a 2nd-level spell slot or two 1st-level Spell Slots.",
-          "page": 182
+          "page": 182,
+          "effects": [
+            {
+              "type": "display",
+              "label": "Slot levels recovered",
+              "expr": "ceil(level / 2)"
+            }
+          ],
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          }
         },
         {
           "level": 1,
@@ -593,7 +611,17 @@
           "text": "When you reach 20th level, you gain mastery over two powerful Creation Powers (Spells) and can cast them with little effort. Choose two 3rd-level Tinkerer creation powers in your spellbook as your signature creation powers . You always have these creation powers prepared, they don’t count against the number of creation powers you have prepared, and you can cast each of them once at 3rd Level without expending a creation power (spell) slot. When you do so, you can’t do so again until you finish a short or Long Rest.\nIf you want to cast either creation power at a higher level, you must expend a creation power slot as normal.",
           "page": 184
         }
-      ]
+      ],
+      "formulas": {
+        "spellDC": {
+          "label": "Creation save DC",
+          "expr": "8 + prof + mod.int"
+        },
+        "spellAttack": {
+          "label": "Creation attack modifier",
+          "expr": "prof + mod.int"
+        }
+      }
     },
     {
       "id": "subclass.tinkerer.holo_science",

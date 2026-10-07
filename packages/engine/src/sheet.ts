@@ -298,8 +298,13 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     tracker,
     noArmor: doc.armor === null,
     noShield: !doc.shield,
+    wearingArmor: doc.armor !== null,
+    // Heavy armor is the kind that adds no Dexterity.
+    heavyArmor: doc.armor?.dexCap === 0,
     bruiserWeapon: false,
     melee: false,
+    ranged: false,
+    twoHanded: false,
     ...extra,
   });
 
@@ -343,6 +348,10 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     for (const skill of (granted?.skills ?? []) as string[]) skillProfs.add(skill);
   }
   for (const e of ofType('proficiency')) if (typeof e.effect.skill === 'string') skillProfs.add(e.effect.skill);
+  // Features that double proficiency in a named skill (Hawk-Eyed) or add a saving throw (Slippery Mind).
+  const expertiseIn = new Set(doc.expertise);
+  for (const e of ofType('expertise')) if (typeof e.effect.skill === 'string') expertiseIn.add(e.effect.skill);
+  for (const e of ofType('saveProficiency')) if (e.effect.ability) saveProfs.add(e.effect.ability);
 
   const saves = {} as Sheet['saves'];
   for (const a of ABILITIES) {
@@ -355,7 +364,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const halfProf = ofType('halfProficiency').slice(0, 1);
   const skills: SheetSkill[] = SKILLS.map((skill) => {
     const proficient = skillProfs.has(skill.id);
-    const expertise = proficient && doc.expertise.includes(skill.id);
+    const expertise = proficient && expertiseIn.has(skill.id);
     const lines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[skill.ability]} modifier`, value: mod[skill.ability]! }];
     if (proficient) lines.push({ label: expertise ? 'Proficiency bonus × 2 (expertise)' : 'Proficiency bonus', value: prof.value * (expertise ? 2 : 1) });
     else for (const e of halfProf) lines.push({ label: `${e.from}: half proficiency, rounded down`, value: Math.floor(prof.value / 2) });
@@ -435,7 +444,10 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   // 8. Resources: class pools, limited-use features, and the rules every character has.
   const resourceDefs: { def: ResourceDef; source?: Source; page?: number }[] = [];
   // Features that don't come from a class (race, background, crew role, feats) see the whole character's level.
-  const plainScope: ExprScope = { level, prof: prof.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, bruiserWeapon: false, melee: false };
+  const plainScope: ExprScope = {
+    level, prof: prof.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, wearingArmor: doc.armor !== null,
+    heavyArmor: doc.armor?.dexCap === 0, bruiserWeapon: false, melee: false, ranged: false, twoHanded: false,
+  };
   for (const source of sources) {
     for (const def of ((source.entry as ClassEntry).resources ?? [])) {
       if (source.classLevel >= (def.minLevel ?? 1)) resourceDefs.push({ def, source, page: source.entry.source.page });
@@ -491,7 +503,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   }));
 
   const trackers: SheetTracker[] = sources.flatMap((source) =>
-    ((source.entry.trackers ?? []) as TrackerDef[]).map((def) => {
+    ((source.entry.trackers ?? []) as TrackerDef[]).filter((def) => source.classLevel >= (def.minLevel ?? 1)).map((def) => {
       const max = evaluateNumber(def.max, scopeFor(source));
       const value = Math.min(max, Math.max(def.min, doc.state.trackers[def.id] ?? def.min));
       return { id: def.id, name: def.name, min: def.min, max, value, page: def.page ?? source.entry.source.page, levels: def.levels, reset: def.reset };
@@ -519,7 +531,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     const isUnarmed = weapon.id === 'unarmed';
     const covering = styles.filter((style) => isUnarmed || styleCovers(style.covers, weapon));
     const style = covering.reduce<(typeof styles)[number] | undefined>((best, c) => (!best || averageOf(c.dice) > averageOf(best.dice) ? c : best), undefined);
-    const extra: ExprScope = { bruiserWeapon: covering.length > 0, melee: !weapon.ranged };
+    const extra: ExprScope = { bruiserWeapon: covering.length > 0, melee: !weapon.ranged, ranged: Boolean(weapon.ranged), twoHanded: Boolean(weapon.twoHanded) };
     const attackNotes: string[] = [];
 
     let ability: Ability = 'str';

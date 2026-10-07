@@ -284,7 +284,13 @@
           "level": 5,
           "name": "Extra Attack",
           "text": "Beginning at 5th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn.",
-          "page": 151
+          "page": 151,
+          "effects": [
+            {
+              "type": "attacksPerAction",
+              "value": 2
+            }
+          ]
         },
         {
           "level": 5,

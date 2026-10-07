@@ -192,6 +192,11 @@ function label(n: Node): string {
     if (head === 'level') return 'Level';
     if (head === 'mod' && key && ABILITY_LABELS[key]) return `${ABILITY_LABELS[key]} modifier`;
   }
+  // max(mod.str, mod.dex): whichever of the two is higher.
+  if (n.t === 'call' && n.fn === 'max' && n.args.length === 2 && n.args.every((a) => a.t === 'ref' && a.path[0] === 'mod' && ABILITY_LABELS[a.path[1] ?? ''])) {
+    const [a, b] = n.args.map((arg) => ABILITY_LABELS[(arg as { path: string[] }).path[1]!]);
+    return `${a} or ${b} modifier, whichever is higher`;
+  }
   return show(n);
 }
 

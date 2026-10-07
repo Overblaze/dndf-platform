@@ -273,6 +273,13 @@
       },
       "resources": [
         {
+          "id": "kamis_will",
+          "name": "Kami’s Will healing pool",
+          "max": "level * 5",
+          "recharge": "long",
+          "minLevel": 3
+        },
+        {
           "id": "slots1",
           "name": "1st-level slots",
           "max": "col.slots1",
@@ -381,6 +388,13 @@
               "text": "You can use a holy symbol as a special power focus for your Priest Holy Powers.",
               "page": 165
             }
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Powers prepared",
+              "expr": "max(1, mod.wis + level)"
+            }
           ]
         },
         {
@@ -408,7 +422,11 @@
               "text": "As an action, you present your holy symbol and speak a prayer. Each enemy humanoid that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. The creature may repeat the save at the end of it’s turns.\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
               "page": 166
             }
-          ]
+          ],
+          "uses": {
+            "max": "level>=18 ? 4 : level>=6 ? 3 : 2",
+            "recharge": "short"
+          }
         },
         {
           "level": 3,
@@ -471,7 +489,14 @@
           "level": 8,
           "name": "Blessed Strikes",
           "text": "When you reach 8th level, you are blessed with divine might in battle. When a creature takes damage from one of your cantrips or weapon attacks, you can also deal 1d8 radiant damage to that creature. Once you deal this damage, you can’t use this feature again until the start of your next turn.",
-          "page": 166
+          "page": 166,
+          "rolls": [
+            {
+              "label": "Radiant damage",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 10,
@@ -492,7 +517,17 @@
             "uses"
           ]
         }
-      ]
+      ],
+      "formulas": {
+        "spellDC": {
+          "label": "Spell save DC",
+          "expr": "8 + prof + mod.wis"
+        },
+        "spellAttack": {
+          "label": "Spell attack modifier",
+          "expr": "prof + mod.wis"
+        }
+      }
     },
     {
       "id": "subclass.priest.cherry_blossom",

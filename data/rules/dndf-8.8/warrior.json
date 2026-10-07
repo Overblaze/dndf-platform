@@ -79,58 +79,11 @@
           "name": "Fighting Style",
           "text": "Starting at 1st level, you adopt a particular style of Fighting as your specialty. Choose two of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.",
           "page": 200,
-          "sections": [
-            {
-              "name": "Aiming",
-              "text": "You gain a +2 bonus to Attack Rolls you make with Ranged Weapons.",
-              "page": 200
-            },
-            {
-              "name": "Close Quarters Shooter",
-              "text": "When making a ranged attack while you are within 5 feet of a hostile creature, you do not have disadvantage on the attack roll. Your ranged attacks ignore half cover and three-quarters cover against targets within 30 feet of you. You have a +1 bonus to attack rolls on ranged attacks.",
-              "page": 200
-            },
-            {
-              "name": "Defense",
-              "text": "While you are wearing armor, you gain a +1 bonus to AC.",
-              "page": 200
-            },
-            {
-              "name": "Dueling",
-              "text": "When you are wielding a melee weapon in one hand and no other Weapons, you gain a +2 bonus to Damage Rolls with that weapon.",
-              "page": 200
-            },
-            {
-              "name": "Great Weapon Fighting",
-              "text": "When you roll a 1 or 2 on a damage die for an Attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the Two-Handed or Versatile property for you to gain this benefit.",
-              "page": 200
-            },
-            {
-              "name": "Interception",
-              "text": "When a creature you can see hits a target, other than you, within 5 feet of you with an attack, you can use your reaction to reduce the damage the target takes by 1d10 + your proficiency bonus (to a minimum of 0 damage). You must be wielding a shield or a simple or martial weapon to use this reaction.",
-              "page": 200
-            },
-            {
-              "name": "Mariner",
-              "text": "As long as you are not wearing heavy armor or using a shield, you have a swimming speed and a climbing speed equal to your normal speed, and you gain a +1 bonus to armor class.",
-              "page": 200
-            },
-            {
-              "name": "Protection",
-              "text": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your Reaction to impose disadvantage on the Attack roll. You must be wielding a shield .",
-              "page": 200
-            },
-            {
-              "name": "Thrown Weapon Fighting",
-              "text": "You can draw a weapon that has the Thrown property as part of the Attack you make with the weapon.\nIn addition, when you hit with a ranged Attack using a Thrown weapon, you gain a +2 bonus to the damage roll.",
-              "page": 200
-            },
-            {
-              "name": "Two-Weapon Fighting",
-              "text": "When you engage in Two-Weapon Fighting, you can add your ability modifier to the damage of the second Attack.",
-              "page": 200
-            }
-          ]
+          "choices": {
+            "id": "fightingStyle",
+            "count": 2,
+            "from": "optionGroup.warrior_fighting_style"
+          }
         },
         {
           "level": 1,
@@ -143,6 +96,14 @@
           },
           "auto": [
             "uses"
+          ],
+          "action": "bonus",
+          "rolls": [
+            {
+              "label": "Hit points regained",
+              "dice": "1d10 + {level}",
+              "kind": "heal"
+            }
           ]
         },
         {
@@ -151,12 +112,9 @@
           "text": "Starting at 2nd Level, you can push yourself beyond your normal limits for a moment. On Your Turn, you can take one additional action.\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.",
           "page": 200,
           "uses": {
-            "max": 1,
+            "max": "level>=17 ? 2 : 1",
             "recharge": "short"
-          },
-          "auto": [
-            "uses"
-          ]
+          }
         },
         {
           "level": 2,
@@ -169,6 +127,13 @@
           },
           "auto": [
             "uses"
+          ],
+          "rolls": [
+            {
+              "label": "Execute damage",
+              "dice": "2d8",
+              "kind": "damage"
+            }
           ]
         },
         {
@@ -195,7 +160,13 @@
           "level": 5,
           "name": "Extra Attack",
           "text": "Beginning at 5th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn.\nThe number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
-          "page": 201
+          "page": 201,
+          "effects": [
+            {
+              "type": "attacksPerAction",
+              "expr": "level>=20 ? 4 : level>=11 ? 3 : 2"
+            }
+          ]
         },
         {
           "level": 6,
@@ -208,6 +179,14 @@
           },
           "auto": [
             "uses"
+          ],
+          "action": "action",
+          "rolls": [
+            {
+              "label": "Damage",
+              "dice": "2d8 + {mod.str}",
+              "kind": "damage"
+            }
           ]
         },
         {
@@ -221,6 +200,14 @@
           },
           "auto": [
             "uses"
+          ],
+          "action": "action",
+          "rolls": [
+            {
+              "label": "Damage",
+              "dice": "3d6 + {max(mod.str, mod.dex)}",
+              "kind": "damage"
+            }
           ]
         },
         {
@@ -245,7 +232,13 @@
             "action"
           ]
         }
-      ]
+      ],
+      "formulas": {
+        "strikeDC": {
+          "label": "Strike save DC",
+          "expr": "8 + prof + max(mod.str, mod.dex)"
+        }
+      }
     },
     {
       "id": "subclass.warrior.black_weapon",
@@ -686,6 +679,116 @@
           "name": "Unstoppable Precision",
           "text": "At 18th level, your strikes are the epitome of Kuja mastery, honed to perfection through years of relentless training. Your Snake Weapon’s weapon attacks critically hit on a roll of 18-20.\nAdditionally, when you critically hit, the target must make a Constitution saving throw equal to 8 + your proficiency bonus + your Dexterity or Strength modifier or be dazed until the beginning of your next turn.\nDazed creature may only make a single action, bonus action, or movement action on their turn.",
           "page": 205
+        }
+      ]
+    },
+    {
+      "id": "optionGroup.warrior_fighting_style",
+      "kind": "optionGroup",
+      "name": "Fighting Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 200
+      },
+      "options": [
+        {
+          "id": "aiming",
+          "name": "Aiming",
+          "text": "You gain a +2 bonus to Attack Rolls you make with Ranged Weapons.",
+          "page": 200,
+          "effects": [
+            {
+              "type": "attack",
+              "value": 2,
+              "when": "ranged"
+            }
+          ]
+        },
+        {
+          "id": "close_quarters_shooter",
+          "name": "Close Quarters Shooter",
+          "text": "When making a ranged attack while you are within 5 feet of a hostile creature, you do not have disadvantage on the attack roll. Your ranged attacks ignore half cover and three-quarters cover against targets within 30 feet of you. You have a +1 bonus to attack rolls on ranged attacks.",
+          "page": 200,
+          "effects": [
+            {
+              "type": "attack",
+              "value": 1,
+              "when": "ranged"
+            }
+          ]
+        },
+        {
+          "id": "defense",
+          "name": "Defense",
+          "text": "While you are wearing armor, you gain a +1 bonus to AC.",
+          "page": 200,
+          "effects": [
+            {
+              "type": "ac",
+              "value": 1,
+              "when": "wearingArmor"
+            }
+          ]
+        },
+        {
+          "id": "dueling",
+          "name": "Dueling",
+          "text": "When you are wielding a melee weapon in one hand and no other Weapons, you gain a +2 bonus to Damage Rolls with that weapon.",
+          "page": 200
+        },
+        {
+          "id": "great_weapon_fighting",
+          "name": "Great Weapon Fighting",
+          "text": "When you roll a 1 or 2 on a damage die for an Attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the Two-Handed or Versatile property for you to gain this benefit.",
+          "page": 200
+        },
+        {
+          "id": "interception",
+          "name": "Interception",
+          "text": "When a creature you can see hits a target, other than you, within 5 feet of you with an attack, you can use your reaction to reduce the damage the target takes by 1d10 + your proficiency bonus (to a minimum of 0 damage). You must be wielding a shield or a simple or martial weapon to use this reaction.",
+          "page": 200,
+          "action": "reaction",
+          "rolls": [
+            {
+              "label": "Damage reduced",
+              "dice": "1d10 + {prof}",
+              "kind": "other"
+            }
+          ]
+        },
+        {
+          "id": "mariner",
+          "name": "Mariner",
+          "text": "As long as you are not wearing heavy armor or using a shield, you have a swimming speed and a climbing speed equal to your normal speed, and you gain a +1 bonus to armor class.",
+          "page": 200,
+          "effects": [
+            {
+              "type": "ac",
+              "value": 1,
+              "when": "!heavyArmor && noShield"
+            }
+          ]
+        },
+        {
+          "id": "protection",
+          "name": "Protection",
+          "text": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your Reaction to impose disadvantage on the Attack roll. You must be wielding a shield .",
+          "page": 200
+        },
+        {
+          "id": "thrown_weapon_fighting",
+          "name": "Thrown Weapon Fighting",
+          "text": "You can draw a weapon that has the Thrown property as part of the Attack you make with the weapon.\nIn addition, when you hit with a ranged Attack using a Thrown weapon, you gain a +2 bonus to the damage roll.",
+          "page": 200
+        },
+        {
+          "id": "two_weapon_fighting",
+          "name": "Two-Weapon Fighting",
+          "text": "When you engage in Two-Weapon Fighting, you can add your ability modifier to the damage of the second Attack.",
+          "page": 200
         }
       ]
     }

@@ -499,6 +499,16 @@
           ]
         }
       ],
+      "formulas": {
+        "spellDC": {
+          "label": "Spell save DC",
+          "expr": "8 + prof + mod.wis"
+        },
+        "spellAttack": {
+          "label": "Spell attack modifier",
+          "expr": "prof + mod.wis"
+        }
+      },
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

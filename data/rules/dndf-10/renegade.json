@@ -107,7 +107,14 @@
           "level": 2,
           "name": "Fast Talker",
           "text": "At 2nd level, you learn to master saying the right thing at the right time to get people to do what you want. When you make a Charisma (Persuasion) or Charisma (Deception) check, you can add 1d4 to the roll.",
-          "page": 172
+          "page": 172,
+          "rolls": [
+            {
+              "label": "Persuasion or Deception bonus",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ]
         },
         {
           "level": 3,
@@ -133,13 +140,27 @@
           "level": 5,
           "name": "Uncanny Dodge",
           "text": "Starting at 5th level, when an attacker that you can see hits you with an attack, you can use your reaction to halve the attack’s damage against you.",
-          "page": 172
+          "page": 172,
+          "action": "reaction"
         },
         {
           "level": 5,
           "name": "Press the Attack",
           "text": "At 5th level, you learn to build momentum with each successful strike. Whenever you hit a creature with a weapon attack made as part of your Dueling Strikes, you gain 1 stack of Press the Attack.\nFor each stack of Press the Attack you have, you gain a +1 bonus to attack rolls you make with your Dueling Strikes up to +3, and your Dueling Strikes attacks deal an additional stacking 1d4 damage on a hit up to half of your Renegade level (rounded up).\nYou lose all stacks of Press the Attack if you miss with a weapon attack made as part of your Dueling Strikes, use your Finishing Act, or combat ends.",
-          "page": 172
+          "page": 172,
+          "effects": [
+            {
+              "type": "attack",
+              "expr": "min(3, tracker.press_the_attack)"
+            }
+          ],
+          "rolls": [
+            {
+              "label": "Extra damage for the stacks held",
+              "dice": "{max(1, tracker.press_the_attack)}d4",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 7,
@@ -157,7 +178,13 @@
           "level": 15,
           "name": "Slippery Mind",
           "text": "By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws.",
-          "page": 173
+          "page": 173,
+          "effects": [
+            {
+              "type": "saveProficiency",
+              "ability": "wis"
+            }
+          ]
         },
         {
           "level": 18,
@@ -177,6 +204,15 @@
           "auto": [
             "uses"
           ]
+        }
+      ],
+      "trackers": [
+        {
+          "id": "press_the_attack",
+          "name": "Press the Attack stacks",
+          "min": 0,
+          "max": "ceil(level / 2)",
+          "minLevel": 5
         }
       ]
     },

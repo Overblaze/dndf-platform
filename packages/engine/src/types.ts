@@ -153,6 +153,8 @@ export interface TrackerDef {
   max: number | string;
   /** Rest that puts the tracker back to its minimum. */
   reset?: string;
+  /** Class level at which the tracker appears. */
+  minLevel?: number;
   page?: number;
   levels?: { value: number; label: string; text?: string }[];
 }
