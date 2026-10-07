@@ -17,18 +17,20 @@ export function signed(n: number): string {
 }
 
 /**
- * Level 1: hit die max + Con; each later level: average (die / 2 + 1) + Con.
+ * Level 1: hit die max + Con; each later level: average (die / 2 + 1) or the roll, + Con.
  * Con is applied to every level, so Con changes are retroactive — v10 p85.
+ * `first: false` is for a class added by multiclassing, which has no maximum first die.
  */
-export function maxHp(input: { hitDie: number; level: number; conMod: number }): Derived {
-  const { hitDie, level, conMod } = input;
-  const later = level - 1;
+export function maxHp(input: { hitDie: number; level: number; conMod: number; rolls?: (number | null)[]; first?: boolean }): Derived {
+  const { hitDie, level, conMod, rolls = [], first = true } = input;
   const average = hitDie / 2 + 1;
-  const lines = [
-    { label: `Level 1: d${hitDie} maximum`, value: hitDie },
-    { label: `Levels 2–${level}: ${later} × ${average} (average)`, value: later * average },
-    { label: `Constitution modifier ${signed(conMod)} × ${level} levels`, value: conMod * level },
-  ];
-  if (later === 0) lines.splice(1, 1);
-  return { value: lines.reduce((sum, l) => sum + l.value, 0), lines };
+  const laterLevels = first ? level - 1 : level;
+  const rolled = rolls.slice(0, laterLevels).filter((r): r is number => typeof r === 'number');
+  const averaged = laterLevels - rolled.length;
+  const lines = [];
+  if (first) lines.push({ label: `Level 1: d${hitDie} maximum`, value: hitDie });
+  if (averaged > 0) lines.push({ label: `${averaged} level${averaged > 1 ? 's' : ''} × ${average} (average)`, value: averaged * average });
+  if (rolled.length > 0) lines.push({ label: `${rolled.length} level${rolled.length > 1 ? 's' : ''} rolled`, value: rolled.reduce((a, b) => a + b, 0) });
+  lines.push({ label: `Constitution modifier ${signed(conMod)} × ${level} levels`, value: conMod * level });
+  return { value: lines.reduce((sum, l) => sum + l.value, 0), lines, page: 85 };
 }

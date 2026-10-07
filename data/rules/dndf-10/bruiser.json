@@ -146,7 +146,8 @@
           "name": "Fury Points",
           "max": "col.fury",
           "recharge": "short",
-          "minLevel": 2
+          "minLevel": 2,
+          "confirm": "Spent at least 30 minutes of the rest training"
         },
         {
           "id": "thrill",
@@ -181,9 +182,30 @@
           "uses": "res.thrill",
           "toggle": {
             "id": "frenzied",
-            "label": "Frenzied"
+            "label": "Frenzied",
+            "effects": [
+              {
+                "type": "damage",
+                "expr": "prof",
+                "when": "bruiserWeapon",
+                "label": "Thrill of the Fight"
+              },
+              {
+                "type": "note",
+                "label": "Advantage on Strength checks and Strength saving throws"
+              },
+              {
+                "type": "note",
+                "label": "Resistance to bludgeoning, piercing, and slashing damage"
+              },
+              {
+                "type": "note",
+                "label": "Can't cast spells or concentrate on them"
+              }
+            ]
           },
-          "page": 86
+          "page": 86,
+          "action": "bonus"
         },
         {
           "level": 1,
@@ -248,7 +270,21 @@
             "max": 1,
             "recharge": "short"
           },
-          "page": 87
+          "page": 87,
+          "action": "reaction",
+          "rolls": [
+            {
+              "label": "Temporary hit points",
+              "dice": "1{col.scrapperDie} + {level}",
+              "kind": "tempHp"
+            }
+          ],
+          "onUse": [
+            {
+              "type": "refill",
+              "resource": "fury"
+            }
+          ]
         },
         {
           "level": 4,
@@ -279,13 +315,27 @@
           "level": 7,
           "name": "Frenzied Rush",
           "text": "At 7th level, as part of the bonus action you take to enter your frenzy, you regain 1 expended fury and you can additionally move up to half of your walking speed for free.\nAdditionally, if you are surprised at the beginning of combat and aren’t incapacitated, you can act normally on your first turn, but only if you enter your frenzy before doing anything else on that turn.",
-          "page": 87
+          "page": 87,
+          "effects": [
+            {
+              "type": "regainOnToggle",
+              "toggle": "frenzied",
+              "resource": "fury",
+              "value": 1
+            }
+          ]
         },
         {
           "level": 13,
           "name": "Undying Frenzy",
           "text": "Starting at 13th level, your frenzy keeps you fighting despite lethal injuries. If you drop to 0 hit points while you’re in a frenzy and don’t die outright, you can make a DC 10 Constitution saving throw. If you succeed, you drop to 1 hit point instead.\nEach time you use this feature after the first, the DC increases by 5. When you finish a short or long rest, the DC resets to 10.",
-          "page": 87
+          "page": 87,
+          "counter": {
+            "id": "undying_frenzy",
+            "label": "Constitution save DC",
+            "expr": "10 + 5 * count",
+            "reset": "short"
+          }
         },
         {
           "level": 15,
@@ -307,7 +357,14 @@
           "level": 18,
           "name": "Invincible",
           "text": "Beginning at 18th level, while you are in your frenzy, you have resistance to all damage.",
-          "page": 87
+          "page": 87,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to all damage",
+              "when": "on.frenzied"
+            }
+          ]
         },
         {
           "level": 20,
@@ -365,7 +422,14 @@
           },
           "action": "bonus",
           "text": "You can use your Fury to grit your teeth and withstand physical injuries. You can use a bonus action and spend 1 fury point to prepare for any incoming attack. You gain a number of temporary hit points equal to your scrapper die + your bruiser level.",
-          "page": 86
+          "page": 86,
+          "rolls": [
+            {
+              "label": "Temporary hit points",
+              "dice": "1{col.scrapperDie} + {level}",
+              "kind": "tempHp"
+            }
+          ]
         },
         {
           "id": "focused_strike",
@@ -463,7 +527,8 @@
               }
             ]
           },
-          "page": 88
+          "page": 88,
+          "action": "bonus"
         },
         {
           "level": 6,
@@ -472,7 +537,14 @@
           "cost": {
             "fury": 1
           },
-          "page": 88
+          "page": 88,
+          "rolls": [
+            {
+              "label": "Fire damage",
+              "dice": "{level>=17 ? 4 : level>=11 ? 3 : 2}{col.scrapperDie}",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 6,
@@ -482,7 +554,8 @@
             "max": 1,
             "recharge": "short"
           },
-          "page": 88
+          "page": 88,
+          "action": "bonus"
         },
         {
           "level": 11,
@@ -492,7 +565,8 @@
             "max": 1,
             "recharge": "long"
           },
-          "page": 88
+          "page": 88,
+          "action": "bonus"
         },
         {
           "level": 17,
@@ -502,7 +576,8 @@
             "max": 1,
             "recharge": "long"
           },
-          "page": 88
+          "page": 88,
+          "action": "action"
         }
       ],
       "flavor": "Some warriors seek strength through relentless training, while others look to the ferocity of nature itself.\nBruisers who follow the Beast Style forge a deep connection with the raw power of the wild, channeling the might of nature’s fiercest creatures into their own combat prowess."
@@ -530,13 +605,32 @@
           "level": 3,
           "name": "Bring Him Down",
           "text": "Also at the 3rd level, while you are in Thrill of the Fight, your presence on the battlefield is so overwhelming that enemies instinctively focus on you. As a bonus action, all enemies within 10 feet of you has disadvantage on attack rolls against creatures other than you (or others who also have this feature) until your thrill of the fight ends. You may use this feature once per thrill of the fight.\nThe range of this ability increases to 20 feet at 11th level.",
-          "page": 89
+          "page": 89,
+          "action": "bonus"
         },
         {
           "level": 6,
           "name": "Armament-Coated Muscles",
           "text": "At 6th level, you can reinforce your body with an unyielding layer of Armament Haki, briefly enhancing either your offensive or defensive capabilities. As a bonus action while in Thrill of the Fight, you harden your skin with Haki and gain one of the following effects until the start of your next turn.\nWhen you are hit by an attack, you gain damage reduction equal to your your Constitution modifier against all damage except for Force and Psychic damage.\nAdd half your Constitution modifier (rounded up) to you attack rolls and your Constitution Modifier to your damage rolls when you attack with bruiser weapons or unarmed strikes.",
-          "page": 89
+          "page": 89,
+          "action": "bonus",
+          "effects": [
+            {
+              "type": "display",
+              "label": "Damage reduction",
+              "expr": "mod.con"
+            },
+            {
+              "type": "display",
+              "label": "Attack bonus",
+              "expr": "ceil(mod.con / 2)"
+            },
+            {
+              "type": "display",
+              "label": "Damage bonus",
+              "expr": "mod.con"
+            }
+          ]
         },
         {
           "level": 11,
@@ -621,13 +715,15 @@
           "level": 3,
           "name": "Liquid Courage",
           "text": "Starting at 3rd level, your fighting style revolves around consuming alcohol to fuel your combat prowess. As a bonus action, you can drink a flask of alcohol. After drinking, you enter a drunken state that lasts for 1 minute. While in this state, you gain one of the following emotional buffs at random, rolling a 1d4 to determine the effect and gaining a number of temp hit points equal to your bruiser level. You lose these temp hit points when you become sober. 1. Drunken Rage (Anger): You gain advantage on Strength-based attack rolls, but attack rolls against you also have advantage. 2. Sorrowful Stagger (Sadness): You gain resistance to all damage, but your movement speed is reduced by 10 feet. 3. Joyous Flurry ( Joy): You can make an additional unarmed strike or bruiser weapon attack whenever you take the Attack action, but all damage you deal is reduced by 1d4. 4. Reckless Frenzy (Madness): You can take the Dash action as a bonus action, but must make a melee attack against the nearest creature at the end of your movement, friend or foe.",
-          "page": 90
+          "page": 90,
+          "action": "bonus"
         },
         {
           "level": 6,
           "name": "Booze Breath",
           "text": "At 6th level, your drunken state mimics the fearsome breath of a dragon. While effected by Liquid Courage, you can use an action to exhale a wave of elemental fury, dealing damage to creatures in a 15-foot cone. The damage type depends on your emotional state:\nDrunken Rage: Fire damage Sorrowful Stagger: Cold damage Joyous Flurry: Lightning damage Reckless Frenzy: Acid damage Creatures in the area must make a Dexterity saving throw against your Fury save DC, taking damage equal to 1d6 * your Drunken State Level on a failed save, or half as much on a successful one. You can use this feature once per turn.",
-          "page": 90
+          "page": 90,
+          "action": "action"
         },
         {
           "level": 11,
@@ -671,7 +767,14 @@
           "level": 3,
           "name": "Eastern Breath",
           "text": "Also at 3rd level, when you take the Attack action on your turn, you can replace one of the attacks with a burst of draconic energy in a 30-foot line that is 5 feet wide. Choose a damage type: fire, cold, or lightning.\nEach creature in the area must make a Dexterity saving throw against your Fury save DC, taking damage of the chosen type equal to two rolls of your Scrapper die on a failure, or half as much damage on a success.\nAt 11th level, the damage of your breath increases to three rolls of your Scrapper die.",
-          "page": 90
+          "page": 90,
+          "rolls": [
+            {
+              "label": "Breath damage",
+              "dice": "{level>=11 ? 3 : 2}{col.scrapperDie}",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 6,
@@ -681,13 +784,21 @@
             "max": "prof",
             "recharge": "short"
           },
-          "page": 90
+          "page": 90,
+          "action": "bonus"
         },
         {
           "level": 11,
           "name": "Descending Star",
           "text": "At 11th level, as part of your cloud walk ability you can choose to teleport straight downwards, if you move in a line at least 30 ft., you are able to emit a large blast of draconic energy.\nAll creatures of your choice within 20 ft. of the impact site must make a Dexterity saving throw against your Fury save DC. A creature takes fire, thunder, or lightning damage equal to 2 scrapper die + your Constitution modiifer on a failed saving throw, and half as much damage on a successful one.",
-          "page": 91
+          "page": 91,
+          "rolls": [
+            {
+              "label": "Blast damage",
+              "dice": "2{col.scrapperDie} + {mod.con}",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 17,
@@ -722,7 +833,14 @@
               "expr": "ceil(prof/2) + 'd6'"
             }
           ],
-          "page": 91
+          "page": 91,
+          "rolls": [
+            {
+              "label": "Thunder damage",
+              "dice": "{ceil(prof/2)}d6",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 3,
@@ -732,7 +850,14 @@
             "max": "prof*2",
             "recharge": "long"
           },
-          "page": 91
+          "page": 91,
+          "rolls": [
+            {
+              "label": "Thunder damage",
+              "dice": "{ceil(prof/2)}d6",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 6,
@@ -742,7 +867,15 @@
             "max": "prof*2",
             "recharge": "long"
           },
-          "page": 91
+          "page": 91,
+          "action": "reaction",
+          "rolls": [
+            {
+              "label": "Damage reduced",
+              "dice": "{ceil(prof/2)}d6",
+              "kind": "other"
+            }
+          ]
         },
         {
           "level": 11,
@@ -752,7 +885,15 @@
             "max": 1,
             "recharge": "short"
           },
-          "page": 91
+          "page": 91,
+          "action": "bonus",
+          "rolls": [
+            {
+              "label": "Force damage",
+              "dice": "3d8",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 17,
@@ -762,7 +903,15 @@
             "max": 1,
             "recharge": "long"
           },
-          "page": 91
+          "page": 91,
+          "action": "action",
+          "rolls": [
+            {
+              "label": "Thunder damage",
+              "dice": "6d10",
+              "kind": "damage"
+            }
+          ]
         }
       ],
       "flavor": "The Hasshoken Style Bruiser harnesses the power of vibrations, delivering devastating punches that send shockwaves through their enemies, causing internal damage."
@@ -812,13 +961,15 @@
             "max": "prof",
             "recharge": "long"
           },
-          "page": 92
+          "page": 92,
+          "action": "action"
         },
         {
           "level": 3,
           "name": "One - Two Punch",
           "text": "Additionally at 3rd level, as a bonus action you quickly jab at a target, making an unarmed strike attack with your fist.",
-          "page": 92
+          "page": 92,
+          "action": "bonus"
         },
         {
           "level": 6,

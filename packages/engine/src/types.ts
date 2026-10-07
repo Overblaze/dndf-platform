@@ -64,6 +64,8 @@ export interface ResourceDef {
   max: number | string;
   recharge: string;
   minLevel?: number;
+  /** Something the player must confirm before a rest refills this. */
+  confirm?: string;
 }
 
 /** The fields every entry in data/rules carries. */
@@ -88,4 +90,47 @@ export interface ClassEntry extends RuleEntry {
 
 export interface RulesFile {
   entries: RuleEntry[];
+}
+
+export interface RollDef {
+  label: string;
+  /** Dice template; {…} parts are expressions. */
+  dice: string;
+  kind: 'damage' | 'heal' | 'tempHp' | 'other';
+}
+
+export interface OnUseDef {
+  type: 'refill' | 'regain';
+  resource: string;
+  value?: number | string;
+}
+
+export interface CounterDef {
+  id: string;
+  label: string;
+  expr: string;
+  reset: string;
+}
+
+export interface ToggleDef {
+  id: string;
+  label: string;
+  effects?: EffectDef[];
+}
+
+export interface OptionDef {
+  id: string;
+  name: string;
+  text: string;
+  page: number;
+  [key: string]: unknown;
+}
+
+export interface TrackerDef {
+  id: string;
+  name: string;
+  min: number;
+  max: number | string;
+  page?: number;
+  levels?: { value: number; label: string; text?: string }[];
 }
