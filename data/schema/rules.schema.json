@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://overblaze.github.io/dndf-platform/schema/rules.schema.json",
+  "title": "DnDF rules file",
+  "description": "One file of public rules entries under data/rules/<version>/. See docs/SPEC.md, \"Data schema\".",
+  "type": "object",
+  "required": ["$schemaVersion", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "$schemaVersion": { "const": 1 },
+    "$note": { "type": "string" },
+    "entries": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/entry" } }
+  },
+  "$defs": {
+    "version": { "enum": ["dndf-8.8", "dndf-10"] },
+    "page": { "type": "integer", "minimum": 1 },
+    "text": { "type": "string", "minLength": 1 },
+    "expr": {
+      "description": "A number, or an expression the engine evaluates (prof, level, mod.con, col.fury, ...).",
+      "oneOf": [{ "type": "number" }, { "type": "string", "minLength": 1 }]
+    },
+    "recharge": { "enum": ["short", "long", "dawn", "turn", "round", "none"] },
+    "ability": { "enum": ["str", "dex", "con", "int", "wis", "cha"] },
+    "action": { "enum": ["action", "bonus", "reaction", "specialReaction", "free"] },
+    "source": {
+      "type": "object",
+      "required": ["book", "page"],
+      "additionalProperties": false,
+      "properties": {
+        "book": { "$ref": "#/$defs/text" },
+        "page": { "$ref": "#/$defs/page" }
+      }
+    },
+    "uses": {
+      "description": "Limited uses, or \"res.<id>\" to share a resource defined on the class.",
+      "oneOf": [
+        { "type": "string", "pattern": "^res\\.[a-z][a-zA-Z0-9_]*$" },
+        {
+          "type": "object",
+          "required": ["max", "recharge"],
+          "additionalProperties": false,
+          "properties": {
+            "max": { "$ref": "#/$defs/expr" },
+            "recharge": { "$ref": "#/$defs/recharge" }
+          }
+        }
+      ]
+    },
+    "cost": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/expr" }
+    },
+    "effect": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "$ref": "#/$defs/text" },
+        "expr": { "type": "string", "minLength": 1 },
+        "value": { "type": "number" },
+        "when": { "type": "string", "minLength": 1 },
+        "ability": { "$ref": "#/$defs/ability" },
+        "max": { "type": "number" },
+        "skill": { "type": "string" },
+        "label": { "type": "string" }
+      }
+    },
+    "toggle": {
+      "type": "object",
+      "required": ["id", "label"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/text" },
+        "label": { "$ref": "#/$defs/text" },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } }
+      }
+    },
+    "choices": {
+      "type": "object",
+      "required": ["id", "count", "from"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/text" },
+        "count": { "$ref": "#/$defs/expr" },
+        "from": { "description": "Id of an optionGroup entry.", "type": "string", "pattern": "^optionGroup\\." },
+        "relearn": { "enum": ["levelUp", "longRest", "never"] }
+      }
+    },
+    "tracker": {
+      "type": "object",
+      "required": ["id", "name", "min", "max"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/text" },
+        "name": { "$ref": "#/$defs/text" },
+        "min": { "type": "number" },
+        "max": { "$ref": "#/$defs/expr" },
+        "page": { "$ref": "#/$defs/page" },
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "label"],
+            "additionalProperties": false,
+            "properties": {
+              "value": { "type": "number" },
+              "label": { "$ref": "#/$defs/text" },
+              "text": { "$ref": "#/$defs/text" }
+            }
+          }
+        }
+      }
+    },
+    "resource": {
+      "type": "object",
+      "required": ["id", "name", "max", "recharge"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/text" },
+        "name": { "$ref": "#/$defs/text" },
+        "max": { "$ref": "#/$defs/expr" },
+        "recharge": { "$ref": "#/$defs/recharge" },
+        "minLevel": { "type": "integer", "minimum": 1, "maximum": 20 }
+      }
+    },
+    "feature": {
+      "description": "A class or subclass feature. Text is word-for-word and every feature cites its own page.",
+      "type": "object",
+      "required": ["level", "name", "text", "page"],
+      "additionalProperties": false,
+      "properties": {
+        "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "name": { "$ref": "#/$defs/text" },
+        "text": { "$ref": "#/$defs/text" },
+        "page": { "$ref": "#/$defs/page" },
+        "action": { "$ref": "#/$defs/action" },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
+        "uses": { "$ref": "#/$defs/uses" },
+        "cost": { "$ref": "#/$defs/cost" },
+        "toggle": { "$ref": "#/$defs/toggle" },
+        "choices": { "$ref": "#/$defs/choices" },
+        "asi": { "type": "boolean" },
+        "grantsSubclass": { "type": "boolean" }
+      }
+    },
+    "option": {
+      "description": "One pick inside an optionGroup (a Fury feature, a manoeuvre, ...).",
+      "type": "object",
+      "required": ["id", "name", "text", "page"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "name": { "$ref": "#/$defs/text" },
+        "text": { "$ref": "#/$defs/text" },
+        "page": { "$ref": "#/$defs/page" },
+        "action": { "$ref": "#/$defs/action" },
+        "cost": { "$ref": "#/$defs/cost" },
+        "uses": { "$ref": "#/$defs/uses" },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
+        "toggle": { "$ref": "#/$defs/toggle" },
+        "prerequisite": { "type": "string" }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "required": ["id", "kind", "name", "versions", "source"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-zA-Z]+(\\.[a-z0-9_]+)+$" },
+        "kind": {
+          "enum": [
+            "class", "subclass", "optionGroup", "race", "subrace", "background", "feat", "crewRole", "dream",
+            "hakiFeature", "surgeAdvancement", "devilFruit", "item", "spell", "beast", "shipType", "shipUpgrade"
+          ]
+        },
+        "name": { "$ref": "#/$defs/text" },
+        "versions": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/version" } },
+        "source": { "$ref": "#/$defs/source" },
+        "text": { "$ref": "#/$defs/text" },
+        "flavor": { "$ref": "#/$defs/text" },
+        "parent": { "type": "string" },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/effect" } },
+        "uses": { "$ref": "#/$defs/uses" },
+        "toggle": { "$ref": "#/$defs/toggle" },
+        "trackers": { "type": "array", "items": { "$ref": "#/$defs/tracker" } },
+        "resources": { "type": "array", "items": { "$ref": "#/$defs/resource" } },
+        "formulas": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["label", "expr"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "$ref": "#/$defs/text" },
+              "expr": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "progression": {
+          "type": "object",
+          "required": ["columns"],
+          "additionalProperties": false,
+          "properties": {
+            "columns": {
+              "description": "Class table columns: one value per level, 1 to 20.",
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "minItems": 20,
+                "maxItems": 20,
+                "items": { "type": ["number", "string"] }
+              }
+            }
+          }
+        },
+        "choices": { "$ref": "#/$defs/choices" },
+        "features": { "type": "array", "items": { "$ref": "#/$defs/feature" } },
+        "options": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/option" } },
+        "overrides": {
+          "description": "Per-version changes to an entry shared by both versions.",
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/version" },
+          "additionalProperties": { "type": "object" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "devilFruit" } } },
+          "then": false,
+          "$comment": "Devil Fruits are secret: they live in ~/dndf/secret and private Supabase tables, never in data/rules."
+        },
+        {
+          "if": { "properties": { "kind": { "const": "class" } } },
+          "then": {
+            "required": ["hitDie", "savingThrows", "features"],
+            "properties": {
+              "hitDie": { "enum": [6, 8, 10, 12] },
+              "savingThrows": { "type": "array", "items": { "$ref": "#/$defs/ability" }, "uniqueItems": true },
+              "asiLevels": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 20 } },
+              "subclass": {
+                "type": "object",
+                "required": ["label", "level", "featureLevels"],
+                "additionalProperties": false,
+                "properties": {
+                  "label": { "$ref": "#/$defs/text" },
+                  "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+                  "featureLevels": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 20 } }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "subclass" } } },
+          "then": { "required": ["parent", "features"], "properties": { "parent": { "type": "string", "pattern": "^class\\." } } }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "optionGroup" } } },
+          "then": { "required": ["options"] }
+        }
+      ]
+    }
+  }
+}

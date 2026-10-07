@@ -1,0 +1,343 @@
+/* "Grand Line sea chart" — tokens and patterns from docs/THEME.md. */
+:root {
+  --paper: #efe0b9;
+  --header: #e4cf9c;
+  --card: #f8eed4;
+  --card-inner: #f3e6c4;
+  --raised: #eeddb2;
+  --line: #b89b63;
+  --rule: #d9c391;
+  --ink: #3b2a1a;
+  --ink-soft: #4e3b24;
+  --muted: #6b5434;
+  --accent: #a9471f;
+  --on-accent: #fff4dc;
+  --accent-ink: #8e3b1c;
+  --accent-tint: #f4d6bc;
+  --damage: #b83a26;
+  --damage-ink: #9e2f1e;
+  --heal: #2e7d74;
+  --heal-ink: #1f5e57;
+  --heal-tint: #d9eee6;
+  --fruit: #6a4c9c;
+  --fruit-ink: #5a3e8a;
+  --fruit-tint: #e8ddf2;
+  --warn: #c8952e;
+  --warn-bg: #f6e2b0;
+  --warn-ink: #6b4a0e;
+  --poster: #fbf3dd;
+  --poster-line: #8a6f45;
+  --grid: rgba(150, 120, 70, 0.16);
+
+  --font-body: 'Barlow', system-ui, sans-serif;
+  --font-label: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+  --font-heading: 'IM Fell English SC', Georgia, serif;
+  --font-note: 'IM Fell English', Georgia, serif;
+  --font-logo: 'Pirata One', 'IM Fell English SC', Georgia, serif;
+
+  --touch: 44px;
+  --nav-height: 56px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  color: var(--ink);
+  font: 15px/1.5 var(--font-body);
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+
+h1,
+h2 {
+  margin: 0 0 8px;
+  color: var(--accent-ink);
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+code {
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--card-inner);
+  font-size: 13px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.label {
+  color: var(--muted);
+  font: 500 13px/1.3 var(--font-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.num {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-ref {
+  color: var(--muted);
+  font: 500 13px/1.3 var(--font-label);
+}
+
+.soft {
+  color: var(--ink-soft);
+}
+
+/* Shell: top bar always; the nav sits in it on wide screens and along the bottom edge on phones. */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: 6px 12px;
+  padding-top: max(6px, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--line);
+  background: var(--header);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--touch);
+  color: var(--ink);
+  font: 30px/1 var(--font-logo);
+  text-decoration: none;
+}
+
+.nav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--line);
+  background: var(--header);
+}
+
+.nav a {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch);
+  min-height: var(--nav-height);
+  border-top: 3px solid transparent;
+  color: var(--ink-soft);
+  font: 600 14px/1 var(--font-label);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav a.active {
+  border-top-color: var(--accent);
+  background: var(--raised);
+  color: var(--accent-ink);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.account-name {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font: 600 13px/1.4 var(--font-label);
+  letter-spacing: 0.12em;
+}
+
+.btn {
+  min-width: var(--touch);
+  min-height: var(--touch);
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--raised);
+  color: var(--ink);
+  font: 600 15px/1 var(--font-label);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn-primary {
+  border-color: var(--accent-ink);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.page {
+  display: grid;
+  gap: 12px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px;
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 24px);
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.card > :last-child {
+  margin-bottom: 0;
+}
+
+.notice {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--warn);
+  border-radius: 6px;
+  background: var(--warn-bg);
+  color: var(--warn-ink);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--card-inner);
+  text-align: center;
+}
+
+.big {
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.breakdowns {
+  display: grid;
+  gap: 8px;
+}
+
+.breakdown {
+  padding: 10px 12px;
+  border: 1px dashed var(--accent);
+  border-radius: 6px;
+  background: var(--card-inner);
+}
+
+.breakdown-head,
+.breakdown li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.breakdown ul {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breakdown li {
+  padding: 2px 0;
+}
+
+.breakdown-total {
+  margin-top: 4px;
+  border-top: 1px solid var(--rule);
+  font-weight: 600;
+}
+
+@media (min-width: 760px) {
+  .topbar {
+    padding-inline: 20px;
+  }
+
+  .nav {
+    position: static;
+    flex: 1;
+    gap: 4px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .nav a {
+    flex: none;
+    min-height: var(--touch);
+    padding: 0 14px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+  }
+
+  .nav a.active {
+    border-color: var(--line);
+  }
+
+  .page {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .breakdowns {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+}
