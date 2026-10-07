@@ -48,5 +48,13 @@ select discord_username, display_name, is_dm from public.profiles;
 | `character_history` | append-only log of changes | whoever can see the character; rows can't be edited or deleted |
 | `app_settings` | site settings such as the bootstrap DM | nobody through the app; SQL Editor only |
 
+## Sheet background pictures (`0002_sheet_backgrounds.sql`)
+
+Creates a private storage bucket, `sheet-backgrounds`, for pictures players upload as their character sheet
+background. Files are stored at `<owner id>/<character id>/<file>`, limited to 2 MB JPEG, PNG or WebP (the site shrinks
+pictures before uploading). A player can add, see and delete only their own; the DMs of a character's campaign can
+also see that character's picture. Until this file is run, the built-in backgrounds work and uploads show a
+"not set up yet" message.
+
 Row-level security is on for every table and signed-out visitors can read nothing. `npm test` runs
 `supabase/tests/rls.test.ts`, which loads these migrations into an in-memory Postgres and checks each rule above.
