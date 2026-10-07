@@ -1,3 +1,4 @@
+import { RuleText } from '../components/RuleText';
 import type { LiveCharacter } from '../lib/useCharacter';
 
 export function FeaturesTab({ live }: { live: LiveCharacter }) {
@@ -14,7 +15,7 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
             <span className="resource-name">{feature.name}</span>
             <span className="page-ref">{feature.from} · p.{feature.page}</span>
           </summary>
-          <p className="feature-text">{feature.text}</p>
+          <RuleText text={feature.text} sections={feature.sections} tables={feature.tables} />
           <p className="page-ref">{feature.book}, p.{feature.page}</p>
         </details>
       ))}

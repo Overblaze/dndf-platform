@@ -218,6 +218,8 @@ code {
 
 .page {
   display: grid;
+  /* minmax(0, …) lets wide tables scroll inside their card instead of stretching the page. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   max-width: 960px;
   margin: 0 auto;
@@ -976,6 +978,97 @@ a.btn {
   padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 160px);
 }
 
+
+/* Book text: sub-headed sections, printed tables, the library */
+h3 {
+  margin: 12px 0 4px;
+  color: var(--heading, var(--accent-ink));
+  font: 400 18px/1.2 var(--font-heading);
+}
+
+.rule-body {
+  display: grid;
+  gap: 4px;
+}
+
+.rule-section {
+  padding-left: 10px;
+  border-left: 2px solid var(--rule);
+}
+
+.rule-table {
+  max-width: 100%;
+  margin: 6px 0;
+  overflow-x: auto;
+}
+
+.rule-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 14px/1.35 var(--font-label);
+}
+
+.rule-table td,
+.rule-table th {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--rule);
+  text-align: center;
+  vertical-align: top;
+}
+
+.rule-table tr:nth-child(even) td {
+  background: var(--card-inner);
+}
+
+.rule-table th {
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rule-table .left,
+.rule-table td:only-child {
+  text-align: left;
+}
+
+.class-table td.left {
+  min-width: 200px;
+}
+
+.quote {
+  color: var(--ink-soft);
+  font: italic 17px/1.4 var(--font-note);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: 12px 0 0;
+}
+
+.facts dt {
+  color: var(--muted);
+  font: 500 13px/1.6 var(--font-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.facts dd {
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.chip-lg {
+  padding: 6px 12px;
+  font-size: 15px;
+}
+
+a {
+  color: var(--accent-ink);
+}
 
 @media (min-width: 760px) {
   .topbar {
