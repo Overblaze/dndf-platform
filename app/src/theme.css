@@ -229,7 +229,64 @@ code {
   padding: 16px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--card);
+  /* On a character sheet --card-bg is a slightly see-through version of --card. */
+  background: var(--card-bg, var(--card));
+}
+
+/* The character's own background, fixed behind the sheet. */
+.sheet-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: 96px 96px;
+}
+
+.sheet-bg-picture {
+  background-position: center;
+  background-size: cover;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card-inner);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.swatch-on {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: var(--accent-tint);
+}
+
+.swatch-color {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background-size: 13px 13px;
+}
+
+input[type='range'] {
+  padding: 0;
+  border: 0;
+  background: none;
+  accent-color: var(--accent);
 }
 
 .card > :last-child {
@@ -926,6 +983,10 @@ a.btn {
   .dialog {
     margin: auto;
     border-radius: 12px;
+  }
+
+  .swatches {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .tiles-vitals {

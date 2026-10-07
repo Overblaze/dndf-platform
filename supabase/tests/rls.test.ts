@@ -28,6 +28,26 @@ const AUTH_STUB = `
     select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid
   $$;
   grant usage on schema auth to anon, authenticated;
+
+  create schema storage;
+  create table storage.buckets (
+    id text primary key,
+    name text not null,
+    public boolean default false,
+    file_size_limit bigint,
+    allowed_mime_types text[]
+  );
+  create table storage.objects (
+    id uuid primary key default gen_random_uuid(),
+    bucket_id text references storage.buckets (id),
+    name text not null
+  );
+  alter table storage.objects enable row level security;
+  create function storage.foldername(name text) returns text[] language sql immutable as $$
+    select (string_to_array(name, '/'))[1 : array_length(string_to_array(name, '/'), 1) - 1]
+  $$;
+  grant usage on schema storage to anon, authenticated;
+  grant all on storage.objects to anon, authenticated;
 `;
 
 let db: PGlite;
@@ -278,6 +298,50 @@ describe('signed-out visitors', () => {
 
   it('cannot call sync_my_profile', async () => {
     await expect(as(null, `select public.sync_my_profile()`)).rejects.toThrow(/permission denied/);
+  });
+});
+
+describe('sheet background pictures', () => {
+  const put = `insert into storage.objects (bucket_id, name) values ('sheet-backgrounds', $1) returning name`;
+  const seen = async (who: string | null) => (await as(who, `select name from storage.objects order by name`)).map((r) => r.name);
+  let anaFile: string;
+  let zedFile: string;
+
+  it('lets a player upload into their own folder only', async () => {
+    anaFile = `${ana}/${anaChar}/a.jpg`;
+    zedFile = `${zed}/${zedChar}/z.jpg`;
+    expect(await as(ana, put, [anaFile])).toHaveLength(1);
+    expect(await as(zed, put, [zedFile])).toHaveLength(1);
+    await expect(as(ana, put, [`${ben}/${benChar}/sneaky.jpg`])).rejects.toThrow(/row-level security/);
+    await expect(as(ana, `insert into storage.objects (bucket_id, name) values ('other', $1)`, [anaFile])).rejects.toThrow(/row-level security/);
+    await expect(as(null, put, [`${ana}/${anaChar}/anon.jpg`])).rejects.toThrow(/row-level security/);
+  });
+
+  it('shows a picture to its owner and to the DM of that character\'s campaign, and nobody else', async () => {
+    expect(await seen(ana)).toEqual([anaFile]);
+    expect(await seen(ben)).toEqual([]);
+    expect(await seen(matt)).toEqual([anaFile]);
+    expect(await seen(zed)).toEqual([zedFile]);
+    expect(await seen(null)).toEqual([]);
+  });
+
+  it('does not show a DM a file that merely borrows a campaign character\'s id in its path', async () => {
+    const borrowed = `${zed}/${anaChar}/z.jpg`;
+    await as(zed, put, [borrowed]);
+    expect(await seen(matt)).toEqual([anaFile]);
+    await as(zed, `delete from storage.objects where name = $1`, [borrowed]);
+  });
+
+  it('lets only the owner delete it', async () => {
+    expect(await as(matt, `delete from storage.objects where name = $1 returning name`, [anaFile])).toEqual([]);
+    expect(await as(ben, `delete from storage.objects where name = $1 returning name`, [anaFile])).toEqual([]);
+    expect(await as(ana, `delete from storage.objects where name = $1 returning name`, [anaFile])).toHaveLength(1);
+  });
+
+  it('keeps the bucket private, limited to 2 MB images', async () => {
+    expect(await admin(`select public, file_size_limit, allowed_mime_types from storage.buckets where id = 'sheet-backgrounds'`)).toEqual([
+      { public: false, file_size_limit: 2097152, allowed_mime_types: ['image/jpeg', 'image/png', 'image/webp'] },
+    ]);
   });
 });
 

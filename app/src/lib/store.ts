@@ -1,6 +1,7 @@
 // Where characters are kept: the signed-in player's rows in Supabase, or this
 // browser's storage when nobody is signed in (a try-it-out mode).
 import { normalizeDoc, type CharacterDoc } from '@dndf/engine';
+import { blobToDataUrl } from './image';
 import { supabase } from './supabase';
 
 export interface StoredCharacter {
@@ -19,6 +20,11 @@ export interface CharacterStore {
   remove(id: string): Promise<void>;
   /** Adds a line to the character's history. Never fails the action it describes. */
   log(id: string, summary: string): Promise<void>;
+  /** Stores a sheet background picture and returns the reference to keep in the character. */
+  uploadBackground(id: string, picture: Blob): Promise<string>;
+  /** A URL the browser can show for a stored picture, or null if it is gone. */
+  backgroundUrl(ref: string): Promise<string | null>;
+  removeBackground(ref: string): Promise<void>;
 }
 
 const LOCAL_KEY = 'dndf.characters.v1';
@@ -41,6 +47,9 @@ function writeLocal(all: Record<string, StoredCharacter>) {
 
 const memory: Record<string, StoredCharacter> = readLocal();
 
+const LOCAL_PICTURE_KEY = 'dndf.background.';
+const localPictures = new Map<string, string>();
+
 const localStore: CharacterStore = {
   local: true,
   async list() {
@@ -62,8 +71,36 @@ const localStore: CharacterStore = {
   async remove(id) {
     delete memory[id];
     writeLocal(memory);
+    await this.removeBackground(`local:${id}`);
   },
   async log() {},
+  async uploadBackground(id, picture) {
+    const ref = `local:${id}`;
+    const dataUrl = await blobToDataUrl(picture);
+    localPictures.set(ref, dataUrl);
+    try {
+      localStorage.setItem(LOCAL_PICTURE_KEY + ref, dataUrl);
+    } catch {
+      // Browser storage is small. The picture still shows until the tab closes.
+      throw new Error('This browser has no room to keep the picture, so it will be gone after you close the tab. Sign in to keep pictures on your account.');
+    }
+    return ref;
+  },
+  async backgroundUrl(ref) {
+    try {
+      return localPictures.get(ref) ?? localStorage.getItem(LOCAL_PICTURE_KEY + ref);
+    } catch {
+      return localPictures.get(ref) ?? null;
+    }
+  },
+  async removeBackground(ref) {
+    localPictures.delete(ref);
+    try {
+      localStorage.removeItem(LOCAL_PICTURE_KEY + ref);
+    } catch {
+      // Nothing was stored.
+    }
+  },
 };
 
 interface Row {
@@ -77,8 +114,13 @@ function fromRow(row: Row): StoredCharacter | null {
   return doc ? { id: row.id, doc, updatedAt: row.updated_at } : null;
 }
 
+const BUCKET = 'sheet-backgrounds';
+/** Downloaded pictures, by reference, so switching tabs doesn't fetch them again. */
+const pictureUrls = new Map<string, string>();
+
 function remoteStore(userId: string): CharacterStore {
   const db = supabase!;
+  const pictures = db.storage.from(BUCKET);
   const fail = (what: string, message: string) => new Error(`Could not ${what}: ${message}`);
   return {
     local: false,
@@ -104,9 +146,36 @@ function remoteStore(userId: string): CharacterStore {
     async remove(id) {
       const { error } = await db.from('characters').delete().eq('id', id);
       if (error) throw fail('delete the character', error.message);
+      // Tidy up its pictures; leftovers are harmless, so problems here are ignored.
+      const folder = `${userId}/${id}`;
+      const { data } = await pictures.list(folder);
+      if (data?.length) await pictures.remove(data.map((file) => `${folder}/${file.name}`));
     },
     async log(id, summary) {
       await db.from('character_history').insert({ character_id: id, change: { summary } });
+    },
+    async uploadBackground(id, picture) {
+      const ref = `${userId}/${id}/${crypto.randomUUID()}.jpg`;
+      const { error } = await pictures.upload(ref, picture, { contentType: 'image/jpeg', cacheControl: '31536000' });
+      if (error) {
+        const setup = /bucket not found/i.test(error.message) ? ' The picture store has not been set up yet (migration 0002).' : '';
+        throw fail('upload the picture', `${error.message}.${setup}`);
+      }
+      pictureUrls.set(ref, URL.createObjectURL(picture));
+      return ref;
+    },
+    async backgroundUrl(ref) {
+      const known = pictureUrls.get(ref);
+      if (known) return known;
+      const { data, error } = await pictures.download(ref);
+      if (error || !data) return null;
+      const url = URL.createObjectURL(data);
+      pictureUrls.set(ref, url);
+      return url;
+    },
+    async removeBackground(ref) {
+      pictureUrls.delete(ref);
+      if (ref.startsWith(`${userId}/`)) await pictures.remove([ref]);
     },
   };
 }

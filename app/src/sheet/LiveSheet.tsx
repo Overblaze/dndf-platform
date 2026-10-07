@@ -5,11 +5,13 @@ import { Dialog } from '../components/Dialog';
 import { RollsProvider } from '../lib/rolls';
 import type { CharacterStore } from '../lib/store';
 import { useCharacter } from '../lib/useCharacter';
+import { AppearanceDialog } from './AppearanceDialog';
 import { CharacterForm } from './CharacterForm';
 import { CombatTab } from './CombatTab';
 import { FeaturesTab } from './FeaturesTab';
 import { RestDialog } from './RestDialog';
 import { RollTray } from './RollTray';
+import { SheetBackground } from './SheetBackground';
 import { SkillsTab } from './SkillsTab';
 import { StatDialog } from './StatDialog';
 import { findStat, type StatKind } from './stats';
@@ -30,7 +32,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
   const { live, loadError, missing } = useCharacter(store, id);
   const [tab, setTab] = useState<TabId>('combat');
   const [open, setOpen] = useState<{ key: string; kind: StatKind; rollable: boolean } | null>(null);
-  const [dialog, setDialog] = useState<'rest' | 'edit' | null>(null);
+  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | null>(null);
 
   if (loadError) return <p className="notice" role="alert">{loadError}</p>;
   if (missing) {
@@ -50,6 +52,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
 
   return (
     <RollsProvider>
+      <SheetBackground appearance={doc.appearance} store={store} />
       <section className="card sheet-head">
         <div>
           <h1>{sheet.name}</h1>
@@ -63,6 +66,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           </span>
           <button className="btn btn-primary" onClick={() => setDialog('rest')}>Rest</button>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
+          <button className="btn" onClick={() => setDialog('look')}>Background</button>
           <Link className="btn" to="/sheet">All characters</Link>
         </div>
         {live.saveError && <p className="notice" role="alert">{live.saveError}. Your changes are kept on screen and will be retried on the next change.</p>}
@@ -87,6 +91,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
 
       {open && openStat && <StatDialog stat={openStat} kind={open.kind} rollable={open.rollable} live={live} onClose={() => setOpen(null)} />}
       {dialog === 'rest' && <RestDialog live={live} onClose={() => setDialog(null)} />}
+      {dialog === 'look' && <AppearanceDialog live={live} store={store} id={id} onClose={() => setDialog(null)} />}
       {dialog === 'edit' && (
         <Dialog title="Edit character" onClose={() => setDialog(null)}>
           <CharacterForm initial={doc} onCancel={() => setDialog(null)} onSave={(next, log) => { live.setDoc(next, log); setDialog(null); }} />

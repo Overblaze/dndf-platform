@@ -48,6 +48,14 @@ export interface CharacterState {
   dreamPointsSpent: number;
 }
 
+/** How the player has dressed up their sheet. Purely cosmetic. */
+export interface SheetAppearance {
+  /** A built-in background, or `ref` pointing at a picture the player uploaded. */
+  background?: { kind: 'preset'; id: string } | { kind: 'image'; ref: string };
+  /** How solid the cards are over the background, 50–100 (percent). */
+  cardOpacity?: number;
+}
+
 export interface CharacterDoc {
   schema: 1;
   name: string;
@@ -68,6 +76,7 @@ export interface CharacterDoc {
   overrides: Record<string, number>;
   state: CharacterState;
   notes: string;
+  appearance?: SheetAppearance;
 }
 
 /** Table rulings a DM can change per campaign (CLAUDE.md, "Table rulings already decided"). */
@@ -145,5 +154,6 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     overrides: doc.overrides ?? {},
     state: { ...freshState(0), ...doc.state },
     notes: doc.notes ?? '',
+    appearance: doc.appearance,
   };
 }
