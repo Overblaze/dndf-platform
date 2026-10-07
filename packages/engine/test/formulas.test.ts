@@ -81,6 +81,14 @@ describe('DnDF', () => {
     expect(willpower({ level, strengthenSelf: 1 }).value).toBe(9);
   });
 
+  it('Willpower: capped at 20 in total, Strengthen Self included', () => {
+    const wp = willpower({ level: 19, strengthenSelf: 2 });
+    expect(wp.value).toBe(20);
+    expect(total(wp.lines)).toBe(20);
+    expect(willpower({ level: 20, strengthenSelf: 1 }).value).toBe(20);
+    expect(willpower({ level, variant: { spiritualAdvancements: 25 } }).value).toBe(20);
+  });
+
   it('Willpower variant: 0 + 1 per Spiritual Advancement', () => {
     expect(willpower({ level, variant: { spiritualAdvancements: 0 } }).value).toBe(0);
     expect(willpower({ level, variant: { spiritualAdvancements: 3 } }).value).toBe(3);

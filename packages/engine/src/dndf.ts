@@ -1,7 +1,7 @@
 // DnDF rows of docs/FORMULAS.md (v10 Expanded Handbook pages).
 import type { BreakdownLine, Derived } from './types';
 
-export const WILLPOWER_LEVEL_CAP = 20;
+export const WILLPOWER_MAX = 20;
 
 export interface WillpowerInput {
   /** Total character level. */
@@ -12,18 +12,20 @@ export interface WillpowerInput {
   variant?: { spiritualAdvancements: number };
 }
 
-/** 1 at level 1, +1 per level gained (max 20); Strengthen Self +2 — v10 p221. */
+/** 1 at level 1, +1 per level gained; Strengthen Self +2; never above 20 in total — v10 p221. */
 export function willpower(input: WillpowerInput): Derived {
   const lines: BreakdownLine[] = [];
   if (input.variant) {
     lines.push({ label: 'Spiritual Advancements (variant)', value: input.variant.spiritualAdvancements });
   } else {
-    lines.push({ label: 'Level (max 20)', value: Math.min(input.level, WILLPOWER_LEVEL_CAP) });
+    lines.push({ label: 'Level', value: input.level });
   }
   if (input.strengthenSelf) {
     lines.push({ label: `Strengthen Self × ${input.strengthenSelf}`, value: 2 * input.strengthenSelf });
   }
-  return { value: lines.reduce((sum, l) => sum + Number(l.value), 0), lines, page: 221 };
+  const sum = lines.reduce((acc, l) => acc + Number(l.value), 0);
+  if (sum > WILLPOWER_MAX) lines.push({ label: `Willpower maximum ${WILLPOWER_MAX}`, value: WILLPOWER_MAX - sum });
+  return { value: Math.min(sum, WILLPOWER_MAX), lines, page: 221 };
 }
 
 function halfWillpower(wp: number, base: number, page?: number): Derived {

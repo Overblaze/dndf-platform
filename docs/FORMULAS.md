@@ -22,7 +22,7 @@ Sample: Kaito Rourke, Human (Standard) Bruiser 7, v10 — Str 18, Dex 14, Con 16
 ## DnDF
 | Number | Formula | Kaito | Page |
 |---|---|---|---|
-| Willpower | 1 at L1, +1 per level gained (max 20); Strengthen Self +2. Variant: 0 + 1 per Spiritual Advancement | 7 | 221 |
+| Willpower | 1 at L1, +1 per level gained; Strengthen Self +2; total capped at 20 (Strengthen Self included). Variant: 0 + 1 per Spiritual Advancement | 7 | 221 |
 | Haki save DC | 10 + ceil(Willpower / 2) | 14 | 221 |
 | Haki attack (table ruling; custom/original-PHB features only) | 2 + ceil(Willpower / 2) | +6 | — |
 | Haki tier per color | T2 at 4 features of that color, T3 at 6; Amateur (Common) don't count | — | 221 |
