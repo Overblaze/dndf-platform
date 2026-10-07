@@ -4,7 +4,7 @@ import { RuleText } from '../components/RuleText';
 import { useRolls } from '../lib/rolls';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { formatStat } from './stats';
-import type { OpenStat } from './Vitals';
+import { Tile, type OpenStat } from './Vitals';
 
 const ACTION_GROUPS: { id: string; title: string }[] = [
   { id: 'action', title: 'Actions' },
@@ -40,7 +40,7 @@ function FeatureAction({ feature, live }: { feature: SheetFeature; live: LiveCha
   const rolls = useRolls();
   const { sheet, doc } = live;
   const res = feature.resource ? sheet.resources.find((r) => r.id === feature.resource) : undefined;
-  const costs = Object.entries(feature.cost ?? {}).map(([id, n]) => `${n} ${sheet.resources.find((r) => r.id === id)?.name ?? id}`);
+  const costs = Object.entries(feature.cost ?? {}).map(([id, n]) => `${n} ${sheet.resources.find((r) => r.id === id)?.name ?? sheet.trackers.find((t) => t.id === id)?.name ?? id}`);
   const usable = Boolean(res || costs.length || feature.onUse.length || feature.counter);
 
   const use = () => {
@@ -167,6 +167,17 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
         ))}
       </section>
 
+      {sheet.formulas.length > 0 && (
+        <section className="card">
+          <h2>Class numbers</h2>
+          <div className="tiles">
+            {sheet.formulas.map((f) => (
+              <Tile key={f.key} stat={f} kind={/attack/i.test(f.label) ? 'mod' : 'plain'} sub={f.from} onOpen={onOpen} rollable={/attack/i.test(f.label)} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {sheet.classTable.length > 0 && (
         <section className="card">
           <h2>Class table</h2>
@@ -199,7 +210,7 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
                 <div className="resource">
                   <div>
                     <div className="resource-name">{tracker.name}</div>
-                    <div className="page-ref">{at ? at.label : `max ${tracker.max}`}{tracker.page ? ` · p.${tracker.page}` : ''}</div>
+                    <div className="page-ref">{at ? at.label : `max ${tracker.max}`}{tracker.reset ? ` · back to ${tracker.min} on a ${tracker.reset} rest` : ''}{tracker.page ? ` · p.${tracker.page}` : ''}</div>
                   </div>
                   <span className="big num">{tracker.value}</span>
                   <div className="row">

@@ -57,6 +57,43 @@ Sample: Kaito Rourke, Human (Standard) Bruiser 7, v10 — Str 18, Dex 14, Con 16
 | Internal Vibrations | ceil(prof / 2) d6 thunder | 2d6 | 91 |
 | The King (20) | Str, Con +2, cap 22 | — | 87 |
 
+## Martial Artist (v10 and v8.8; the class is the same in both)
+Sample: Martial Artist 7 — Str 10, Dex 16, Con 14, Wis 14.
+| Number | Formula | Sample | Page |
+|---|---|---|---|
+| Unarmored Defense | 10 + Dex + Wis, no armor and no shield | 15 | 149 |
+| Unarmored Movement | + table bonus to speed (10 ft at 2nd … 30 ft at 18th), no armor and no shield | 45 ft | 150 |
+| Martial Arts | unarmed and martial artist weapons (shortswords; simple melee without two-handed or heavy): Dex or Str, and the Martial Arts die if larger; no armor and no shield | +6, 1d8 + 3 | 150 |
+| Ki points | = table (0 at 1st, then = level); short rest after 30 min meditating | 7 | 150 |
+| Ki save DC | 8 + prof + Wis | 13 | 150 |
+| Deflect Projectile | 1d10 + Dex + level; redirect for 1 ki: two Martial Arts dice | 1d10 + 10, 2d8 | 150 |
+| Slow Fall | 5 × level | 35 | 151 |
+
+## Hybrid (v10 pages; v8.8 is the same from p136)
+Sample: Hybrid 5 — Str 16, Dex 12, Cha 16.
+| Number | Formula | Sample | Page |
+|---|---|---|---|
+| Hybrid save DC / attack | 8 + prof + Cha / prof + Cha | 14 / +6 | 131 |
+| Close Quarters Training | unarmed strikes 1d8, Str or Dex | +6, 1d8 + 3 | 131 |
+| Hybrid Points | held up to the Power Threshold maximum (table); 0 after a long rest | max 4 | 131 |
+| Power Threshold (from 2nd) | +1 melee damage per 2 points held, +1 AC per 5, +1 melee attack per 3 | 7 held: +3 dmg, +1 AC, +2 hit | 132 |
+| Energy Transfer / Absorb Power / Defensive Augment | +2 points / +1 point / −2 points | — | 132 |
+
+## Virtuoso (v10) and Skald (v8.8)
+Sample: level 5 — Dex 14, Cha 18.
+| Number | Formula | Sample | Page |
+|---|---|---|---|
+| Spirit save DC / attack | 8 + prof + Cha / prof + Cha | 15 / +7 | 194 (v8.8 184) |
+| Jack of All Trades (from 2nd) | + floor(prof / 2) on ability checks without proficiency, initiative included | Stealth +3, Initiative +3 | 195 |
+| Harmonic Weaponry | Cha for the chosen weapon's attack and damage (set per weapon) | rapier +7, 1d8 + 4 | 195 |
+| Song of the Sea | 1d6; 1d8 at 9th, 1d10 at 13th, 1d12 at 17th | 1d6 | 195 |
+| Floating chords | up to 3 held | — | 194 |
+
+## Devilforged (v10)
+| Number | Formula | Sample (level 5, Int 16) | Page |
+|---|---|---|---|
+| Devilforged save DC / attack | 8 + prof + Int / prof + Int | 14 / +6 | 114 |
+
 ## Rests
 - Short: choose HD to spend → roll each + Con → heal; refill short-rest uses, Special Reactions, Healing Surge, Fury (confirm 30 min training).
 - Long: HP = max, temp HP cleared, ALL spent HD back (ruling), all short+long uses, exhaustion −1, Undying Frenzy DC → 10.

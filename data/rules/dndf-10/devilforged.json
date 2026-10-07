@@ -473,7 +473,17 @@
             "uses"
           ]
         }
-      ]
+      ],
+      "formulas": {
+        "devilforgedDC": {
+          "label": "Devilforged save DC",
+          "expr": "8 + prof + mod.int"
+        },
+        "devilforgedAttack": {
+          "label": "Devilforged attack modifier",
+          "expr": "prof + mod.int"
+        }
+      }
     },
     {
       "id": "subclass.devilforged.bestial_klabautermann",

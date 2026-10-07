@@ -29,6 +29,19 @@ export function spendResource(state: CharacterState, sheet: Sheet, id: string, a
   };
 }
 
+/** Moves a tracker by an amount within its range. Paying more than is held warns and stops at the minimum. */
+export function moveTracker(state: CharacterState, sheet: Sheet, id: string, by: number): ActionResult {
+  const tracker = sheet.trackers.find((t) => t.id === id);
+  if (!tracker) return { state, summary: '', warning: `No "${id}" on this sheet.` };
+  const before = Math.min(tracker.max, Math.max(tracker.min, state.trackers[id] ?? tracker.min));
+  const after = Math.min(tracker.max, Math.max(tracker.min, before + by));
+  return {
+    state: { ...state, trackers: { ...state.trackers, [id]: after } },
+    summary: `${tracker.name} ${before} → ${after}`,
+    warning: before + by < tracker.min ? `Not enough ${tracker.name}.` : undefined,
+  };
+}
+
 function chain(state: CharacterState, steps: ((s: CharacterState) => ActionResult)[]): ActionResult {
   const summaries: string[] = [];
   const warnings: string[] = [];
@@ -44,12 +57,20 @@ function chain(state: CharacterState, steps: ((s: CharacterState) => ActionResul
 /** Uses a feature: pays its cost, spends one of its uses, applies what it refills. */
 export function activateFeature(state: CharacterState, sheet: Sheet, feature: SheetFeature): ActionResult {
   const steps: ((s: CharacterState) => ActionResult)[] = [];
-  for (const [id, amount] of Object.entries(feature.cost ?? {})) steps.push((s) => spendResource(s, sheet, id, amount));
+  // A cost is paid from a pool (Fury, Ki) or, failing that, from a tracker of the same id (Hybrid Points).
+  for (const [id, amount] of Object.entries(feature.cost ?? {})) {
+    steps.push((s) => (resource(sheet, id) || !sheet.trackers.some((t) => t.id === id) ? spendResource(s, sheet, id, amount) : moveTracker(s, sheet, id, -amount)));
+  }
   if (feature.resource) steps.push((s) => spendResource(s, sheet, feature.resource!, 1));
   for (const effect of feature.onUse) {
-    const max = resource(sheet, effect.resource)?.max ?? 0;
+    if (effect.type === 'addTracker') {
+      steps.push((s) => moveTracker(s, sheet, effect.tracker ?? '', evaluateNumber(effect.value ?? 1)));
+      continue;
+    }
+    const id = effect.resource ?? '';
+    const max = resource(sheet, id)?.max ?? 0;
     const back = effect.type === 'refill' ? max : evaluateNumber(effect.value ?? 1);
-    steps.push((s) => spendResource(s, sheet, effect.resource, -back));
+    steps.push((s) => spendResource(s, sheet, id, -back));
   }
   if (feature.counter) {
     const id = feature.counter;

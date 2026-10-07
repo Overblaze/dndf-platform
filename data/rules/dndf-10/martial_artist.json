@@ -96,26 +96,26 @@
             20
           ],
           "unarmoredMovement": [
-            "—",
-            "+10ft",
-            "+10ft",
-            "+10ft",
-            "+10ft",
-            "+15ft",
-            "+15ft",
-            "+15ft",
-            "+15ft",
-            "+20ft",
-            "+20ft",
-            "+20ft",
-            "+20ft",
-            "+25ft",
-            "+25ft",
-            "+25ft",
-            "+25ft",
-            "+30ft",
-            "+30ft",
-            "+30ft"
+            0,
+            10,
+            10,
+            10,
+            10,
+            15,
+            15,
+            15,
+            15,
+            20,
+            20,
+            20,
+            20,
+            25,
+            25,
+            25,
+            25,
+            30,
+            30,
+            30
           ]
         }
       },
@@ -155,19 +155,42 @@
           "level": 1,
           "name": "Unarmored Defense",
           "text": "Beginning at 1st level, while you are wearing no armor and not wielding a Shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
-          "page": 149
+          "page": 149,
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "10 + mod.dex + mod.wis",
+              "when": "noArmor && noShield"
+            }
+          ]
         },
         {
           "level": 1,
           "name": "Martial Arts",
           "text": "At 1st level, your practice of Martial Arts gives you mastery of Combat styles that use unarmed strikes and martial artist Weapons, which are shortswords and any simple melee weapons that don’t have the Two-Handed or heavy property.\nYou gain the following benefits while you are unarmed or wielding only martial artist Weapons and you aren’t wearing armor or wielding a shield:\nYou can use Dexterity instead of Strength for the Attack and Damage Rolls of your unarmed strikes and martial artist Weapons.\nYou can roll a d6 in place of the normal damage of your Unarmed Strike or martial artist weapon. This die changes as you gain martial artist levels, as shown in the Martial Arts column of the Martial Artist table.\nWhen you use the Attack action with an Unarmed Strike or a martial artist weapon on Your Turn, you can make one Unarmed Strike as a bonus action. For example, if you take the Attack action and Attack with a Quarterstaff, you can also make an Unarmed Strike as a bonus action, assuming you haven’t already taken a bonus action this turn.\nCertain martial arts schools use specialized forms of the martial artist Weapons. For example, you might use a club that is two lengths of wood connected by a short chain (called a nunchaku) or a Sickle with a shorter, straighter blade (called a kama). Whatever name you use for a martial artist weapon, you can use the game statistics provided for the weapon.",
-          "page": 150
+          "page": 150,
+          "effects": [
+            {
+              "type": "unarmedDie",
+              "expr": "col.martialArtsDie",
+              "weapons": "martialArtist",
+              "finesse": true,
+              "when": "noArmor && noShield"
+            }
+          ]
         },
         {
           "level": 2,
           "name": "Unarmored Movement",
           "text": "Starting at 2nd level, your speed increases by 10 feet while you are not wearing armor or wielding a Shield. This bonus increases when you reach certain martial artist levels, as shown in the Martial Artist table.",
-          "page": 150
+          "page": 150,
+          "effects": [
+            {
+              "type": "speed",
+              "expr": "col.unarmoredMovement",
+              "when": "noArmor && noShield"
+            }
+          ]
         },
         {
           "level": 2,
@@ -209,7 +232,20 @@
           "level": 3,
           "name": "Deflect Projectile",
           "text": "Starting at 3rd level, you can use your reaction to deflect ranged attacks that deal bludgeoning, piercing, or slashing damage. When you do so, the damage you take from the attack is reduced by 1d10 + your Dexterity modifier + your martial artist level.\nIf you reduce the damage to 0, you can spend 1 ki point to redirect the attack toward another creature. If you do so, choose a creature within 60 feet of yourself that isn’t behind Total Cover. That creature must succeed on a Dexterity saving throw or take damage equal to two rolls of your Martial Arts die. The damage is the same type dealt by the attack.",
-          "page": 150
+          "page": 150,
+          "action": "reaction",
+          "rolls": [
+            {
+              "label": "Damage reduced",
+              "dice": "1d10 + {mod.dex + level}",
+              "kind": "other"
+            },
+            {
+              "label": "Redirected attack (1 ki)",
+              "dice": "{col.martialArtsDie} + {col.martialArtsDie}",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 3,
@@ -228,7 +264,15 @@
           "level": 4,
           "name": "Slow Fall",
           "text": "Beginning at 4th level, you can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your martial artist level.",
-          "page": 151
+          "page": 151,
+          "effects": [
+            {
+              "type": "display",
+              "label": "Falling damage reduced",
+              "expr": "level * 5"
+            }
+          ],
+          "action": "reaction"
         },
         {
           "level": 4,
@@ -246,13 +290,19 @@
           "level": 5,
           "name": "Stunning Strike",
           "text": "Starting at 5th level, you can interfere with the flow of ki in an opponent’s body. When you hit another creature with a melee weapon Attack, you can spend 1 ki point to attempt a Stunning Strike. The target must succeed on a Constitution saving throw or be Stunned until the start of your next turn.",
-          "page": 151
+          "page": 151,
+          "cost": {
+            "ki": 1
+          }
         },
         {
           "level": 5,
           "name": "Focused Aim",
           "text": "Beginning at 5th level, when you miss with an attack roll, you can spend 1 to 3 ki points to increase your attack roll by 2 for each of these ki points you spend, potentially turning the miss into a hit.",
-          "page": 151
+          "page": 151,
+          "cost": {
+            "ki": 1
+          }
         },
         {
           "level": 6,
@@ -328,6 +378,12 @@
           "page": 152
         }
       ],
+      "formulas": {
+        "kiDC": {
+          "label": "Ki save DC",
+          "expr": "8 + prof + mod.wis"
+        }
+      },
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

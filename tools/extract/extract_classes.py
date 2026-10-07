@@ -19,6 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from pdfdoc import Block, Heading, Para, Quote, Table, read_blocks  # noqa: E402
+from structure import apply_structure  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -160,6 +161,9 @@ def _value(token: str):
         return "—"
     if re.fullmatch(r"[+-]?\d+", token):
         return int(token)
+    feet = re.fullmatch(r"\+?(\d+)ft", token)
+    if feet:
+        return int(feet.group(1))  # "+10 ft." as a number the sheet can add to speed
     return token
 
 
@@ -535,8 +539,8 @@ def extract_class(version: str, key: str) -> dict:
             group["options"] = dedupe_ids(options, f"{name} {title}")
             entries.append(group)
 
-    features_key = [f for f in features]
-    entry["features"] = features_key
+    entry["features"] = features
+    apply_structure(key, version, entry, problems)
     return {"$schemaVersion": 1, "entries": entries, "$note": f"Extracted from {book['book']} (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."}
 
 

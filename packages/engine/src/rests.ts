@@ -32,13 +32,19 @@ function refill(state: CharacterState, sheet: Sheet, recharges: string[], option
     changes.push(`${counter.label} resets`);
     delete counters[counter.id];
   }
+  const trackers = { ...state.trackers };
+  for (const tracker of sheet.trackers) {
+    if (!tracker.reset || !recharges.includes(tracker.reset) || tracker.value === tracker.min) continue;
+    changes.push(`${tracker.name} ${tracker.value} → ${tracker.min}`);
+    delete trackers[tracker.id];
+  }
   const toggles = { ...state.toggles };
   for (const toggle of sheet.toggles) {
     if (!toggles[toggle.id]) continue;
     changes.push(`${toggle.label} ends`);
     delete toggles[toggle.id];
   }
-  return { ...state, spent, counters, toggles };
+  return { ...state, spent, counters, toggles, trackers };
 }
 
 /** Spend hit dice (each roll + Con, at least 0); refill short-rest uses. */

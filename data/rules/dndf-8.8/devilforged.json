@@ -362,7 +362,17 @@
           "text": "At 20th level, you can release a surge of energy from within your Devil Fruit-infused item, allowing you to regain expended power (spell) slots. To do so, you must spend 1 minute focusing on your infused item in order to regain all your expended spell slots from your Devil Fruit Infusion (Spellcasting) feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.",
           "page": 116
         }
-      ]
+      ],
+      "formulas": {
+        "spellDC": {
+          "label": "Spell save DC",
+          "expr": "8 + prof + mod.cha"
+        },
+        "spellAttack": {
+          "label": "Spell attack modifier",
+          "expr": "prof + mod.cha"
+        }
+      }
     },
     {
       "id": "subclass.devilforged.blade_smithing",

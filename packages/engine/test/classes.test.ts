@@ -84,7 +84,7 @@ describe('v10 class details', () => {
 
     const monk = deriveSheet(newCharacter({ name: 'M', classId: 'class.martial_artist', level: 7, scores }, rules), rules);
     expect(monk.resources.find((r) => r.id === 'ki')).toMatchObject({ max: 7, recharge: 'short' });
-    expect(monk.classTable.map((c) => [c.label, c.value])).toEqual([['Martial Arts Die', '1d8'], ['Ki', 7], ['Unarmored Movement', '+15ft']]);
+    expect(monk.classTable.map((c) => [c.label, c.value])).toEqual([['Martial Arts Die', '1d8'], ['Ki', 7], ['Unarmored Movement', 15]]);
     expect(deriveSheet(newCharacter({ name: 'M', classId: 'class.martial_artist', level: 1, scores }, rules), rules).resources.find((r) => r.id === 'ki')).toBeUndefined();
   });
 

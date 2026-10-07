@@ -14,6 +14,7 @@ export function weaponFromItem(item: RuleEntry, id: string = item.id): WeaponDef
     ...(item.ranged === true ? { ranged: true } : {}),
     ...(item.finesse === true ? { finesse: true } : {}),
     ...(item.twoHanded === true ? { twoHanded: true } : {}),
+    ...(item.heavy === true ? { heavy: true } : {}),
   };
 }
 

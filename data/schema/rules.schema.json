@@ -165,6 +165,17 @@
         },
         "resource": {
           "type": "string"
+        },
+        "weapons": {
+          "description": "Which weapons a fighting-style die covers besides unarmed strikes.",
+          "enum": [
+            "bruiser",
+            "martialArtist",
+            "unarmedOnly"
+          ]
+        },
+        "finesse": {
+          "type": "boolean"
         }
       }
     },
@@ -265,6 +276,9 @@
               }
             }
           }
+        },
+        "reset": {
+          "$ref": "#/$defs/recharge"
         }
       }
     },
@@ -584,6 +598,9 @@
               "expr": {
                 "type": "string",
                 "minLength": 1
+              },
+              "page": {
+                "$ref": "#/$defs/page"
               }
             }
           }
@@ -959,15 +976,15 @@
       "description": "What happens to resources when the feature is used.",
       "type": "object",
       "required": [
-        "type",
-        "resource"
+        "type"
       ],
       "additionalProperties": false,
       "properties": {
         "type": {
           "enum": [
             "refill",
-            "regain"
+            "regain",
+            "addTracker"
           ]
         },
         "resource": {
@@ -975,6 +992,9 @@
         },
         "value": {
           "$ref": "#/$defs/expr"
+        },
+        "tracker": {
+          "$ref": "#/$defs/text"
         }
       }
     },
