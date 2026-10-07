@@ -42,7 +42,7 @@ function chain(state: CharacterState, steps: ((s: CharacterState) => ActionResul
 }
 
 /** Uses a feature: pays its cost, spends one of its uses, applies what it refills. */
-export function useFeature(state: CharacterState, sheet: Sheet, feature: SheetFeature): ActionResult {
+export function activateFeature(state: CharacterState, sheet: Sheet, feature: SheetFeature): ActionResult {
   const steps: ((s: CharacterState) => ActionResult)[] = [];
   for (const [id, amount] of Object.entries(feature.cost ?? {})) steps.push((s) => spendResource(s, sheet, id, amount));
   if (feature.resource) steps.push((s) => spendResource(s, sheet, feature.resource!, 1));

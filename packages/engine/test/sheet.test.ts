@@ -17,7 +17,7 @@ import {
   setToggle,
   setTracker,
   spendResource,
-  useFeature,
+  activateFeature,
   type CharacterDoc,
   type RulesFile,
 } from '../src';
@@ -203,9 +203,9 @@ describe('the rest of the sheet', () => {
   it('using a Fury feature spends Fury; running out warns but does not block', () => {
     const brace = sheet.features.find((f) => f.name === 'Brace for Impact')!;
     let state = doc.state;
-    for (let i = 0; i < 4; i++) state = useFeature(state, sheet, brace).state;
+    for (let i = 0; i < 4; i++) state = activateFeature(state, sheet, brace).state;
     expect(res(deriveSheet({ ...doc, state }, rules), 'fury').remaining).toBe(0);
-    const empty = useFeature(state, deriveSheet({ ...doc, state }, rules), brace);
+    const empty = activateFeature(state, deriveSheet({ ...doc, state }, rules), brace);
     expect(empty.warning).toBe('No Fury Points left.');
     expect(empty.state.spent.fury).toBe(4);
   });
@@ -213,7 +213,7 @@ describe('the rest of the sheet', () => {
   it('Blood for Brawn spends its use and refills Fury', () => {
     const blood = sheet.features.find((f) => f.name === 'Blood for Brawn')!;
     const low = spendResource(doc.state, sheet, 'fury', 4).state;
-    const after = deriveSheet({ ...doc, state: useFeature(low, sheet, blood).state }, rules);
+    const after = deriveSheet({ ...doc, state: activateFeature(low, sheet, blood).state }, rules);
     expect(res(after, 'fury').remaining).toBe(4);
     expect(res(after, 'use.blood_for_brawn').remaining).toBe(0);
   });
@@ -223,7 +223,7 @@ describe('the rest of the sheet', () => {
     let s = deriveSheet(veteran, rules);
     expect(s.counters).toMatchObject([{ id: 'undying_frenzy', value: 10 }]);
     const feature = s.features.find((f) => f.name === 'Undying Frenzy')!;
-    const state = useFeature(useFeature(veteran.state, s, feature).state, s, feature).state;
+    const state = activateFeature(activateFeature(veteran.state, s, feature).state, s, feature).state;
     s = deriveSheet({ ...veteran, state }, rules);
     expect(s.counters[0]!.value).toBe(20);
   });
