@@ -789,6 +789,81 @@ more("subclass.chemist.botany", {
     "Field Invention Powers (Spells)": {"expect": "Choose that land", "choose": {"id": "botanyLand", "count": 1}},
 })
 
+# --- Steamtech: Pressure Gauge Points and the device table -------------------------------
+ENTRY = "*entry*"
+
+
+def _device(name: str, cost: int, *sentences: str, action: str = "action") -> dict:
+    return {"name": name, "text": " ".join(sentences), "expect": list(sentences) + [name.split()[0]], "cost": {"pgp": cost}, "action": action}
+
+
+# The table is three columns whose long cells wrap; each device is typed here from EH10 p.189 and
+# checked against the extracted cells, line by line as the book breaks them.
+STEAM_DEVICES = [
+    _device("Gatling Gun", 1, "As an action, cast the Magic Missile spell at 1st level from the device."),
+    _device("Grappling Hook", 1, "As an action, cast the Lightning Lure cantrip on a target or surface from the device. If cast on a surface, you",
+            "pull yourself 15 ft. in the surface’s direction, ignoring opportunity attacks."),
+    _device("Multiarm Apparatus", 1, "As an action, cast the Mage Hand cantrip from the device. While the mage hand is active, you can use a bonus",
+            "action to have the hand grant the help action."),
+    _device("Pneumatic Gauntlet", 1, "As an action, cast the Burning Hands spell at 1st level from the device."),
+    _device("Steam Shield", 1, "As a reaction when you are hit by an attack or targeted by the Magic Missile spell, cast the Shield spell at 1st", "level.", action="reaction"),
+    _device("Steam Vent Boots", 1, "As an action, cast the Thunderwave spell at 1st level from the device."),
+    _device("Rocket Spear", 2, "As an action, cast the Aganazzar’s Scorcher spell at 2nd level from the device."),
+    _device("Steam-Powered Turret", 2, "As an action, place the turret in unoccupied space within 5 ft. of you. As a reaction, cast the Gust of Wind spell",
+            "at 2nd level from the turrets location."),
+    _device("Jetpack", 3, "As an action, cast the Fly spell at 3rd level from the device."),
+    _device("Pressure Mine Dispenser", 3, "As an action, place up to 3 mines in unoccupied space within 5 ft. of you. When a creature steps on this",
+            "device, cast the Fireball spell at 3rd level on the mines location. Once a mine uses its signature spell, the device self destructs. You may only have 3 mine activate at a time."),
+]
+
+
+def repair_steamtech(version: str, entry: dict, problems: list[str]) -> None:
+    """The device table sits mid-sentence in Overclock on the page, so the reader split Overclock in two
+    and hung the table on the last feature. Put Overclock's sentence back together and move the table,
+    rebuilt as the book's three columns, to Steamtech Devices."""
+    features = {f["name"]: f for f in entry["features"]}
+    overclock, devices, last = features.get("Overclock"), features.get("Steamtech Devices"), features.get("Steam Conversion")
+    stray = next((s for s in (overclock or {}).get("sections", []) if s["name"] == "Steamtech Device Table"), None)
+    table = next((t for t in (last or {}).get("tables", []) if t["rows"] and t["rows"][0][0] == "Steamtech"), None)
+    if not (overclock and devices and stray and table and overclock["text"].endswith("you can increase the spell")):
+        problems.append(f"{entry['name']} ({version}): the Steamtech device table is laid out differently here; not repaired")
+        return
+    cells = re.sub(r"\s+", " ", " ".join(str(c) for row in table["rows"] for c in row))
+    if any(part not in cells for device in STEAM_DEVICES for part in device["expect"]):
+        problems.append(f"{entry['name']} ({version}): the Steamtech device table reads differently here; not repaired")
+        return
+    overclock["text"] += " " + stray["text"]
+    overclock["sections"] = [s for s in overclock["sections"] if s is not stray]
+    if not overclock["sections"]:
+        del overclock["sections"]
+    devices["tables"] = [{"rows": [["Steamtech Device", "Description", "PGP Cost"]] + [[d["name"], d["text"], str(d["cost"]["pgp"])] for d in STEAM_DEVICES], "page": table["page"]}]
+    last["tables"] = [t for t in last["tables"] if t is not table]
+    if not last["tables"]:
+        del last["tables"]
+    devices["_cells"] = cells  # for the option list below; removed once it is built
+
+
+REPAIRS = {"subclass.tinkerer.steamtech": repair_steamtech}
+
+more("subclass.tinkerer.steamtech", {
+    ENTRY: {"feature": "Pressure Gauge System", "expect": "The amount of PGPs you have is based on your Tinkerer level",
+            "resources": [{"id": "pgp", "name": "Pressure Gauge Points", "max": "level>=14 ? 20 : level>=10 ? 15 : level>=6 ? 10 : 5", "recharge": "long"}]},
+    "Steamtech Devices": {
+        "expect": "You can build two Steamtech Devices of your choice from the Steam Device Table",
+        # A third device at 6th (Overclock), a fourth at 10th (Integrated Pressure Core), a fifth at 14th (Steam Conversion).
+        "choose": {"id": "steamtechDevices", "count": "level>=14 ? 5 : level>=10 ? 4 : level>=6 ? 3 : 2", "given": STEAM_DEVICES},
+        "effects": [show("Spell levels a device can be upcast (+1 PGP each)", "level>=14 ? 3 : level>=10 ? 2 : level>=6 ? 1 : 0")],
+    },
+    "Integrated Pressure Core": {"expect": "you regain 2 PGPs per hit dice you spend", "effects": [note("Short rest: regain 2 PGPs per hit die spent (no hit points from those dice)")]},
+    "Steam Conversion": {"expect": "When you roll initiative, you immediately regain 3 PGPs", "effects": [note("Rolling initiative: regain 3 PGPs")]},
+})
+more("subclass.tinkerer.military_science", {
+    ENTRY: {"feature": "Power Surge", "expect": "You can store a maximum number of Power Surges equal to your Intelligence modifier (minimum of one)",
+            "trackers": [{"id": "power_surges", "name": "Power Surges", "min": 0, "max": "max(1, mod.int)"}]},
+    "Power Surge": {"expect": "The extra damage equals your Tinkerer level", "cost": {"power_surges": 1},
+                    "rolls": [{"label": "Extra force damage", "dice": "{level}", "kind": "damage"}]},
+})
+
 _seen_subclasses: set[str] = set()
 _missing: dict[tuple[str, str], list[str]] = {}
 _found: set[tuple[str, str]] = set()
@@ -809,8 +884,22 @@ def apply_subclass_structure(version: str, entry: dict, problems: list[str]) -> 
         return made
     _seen_subclasses.add(entry["id"])
     squash = lambda t: re.sub(r"\s+", " ", t)
+    repair = REPAIRS.get(entry["id"])
+    if repair:
+        repair(version, entry, problems)
     features = {f["name"]: f for f in entry["features"]}
     for name, wordings in patch.items():
+        if name == ENTRY:
+            # Pools and trackers the subclass itself owns, shown from the level its feature arrives.
+            anchor = features.get(wordings["feature"])
+            if anchor is None or squash(wordings["expect"]) not in squash(anchor["text"] + " " + " ".join(s["text"] for s in anchor.get("sections", []))):
+                problems.append(f"{entry['name']} ({version}): '{wordings['feature']}' is worded differently here, so its pool was not added")
+                continue
+            for field in ("resources", "trackers"):
+                if field in wordings:
+                    page = {"page": anchor["page"]} if field == "trackers" else {}
+                    entry[field] = [{**item, "minLevel": anchor["level"], **page} for item in wordings[field]]
+            continue
         wordings = [w for w in (wordings if isinstance(wordings, list) else [wordings]) if w.get("only", version) == version]
         feature = features.get(name)
         if not wordings:
@@ -847,7 +936,16 @@ def _subclass_options(version: str, entry: dict, feature: dict, choose: dict, pr
     group_id = f"optionGroup.{key}_{entry['id'].split('.')[2]}_{_slug(feature['name'])}"
     where = f"{entry['name']} ({version}): '{feature['name']}"
     options = []
-    if choose.get("inline"):
+    if choose.get("given"):
+        # A list the book prints as a table: each option's words are typed here and must be found in the entry's tables.
+        cells = feature.pop("_cells", None) or re.sub(r"\s+", " ", " ".join(str(c) for f in entry["features"] for t in f.get("tables", []) for row in t["rows"] for c in row))
+        for given in choose["given"]:
+            missing = [part for part in given["expect"] if part not in cells]
+            if missing:
+                problems.append(f"{where}: {given['name']}' is not in the book's table as typed ({missing[0][:40]}…)")
+                continue
+            options.append({"id": _slug(given["name"]), "name": given["name"], "page": feature["page"], **{k: v for k, v in given.items() if k not in ("name", "expect")}})
+    elif choose.get("inline"):
         for name in choose["inline"]:
             line = next((p for p in feature["text"].split("\n") if p.startswith(name + ". ")), None)
             if line is None:

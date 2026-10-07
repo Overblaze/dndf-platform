@@ -210,6 +210,16 @@ Picked in the character form; only the chosen options appear on the sheet. Picki
 | Marksman, Rope Master: Rope Tricks | 2, 3 at 7th, 4 at 15th | each trick 2 × prof uses per short rest | EH10 p.146 · EH8.8 p.152 |
 | Devilforged, Mechadevil: Mechadevil Mark 2 | 2, 3 at 10th, 4 at 14th | each weapon system prof uses per short rest, with its own damage dice | EH10 p.125 |
 | Chemist, Botany: Field Invention Powers | 1 land of 8 | that land's table of powers | EH10 p.97 · EH8.8 p.97 |
+| Tinkerer, Steamtech: Steamtech Devices | 2, 3 at 6th, 4 at 10th, 5 at 14th, of 10 | each device spends its Pressure Gauge Point cost (1, 2 or 3) | EH10 p.189 · EH8.8 p.198 |
+
+### Steamtech and Power Surges
+| Rule | Formula | Page |
+|---|---|---|
+| Pressure Gauge Points | 5 at 2nd, 10 at 6th, 15 at 10th, 20 at 14th; all back on a long rest | EH10 p.188 · EH8.8 p.197 |
+| Device upcasting | +1 spell level at 6th, +2 at 10th, +3 at 14th, each +1 PGP (paid by hand) | EH10 p.189 · EH8.8 p.198 |
+| Power Surges (Military Science, 6th) | hold up to max(1, Int); spend one for extra force damage equal to Tinkerer level | EH10 p.186 · EH8.8 p.195 |
+
+Power Surges "reset to one" on a long rest and are gained in play; the sheet keeps the count and the player sets it.
 
 "You gain expertise in X" is read as proficiency with the bonus doubled, whether or not the character had the proficiency already.
 Standing resistances, immunities and advantages a subclass gives are listed on the sheet under "In effect" (word for word in the feature); they change no number.

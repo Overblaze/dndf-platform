@@ -1,7 +1,7 @@
 // The numbers subclasses add to the sheet (docs/FORMULAS.md, "Subclasses"), each worked out by hand
 // from the handbook named beside it. Shared subclasses are checked in both handbooks.
 import { describe, expect, it } from 'vitest';
-import { deriveSheet, newCharacter, type AbilityScores, type CharacterDoc, type RuleEntry, type RulesVersion, type Sheet } from '../src';
+import { activateFeature, deriveSheet, newCharacter, type AbilityScores, type CharacterDoc, type RuleEntry, type RulesVersion, type Sheet } from '../src';
 import { loadRules } from './load';
 
 const V10 = 'dndf-10' as RulesVersion;
@@ -328,6 +328,53 @@ describe('choices inside a subclass', () => {
     const sheet = build(version, 'class.chemist', 'subclass.chemist.botany', 3, {}, [], { choices: { botanyLand: ['swamp'] } });
     expect(sheet.warnings).toEqual([]);
     expect(feature(sheet, 'Swamp')).toBeDefined();
+  });
+});
+
+describe('Steamtech and Power Surges', () => {
+  const pool = (sheet: Sheet, name: string) => sheet.resources.find((r) => r.name === name);
+  const feature = (sheet: Sheet, name: string) => sheet.features.find((f) => f.name === name);
+  const steam = (version: RulesVersion, level: number, devices: string[] = []) =>
+    build(version, 'class.tinkerer', 'subclass.tinkerer.steamtech', level, {}, [], { choices: { steamtechDevices: devices } });
+
+  it.each(BOTH)('Pressure Gauge Points: 5 at 2nd, 10 at 6th, 15 at 10th, 20 at 14th, back on a long rest; none before 2nd (%s)', (version) => {
+    expect([2, 5, 6, 10, 14, 20].map((level) => pool(steam(version, level), 'Pressure Gauge Points')!.max)).toEqual([5, 5, 10, 15, 20, 20]);
+    expect(pool(steam(version, 2), 'Pressure Gauge Points')!.recharge).toBe('long');
+    expect(pool(steam(version, 1), 'Pressure Gauge Points')).toBeUndefined();
+    expect(pool(build(version, 'class.tinkerer', 'subclass.tinkerer.meteorology', 6), 'Pressure Gauge Points')).toBeUndefined();
+  });
+
+  it.each(BOTH)('Steamtech Devices: ten devices in the book’s table, two built at 2nd, then three, four, five; each spends its PGP cost (%s)', (version) => {
+    const rules = loadRules(version);
+    const devices = rules.get('subclass.tinkerer.steamtech')!.features!.find((f) => f.name === 'Steamtech Devices')!;
+    const group = rules.get(devices.choices!.from)!.options as { name: string; cost: Record<string, number>; text: string }[];
+    expect(group.map((o) => [o.name, o.cost.pgp])).toEqual([
+      ['Gatling Gun', 1], ['Grappling Hook', 1], ['Multiarm Apparatus', 1], ['Pneumatic Gauntlet', 1], ['Steam Shield', 1], ['Steam Vent Boots', 1],
+      ['Rocket Spear', 2], ['Steam-Powered Turret', 2], ['Jetpack', 3], ['Pressure Mine Dispenser', 3],
+    ]);
+    expect(devices.tables![0]!.rows).toHaveLength(11);
+    expect(devices.choices!.count).toBe('level>=14 ? 5 : level>=10 ? 4 : level>=6 ? 3 : 2');
+    // Overclock's sentence, which the table splits on the page, reads straight through again.
+    expect(rules.get('subclass.tinkerer.steamtech')!.features!.find((f) => f.name === 'Overclock')!.text).toContain('you can increase the spell level of your devices signature spell by 2');
+
+    const doc = { ...newCharacter({ name: 'Test', rulesVersion: version, classId: 'class.tinkerer', level: 6, scores: base, subclass: 'subclass.tinkerer.steamtech', choices: { steamtechDevices: ['jetpack', 'steam_shield'] } }, rules) };
+    const sheet = deriveSheet(doc, rules);
+    expect(feature(sheet, 'Jetpack')).toMatchObject({ cost: { pgp: 3 }, action: 'action' });
+    expect(feature(sheet, 'Steam Shield')!.action).toBe('reaction');
+    expect(feature(sheet, 'Gatling Gun')).toBeUndefined();
+    const used = activateFeature(doc.state, sheet, feature(sheet, 'Jetpack')!);
+    expect(used.warning).toBeUndefined();
+    expect(pool(deriveSheet({ ...doc, state: used.state }, rules), 'Pressure Gauge Points')).toMatchObject({ max: 10, remaining: 7 });
+  });
+
+  it.each(BOTH)('Tinkerer, Military Science: holds up to Int Power Surges (at least one) from 6th; spending one adds the Tinkerer level in force damage (%s)', (version) => {
+    const at = (level: number, int: number) => build(version, 'class.tinkerer', 'subclass.tinkerer.military_science', level, { int });
+    const surges = (sheet: Sheet) => sheet.trackers.find((t) => t.name === 'Power Surges');
+    expect(surges(at(6, 18))!.max).toBe(4);
+    expect(surges(at(6, 8))!.max).toBe(1);
+    expect(surges(at(5, 18))).toBeUndefined();
+    expect(feature(at(9, 18), 'Power Surge')).toMatchObject({ cost: { power_surges: 1 } });
+    expect(feature(at(9, 18), 'Power Surge')!.rolls[0]).toMatchObject({ dice: '9', kind: 'damage' });
   });
 });
 
