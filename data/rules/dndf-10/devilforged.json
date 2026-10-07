@@ -847,10 +847,6 @@
           "name": "Mechadevil Mark 2",
           "text": "At 6th level, when you finish a long rest, choose two of the following weapon systems. While wearing your Mechadevil Armor, you can use an action to activate one weapon system you have chosen. If a weapon system requires a saving throw, it uses your Devilforged save DC. If it requires an attack roll, it uses your Devilforged attack modifier.\nYou can replace one chosen weapon system with another whenever you finish a long rest.\nSwarm Cannons. When you activate this weapon, both cannons fire a swarm of 12 missiles at a creature or object within 90 feet of you. Each dart hits a creature of your choice that you can see within range. A single missile deals 1d4 of the armor’s elemental damage type. The darts all strike simultaneously, and you can direct them to hit one creature or several. Each creature targeted must make a Dexterity saving throw against your Spell save DC or take the damage of all missile directed at them.\nEnergy Blast. When you activate this weapon, the mech releases a blast of searing energy in a 15-foot cone. Each creature in the area must make a Constitution saving throw against your Spell save DC. On a failed save, a creature takes 6d6 of the armor’s elemental damage type and is blinded until the end of their next turn. On a successful save, a creature takes half damage.\nEnergy Lance. When you activate this weapon, you unleash a lance of lightning in a line 30 ft. long and 5 ft. wide. Creatures in the line must succeed on a Dexterity saving throw against your Spell save DC, or take 4d8 of the armor’s elemental damage type and their armor class is reduced by -2 until the end if the creatures next turn.\nRailcannon. When you activate this weapon, you fire a hypervelocity slug at a target you can see within 300 ft. Make a ranged spell attack. On a hit, the target takes 6d10 of the armor’s elemental damage type.\nPower Fist. You make a melee attack usuing intelligence as the modifier against one creature within 5 feet of you. On a hit, the target takes 4d8 damage of the armor’s elemental damage type and is pushed up to 30 feet away from you.\nYou can activate each weapon system a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a short or long rest.\nWhen you get to 10th level gain 1 additional weapon option, and at 14th level gain another weapon option.",
           "page": 125,
-          "uses": {
-            "max": "prof",
-            "recharge": "short"
-          },
           "rolls": [
             {
               "label": "1d4",
@@ -874,9 +870,13 @@
             }
           ],
           "auto": [
-            "uses",
             "rolls"
-          ]
+          ],
+          "choices": {
+            "id": "mechadevilWeapons",
+            "count": "level>=14 ? 4 : level>=10 ? 3 : 2",
+            "from": "optionGroup.devilforged_mechadevil_mechadevil_mark_2"
+          }
         },
         {
           "level": 10,
@@ -889,6 +889,125 @@
           "name": "Mechadevil Mark 4",
           "text": "At 14th level, while wearing your Mechadevil Armor, you gain the following benefits:\nYour flying speed increases to 120 feet.\nYour Elemental Blast can target two creatures within range instead of one.\nYou can move through the space of other creatures as if they were difficult terrain. The first time you move through a creature’s space on your turn, that creature takes damage equal to your proficiency bonus. The damage type is the same as your armor’s elemental damage type.",
           "page": 126
+        }
+      ]
+    },
+    {
+      "id": "optionGroup.devilforged_mechadevil_mechadevil_mark_2",
+      "kind": "optionGroup",
+      "name": "Mechadevil: Mechadevil Mark 2",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 125
+      },
+      "options": [
+        {
+          "id": "swarm_cannons",
+          "name": "Swarm Cannons",
+          "text": "When you activate this weapon, both cannons fire a swarm of 12 missiles at a creature or object within 90 feet of you. Each dart hits a creature of your choice that you can see within range. A single missile deals 1d4 of the armor’s elemental damage type. The darts all strike simultaneously, and you can direct them to hit one creature or several. Each creature targeted must make a Dexterity saving throw against your Spell save DC or take the damage of all missile directed at them.",
+          "page": 125,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "action": "action",
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
+        },
+        {
+          "id": "energy_blast",
+          "name": "Energy Blast",
+          "text": "When you activate this weapon, the mech releases a blast of searing energy in a 15-foot cone. Each creature in the area must make a Constitution saving throw against your Spell save DC. On a failed save, a creature takes 6d6 of the armor’s elemental damage type and is blinded until the end of their next turn. On a successful save, a creature takes half damage.",
+          "page": 125,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "action": "action",
+          "rolls": [
+            {
+              "label": "6d6",
+              "dice": "6d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
+        },
+        {
+          "id": "energy_lance",
+          "name": "Energy Lance",
+          "text": "When you activate this weapon, you unleash a lance of lightning in a line 30 ft. long and 5 ft. wide. Creatures in the line must succeed on a Dexterity saving throw against your Spell save DC, or take 4d8 of the armor’s elemental damage type and their armor class is reduced by -2 until the end if the creatures next turn.",
+          "page": 125,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "action": "action",
+          "rolls": [
+            {
+              "label": "4d8",
+              "dice": "4d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
+        },
+        {
+          "id": "railcannon",
+          "name": "Railcannon",
+          "text": "When you activate this weapon, you fire a hypervelocity slug at a target you can see within 300 ft. Make a ranged spell attack. On a hit, the target takes 6d10 of the armor’s elemental damage type.",
+          "page": 125,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "action": "action",
+          "rolls": [
+            {
+              "label": "6d10",
+              "dice": "6d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
+        },
+        {
+          "id": "power_fist",
+          "name": "Power Fist",
+          "text": "You make a melee attack usuing intelligence as the modifier against one creature within 5 feet of you. On a hit, the target takes 4d8 damage of the armor’s elemental damage type and is pushed up to 30 feet away from you.",
+          "page": 125,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "action": "action",
+          "rolls": [
+            {
+              "label": "4d8 damage",
+              "dice": "4d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },

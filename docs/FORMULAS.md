@@ -201,6 +201,16 @@ Tested in `packages/engine/test/subclasses.test.ts`. "Switch" means a toggle on 
 
 Every other "a number of times equal to your proficiency bonus / X modifier … per rest" and "once … until you finish a rest" sentence in a subclass feature is read automatically into a counter (`auto: ["uses"]`).
 
+### Choices inside a subclass
+Picked in the character form; only the chosen options appear on the sheet. Picking more than the book allows warns and never blocks.
+
+| Subclass, feature | Pick | What each option adds | Page |
+|---|---|---|---|
+| Hybrid, Germa Lineage: Genetic Superpower | 1 of 5 | Poison Pink: 1d6 acid, Poisonous Kiss prof / long rest, poison immunity. Stealth Black: 1d6 fire, Optical Camouflage max(1, Dex) / long rest. Winch Green: 1d8, Str + 2 (max 22), carrying × 8. Dengeki Blue: 1d6 lightning, speed + 10 × prof. Sparking Red: 1d6 radiant | EH10 p.136 · EH8.8 p.141 |
+| Marksman, Rope Master: Rope Tricks | 2, 3 at 7th, 4 at 15th | each trick 2 × prof uses per short rest | EH10 p.146 · EH8.8 p.152 |
+| Devilforged, Mechadevil: Mechadevil Mark 2 | 2, 3 at 10th, 4 at 14th | each weapon system prof uses per short rest, with its own damage dice | EH10 p.125 |
+| Chemist, Botany: Field Invention Powers | 1 land of 8 | that land's table of powers | EH10 p.97 · EH8.8 p.97 |
+
 "You gain expertise in X" is read as proficiency with the bonus doubled, whether or not the character had the proficiency already.
 Standing resistances, immunities and advantages a subclass gives are listed on the sheet under "In effect" (word for word in the feature); they change no number.
 Dice named in a feature's text ("takes 2d8 fire damage") become roll buttons on that feature automatically; these are marked `auto: ["rolls"]` in the data.

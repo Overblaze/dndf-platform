@@ -28,7 +28,7 @@ export interface RuleSet {
   subracesOf: (raceId: string) => RuleEntry[];
   optionGroupsOf: (classKey: string) => RuleEntry[];
   /** Features of a class that ask the player to pick options from a list (Fury features, Emanations). */
-  choiceFeatures: (cls: ClassEntry) => (FeatureDef & { choices: NonNullable<FeatureDef['choices']>; options: OptionDef[] })[];
+  choiceFeatures: (cls: ClassEntry, subclassId?: string) => (FeatureDef & { choices: NonNullable<FeatureDef['choices']>; options: OptionDef[]; from: string })[];
 }
 
 function build(version: RulesVersion): RuleSet {
@@ -58,11 +58,15 @@ function build(version: RulesVersion): RuleSet {
     },
     subracesOf: (raceId) => all.filter((e) => e.kind === 'subrace' && e.parent === raceId),
     optionGroupsOf: (classKey) => all.filter((e) => e.kind === 'optionGroup' && e.id.startsWith(`optionGroup.${classKey}_`)),
-    choiceFeatures: (cls) =>
-      cls.features.flatMap((feature) => {
-        if (!feature.choices) return [];
-        return [{ ...feature, choices: feature.choices, options: (rules.get(feature.choices.from)?.options ?? []) as OptionDef[] }];
-      }),
+    choiceFeatures: (cls, subclassId) => {
+      const sub = subclassId ? rules.get(subclassId) : undefined;
+      return [cls, ...(sub?.kind === 'subclass' ? [sub] : [])].flatMap((entry) =>
+        ((entry.features ?? []) as FeatureDef[]).flatMap((feature) => {
+          if (!feature.choices) return [];
+          return [{ ...feature, choices: feature.choices, options: (rules.get(feature.choices.from)?.options ?? []) as OptionDef[], from: entry.name }];
+        }),
+      );
+    },
   };
 }
 

@@ -643,264 +643,11 @@
           "name": "Field Invention Powers (Spells)",
           "text": "Your deep connection and understading of nature and plantlife enables you to advance your research far beyond ordinary levels. At 3rd, 5th, 7th, and 9th level you gain access to special invention powers depending on the plantlife in the region you primarily study. Choose that land – arctic, coast, desert, forest, grassland, mountain, swamp, or underground – and consult the associated list of invention powers.\nOnce you gain access to a field invention power, you always have it prepared, and it doesn’t count against the number of spells you can prepare each day. If you gain access to a invention power (spell) that doesn’t appear on the chemist spell list, the spell is nonetheless a chemist invention power for you.",
           "page": 97,
-          "sections": [
-            {
-              "name": "Arctic",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Hold Person, Spike Growth"
-                    ],
-                    [
-                      "5th",
-                      "Sleet Storm, Slow"
-                    ],
-                    [
-                      "7th",
-                      "Freedom of Movement, Ice Storm"
-                    ],
-                    [
-                      "9th",
-                      "Commune with Nature, Cone of Cold"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            },
-            {
-              "name": "Coast",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Mirror Image, Misty Step"
-                    ],
-                    [
-                      "5th",
-                      "Water Breathing, Water Walk"
-                    ],
-                    [
-                      "7th",
-                      "Control Water, Freedom of Movement"
-                    ],
-                    [
-                      "9th",
-                      "Conjure Elemental, Scrying"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            },
-            {
-              "name": "Desert",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Blur, Silence"
-                    ],
-                    [
-                      "5th",
-                      "Create Food and Water, Protection from Energy"
-                    ],
-                    [
-                      "7th",
-                      "Blight, Hallucinatory Terrain"
-                    ],
-                    [
-                      "9th",
-                      "Insect Plague, Wall of Stone"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            },
-            {
-              "name": "Forest",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Barkskin, Spider Climb"
-                    ],
-                    [
-                      "5th",
-                      "Call Lightning, Plant Growth"
-                    ],
-                    [
-                      "7th",
-                      "Divination, Freedom of Movement"
-                    ],
-                    [
-                      "9th",
-                      "Commune with Nature, Tree Stride"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            },
-            {
-              "name": "Grassland",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Invisibility, Pass Without Trace"
-                    ],
-                    [
-                      "5th",
-                      "Daylight, Haste"
-                    ],
-                    [
-                      "7th",
-                      "Divination, Freedom of Movement"
-                    ],
-                    [
-                      "9th",
-                      "Dream, Insect Plague"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            },
-            {
-              "name": "Mountain",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Spider Climb, Spike Growth"
-                    ],
-                    [
-                      "5th",
-                      "Lightning Bolt, Meld into Stone"
-                    ],
-                    [
-                      "7th",
-                      "Stone Shape, Stoneskin"
-                    ],
-                    [
-                      "9th",
-                      "Passwall, Wall of Stone"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            },
-            {
-              "name": "Swamp",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Darkness, Melf’s Acid Arrow"
-                    ],
-                    [
-                      "5th",
-                      "Water Walk, Stinking Cloud"
-                    ],
-                    [
-                      "7th",
-                      "Freedom of Movement, Locate Creature"
-                    ],
-                    [
-                      "9th",
-                      "Insect Plague, Scrying"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            },
-            {
-              "name": "Underground",
-              "text": "",
-              "page": 97,
-              "tables": [
-                {
-                  "rows": [
-                    [
-                      "Chemist Level",
-                      "Field Invention Power"
-                    ],
-                    [
-                      "3rd",
-                      "Spider Climb, Web"
-                    ],
-                    [
-                      "5th",
-                      "Gaseous Form, Stinking Cloud"
-                    ],
-                    [
-                      "7th",
-                      "Greater Invisibility, Stone Shape"
-                    ],
-                    [
-                      "9th",
-                      "Cloudkill, Insect Plague"
-                    ]
-                  ],
-                  "page": 97
-                }
-              ]
-            }
-          ]
+          "choices": {
+            "id": "botanyLand",
+            "count": 1,
+            "from": "optionGroup.chemist_botany_field_invention_powers_spells"
+          }
         },
         {
           "level": 6,
@@ -925,6 +672,291 @@
           "name": "Natural Repellent",
           "text": "When you reach 14th level, you develop plant-based fragrances that make wild creatures hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your chemist invention save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.\nThe creature is aware of this effect before it makes its attack against you.",
           "page": 98
+        }
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 97
+        }
+      }
+    },
+    {
+      "id": "optionGroup.chemist_botany_field_invention_powers_spells",
+      "kind": "optionGroup",
+      "name": "Botany: Field Invention Powers (Spells)",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 97
+      },
+      "options": [
+        {
+          "id": "arctic",
+          "name": "Arctic",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Hold Person, Spike Growth"
+                ],
+                [
+                  "5th",
+                  "Sleet Storm, Slow"
+                ],
+                [
+                  "7th",
+                  "Freedom of Movement, Ice Storm"
+                ],
+                [
+                  "9th",
+                  "Commune with Nature, Cone of Cold"
+                ]
+              ],
+              "page": 97
+            }
+          ]
+        },
+        {
+          "id": "coast",
+          "name": "Coast",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Mirror Image, Misty Step"
+                ],
+                [
+                  "5th",
+                  "Water Breathing, Water Walk"
+                ],
+                [
+                  "7th",
+                  "Control Water, Freedom of Movement"
+                ],
+                [
+                  "9th",
+                  "Conjure Elemental, Scrying"
+                ]
+              ],
+              "page": 97
+            }
+          ]
+        },
+        {
+          "id": "desert",
+          "name": "Desert",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Blur, Silence"
+                ],
+                [
+                  "5th",
+                  "Create Food and Water, Protection from Energy"
+                ],
+                [
+                  "7th",
+                  "Blight, Hallucinatory Terrain"
+                ],
+                [
+                  "9th",
+                  "Insect Plague, Wall of Stone"
+                ]
+              ],
+              "page": 97
+            }
+          ]
+        },
+        {
+          "id": "forest",
+          "name": "Forest",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Barkskin, Spider Climb"
+                ],
+                [
+                  "5th",
+                  "Call Lightning, Plant Growth"
+                ],
+                [
+                  "7th",
+                  "Divination, Freedom of Movement"
+                ],
+                [
+                  "9th",
+                  "Commune with Nature, Tree Stride"
+                ]
+              ],
+              "page": 97
+            }
+          ]
+        },
+        {
+          "id": "grassland",
+          "name": "Grassland",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Invisibility, Pass Without Trace"
+                ],
+                [
+                  "5th",
+                  "Daylight, Haste"
+                ],
+                [
+                  "7th",
+                  "Divination, Freedom of Movement"
+                ],
+                [
+                  "9th",
+                  "Dream, Insect Plague"
+                ]
+              ],
+              "page": 97
+            }
+          ]
+        },
+        {
+          "id": "mountain",
+          "name": "Mountain",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Spider Climb, Spike Growth"
+                ],
+                [
+                  "5th",
+                  "Lightning Bolt, Meld into Stone"
+                ],
+                [
+                  "7th",
+                  "Stone Shape, Stoneskin"
+                ],
+                [
+                  "9th",
+                  "Passwall, Wall of Stone"
+                ]
+              ],
+              "page": 97
+            }
+          ]
+        },
+        {
+          "id": "swamp",
+          "name": "Swamp",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Darkness, Melf’s Acid Arrow"
+                ],
+                [
+                  "5th",
+                  "Water Walk, Stinking Cloud"
+                ],
+                [
+                  "7th",
+                  "Freedom of Movement, Locate Creature"
+                ],
+                [
+                  "9th",
+                  "Insect Plague, Scrying"
+                ]
+              ],
+              "page": 97
+            }
+          ]
+        },
+        {
+          "id": "underground",
+          "name": "Underground",
+          "text": "",
+          "page": 97,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Chemist Level",
+                  "Field Invention Power"
+                ],
+                [
+                  "3rd",
+                  "Spider Climb, Web"
+                ],
+                [
+                  "5th",
+                  "Gaseous Form, Stinking Cloud"
+                ],
+                [
+                  "7th",
+                  "Greater Invisibility, Stone Shape"
+                ],
+                [
+                  "9th",
+                  "Cloudkill, Insect Plague"
+                ]
+              ],
+              "page": 97
+            }
+          ]
         }
       ],
       "sources": {

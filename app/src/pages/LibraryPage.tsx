@@ -19,13 +19,19 @@ const ordinal = (n: number) => `${n}${n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 
 function Feature({ feature, book }: { feature: FeatureDef | OptionDef; book: string }) {
   const level = typeof feature.level === 'number' ? `Level ${feature.level} · ` : '';
   const uses = feature.uses as { max: number | string; recharge: string } | string | undefined;
+  const { rules } = useSet();
+  // A feature whose sub-headed parts became a list to pick from still shows them here, as the book prints them.
+  const choices = (feature as FeatureDef).choices;
+  const options = choices ? ((rules.get(choices.from)?.options ?? []) as OptionDef[]) : [];
+  const inText = (option: OptionDef) => feature.text.includes(`${option.name}. `);
+  const sections = (feature as FeatureDef).sections ?? options.filter((o) => !inText(o)).map((o) => ({ name: o.name, text: o.text, page: o.page, tables: o.tables }));
   return (
     <details className="feature">
       <summary>
         <span className="resource-name">{feature.name}</span>
         <span className="page-ref">{level}{cite(book, feature.page)}</span>
       </summary>
-      <RuleText text={feature.text} sections={(feature as FeatureDef).sections} tables={(feature as FeatureDef).tables} book={book} />
+      <RuleText text={feature.text} sections={sections.length ? (sections as FeatureDef['sections']) : undefined} tables={(feature as FeatureDef).tables} book={book} />
       {uses && typeof uses === 'object' && (
         <p className="page-ref">Tracked on the sheet: {uses.max === 'prof' ? 'proficiency bonus' : uses.max} use{uses.max === 1 ? '' : 's'} per {uses.recharge} rest</p>
       )}

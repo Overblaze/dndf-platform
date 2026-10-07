@@ -557,6 +557,7 @@ def extract_class(version: str, key: str) -> dict:
             grant = next((f for f in features if norm(f["name"]) in [norm(w) for w in wanted]), None)
             for heading, member_blocks in members:
                 entries.append(make_subclass(version, key, class_id, title, heading, member_blocks, config.get("strip", []), grant["level"] if grant else 0))
+                entries.extend(entries[-1].pop("_groups", []))
             if n == 0:
                 stem = norm(grant["name"]).rstrip("s") if grant else "?"
                 marks = [lvl for lvl, names in table_features.items() if any(re.search(r"\bfeature$", x, re.I) and stem in norm(x) for x in names)]
@@ -644,7 +645,16 @@ def make_subclass(version, key, class_id, group_title, heading, blocks, strip, g
         if after["level"] < before["level"]:
             problems.append(f"{heading.text}: '{after['name']}' reads as level {after['level']} but follows '{before['name']}' at {before['level']} (p{after['page']})")
     entry["features"] = features
-    apply_subclass_structure(version, entry, problems)
+    groups = apply_subclass_structure(version, entry, problems)
+    for group in groups:
+        for option in group["options"]:
+            # Dice an option's text names become its roll buttons, unless they were entered by hand.
+            rolls = [] if "rolls" in option else dice_in(option["text"])
+            if rolls:
+                option["rolls"] = rolls
+                option["auto"] = ["rolls"]
+    if groups:
+        entry["_groups"] = groups
     return entry
 
 

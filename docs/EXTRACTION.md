@@ -78,3 +78,5 @@ Writes to `~/dndf/secret/` only. The script refuses any other destination, print
 `extract_classes.py` also turns dice named in any feature's text into roll buttons (`dice_in`): each distinct roll once, at most four, never a d20. They are flagged `auto: ["rolls"]` so hand-entered rolls always win.
 
 The hand-verified `data/rules/dndf-10/bruiser.json` is never rewritten, so its subclass switches are entered in that file directly.
+
+A subclass patch can also carry `choose`: the feature's sub-headed parts (or, with `inline`, the paragraphs of its text that open with the names given) become an `optionGroup` entry, and the feature gets `choices` pointing at it. `each` gives every option the same fields (its own uses); `options` adds numbers to one option, guarded by `expect` like everything else.
