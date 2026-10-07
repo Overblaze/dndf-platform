@@ -130,12 +130,20 @@ function ClassView({ cls }: { cls: ClassEntry }) {
 
 const KIND_LABEL: Record<string, string> = {
   race: 'Race', subrace: 'Subrace', background: 'Background', feat: 'Feat', crewRole: 'Crew role', rule: 'Rules', subclass: 'Subclass', optionGroup: 'Options', class: 'Class',
+  hakiFeature: 'Haki', surgeAdvancement: 'Standard advancement', spell: 'Spell', spellList: 'Spell list', item: 'Armory',
 };
 
 const FACTS: [string, string][] = [
-  ['prerequisite', 'Prerequisite'], ['size', 'Size'], ['skillProficiencies', 'Skill proficiencies'], ['toolProficiencies', 'Tool proficiencies'],
-  ['languages', 'Languages'], ['equipment', 'Equipment'],
+  ['typeLine', 'Type'], ['prerequisite', 'Prerequisite'], ['size', 'Size'], ['skillProficiencies', 'Skill proficiencies'], ['toolProficiencies', 'Tool proficiencies'],
+  ['languages', 'Languages'], ['equipment', 'Equipment'], ['castingTime', 'Casting time'], ['range', 'Range'], ['components', 'Components'], ['duration', 'Duration'],
+  ['damage', 'Damage'], ['damageType', 'Damage type'], ['properties', 'Properties'], ['weight', 'Weight'],
 ];
+
+const COLOR_NAMES: Record<string, string> = { armament: 'Color of Armament', observation: 'Color of Observation', supremeKing: 'Color of the Supreme King' };
+const RARITY_ORDER = ['Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'];
+const byRarity = (a: RuleEntry, b: RuleEntry) => RARITY_ORDER.indexOf(String(a.rarity)) - RARITY_ORDER.indexOf(String(b.rarity));
+const berries = (amount: unknown) => (typeof amount === 'number' ? `฿${amount.toLocaleString('en-US')}` : '');
+const levelName = (level: string) => (level === '0' ? 'Cantrips' : `${ordinal(Number(level))} level`);
 
 function EntryView({ entry }: { entry: RuleEntry }) {
   const { rules, subracesOf } = useSet();
@@ -150,7 +158,7 @@ function EntryView({ entry }: { entry: RuleEntry }) {
   const facts = FACTS.filter(([key]) => typeof entry[key] === 'string');
   const uses = entry.uses as { max: number | string; recharge: string } | undefined;
   // Backgrounds repeat their proficiency lines as their text; those are shown as facts.
-  const text = entry.kind === 'background' ? '' : typeof entry.text === 'string' ? entry.text : '';
+  const text = entry.kind === 'background' || entry.kind === 'spellList' ? '' : typeof entry.text === 'string' ? entry.text : '';
   return (
     <>
       <section className="card">
@@ -160,9 +168,13 @@ function EntryView({ entry }: { entry: RuleEntry }) {
           {entry.optional === true && ' (optional)'} · {entry.source.book}, p.{entry.source.page}
         </p>
         <h1>{entry.name}</h1>
-        {(facts.length > 0 || typeof entry.speed === 'number') && (
+        {(facts.length > 0 || typeof entry.speed === 'number' || entry.kind === 'item') && (
           <dl className="facts facts-plain">
             {typeof entry.speed === 'number' && <><dt>Walking speed</dt><dd>{entry.speed} ft</dd></>}
+            {typeof entry.cost === 'number' && <><dt>Cost</dt><dd>{berries(entry.cost)}</dd></>}
+            {entry.kind === 'item' && typeof entry.ac === 'object' && entry.ac !== null && <><dt>Armor class</dt><dd>{describeAc(entry)}</dd></>}
+            {typeof entry.strength === 'number' && <><dt>Strength needed</dt><dd>{entry.strength}</dd></>}
+            {entry.stealthDisadvantage === true && <><dt>Stealth</dt><dd>Disadvantage</dd></>}
             {facts.map(([key, label]) => (
               <Fragment key={key}>
                 <dt>{label}</dt>
@@ -175,6 +187,12 @@ function EntryView({ entry }: { entry: RuleEntry }) {
         {Boolean(text || entry.sections || entry.tables) && (
           <RuleText text={text} sections={(entry.sections ?? []) as SectionDef[]} tables={(entry.tables ?? []) as TableDef[]} />
         )}
+        {entry.kind === 'spellList' && Object.entries(entry.levels as Record<string, string[]>).map(([level, names]) => (
+          <div key={level} className="rule-section">
+            <h3>{levelName(level)} <span className="page-ref">{names.length}</span></h3>
+            <p className="feature-text">{names.join(', ')}</p>
+          </div>
+        ))}
         {uses && typeof uses === 'object' && (
           <p className="page-ref">Tracked on the sheet: {uses.max === 'prof' ? 'proficiency bonus' : uses.max} use{uses.max === 1 ? '' : 's'} per {uses.recharge} rest</p>
         )}
@@ -205,6 +223,12 @@ function EntryView({ entry }: { entry: RuleEntry }) {
       )}
     </>
   );
+}
+
+function describeAc(item: RuleEntry): string {
+  const ac = item.ac as { base?: number; dex?: string; bonus?: number };
+  if (typeof ac.bonus === 'number') return `+${ac.bonus}`;
+  return `${ac.base}${ac.dex === 'full' ? ' + Dex modifier' : ac.dex === 'max2' ? ' + Dex modifier (max 2)' : ''}`;
 }
 
 function EntryLinks({ entries, detail }: { entries: RuleEntry[]; detail?: (entry: RuleEntry) => string }) {
@@ -259,7 +283,11 @@ function search(query: string, rules: RuleSet['rules']): Hit[] {
 }
 
 function LibraryHome() {
-  const { version, rules, classes, races, backgrounds, crewRoles, feats, generalRules, subclassesOf, subracesOf } = useSet();
+  const { version, rules, classes, races, backgrounds, crewRoles, feats, generalRules, subclassesOf, subracesOf, hakiFeatures, surgeAdvancements, spellLists, spells } = useSet();
+  const items = [...rules.values()].filter((e) => e.kind === 'item');
+  const armoryRules = generalRules.filter((e) => e.id.startsWith('rule.armory_'));
+  const otherRules = generalRules.filter((e) => !e.id.startsWith('rule.armory_'));
+  const surgeDetail = (e: RuleEntry) => [String(e.rarity), e.amateur ? 'Amateur' : '', typeof e.tier === 'number' ? `Tier ${e.tier}` : ''].filter(Boolean).join(' · ');
   const link = useLink();
   const [, setParams] = useSearchParams();
   const [query, setQuery] = useState('');
@@ -268,7 +296,7 @@ function LibraryHome() {
     <>
       <section className="card">
         <h1>Library</h1>
-        <p className="soft">Chapters 1 to 3 of the DnDF Expanded Handbook, word for word, with the page for everything.</p>
+        <p className="soft">The player chapters of the DnDF Expanded Handbook, word for word, with the page for everything.</p>
         <div className="segmented" role="radiogroup" aria-label="Handbook">
           {(Object.keys(VERSION_NAMES) as (keyof typeof VERSION_NAMES)[]).map((v) => (
             <button key={v} role="radio" aria-checked={version === v} className={version === v ? 'active' : ''} onClick={() => setParams(v === 'dndf-8.8' ? { v: '8.8' } : {})}>
@@ -311,11 +339,33 @@ function LibraryHome() {
       <Shelf title="Feats" count={feats.length}>
         <EntryLinks entries={feats} detail={(feat) => (feat.prerequisite ? `needs ${feat.prerequisite}` : '')} />
       </Shelf>
-      <Shelf title="General rules" count={generalRules.length}>
-        <EntryLinks entries={generalRules} />
+      <Shelf title="Haki and Spirit Surges" count={hakiFeatures.length + surgeAdvancements.length}>
+        <h3>Standard advancements</h3>
+        <EntryLinks entries={[...surgeAdvancements].sort(byRarity)} detail={surgeDetail} />
+        {Object.entries(COLOR_NAMES).map(([color, name]) => (
+          <Fragment key={color}>
+            <h3>{name}</h3>
+            <EntryLinks entries={hakiFeatures.filter((f) => f.color === color).sort(byRarity)} detail={surgeDetail} />
+          </Fragment>
+        ))}
+      </Shelf>
+      <Shelf title="Spell lists and custom spells" count={spellLists.length + spells.length}>
+        <EntryLinks entries={spellLists} detail={(list) => `${Object.values(list.levels as Record<string, string[]>).reduce((n, names) => n + names.length, 0)} spells`} />
+        <h3>Custom spells</h3>
+        <EntryLinks entries={spells} detail={(spell) => `${spell.level === 0 ? 'cantrip' : `${ordinal(Number(spell.level))} level`} ${String(spell.school ?? '')}`} />
+      </Shelf>
+      <Shelf title="Armory" count={items.length + armoryRules.length}>
+        <EntryLinks entries={armoryRules} />
+        <h3>Armor and shields</h3>
+        <EntryLinks entries={items.filter((i) => i.itemType !== 'weapon')} detail={(i) => `AC ${describeAc(i)} · ${berries(i.cost)}`} />
+        <h3>Weapons</h3>
+        <EntryLinks entries={items.filter((i) => i.itemType === 'weapon')} detail={(i) => [i.damage ? `${String(i.damage)} ${String(i.damageType)}` : '', String(i.category), berries(i.cost)].filter(Boolean).join(' · ')} />
+      </Shelf>
+      <Shelf title="General rules" count={otherRules.length}>
+        <EntryLinks entries={otherRules} />
       </Shelf>
       <section className="card">
-        <p className="page-ref">Still to be added: spell lists, Haki and Spirit Surges, and the armory.</p>
+        <p className="page-ref">Not here: Devil Fruits and their advancements, which only the DM can hand out, and the medical log.</p>
       </section>
     </>
   );

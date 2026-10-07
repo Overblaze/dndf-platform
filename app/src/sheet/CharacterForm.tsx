@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, SKILLS, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, type AbilityScores, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, SKILLS, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type AbilityScores, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { useState } from 'react';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -10,7 +10,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const first = initial?.classes[0];
   // A character is pinned to one handbook; it is chosen when the character is made.
   const [version, setVersion] = useState<RulesVersion>(initial?.rulesVersion ?? 'dndf-10');
-  const { rules, classes, races, backgrounds, crewRoles, feats: allFeats, mainSubclasses, subracesOf, choiceFeatures } = ruleSet(version);
+  const { rules, classes, races, backgrounds, crewRoles, feats: allFeats, armors, weapons: armory, mainSubclasses, subracesOf, choiceFeatures } = ruleSet(version);
   const changeVersion = (next: RulesVersion) => {
     // The other handbook has its own classes, subclasses and feats: start those picks again.
     const other = ruleSet(next);
@@ -74,7 +74,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleId: crewRoleId || undefined, feats,
     };
     if (!initial) {
-      const doc = { ...newCharacter(shared, rules), armor, shield, weapons, willpower: { strengthenSelf } };
+      const doc = { ...newCharacter(shared, rules), armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return onSave(doc, `Created ${doc.name}`);
     }
@@ -95,7 +95,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       armor,
       shield,
       weapons,
-      willpower: { ...initial.willpower, strengthenSelf },
+      willpower: { ...initial.willpower, strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 },
     };
     const newMax = deriveSheet(doc, rules).maxHp.value;
     // A character at full health stays at full health when the maximum changes.
@@ -246,8 +246,26 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       </fieldset>
       <fieldset>
         <legend className="label">Armor and shield</legend>
+        <select
+          value=""
+          onChange={(e) => {
+            const picked = rules.get(e.target.value);
+            if (picked) setArmor(armorFromItem(picked));
+          }}
+          aria-label="Pick armor from the armory"
+        >
+          <option value="">Pick armor from the armory…</option>
+          {armors.map((item) => {
+            const worn = armorFromItem(item)!;
+            return (
+              <option key={item.id} value={item.id}>
+                {item.name}: AC {worn.base}{worn.dexCap === null ? ' + Dex' : worn.dexCap ? ` + Dex (max ${worn.dexCap})` : ''}{item.strength ? `, Str ${item.strength}` : ''}
+              </option>
+            );
+          })}
+        </select>
         <label className="check">
-          <input type="checkbox" checked={armor !== null} onChange={(e) => setArmor(e.target.checked ? { name: 'Leather', base: 11, dexCap: null } : null)} />
+          <input type="checkbox" checked={armor !== null} onChange={(e) => setArmor(e.target.checked ? { name: 'Custom armor', base: 11, dexCap: null } : null)} />
           <span>Wearing armor</span>
         </label>
         {armor && (
@@ -309,14 +327,38 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
             </div>
           </div>
         ))}
-        <button type="button" className="btn" onClick={() => setWeapons([...weapons, { id: crypto.randomUUID(), name: 'Club', damage: '1d4', damageType: 'bludgeoning', category: 'simple' }])}>
-          Add a weapon
+        <select
+          value=""
+          onChange={(e) => {
+            const picked = rules.get(e.target.value);
+            const weapon = picked && weaponFromItem(picked, crypto.randomUUID());
+            if (weapon) setWeapons([...weapons, weapon]);
+          }}
+          aria-label="Add a weapon from the armory"
+        >
+          <option value="">Add a weapon from the armory…</option>
+          {(['simple', 'martial'] as const).map((category) => (
+            <optgroup key={category} label={category === 'simple' ? 'Simple weapons' : 'Martial weapons'}>
+              {armory.filter((item) => item.category === category).map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}: {String(item.damage)} {String(item.damageType)}{item.properties ? ` (${String(item.properties).toLowerCase()})` : ''}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+        <button type="button" className="btn" onClick={() => setWeapons([...weapons, { id: crypto.randomUUID(), name: 'Custom weapon', damage: '1d6', damageType: 'bludgeoning', category: 'simple' }])}>
+          Add a custom weapon
         </button>
       </fieldset>
-      <label className="field">
-        <span className="label">Strengthen Self taken (+2 Willpower each) · p.221</span>
-        <input type="number" inputMode="numeric" min={0} value={strengthenSelf} onChange={(e) => setStrengthenSelf(clamp(Number(e.target.value), 0, 10))} />
-      </label>
+      {version === 'dndf-10' ? (
+        <label className="field">
+          <span className="label">Strengthen Self taken for Willpower (+2 each, total capped at 20) · p.222</span>
+          <input type="number" inputMode="numeric" min={0} value={strengthenSelf} onChange={(e) => setStrengthenSelf(clamp(Number(e.target.value), 0, 10))} />
+        </label>
+      ) : (
+        <p className="page-ref">In v8.8, Strengthen Self raises an ability score, not Willpower, so add it to the scores above · p.222</p>
+      )}
       <div className="row">
         <button type="submit" className="btn btn-primary">{initial ? 'Save changes' : 'Create character'}</button>
         <button type="button" className="btn" onClick={onCancel}>Cancel</button>
