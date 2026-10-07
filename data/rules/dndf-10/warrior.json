@@ -1,0 +1,836 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.warrior",
+      "kind": "class",
+      "name": "Warrior",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 200
+      },
+      "flavor": "The Warrior is a battle-hardened fighter, trained to excel in the heat of combat with a wide range of tactics and techniques. Whether mastering weapons, enduring the hardships of battle, or protecting their allies, Warriors are relentless in their pursuit of victory. They are the frontline champions, pushing their bodies and minds to the limit, driven by an unyielding will to survive and conquer.",
+      "quote": "CONVEY MY WILL TO THIS BLADE… NOW LET’S SEE IF I AM ABLE TO CUT STEEL. --- Roronoa Zoro",
+      "hitDie": 10,
+      "savingThrows": [
+        "str",
+        "con"
+      ],
+      "proficiencies": {
+        "armor": [
+          "all_armor",
+          "shields"
+        ],
+        "weapons": [
+          "simple",
+          "martial"
+        ],
+        "tools": [],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "acrobatics",
+            "animal_handling",
+            "athletics",
+            "history",
+            "insight",
+            "intimidation",
+            "perception",
+            "survival"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) Chain Mail or (b) Thick Shirt, Rifle, and 20 Bullets",
+        "(a) a martial weapon and a Shield or (b) two Martial Weapons",
+        "(a) a Pistol and 20 gun bullets or (b) two handaxes",
+        "(a) a dungeoneer’s pack or (b) an explorer’s pack"
+      ],
+      "progression": {
+        "columns": {
+          "executeDice": [
+            "—",
+            "1d6",
+            "1d6",
+            "2d6",
+            "2d6",
+            "2d6",
+            "2d6",
+            "3d6",
+            "3d6",
+            "3d6",
+            "3d6",
+            "4d6",
+            "4d6",
+            "4d6",
+            "4d6",
+            "5d6",
+            "5d6",
+            "5d6",
+            "5d6",
+            "5d6"
+          ]
+        }
+      },
+      "asiLevels": [
+        4,
+        6,
+        8,
+        12,
+        14,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Warrior Type",
+        "level": 3,
+        "featureLevels": [
+          3,
+          7,
+          10,
+          15,
+          18
+        ]
+      },
+      "subclassIntro": {
+        "text": "Fighters can vary by the types of weapons they use, what style of fighting they want to utilize, and what they want to provide for their allies. Once you have chosen the type of warrior you are, follow the subclass features listed below.",
+        "page": 202
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Fighting Style",
+          "text": "Starting at 1st level, you adopt a particular style of Fighting as your specialty. Choose two of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.",
+          "page": 201,
+          "sections": [
+            {
+              "name": "Aiming",
+              "text": "You gain a +1 bonus to Attack Rolls you make with Ranged Weapons.",
+              "page": 201
+            },
+            {
+              "name": "Close Quarters Shooter",
+              "text": "When making a ranged attack while you are within 5 feet of a hostile creature, you do not have disadvantage on the attack roll. Your ranged attacks ignore half cover and three-quarters cover against targets within 30 feet of you. You have a +1 bonus to attack rolls on ranged attacks.",
+              "page": 201
+            },
+            {
+              "name": "Defense",
+              "text": "While you are wearing armor, you gain a +1 bonus to AC.",
+              "page": 201
+            },
+            {
+              "name": "Dueling",
+              "text": "When you are wielding a melee weapon in one hand and no other Weapons, you gain a +2 bonus to Damage Rolls with that weapon.",
+              "page": 201
+            },
+            {
+              "name": "Great Weapon Fighting",
+              "text": "When you roll a 1 or 2 on a damage die for an Attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the Two-Handed or Versatile property for you to gain this benefit.",
+              "page": 201
+            },
+            {
+              "name": "Interception",
+              "text": "When a creature you can see hits a target, other than you, within 5 feet of you with an attack, you can use your reaction to reduce the damage the target takes by 1d10 + your proficiency bonus (to a minimum of 0 damage). You must be wielding a shield or a simple or martial weapon to use this reaction.",
+              "page": 201
+            },
+            {
+              "name": "Mariner",
+              "text": "As long as you are not wearing heavy armor or using a shield, you have a swimming speed and a climbing speed equal to your normal speed, and you gain a +1 bonus to armor class.",
+              "page": 201
+            },
+            {
+              "name": "Protection",
+              "text": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your Reaction to impose disadvantage on the Attack roll. You must be wielding a shield .",
+              "page": 201
+            },
+            {
+              "name": "Thrown Weapon Fighting",
+              "text": "You can draw a weapon that has the Thrown property as part of the Attack you make with the weapon.\nIn addition, when you hit with a ranged Attack using a Thrown weapon, you gain a +2 bonus to the damage roll.",
+              "page": 201
+            },
+            {
+              "name": "Two-Weapon Fighting",
+              "text": "When you engage in Two-Weapon Fighting, you can add your ability modifier to the damage of the second Attack.",
+              "page": 201
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Second Wind",
+          "text": "Also at 1st level, you have a limited well of stamina that you can draw on to protect yourself from harm. On Your Turn, you can use a bonus action to regain Hit Points equal to 1d10 + your Warrior level. Once you use this feature, you must finish a short or long rest before you can use it again.",
+          "page": 201,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Action Surge",
+          "text": "Starting at 2nd Level, you can push yourself beyond your normal limits for a moment. On Your Turn, you can take one additional action.\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.",
+          "page": 201,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Execute",
+          "text": "Starting at 2nd level, once per turn, when you hit a creature with a melee weapon attack, you can to deal an extra 1d6 weapon damage to the target, in addition to the weapon’s normal damage. You may use this feature an amount of times equal to your proficiency bonus, regaining all uses after a long rest.\nAdditionally, at 5th level, when you cast Execute, you can choose one of the following effects.\nSearing Strike. Convert your extra damage into fire damage and cause the target to ignite in flames. At the start of each of its turns the target takes 1d6 fire damage. If the target or a creature within 5 feet of it uses an action to put out the flames, or if some other effect douses the flames (such as the target being submerged in water), the effect ends.\nThunderous Execution. Convert your extra damage into thunder damage and your weapon rings with thunder that is audible within 300 feet of you. Additionally, if the target is a creature, it must succeed on a DC Strength saving throw equal to 8 + your proficiency + your Strength or Dexterity modifier or be pushed 10 feet away from you and knocked prone.\nWrathful Slash. Convert your extra damage into psychic damage. Additionally, if the target is a creature, it must succeed on a DC Wisdom saving throw equal to 8 + your proficiency + your Strength or Dexterity modifier or be frightened of you for 1 minute. The creature can make the save at the end of each of it’s turns.\nBranding Judgement. Convert your extra damage into radiant damage. Additionally, the target becomes visible if it is invisible, and the target sheds dim light in a 5-foot radius and can’t become invisible for 1 minute.\nBlinding Wrath. Convert your extra damage into radiant damage. Additionally, the target must succeed on a DC Constitution saving throw equal to 8 + your proficiency + your Strength or Dexterity modifier or be blinded for 1 round.\nThe extra damage increases with your warrior levels to 2d6 at 4th level, 3d6 at 8th level, 4d6 at 12th level, and 5d6 at 16th level.",
+          "page": 201,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Warrior Type",
+          "text": "At 3rd level, you choose an archetype that you strive to emulate in your combat styles and Techniques. Choose Black Weapon, Cursed Soul, Kuja Huntress, Ramen Kenpo, Ryuo Samurai, or Slow Cutting all detailed at the end of the class description. The archetype you choose grants you features at 3rd level and again at 7th, 10th, 15th, and 18th level.",
+          "page": 202,
+          "grantsSubclass": true
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 6th, 8th, 12th, 14th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1.\nAdditionally, whenever you reach a level in this class that grants you an ability score improvement feature, you can replace a fighting style you know with another fighting style available to Warriors.",
+          "page": 202,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "Beginning at 5th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn.\nThe number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
+          "page": 202
+        },
+        {
+          "level": 6,
+          "name": "Dashing Strike",
+          "text": "Starting at 6th level, you can use your action to rush forward in a straight line up to 20 feet, dealing damage to all creatures within 5 feet of the path. Each creature you pass must make a Dexterity save DC equal to 8 + your proficiency bonus + your Strength or Dexterity modifier or take damage equal to 2d8 + your Strength modifier, with the damage type of your main weapon. This movement does not provoke attacks of opportunity.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all uses after a long rest.",
+          "page": 202,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Crescent Strike",
+          "text": "Starting at 8th level, you can use your action to unleash a mighty swing that cuts through a 15-foot cone in front of you. Each creature in the area must make a Dexterity save DC equal to 8 + your proficiency bonus + your Strength or Dexterity modifier or take 3d6 + your Strength or Dexterity modifier, with the damage type of your main weapon.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all uses after a long rest.",
+          "page": 202,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 9,
+          "name": "Aura of Endurance",
+          "text": "Starting at 9th level, once a turn whenever you or a friendly creature within 15 feet of you must make a saving throw, the creature gains a bonus to the saving throw equal half of your proficiency bonus (rounded up). You must be conscious to grant this bonus. If another Warrior is present, a creature can benefit from only one Aura of Endurance at a time.",
+          "page": 202
+        },
+        {
+          "level": 12,
+          "name": "Hawk Strike",
+          "text": "Starting at 12th level, as an action, you can release a wave of force from your weapon, creating a ranged slashing attack that travels in a 30-foot line, 5 feet wide. Each creature in the line must make a Dexterity save DC equal to 8 + your proficiency bonus + your Strength or Dexterity modifier or take force damage equal to your current main weapon damage.",
+          "page": 202,
+          "action": "action",
+          "auto": [
+            "action"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.black_weapon",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Black Weapon",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 202
+      },
+      "flavor": "Black weapon users are born with incredibly powerful spirits and willpower, which they channel into their weapons. By utilizing armament haki, their weapons become darkened over time until they turn pitch black.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Sharpened Spirit",
+          "text": "Beginning when you choose this style at 3rd level, your weapon attacks now score a critical hit on a roll of 19 or higher.\nWhen you reach certain levels in the warrior class, you gain the following bonuses. At 7th level your weapon attacks now score a critical hit on a roll of 18 or higher, and at 15th level your weapon attacks score a critical hit on a roll of 17 or higher.",
+          "page": 202
+        },
+        {
+          "level": 7,
+          "name": "Blackened Armory",
+          "text": "At 7th level, when you land a critical hit on an enemy with a melee weapon increase the damage by 2d6 and change the damage type to force, and all healing on the target you crit receives half of all healing and regeneration received for 1 minute.",
+          "page": 203
+        },
+        {
+          "level": 10,
+          "name": "Reaper’s Blade",
+          "text": "At 10th level, when you land a critical hit you automatically apply Execute for free. No charges of execute are needed and there is no turn limit restriction for this free execute.",
+          "page": 203
+        },
+        {
+          "level": 15,
+          "name": "Superior Sharpened Spirit",
+          "text": "Starting at 15th level, you can ignore magical and non- magical bludgeoning, piercing, and slashing resistances.",
+          "page": 203
+        },
+        {
+          "level": 18,
+          "name": "Haki Weapon Master",
+          "text": "At 18th level, your weapon attacks ignore magical and non-magical bludgeoning, piercing, and slashing immunities. Additionally, when you score a critical hit with a weapon attack, you heal for 6d8 hit points.",
+          "page": 203
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.cursed_soul",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Cursed Soul",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 203
+      },
+      "flavor": "Somehow, along the lines you have become the host to one or more evil presences caged within you. This may either be due to wielding a cursed weapon, being hexed, or perhaps simply having a tainted spirit yourself. Regardless of how you became this way, you have slowly developed a craving for blood and violence. Will you follow the path of destruction? Or will you simply crumble from the curse brought upon you? Only your own strength and willpower can determine your fate.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Champion of Malice",
+          "text": "When you reach 3rd level, you harbor evil energy within yourself. This energy is represented by your Cursed Spirit dice, which are each a d6. You have a number of these dice equal to twice your Proficiency Bonus, and they fuel various cursed powers you have, which are detailed below.\nSome of your powers expend the Cursed Spirit die they use, as specified in a power’s description, and you can’t use a power if it requires you to use a die when your dice are all expended. You regain all your expended Cursed Spirit dice when you finish a long rest. In addition, as a bonus action, you can regain one expended Cursed Spirit die, but you can’t do so again until you finish a short or long rest.\nWhen you reach certain levels in this class, the size of your Cursed Spirit dice increases: at 5th Level (d8), 11th level (d10), and 17th level (d12).\nSaving Throws. Some of your cursed abilities require your target to make a saving throw to resist the curse’s Effects. The saving throw DC is calculated as follows:\nCurse save DC = 8 + your Proficiency Bonus + your Intelligence modifier\nThe powers below use your Cursed Spirit dice:",
+          "page": 203,
+          "sections": [
+            {
+              "name": "Demon Strike",
+              "text": "You can enhance your Weapons with demonic energy. Once on each of your turns, immediately after you hit a target within 30 feet of you with an Attack and deal damage to it with a weapon, you can expend one Cursed Spirit die, rolling it and dealing necrotic, psychic or radiant damage (your choice) to the target equal to the number rolled plus your Intelligence modifier.",
+              "page": 203
+            },
+            {
+              "name": "Hellish Glare",
+              "text": "By channeling your curse through your appearance, you can cripple a creature that can see you within 30 feet with fear. As a bonus action on your turn, you can force the target to make a Wisdom saving throw against your Curse save DC. If the save fails, the creature is frightened of you until the end of your next turn. Once you take this action, you can’t do so again until you finish a short or long rest, unless you expend a Cursed Spirit die to take it again.",
+              "page": 203
+            },
+            {
+              "name": "Arms of Asura",
+              "text": "You begin to grow illusory cursed arms, allowing you to make additional attacks on your turn.\nWhen you hit a creature with an Attack, you can expend one Cursed Spirit die to attempt to damage another creature with a mirrored version of the same Attack. Choose another creature within 5 feet of the original target and within 30 feet of you. If the original Attack roll would hit the second creature, it takes necrotic, psychic or radiant damage (your choice) equal to the number you roll on your Cursed Spirit die.",
+              "page": 203
+            }
+          ]
+        },
+        {
+          "level": 7,
+          "name": "Evil’s Embrace",
+          "text": "Starting at 7th level, you gain new ways to utilize your cursed spirit:",
+          "page": 204,
+          "sections": [
+            {
+              "name": "Fallen Angel Wings",
+              "text": "As a bonus action, you grow spiritual black wings. You gain a flying speed equal to twice your walking speed until the end of the current turn. Once you take this bonus action, you can’t do so again until you finish a short or long rest, unless you expend a Cursed Spirit die to take it again.",
+              "page": 204
+            },
+            {
+              "name": "Purgatory Strike",
+              "text": "When you deal damage to a target with your Demon Strike, you can force the target to make a Strength saving throw. If the save fails, you can knock the target prone or move it up to 10 feet in any direction horizontally.",
+              "page": 204
+            }
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Shepard of Spirits",
+          "text": "Beginning at 10th level, your ability to host and contain spirits has allowed your mind to grow stronger. You have Resistance to psychic damage. Moreover, if you start Your Turn Charmed or Frightened, you can expend a Cursed Spirit die and end every Effect on yourself subjecting you to those Conditions.",
+          "page": 204
+        },
+        {
+          "level": 15,
+          "name": "Silver Mist",
+          "text": "Starting at 15th level, you can enhance yourself with an intense demonic aura which allows you to manifest spirital arms and weapons for a period of time. As a bonus action, you grow extra arms that give you advantage on one of your attacks made each turn and gain a bonus of +2 to Armor Class. This lasts for 1 minute or until you’re Incapacitated.\nOnce you take this bonus action, you can’t do so again until you finish a long rest, unless you expend 2 Cursed Spirit die to take it again.",
+          "page": 204
+        },
+        {
+          "level": 18,
+          "name": "Jest of the Dead",
+          "text": "Beginning at 18th level, your Silver Mist feature is now enhanced even further. While using Silver Mist, you grow even more extra appendages and heads that give you these additional bonuses:\nWhen you hit a creature with an Attack, you can use your Reaction to force that creature to make a Strength saving throw. On a failed save, the creature is knocked prone, as if struck by several attacks at once.\nAdditionally, your extra heads give you advantage on saving throws against being blinded, deafened, stunned or knocked unconcious.\nYou can use your Demon Strike feature on any attack you make against a creature within 30 feet, instead of once per turn, by expending a Cursed Spirit die.",
+          "page": 204
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.kuja_huntress",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Kuja Huntress",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 204
+      },
+      "flavor": "Subclass Prerequisite: Kuja Background Trained in the arts of the hunt, Kuja Huntress’ combine their physical prowess with a deep connection to the natural world, using their instincts and keen senses to strike down their enemies with deadly accuracy.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Snake Companion",
+          "text": "Beginning when you choose this style at 3rd level, you gain expertise in the Acrobatics and Survival skills.\nAdditionally, you gain a Kuja Snake Weapon companion. While you are within 5 ft. of your companion the Snake Weapon cannot be targeted by attacks or damaged in any way.\nIf your Snake Weapon companion dies, you can hatch a new one after a long rest.",
+          "page": 204,
+          "sections": [
+            {
+              "name": "Kuja Snake Weapon",
+              "text": "",
+              "page": 204,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Tiny beast, unaligned"
+                    ],
+                    [
+                      "Armor Class 13"
+                    ],
+                    [
+                      "Hit Points 2 (1d4)"
+                    ],
+                    [
+                      "Speed 30 ft., swim 30 ft."
+                    ],
+                    [
+                      "STR",
+                      "DEX",
+                      "CON",
+                      "INT",
+                      "WIS",
+                      "CHA"
+                    ],
+                    [
+                      "2 (-4)",
+                      "16 (+3)",
+                      "11 (+0)",
+                      "1 (-5)",
+                      "10 (+0)",
+                      "3 (-4)"
+                    ],
+                    [
+                      "Senses blindsight 10 ft., passive Perception 10"
+                    ],
+                    [
+                      "Challenge 1/8 (25 XP)",
+                      "Proficiency Bonus +2"
+                    ],
+                    [
+                      "Weapon Form. Being trained to be used as a bow, a snake"
+                    ],
+                    [
+                      "weapon can use its action to transform into a functional +1"
+                    ],
+                    [
+                      "bow or +1 quarterstaff that can be used by any creature that"
+                    ],
+                    [
+                      "has proficiency with using the chosen weapon. It reverts back"
+                    ],
+                    [
+                      "to its regular snake form when it falls to 0 hit points or spends"
+                    ],
+                    [
+                      "a bonus action to do so."
+                    ],
+                    [
+                      "Actions"
+                    ],
+                    [
+                      "Bite. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit:"
+                    ],
+                    [
+                      "(1) piercing damage plus 5 (2d4) poison damage. The target"
+                    ],
+                    [
+                      "must make a DC 10 Constitution saving throw, taking the"
+                    ],
+                    [
+                      "poison damage on a failed save, or half as much damage on a"
+                    ],
+                    [
+                      "successful one."
+                    ]
+                  ],
+                  "page": 204
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Haki-Infused Serpent",
+          "text": "Also at 3rd level, with a steady breath and unwavering focus, you channel your inner energy, infusing your Snake Weapon companion’s weapon form feature with the power of your spirit. When you hit a creature with the weapon form’s bow or quarterstaff weapon attacks, you can channel your inner power to enhance the strike. Once per turn, you can deal extra force damage equal to your proficiency bonus.\nAdditionally, your ranged weapon attacks ignore half cover.",
+          "page": 204
+        },
+        {
+          "level": 7,
+          "name": "Serpent’s Reflexes",
+          "text": "At 7th level, your combat instincts become as sharp and fluid as a hunting serpent. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail.",
+          "page": 205
+        },
+        {
+          "level": 10,
+          "name": "Empowered Strikes",
+          "text": "At 10th level, your attacks are empowered to strike through the toughest defenses. Your Snake Weapon’s weapon form weapon attacks now ignore resistance to non-magical attacks and bow attacks can bypass three- quarters cover.\nAdditionally, when you score a critical hit with a weapon form’s weapon attack, you can add your warrior level / 2 to the damage dealt.",
+          "page": 205
+        },
+        {
+          "level": 15,
+          "name": "Snake’s Dance",
+          "text": "Starting at 15th level, your movements mirror the fluid grace of a serpent weaving through the jungle. As a reaction when you are targeted by an attack, you can move up to 10 feet without provoking opportunity attacks. If this movement takes you out of the attack’s range, the attack misses automatically.\nYou can use this feature a number of times equal to your proficiency bonus per long rest.\nAdditionally, your Snake Weapon companion grows into an Empress Snake Weapon.",
+          "page": 205,
+          "sections": [
+            {
+              "name": "Empress Snake Weapon",
+              "text": "",
+              "page": 205,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Small beast, unaligned"
+                    ],
+                    [
+                      "Armor Class 16"
+                    ],
+                    [
+                      "Hit Points 75(15d6 + 30)"
+                    ],
+                    [
+                      "Speed 40 ft., swim 30 ft."
+                    ],
+                    [
+                      "STR",
+                      "DEX",
+                      "CON",
+                      "INT",
+                      "WIS",
+                      "CHA"
+                    ],
+                    [
+                      "19 (+4)",
+                      "18 (+4)",
+                      "12 (+1)",
+                      "1 (-5)",
+                      "10 (+0)",
+                      "3 (-4)"
+                    ],
+                    [
+                      "Senses blindsight 10 ft., passive Perception 10"
+                    ],
+                    [
+                      "Challenge 4 (25 XP)",
+                      "Proficiency Bonus +2"
+                    ],
+                    [
+                      "Empress Weapon Form. Being trained to be used as a bow, a"
+                    ],
+                    [
+                      "snake weapon can use its action to transform into a functional"
+                    ],
+                    [
+                      "+3 bow or +3 quarterstaff that can be used by any creature that"
+                    ],
+                    [
+                      "has proficiency with using the chosen weapon. It reverts back"
+                    ],
+                    [
+                      "to its regular snake form when it falls to 0 hit points or spends"
+                    ],
+                    [
+                      "a bonus action to do so."
+                    ],
+                    [
+                      "Actions"
+                    ],
+                    [
+                      "Bite. Melee Weapon Attack +6 to hit, reach 5 ft., one target. Hit"
+                    ],
+                    [
+                      "12 (2d8 + 4) piercing damage plus 8 (2d8) poison damage. The"
+                    ],
+                    [
+                      "target must make a DC 11 Constitution saving throw, taking"
+                    ],
+                    [
+                      "the poison damage on a failed save, or half as much damage"
+                    ],
+                    [
+                      "on a successful one."
+                    ]
+                  ],
+                  "page": 205
+                }
+              ]
+            }
+          ],
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 18,
+          "name": "Unstoppable Precision",
+          "text": "At 18th level, your strikes are the epitome of Kuja mastery, honed to perfection through years of relentless training. Your Snake Weapon’s weapon attacks critically hit on a roll of 18 or higher.\nAdditionally, when you critically hit, the target must make a Constitution saving throw equal to 8 + your proficiency bonus + your Dexterity or Strength modifier or be dazed until the beginning of your next turn.\nDazed creature may only make a single action, bonus action, or movement action on their turn.",
+          "page": 205
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.ramen_kenpo",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Ramen Kenpo",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 206
+      },
+      "flavor": "Harnessing the power of noodles wielding ramen like a weapon, crafting flavorful dishes to fuel your allies and overwhelming your enemies with the forbidden art of Ramen Kenpo.\nRamen save DC = 8 + your Proficiency bonus + your Constitution modifier",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Warrior Level",
+              "Ramen Die"
+            ],
+            [
+              "3rd",
+              "1d4"
+            ],
+            [
+              "7th",
+              "1d6"
+            ],
+            [
+              "10th",
+              "1d8"
+            ],
+            [
+              "15th",
+              "1d10"
+            ],
+            [
+              "18th",
+              "1d12"
+            ]
+          ],
+          "page": 206
+        }
+      ],
+      "features": [
+        {
+          "level": 3,
+          "name": "Apprentice Chef",
+          "text": "Beginning when you choose this style at 3rd level, you’ve begun to learn the fundamentals of Ramen Kenpo, transforming noodles into formidable weapons. You gain proficiency with Cook’s Utensils, and any melee weapon you have equipped can be used as Cook’s Utensils for the purposes of checks. Also you may use your ramen dice in place of the damage dice for the weapon if your ramen dice is higher.\nAdditionally, when you make an attack action, you may replace one of your attacks with one of the following ramen techniques. You can only use one of these features per turn.\nRamen Beam. Fire sharpened ramen noodles in a 10 ft. cone. Creatures in the area must make a Dexterity saving throw against your Ramen save DC. On a failed save, they take 2 Ramen Dice in piercing damage, or half as much on a success.\nNoodle Whip. Make a melee attack against a creature within 15 ft. On a hit, they take 2 Ramen Dice + Dexterity or Strength modifier in bludgeoning damage and you may pull the creature up to 10 ft. towards you.",
+          "page": 206
+        },
+        {
+          "level": 3,
+          "name": "Home Cooking",
+          "text": "Also at 3rd level, during a short or long rest, you can prepare an amount of special ramen dishes equal to double your proficiency bonus. Each creature that eats the dish gains temporary hit points equal to 1 Ramen Dice + half your Warrior level (rounded up). These temporary hit points last until their next short or long rest.",
+          "page": 206
+        },
+        {
+          "level": 7,
+          "name": "Advanced Formula",
+          "text": "At 7th level, your ramen mastery reaches new heights, allowing you to create defensive armor. As a bonus action, you can summon Ra-Men’s Formal Suit, lasting for 1 minute or until its temporary hit points are depleted. While active, you gain:\nTemporary hit points equal to 3 times your Warrior level.\nAC bonus equal to your proficiency bonus / 2 (rounded up).\nYou grow one size larger, and your melee and noodle features reach increases by 5 feet.\nIncrease ramen technique’s ramen dice by 1.\nOnce you use Ra-Men’s Formal Suit, you can’t do so again until you finish a long rest.",
+          "page": 206
+        },
+        {
+          "level": 10,
+          "name": "Adept Chef",
+          "text": "At 10th level, your culinary prowess enhances your combat and support abilities. Add an additional Ramen Dice to the techniques damage and temp hit point rolls of your Home Cooking feature.",
+          "page": 206
+        },
+        {
+          "level": 15,
+          "name": "Secret Formula",
+          "text": "Starting at 15th level, your mastery of Ramen Kenpo improves your signature techniques:\nRamen Beam. Range increases to a 30-foot cone. Targets that fail the save take additional piercing damage equal to 1 Ramen die at the start of each of their turns until they or another creature uses an action to remove the noodles.\nHundred Noodle Whip. Range increases to 30 feet and targets must succeed on a Strength saving throw against your Ramen save DC or be knocked prone.\nAdditionally, add an extra Ramen Dice to the temp hit point roll of your Home Cooking feature.",
+          "page": 206
+        },
+        {
+          "level": 18,
+          "name": "Master Chef",
+          "text": "At 18th level, you have achieved absolute perfection in Ramen Kenpo. Ra-Men’s Formal Suit’s temporary hit points increases to 4 times your Warrior level and while Ra-Men’s Formal Suit is active, you gain an additional attack option:\nThousand Noodle Whip. Lash out in a 40-foot-long, 5- foot-wide line. Creatures in the area must make a Dexterity saving throw against your Ramen save DC, taking 5 Ramen Dice in bludgeoning damage on a failed save, or half as much on a success. On a failed save, they are restrained, repeating the save at the end of each turn.\nAdditionally, add an extra Ramen Dice to the temp hit point roll of your Home Cooking feature.",
+          "page": 206
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.ryuo_samurai",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Ryuo Samurai",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 207
+      },
+      "flavor": "Born from the ancient swordsmanship of Wano, the Ryuo Samurai wields blades empowered by Ryuo. Through disciplined training and unparalleled strength, they become unstoppable warriors, cutting down all obstacles in their path.\nRyuo save DC = 8 + your Proficiency bonus + your Strength modifier",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Warrior Level",
+              "Ryuo Die"
+            ],
+            [
+              "3rd",
+              "1d6"
+            ],
+            [
+              "5th",
+              "1d8"
+            ],
+            [
+              "11th",
+              "1d10"
+            ],
+            [
+              "17th",
+              "1d12"
+            ]
+          ],
+          "page": 207
+        }
+      ],
+      "features": [
+        {
+          "level": 3,
+          "name": "Twin Weapon Training",
+          "text": "Beginning when you choose this style at 3rd level, your training in the art of dual wielding bears fruit. When you make an attack as a bonus action with an offhand weapon, you may add your Strength modifier to the damage roll.",
+          "page": 207
+        },
+        {
+          "level": 3,
+          "name": "Ryuo Training",
+          "text": "Also at 3rd level, you awaken your skill in Ryuo, represented by your Ryuo Dice. You have a number of these dice equal to twice your proficiency bonus, fueling various techniques described below.\nSome techniques expend Ryuo Dice, as specified in their descriptions. You cannot use a technique if you lack the required dice. You regain all expended Ryuo Dice after finishing a long rest. Additionally, when you roll initiative, you regain one expended Ryuo Die.\nTo use these features, you must be wielding two melee weapons that deal slashing damage.\nParadise Waterfall. When you hit a creature with a melee weapon attack, you can expend one Ryuo Die to deal extra damage equal to the roll. For each size category the target is larger than you, you can expend an additional Ryuo Die, adding the result to the damage for each die spent.\nTwin Peach Guard. As a reaction when you are hit by an attack or forced to make a saving throw, you can expend one Ryuo Die and roll it. Add the result to your AC against the triggering attack or to your saving throw.",
+          "page": 207
+        },
+        {
+          "level": 7,
+          "name": "Intermediate Two Sword Style",
+          "text": "At 7th level, your mastery of Ryuo expands, granting you access to new techniques:\nGun Quasi Demon. As an action and move action, you can move up to your speed in a straight or diagonal line. By expending a Ryuo Die, you can make one weapon attack against each creature within your melee range along your path. Each attack deals your weapon damage plus the Ryuo Die roll in magical slashing damage. This movement does not provoke opportunity attacks.\nGreat Spirit of the Samurai. By expending up to 3 Ryuo Dice, you release a wave of cutting energy. As an action, all creatures within a 10-foot radius must make a Dexterity saving throw. On a failed save, they take slashing damage equal to your weapon damage plus the total of the spent Ryuo Dice. On a successful save, they take half as much damage.",
+          "page": 207
+        },
+        {
+          "level": 10,
+          "name": "Two Weapon Expert",
+          "text": "At 10th level, your bond with your blades deepens. You can no longer be disarmed of your paired weapons against your will and you gain resistance to both magical and nonmagical slashing damage.",
+          "page": 207
+        },
+        {
+          "level": 15,
+          "name": "Peach Meadow Ten Fists",
+          "text": "Starting at 15th level, you unlock the ultimate technique of the Ryuo style. As an action, you can move up to your movement speed and make a single devastating weapon attack. On a hit, you expend all remaining Ryuo Dice, dealing additional slashing damage equal to the total rolled, in addition to your weapon’s damage. If the target has temporary hit points or is in a form that grants a secondary health pool (such as a Zoan transformation), the attack bypasses those defenses and deals that amount as damage to their original health pool.",
+          "page": 207
+        },
+        {
+          "level": 18,
+          "name": "Ryuo Master",
+          "text": "At 18th level, your dual weapons permanently awaken as Black Blades, infused with the highest form of Ryuo. Both weapons count as magical for overcoming resistance and immunity, gain a +2 bonus to attack and damage rolls, and critical hits with these weapons deal full damage.",
+          "page": 207
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.slow_cutting",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Slow Cutting",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 208
+      },
+      "flavor": "Warriors of the Slow Cutting style reject speed in favor of patience, precision, and a single decisive strike. Their cuts are so clean and deliberate that enemies often realize too late that a cut has been made.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Slow Style",
+          "text": "Beginning when you choose this style at 3rd level, you abandon rapid attacks in favor of one decisive strike. When you take the Attack action on your turn, you must make only one weapon attack as part of that action, even if a feature such as Extra Attack or another source would allow you to make more attacks, and you add +1 to your attack roll per extra attack you are missing.\nWhen you hit a creature with this attack, the attack deals extra weapon damage equal to 1d12 for each attack you would have made with extra attack. This damage is the same type as the weapon’s damage.\nYou may not make an attack with this subclass as a bonus action. However, if you would use a bonus action to make an attack before making an action attack, instead make no attack and increase the extra attack missing counter by 1 for Slow Style.",
+          "page": 208
+        },
+        {
+          "level": 3,
+          "name": "Lingering Cut",
+          "text": "Also at 3rd level, your deliberate cuts leave wounds that worsen with each successful strike. When you hit a creature with a melee weapon attack, you can cause the target to begin bleeding for 3 rounds. At the start of each of the bleeding creature’s turns, it takes 1d6 non- resistable necrotic damage. When you successfully hit a bleeding creature with a melee weapon attack, the bleed damage increases by an additional 1d6 and the duration resets. The bleed ends early if a creature uses an action to stanch the wound.\nThe damage per turn of this feature deals increases as you gain levels in the warrior class. The damage becomes 2d6 at 8th level, and 3d6 at 14th level.",
+          "page": 208
+        },
+        {
+          "level": 7,
+          "name": "Opening Cut",
+          "text": "At 7th level, your slow cuts become harder to escape once they draw blood. When you hit a creature affected by your Lingering Cut with a melee weapon attack, you can choose one of the following effects:\nHamstring. The creature’s speed is reduced by 5 feet per lingering wound stack on the target until the start of your next turn.\nWeakening Cut. The creature subtracts 1d4 from the next attack roll it makes before the end of its next turn.",
+          "page": 208
+        },
+        {
+          "level": 10,
+          "name": "Momentum Cut",
+          "text": "At 10th level, If you have not moved during your turn before making your Slow Style attack, the attack gains a bonus to its damage roll equal to double your proficiency bonus.\nAdditionally, each time you miss a creature with your Slow Style attack, you build momentum towards your next successful attack. The next time you hit a creature with a weapon attack, the attack deals additional weapon damage equal to half the number of damage dice rolled for your weapon damage and Slow Style damage, rounded down, for each attack you missed against that creature since the last time you hit it.\nThis stored damage is lost if you become incapacitated or finish a short or long rest.",
+          "page": 208
+        },
+        {
+          "level": 15,
+          "name": "Sheathed Cut",
+          "text": "Starting at 15th level, your strikes cut so cleanly that the wound does not reveal itself until moments later. When you hit a creature with a melee weapon attack, you can delay the strike’s damage. Roll for the damage roll as usual, however the attack deals no damage immediately.\nUntil the start of your next turn, if the creature uses an action, legendary action, or moves, it takes non- resistable necrotic damage equal to double the damage rolled.",
+          "page": 208
+        },
+        {
+          "level": 18,
+          "name": "Perfected Cut",
+          "text": "At 18th level, your slow, deliberate strikes deal additional overwhelming force. The additional damage granted by your Slow Style feature increases from 1d12 to 2d12 for each attack you would have made with extra attack.",
+          "page": 208
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

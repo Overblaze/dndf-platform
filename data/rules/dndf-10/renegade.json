@@ -1,0 +1,686 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.renegade",
+      "kind": "class",
+      "name": "Renegade",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 171
+      },
+      "flavor": "Renegades using Dueling Strikes to build combos before ending them with sudden, decisive Finishing Acts. Where others rely on perfect form, they thrive on aggressive combo techniques.",
+      "quote": "EVERYONE’S WEAK WHEN THEY HESITATE. --- Nami",
+      "hitDie": 8,
+      "savingThrows": [
+        "dex",
+        "int"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor"
+        ],
+        "weapons": [
+          "simple",
+          "pistol",
+          "longsword",
+          "rapier",
+          "shortsword",
+          "cane_sword",
+          "kunai",
+          "katana",
+          "chakram",
+          "saber"
+        ],
+        "tools": [
+          "Thieves’ tools"
+        ],
+        "skills": {
+          "choose": 4,
+          "from": [
+            "acrobatics",
+            "athletics",
+            "deception",
+            "insight",
+            "intimidation",
+            "investigation",
+            "perception",
+            "performance",
+            "persuasion",
+            "sleight_of_hand",
+            "stealth"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a Rapier or (b) a Shortsword",
+        "(a) a Musket and 20 gun bullets or (b) a Shortbow and Quiver of 20 Arrows",
+        "(a) a burglar’s pack, (b) a dungeoneer’s pack, or (c) an explorer’s pack",
+        "Thick Shirt, two daggers, and thieves’ tools"
+      ],
+      "asiLevels": [
+        4,
+        8,
+        10,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Renegade Archetype",
+        "level": 3,
+        "featureLevels": [
+          3,
+          5,
+          9,
+          13,
+          17
+        ]
+      },
+      "subclassIntro": {
+        "text": "There are various types of renegades that utilize a number of different tools to steal from their targets in the shadows, attack with elemental tricks, or duel in close range using fancy maneuvers. Through developing these methods of combat, several archetypes have emerged.",
+        "page": 173
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Expertise",
+          "text": "At 1st level, choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with thieves’ tools. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies.\nAt 6th level, you can choose two more of your proficiencies (in skills or with thieves’ tools) to gain this benefit.",
+          "page": 171
+        },
+        {
+          "level": 1,
+          "name": "Dueling Strikes",
+          "text": "Beginning at 1st level, you learn to fight with deliberate rhythm, choosing between swift flurries and powerful committed blows. When you take the Attack action on your turn with a renegade weapon, you can replace your normal attacks with one of the following strike options:\nLight Strike. You make two weapon attacks. Heavy Strike. You make one weapon attack at advantage. On a hit, the attack deals one additional weapon damage die. You do not gain advantage if this attack is declared as the Finishing Act.",
+          "page": 172
+        },
+        {
+          "level": 1,
+          "name": "Finishing Act",
+          "text": "At 1st level, you can end a flawless combo with a decisive finishing blow. Before you make an attack granted by your Dueling Strikes feature, you can declare that attack to be a Finishing Act.\nWhen you declare a Finishing Act, you gain benefits based on the attacks you have successfully made as part of your current combo. You only gain these benefits if you have not missed with any weapon attack made as part of your Dueling Strikes since the combo began.\nYour Finishing Act gains the following benefits:\nLight Strike Bonus. The attack gains a +1 bonus to its attack roll for each Light Strike attack you have hit with during the combo.\nHeavy Strike Bonus. The attack deals one additional weapon damage die for each Heavy Strike attack you have hit with during the combo.\nAfter the Finishing Act is resolved, your combo immediately ends, and all bonuses gathered from your Dueling Strikes are lost.",
+          "page": 172
+        },
+        {
+          "level": 2,
+          "name": "Fast Talker",
+          "text": "At 2nd level, you learn to master saying the right thing at the right time to get people to do what you want. When you make a Charisma (Persuasion) or Charisma (Deception) check, you can add 1d4 to the roll.",
+          "page": 172
+        },
+        {
+          "level": 3,
+          "name": "Renegade Archetype",
+          "text": "At 3rd level, you choose an archetype that you emulate in the exercise of your renegade abilities: Agent, Assassin, Dancing Duelist, Elemental Trickster, Swashbuckler, or Thief, all detailed at the end of the class description. Your archetype choice grants you features at 3rd Level and then again at 9th, 13th, and 17th level.",
+          "page": 172,
+          "grantsSubclass": true
+        },
+        {
+          "level": 3,
+          "name": "Combo Flow",
+          "text": "Starting at 3rd level, you learn to weave additional movements into the rhythm of your attacks. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques:\nTumble. You move up to 5 feet in a direction of your choice. This movement does not provoke opportunity attacks.\nDodge. You take the Dodge action.\nItem Consumption. You use or consume one item that would normally require an action to use. Reckless Strike. You make a single Light Attack granted by your Dueling Strikes feature. Until the start of your next turn, attack rolls against you have advantage.\nGuard Break. You make one Heavy Strike against a creature within range. This attack deals no damage. On a hit, the target cannot take reactions until the start of your next turn.",
+          "page": 172
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 172,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Uncanny Dodge",
+          "text": "Starting at 5th level, when an attacker that you can see hits you with an attack, you can use your reaction to halve the attack’s damage against you.",
+          "page": 172
+        },
+        {
+          "level": 5,
+          "name": "Press the Attack",
+          "text": "At 5th level, you learn to build momentum with each successful strike. Whenever you hit a creature with a weapon attack made as part of your Dueling Strikes, you gain 1 stack of Press the Attack.\nFor each stack of Press the Attack you have, you gain a +1 bonus to attack rolls you make with your Dueling Strikes up to +3, and your Dueling Strikes attacks deal an additional stacking 1d4 damage on a hit up to half of your Renegade level (rounded up).\nYou lose all stacks of Press the Attack if you miss with a weapon attack made as part of your Dueling Strikes, use your Finishing Act, or combat ends.",
+          "page": 172
+        },
+        {
+          "level": 7,
+          "name": "Evasion",
+          "text": "Beginning at 7th level, you can nimbly dodge out of the way of certain area Effects, such as a devil fruit user’s fireball ability or an Ice Storm attack. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+          "page": 173
+        },
+        {
+          "level": 11,
+          "name": "Reliable Talent",
+          "text": "By 11th level, you have refined your chosen skills until they approach perfection. Whenever you make an ability check that lets you add your proficiency bonus, you can treat a d20 roll of 9 or lower as a 10.",
+          "page": 173
+        },
+        {
+          "level": 15,
+          "name": "Slippery Mind",
+          "text": "By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws.",
+          "page": 173
+        },
+        {
+          "level": 18,
+          "name": "Elusive",
+          "text": "Beginning at 18th level, you are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren’t incapacitated.",
+          "page": 173
+        },
+        {
+          "level": 20,
+          "name": "Stroke of Luck",
+          "text": "At 20th level, you have an uncanny knack for succeeding when you need to. If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the d20 roll as a 20.\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
+          "page": 173,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.renegade.agent",
+      "kind": "subclass",
+      "parent": "class.renegade",
+      "name": "Agent",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 173
+      },
+      "flavor": "Masters of infiltration, agents specialize in disguises, mimicry, and uncovering secrets. Whether slipping into an enemy stronghold under a false identity or extracting compromising information through casual conversation, these renegades excel in the art of espionage.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Compromising Secrets",
+          "text": "When you choose this archetype at 3rd level, you excel at exploiting the vulnerabilities of others. Once per long rest, you can spend 10 minutes observing or conversing with a creature. At the end of the interaction, make a Wisdom (Insight) check contested by the target’s Charisma (Deception) check. On a success, you uncover one of the following secrets:\nA personal fear or emotional trigger.\nA close relationship or loyalty.\nA physical or tactical weakness.\nFor the next hour, you have advantage on Charisma checks made against that creature.",
+          "page": 173,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Covert Operative",
+          "text": "Also at 3rd level, your training in infiltration and disguise gives you the tools to operate unnoticed. You gain proficiency with the Disguise Kit, Forgery Kit, and one additional tool of your choice.\nAdditionally, when you make a Dexterity (Stealth), Charisma (Persuasion), or Charisma (Deception) check, you can treat a roll of 11 or lower on the d20 as a 12.",
+          "page": 173
+        },
+        {
+          "level": 5,
+          "name": "Infiltrator’s Flow",
+          "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nTalk Down. Choose one creature within 30 feet of you that can hear and understand you. The target must make a Wisdom saving throw equal to 8 + your proficiency bonus + your charisma modifier. On a failed save, the creature cannot willingly target you with attacks or harmful effects until you attack it, damage it, force it to make a saving throw, or it has no other hostile creature it can target. This effect ends early if you are the only hostile creature the target can perceive.\nEncourage. Choose one allied creature within 30 feet of you that can hear you. The next time the target makes an attack roll, ability check, or saving throw before the start of your next turn, it has advantage on the roll.\nDiscourage. Choose one hostile creature within 30 feet of you that can hear you. The next time the target makes an attack roll, ability check, or saving throw before the start of your next turn, it has disadvantage on the roll.",
+          "page": 174
+        },
+        {
+          "level": 9,
+          "name": "Shifting Identity",
+          "text": "At 9th level, you master the art of creating and maintaining alternate personas. During a short or long rest, choose one tool you are proficient with and create a detailed false identity associated with it, including a name, appearance, and background. While using this identity:\nYou can adopt this identity as an action, changing your appearance, voice, and mannerisms.\nYou have expertise (double proficiency bonus) with the associated tool.\nCreatures interacting with you must succeed on an Intelligence (Investigation) check against your Charisma (Deception) roll to discern the disguise if they are suspicious.\nYou can maintain one primary persona at a time. Creating a new persona replaces the previous one.",
+          "page": 174
+        },
+        {
+          "level": 13,
+          "name": "Branching Network",
+          "text": "Starting at 13th level, your network of contacts and informants keeps you one step ahead. While in a settlement for at least 1 hour, you can gather intelligence by tapping into rumors, local gossip, and faction movements. The DM provides one piece of useful information of their choice, such as:\nThe goals of a prominent faction.\nHidden entrances to a stronghold.\nA target’s last known location.\nA weakness in a defensive point.\nAn enemy who doesn’t have full allegiance to the current regime.\nThe location of an item.\nLocations of rebellious groups.\nAdditionally, you gain advantage on Charisma (Persuasion) and Intelligence (Investigation) checks made to gather information.",
+          "page": 174
+        },
+        {
+          "level": 17,
+          "name": "Ultimate Subterfuge",
+          "text": "Beginning at 17th level, your skill in deception and infiltration reaches unparalleled heights. You gain the following benefits:\nWhen you make a Dexterity (Stealth), Charisma (Persuasion), or Charisma (Deception) check, you can treat a roll of 13 or lower on the d20 as a 14. As an action, you can perfectly mimic a creature you’ve observed for at least 1 minute, replicating their voice, mannerisms, clothing style, and behavior. Creatures must succeed on an Intelligence (Investigation) check against your Charisma (Deception) roll to discern the impersonation. Once per turn, when you attack a creature unaware of your true identity (such as while disguised or hidden), you can deal an additional 4d6 damage.",
+          "page": 174
+        }
+      ]
+    },
+    {
+      "id": "subclass.renegade.assassin",
+      "kind": "subclass",
+      "parent": "class.renegade",
+      "name": "Assassin",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 175
+      },
+      "flavor": "Master of poisons, the assassin concocts deadly brews to eliminates targets slowly and with subtlety. Their victims never see the danger until it’s far too late.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Poison Crafter",
+          "text": "When you choose this archetype at 3rd level, you gain proficiency with the Poisoner’s Kit if you don’t already have it.\nAdditionally you can craft poisons during a long rest using your Poisoner’s Kit. You can craft a number of vials of poison up to your Dexterity modifier (minimum of one) and no more of the specific Vials per long rest limit as shown in the table. Each poison requires a specific crafting cost and has a limited potency duration, after which it neutralizes itself within its container and becomes ineffective.\nThe DC of your Poisons saves are equal to 8 + your proficiency + half your renegade level (rounded up)",
+          "page": 175,
+          "sections": [
+            {
+              "name": "Poison Crafting Table",
+              "text": "฿\n฿\n฿\n฿\nAll poisons can be found in Chapter 9: Medical Log",
+              "page": 175,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Vials"
+                    ],
+                    [
+                      "per"
+                    ],
+                    [
+                      "Renegade",
+                      "Crafting",
+                      "Potency",
+                      "long"
+                    ],
+                    [
+                      "Level",
+                      "Poisons",
+                      "Cost",
+                      "Duration",
+                      "rest"
+                    ],
+                    [
+                      "3rd",
+                      "Sailor’s Bane",
+                      "-",
+                      "-",
+                      "-"
+                    ]
+                  ],
+                  "page": 175
+                },
+                {
+                  "rows": [
+                    [
+                      "3rd",
+                      "Red Blade Brew,",
+                      "10,000",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "Mermaid’s Guilt, Black"
+                    ],
+                    [
+                      "Spot Poison, or Parrot’s"
+                    ],
+                    [
+                      "Plague"
+                    ]
+                  ],
+                  "page": 175
+                },
+                {
+                  "rows": [
+                    [
+                      "9th",
+                      "Drunken Siren, Lullaby",
+                      "30,000",
+                      "3 days",
+                      "-"
+                    ],
+                    [
+                      "of the Deep, Seafire"
+                    ],
+                    [
+                      "Vapor, Kraken’s"
+                    ],
+                    [
+                      "Whisper, Desert"
+                    ],
+                    [
+                      "Strawberry, or Blinding"
+                    ],
+                    [
+                      "Fog"
+                    ]
+                  ],
+                  "page": 175
+                },
+                {
+                  "rows": [
+                    [
+                      "13th",
+                      "Sea Serpent Venom,",
+                      "100,000 24 hours max 2"
+                    ],
+                    [
+                      "Amiudake Extract, or"
+                    ],
+                    [
+                      "The Captain’s Curse"
+                    ]
+                  ],
+                  "page": 175
+                },
+                {
+                  "rows": [
+                    [
+                      "17th",
+                      "Puzzle Scorpion Venom",
+                      "200,000 24 hours max 1"
+                    ],
+                    [
+                      "or Sea King Venom"
+                    ]
+                  ],
+                  "page": 175
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Toxic Precision",
+          "text": "Also at 3rd level, as a bonus action, you can coat a weapon, piece of ammunition, or a 5-foot square surface with a poison from your inventory. The poison remains potent for 1 hour or until triggered. When you hit a creature with a poisoned weapon or piece of ammunition, you gain the following benefits:\nThe creature has disadvantage on its first saving throw made against the poison.\nWhen applied to a surface, the poison is triggered when a creature touches or interacts with it, as determined by the DM.\nOnce you inflict a target with the poison covered weapon, ammunition, or surface, the poison dissipates. Poisons do not stack, and only 1 poison can be on a target at once. If you inflict a creature with a higher severity poison than they currently have, the higher severity poison takes effect.\nAdditionally, your strikes exploit poisoned enemies. Once per turn, when you hit a poisoned creature with a weapon attack made as part of your Dueling Strikes, the attack deals an additional 1d6 poison damage.",
+          "page": 175,
+          "action": "bonus",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 5,
+          "name": "Poisoner’s Flow",
+          "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nNerve Gas. You release a burst of debilitating gas at one creature within 5 feet of you. If the target has multiple attacks in a turn, the target must succeed on a Constitution saving throw against your Poison save DC or reduce the amount of attacks that it can use by 1 until the start of your next turn.\nNumbing Cut. You make one weapon attack against a poisoned creature. On a hit, the attack deals no damage, but the target’s speed is reduced by 30 feet until the start of your next turn. If this attack hits, it counts as a successful Light Strike for your combo and for any feature that tracks successful Dueling Strikes.\nVenom Step. You move up to 10 feet without provoking opportunity attacks from poisoned creatures.",
+          "page": 175
+        },
+        {
+          "level": 9,
+          "name": "Venomous Reflexes",
+          "text": "At 9th level, your hands move faster than your victims can react. When you make a weapon attack as part of your Dueling Strikes, you can apply one poison from your inventory to the weapon or ammunition used for that attack as part of the attack itself.\nIn addition, if you are holding a vial of poison when a creature within 5 feet of you misses you with a melee attack, you can use your reaction to splash the poison onto that creature. The target must succeed on a Dexterity saving throw against equal to 8 + your proficiency bonus + your Dexterity modifier or immediately suffer the poison’s effects. On a successful save, the poison is wasted.",
+          "page": 175
+        },
+        {
+          "level": 13,
+          "name": "Potent Poisoner",
+          "text": "Starting at 13th level, your expertise allows you to brew deadlier poisons and bypass resistances. Creatures with resistance to poison damage no longer apply that resistance against poisons you administer.\nIn addition, when you hit a poisoned creature with your Finishing Act, the attack deals additional poison damage equal to one roll of your weapon’s damage die for each Press the Attack stack you had before the Finishing Act was resolved.",
+          "page": 176
+        },
+        {
+          "level": 17,
+          "name": "Black Out Strike",
+          "text": "Beginning at 17th level, you can turn a poisoned enemy’s failing body against them. When you hit a poisoned creature with your Finishing Act, you can force the target to make a Constitution saving throw equal to 8 + your proficiency bonus + your dexterity modifier.\nOn a failed save, the creature falls unconscious for 1 minute. This effect ends early if the creature takes damage or if another creature uses an action to shake it awake.\nOnce you use this feature, you cannot use it again until you finish a short or long rest.",
+          "page": 176,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.renegade.circus_tricks",
+      "kind": "subclass",
+      "parent": "class.renegade",
+      "name": "Circus Tricks",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 176
+      },
+      "flavor": "Renegades who learn Circus Tricks turn combat into an acrobatic performance, fighting from unicycles, rolling balls, stilts, ladders, tightropes, and whatever ridiculous prop they can ride into battle.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Trick Rider",
+          "text": "When you choose this archetype at 3rd level, you gain expertise in the Acrobatics and Performance skills if you do not already have them.\nYou also learn to fight while riding or balancing on circus props, such as a unicycle, giant ball, stilts, ladder, barrel, or another appropriate object approved by the DM. While using such a prop, you gain the following benefits:\nYour walking speed increases by 25 feet.\nStanding up from prone costs you only 5 feet of movement.\nYou can mount or dismount the prop without spending additional movement. If your prop is destroyed, lost, or unavailable, you can replace it during a long rest.",
+          "page": 176
+        },
+        {
+          "level": 3,
+          "name": "Juggler’s Arsenal",
+          "text": "Starting at 3rd level, you learn to juggling thrown weapons. When you use your Dueling Strikes feature, you can make your Light Strikes and Heavy Strikes with thrown weapons.\nIn addition, once on each of your turns, when you hit a creature with a thrown weapon attack made as part of your Dueling Strikes, the attack deals one additional weapon damage die.\nA thrown weapon used this way returns to your hand immediately after the attack hits or misses.",
+          "page": 176
+        },
+        {
+          "level": 5,
+          "name": "Circus Flow",
+          "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nOld Man’s Flame. You exhale a burst of flame at one creature within 5 feet of you. The target must succeed on a Dexterity saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or take 1d6 fire damage and be unable to take reactions until the start of your next turn.\nThe fire damage increases to 2d6 when you reach 9th level in this class and 3d6 when you reach 17th level in this class.\nMurder at the Steam Bath. You spin your weapon or circus prop against the ground, kicking up dust or debris. Choose one creature within 5 feet of you. Until the start of your next turn, the next attack roll made against that creature has advantage.\nDance of One Hundred Tops. You scatter spinning tops, blades, or small weighted props in a 10 by 10 foot square within 15 feet of you. The first creature other than you that enters that space before the start of your next turn must succeed on a Dexterity saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or take damage equal to your Renegade level and have its speed reduced by 10 feet until the end of its turn.",
+          "page": 176
+        },
+        {
+          "level": 9,
+          "name": "Sting of the Unicycle",
+          "text": "Starting at 9th level, you can turn reckless movement into a plunging strike. If you move at least 15 feet in a straight line before making a Heavy Strike attack, you can make that attack as a Sting of the Unicycle.\nOn a hit, the attack deals additional damage equal to one roll of your weapon’s damage die, and the target must succeed on a Strength saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or be knocked prone. If you moved along a vertical surface, jumped, fell, or descended before making the attack, the target has disadvantage on this saving throw.\nYou can use this feature once on each of your turns.",
+          "page": 176
+        },
+        {
+          "level": 13,
+          "name": "Mountain Climb",
+          "text": "At 13th level, while using your Trick Rider prop, you gain a climbing speed equal to your walking speed, and you can move along vertical surfaces and across narrow surfaces without making an ability check. If you end your turn on a vertical surface, you must have at least one hand free to remain there. Otherwise, you fall.\nIn addition, when you use the Tumble option from your Combo Flow feature, you can move an additional 10 feet.",
+          "page": 177
+        },
+        {
+          "level": 17,
+          "name": "Carnival of Colors",
+          "text": "When you reach 17th level, when you declare a Finishing Act, you can turn it into a Carnival of Colors. When you do so, choose up to three creatures you can see within 15 feet of you. You make one weapon attack against each target, using a finesse weapon, thrown weapon, or improvised weapon. Each attack gains the benefits of your Finishing Act.\nAfter the attacks are resolved, each creature hit by one of these attacks must succeed on a Constitution saving throw against your Rogue save DC or suffer one of the following effects of your choice until the start of your next turn:\nThe creature is blinded.\nThe creature is deafened.\nThe creature cannot take reactions.\nThe creature’s speed is reduced to 0.\nOnce you do so, you can’t use this feature again until you finish a long rest.",
+          "page": 177,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.renegade.dancing_duelist",
+      "kind": "subclass",
+      "parent": "class.renegade",
+      "name": "Dancing Duelist",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 177
+      },
+      "flavor": "To the Dancing Duelist, battle is a performance and every strike a step in an intricate choreography. Inspired by wandering performers, court jesters, and dueling masters, these renegades flow through combat with grace.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Stage of Battle",
+          "text": "When you choose this archetype at 3rd level, combat is your stage, and each movement enhances your deadly performance. Once per turn, when you make a Dueling Strike attack with a finesse weapon, you can perform a flourish, choosing one of the following effects:\nYou gain a +2 bonus to AC until the start of your next turn.\nYou add an extra 1d6 damage to the attack.\nYou also gain proficiency in the Performance skill if you don’t already have it.",
+          "page": 177
+        },
+        {
+          "level": 3,
+          "name": "Vortex Strike",
+          "text": "Also at 3rd level, you can end a flawless combo by spinning through nearby foes. When you declare a Finishing Act, you may gain the following effect on top of other bonuses you gain from ending a combo:\nYour Finishing Act attack is rolled at disadvantage. However, you may attack all creatures within 5 ft. of you at once with the strike attack.",
+          "page": 177
+        },
+        {
+          "level": 5,
+          "name": "Waltzing Flow",
+          "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nSpinning Tango. You move up to 10 feet in a direction of your choice without provoking opportunity attacks. If you end this movement within 5 feet of a creature, the next Dueling Strike you make against that creature before the end of your turn gains a +1 bonus to its attack roll. Distracting Tap Dance. Choose one creature within 5 feet of you. Until the start of your next turn, the next attack roll made against that creature by a creature other than you has advantage.\nAwe-Struck. You make one Heavy Strike against a creature within range. On a hit, if the target is concentrating on a spell or feature, its concentration immediately ends.",
+          "page": 177
+        },
+        {
+          "level": 9,
+          "name": "Evasion in Motion",
+          "text": "At 9th level, your footwork allows you to glide effortlessly through danger. When a creature misses you with a melee attack, you can use your reaction to make a Dueling Strikes attack against that creature. Whether the attack hits or misses, you can then move up to 10 feet without provoking opportunity attacks.",
+          "page": 177
+        },
+        {
+          "level": 13,
+          "name": "Unstoppable Rhythm",
+          "text": "Starting at 13th level, your movements flow seamlessly from one strike to the next. When you make a Dueling Strikes attack, you may add one additional attack to either strike option.",
+          "page": 177
+        },
+        {
+          "level": 17,
+          "name": "Elegance of the Blade",
+          "text": "Beginning at 17th level, your dance reaches its crescendo, an unstoppable flurry of motion and steel. When you reduce a creature to 0 hit points with a Dueling Strikes attack, your movement is reset to full and your action is refreshed. You may use this feature an amount of times equal to your proficiency bonus, recharging on a short or long rest.",
+          "page": 177
+        }
+      ]
+    },
+    {
+      "id": "subclass.renegade.swashbuckler",
+      "kind": "subclass",
+      "parent": "class.renegade",
+      "name": "Swashbuckler",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 178
+      },
+      "flavor": "Swashbucklers are daring duelists who treat every battle like a wager. With a blade in one hand and luck on their side, they gamble on reckless openings, trying to turn even a loss into a winning hand.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Fancy Footwork",
+          "text": "When you choose this archetype at 3rd level, you learn how to land a strike and then slip away without reprisal. During your turn, if you make a Dueling Strikes attack against a creature, that creature can’t make opportunity attacks against you for the rest of your turn.",
+          "page": 178
+        },
+        {
+          "level": 3,
+          "name": "Better’s Hand",
+          "text": "Also at 3rd level, your daring instincts let you seize the first move. You gain a bonus to initiative rolls equal to your Charisma modifier.\nIn addition, when you begin a combo using Dueling Strikes, you can place a wager on the first attack in that combo. Before you roll the attack, choose one of the following wagers. You can place only one wager per combo.:\nSafe Bet. If the attack hits, you gain a +1 bonus to the next attack roll you make as part of your Dueling Strikes before the end of your turn. If the attack misses, reduce your movement speed by half for the turn.\nRisky Bet. If the attack hits, it deals an additional 2d6 damage. If the attack misses, you lose your bonus action and reaction for this combat round. All In. If the attack hits, you gain a +3 bonus to the next attack roll you make as part of your Dueling Strikes before the end of your turn and this attack deals an additional 4d6 damage. If the attack misses, gain 1 exhaustion, you lose your bonus action and reaction for this combat round, and your turn immediately ends.",
+          "page": 178
+        },
+        {
+          "level": 5,
+          "name": "Gambler’s Flow",
+          "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nLoaded Step. Roll 1d4 and increase your movement speed by a number of feet equal to 5 times the number rolled for the rest of the turn.\nDice Roll. Roll 2d6 dice. On a roll of 12, your next attack automatically hits and it is considered a critical hit. On a roll of 2, your next attack automatically misses and gain 1 exhaustion until you make a successful attack roll.\nSweep. You make one melee weapon attack against a creature within your reach. On a hit, the attack deals no damage, but the target falls prone. If this attack hits, it counts as a successful Light Attack for the purpose of your Light Strike Combo and any class features that track successful Dueling Strikes.",
+          "page": 178
+        },
+        {
+          "level": 9,
+          "name": "Stacked Deck",
+          "text": "At 9th level, you learn to tilt the odds in your favor. When you declare a Finishing Act, roll a 1d6 and apply one of the following effects based on the number rolled:",
+          "page": 178,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d6 Effect"
+                ],
+                [
+                  "1 The Finishing Act gains a -1 bonus to its attack roll and"
+                ],
+                [
+                  "deals an 1d6 less damage on a hit."
+                ],
+                [
+                  "2- The Finishing Act deals an additional 1d6 damage on a hit."
+                ],
+                [
+                  "3"
+                ],
+                [
+                  "4- The Finishing Act gains a +2 bonus to its attack roll."
+                ],
+                [
+                  "5"
+                ],
+                [
+                  "6 The Finishing Act gains a +2 bonus to its attack roll and"
+                ],
+                [
+                  "deals an additional 2d6 damage on a hit."
+                ]
+              ],
+              "page": 178
+            }
+          ]
+        },
+        {
+          "level": 13,
+          "name": "Coin Flip",
+          "text": "Starting at 13th level, you can gamble on the weight of your heavier strikes to keep your momentum flowing. Once on each of your turns, immediately after you hit with a Heavy Strike, you can flip a coin.\nHeads. You gain one additional bonus action this turn. This additional bonus action can be used only to perform one option from your Combo Flow feature.\nTails. You gain no benefit.",
+          "page": 178
+        },
+        {
+          "level": 17,
+          "name": "Master of the Game",
+          "text": "Beginning at 17th level, your mastery of the blade lets you turn failure into success in combat. If you miss with an Dueling Strikes attack roll, you can roll it again with advantage. Once you do so, you can’t use this feature again until you finish a short or long rest.",
+          "page": 178,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.renegade.thief",
+      "kind": "subclass",
+      "parent": "class.renegade",
+      "name": "Thief",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 179
+      },
+      "flavor": "You hone your skills in the larcenous arts. Burglars, bandits, cutpurses, and other criminals typically follow this archetype, but so do renegades who prefer to think of themselves as professional treasure seekers, explorers, delvers, and investigators. In addition to improving your agility and stealth, you learn skills useful for delving into ancient ruins, reading unfamiliar languages, and using magic items you normally couldn’t employ.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Sneak Attack",
+          "text": "When you choose this archetype at 3rd level, you learn how to strike subtly and exploit a foe’s distraction. Once per turn, you can deal an additional 2d6 damage to one creature you hit with a Dueling Strikes attack if you have advantage on the attack roll. The attack must use a finesse or ranged weapon.\nYou do not need advantage on the attack roll if another enemy of the target is within 5 feet of it, that enemy is not incapacitated, and you do not have disadvantage on the attack roll.",
+          "page": 179
+        },
+        {
+          "level": 3,
+          "name": "Thievery Skills",
+          "text": "Starting at 3rd level, you gain advantage on Dexterity (Sleight of Hand) checks and using your thieves’ tools to disarm a trap or open a lock. You gain the ability to climb faster than normal; climbing no longer costs you extra movement.\nIn addition, when you make a running jump, the distance you cover increases by a number of feet equal to your Dexterity modifier.",
+          "page": 179
+        },
+        {
+          "level": 5,
+          "name": "Thieving Flow",
+          "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nPocket Nab. Choose one creature within 5 feet of you and flip a coin:\nHeads. You steal one random item from the target’s inventory, as determined by the DM. If the target has no items that can reasonably be stolen, treat the result as tails instead.\nTails. You steal ฿1,000 from the target. The target does not need to be carrying berries for you to gain this amount.\nDisarm. Choose one creature within 5 feet of you that is holding an item. The target must succeed on a Strength saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or drop one item of your choice that it is holding. The item lands at the target’s feet.\nPocket Sand. Choose one creature within 5 feet of you. The target must succeed on a Constitution saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or be blinded until it uses an action to wipe it’s eyes.",
+          "page": 179
+        },
+        {
+          "level": 9,
+          "name": "Supreme Sneak",
+          "text": "Starting at 9th level, you have advantage on a Dexterity (Stealth) checks.",
+          "page": 179
+        },
+        {
+          "level": 13,
+          "name": "Improved Sneak Attack",
+          "text": "By 13th level, your Sneak Attack features damage increases to 4d6 damage.\nAdditionally, when you roll your Dexterity (Stealth) on advantage, you roll 3 dice instead of 2 and pick the highest.",
+          "page": 179
+        },
+        {
+          "level": 17,
+          "name": "Thief’s Reflexes",
+          "text": "When you reach 17th level, you have become adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal initiative and your second turn at your initiative minus 10. You can’t use this feature when you are surprised.",
+          "page": 179
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

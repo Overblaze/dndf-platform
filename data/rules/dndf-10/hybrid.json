@@ -1,0 +1,742 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.hybrid",
+      "kind": "class",
+      "name": "Hybrid",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 130
+      },
+      "flavor": "STARTING CLASS ONLY. THIS CLASS CANNOT BE MULTICLASSED INTO.\nThe Hybrid is a living embodiment of ancient experimentation or advanced genetic modification, carrying the unique power of interwoven bloodlines and cybernetic modifications. Hybrids are the result of advanced cloning science, built to adapting to any challenge they face.",
+      "quote": "I CAN GIVE THE HUMAN BODY AN EXOSKELETON… ABNORMAL REGENERATION… GREAT PHYSICAL STRENGTH… --- Queen the Plague",
+      "hitDie": 10,
+      "savingThrows": [
+        "con",
+        "cha"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor"
+        ],
+        "weapons": [
+          "simple",
+          "longsword",
+          "greatsword"
+        ],
+        "tools": [],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "arcana",
+            "insight",
+            "intimidation",
+            "acrobatics",
+            "athletics",
+            "perception"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a longsword or (b) a greatsword",
+        "(a) a dungeoneer’s pack or (b) an explorer’s pack Two daggers and a dense coat"
+      ],
+      "progression": {
+        "columns": {
+          "hybridPoints": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "cantripsKnown": [
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          "powersKnown": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            12,
+            13,
+            13,
+            14,
+            14,
+            15,
+            15,
+            15,
+            15
+          ],
+          "highestSpellLevel": [
+            "1st",
+            "1st",
+            "2nd",
+            "2nd",
+            "3rd",
+            "3rd",
+            "4th",
+            "4th",
+            "5th",
+            "5th",
+            "6th",
+            "6th",
+            "7th",
+            "7th",
+            "8th",
+            "8th",
+            "9th",
+            "9th",
+            "9th",
+            "9th"
+          ],
+          "powerThresholdMaximum": [
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            8,
+            8,
+            9,
+            9,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        }
+      },
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Hybrid Lineage",
+        "level": 1,
+        "featureLevels": [
+          1,
+          6,
+          10,
+          14,
+          18
+        ]
+      },
+      "subclassIntro": {
+        "text": "Hybrids may have any number of lineage factors packed into them. However, whichever lineage is dominant in your gene pool will determine your Hybrid Lineage.",
+        "page": 134
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Hybrid Powers (Spellcasting)",
+          "text": "At some point in your lineage, the blood of ancient beasts or the influence of cutting-edge science merged with your own, unlocking a deep, unstable power within you. This innate energy grants you access to Hybrid Powers, volatile spells that must be channeled through physical attacks rather than traditional casting.\nYou do not cast spells normally. Instead, you infuse Hybrid Powers into your melee strikes, unleashing their effects when you land a blow. Hybrid Powers follow most of the standard spellcasting rules in 5th edition, but with the following critical differences:\nHybrid Points. You do not use spell slots. Instead, you expend Hybrid Points to cast Hybrid Powers. Each point spent equals one level of the spell cast. Hybrid Point Accumulation. You begin each day with 0 Hybrid Points. When you hit a hostile creature with a hybrid melee weapon or unarmed strike, you gain 1 Hybrid Point, to a maximum amount equal to your highest Power Threshold Amount. These points reset to 0 when you take a long rest.\nSpell Delivery. You cannot cast Hybrid Powers normally. They must be channeled through unarmed strikes or hybrid melee weapon attacks. Once per turn if you have at least 1 Hybrid Point and the attack hits, you may cast a non-cantrip spell. The hybrid does not have disadvantage when casting ranged spell attacks in this way. If the spell does not hit, the Hybrid Points used to cast the spell are still spent.\nYou may cast 1 spell per turn in this way. If the spell does not hit, the Hybrid Points used to cast the spell are still spent.\nArea-of-Effect Powers. When casting a spell with an area of effect, including line and cone attacks, you are the point of origin and are also affected by the spell unless stated otherwise.\nMorning Surge. At the start of each day, you can expend one of your Hit Dice to draw upon your inner reserves. When you do, you gain a number of Hybrid Points equal to the result rolled on the die up to your power threshold maximum.\nHybrid Powers count as spells for the purposes of interactions such as counterspell or dispel magic.",
+          "page": 131,
+          "sections": [
+            {
+              "name": "Natural Abilities (Cantrips)",
+              "text": "At 1st level, you learn four cantrips of your choice from the hybrid spell list. These cantrips, known as Natural Abilities, represent minor hybrid phenomena you can trigger without needing to strike. You can cast them normally, without making a melee attack or spending Hybrid Points.\nYou learn additional cantrips at higher levels, as shown in the Natural Abilities Known column of the Hybrid table.",
+              "page": 131
+            },
+            {
+              "name": "Hybrid Powers Known",
+              "text": "At 1st level, you know two 1st-level Hybrid Powers of your choice from the hybrid spell list. These represent combat-grade infusions, volatile forces only controlled when delivered alongside a strike.\nYou learn additional powers as you level, as shown in the Hybrid Powers Known column of the Hybrid table. Whenever you level up, you may replace one Hybrid Power you know with another of the same level.",
+              "page": 131
+            },
+            {
+              "name": "Hybrid Powercasting Ability",
+              "text": "Charisma is your spellcasting ability for Hybrid Powers, representing the force of will and personal expression that allows you to channel such unstable energy. You use your Charisma whenever a power refers to your spellcasting ability, including determining the spell save DC and attack modifier.\nHybrid save DC = 8 + your proficiency bonus + your Charisma modifier\nHybrid attack modifier = your proficiency bonus + your Charisma modifier",
+              "page": 131
+            },
+            {
+              "name": "Hybrid Focus",
+              "text": "You use your own body as your focus. No external spellcasting implements are needed.",
+              "page": 131
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Hybrid Lineage",
+          "text": "At 1st level, choose a hybrid lineage, which describes the source of your innate power. Choose the Beast Lineage, Caesar Lineage, Germa Lineage, Satellite Lineage, or Seraphim Lineage, or Twin Devil Lineage all detailed at the end of the class description. Your choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level.",
+          "page": 131,
+          "grantsSubclass": true
+        },
+        {
+          "level": 1,
+          "name": "Close Quarters Training",
+          "text": "Also at 1st level, You gain proficiency with unarmed strikes. Your unarmed strikes deal 1d8 bludgeoning damage and you can use Dexterity or Strength for the attack and damage rolls.",
+          "page": 131
+        },
+        {
+          "level": 2,
+          "name": "Power Threshold",
+          "text": "Starting at 2nd level, you gain passive benefits as you maintain a stockpile of Hybrid Points. These bonuses are cumulative and remain active as long as your current Hybrid Points are equal to or greater than the listed threshold.\nYou gain a +1 bonus to melee weapon damage rolls for every 2 points you are holding.\nYou gain a +1 bonus to your AC for every 5 points you are holding.\nYou gain a +1 bonus to melee weapon attack rolls for every 3 points you are holding.\nWhen you cast a spell with your hybrid points while holding 10 points at the time of casting, its damage is doubled.",
+          "page": 132
+        },
+        {
+          "level": 2,
+          "name": "Energy Transfer",
+          "text": "At 2nd level, you can release a concentrated chain of energy at a distant target, slightly recharging yourself as you absorb some of their energy. As an action, you target one hostile creature within 30 ft. of you that you can see. The attack automatically hits and the target takes 1d4 force damage. When you use this feature, you gain 2 Hybrid Points.",
+          "page": 132
+        },
+        {
+          "level": 3,
+          "name": "Power Enhancements",
+          "text": "At 3rd level, you learn to modify the properties of your Hybrid Powers. When you cast a spell using your melee attack, you may spend 1 Hybrid Point and apply one of the following Power Enhancements with a reaction:",
+          "page": 132,
+          "sections": [
+            {
+              "name": "Arc Surge",
+              "text": "The spell deals an additional 1d6 force damage on a hit.",
+              "page": 132
+            },
+            {
+              "name": "Elemental Fist",
+              "text": "You may change the spell’s damage type to acid, cold, fire, lightning, poison, or thunder.",
+              "page": 132
+            },
+            {
+              "name": "Splash Guard",
+              "text": "When casting an area-of-effect spell through yourself, you take only half the damage from the spell.",
+              "page": 132
+            },
+            {
+              "name": "Power of Friendship",
+              "text": "Choose a number of creatures (excluding yourself) up to your Charisma modifier. Each chosen creature automatically succeeds on its saving throw against the spell.",
+              "page": 132
+            },
+            {
+              "name": "Empowered Strike",
+              "text": "Reroll a number of damage dice equal to your Charisma modifier (minimum of one). You must use the new rolls.",
+              "page": 132
+            },
+            {
+              "name": "Heightened Power",
+              "text": "Choose one creature targeted by the spell. That creature\nyou, yo\nhas disadvantage on its saving throw against the spell.\nthis fea",
+              "page": 132
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Absorb Power",
+          "text": "Also at 3rd level, when a spell attack hits you, you may use your reaction to absorb its energy. When you do, you take half of the damage from the spell and gain 1 Hybrid Point.\nYou may use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+          "page": 132,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 132,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "Beginning at 5th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn. Moreover, you can cast one of your cantrips in place of one of those attacks.",
+          "page": 132
+        },
+        {
+          "level": 6,
+          "name": "Defensive Augment",
+          "text": "Starting at 6th level, you can temporarily boost your defenses. As a bonus action, you can expend 2 Hybrid Points to gain a +1 bonus to AC until the start of your next turn. This bonus increases by +1 for each additional hostile creature above 1 within 5 feet of you.",
+          "page": 132
+        },
+        {
+          "level": 6,
+          "name": "Reactive Surge",
+          "text": "At 6th level, when you make an opportunity attack against a creature, you may cast a cantrip instead of a melee attack. If you make a melee attack and have the Booming Blade or Green-Flame Blade cantrip, you may apply the cantrip to your melee attack.",
+          "page": 132
+        },
+        {
+          "level": 6,
+          "name": "Flash Augment",
+          "text": "Also at 6th level, you can briefly propel yourself with hybrid energy. As a bonus action, you can expend 2 Hybrid Points to teleport up to 30 feet to an unoccupied space you can see.",
+          "page": 132
+        },
+        {
+          "level": 8,
+          "name": "Resilience Augment",
+          "text": "At 8th level, your hybrid form begins to defend itself instinctively. When you fail a saving throw, you can spend 1 Hybrid Point to reroll the saving throw. You must use the new result.",
+          "page": 132
+        },
+        {
+          "level": 10,
+          "name": "Power Immunity",
+          "text": "Beginning at 10th level, your hybrid body learns to redirect its own volatile magic. When you cast a Hybrid Power that affects an area and would deal damage to",
+          "page": 132
+        },
+        {
+          "level": 12,
+          "name": "Re-Energized",
+          "text": "At 12th level, your hybrid systems become more efficient. When you finish a short or long rest, you regain 4 Hybrid Points.",
+          "page": 133
+        },
+        {
+          "level": 14,
+          "name": "Chain Channeling",
+          "text": "Starting at 14th level, your control over hybrid power allows you to unleash multiple powers in rapid succession. When you hit a creature with a spell cast through a melee attack, you can expend 2 Hybrid Points to immediately cast a second Hybrid Power.\nThis second Hybrid Power can target the same creature or a different creature within 10 feet of the original target.",
+          "page": 133
+        },
+        {
+          "level": 20,
+          "name": "Overdrive",
+          "text": "At 20th level, you can unleash the full extent of your hybrid potential in a brief, devastating burst. As a bonus action, you can enter your Apex Overdrive for 1 minute. While in this state, you gain the following benefits:\nYour hybrid point total cannot fall below 5 for the duration of apex overdrive.\nYou are immune to damage from your own area-of- effect Hybrid Powers.\nThe damage die for your unarmed strikes and hybrid melee weapon attacks becomes 1d12.\nWhenever you hit a creature with a melee attack, you regain 10 hit points.\nOnce you use this feature, you cannot use it again until you finish a long rest.",
+          "page": 133,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.hybrid.beast",
+      "kind": "subclass",
+      "parent": "class.hybrid",
+      "name": "Beast Lineage",
+      "group": "Hybrid Lineage",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 134
+      },
+      "flavor": "Beast Lineage hybrids are living war machines. As they upgrade, their cybernetic enhancements evolve alongside their primal zoan forms, unleashing devastating might.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Prehistoric Powers",
+          "text": "Starting when you choose this lineage, your modified biology has been engineered to contain the essence of Devil Fruit power. You begin play with a Ancient Zoan- type Devil Fruit. Roll on the Very Rare or Very Rare (Expanded) Devil Fruit Generation Table (your choice) until you receive a Ancient Zoan result; that fruit is permanently infused into your body.\nVariant Rule: Instead of starting with a Devil Fruit, you can instead start with none. Letting you have a chance of finding a specific fruit on your adventures instead.",
+          "page": 134
+        },
+        {
+          "level": 1,
+          "name": "Prototype Augmentations",
+          "text": "Also at 1st level, your body has been outfitted with rudimentary yet potent cybernetic enhancements. These augmentations are integrated into your biological structure and only active even when you transform into your beast or hybrid form. You gain the following features:\nYour AC increases by +2.\nOnce per short rest, you can use a bonus action to overclock your internal systems, reinforcing your defenses. You gain temporary hit points equal to 2 × your Hybrid level.\nYou may now use your beast form as long as you want and the form has no more charges. However, you do not gain separate hitpoints from your beast form, instead gaining an amount of temporary hitpoints equal to your proficiency bonus when you transform into your beast or hybrid forms. Your beast form does not end if you run out of temporary hit points.\nYou may use your spells while in beast form as seen in Hybrid Powers (Spellcasting), can gain hybrid points in beast form, and gains benefits from your Power Threshold feature.",
+          "page": 134,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Integrate Weapon Subsystems",
+          "text": "Starting at 6th level, your cybernetic components have undergone significant upgrades. These systems only function in your beast and hybrid form. You gain the following benefits:\nAs a bonus action, you can extend one of your cybernetic limbs up to 15 ft. beyond your normal reach to make a single unarmed attack or interact with an object.\nChoose one weapon, this weapon is added to your hybrid weapons proficiency list. This weapon is now considered built into your body and can be summoned or retracted as a bonus action. When summoned, the weapon appears as a mechanical appendage protruding from your back, allowing you to make 1 additional attack per turn with the weapon. It cannot be disarmed and does not require a free hand to wield.",
+          "page": 134
+        },
+        {
+          "level": 10,
+          "name": "Integrated Siege Laser",
+          "text": "Starting at 10th level, a high-powered energy cannon has been installed within your body which can be used in your zoan beast and hybrid forms. As an action and by spending 5 Hybrid Points, you can fire a beam of concentrated energy from your mouth. Choose a creature or object within 60 feet that you can see. Creatures must make a Dexterity saving throw against your Hybrid save DC. On a failed save, the target takes radiant damage equal to 1d4 x your Hybrid level. On a success, the target takes half as much damage. Creatures within 5 feet of the target take half the damage dealt with no damage on a successful save. Deals triple damage to objects not worn, structures and constructs. Objects and structures automatically fail the saving throw.",
+          "page": 134
+        },
+        {
+          "level": 18,
+          "name": "Integrate Beastcore",
+          "text": "Starting at 18th level, you become a perfected weapon. You gain the following benefits in beast form:\nYour size increases by one category (to a maximum of Gargantuan). Your reach with melee attacks increases by 5 ft., and you count as one size larger for grappling and shoving. In tight spaces or buildings, your body compresses into a more compact form, allowing you to fit without penalties unless otherwise restricted.\nYou are immune to being blinded, deafened, paralyzed, poisoned, or stunned.\nYou may now shift into your beast form as a reaction once per long rest.",
+          "page": 134,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.hybrid.caesar",
+      "kind": "subclass",
+      "parent": "class.hybrid",
+      "name": "Caesar Lineage",
+      "group": "Hybrid Lineage",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 135
+      },
+      "flavor": "Subclass Prerequisite: No Starting Race, you begin as a Living Ooze.\nA failed experiment with living ooze and Zoan- enhanced biology, you are a synthetic creature whose body adapts, expands, and evolves as you grow. Infused with a Devil Fruit and lacking a true humanoid form, you fight as an amorphous weapon of war, your mass engulfing the battlefield.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Devils Gift",
+          "text": "Starting when you choose this lineage, your modified biology has been engineered to contain the essence of Devil Fruit power. You begin play with a Zoan-type Devil Fruit. Roll on the Devil Fruit Generation Table until you receive a any type of Zoan result; that fruit is permanently infused into your oozing mass.\nWhile in your beast form, your ooze nature remains dominant. Your form retains the following living ooze traits: Growing Size, Amorphous Form, Slime Limbs, Oozing Defense, Ooze Storage, Fluid Biology, and Engulf. You are still unable to wear armor or shields in these forms, but can otherwise use equipment stored within your body as normal.\nThe growing size feature always modifies your zoan beast and hybrid form sizes according to the feature.",
+          "page": 135
+        },
+        {
+          "level": 1,
+          "name": "Living Ooze",
+          "text": "Also at 1st level, you are considered a slime rather than a traditional humanoid. Your body is a semi-liquid, unstable mass of synthetic ooze. You gain the following race:",
+          "page": 135,
+          "sections": [
+            {
+              "name": "Living Ooze Traits",
+              "text": "Your ooze will have these traits.\nAbility Score Increase. Constitution scores increase by 4. Your maximum for this scores is now 24.\nAge. Is is unknown how long a ooze has to live.\nCreature Type. You are a Ooze.\nGrowing Size. Your size is Medium. As you gain levels in this subclass, your size increases:\nAt 6th level, you become Large.\nAt 10th level, you become Huge.\nAt 18th level, you become Gargantuan.\nSpeed. Your base walking speed is 25 feet.\nAmorphous Form. You can move through a space as narrow as 1 inch wide without squeezing. You have advantage on ability checks and saving throws made to escape grapples or restraints.\nSlime Limbs. Despite lacking defined anatomy, you can manipulate objects and make unarmed strikes, which deal an additional amount of acid damage equal to your size value in d4s. You can wield weapons and cast spells, but cannot wear armor, clothing, or wield shields.\nYour size value is determined by your current token size: Gargantuan (5), Huge (4), Large (3), Medium (2), Small (1), or Tiny (0).\nOozing Defense. Your Armor Class equals 15 + your size value.\nYour size value is determined by your current token size: Gargantuan (0), Huge (1), Large (2), Medium (3), Small (4), or Tiny (5).\nOoze Storage. Any equipment you possess floats safely within your gelatinous body. It is not harmed by your acidic form and can be drawn or used as normal.\nFluid Biology. You do not require food or drink. You have resistance to acid damage.\nEngulf. As an action, the ooze moves up to its speed and attempts to engulf a single creature. While doing so, it can enter creatures’ spaces who’s token size is smaller than yours. Whenever the ooze enters a creature’s space, the creature must make a DC Dexterity saving throw versus a contested Constitution saving throw.\nOn a successful save, the creature can choose to be pushed 5 feet back or to the side of the ooze. A creature that chooses not to be pushed suffers the consequences of a failed saving throw.\nOn a failed save, the ooze enters the creature’s space, and the creature is engulfed. The engulfed creature can’t breathe, is restrained, and takes an amount of damage equal to 1d6 x your proficiency bonus in acid damage at the start of each of the ooze’s turns. When the ooze moves, the engulfed creature moves with it.\nAn engulfed creature can try to escape by taking an action to make a DC Strength check versus your Constitution check. On a success, the creature escapes and enters a space of its choice within 5 feet of the ooze.",
+              "page": 135
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Ooze Artillery",
+          "text": "Starting at 6th level, you gain the ability to eject a high- pressure glob of your ooze mass as a ranged attack. As a bonus action, you can launch a glob of ooze at a point you can see within 60 feet, marking the space with your ooze, which evaporates after 1 minute.\nA creature in the targeted space must succeed on a Dexterity saving throw against your Hybrid save DC or take acid damage equal to your engulf’s damage and you gain 1 Hybrid Point. On a successful save, the creature takes no damage and you gain no points.\nIf you target a point that is already marked with your ooze, you may choose to teleport to that location as part of the same bonus action. You reconstitute your body at the marked space, leaving behind a marked space in your original location. Each creature within 5 feet of you when you teleport must succeed on a Dexterity saving throw against your Hybrid save DC or take 2d6 acid damage and are pushed outside your token spaces.\nEach time you use this feature, your size decreases by one category, to a minimum of Tiny.\nAs an action, you can reassemble your body, returning to your normal size.",
+          "page": 135
+        },
+        {
+          "level": 10,
+          "name": "Jelly Core",
+          "text": "Starting at 10th level, your living slime form becomes highly mutable, able to quickly reform and retaliate when struck. You gain the following benefits:\nWhen a creature hits you with a melee attack, the attacker takes 1d6 acid damage.\nWhen you take damage from a critical hit, you can reduce the damage by half for 2 Hybrid Points.",
+          "page": 136
+        },
+        {
+          "level": 18,
+          "name": "Gelatinous Titan",
+          "text": "Starting at 18th level, your ooze body reaches its perfected, monstrous state. A living tidal wave of biological experimentation. You gain the following benefits:\nYour reach increases by 10 feet for melee attacks and unarmed strikes. Additionally, your Engulf feature can now affect creatures up to your current size.\nYou can advantage on contested saving throws made with your Engulf race feature. Additionally, you can choose to deal acid damage equal to 2d6 × your proficiency bonus at the start of each of your turns, instead of the standard Engulf damage.\nWhen reduced to 0 hit points, you may choose to erupt in a burst of volatile slime. All creatures within 15 feet must make a Dexterity saving throw against your Hybrid save DC or take 6d10 acid damage and be knocked prone, or half as much on a success. Once you use this feature, you must finish a short or long rest before doing so again.",
+          "page": 136
+        }
+      ]
+    },
+    {
+      "id": "subclass.hybrid.germa",
+      "kind": "subclass",
+      "parent": "class.hybrid",
+      "name": "Germa Lineage",
+      "group": "Hybrid Lineage",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 136
+      },
+      "flavor": "Genetically engineered by cutting-edge Germa science, your body is enhanced with a powerful exoskeleton, superhuman regeneration, and a unique combat ability.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Genetic Superpower",
+          "text": "Starting when you choose this lineage, your body has been infused with cutting-edge genetic modifications. These enhancements grant you one of five unique combat abilities.\nChoose one of the following powers. The chosen power reflects your specific genetic engineering and grants you features as described below.",
+          "page": 136,
+          "sections": [
+            {
+              "name": "Poison Pink",
+              "text": "You gain the following abilities:\nAcidic Touch. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 acid damage.\nToxic Immunity. You are immune to poison damage and the poisoned condition.\nPoisonous Kiss. As an action, you can attempt to poison a creature you touch. The creature must succeed on a Constitution saving throw against your Hybrid save DC or become poisoned for 1 minute. The poisoned creature can repeat the save at the end of each of its turns. You can use this ability a number of times equal to your proficiency bonus, regaining all expended uses after a long rest.\nFlight. You gain a flying speed of 45 ft. while you are not wearing medium or heavy armor.",
+              "page": 136
+            },
+            {
+              "name": "Stealth Black",
+              "text": "You gain the following abilities:\nFlame Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 fire damage.\nOptical Camouflage. As a bonus action, you can become invisible until the start of your next turn or until you attack or cast a spell. You can use this ability a number of times equal to your Dexterity modifier (minimum of once), regaining all uses after a long rest.\nSilent Movement. You have advantage on Dexterity (Stealth) checks made to move silently or hide.",
+              "page": 136
+            },
+            {
+              "name": "Winch Green",
+              "text": "You gain the following abilities:\nBionic Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d8 damage.\nEnhanced Strength. Increase your strength score by +2 and your maximum strength score to 22. You count as gargantuan when determining your carrying capacity and the weight you can push, drag, or lift. Extendable Arm. As an action, you can launch your arm up to 30 ft. to grab objects or pull creatures. Make a melee weapon attack or unarmed strike. On a hit, pull the target up to 15 ft. toward you if it is large or smaller.",
+              "page": 136
+            },
+            {
+              "name": "Dengeki Blue",
+              "text": "You gain the following abilities:\nLightning Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 lightning damage.\nBlitz. Your walking speed increases by an amount equal to 10 x your proficiency bonus.\nSpeed Demon. You can Dash as a bonus action.",
+              "page": 136
+            },
+            {
+              "name": "Sparking Red",
+              "text": "You gain the following abilities:\nFlash Burst. Once per turn when you hit with a spell attack, you deal an additional 1d6 radiant damage with the spell.\nEnergy Blast. As an action, you may cast a spell at it’s normal spell range instead of only activating in melee range as stated in Hybrid Powers (Spellcasting). The damage for your spells is lightning, fire, or radiant (your choice).\nRadiant Charge. When you roll damage for a hybrid spell, melee attack, or unarmed attack, you may reroll any 1s.",
+              "page": 137
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Combat Exoskeleton",
+          "text": "Also at 1st level, your outer skin hardens into an armor- like shell, allowing you to shrug off attacks with ease. You gain the following benefits:\nWhile you are not wearing armor, your AC equals 13 + your Strength modifier.\nYour hit point maximum increases by 1, and it increases by 1 again whenever you gain a level in this class.\nWhen you are damaged by a critical hit, gain 1 Hybrid Point.",
+          "page": 137
+        },
+        {
+          "level": 6,
+          "name": "Cell Regeneration",
+          "text": "Starting at 6th level, due to your lineage factor your body heals quicker than normal. As a bonus action you can spend one hybrid point to instantly regain a number of HP equal to your Strength modifier.\nAt 14th level this bonus increases to 2 x your Strength modifier.",
+          "page": 137
+        },
+        {
+          "level": 10,
+          "name": "Warp Implosion",
+          "text": "Starting at 10th level, you can unleash your hidden germa abilities, granting you the ability to use a space- warping dash. As an action, you can teleport to an unoccupied space you can see within 120 feet of you. Immediately after you disappear, each creature within 30 feet of the space you left must make a Strength saving throw. On a failed save, the creature takes 10d10 force damage and is pulled straight toward the space you left, ending in an unoccupied space as close to your former space as possible. On a successful save, the creature takes half as much damage and isn’t pulled.\nOnce you use this feature, you can’t do so again until you finish a long rest, unless you spend 5 hybrid points to use it again.",
+          "page": 137,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 18,
+          "name": "Genetic Pinnacle",
+          "text": "Starting at 18th level, your body is a perfected fusion of science and strength. You gain the following benefits:\nYou have resistance to all damage except force and psychic damage.\nWhen you are reduced to 0 hit points, you can drop to 1 hit point instead. Once you use this feature, you can’t do so again until you finish a long rest.\nOnce per turn when you hit a creature with an attack or Hybrid Power, you can deal additional force damage equal to your Hybrid level.",
+          "page": 137,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.hybrid.satellite",
+      "kind": "subclass",
+      "parent": "class.hybrid",
+      "name": "Satellite Lineage",
+      "group": "Hybrid Lineage",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 138
+      },
+      "flavor": "A marvel of post-Void Century cloning, the Satellite Lineage allows you to divide yourself across seven sin- themed clones.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Seven Satellites",
+          "text": "Starting when you choose this lineage, your body has been modified to host a system of cloned extensions— fragments of your consciousness.\nYou are split into seven unique clones, each named after one of the seven deadly sins. These satellites share your general appearance, but each comes with a mechanical drawback, depending on the satellite. Only one satellite may be active as the Primary Satellite at a time. Pride Satellite. Cannot benefit from help actions or spells cast by allies.\nGreed Satellite. Has disadvantage on saving throws made to avoid area-of-effect spells or effects.\nWrath Satellite. Cannot take the Disengage action.\nEnvy Satellite. Suffers a -1 penalty to all attack rolls while an ally is within 15 ft. of the satellite.\nLust Satellite. Has a -2 penalty to AC. Gluttony Satellite. Cannot use reactions. Sloth Satellite. Cannot Dash or take the Ready action, and must attack last in the Satellites turn order.\nThe Primary Satellite is the only one that benefits from your class features, spellcasting, subclass abilities, and proficiencies. As a bonus action, you may swap which satellite is designated as the Primary Satellite. The new Primary immediately gains access to all your features; the former Primary loses access.\nEach satellite has hit points equal to half your total hit points and shares your armor class, speed, and ability scores. If a satellite is reduced to 0 hit points, it is destroyed and do not gain the benefits of death saving throws. If your primary satellite dies, you may switch your primary satellite to a new one as a free action, as long as you have a online non-primary to switch to. If you do not have any more satellites left or online at the time your Primary satellite reaches 0 hit points, you die. You may recreate one destroyed satellite per long rest.\nYour Non-Primary Satellites can only use actions. You have a total amount of actions you can designate to your Non-Primary Satellines equal to your proficiency bonus. Each satellite can only use 1 action per turn.\nOnly the Primary Satellite may cast spells. Non- primary satellites cannot benefit from or activate spellcasting or any class features.\nYou may issue verbal commands to your non- primary satellites as part of your action. These clones can follow simple instructions (such as “defend me,” “go here,” or “hold this”), but cannot act independently or use abilities. All satellites act on the same turn order as you.\nIf a satellite moves more than 600 feet away from the current Primary Satellite, it goes offline, becoming inert and unresponsive. Offline satellites cannot be designated as the Primary Satellite until they return within range.\nYour satellites do not share equipment.\nYou are immune to any spell or effect that would alter your form.\nIf any of your Satellites attempt to consume a Devil Fruit, it has no effect, and the fruit’s power is expelled from your system. The Devil Fruit’s abilities are then instantly reincarnated into a new fruit elsewhere in the world, as though it had never been eaten.",
+          "page": 138,
+          "sections": [
+            {
+              "name": "Variant Rule: Devil Consumption",
+              "text": "If your DM allows it, you may eat a fruit and the satellite that eats the fruit gains its powers or all of them gain the fruit but only the primary satellite may use them.",
+              "page": 138
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Linked Combat Protocol",
+          "text": "Also at 1st level, as a bonus action, you can activate your Protocol, drawing coordinated strength from nearby non-primary satellites. For the next 1 minute, the Primary Satellite gains a +1 bonus to attack and damage rolls for each non-primary satellite within 10 ft. of the Primary Satellite, to a maximum bonus equal to your proficiency bonus.\nThe effect ends early if the Primary Satellite is reduced to 0 hit points. Once you use this feature, you can’t do so again until you finish a short or long rest.",
+          "page": 138,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "action": "bonus",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Upgraded Bandwidth",
+          "text": "Starting at 6th level, you may switch your Primary Satellite to a new one for free once per turn and your Non-primary Satellites now gain your proficiencies.\nAdditionally, if a Satellite is destroyed, gain 2 Hybrid Points.",
+          "page": 138
+        },
+        {
+          "level": 10,
+          "name": "Sinful Broadcast",
+          "text": "Starting at 10th level, depending on the current Primary Satellite, all non-satellite allies within 30 ft. of you gain a passive benefit based on the sin of that satellite. These effects persist as long as that satellite remains the Primary Satellite.\nPride Satellite. Allies gain a +1 bonus to AC. Greed Satellite. Each ally gains an additional Bonus Action.\nWrath Satellite. Allies deal +2 bonus damage with weapon attacks.\nEnvy Satellite. When an ally within 30 feet of you scores a critical hit, all other allies (excluding the attacker and the Primary Satellite) gain advantage on their next attack roll within 1 minute.\nLust Satellite. Allies can make opportunity attacks against creatures even if they take the Disengage action or teleport.\nGluttony Satellite. Allies reduce all damage taken by an amount equal to your proficiency bonus, excluding force damage.\nSloth Satellite. Allies can’t be forcibly moved against their will and have advantage on saving throws against being grappled, restrained, or paralyzed.",
+          "page": 139
+        },
+        {
+          "level": 18,
+          "name": "Synchronized Restoration",
+          "text": "Starting at 18th level, while in combat whenever you switch your Primary Satellite to a different satellite, the newly designated Primary Satellite regains hit points equal to 4 × the number of your non-destroyed satellites.",
+          "page": 139
+        }
+      ]
+    },
+    {
+      "id": "subclass.hybrid.seraphim",
+      "kind": "subclass",
+      "parent": "class.hybrid",
+      "name": "Seraphim Lineage",
+      "group": "Hybrid Lineage",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 139
+      },
+      "flavor": "Subclass Prerequisite: Non-Lunarian Race Engineered as a fusion of Lunarian and cutting-edge Pacifista technology, Seraphim are living weapons shaped by science and cloning.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Green Blood",
+          "text": "Starting when you choose this lineage, your modified biology has been engineered to contain the essence of Devil Fruit power. You begin play with a Paramecia-type Devil Fruit. Roll on the Devil Fruit Generation Table until you receive a Paramecia result; that fruit is permanently infused into your body.\nVariant Rule: Instead of starting with a Devil Fruit, your body remains in a dormant state. When you discover a Paramecia-type Devil Fruit during your adventures, you may choose to infuse it into your green blood, permanently integrating its power as if you had consumed it.",
+          "page": 139
+        },
+        {
+          "level": 1,
+          "name": "Prototype Seraphim Frame",
+          "text": "Also at 1st level, your body has begun to develope into the first stage of the Seraphim transformation, an artificial fusion of Lunarian and Pacifista engineering. Your skin is a copper-bronze hue, your hair white, and a tube of green blood replaces your right bicep. You gain the following traits:\nLunarian Resilience. You have resistance to fire damage.\nArtificial Flame Core. As a bonus action, you can activate a hidden flame core within your body and flames erupt from your spine. For 1 minute, you have resistance to all damage types (except force). While this effect is active, your attack rolls are made with disadvantage and your flying speed is reduced by 20 feet. You cannot remove or cancel out the disadvantage gained by this feature in any way. You may activate this feature a number of times equal to your proficiency bonus, and regain all expended uses when you finish a long rest. You may end this effect early as a bonus action.\nPrototype Pacifista Beam. As an action, you can release a focused laser from your palm. Choose a creature within 60 feet of you that you can see. That creature must make a Dexterity saving throw equal to your Hybrid save DC. On a failed save, it takes 2d8 radiant damage, or half as much on a successful one. The beams damage increases to 3d8 at 6th level, 4d8 at 10th level, and 6d8 at 18th level.\nPrototype Black Wings. You start with small black- feathered wings, granting you a flying speed of 20 feet. You cannot use this flying speed while wearing medium or heavy armor.",
+          "page": 139,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "S-Defensive Protocol",
+          "text": "Starting at 6th level, your Seraphim frame is upgraded with defensive countermeasures and improved energy control. You gain the following traits:\nV2 Pacifista Beam. Each creature within 5 ft. of the primary target must also make a Dexterity saving throw against your Hybrid save DC, taking half the beam’s damage on a failed save, or no damage on a success, and you can then immediately move up to 15 ft. without provoking opportunity attacks. In addition, you gain 1 Hybrid Point per creature you hit with the beam and its blast, up to an amount equal to your proficiency bonus.\nSeraphim Resilience. While you are not wearing armor, your AC equals 13 + your Constitution modifier.\nV2 L-Wings. Your flying speed increases by 10 feet.",
+          "page": 139
+        },
+        {
+          "level": 10,
+          "name": "S-Offensive Protocol",
+          "text": "Starting at 10th level, your frame evolves to adapt rapidly to threats, amplifying your destructive capabilities. You gain the following traits:\nV3 Pacifista Beam. The area of effect for your Pacifista Beam explosion increases to 10 feet. Integrated Combustion. Your unarmed strikes and weapon attacks deal an additional 1d6 fire damage. V3 L-Wings. Your flying speed increases by 10 feet.",
+          "page": 140
+        },
+        {
+          "level": 18,
+          "name": "S-Prime Protocol",
+          "text": "Starting at 18th level, you have reached the pinnacle of your Seraphim upgrades, unlocking your full power. You gain the following traits:\nPerfected Flame Core. Your Artificial Flame Core is no longer limited in duration or uses.\nV4 L-Wings. Your flying speed increases by 20 feet.",
+          "page": 140
+        }
+      ]
+    },
+    {
+      "id": "subclass.hybrid.twin_devil",
+      "kind": "subclass",
+      "parent": "class.hybrid",
+      "name": "Twin Devil Lineage",
+      "group": "Hybrid Lineage",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 140
+      },
+      "flavor": "A single body should never contain more than one Devil Fruit… yet yours houses multiple, their clashing wills twisting into a volatile power you alone can command.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Two Souled",
+          "text": "Starting when you choose this lineage, you gain the ability to consume and wield the power of two Devil Fruits simultaneously, ignoring the normal restriction of one fruit per body. To maintain balance between multiple powers, the following rules apply:\nYou may only benefit from one Devil Fruit at a time. As a bonus action, you can switch your Active Fruit. Any form you are current in during the switch is dismissed.\nYou may only have a single type of each fruit (Paramecia, Zoan, and Logia).\nYou must use your Hybrid Points instead of normal Devil Fruit Charges.\nYou only gain access to the spell list of your current active fruit. These spells can be cast normally, ignoring your hybrid spellcasting rules.\nYou must use one Hybrid Point on top of the normal resources to transform into your Hybrid or Beast Form if you possess a Zoan fruit.\nYour Beast Form only gains half of the hit points (rounded down).\nYou do not benefit from passive healing or regeneration.\nDevil Fruit passive features only active when the corresponding fruit is active.\nAll Devil Fruit weaknesses apply universally across your fruits. Devil Fruit Resistances and Immunities only apply when your respected fruit is active. When spending surges on your devil fruits, you may only choose a single fruit to modify.\nYou cannot awaken your devil fruits.",
+          "page": 140,
+          "sections": [
+            {
+              "name": "Variant Rule: Devil Consumption",
+              "text": "Though you do not gain a devil fruit when you gain this feature, if your DM allows it, you may eat a devil fruit at character creation.",
+              "page": 140
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Demonic Overlap",
+          "text": "Also at 1st level, You learn to briefly overlap your Devil Fruits. You can expend two Hybrid Points to trigger a effect from one of your inactive fruits, provided it is not a transformation or a feature requiring an action.\nYou may also use a spell from another fruits spell list.",
+          "page": 140
+        },
+        {
+          "level": 6,
+          "name": "Hell Form",
+          "text": "Starting at 6th level, you can force all consumed fruits to manifest at once for short bursts. As a bonus action, you may enter an overdrive for 1 minute, allowing you to use features from all fruits without switching. You may end this feature at any time as a bonus action.\nAt the end of each of your turns while in this state, you take force damage equal to your proficiency bonus + a quarter of your character level (rounded up) + number of fruits you possess.\nYou can use this feature once per long rest.",
+          "page": 140,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Devil’s Resilience",
+          "text": "Starting at 10th level, when you are hit by an attack or fail a saving throw, you may use your reaction and a Hybrid Point to switch your Active Fruit before resolving the effect. If the new Active Fruit would grant a relevant defensive benefit (such as resistance, AC bonus, or advantage on the save), you apply it to that instance.",
+          "page": 140
+        },
+        {
+          "level": 18,
+          "name": "Three Souled",
+          "text": "Starting at 18th level, your body surpasses its limits. You may now consume up to three Devil Fruits.",
+          "page": 140
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

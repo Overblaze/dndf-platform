@@ -368,6 +368,29 @@
         },
         "counter": {
           "$ref": "#/$defs/counter"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/table"
+          }
+        },
+        "auto": {
+          "description": "Fields the extraction tool recognised from the feature's wording, not yet checked by hand.",
+          "type": "array",
+          "items": {
+            "enum": [
+              "uses",
+              "action"
+            ]
+          },
+          "uniqueItems": true
         }
       }
     },
@@ -384,7 +407,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^[a-z][a-z0-9_]*$"
+          "pattern": "^[a-z0-9][a-z0-9_]*$"
         },
         "name": {
           "$ref": "#/$defs/text"
@@ -427,6 +450,33 @@
           "items": {
             "$ref": "#/$defs/onUse"
           }
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/table"
+          }
+        },
+        "auto": {
+          "description": "Fields the extraction tool recognised from the feature's wording, not yet checked by hand.",
+          "type": "array",
+          "items": {
+            "enum": [
+              "uses",
+              "action"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "group": {
+          "description": "Sub-heading the option is printed under.",
+          "type": "string"
         }
       }
     },
@@ -580,6 +630,19 @@
           },
           "additionalProperties": {
             "type": "object"
+          }
+        },
+        "quote": {
+          "type": "string"
+        },
+        "group": {
+          "description": "Which of the class's sets of subclasses this belongs to (Tinkerer Studies, Tinkerer Professions).",
+          "type": "string"
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/table"
           }
         }
       },
@@ -772,6 +835,56 @@
         },
         "reset": {
           "$ref": "#/$defs/recharge"
+        }
+      }
+    },
+    "table": {
+      "description": "A table printed with the feature, row by row as printed (the first row is usually the header).",
+      "type": "object",
+      "required": [
+        "rows",
+        "page"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    },
+    "section": {
+      "description": "A named part of a feature printed under its own smaller heading (a spellcasting sub-rule, an option, a stat block).",
+      "type": "object",
+      "required": [
+        "name",
+        "text",
+        "page"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/table"
+          }
         }
       }
     }

@@ -1,0 +1,654 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.conqueror",
+      "kind": "class",
+      "name": "Conqueror",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 105
+      },
+      "flavor": "The Conqueror is a master of presence, strategy, and spirit. Unlike frontline brutes, the conqueror leads from the rear, controlling the flow of combat with clever positioning, tactical orders, and bursts of Haki-enhanced charisma. With a pool of Leadership Dice, they empower allies, disrupt enemies, and magnify the power of Supreme King Haki. Where others seek personal glory, the Conqueror seeks victory—no matter the cost.",
+      "quote": "THERE IS NO “I .” I ’S CRAZY TO EVEN THINK ABOUT IT. THIS OUTCOME IS THE ONLY REALITY. YOU LOST. F T --- Tsuru",
+      "hitDie": 10,
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor",
+          "medium_armor",
+          "shields"
+        ],
+        "weapons": [
+          "simple",
+          "martial"
+        ],
+        "tools": [
+          "One tool of your choice"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "insight",
+            "persuasion",
+            "intimidation",
+            "history",
+            "perception",
+            "athletics"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "A weapon of your choice",
+        "(a) Scale mail or (b) a bulletproof jacket",
+        "(a) a dungeoneer’s pack or (b) an explorer’s pack A tactical banner, cartographer’s tools, and calligrapher’s supplies"
+      ],
+      "progression": {
+        "columns": {
+          "leadershipDice": [
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            8,
+            8,
+            9,
+            9,
+            10,
+            10,
+            11,
+            12
+          ],
+          "leadershipDie": [
+            "1d6",
+            "1d6",
+            "1d6",
+            "1d6",
+            "1d8",
+            "1d8",
+            "1d8",
+            "1d8",
+            "1d8",
+            "1d10",
+            "1d10",
+            "1d10",
+            "1d10",
+            "1d10",
+            "1d12",
+            "1d12",
+            "1d12",
+            "1d12",
+            "1d12",
+            "1d12"
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "leadership",
+          "name": "Leadership Dice",
+          "max": "col.leadershipDice",
+          "recharge": "short"
+        }
+      ],
+      "asiLevels": [
+        4,
+        6,
+        8,
+        12,
+        14,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Conqueror Tactics",
+        "level": 3,
+        "featureLevels": [
+          3,
+          6,
+          12,
+          16
+        ]
+      },
+      "subclassIntro": {
+        "text": "Conquerors are shaped by the doctrines they follow, the philosophies they adopt, and the legacies they seek to forge. Each Conqueror develops a unique style of leadership that defines how they command the battlefield, rally their forces, and dominate their enemies. Once you have chosen your doctrine, follow the subclass features listed below.",
+        "page": 108
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Conqueror’s Leadership",
+          "text": "Starting at 1st level, you have access to a pool of tactical energy called Leadership Dice, which you use to empower your features.\nYour Leadership Dice are d6s. You have a number of Leadership Dice as shown in the Conqueror class table. You regain all expended Leadership Dice when you finish a short or long rest.\nYour Leadership Dice improve as you gain levels in this class, becoming d8s at 5th level, d10s at 10th level, and d12s at 15th level.",
+          "page": 106
+        },
+        {
+          "level": 1,
+          "name": "King’s Training",
+          "text": "Also at 1st level, you gain the Qualities of a King spirit surge requirement and you learn 1 uncommon Color of the Supreme King haki of your choice.\nAdditionally, at 5th level you learn 1 rare Color of the Supreme King haki of your choice.\nVariant Rule: If you are using the Amateur Haki ruling in Chapter 5, take 2 amateur Color of the Supreme King haki of your choice at 1st level.",
+          "page": 106
+        },
+        {
+          "level": 1,
+          "name": "Conqueror’s Command",
+          "text": "At 2nd level, you can issue precise commands that shift the flow of battle. When you change stances using the Conqueror’s Command feature, you may also choose to command an ally within 30 ft. of you, choose one of the following options and expend a Leadership Die:\nAdvance. An ally that can see or hear you can immediately move up to half its movement without provoking opportunity attacks.\nStrike. An ally immediately makes 1 unarmed or weapon attack, adding the Leadership Die to the attack roll.\nBrace. An ally can add the Leadership Die to one saving throw of its choice made before the start of your next turn.",
+          "page": 106
+        },
+        {
+          "level": 2,
+          "name": "Tactical Combatant",
+          "text": "At 2nd level, your battlefield awareness improves your ability to support your allies. You use the Help action up to 15 feet away from your target, provided your target can see or hear you. You may use the help action as an action or bonus action.",
+          "page": 106
+        },
+        {
+          "level": 2,
+          "name": "Command Stances",
+          "text": "At 2nd level, you adopt several stances as you fight. As a bonus action, change your current stance to a new one below. Your stance benefits from both its active and passive effects immediately. At the start of your next turn, the active effect ends. The stance lasts until you change it again with a bonus action or are knocked unconscious. You cannot active a stance again until you have used another.\nWhenever you switch your current stance to another, you gain an additional 1d4 force damage on your weapon attacks until the end of your turn and you gain an amount of temporary hit points equal to your wisdom modifier.",
+          "page": 106,
+          "sections": [
+            {
+              "name": "War Stance",
+              "text": "Active. When an allied creature within 30 feet of you hits with a melee weapon attack, they can roll an additional die equal to your Leadership Die and add it to the damage dealt. A creature can only benefit from this bonus once during the stance’s duration. You do not gain the benefits of this active. Passive. Allied creatures within 30 feet of you gain a +2 bonus to Damage Rolls with melee weapons. You do not gain the benefits of this passive.",
+              "page": 106
+            },
+            {
+              "name": "Defender Stance",
+              "text": "Active. One allied creature of your choice within 30 feet gain resistance to bludgeoning, piercing, and slashing damage from nonmagical weapons. You do not gain the benefits of this active.\nPassive. The ally you grant the active to gains a +1 bonus to AC and an additonal +1 AC per 2 hostile creatures within 5 ft. of their token.",
+              "page": 106
+            },
+            {
+              "name": "Tactician Stance",
+              "text": "Active. The first time each allied creature within 30 feet of you moves on their turn, they do not provoking opportunity attacks.\nPassive. When you expend a Leadership Die to benefit an ally, that ally gains temporary hit points equal to 2 x the number rolled.",
+              "page": 106
+            },
+            {
+              "name": "Focused Stance",
+              "text": "Active. An ally within 45 ft. gains advantage on their next spell attack on their next turn.\nPassive. The ally you grant the active to gains advantage on its concentration checks.",
+              "page": 106
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Conqueror Tactics",
+          "text": "At 3rd level, you choose an doctrine that reflects your unique style of command. Choose Celestial Doctrine, Kingly Order, Manipulator, Supreme King Master, Warmonger, or Will of D. all detailed at the end of the class description. The doctrine you choose grants you features at 3rd level and again at 6th, 12th, and 16th level.",
+          "page": 106,
+          "grantsSubclass": true
+        },
+        {
+          "level": 3,
+          "name": "Rally Morale",
+          "text": "Also at 3rd level, your gift for organization and preparation enhances your group’s efficiency outside of battle.\nDuring a long rest, you can spend 10 minutes coordinating supplies, roles, and routines. At the end of the rest, choose up to six creatures (excluding yourself). Each chosen creature gains one of the following benefits until their next long rest:\nThe creature gains advantage on its next initiative roll.\nThe creature gains temporary hit points equal to your Leadership Die + your Wisdom Modifier.\nThe creature gains advantage on its next ability check or saving throw roll.\nYou can’t use this feature again until you finish a long rest.",
+          "page": 107,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 6th, 8th, 12th, 14th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 107,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "At 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
+          "page": 107
+        },
+        {
+          "level": 9,
+          "name": "Empower Conqueror’s Haki",
+          "text": "At 9th level, your commanding spirit enhances the power of King’s Haki. When you use a Supreme King Haki feature, you can expend a Leadership Die to apply one of the following enhancements:\nWhen you use a Supreme King Haki feature that requires a saving throw, you can expend a Leadership Die to increase the DC by the number rolled.\nWhen you use a Supreme King Haki feature, you can expend a Leadership Die to increase the range by 15 feet or to target one additional creature within range.",
+          "page": 107
+        },
+        {
+          "level": 10,
+          "name": "Coordinated Assault",
+          "text": "At 10th level, you move your allies like pieces on a board. As a bonus action, you can expend 2 Leadership Dice to move any number of friendly creatures within 30 feet of you up to 15 feet to an unoccupied space they can see. This movement does not provoke opportunity attacks.",
+          "page": 107
+        },
+        {
+          "level": 11,
+          "name": "Strategic Insight",
+          "text": "At 11th level, your tactical genius provides clarity in and out of battle.\nYou can cast the legend lore spell as a ritual without expending a spell slot or requiring material components. When used to learn about a creature, you also learn its highest ability score, what devil fruit it has consumed, and whether it relies primarily on physical, magical, haki, or devil fruit attacks.\nAdditionally, when you make an Intelligence (History) check, you can treat a roll of 9 or lower as a 14.",
+          "page": 107
+        },
+        {
+          "level": 13,
+          "name": "Chain of Command",
+          "text": "At 13th level, your commands echo across the battlefield.\nWhen you expend a Leadership Die to target a friendly creature with a Conqueror feature, you can choose a second creature within 15 feet of the original target to gain the same benefit without expending another die.\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once). You regain all expended uses when you finish a long rest.",
+          "page": 107,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 15,
+          "name": "Checkmate",
+          "text": "At 15th level, you allow your allies to attempt to checkmate an opponent. As an action, pick a target within 120 ft. of you, all allied targets who can attack the target immediately do so with advantage on their attack roll, with each ally only making a single attack. You regain the use of this feature when you take a short or long rest.",
+          "page": 107
+        },
+        {
+          "level": 17,
+          "name": "Supreme Coordination",
+          "text": "At 17th level, your commands take effect before battle begins.\nWhen you roll initiative, choose up to three friendly creatures who can see or hear you. Each creature can choose to use your initiative count instead of their own.\nIn addition, friendly creatures within 60 feet of you gain a +2 bonus to initiative rolls.",
+          "page": 107
+        },
+        {
+          "level": 18,
+          "name": "King’s Spirit",
+          "text": "At 18th level, your spiritual dominance bolsters allies and enhances haki.\nWhile you are conscious, allies within 30 feet of you cannot be frightened.\nOnce per turn, when you or an ally uses a Supreme King Haki feature, they may add 1d10 to one damage roll or healing roll made by that feature. When you roll initiative and have no Leadership Dice remaining, you regain 2 Leadership Dice.",
+          "page": 107
+        },
+        {
+          "level": 20,
+          "name": "Supreme Stratagem",
+          "text": "At 20th level, you execute a flawless command that shifts the tide of war.\nAs an action, choose any number of friendly creatures within 60 feet of you. Each chosen creature can reroll 1 failed saving throw per turn for 1 minute and immediately do each of the following:\nMove up to their speed.\nMake one weapon or spell attack.\nAdditionally, you regain all expended Leadership Dice and may take one additional action immediately. Once you use this feature, you must finish a long rest before using it again.",
+          "page": 108
+        }
+      ]
+    },
+    {
+      "id": "subclass.conqueror.celestial_doctrine",
+      "kind": "subclass",
+      "parent": "class.conqueror",
+      "name": "Celestial Doctrine",
+      "group": "Conqueror Tactics",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 108
+      },
+      "flavor": "The Celestial Doctrine represents those trained in the tradition of absolute authority, whether you are a true Celestial Dragon or merely emulate their godlike bearing. Your every word is a decree, your very presence enough to shatter the will of lesser beings.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Divine Mandate",
+          "text": "Starting when you choose this doctrine at 3rd level, you learn the Command spell with the Wisdom saving throw being equal to your Haki save DC. You may cast it a number of times equal to your Wisdom modifier (minimum of once). You regain all expended uses when you finish a long rest.\nAdditionally, whenever you cast command or use a Supreme King Haki feature that causes the frightened condition, you may expend a Leadership Die to impose disadvantage on the saving throw.",
+          "page": 108,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Stance Improvement",
+          "text": "Also at 3rd level you gain this stance for your Command Stances feature. While in this stance:",
+          "page": 108,
+          "sections": [
+            {
+              "name": "Tyrant’s Stance",
+              "text": "Active. When a creature of your choice within 15 feet of you fails a saving throw against being frightened or charmed, they are also incapacitated until the end of their next turn.\nPassive. Creatures of your choice within 15 feet of you have disadvantage on saving throws against being frightened or charmed.",
+              "page": 108
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Judgement of Heaven",
+          "text": "Starting at 6th level, once per short or long rest, you may declare a creature to be “lesser”.\nAs an action, choose one creature within 60 feet of you. That creature must make a Wisdom saving throw equal to your Haki save DC. On a failure, they are incapacitated and prone until the end of your next turn, overwhelmed by your divine authority. On a success, the creature has disadvantage on all attack rolls against creatures other than you until the end of its next turn.\nYou may expend a Leadership Die to increase the save DC by half the number rolled (rounded down).",
+          "page": 108,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Irrefutable Authority",
+          "text": "Also at 6th level, whenever a creature succeeds on a saving throw against one of your Conqueror class features or a Supreme King Haki feature you use, they become increasingly susceptible to your power.\nUntil a creature fails a saving throw against one of your Conqueror class features or Supreme King Haki features, the DC for subsequent saving throws you impose increases by +1, stacking each time all creatures succeed. Once a creature fails one of these saving throws, the DC returns to normal.",
+          "page": 108
+        },
+        {
+          "level": 12,
+          "name": "Divine Right",
+          "text": "Starting at 12th level, when you use a Conqueror feature that targets an ally, you may also choose one enemy that can see you within 60 feet. That enemy must make a Charisma saving throw equal to your Haki save DC. On a failed save, the creature is frightened of you until the end of your next turn.\nAdditionally, you are immune to being charmed or frightened.",
+          "page": 108
+        },
+        {
+          "level": 16,
+          "name": "Divine Subjugation",
+          "text": "Starting at 16th level, your presence alone bends the will of others, paralyzing defiance and cementing your supremacy.\nAs an action, you can radiate an aura of sovereign will in a 30 foot radius centered on you for 1 minute. When a hostile creature enters the aura or starts its turn there, it must succeed on a Wisdom saving throw against your Haki save DC or be frightened until the aura ends. A creature that fails this saving throw by 5 or more is also paralyzed until the end of its next turn.\nA creature that succeeds on the saving throw is immune to this effect for 24 hours. You must finish a long rest before you can use this feature again.",
+          "page": 108
+        }
+      ]
+    },
+    {
+      "id": "subclass.conqueror.kingly_order",
+      "kind": "subclass",
+      "parent": "class.conqueror",
+      "name": "Kingly Order",
+      "group": "Conqueror Tactics",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 109
+      },
+      "flavor": "The Kingly Order represents leaders who fight not through overwhelming power, but through structure, unity, and tactical precision. These conquerors lead as shining examples to their men, standing tall as both guardian and commander.",
+      "features": [
+        {
+          "level": 3,
+          "name": "King’s Aegis",
+          "text": "Starting when you choose this doctrine at 3rd level, you know how to shield others from harm through calculated positioning. When a creature within 5 feet of you takes damage from an attack, you can use your reaction to reduce that damage by an amount equal to your Leadership Die + your Wisdom modifier (minimum 1).\nAdditionally, when you or an ally within 15 feet of you benefits from your Conqueror’s Command feature, they also gain temporary hit points equal to your Wisdom modifier (minimum 1).",
+          "page": 109
+        },
+        {
+          "level": 3,
+          "name": "Stance Improvement",
+          "text": "Also at 3rd level you gain this stance for your Command Stances feature. While in this stance:",
+          "page": 109,
+          "sections": [
+            {
+              "name": "Royal Stance",
+              "text": "Active. Allied creatures within 10 feet of you are immune to being frightened, charmed, grappled, or restrained. You do not gain the benefits of this active. Passive. Allied creatures within 10 feet of you gain a +1 bonus to AC and attack rolls and cannot be knocked prone or moved against their will. You do not gain the benefits of this passive.",
+              "page": 109
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Shield Formation",
+          "text": "Starting at 6th level, you can command a defensive formation. When a creature within 15 feet of you is targeted by an attack, you can use your reaction and expend a Leadership Die to swap positions with that creature for no movement cost and neither of you provoking opportunity attacks. You become the target of the attack instead.\nWhen you do, you may roll and add the result of the Leadership Die to your AC against that attack.",
+          "page": 109
+        },
+        {
+          "level": 12,
+          "name": "Honored Discipline",
+          "text": "Starting at 12th level, allies who fight under your guidance learn to keep their focus. When a creature within 30 feet of you who can see or hear you makes a concentration check, saving throw to avoid being frightened or charmed, or a Constitution saving throw, they may add your Wisdom modifier to the roll. They can do this once per turn.",
+          "page": 109
+        },
+        {
+          "level": 16,
+          "name": "Crown Unshaken",
+          "text": "Starting at 16th level, your presence anchors your allies in even the most chaotic battles. While you are conscious, friendly creatures within 30 feet of you have advantage on saving throws against being blinded, deafened, incapacitated, paralyzed, petrified, or stunned.",
+          "page": 109
+        }
+      ]
+    },
+    {
+      "id": "subclass.conqueror.manipulator",
+      "kind": "subclass",
+      "parent": "class.conqueror",
+      "name": "Manipulator",
+      "group": "Conqueror Tactics",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 109
+      },
+      "flavor": "Some Conquerors rule with charisma. Others lead from the front. You lead from behind the curtain. Manipulators excel at psychological control and tactical misdirection. You sow fear, pull enemies into dangerous ground, and force them into unfavorable decisions, until every path leads to checkmate.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Puppet Master",
+          "text": "Starting when you choose this doctrine at 3rd level, your mere presence unsettles your enemies. When a creature you can see within 60 feet fails a saving throw against one of your Conqueror or Supreme King Haki features, you can move that creature up to 10 feet to an unoccupied space of your choice. This movement does not provoke opportunity attacks.\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all expended uses when you finish a long rest.\nAdditionally, when you use Conqueror’s Command to move an ally with Advance, you can choose to push an enemy within 5 feet of that ally 5 feet in any direction.",
+          "page": 109,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Stance Improvement",
+          "text": "At 3rd level you gain this stance for your Command Stances feature. While in this stance:",
+          "page": 109,
+          "sections": [
+            {
+              "name": "Manipulation Stance",
+              "text": "Active. When a creature you can see within 60 feet of you makes an opportunity attack, you can use your reaction to force them to reroll the attack and use the lower result.\nPassive. Enemy creatures you can see within 60 feet of you have disadvantage on opportunity attacks made against creatures other than you.",
+              "page": 109
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Forced Misstep",
+          "text": "Starting at 6th level, you have learned to bait foes into compromising positions. When a creature within 30 feet of you misses an attack roll or fails a saving throw, you can use your reaction to immediately move that creature up to 10 feet to an unoccupied space of your choice. This movement does not provoke opportunity attacks.\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a long rest.",
+          "page": 109,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 12,
+          "name": "Check Their Position",
+          "text": "Starting at 12th level, you’ve learned to exploit momentary lapses in attention. When a creature moves into or out of an ally’s melee range, you can use your reaction to expend a Leadership Die and grant your ally an immediate opportunity attack against that creature even if it used the disengage action. On a hit, the attack deals additional damage equal to the result of the Leadership Die. You cannot use this feature on yourself.",
+          "page": 110
+        },
+        {
+          "level": 16,
+          "name": "Web of Control",
+          "text": "Starting at 16th level, when a creature within 60 feet of you takes damage from a weapon or Supreme King Haki feature, you can expend 1 Leadership Die to force that creature to make a Wisdom saving throw against your Haki save DC. On a failure, the creature’s movement speed is halved until the start of its next turn and choose one additional effect:\nThe creature is moved up to 15 feet in a direction of your choice.\nThe creature has disadvantage on its next attack or saving throw.\nYou may use this feature a number of times equal to your Wisdom modifier (minimum of once), regaining all expended uses when you finish a long rest.",
+          "page": 110,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.conqueror.supreme_king_master",
+      "kind": "subclass",
+      "parent": "class.conqueror",
+      "name": "Supreme King Master",
+      "group": "Conqueror Tactics",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 110
+      },
+      "flavor": "Conquerors who follow the path of the Supreme King Master are those born to lead through sheer force of will. These rare individuals wield the Color of the Supreme King not as a passive gift, but as a weapon and a tool of absolute authority. Their haki overwhelms those who stand in defiance.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Sovereign’s Aura",
+          "text": "Starting when you choose this doctrine at 3rd level, enemies within 15 feet of you have disadvantage on saving throws against your Supreme King Haki features. This range increases to 30 feet at 12th level and 45 feet at 16th level.\nAdditionally, you gain one additional Uncommon Color of the Supreme King Haki advancement of your choice.",
+          "page": 110
+        },
+        {
+          "level": 3,
+          "name": "Stance Improvement",
+          "text": "Also at 3rd level you gain this stance for your Command Stances feature. While in this stance:",
+          "page": 110,
+          "sections": [
+            {
+              "name": "Supreme King Stance",
+              "text": "Active. You can activate a Supreme King Haki feature without expending its normal resource cost. Once you do so for that feature, it cannot benefit from this effect again until you finish a long rest. Passive. You can activate a Supreme King Haki feature as a bonus action instead of an action. Once you do so, you cannot do so again until the start of your next turn.",
+              "page": 110
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Royal Ascension",
+          "text": "Starting at 6th level, when you use a Supreme King Haki feature, you can expend one Leadership Die to increase the range of the feature to double its range. This feature can be used directly after expending dice for your Empower Conqueror’s Haki feature at 9th level.\nAdditionally, you gain one additional Rare Color of the Supreme King Haki advancement of your choice.",
+          "page": 110
+        },
+        {
+          "level": 12,
+          "name": "Overwhelming Will",
+          "text": "Starting at 12th level, you can now expend multiple Leadership Dice when using the Empower Conqueror’s Haki feature. Each additional die allows you to apply the same effect again (such as stacking DC increases or targeting more creatures).\nAdditionally, you gain one additional Very Rare Color of the Supreme King Haki advancement of your choice.",
+          "page": 110
+        },
+        {
+          "level": 16,
+          "name": "Sovereign’s Apex",
+          "text": "Starting at 16th level, when you use a Supreme King Haki feature that has a DC, all enemies of CR 3 or lower fail the check automatically.\nAdditionally, you gain one additional Legendary Color of the Supreme King Haki advancement of your choice.",
+          "page": 110
+        }
+      ]
+    },
+    {
+      "id": "subclass.conqueror.warmonger",
+      "kind": "subclass",
+      "parent": "class.conqueror",
+      "name": "Warmonger",
+      "group": "Conqueror Tactics",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 111
+      },
+      "flavor": "Warmongers are generals who lead from the front, clad in scars and iron. Their presence on the battlefield inspires brute confidence and unshakable momentum. These Conquerors thrive in the thick of combat. Their doctrine is not about elegance, it’s about winning.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Battlefield Veteran",
+          "text": "Starting when you choose this doctrine at 3rd level, you gain proficiency with heavy armor.\nWhen you use your Action to make a weapon attack, you can expend a Leadership Die to deal additional damage equal to the number rolled. If this attack reduces a creature to 0 hit points, you regain the expended die.\nAdditionally, you have advantage on saving throws against being frightened.",
+          "page": 111
+        },
+        {
+          "level": 3,
+          "name": "Stance Improvement",
+          "text": "Also at 3rd level you gain this stance for your Command Stances feature. While in this stance:",
+          "page": 111,
+          "sections": [
+            {
+              "name": "Bloodlust Stance",
+              "text": "Active. You gain a bonus to attack and damage rolls equal to the number of allied creatures within 15 ft. of you.\nPassive. You and allied creatures within 15 ft. of you gain hit points equal to your Wisdom modifier (minimum of 1) at the start of your turn if you’ve dealt damage to a creature during your last turn.",
+              "page": 111
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Relentless Charge",
+          "text": "Starting at 6th level, when you move at least 20 feet in a straight line toward a creature and hit it with a melee weapon attack on the same turn, the target must succeed on a Strength saving throw equal to 8 + your proficiency bonus + your Wisdom modifier or be knocked prone.",
+          "page": 111
+        },
+        {
+          "level": 6,
+          "name": "Warmonger’s Rage",
+          "text": "Also at 6th level, when you take the Attack action on your turn, you can choose to enter a state of brutal momentum for 1 minute. While in this state:\nYour movement speed increases by 10 feet.\nYou can make one additional weapon attack when you take the Attack action.\nWhen you reduce a creature to 0 hit points, you gain an amount of hit points equal to your Conqueror level.\nOnce you use this feature, you must finish a long rest before using it again.",
+          "page": 111
+        },
+        {
+          "level": 12,
+          "name": "Break Their Lines",
+          "text": "Starting at 12th level, once per turn when you successfully hit a creature with a melee weapon attack, you can choose to strike with overwhelming force. Expend a Leadership Die and choose one of the following effects:\nShockwave. Each unwilling creature of your choice within 5 feet of the target must make a Strength saving throw equal to 8 + your proficiency bonus + your Strength modifier or be pushed 10 feet away from the target. Willing creature can choose to fail the saving throw.\nMomentum. You may immediately move up to 15 feet in a straight line and make an additional melee weapon attack against a different creature as part of the same action.\nDestruction. Your damage roll counts as a critical hit.",
+          "page": 111
+        },
+        {
+          "level": 16,
+          "name": "Warmonger’s Fury",
+          "text": "Starting at 16th level, your Warmonger’s Rage feature gains the following improvements:\nYour movement speed increases by 30 feet.\nYou can make three additional weapon attacks when you take the Attack action.",
+          "page": 111
+        }
+      ]
+    },
+    {
+      "id": "subclass.conqueror.will_of_d",
+      "kind": "subclass",
+      "parent": "class.conqueror",
+      "name": "Will of D.",
+      "group": "Conqueror Tactics",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 112
+      },
+      "flavor": "Those who carry the Will of D burn with a purpose that redefines fate. Whether driven by freedom, rebellion, or legacy, these Conquerors rally others through unwavering conviction. Your command encourages the hearts of those who believe change is inevitable.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Inheritor’s Defiance",
+          "text": "Starting when you choose this doctrine at 3rd level, you refuse to bend to destiny. When you or an ally within 30 feet of you fails a saving throw or a death save, you can use your reaction to allow them to reroll it, potentially turning failure into success. They must use the new roll.",
+          "page": 112
+        },
+        {
+          "level": 3,
+          "name": "Stance Improvement",
+          "text": "Also at 3rd level you gain this stance for your Command Stances feature. While in this stance:",
+          "page": 112,
+          "sections": [
+            {
+              "name": "Unwavering Stance",
+              "text": "Active. Any ally within 30 feet of you who is below half their hit point maximum has advantage on all saving throws. You do not gain the benefits of this Active.\nPassive. Any ally within 30 feet of you who is below half their hit point maximum gains a +2 bonus to attack rolls, damage rolls, and saving throws. You do not gain the benefits of this Passive.",
+              "page": 112
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Unshaken Drive",
+          "text": "Starting at 6th level, when an allied creature within 30 feet of you that can see or hear you ends its turn with no temporary hit points and fewer hit points than half its maximum, it gains temporary hit points equal to your Wisdom modifier + your Leadership Die.\nA creature can benefit from this feature only once per round. You do not gain the benefits of this feature.",
+          "page": 112
+        },
+        {
+          "level": 12,
+          "name": "Legacy of Defiance",
+          "text": "Starting at 12th level, your will inspires others to press on even in the darkest hour. When an allied creature within 30 feet of you drops to 0 hit points but is not killed outright, you can use your reaction to let them remain at 1 hit point instead.\nOnce a creature benefits from this feature, it can’t do so again until it finishes a long rest. You can use this reaction a number of times equal to your Wisdom modifier (minimum of once), regaining all uses on a long rest.",
+          "page": 112
+        },
+        {
+          "level": 16,
+          "name": "Unbreakable",
+          "text": "Starting at 16th level, when defeat seems certain, you reignite the hope of your allies.\nOnce per long rest as an action, target all allies within 60 feet of you and are at 0 hit points, they immediately gain the following:\nThat ally regains 1 hit point and gains temporary hit points equal to your Leadership Die + your Wisdom modifier.\nThat ally gains advantage on their next attack roll or saving throw.\nYou regain 3 expended Leadership Dice.\nThis feature also activates automatically if you fall unconscious but not dead, granting you the benefits of this feature.",
+          "page": 112,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}
