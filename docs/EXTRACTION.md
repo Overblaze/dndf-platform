@@ -50,6 +50,20 @@ Run `python3 tools/extract/pdfdoc.py V10_D_DF_EH.pdf 85 87` to see any pages as 
 - **The hand-verified v10 Bruiser is never rewritten.** Its hand-entered structure (AC formula, Scrapper die, Fury, toggles, dice) is copied onto a v8.8 Bruiser feature only when both books print the same text for it. The one exception is listed in `SAME_MECHANICS` with the reason. Features that changed between versions (Black Fist, Hasshoken's Internal Vibrations) are text only in v8.8 until they are structured by hand.
 - v8.8 differences in layout: the class list has Rogue and Skald (v10: Renegade and Virtuoso), the Devilforged is a caster with a list of 87 Sea Devil's Emanations, and there is no Void Century Automaton.
 
+## Secret material (`tools/extract/extract_secret.py`)
+
+Writes to `~/dndf/secret/` only. The script refuses any other destination, prints counts and page numbers but never names or text, and contains no fruit names itself. Nothing it produces may be committed; `secret/` is git-ignored and the rules schema rejects `devilFruit` entries under `data/rules/`.
+
+- **Fruits** come from three books with three layouts:
+  - *Expanded Encyclopedia*: entries run the full width of the page; each part opens with a bold lead-in.
+  - *v8.8 handbook* (pp. 252–329): the same entries set in two columns. A page is treated as two columns when a fruit name starts in the right half.
+  - *Original Encyclopedia*: other fonts. Names are in small caps and lead-ins are a size larger than the text, not bold.
+- A fruit starts at a name heading followed by a "Devil Fruit, <rarity>" line. A name-sized heading without that line is a table or second part of the fruit above and is folded into it.
+- Lead-ins become fields (Type, Fruit appearance, Description, Sea Weakness, Spells, Awakening) or named features. Lines of a beast's stat block (Armor Class, Hit Points, the ability row, …) are kept apart under `statBlockLines`.
+- **Fruit advancements** (handbook Spirit Surges for fruits), **generation tables** and the **DM-only chapter** are read with the ordinary section reader from their own page ranges, per version, and from the encyclopedia's front matter.
+- Not done: the six licensed stat blocks from Volo's Guide. That scan has OCR errors and needs correcting by hand.
+- Loading these files into the private Supabase tables, and granting fruits, is phase 6.
+
 ## Things to know
 
 - Page numbers: Handbooks, Encyclopedias and the original PHB print the PDF page number. The DM Guide does not: cite its PDF pages and say so. Volo's: PDF page = printed + 1; its scan has OCR errors ("Armor dass", "2dl O", "ld6") — correct by hand.
