@@ -1,0 +1,846 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.bruiser",
+      "kind": "class",
+      "name": "Bruiser",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 85
+      },
+      "flavor": "A warrior forged in the heat of countless battles, their body a living weapon honed through a life of relentless combat.",
+      "hitDie": 12,
+      "savingThrows": [
+        "str",
+        "con"
+      ],
+      "proficiencies": {
+        "armor": [],
+        "weapons": [
+          "simple",
+          "improvised",
+          "cutlass",
+          "kanabo"
+        ],
+        "tools": [],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "acrobatics",
+            "athletics",
+            "persuasion",
+            "intimidation",
+            "perception",
+            "animal_handling",
+            "survival"
+          ]
+        }
+      },
+      "startingEquipment": [
+        {
+          "choose": 1,
+          "options": [
+            [
+              "cutlass"
+            ],
+            [
+              "any:simple_weapon"
+            ]
+          ]
+        },
+        {
+          "choose": 1,
+          "options": [
+            [
+              "pirates_pack"
+            ],
+            [
+              "explorers_pack"
+            ]
+          ]
+        },
+        {
+          "choose": 1,
+          "options": [
+            [
+              "any:artisans_tools"
+            ],
+            [
+              "any:gaming_set"
+            ]
+          ]
+        }
+      ],
+      "progression": {
+        "columns": {
+          "scrapperDie": [
+            "d4",
+            "d4",
+            "d4",
+            "d4",
+            "d6",
+            "d6",
+            "d6",
+            "d6",
+            "d8",
+            "d8",
+            "d8",
+            "d8",
+            "d10",
+            "d10",
+            "d10",
+            "d10",
+            "d12",
+            "d12",
+            "d12",
+            "d12"
+          ],
+          "fury": [
+            0,
+            2,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            8,
+            8,
+            9,
+            9,
+            10,
+            10,
+            12
+          ]
+        }
+      },
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Brawling Style",
+        "level": 3,
+        "featureLevels": [
+          3,
+          6,
+          11,
+          17
+        ]
+      },
+      "resources": [
+        {
+          "id": "fury",
+          "name": "Fury Points",
+          "max": "col.fury",
+          "recharge": "short",
+          "minLevel": 2
+        },
+        {
+          "id": "thrill",
+          "name": "Thrill of the Fight",
+          "max": "prof",
+          "recharge": "long"
+        }
+      ],
+      "formulas": {
+        "furyDC": {
+          "label": "Fury save DC",
+          "expr": "8 + prof + mod.con"
+        }
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Scrapper",
+          "text": "At 1st level, your life of scrapping and battling with beasts, humans, or other tough creatures has given you mastery of Combat styles that use unarmed strikes and bruiser weapons, which are simple melee weapons without the two-handed property, cutlasses, kanabos, and improvised weapons. You can not use the finesse property of a weapon while using it as a bruiser weapon.\nYou gain the following benefits while you are unarmed or wielding only bruiser weapons:\nYou can roll a d4 in place of the normal damage of your unarmed strike or bruiser weapon. This die changes as you gain bruiser levels, as shown in the scrapper column on the bruiser table.\nWhen you use the Attack action with an unarmed strike or a bruiser weapon on your turn, you can make one unarmed strike or grapple as a bonus action. For example, if you take the Attack action and Attack with a Club, you can also make an Unarmed Strike or grapple as a bonus action, assuming you haven’t already taken a bonus action this turn.",
+          "effects": [
+            {
+              "type": "unarmedDie",
+              "expr": "col.scrapperDie"
+            }
+          ],
+          "page": 86
+        },
+        {
+          "level": 1,
+          "name": "Thrill of the Fight",
+          "text": "You are filled with an overwhelming sense of reckless excitement or rage during battle. As a bonus action, you enter a bloodthirsty frenzy.\nWhile frenzied, you gain the following:\nYou have advantage on Strength checks and Strength saving throws.\nYou have resistance to all magical and non-magical bludgeoning, piercing, and slashing damage.\nYour unarmed strikes and bruiser weapons deals an extra amount of damage equal to your proficiency bonus.\nIf you are able to cast spells, you can’t cast them or concentrate on them while in your frenzy.\nYour frenzy lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven’t attacked a hostile creature since your last turn or taken damage since then. You can also end your frenzy on your turn as a bonus action.\nOnce you have used your frenzy a number of times equal to your Proficiency bonus, you must finish a long rest before you can enter it again.",
+          "uses": "res.thrill",
+          "toggle": {
+            "id": "frenzied",
+            "label": "Frenzied"
+          },
+          "page": 86
+        },
+        {
+          "level": 1,
+          "name": "Offensive Defense",
+          "text": "While you aren’t wearing any armor or wielding a shield, your armor class equals 10 + your Dexterity modifier + your Constitution modifier and your movement speed increases by 10 feet.",
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "10 + mod.dex + mod.con",
+              "when": "noArmor && noShield"
+            },
+            {
+              "type": "speed",
+              "value": 10,
+              "when": "noArmor && noShield"
+            }
+          ],
+          "page": 86
+        },
+        {
+          "level": 2,
+          "name": "Fury",
+          "text": "Starting at 2nd level, your Training allows you to harness Fury, raw power and energy that stems from your spirit. Your access to this energy is represented by a number of Fury points. Your bruiser level determines the number of points you have, as shown in the Fury Points column of the Bruiser table and you can choose a number of fury features to know equal to your proficiency bonus. You are able to change these choices at each level up.\nWhen you spend a Fury point, it is unavailable until you finish a short or long rest, at the end of which you draw all of your expended Fury back into yourself. You must spend at least 30 minutes of the rest training to regain your Fury points.\nSome of your Fury features require your target to make a saving throw to resist the feature’s Effects. The saving throw DC is calculated as follows:\nFury save DC = 8 + your Proficiency Bonus + your Constitution modifier Additionally, so long as you have at least 1 fury point remaining, you have advantage on constitution saving throws against traps, spells, poison, disease, or breath attacks. To gain this benefit, you can’t be Incapacitated.",
+          "choices": {
+            "id": "furyFeatures",
+            "count": "prof",
+            "from": "optionGroup.bruiser_fury",
+            "relearn": "levelUp"
+          },
+          "page": 86
+        },
+        {
+          "level": 2,
+          "name": "Enduring Honesty",
+          "text": "At 2nd level, you have able to convince enemies of your dream and motive easier. You gain proficiency in Persuasion, and when you speak the truth about your motives and current mission you may add an additional amount to your persuassion roll equal to 1/4th of your bruiser level (rounded up).",
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "persuasion"
+            }
+          ],
+          "page": 87
+        },
+        {
+          "level": 2,
+          "name": "Rampage",
+          "text": "Also at 2nd level, you can make reckless attacks against enemies, making your fighting style a double-edged sword. During your turn, you can choose to have advantage on all melee weapon attack rolls, but attack rolls against you have advantage until your next turn.",
+          "page": 87
+        },
+        {
+          "level": 3,
+          "name": "Brawling Style",
+          "text": "At 3rd level, you choose and develop a way of brawling that best defines your fighting style: Beast Style, Black Fist Style, Drunken Dragon Style, Eastern Dragon Style, Hasshoken Style, or King Style, all detailed at the end of the class description. Your brawling style grants you features at 3rd level and again at 6th, 11th, and 17th level.",
+          "grantsSubclass": true,
+          "page": 87
+        },
+        {
+          "level": 3,
+          "name": "Blood for Brawn",
+          "text": "Starting at 3rd level, when you are reduced to half your hit point maximum or less, you can use your reaction to gain temporary hit points equal to a roll of your scrapper die + Bruiser level and you regain all expended fury points. You cannot use this feature again until you finish a short or long rest.",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "page": 87
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "asi": true,
+          "page": 87
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.",
+          "effects": [
+            {
+              "type": "attacksPerAction",
+              "value": 2
+            }
+          ],
+          "page": 87
+        },
+        {
+          "level": 6,
+          "name": "Spirit Assault",
+          "text": "Starting at 6th level, you’ve instinctively learned how to incorporate a little bit of haki into your attacks. Your unarmed strikes and bruiser weapon count as magical for the purpose of overcoming resistance and immunity to non-magical attacks and damage.",
+          "page": 87
+        },
+        {
+          "level": 7,
+          "name": "Frenzied Rush",
+          "text": "At 7th level, as part of the bonus action you take to enter your frenzy, you regain 1 expended fury and you can additionally move up to half of your walking speed for free.\nAdditionally, if you are surprised at the beginning of combat and aren’t incapacitated, you can act normally on your first turn, but only if you enter your frenzy before doing anything else on that turn.",
+          "page": 87
+        },
+        {
+          "level": 13,
+          "name": "Undying Frenzy",
+          "text": "Starting at 13th level, your frenzy keeps you fighting despite lethal injuries. If you drop to 0 hit points while you’re in a frenzy and don’t die outright, you can make a DC 10 Constitution saving throw. If you succeed, you drop to 1 hit point instead.\nEach time you use this feature after the first, the DC increases by 5. When you finish a short or long rest, the DC resets to 10.",
+          "page": 87
+        },
+        {
+          "level": 15,
+          "name": "Tireless Training",
+          "text": "Starting at 15th level, your carrying capacity is doubled.\nYour standard jumping distance is the same as your running start jump distance.\nAdditionally, when you gain a level of exhaustion from a forced march, you can choose to ignore it. You cannot use this feature this way again until you complete a long rest.",
+          "effects": [
+            {
+              "type": "carryMultiplier",
+              "value": 2
+            }
+          ],
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "page": 87
+        },
+        {
+          "level": 18,
+          "name": "Invincible",
+          "text": "Beginning at 18th level, while you are in your frenzy, you have resistance to all damage.",
+          "page": 87
+        },
+        {
+          "level": 20,
+          "name": "The King",
+          "text": "At 20th level, you are truly the strongest. Your Strength and Constitution scores increase by 2. Your maximum for those scores is now 22. Additionally, when you complete a long rest you regain all expended hit dice instead of half your expended hit dice.",
+          "effects": [
+            {
+              "type": "ability",
+              "ability": "str",
+              "value": 2,
+              "max": 22
+            },
+            {
+              "type": "ability",
+              "ability": "con",
+              "value": 2,
+              "max": 22
+            }
+          ],
+          "page": 87
+        }
+      ],
+      "brawlingStylesIntro": {
+        "text": "Despite how easy it may be to generalize the brutish ways of a bruiser, each have a fairly distinct way of fighting. It may depend on their spirit, special attacks, or the way fury fuels their power. This comes in the form of using different fighting styles, typically representing how they were raised and taught to fight, and how they continue to train.",
+        "page": 88
+      }
+    },
+    {
+      "id": "optionGroup.bruiser_fury",
+      "kind": "optionGroup",
+      "name": "Fury Features",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 86
+      },
+      "options": [
+        {
+          "id": "brute_force",
+          "name": "Brute Force",
+          "cost": {
+            "fury": 1
+          },
+          "action": "bonus",
+          "text": "You can use a bonus action and expend 1 fury point to make a shove attack or grapple an enemy within 5 ft. of you.",
+          "page": 86
+        },
+        {
+          "id": "brace_for_impact",
+          "name": "Brace for Impact",
+          "cost": {
+            "fury": 1
+          },
+          "action": "bonus",
+          "text": "You can use your Fury to grit your teeth and withstand physical injuries. You can use a bonus action and spend 1 fury point to prepare for any incoming attack. You gain a number of temporary hit points equal to your scrapper die + your bruiser level.",
+          "page": 86
+        },
+        {
+          "id": "focused_strike",
+          "name": "Focused Strike",
+          "cost": {
+            "fury": 1
+          },
+          "text": "Immediately after you fail an attack roll on your turn, you can spend 1 fury point to reroll one of the 1d20s that failed.",
+          "page": 86
+        },
+        {
+          "id": "keep_going",
+          "name": "Keep Going",
+          "cost": {
+            "fury": 1
+          },
+          "text": "Whenever you make any saving throw and fail, you can spend 1 fury point to reroll it and take the second result.",
+          "page": 86
+        },
+        {
+          "id": "redirect_anger",
+          "name": "Redirect Anger",
+          "cost": {
+            "fury": 1
+          },
+          "action": "bonus",
+          "text": "You can use a bonus action and expend 1 fury point to move up to half your full movement directly toward an enemy without provoking opportunity attacks.",
+          "page": 86
+        },
+        {
+          "id": "unbending_resolve",
+          "name": "Unbending Resolve",
+          "cost": {
+            "fury": 1
+          },
+          "action": "bonus",
+          "text": "When you are Charmed or Frightened, you may use a bonus action and spend 1 fury point to end one of these effects on yourself.",
+          "page": 87
+        }
+      ]
+    },
+    {
+      "id": "subclass.bruiser.beast",
+      "kind": "subclass",
+      "parent": "class.bruiser",
+      "name": "Beast Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 88
+      },
+      "features": [
+        {
+          "level": 3,
+          "name": "Bonus Proficiency",
+          "text": "When you choose this style at 3rd level, you gain proficiency in the Acrobatics skill. If you are already proficient in Acrobatics, you instead gain proficiency in either Persuasion or Intimidation (your choice).",
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "acrobatics",
+              "fallback": {
+                "choose": 1,
+                "from": [
+                  "persuasion",
+                  "intimidation"
+                ]
+              }
+            }
+          ],
+          "page": 88
+        },
+        {
+          "level": 3,
+          "name": "Raging Gorilla Flex",
+          "text": "Starting at 3rd level, you can channel primal energy into your limbs, momentarily enhancing your raw physical power. While in thrill of the fight, you gain the following benefits:\nYou triple the distance of all thrown weapon attacks and object throws.\nOnce per turn, when you hit a creature with a melee weapon attack or an unarmed strike, you can push the target a number of feet horizontally equal to 5 × your Strength modifier. If the target collides with a solid object, both the target and the object take bludgeoning damage equal to the remaining amount of feet not traveled in the initial punch.",
+          "page": 88
+        },
+        {
+          "level": 3,
+          "name": "Adamantine Rhinoceros Hide",
+          "text": "Also at 3rd level, you can fortify your body with the resilience of a rhinoceros. As a bonus action, you increase your AC by 2 and you reduce all damage you take by an amount equal to your Constitution modifier (minimum 1) for 1 minute.\nOnce you use this feature, you can’t use it again until you complete a short or long rest.",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "toggle": {
+            "id": "rhino_hide",
+            "label": "Rhino Hide",
+            "effects": [
+              {
+                "type": "ac",
+                "value": 2
+              }
+            ]
+          },
+          "page": 88
+        },
+        {
+          "level": 6,
+          "name": "Flaming Phoenix Flight",
+          "text": "At 6th level, you can channel energy into your legs to launch yourself into the air in a fiery assault. By spending a fury point and both your Movement and Attack actions to use this feature, you can leap up to three times your movement speed, landing in an unoccupied space and striking a target in a blaze of flame. Choose one creature within 5 feet of your landing space and make a melee attack. On a hit, the target takes damage equal to your Scrapper Die + your Strength modifier in bludgeoning damage and all creatures, other than yourself, within 5 feet of the target must make a Dexterity saving throw against your Fury save DC. On a failed save, they take 2 Scrapper Dice rolls in fire damage, or half as much on a success.\nYou cannot use this feature if you have already moved or attacked on your turn. The fire damage increases to 3 Scrapper Dice rolls at level 11 and 4 Scrapper Dice at level 17.",
+          "cost": {
+            "fury": 1
+          },
+          "page": 88
+        },
+        {
+          "level": 6,
+          "name": "Laughing Monkey Tango",
+          "text": "Also at 6th level, you gain the nimbleness and unpredictability of a monkey. As a bonus action, you gain the following benefits for 1 minute:\nYou ignore difficult terrain.\nYou have advantage on Acrobatics checks.\nWhen you hit a creature with a melee attack, you can move away from it without provoking opportunity attacks.\nOnce you use this feature, you can’t use it again until you complete a short or long rest.",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "page": 88
+        },
+        {
+          "level": 11,
+          "name": "Bleeding Crimson Scorpion Sting",
+          "text": "At 11th level, you can channel your energy into your nails, sharpening them into deadly piercing weapons. As a bonus action, for 1 minute, your melee attacks gain the following benefits:\nThey deal piercing damage instead of bludgeoning.\nWhen you hit a creature, it begins to bleed, taking 1 damage at the start of each of its turns for 1 minute.\nIf you hit a bleeding target, the bleed duration resets, and the ongoing damage increases by 1, up to a maximum of 9 damage per turn.\nOnce you use this feature, you cannot use it again until you complete a long rest.",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "page": 88
+        },
+        {
+          "level": 17,
+          "name": "Ascending Seiryu Vortex",
+          "text": "Beginning at 17th level, you can summon a devastating whirlwind with a single uppercut. As an action, you unleash a tornado around you in the shape of a mighty Seiryu, trampling everything in its path. All creatures in a 30-foot radius must make a Dexterity saving throw against your Fury save DC. On a failed save, creatures take 6 Scrapper Dice in bludgeoning damage and are launched 30 feet into the air, reduced by 10 feet per size category above Medium (falling damage applies as normal). On a successful save, creatures take half damage and are not launched.\nOnce you use this feature, you cannot use it again until you complete a long rest.",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "page": 88
+        }
+      ],
+      "flavor": "Some warriors seek strength through relentless training, while others look to the ferocity of nature itself.\nBruisers who follow the Beast Style forge a deep connection with the raw power of the wild, channeling the might of nature’s fiercest creatures into their own combat prowess."
+    },
+    {
+      "id": "subclass.bruiser.black_fist",
+      "kind": "subclass",
+      "parent": "class.bruiser",
+      "name": "Black Fist Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 89
+      },
+      "features": [
+        {
+          "level": 3,
+          "name": "Iron Stance",
+          "text": "At the 3rd level, while you are in Thrill of the Fight, you have become so accustomed to taking blows that your body instinctively reinforces itself. At the start of each of your turns, you gain temporary hit points equal to your Constitution modifier.",
+          "page": 89
+        },
+        {
+          "level": 3,
+          "name": "Bring Him Down",
+          "text": "Also at the 3rd level, while you are in Thrill of the Fight, your presence on the battlefield is so overwhelming that enemies instinctively focus on you. As a bonus action, all enemies within 10 feet of you has disadvantage on attack rolls against creatures other than you (or others who also have this feature) until your thrill of the fight ends. You may use this feature once per thrill of the fight.\nThe range of this ability increases to 20 feet at 11th level.",
+          "page": 89
+        },
+        {
+          "level": 6,
+          "name": "Armament-Coated Muscles",
+          "text": "At 6th level, you can reinforce your body with an unyielding layer of Armament Haki, briefly enhancing either your offensive or defensive capabilities. As a bonus action while in Thrill of the Fight, you harden your skin with Haki and gain one of the following effects until the start of your next turn.\nWhen you are hit by an attack, you gain damage reduction equal to your your Constitution modifier against all damage except for Force and Psychic damage.\nAdd half your Constitution modifier (rounded up) to you attack rolls and your Constitution Modifier to your damage rolls when you attack with bruiser weapons or unarmed strikes.",
+          "page": 89
+        },
+        {
+          "level": 11,
+          "name": "Save the Weak",
+          "text": "At 11th level, you can move with blinding speed to protect those who cannot defend themselves. When an ally within 30 feet of you is targeted by an attack roll, you can teleport to their space, pushing them 5 feet behind you. The incoming attack is redirected to you instead.",
+          "page": 89
+        },
+        {
+          "level": 17,
+          "name": "Bruises for Bruises",
+          "text": "At 17th level, you have learned to turn pain into power, striking with increased force the more damage you endure. For every 10 hit points you are below your maximum, your melee attacks deal an additional +1 damage of their respective type.",
+          "page": 89
+        }
+      ],
+      "flavor": "This style is used by those who primarily use their fists as weapons. Many who utilize this style are often feared for their display of otherworldly strength, speed, defense, and use of haki in battle. The spirit of those who use this style is often heroic, sacrificing themself for the safety of others. Black fist style is named after the way its users coat their limbs in extremely dark and thick layers of haki."
+    },
+    {
+      "id": "subclass.bruiser.drunken_dragon",
+      "kind": "subclass",
+      "parent": "class.bruiser",
+      "name": "Drunken Dragon Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 89
+      },
+      "trackers": [
+        {
+          "id": "drunken_state",
+          "name": "Drunken State",
+          "min": 0,
+          "max": 6,
+          "levels": [
+            {
+              "value": 0,
+              "label": "Sober"
+            },
+            {
+              "value": 1,
+              "label": "Tipsy",
+              "text": "Gain advantage on Charisma saves and any save against becoming frightened. Ignore up to one level of exhaustion."
+            },
+            {
+              "value": 2,
+              "label": "Merry",
+              "text": "Gain advantage on Charisma saves and any save against becoming frightened, and disadvantage on any other Dexterity, Intelligence and Wisdom saves. Ignore up to two levels of exhaustion."
+            },
+            {
+              "value": 3,
+              "label": "Drunk",
+              "text": "Gain disadvantage on all saves and ability checks, except those against becoming frightened."
+            },
+            {
+              "value": 4,
+              "label": "Bladdered",
+              "text": "Gain disadvantage on all attack rolls, saves and ability checks."
+            },
+            {
+              "value": 5,
+              "label": "Falling-Down Drunk",
+              "text": "Gain disadvantage on all attack rolls, saves and ability checks. Any movement requires a DC 15 Dexterity saving throw (fall prone on failure). And all memories gained in this state are forgotten once you leave this state."
+            },
+            {
+              "value": 6,
+              "label": "Passed-Out Drunk",
+              "text": "Fall unconscious, recover in 1d4 minutes. When you get back up you are sober."
+            }
+          ],
+          "page": 89
+        }
+      ],
+      "features": [
+        {
+          "level": 3,
+          "name": "Drunken State",
+          "text": "Starting when you choose this subclass at 3rd level, you learn how to make alchoholic beverages. During a long rest, you may spend ฿2,000 to create an alcoholic beverage of your choice. You can create up to 5 beverages per long rest.\nEvery time you drink an alcoholic beverage you increase your Drunken State level by +1. If you do not consume any alcohol for 1 minute your Drunken State level decreases by -1 until you get to 0, which is considered your sober state.",
+          "page": 89
+        },
+        {
+          "level": 3,
+          "name": "Liquid Courage",
+          "text": "Starting at 3rd level, your fighting style revolves around consuming alcohol to fuel your combat prowess. As a bonus action, you can drink a flask of alcohol. After drinking, you enter a drunken state that lasts for 1 minute. While in this state, you gain one of the following emotional buffs at random, rolling a 1d4 to determine the effect and gaining a number of temp hit points equal to your bruiser level. You lose these temp hit points when you become sober. 1. Drunken Rage (Anger): You gain advantage on Strength-based attack rolls, but attack rolls against you also have advantage. 2. Sorrowful Stagger (Sadness): You gain resistance to all damage, but your movement speed is reduced by 10 feet. 3. Joyous Flurry ( Joy): You can make an additional unarmed strike or bruiser weapon attack whenever you take the Attack action, but all damage you deal is reduced by 1d4. 4. Reckless Frenzy (Madness): You can take the Dash action as a bonus action, but must make a melee attack against the nearest creature at the end of your movement, friend or foe.",
+          "page": 90
+        },
+        {
+          "level": 6,
+          "name": "Booze Breath",
+          "text": "At 6th level, your drunken state mimics the fearsome breath of a dragon. While effected by Liquid Courage, you can use an action to exhale a wave of elemental fury, dealing damage to creatures in a 15-foot cone. The damage type depends on your emotional state:\nDrunken Rage: Fire damage Sorrowful Stagger: Cold damage Joyous Flurry: Lightning damage Reckless Frenzy: Acid damage Creatures in the area must make a Dexterity saving throw against your Fury save DC, taking damage equal to 1d6 * your Drunken State Level on a failed save, or half as much on a successful one. You can use this feature once per turn.",
+          "page": 90
+        },
+        {
+          "level": 11,
+          "name": "Emotional Resilience",
+          "text": "At 11th level, as your mastery of Drunken Dragon Style grows, you learn to control and harness the emotional swings of intoxication. You can now choose which emotional state to enter after consuming alcohol instead of rolling at random. Additionally, the duration of your drunken state increases to 2 minutes.",
+          "page": 90
+        },
+        {
+          "level": 17,
+          "name": "Drunken Dragon's Fury",
+          "text": "At 17th level, You become a true master of Drunken Dragon Style, able to invoke the full chaotic might of a dragon. Once per long rest, when you consume alcohol and enter a drunken state, you gain all four emotional buffs simultaneously for 1 minute. During this time, your unarmed strikes and bruiser weapon attacks deal additional elemental damage equal to your Constitution modifier, based on your chosen Dragon’s Breath element.",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "page": 90
+        }
+      ],
+      "flavor": "The Drunken Dragon Style draws from the wild, unpredictable power of alcohol-fueled emotions, channeling different states of intoxication into powerful combat techniques. As you drink and sway through battle, your shifting moods empower you in unpredictable ways."
+    },
+    {
+      "id": "subclass.bruiser.eastern_dragon",
+      "kind": "subclass",
+      "parent": "class.bruiser",
+      "name": "Eastern Dragon Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 90
+      },
+      "features": [
+        {
+          "level": 3,
+          "name": "Dragon Stance",
+          "text": "Starting at 3rd level, your limbs are surrounded by the aura of a mighty dragon. when you damage a target with an unarmed strike or bruiser weapon attack, you can change the damage type to fire, cold, or lightning and add your proficiency bonus to the damage roll.",
+          "page": 90
+        },
+        {
+          "level": 3,
+          "name": "Eastern Breath",
+          "text": "Also at 3rd level, when you take the Attack action on your turn, you can replace one of the attacks with a burst of draconic energy in a 30-foot line that is 5 feet wide. Choose a damage type: fire, cold, or lightning.\nEach creature in the area must make a Dexterity saving throw against your Fury save DC, taking damage of the chosen type equal to two rolls of your Scrapper die on a failure, or half as much damage on a success.\nAt 11th level, the damage of your breath increases to three rolls of your Scrapper die.",
+          "page": 90
+        },
+        {
+          "level": 6,
+          "name": "Cloud Walk",
+          "text": "At 6th level, you gain the blinding speed of a dragon. As a bonus action, you can teleport up to 30 ft. toward a point you can see, hover in place until the end of your next turn, and gain advantage on your next attack.\nAdditonally if you have not moved on your turn, you may use an action to teleport 90 ft, after which your movement speed becomes 0.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a short or long rest.",
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "page": 90
+        },
+        {
+          "level": 11,
+          "name": "Descending Star",
+          "text": "At 11th level, as part of your cloud walk ability you can choose to teleport straight downwards, if you move in a line at least 30 ft., you are able to emit a large blast of draconic energy.\nAll creatures of your choice within 20 ft. of the impact site must make a Dexterity saving throw against your Fury save DC. A creature takes fire, thunder, or lightning damage equal to 2 scrapper die + your Constitution modiifer on a failed saving throw, and half as much damage on a successful one.",
+          "page": 91
+        },
+        {
+          "level": 17,
+          "name": "Dragon Emperor",
+          "text": "At 17th level, when you enter into your frenzy using your Thrill of the Fight feature, you surround yourself with an aura of draconic spirit energy. You shed bright light in a 30-foot radius and dim light for an additional 30 feet from this aura. You can extinguish or restore the light as a bonus action. You gain the following abilities while this effect is active:\nIf an enemy you can see hits you with an attack within 60 feet, you can use your reaction to deal a Scrapper die in fire, cold, or lightning damage to them.\nWhen you damage a creature with your Dragon’s breath, the energy clings to the target if they failed the save. At the start of each of the creature’s turns, it takes damage of the type dealt equal to one roll of your Scrapper die. At the end of its turn, the creature can repeat the save, ending the effect on itself on a success.\nYou can use your Cloud Walk feature without expending charges.\nYou may choose to increase the radius of your Descending Star by up to 60 ft. and increase the damage to 3 scrapper die + your Constitution modifier",
+          "page": 91
+        }
+      ],
+      "flavor": "This brawling style can be best described as a fierce style that emulates the pride and might of a dragon.\nThis style uses a mixture of Unarmed Strikes and Weapon Attacks. Users of the dragon style are fierce aerial fighters that crush and pulverize their enemies with raw strength, guided by the wrath of a dragon spirit surrounding them. Very few have ever lived to see this style used at its full potential."
+    },
+    {
+      "id": "subclass.bruiser.hasshoken",
+      "kind": "subclass",
+      "parent": "class.bruiser",
+      "name": "Hasshoken Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 91
+      },
+      "features": [
+        {
+          "level": 3,
+          "name": "Internal Vibrations",
+          "text": "Starting at 3rd level, you can infuse your strikes with powerful vibrations that damage enemies internally.\nWhen you hit a creature with a melee attack, you can choose to deal additional thunder damage equal to a number of d6s equal to half your proficiency bonus (rounded up) as your punch sends vibrations through the target’s body.\nAdditionally, all thunder damage from your hasshoken style features ignore resistances and immunities and deals double damage to structures as they directly harms the internal core of the target.",
+          "effects": [
+            {
+              "type": "display",
+              "label": "Internal Vibrations",
+              "expr": "ceil(prof/2) + 'd6'"
+            }
+          ],
+          "page": 91
+        },
+        {
+          "level": 3,
+          "name": "Vibration Wave",
+          "text": "Also at 3rd level, your strikes can emit devastating shockwaves through your target and then beyond. When you hit a creature with a melee attack, you can unleash a vibration wave that erupts from the opposite side of the target (extending away from you). Each creature in the 10-foot long 5-foot line must make a Constitution saving throw against your Fury save DC. On a failed save, a creature takes thunder damage equal to your Internal Vibrations damage. On a success, the creature takes half damage and suffers no other effects.\nYou can use this feature a number of times equal to double your proficiency bonus, and you regain all expended uses when you finish a long rest.\nAt 11th level, the length of the vibration wave increases to 20 feet.",
+          "uses": {
+            "max": "prof*2",
+            "recharge": "long"
+          },
+          "page": 91
+        },
+        {
+          "level": 6,
+          "name": "Vibrational Guard",
+          "text": "At 6th level, you learn to use vibrations defensively, creating a resonating barrier around yourself. As a reaction when you are hit by a melee or ranged attack, you can activate Vibrational Guard, reducing the damage taken by your Internal Vibrations roll. If the attacker is within 5 feet of you, they also take thunder damage equal to your Bruiser level as the vibrations rebound back at them.\nYou can use this feature a number of times equal to double your proficiency bonus, and you regain all expended uses when you finish a long rest.",
+          "uses": {
+            "max": "prof*2",
+            "recharge": "long"
+          },
+          "page": 91
+        },
+        {
+          "level": 11,
+          "name": "Resonance Strike",
+          "text": "At 11th level, your mastery of vibrations allows you to bypass armor and defenses entirely, striking directly at the core of your enemies. As a bonus action, a target within 10 ft. of you must make a Constitution saving throw equal to your Fury save DC. On a failed save, the target takes 3d8 force damage, and their armor class changes to 1 until the end of your turn. On a successful save, the target takes half the damage and their armor class does not change.\nYou can use this feature once per short or long rest.",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "page": 91
+        },
+        {
+          "level": 17,
+          "name": "Earthshaker Punch",
+          "text": "At 17th level, you can unleash a devastating punch that sends rippling shockwaves through the ground and air, damaging everything in its path. As an action, you punch in a 30-foot line that is 5 feet wide. Each creature in that area must make a Constitution saving throw against your Fury save DC. On a failed save, a creature takes 6d10 thunder damage, is knocked prone, and is stunned until the end of its next turn. On a successful save, a creature takes half damage and is not stunned.\nYou can use this feature once per long rest.",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "page": 91
+        }
+      ],
+      "flavor": "The Hasshoken Style Bruiser harnesses the power of vibrations, delivering devastating punches that send shockwaves through their enemies, causing internal damage."
+    },
+    {
+      "id": "subclass.bruiser.king",
+      "kind": "subclass",
+      "parent": "class.bruiser",
+      "name": "King Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 92
+      },
+      "trackers": [
+        {
+          "id": "king_charges",
+          "name": "King Punch Charges",
+          "min": 0,
+          "max": "level>=17 ? 60 : level>=11 ? 40 : 30"
+        }
+      ],
+      "features": [
+        {
+          "level": 3,
+          "name": "Bonus Proficiency",
+          "text": "Starting at 3rd level, your King Style emphasizes raw physical power through the sheer force of your attacks.\nYou gain proficiency in Athletics and Intimidation.",
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "athletics"
+            },
+            {
+              "type": "proficiency",
+              "skill": "intimidation"
+            }
+          ],
+          "page": 92
+        },
+        {
+          "level": 3,
+          "name": "King's Preparation",
+          "text": "Also at the 3rd level, you learn to channel your energy into a devastating blow. As an action, you can begin preparing your King Punch.\nThe longer you prepare, the more powerful it becomes. For each minute you spend preparing out of combat, or 6 seconds in combat, you gain 2 charge up to a maximum of 30 Charges. On your turn, if you don’t use any movement options while charging, you instead gain 3 charges. The damage of your King Punch equals 1d4 x your current charge amount, with the damage type being thunder. While charging the punch your speed is reduced to half, if you take any actions, you lose your charges.\nAs an action on your turn, you unleash the King Punch. The punch has the following effects depending on how long you charged for: 10 Charges: Your punch becomes a 10 ft. long and 5 ft. wide line, all creatures inside must make a Strength saving throw against your Fury save DC or be hit, half damage on a successful save. 20 Charges: Your punch becomes a 15 ft. long and 5 ft. wide line, all creatures inside must make a Strength saving throw against your Fury save DC or be hit and knocked back 20 feet, half damage on a successful save and not pushed back. 30 Charges: Your punch becomes a 20 ft. long and 10 ft. wide line, all creatures inside must make a Strength saving throw against your Fury save DC or be hit and knocked back 20 feet and land prone, half damage on a successful save and not pushed back.\nOnce you hit your maximum amount of charges you must unleash the punch, otherwise you can stop charging at any time as a free action.\nFor every 30 charges you spend when unleashing your punch you gain 1 exhaustion. you cannot gain a 6th level exhaustion with this ability. You can use your King Punch a number of times equal to your proficiency bonus per long rest and you recover from all exhaustion gained from this ability at the end of the long rest.",
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "page": 92
+        },
+        {
+          "level": 3,
+          "name": "One - Two Punch",
+          "text": "Additionally at 3rd level, as a bonus action you quickly jab at a target, making an unarmed strike attack with your fist.",
+          "page": 92
+        },
+        {
+          "level": 6,
+          "name": "Born to Rule",
+          "text": "At 6th level, your defense is fortified as you prepare your King Punch. While preparing, you gain resistance to non magical bludgeoning, piercing, and slashing damage.\nAdditionally, if you do not possess Color of the Supreme King haki due to failing your Qualities of a King roll, you now gain this haki type and gain 1 uncommon supreme king spirit surge.",
+          "page": 92
+        },
+        {
+          "level": 11,
+          "name": "Monarch's Impact",
+          "text": "At 11th level, your King Punch now affects a broader area with greater force. The King’s Preparation effects change to the following:\nThe damage dice increases to a d6.\nIncrease the range of the attack by an additional 5 ft. per 10 charges.\nYour maximum charges is now 40.\nAdditionally, you can add your Extra Attack feature to your One - Two Punch, and when you land a successful hit with your punch gain +1 charge to your King’s Preparation if you are currently channeling it.",
+          "page": 92
+        },
+        {
+          "level": 17,
+          "name": "Supreme King Punch",
+          "text": "At 17th level, your mastery of King Punch is unparalleled, allowing you to unleash its full destructive potential. You gain the additional effects to King’s Preparation:\nThe damage dice increases to a d10.\nDouble the distance of your punch’s range and the line becomes a cone.\nYour maximum charges is now 60.\nYou no longer need to unleash your punch when you reach maximum charges, you can now store it until you wish to punch for an action.\nAt 60 charges, if a creature dies to your King Preparation, it is vaporized and all buildings in the path of the punch topple.",
+          "page": 92
+        }
+      ],
+      "flavor": "This style of combat allows the user to learn the knowledge to unleash a devastating punch that grows in power the longer the user prepares."
+    }
+  ],
+  "$note": "All feature text is word-for-word from DnDF Expanded Handbook v10 (PDF page = printed page). Each feature carries its own page."
+}

@@ -1,0 +1,327 @@
+{
+  "$schemaVersion": 1,
+  "kind": "character",
+  "id": "char.example.marlo",
+  "name": "Marlo Vance",
+  "rulesVersion": "dndf-8.8",
+  "level": 5,
+  "race": {
+    "id": "race.human.standard",
+    "source": {
+      "book": "Expanded Handbook v8.8",
+      "page": 67
+    }
+  },
+  "background": {
+    "id": "background.salvager",
+    "source": {
+      "book": "Expanded Handbook v8.8",
+      "page": 46
+    }
+  },
+  "crewRole": {
+    "id": "crewRole.shipwright",
+    "source": {
+      "book": "Expanded Handbook v8.8",
+      "page": 15
+    }
+  },
+  "classes": [
+    {
+      "id": "class.devilforged",
+      "version": "dndf-8.8",
+      "level": 5,
+      "subclass": "subclass.devilforged.blade_smithing",
+      "source": {
+        "book": "Expanded Handbook v8.8",
+        "page": 112
+      }
+    }
+  ],
+  "abilityScores": {
+    "method": "standard array 15,14,13,12,10,8 + Human (Standard) +1 to each (p 67) + ASI +2 Cha at 4th (p 115)",
+    "base": {
+      "str": 12,
+      "dex": 13,
+      "con": 14,
+      "int": 8,
+      "wis": 10,
+      "cha": 15
+    },
+    "final": {
+      "str": 13,
+      "dex": 14,
+      "con": 15,
+      "int": 9,
+      "wis": 11,
+      "cha": 18
+    }
+  },
+  "proficiencies": {
+    "saves": [
+      "wis",
+      "cha"
+    ],
+    "skills": {
+      "deception": "class p 112",
+      "intimidation": "class p 112",
+      "investigation": "Salvager p 46",
+      "perception": "Salvager p 46",
+      "athletics": "Shipwright p 15"
+    },
+    "armor": [
+      "light (class p 112)",
+      "medium (Hell's Duelist p 116)",
+      "shields (Hell's Duelist p 116)"
+    ],
+    "weapons": [
+      "simple (class p 112)",
+      "martial melee (Hell's Duelist p 116)"
+    ],
+    "tools": [
+      "smith's tools (class choice p 112)",
+      "carpenter's tools (Salvager p 46; also Shipwright p 15)",
+      "cartographer's tools (Salvager p 46)",
+      "woodcarver's tools (Shipwright p 15)"
+    ]
+  },
+  "derived": {
+    "proficiencyBonus": 3,
+    "hp": {
+      "max": 38,
+      "math": "8 + Con 2 at 1st, then 4 × (5 + 2) = 28 (p 112)"
+    },
+    "hitDice": "5d8",
+    "ac": {
+      "value": 16,
+      "math": "Hide 12 + Dex 2 (max 2) + Shield 2 (Armor table p 332)"
+    },
+    "initiative": 2,
+    "speed": 30,
+    "passivePerception": 13,
+    "spellSaveDC": {
+      "value": 15,
+      "math": "8 + prof 3 + Cha 4 (p 113)"
+    },
+    "spellAttack": {
+      "value": 7,
+      "math": "prof 3 + Cha 4 (p 113)"
+    },
+    "willpower": 5,
+    "hakiSaveDC": 13,
+    "dreamPoints": 5,
+    "piratePrestigeMax": 3
+  },
+  "infusedWeapon": {
+    "item": {
+      "id": "item.katana",
+      "damage": "1d8 slashing",
+      "properties": [
+        "versatile (1d10)"
+      ],
+      "category": "martial melee",
+      "source": {
+        "book": "Expanded Handbook v8.8",
+        "page": 334
+      }
+    },
+    "spellcastingFocus": true,
+    "hellsDuelist": true,
+    "fruit": {
+      "id": "fruit.ushi_ushi_model_stench_kow",
+      "name": "Ushi Ushi no Mi, Model: Stench Kow",
+      "rarity": "Uncommon",
+      "type": "Standard Zoan",
+      "source": {
+        "book": "Expanded Devil Fruit Encyclopedia v1.2",
+        "page": 65
+      }
+    },
+    "infusion": {
+      "feature": "Infuse Devil Fruit (p 114)",
+      "type": "Zoan Infusion (p 115)",
+      "effects": [
+        "Enhanced Strikes +1 attack and damage (Uncommon)",
+        "Beastial Morph: reach +5 ft; may use one of the beast's attacks instead",
+        "Infused Animal Form: bonus action, weapon becomes a Stench Kow that acts right after you"
+      ]
+    },
+    "attack": {
+      "toHit": 8,
+      "math": "Cha 4 (Hell's Duelist) + prof 3 + Enhanced Strikes 1",
+      "damage": "1d8 + 5 slashing",
+      "damageMath": "Cha 4 + Enhanced Strikes 1",
+      "reach": "10 ft with Beastial Morph",
+      "vsBranded": "+3 damage, crits on 19–20 (Devil's Branding p 116)"
+    }
+  },
+  "summon": {
+    "name": "Stench Kow (infused katana)",
+    "statBlockSource": "Volo's Guide to Monsters p 207-208 (licensed: loaded from the private members-only table at runtime, never stored in this repo)",
+    "modifiers": [
+      {
+        "text": "+1 to attack and damage rolls, +1 AC",
+        "from": "Bestial Summon emanation, p 128"
+      },
+      {
+        "text": "Walking speed 60 ft while you ride it; it can Dash as a bonus action while you ride it",
+        "from": "Zoan Mount emanation, p 129"
+      },
+      {
+        "text": "All its non-elemental damage is slashing (the katana's damage type)",
+        "from": "Zoan Infusion, p 115"
+      },
+      {
+        "text": "Gains the katana's weapon attack in its action list",
+        "from": "Zoan Infusion, p 115"
+      },
+      {
+        "text": "Telepathy with you; you can see through its senses and speak through it",
+        "from": "Enhanced Zoan Bond emanation, p 127"
+      },
+      {
+        "text": "Acts on its own turn directly after yours and listens to its wielder",
+        "from": "Zoan Infusion, p 115"
+      }
+    ],
+    "rulingsNeeded": [
+      "How long the Infused Animal Form lasts and how often it can be used (p 115 gives no limit)",
+      "Which attack bonus the kow uses for the katana attack it gains (p 115 doesn't say)"
+    ],
+    "statBlockRef": "beast.volo.stench_kow",
+    "expectedAsSummoned": "engine test: AC base+1, Gore base+1/+1 and slashing, ridden speed 60 ft (values come from the private table)"
+  },
+  "spellcasting": {
+    "ability": "cha",
+    "slots": {
+      "count": 2,
+      "level": 3,
+      "recharge": "short",
+      "page": 112
+    },
+    "cantrips": [
+      "Booming Blade",
+      "Green-Flame Blade",
+      "Minor Illusion"
+    ],
+    "spells": [
+      {
+        "name": "Shield",
+        "level": 1,
+        "from": "Blade Smithing expanded list p 116"
+      },
+      {
+        "name": "Thunderous Smite",
+        "level": 1,
+        "from": "Blade Smithing expanded list p 116"
+      },
+      {
+        "name": "Hex",
+        "level": 1,
+        "from": "Devilforged list p 211"
+      },
+      {
+        "name": "Branding Smite",
+        "level": 2,
+        "from": "Blade Smithing expanded list p 116"
+      },
+      {
+        "name": "Shadow Blade",
+        "level": 2,
+        "from": "Devilforged list p 211"
+      },
+      {
+        "name": "Blink",
+        "level": 3,
+        "from": "Blade Smithing expanded list p 116"
+      }
+    ],
+    "listPage": 211
+  },
+  "emanations": [
+    {
+      "name": "Enhanced Zoan Bond",
+      "page": 127
+    },
+    {
+      "name": "Zoan Regeneration",
+      "page": 128
+    },
+    {
+      "name": "Bestial Summon",
+      "page": 128
+    },
+    {
+      "name": "Zoan Mount",
+      "page": 129
+    }
+  ],
+  "features": [
+    {
+      "level": 1,
+      "name": "Devil Fruit Infusion (Spellcasting)",
+      "page": 112
+    },
+    {
+      "level": 1,
+      "name": "Infused Item (Spellcasting Focus)",
+      "page": 113
+    },
+    {
+      "level": 1,
+      "name": "Devilsmith: Blade Smithing",
+      "page": 114
+    },
+    {
+      "level": 1,
+      "name": "Blade Smithing Expanded Powers",
+      "page": 116
+    },
+    {
+      "level": 1,
+      "name": "Devil's Branding",
+      "page": 116,
+      "uses": {
+        "max": 1,
+        "recharge": "short"
+      }
+    },
+    {
+      "level": 1,
+      "name": "Hell's Duelist",
+      "page": 116
+    },
+    {
+      "level": 2,
+      "name": "Sea Devil's Emanations",
+      "page": 114
+    },
+    {
+      "level": 3,
+      "name": "Infuse Devil Fruit",
+      "page": 114
+    },
+    {
+      "level": 3,
+      "name": "Zoan Infusion",
+      "page": 115
+    },
+    {
+      "level": 4,
+      "name": "Ability Score Improvement (+2 Cha)",
+      "page": 115
+    }
+  ],
+  "inventory": {
+    "personal": [
+      "Katana (infused) p 334",
+      "Hide armor p 332",
+      "Shield p 332",
+      "Smith's tools",
+      "Explorer's pack",
+      "Two daggers, thick shirt (class equipment p 112)",
+      "Ancient artifact from a sunken ship, traveler's clothes (Salvager p 46)"
+    ],
+    "belly": 150000
+  }
+}
