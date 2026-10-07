@@ -153,7 +153,7 @@ def split_sections(blocks: list[Block], level: int) -> tuple[list[Block], list[t
 
 
 def table_rows(table: Table) -> list[list[str]]:
-    return [row for row in table.texts() if any(cell.strip() for cell in row)]
+    return [row for row in table.merged() if any(cell.strip() for cell in row)]
 
 
 def body_text(blocks: list[Block]) -> str:

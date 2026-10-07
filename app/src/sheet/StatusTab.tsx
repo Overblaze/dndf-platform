@@ -1,9 +1,23 @@
 import { CONDITIONS, DREAM_POINT_DIE, healingSurge, iWontAbandonMyDreams, rescueDeathSave, rollDie, spendResource, ABANDON_DREAMS_DC } from '@dndf/engine';
 import { useState } from 'react';
 import { Pips } from '../components/Pips';
+import { RuleText } from '../components/RuleText';
 import { useRolls } from '../lib/rolls';
 import { rng } from '../lib/rules';
 import type { LiveCharacter } from '../lib/useCharacter';
+
+/** The book's own wording for a universal rule, when the general rules are loaded. */
+function BookText({ sheet, name, note }: { sheet: LiveCharacter['sheet']; name: string; note?: string }) {
+  const rule = sheet.generalRules[name];
+  if (!rule) return null;
+  return (
+    <details className="rule-text">
+      <summary>Rules text · p.{rule.page}</summary>
+      <RuleText text={rule.text} tables={rule.tables} />
+      {note && <p className="page-ref">{note}</p>}
+    </details>
+  );
+}
 
 export function StatusTab({ live }: { live: LiveCharacter }) {
   const rolls = useRolls();
@@ -58,6 +72,7 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
           </div>
         </div>
         <p className="page-ref">Pirate Prestige maximum: {sheet.prestigeMax} · p.12</p>
+        <BookText sheet={sheet} name="Dream Points" />
       </section>
 
       <section className="card">
@@ -90,6 +105,7 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
           )}
         </div>
         {surge.remaining === 0 && <p className="notice">Already used since the last rest. You can still use it; this is only a reminder.</p>}
+        <BookText sheet={sheet} name="Healing Surge" note="Table ruling: a long rest returns all spent hit dice, and a surge can spend up to half your hit dice." />
       </section>
 
       <section className="card">
@@ -111,6 +127,7 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
           <button className="btn" disabled={successes + failures === 0} onClick={() => live.setState({ ...state, deathSaves: { successes: 0, failures: 0 } }, 'Death saves cleared')}>Clear</button>
         </div>
         <p className="page-ref">A Dream Point turns a failed death save into a success. On death, a d20 of {ABANDON_DREAMS_DC} or more leaves you at 1 HP · p.11</p>
+        <BookText sheet={sheet} name="I Won’t Abandon My Dreams" />
       </section>
 
       <section className="card">

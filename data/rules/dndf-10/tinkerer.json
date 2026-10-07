@@ -818,10 +818,7 @@
             [
               "2nd",
               "Blue Disease,",
-              "Kiss Kiss Germ, Vocal Disease"
-            ],
-            [
-              "Filth Disease"
+              "Kiss Kiss Germ, Vocal Disease Filth Disease"
             ],
             [
               "6th",
@@ -830,18 +827,12 @@
             ],
             [
               "Disease, Sight",
-              "Disease, Laughter Disease"
-            ],
-            [
-              "Disease"
+              "Disease, Laughter Disease Disease"
             ],
             [
               "10th",
               "Mondolin",
-              "Madness Disease"
-            ],
-            [
-              "Sickness"
+              "Madness Disease Sickness"
             ],
             [
               "14th",
@@ -940,17 +931,11 @@
                     ],
                     [
                       "4th",
-                      "Find Greater Steed, Summon"
-                    ],
-                    [
-                      "Construct"
+                      "Find Greater Steed, Summon Construct"
                     ],
                     [
                       "5th",
-                      "Summon Celestial, Summon"
-                    ],
-                    [
-                      "Draconic Spirit"
+                      "Summon Celestial, Summon Draconic Spirit"
                     ],
                     [
                       "6th",
@@ -1128,25 +1113,16 @@
                 [
                   "Pneumatic",
                   "As an action, cast the Burning Hands spell at 1st level from the device.",
-                  "1"
-                ],
-                [
-                  "Gauntlet"
+                  "1 Gauntlet"
                 ],
                 [
                   "Steam Shield As a reaction when you are hit by an attack or targeted by the Magic Missile spell, cast the Shield spell at 1st",
-                  "1"
-                ],
-                [
-                  "level."
+                  "1 level."
                 ],
                 [
                   "Steam Vent",
                   "As an action, cast the Thunderwave spell at 1st level from the device.",
-                  "1"
-                ],
-                [
-                  "Boots"
+                  "1 Boots"
                 ],
                 [
                   "Rocket Spear As an action, cast the Aganazzar’s Scorcher spell at 2nd level from the device.",
@@ -1172,10 +1148,7 @@
                 ],
                 [
                   "Dispenser",
-                  "device, cast the Fireball spell at 3rd level on the mines location. Once a mine uses its signature spell, the"
-                ],
-                [
-                  "device self destructs. You may only have 3 mine activate at a time."
+                  "device, cast the Fireball spell at 3rd level on the mines location. Once a mine uses its signature spell, the device self destructs. You may only have 3 mine activate at a time."
                 ]
               ],
               "page": 189

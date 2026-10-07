@@ -512,7 +512,8 @@
             "spell",
             "beast",
             "shipType",
-            "shipUpgrade"
+            "shipUpgrade",
+            "rule"
           ]
         },
         "name": {
@@ -530,7 +531,7 @@
           "$ref": "#/$defs/source"
         },
         "text": {
-          "$ref": "#/$defs/text"
+          "type": "string"
         },
         "flavor": {
           "$ref": "#/$defs/text"
@@ -644,6 +645,58 @@
           "items": {
             "$ref": "#/$defs/table"
           }
+        },
+        "traits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/trait"
+          }
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "auto": {
+          "description": "Fields the extraction tool recognised from the wording, not yet checked by hand.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "speed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "size": {
+          "enum": [
+            "Tiny",
+            "Small",
+            "Medium",
+            "Large",
+            "Huge",
+            "Gargantuan"
+          ]
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "prerequisite": {
+          "type": "string",
+          "minLength": 1
+        },
+        "skills": {
+          "description": "Skill proficiencies granted, as skill ids.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          }
+        },
+        "action": {
+          "$ref": "#/$defs/action"
         }
       },
       "allOf": [
@@ -758,6 +811,60 @@
           "then": {
             "required": [
               "options"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "subrace"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "parent",
+              "traits"
+            ],
+            "properties": {
+              "parent": {
+                "type": "string",
+                "pattern": "^race\\."
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "race"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "traits"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "feat",
+                  "background",
+                  "crewRole",
+                  "rule"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "text"
             ]
           }
         }
@@ -876,6 +983,33 @@
         },
         "text": {
           "type": "string"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/table"
+          }
+        }
+      }
+    },
+    "trait": {
+      "description": "A racial trait: the bold name it is printed under, and its text.",
+      "type": "object",
+      "required": [
+        "name",
+        "text",
+        "page"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
         },
         "page": {
           "$ref": "#/$defs/page"

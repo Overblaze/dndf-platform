@@ -24,6 +24,14 @@ Run `python3 tools/extract/pdfdoc.py V10_D_DF_EH.pdf 85 87` to see any pages as 
 - Spell slots become resources when the class says they come back on a rest. Other pools (Ki, Leadership Dice) are named by hand in `CLASSES`.
 - `--check` re-extracts the Bruiser and compares it with the hand-verified `data/rules/dndf-10/bruiser.json`: text, levels, pages and uses. It must report 0 differences before any change to the reader is kept.
 
+## Chapters 1 and 2 (`tools/extract/extract_chapters.py`)
+
+- **General rules** (kind `rule`): each top-level heading becomes an entry, with its smaller headings as sections.
+- **Crew roles**: every role must have exactly one "Feature: …" and one "Pirate Prestige Ability: …" section; the role's skills are read from "Role Skill Proficiency".
+- **Backgrounds**: the bold-led lines (Skill Proficiencies, Tool Proficiencies, Equipment) become fields. A name ending in `*` is unchanged from the original Player's Handbook (`unchangedFromPhb`).
+- **Feats**: a first line starting "Prerequisite:" is kept apart from the text. A prerequisite line that fills the column runs into the text and is parted at the first sentence.
+- **Races**: paragraphs led by a bold name ("Darkvision.") are traits; bullets and plain paragraphs after one belong to it. Walking speed, size and fixed ability increases are read from the wording and listed under `auto`. "X Subraces" sections become `subrace` entries.
+
 ## Things to know
 
 - Page numbers: Handbooks, Encyclopedias and the original PHB print the PDF page number. The DM Guide does not: cite its PDF pages and say so. Volo's: PDF page = printed + 1; its scan has OCR errors ("Armor dass", "2dl O", "ld6") — correct by hand.

@@ -375,7 +375,7 @@
         {
           "level": 1,
           "name": "Predictions",
-          "text": "At the start of each in game day, you can write down up to 5 predictions about events that may occur. These predictions should be specific and plausible within the context of the day’s adventures or activities.\nThe following rules must be followed when making a prediction:\nYou cannot make a prediction about the outcome of a roll but you may make a single prediction about the outcome of a specific skill check on a specific player other than yourself.\nPredictions must be based on in-game knowledge and observations, not on player knowledge or meta- game tactics.\nYou may not predict events in combat but may predict combat. If you predict combat you must guess the groups involved.\nYou may predict meeting someone but you must either use their name, job title, or general age group (ex. 20’s)\nThe prediction must not be ambiguous or subjective. They must be clearly verifiable as true or false. You cannot have more than one of the same prediction type (ex. I predict we will fight and I predict there will be combat.)\nYou can make a prediction about another player using all of their spell slots.\nYou may predict an exact string of three or more actions another player will make.\nIf you push someone into making your prediction come true, or you are the one who made the prediction come true, the prediction becomes null and void and you cannot gain the benefits from completing it.\nOnce a day at any point, you may remake all unsuccessful predictions.\nFor each prediction that comes true, you gain a small buff until your next long rest. These buffs can only be chosen once each, resetting on the long rest. The nature of these buffs can be chosen from the following list:\nForesight: +2 to AC.\nClarity: +2 to all saving throws.\nVitality: Gain temporary hit points equal to your Wisdom modifier (minimum of 1) at the start of each of your turns in combat.\nInsight: +2 to attack rolls and spell attack rolls. Grace: +10 feet to your movement speed.\nIf you gain all prediction buffs, you regain all uses of your Perfect Outcome and Oracle’s Insight features and restore an amount of 1st level spell slots equal to your proficiency bonus. You may combine spell slots together to restore higher level slots (ex. if you combine 2 level 1 spell slots you restore a 2nd level slot).",
+          "text": "At the start of each in game day, you can write down up to 5 predictions about events that may occur. These predictions should be specific and plausible within the context of the day’s adventures or activities.\nThe following rules must be followed when making a prediction:\nYou cannot make a prediction about the outcome of a roll but you may make a single prediction about the outcome of a specific skill check on a specific player other than yourself.\nPredictions must be based on in-game knowledge and observations, not on player knowledge or meta- game tactics.\nYou may not predict events in combat but may predict combat. If you predict combat you must guess the groups involved.\nYou may predict meeting someone but you must either use their name, job title, or general age group (ex. 20’s)\nThe prediction must not be ambiguous or subjective. They must be clearly verifiable as true or false. You cannot have more than one of the same prediction type (ex. I predict we will fight and I predict there will be combat.)\nYou can make a prediction about another player using all of their spell slots.\nYou may predict an exact string of three or more actions another player will make.\nIf you push someone into making your prediction come true, or you are the one who made the prediction come true, the prediction becomes null and void and you cannot gain the benefits from completing it.\nOnce a day at any point, you may remake all unsuccessful predictions.\nFor each prediction that comes true, you gain a small buff until your next long rest. These buffs can only be chosen once each, resetting on the long rest. The nature of these buffs can be chosen from the following list:\nForesight: +2 to AC.\nClarity: +2 to all saving throws.\nVitality: Gain temporary hit points equal to your Wisdom modifier (minimum of 1) at the start of each of your turns in combat.\nInsight: +2 to attack rolls and spell attack rolls.\nGrace: +10 feet to your movement speed.\nIf you gain all prediction buffs, you regain all uses of your Perfect Outcome and Oracle’s Insight features and restore an amount of 1st level spell slots equal to your proficiency bonus. You may combine spell slots together to restore higher level slots (ex. if you combine 2 level 1 spell slots you restore a 2nd level slot).",
           "page": 158
         },
         {
@@ -449,7 +449,7 @@
         {
           "level": 5,
           "name": "Improved Predictions",
-          "text": "At 5th level, your predictions become more potent. You can now make up to 7 predictions each day, and the buffs you gain for correct predictions are enhanced:\nForesight: +3 to AC\nClarity: +3 to all saving throws\nVitality: Temporary hit points equal to twice your Wisdom modifier (minimum of 2)\nInsight: +3 to attack rolls and spell attack rolls Grace: +15 feet to your movement speed",
+          "text": "At 5th level, your predictions become more potent. You can now make up to 7 predictions each day, and the buffs you gain for correct predictions are enhanced:\nForesight: +3 to AC\nClarity: +3 to all saving throws\nVitality: Temporary hit points equal to twice your Wisdom modifier (minimum of 2)\nInsight: +3 to attack rolls and spell attack rolls\nGrace: +15 feet to your movement speed",
           "page": 159
         },
         {
@@ -474,7 +474,7 @@
         {
           "level": 14,
           "name": "Prophetic Expert",
-          "text": "At 14th level, your predictive powers reach their peak. The buffs you receive from correct predictions are further enhanced:\nForesight: +4 to AC\nClarity: +4 to all saving throws\nVitality: Temporary hit points equal to three times your Wisdom modifier (minimum of 3)\nInsight: +4 to attack rolls and spell attack rolls Grace: +20 feet to your movement speed\nFurthermore, when you make predictions, you can choose to designate one as a Prophetic Insight. This Prophetic Insight is guaranteed to come true, and the buff you receive from it is doubled (Ask the DM for a prediction that will come true). You can use this feature once per long rest.",
+          "text": "At 14th level, your predictive powers reach their peak. The buffs you receive from correct predictions are further enhanced:\nForesight: +4 to AC\nClarity: +4 to all saving throws\nVitality: Temporary hit points equal to three times your Wisdom modifier (minimum of 3)\nInsight: +4 to attack rolls and spell attack rolls\nGrace: +20 feet to your movement speed\nFurthermore, when you make predictions, you can choose to designate one as a Prophetic Insight. This Prophetic Insight is guaranteed to come true, and the buff you receive from it is doubled (Ask the DM for a prediction that will come true). You can use this feature once per long rest.",
           "page": 159,
           "uses": {
             "max": 1,
@@ -487,7 +487,7 @@
         {
           "level": 20,
           "name": "Master of Prophecies",
-          "text": "At 20th level, you have reached the pinnacle of your prophetic abilities, gaining unparalleled mastery over fate and foresight. Your connection to the divine and mystical realms allows you to influence events on a grand scale.\nYour predictions are more potent, and each correct prediction provides a greater buff. The buffs are as follows:\nForesight: +5 to AC\nClarity: +5 to all saving throws\nVitality: Temporary hit points equal to four times your Wisdom modifier (minimum of 4)\nInsight: +5 to attack rolls and spell attack rolls Grace: +25 feet to your movement speed\nAdditionally, your mere presence on the battlefield can alter the course of events. You can use your reaction to automatically turn a missed/hit attack roll made by a creature within 30 feet into a hit/miss. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+          "text": "At 20th level, you have reached the pinnacle of your prophetic abilities, gaining unparalleled mastery over fate and foresight. Your connection to the divine and mystical realms allows you to influence events on a grand scale.\nYour predictions are more potent, and each correct prediction provides a greater buff. The buffs are as follows:\nForesight: +5 to AC\nClarity: +5 to all saving throws\nVitality: Temporary hit points equal to four times your Wisdom modifier (minimum of 4)\nInsight: +5 to attack rolls and spell attack rolls\nGrace: +25 feet to your movement speed\nAdditionally, your mere presence on the battlefield can alter the course of events. You can use your reaction to automatically turn a missed/hit attack roll made by a creature within 30 feet into a hit/miss. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
           "page": 159,
           "uses": {
             "max": "prof",
@@ -559,10 +559,7 @@
                 ],
                 [
                   "6",
-                  "sense the direction of the nearest creature with hostile"
-                ],
-                [
-                  "intent within 1 mile."
+                  "sense the direction of the nearest creature with hostile intent within 1 mile."
                 ]
               ],
               "page": 160
@@ -705,10 +702,7 @@
                 ],
                 [
                   "6",
-                  "You gain resistance to one damage type of your choice"
-                ],
-                [
-                  "(other than force)."
+                  "You gain resistance to one damage type of your choice (other than force)."
                 ]
               ],
               "page": 161
@@ -970,7 +964,7 @@
         {
           "level": 6,
           "name": "Spirit Infusion",
-          "text": "Starting at 6th level, your connection to the spirits of the past allows you to infuse their power into your spells. When you cast a spell that grants a beneficial effect to an ally (such as a buff or healing spell), you can also grant them an additional effect based on the type of spell cast:\nHealing Spell: The ally gains temporary hit points equal to your Wisdom modifier + your Oracle level. Buff Spell: The ally gains a +1 bonus to AC and saving throws until the start of your next turn.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+          "text": "Starting at 6th level, your connection to the spirits of the past allows you to infuse their power into your spells. When you cast a spell that grants a beneficial effect to an ally (such as a buff or healing spell), you can also grant them an additional effect based on the type of spell cast:\nHealing Spell: The ally gains temporary hit points equal to your Wisdom modifier + your Oracle level.\nBuff Spell: The ally gains a +1 bonus to AC and saving throws until the start of your next turn.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
           "page": 163,
           "uses": {
             "max": "prof",

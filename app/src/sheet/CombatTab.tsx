@@ -93,18 +93,17 @@ function FeatureAction({ feature, live }: { feature: SheetFeature; live: LiveCha
 export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenStat }) {
   const rolls = useRolls();
   const { sheet, doc } = live;
-  const general = new Set(['sr.parry', 'sr.deflect', 'healing_surge']);
+  const general = new Set(['healing_surge', ...sheet.specialReactions.map((r) => r.resource)]);
   const featureOwned = new Set(sheet.features.flatMap((f) => (f.resource && !f.toggle ? [f.resource] : [])));
   const pools = sheet.resources.filter((r) => !general.has(r.id) && !featureOwned.has(r.id));
 
   const actionable = sheet.features.filter((f) => !f.toggle && (f.action || f.resource || f.cost || f.rolls.length || f.onUse.length || f.counter || f.displays.length));
   const groupOf = (f: SheetFeature) => (f.action && ACTION_GROUPS.some((g) => g.id === f.action) ? f.action : 'other');
 
-  const specialReaction = (id: string) => {
-    const res = sheet.resources.find((r) => r.id === id)!;
-    const result = spendResource(doc.state, sheet, id, 1);
+  const specialReaction = (reaction: (typeof sheet.specialReactions)[number]) => {
+    const result = spendResource(doc.state, sheet, reaction.resource, 1);
     live.setState(result.state, result.warning ? `${result.summary} (${result.warning})` : result.summary);
-    rolls.dice(`${res.name}: damage reduced`, sheet.specialReactionReduction);
+    if (reaction.roll) rolls.dice(`${reaction.name}: damage reduced`, reaction.roll);
   };
 
   return (
@@ -233,17 +232,25 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
             <h2>{group.title}</h2>
             {special && (
               <>
-                <p className="page-ref">2 per round · each {sheet.resources.find((r) => r.id === 'sr.parry')?.max} times per short rest · p.11</p>
-                {(['sr.parry', 'sr.deflect'] as const).map((id) => {
-                  const res = sheet.resources.find((r) => r.id === id)!;
+                <p className="page-ref">2 per round · each {sheet.resources.find((r) => r.id === 'sr.parry')?.max} times per short rest · separate from your normal reaction · p.11</p>
+                {sheet.specialReactions.map((reaction) => {
+                  const res = sheet.resources.find((r) => r.id === reaction.resource)!;
                   return (
-                    <div key={id} className="resource">
-                      <div>
-                        <div className="resource-name">{res.name}</div>
-                        <div className="page-ref">reduce the damage by {sheet.specialReactionReduction}</div>
+                    <div key={reaction.id} className="action">
+                      <div className="resource">
+                        <div>
+                          <div className="resource-name">{reaction.name}</div>
+                          <div className="page-ref">{reaction.roll ? `reduce the damage by ${reaction.roll} · ` : ''}p.{reaction.page}</div>
+                        </div>
+                        <Pips remaining={res.remaining} max={res.max} label={res.name} />
+                        <button className="btn btn-primary" onClick={() => specialReaction(reaction)}>Use</button>
                       </div>
-                      <Pips remaining={res.remaining} max={res.max} label={res.name} />
-                      <button className="btn btn-primary" onClick={() => specialReaction(id)}>Use</button>
+                      {reaction.text && (
+                        <details className="rule-text">
+                          <summary>Rules text</summary>
+                          <RuleText text={reaction.text} />
+                        </details>
+                      )}
                     </div>
                   );
                 })}

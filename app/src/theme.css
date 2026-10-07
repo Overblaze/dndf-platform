@@ -858,6 +858,11 @@ a.btn {
   border-top: 1px solid var(--rule);
 }
 
+.action > .resource {
+  padding: 0;
+  border-top: 0;
+}
+
 .action-head {
   display: flex;
   align-items: center;
@@ -1059,6 +1064,22 @@ h3 {
 .facts dd {
   margin: 0;
   text-transform: capitalize;
+}
+
+.facts-plain dd {
+  text-transform: none;
+}
+
+.shelf summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--touch);
+  cursor: pointer;
+}
+
+.shelf summary h2 {
+  margin: 0;
 }
 
 .chip-lg {

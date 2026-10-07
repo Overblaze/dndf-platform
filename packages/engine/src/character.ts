@@ -62,7 +62,12 @@ export interface CharacterDoc {
   schema: 1;
   name: string;
   rulesVersion: RulesVersion;
-  race: { name: string; speed: number; /** "Counts as one size larger" steps, for carrying. */ sizeSteps?: number };
+  /** `id` / `subraceId` point at rules entries when the race was picked from the book; name and speed can be typed by hand. */
+  race: { id?: string; subraceId?: string; name: string; speed: number; /** Extra "counts as one size larger" steps, for carrying. */ sizeSteps?: number };
+  background?: { id: string };
+  crewRole?: { id: string };
+  /** Feat entry ids. */
+  feats?: string[];
   classes: CharacterClass[];
   scores: AbilityScores;
   skills: string[];
@@ -143,6 +148,9 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     name: doc.name ?? 'Unnamed',
     rulesVersion: doc.rulesVersion ?? 'dndf-10',
     race: doc.race ?? { name: 'Human (Standard)', speed: 30 },
+    background: doc.background,
+    crewRole: doc.crewRole,
+    feats: doc.feats,
     classes: doc.classes,
     scores: doc.scores,
     skills: doc.skills ?? [],

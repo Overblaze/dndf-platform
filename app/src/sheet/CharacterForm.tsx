@@ -1,6 +1,6 @@
 import { ABILITIES, ABILITY_NAMES, SKILLS, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, type AbilityScores, type CharacterDoc, type WeaponDef } from '@dndf/engine';
 import { useState } from 'react';
-import { choiceFeatures, classes, mainSubclasses, rules } from '../lib/rules';
+import { backgrounds, choiceFeatures, classes, crewRoles, feats as allFeats, mainSubclasses, races, rules, subracesOf } from '../lib/rules';
 
 const BLANK_SCORES: AbilityScores = { str: 15, dex: 13, con: 14, int: 8, wis: 12, cha: 10 };
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, Math.floor(Number.isFinite(n) ? n : min)));
@@ -9,8 +9,13 @@ const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(mi
 export function CharacterForm({ initial, onSave, onCancel }: { initial: CharacterDoc | null; onSave: (doc: CharacterDoc, log: string) => void; onCancel: () => void }) {
   const first = initial?.classes[0];
   const [name, setName] = useState(initial?.name ?? '');
+  const [raceId, setRaceId] = useState(initial?.race.id ?? '');
+  const [subraceId, setSubraceId] = useState(initial?.race.subraceId ?? '');
   const [raceName, setRaceName] = useState(initial?.race.name ?? 'Human (Standard)');
   const [speed, setSpeed] = useState(initial?.race.speed ?? 30);
+  const [backgroundId, setBackgroundId] = useState(initial?.background?.id ?? '');
+  const [crewRoleId, setCrewRoleId] = useState(initial?.crewRole?.id ?? '');
+  const [feats, setFeats] = useState<string[]>(initial?.feats ?? []);
   const [classId, setClassId] = useState(first?.id ?? 'class.bruiser');
   const [level, setLevel] = useState(first?.level ?? 1);
   const [scores, setScores] = useState<AbilityScores>(initial?.scores ?? BLANK_SCORES);
@@ -22,6 +27,19 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const [weapons, setWeapons] = useState<WeaponDef[]>(initial?.weapons ?? []);
   const [strengthenSelf, setStrengthenSelf] = useState(initial?.willpower.strengthenSelf ?? 0);
 
+  const subraces = raceId ? subracesOf(raceId) : [];
+  // Picking from the book fills in the name and walking speed; both can still be changed by hand.
+  const pickRace = (nextRace: string, nextSub: string) => {
+    setRaceId(nextRace);
+    setSubraceId(nextSub);
+    const race = rules.get(nextRace);
+    const sub = rules.get(nextSub);
+    if (!race) return;
+    setRaceName(sub ? `${race.name} (${sub.name})` : race.name);
+    const walk = sub?.speed ?? race.speed;
+    if (typeof walk === 'number') setSpeed(walk);
+  };
+  const granted = [rules.get(backgroundId), rules.get(crewRoleId)].flatMap((e) => ((e?.skills ?? []) as string[]).map((id) => `${SKILLS.find((k) => k.id === id)?.name ?? id} (${e!.name})`));
   const cls = classes.find((c) => c.id === classId) ?? classes[0]!;
   const subclassLevel = cls.subclass?.level ?? 3;
   const styles = mainSubclasses(cls.id);
@@ -36,7 +54,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const setWeapon = (i: number, patch: Partial<WeaponDef>) => setWeapons(weapons.map((w, j) => (j === i ? { ...w, ...patch } : w)));
 
   const save = () => {
-    const shared = { name: name.trim() || 'Unnamed', classId: cls.id, level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, choices: keptChoices };
+    const shared = {
+      name: name.trim() || 'Unnamed', classId: cls.id, level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, choices: keptChoices,
+      raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleId: crewRoleId || undefined, feats,
+    };
     if (!initial) {
       const doc = { ...newCharacter(shared, rules), armor, shield, weapons, willpower: { strengthenSelf } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
@@ -48,7 +69,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     const doc: CharacterDoc = {
       ...base,
       name: shared.name,
-      race: { ...initial.race, name: shared.raceName, speed },
+      race: { ...initial.race, id: shared.raceId, subraceId: shared.subraceId, name: shared.raceName, speed },
+      background: shared.backgroundId ? { id: shared.backgroundId } : undefined,
+      crewRole: shared.crewRoleId ? { id: shared.crewRoleId } : undefined,
+      feats,
       classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...base.classes.slice(1)],
       scores,
       skills,
@@ -72,7 +96,25 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       </label>
       <div className="grid-2">
         <label className="field">
-          <span className="label">Race</span>
+          <span className="label">Race from the book</span>
+          <select value={raceId} onChange={(e) => pickRace(e.target.value, '')}>
+            <option value="">Typed in by hand</option>
+            {races.map((race) => <option key={race.id} value={race.id}>{race.name}{race.optional ? ' (optional)' : ''}</option>)}
+          </select>
+        </label>
+        {subraces.length > 0 && (
+          <label className="field">
+            <span className="label">Subrace</span>
+            <select value={subraceId} onChange={(e) => pickRace(raceId, e.target.value)}>
+              <option value="">Not chosen yet</option>
+              {subraces.map((sub) => <option key={sub.id} value={sub.id}>{sub.name}</option>)}
+            </select>
+          </label>
+        )}
+      </div>
+      <div className="grid-2">
+        <label className="field">
+          <span className="label">Race shown on the sheet</span>
           <input value={raceName} onChange={(e) => setRaceName(e.target.value)} maxLength={60} />
         </label>
         <label className="field">
@@ -128,9 +170,42 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           </fieldset>
         );
       })}
+      <div className="grid-2">
+        <label className="field">
+          <span className="label">Background</span>
+          <select value={backgroundId} onChange={(e) => setBackgroundId(e.target.value)}>
+            <option value="">None chosen</option>
+            {backgrounds.map((bg) => <option key={bg.id} value={bg.id}>{bg.name}</option>)}
+          </select>
+        </label>
+        <label className="field">
+          <span className="label">Crew role</span>
+          <select value={crewRoleId} onChange={(e) => setCrewRoleId(e.target.value)}>
+            <option value="">None chosen</option>
+            {crewRoles.map((role) => <option key={role.id} value={role.id}>{role.name}</option>)}
+          </select>
+        </label>
+      </div>
       <fieldset>
-        <legend className="label">Skill proficiencies (class, background and others)</legend>
+        <legend className="label">Feats: {feats.length}</legend>
+        <div className="chips">
+          {feats.map((id) => (
+            <button type="button" key={id} className="chip chip-btn chip-on" onClick={() => setFeats(feats.filter((f) => f !== id))} aria-label={`Remove ${rules.get(id)?.name ?? id}`}>
+              {rules.get(id)?.name ?? id} ×
+            </button>
+          ))}
+        </div>
+        <select value="" onChange={(e) => e.target.value && setFeats([...feats, e.target.value])} aria-label="Add a feat">
+          <option value="">Add a feat…</option>
+          {allFeats.filter((feat) => !feats.includes(feat.id)).map((feat) => (
+            <option key={feat.id} value={feat.id}>{feat.name}{feat.prerequisite ? ` (needs ${feat.prerequisite})` : ''}</option>
+          ))}
+        </select>
+      </fieldset>
+      <fieldset>
+        <legend className="label">Skill proficiencies you chose (class and others)</legend>
         {skillHint && <p className="page-ref">{skillHint}</p>}
+        {granted.length > 0 && <p className="page-ref">Added automatically: {granted.join(', ')}</p>}
         <div className="grid-checks">
           {SKILLS.map((skill) => (
             <label key={skill.id} className="check">

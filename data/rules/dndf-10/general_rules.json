@@ -1,0 +1,511 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "rule.character_creation_guide",
+      "kind": "rule",
+      "name": "Character Creation Guide",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 9
+      },
+      "text": "This guide can be used for Players or Dungeon Masters new to the Dungeons and Devil Fruits System. It should be noted that all steps marked with DM’s Choice are optional and do not need to be followed. Those rules are there to bring the system more in line with the setting and provide players with additional tools for their character.",
+      "sections": [
+        {
+          "name": "Step 1: Choose a Devil Fruit or Haki (DM’s Choice)",
+          "text": "Begin your character by selecting either a Devil Fruit or Haki to shape your character’s unique abilities with your DM’s help.\nDevil Fruits. These powerful, rare fruits grant incredible abilities, but at the cost of the eater’s ability to swim. If you choose a Devil Fruit, consult Chapter 7 of the Dungeons and Devil Fruits Player’s Handbook, the Dungeons and Devil Expanded Fruits Devil Fruit Encyclopedia, or Chapter 6 of this Handbook. Your DM will guide you, either rolling on a generation table for a randomized choice or allowing you to pick a specific fruit.\nHaki. Even if you do not consume a Devil Fruit, you may still increase your prowess with Haki over the course of your adventures. In Chapter 5 of this Handbook, you’ll find options to develop this innate power.\nFor extra potential, roll for “Qualities of a King” in the Color of the Supreme King Advancement section to determine if you possess this rare Haki type.",
+          "page": 9
+        },
+        {
+          "name": "Step 2: Determine Devil Fruit Scaling (DM’s Choice)",
+          "text": "The power of a Devil Fruit can grow and evolve over time, adding new layers of depth and strength to your character’s abilities. However, whether your Devil Fruit scales as you progress is up to the DM’s discretion. DMs can refer to Chapter 6 of this Handbook to decide if they want to use scaling rules for Devil Fruits.\nThis choice affects how your Devil Fruit abilities unfold through your journey, whether they remain consistent or expand in impact as your character grows.",
+          "page": 9
+        },
+        {
+          "name": "Step 3: Determine Universal Features (DM’s Choice)",
+          "text": "In the world of One Piece, characters possess remarkable endurance that allow them to face incredible challenges and keep fighting. To reflect this in gameplay, DMs can choose to apply Universal Features from Chapter 1 of this Handbook.\nThese features provide characters with durability that aligns more closely with the One Piece universe, giving players the sense of pushing their limits just like the iconic characters of the series.",
+          "page": 9
+        },
+        {
+          "name": "Step 4: Determine Special Reactions (DM’s Choice)",
+          "text": "One Piece combat is fast-paced, dynamic, and full of surprises, where quick reflexes often turn the tide of battle. To capture this spirit, DMs can introduce Special Reactions from Chapter 1 of this Handbook.\nThese special reactions provide characters with additional ways to respond to threats, creating a more versatile combat experience in line with the series.",
+          "page": 9
+        },
+        {
+          "name": "Step 5: Choose a Race",
+          "text": "In the world of One Piece, countless unique races inhabit the seas, each with their own distinct traits and abilities. Players can explore these options in Chapter 2: Character Races.\nWhen choosing a race, make sure to also select a subrace if one is available, as it adds another layer of individuality to your character.",
+          "page": 9
+        },
+        {
+          "name": "Step 6: Choose a Class",
+          "text": "Your class defines your character’s core skills and combat style within the crew. Classes and Subclasses can be found in Chapter 3: Character Classes.",
+          "page": 9
+        },
+        {
+          "name": "Step 7: Determine Ability Scores",
+          "text": "Much of what your character does in the game depends on his or her six abilities: Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma. Each ability has a score, which is a number you record on your character sheet.\nThe six abilities and their use in the game are described in the Using Ability Scores section. The Ability Score Summary table provides a quick reference for what qualities are measured by each ability, what races increase which abilities, and what classes consider each ability particularly important.\nYou generate your character’s six ability scores randomly. Roll four 6-sided dice and record the total of the highest three dice on a piece of scratch paper. Do this five more times, so that you have six numbers. If you want to save time or don’t like the idea of randomly determining ability scores, you can use the following scores instead: 15, 14, 13, 12, 10, 8.\nNow take your six numbers and write each number beside one of your character’s six abilities to assign scores to Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma. Afterward, make any changes to your ability scores as a result of your race choice.\nAfter assigning your ability scores, determine your ability modifiers using the Ability Scores and Modifiers table. To determine an ability modifier without consulting the table, subtract 10 from the ability score and then divide the result by 2 (round down). Write the modifier next to each of your scores.",
+          "page": 10
+        },
+        {
+          "name": "Step 8: Pick a Background",
+          "text": "Your background provides insight into your character’s past, skills, and motivations, helping to shape who they are beyond their combat abilities. Backgrounds can be found in Chapter 1 of this Handbook, offering a variety of options, from archaeologist to noble, each with unique skills, proficiencies, and starting equipment.",
+          "page": 10
+        },
+        {
+          "name": "Step 9: Pick Your Crew Role",
+          "text": "Every member of a pirate crew plays a vital part in its success, and your crew role will define how you contribute to the ship’s journey. Crew roles can be found in Chapter 1 of this Handbook. Each role provides unique abilities and proficiencies.\nOnly one player can occupy each crew role, ensuring that every crewmate brings something distinct to the adventure. Choose a role that aligns with your character’s strengths and aspirations.",
+          "page": 10
+        },
+        {
+          "name": "Step 10: Choose Equipment",
+          "text": "Your class and background determine your character’s starting equipment, including weapons, armor, and other adventuring gear. Record this equipment on your character sheet. All such items are detailed in Chapter 5 of the Dungeons and Devil Fruits Player’s Handbook.\nYour Strength score limits the amount of gear you can carry. Try not to purchase equipment with a total weight (in pounds) exceeding your Strength score times 15. “Using Ability Scores” has more information on carrying capacity.",
+          "page": 10
+        },
+        {
+          "name": "Step 11: Describe your Character",
+          "text": "Once you know the basic game aspects of your character, it’s time to flesh them out as a person. Your character needs a name. Spend a few minutes thinking about what they look like and how they behave in general terms.",
+          "page": 10
+        },
+        {
+          "name": "Step 12: Create a Backstory and Dream",
+          "text": "In the world of One Piece, every pirate has a story and a dream that fuels their journey. Now it’s time to bring your character to life by crafting their backstory and defining the dream that pushes them forward. Example dreams can be found in Chapter 1 of this Handbook, but for a more personal touch, creating your own unique dream is encouraged.\nConsider what has driven your character to join the crew. Did they experience hardship or adventure that ignited their desire for freedom or power? What do they hope to achieve? A dream could be as grand as finding the One Piece or as personal as reuniting with a lost family. Let this vision guide your character’s choices, as it is the heart of their story and will inspire them as they face the challenges of the open sea.",
+          "page": 10
+        },
+        {
+          "name": "Join your Crew!",
+          "text": "With your character ready, it’s time to set sail and join your crew on a grand adventure! You’ve crafted a unique individual with their own strengths, dreams, and purpose, and now they’re ready to face the vast unknown. Have fun!",
+          "page": 10
+        }
+      ]
+    },
+    {
+      "id": "rule.universal_features",
+      "kind": "rule",
+      "name": "Universal Features",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 11
+      },
+      "text": "Universal features give the players of your game main character plot armor. So if you want to push the One Piece vibe, take these.",
+      "sections": [
+        {
+          "name": "Dream Points",
+          "text": "A character starts with 1 dream point at 1st Level. Each time the character gains a level, they lose any unspent dream points and gain a new total equal to the character’s level. A player can spend a dream point whenever they make an Attack roll, an ability check, or a saving throw. The player can spend the dream point after the roll is made but before any of its results are applied. Spending the dream point allows the player to roll a d6 and add it to The D20, possibly turning a failure into a success. In addition, whenever a character fails a death saving throw, the player can spend one dream point to turn the failure into a success.",
+          "page": 11
+        },
+        {
+          "name": "I Won’t Abandon My Dreams",
+          "text": "As you lay bloody and dying at the feet of your enemy, your memories and dreams rush through your mind giving you hope. If at any point you reach 0 hit points and you die, instead roll a d20, on a 12 or higher you stand back up and regain 1 hp. If you died because you reached exhaustion level 6, instead go back to exhaustion level 5.",
+          "page": 11
+        },
+        {
+          "name": "Healing Surge",
+          "text": "As an action or bonus action (DM Discretion), a character can healing surge and spend up to half his or her Hit Dice (minimum 1). For each Hit Die spent in this way, the player rolls the die and adds the character’s Constitution modifier. The character regains hit points equal to the total. The player can decide to spend an additional Hit Die after each roll.\nA character who uses a healing surge can’t do so again until he or she finishes a short or long rest.\nA character regains all spent Hit Dice at the end of a long rest.",
+          "page": 11
+        }
+      ]
+    },
+    {
+      "id": "rule.special_reactions",
+      "kind": "rule",
+      "name": "Special Reactions",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 11
+      },
+      "text": "Special Reactions are a unique type of reaction that players can use to enhance their combat effectiveness and bring a dynamic, One Piece-inspired flair to the game.\nThese reactions are separate from normal reactions and are designed to reflect the tactical maneuvers seen in the series.\nEach player gets 2 Special Reactions a combat round and can use each Special Reaction a number of times equal to their proficiency bonus per short rest. The Special Reactions are as followed:",
+      "sections": [
+        {
+          "name": "Counter Strike",
+          "text": "When an enemy misses an attack against the player, the player may use their special reaction to make a melee or ranged weapon attack against the attacker.",
+          "page": 11
+        },
+        {
+          "name": "Deflect Projectile",
+          "text": "When an enemy makes a ranged attack roll against the player and it hits, the player may use their special reaction to reduce the damage by 1d10 + their player level.",
+          "page": 11
+        },
+        {
+          "name": "Flash Step",
+          "text": "When an enemy makes a successful attack roll against the player but before the damage is dealt, the player can use their special reaction to make a Dexterity saving throw against the attacker’s attack roll. If you succeed on the roll, move 10 ft. to an unoccupied space of your choice without provoking opportunity attacks and take no damage from the attack. On a failed save take the full damage of the attack and you may still move 10 ft. in a straight line without provoking opportunity attacks. You cannot use this special reaction if your movement speed is 0.",
+          "page": 11
+        },
+        {
+          "name": "Parry Blow",
+          "text": "When an enemy hits the player with a melee attack, the player can use their special reaction to reduce the damage by 1d10 + their player level.",
+          "page": 11
+        },
+        {
+          "name": "Shield Bash",
+          "text": "When an enemy makes an attack roll and hits the player, the player may use their special reaction to make a shield attack if they have a shield equipped, knocking the enemy prone if the attack hits. Shield Attack Melee Weapon Attack: +strength modifier, reach 5 ft., one creature, Hit: 4 (1d4) bludgeoning damage.",
+          "page": 11
+        }
+      ]
+    },
+    {
+      "id": "rule.inspiration_dice_alternative_pirate_prestige",
+      "kind": "rule",
+      "name": "Inspiration Dice Alternative: Pirate Prestige",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 12
+      },
+      "text": "In order to understand how crew roles work, it is important to understand a new system of reward points I am introducing called “Pirate Prestige“. This is intended to reward players for playing their roles to the best of their ability, while also promoting proper teamwork. A crew that works together will succeed, and this system is designed to make that process feel very fulfilling. While you can use Inspiration Dice in favor of this system if you don’t like it, it is another easy way to balance crew roles by rewarding points to players, which can be used for strengthening their role’s abilities and different roleplay elements.\nThe way this works is fairly simple. Whenever players overcome a difficult challenge, like winning a fight against a mighty enemy pirate, battling a deadly storm on the seas, or simply saving a town from danger, everyone who did well in that situation will gain a point of pirate prestige. However, characters that were absent, didn’t want to help the group, or simply complained and caused issues for others shouldn’t receive any points. Fighting pointless battles, intentionally running into dangerous situations which have no reward, or simply trying to farm these points will not net the crew any points. At higher levels, you can also choose to elect an MVP character during an event. Players may decide someone in the crew went above and beyond in overcoming a challenge, and give them a large surge of pirate prestige points at the end of the encounter. An MVP may roll a 1d4 at the end of such an event, and gain a number of pirate prestige points equal to the number rolled. A character can have a maximum number of Pirate Prestige points equal to half their character level, rounded up.",
+      "sections": [
+        {
+          "name": "Methods of Spending Pirate Prestige",
+          "text": "While pirate prestige should be primarily used to benefit the crew as a whole and should heavily reward teamwork, it can also be spent in a few other ways. Stockpiling these points can be rewarding and beneficial to overcoming future challenges. Other uses for pirate prestige is described under “Crew Roles” up next, but these points can be used for anything that the DM deems to be fun or appropriate for roleplay, investigating, or exploration, such as the following abilities:",
+          "page": 12
+        },
+        {
+          "name": "Pirate Prestige Ability: Locate Quests",
+          "text": "When exploring a populated town, city, or village, a character may expend 1 pirate prestige point to locate a random NPC or troubled creature that will provide them with a task to complete (up to the DM to decide the difficulty and reward), without needing to make any skill checks. To use this ability again, a character must complete a long rest.",
+          "page": 12
+        },
+        {
+          "name": "Pirate Prestige Ability: Find Minor Clue",
+          "text": "If a group is stuck on a mission or quest that they need to complete, a character may expend 1 pirate prestige point to ask the DM for a minor hint or clue that may lead them on the right track. This can only be used once per character during any single mission or quest.",
+          "page": 12
+        },
+        {
+          "name": "Pirate Prestige Ability: Gain Reputation",
+          "text": "If a group wants to gain recognition or respect in a single kingdom, village or town, or simply undo their negative reputation, characters may spend 24 hours and 1 pirate prestige point to spread rumors and tales of their deeds and gain 1 point of reputation in that location (explained further in the One Piece D&D 5E DM’s guide). A character can only use this ability this way once per location, and a crew can only spend a total of 5 pirate prestige points altogether to gain reputation in a location. A crew cannot use this ability when they only have 1 reputation point in that location.",
+          "page": 12
+        }
+      ]
+    },
+    {
+      "id": "rule.crew_recruitment",
+      "kind": "rule",
+      "name": "Crew Recruitment",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 18
+      },
+      "text": "The following rules are optional and intended for groups and DMs who wish to incorporate resource management into their campaign.\nFor smaller ships, a party of 4–5 adventurers can manage operations with assigned officer roles. However, as the ship grows in size or complexity, additional crew becomes necessary. These supplementary NPCs, known as Hirelings, can be recruited from seafaring communities—especially bustling port cities.\nA general rule of thumb is one officer per ten hirelings to maintain discipline and structure. These officers may oversee departments, supervise tasks, or serve as apprentices under player characters. Hirelings can be assigned as assistants (e.g., an assistant chef or assistant navigator), or given basic maintenance and labor tasks.",
+      "sections": [
+        {
+          "name": "Hireling Wages",
+          "text": "Hirelings require fair treatment, food, lodging, and pay. Use the “Recruit” stat block (see DM Cabin for statblock) for base hirelings, or higher CR NPCs for officers and specialists.\nStandard Hireling: ฿15,000 per week (฿60,000 per month)\nSpecialist Officer: ฿150,000 per week (฿600,000 per month)",
+          "page": 18
+        },
+        {
+          "name": "Loyalty & Mutiny",
+          "text": "Poor treatment can sow the seeds of rebellion. Every instance of mistreatment—underpayment, neglect, or abuse—adds a cumulative +10 to your weekly loyalty roll that affected hirelings or fleet crews may begin planning a mutiny. Proper compensation or acts of goodwill reduce this chance.\nConversely, hirelings and fleet crews treated with respect may form bonds with the crew and add a cumulative -5 to your weekly loyalty roll. Over time, they may become trusted companions, apprentices, or even receive stat improvements.",
+          "page": 18
+        },
+        {
+          "name": "Loyalty Roll",
+          "text": "Once per week, the DM will roll a 1d100 on the loyalty role table if you have mistreated any of your crew members.",
+          "page": 18
+        },
+        {
+          "name": "Loyalty Roll Table",
+          "text": "",
+          "page": 18,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d100",
+                  "Loyalty"
+                ],
+                [
+                  "1-80",
+                  "Happy Crew. Your crew continues to be loyal. Each player gains a Inspiration - Pirate Prestige point."
+                ],
+                [
+                  "81-",
+                  "Dissatisfied Crew. Add +25 to the next loyalty roll."
+                ],
+                [
+                  "99"
+                ],
+                [
+                  "100",
+                  "Mutiny. Roll on the Mutiny Table."
+                ]
+              ],
+              "page": 18
+            }
+          ]
+        },
+        {
+          "name": "Mutiny Table",
+          "text": "",
+          "page": 18,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d20",
+                  "Mutiny Amount"
+                ],
+                [
+                  "1-10",
+                  "Individual Mutiny. Only the individuals who are wronged on the crew will mutiny."
+                ],
+                [
+                  "11-",
+                  "Small Mutiny. Less than half the crew will mutiny."
+                ],
+                [
+                  "19"
+                ],
+                [
+                  "11-",
+                  "Mass Mutiny. More than half the crew will mutiny."
+                ],
+                [
+                  "19"
+                ],
+                [
+                  "20",
+                  "Complete Mutiny. All crew members will mutiny against the players."
+                ]
+              ],
+              "page": 18
+            }
+          ]
+        },
+        {
+          "name": "Fleet Command",
+          "text": "As a crew’s notoriety and influence grows, a single ship may no longer suffice. In time, captains may expand their domain by assembling a Fleet.\nRather than tracking every gold coin spent on wages across the fleet, DMs may assume that secondary ships are self-sustaining unless impacted by major events such as plunder, ship damage, or mutiny. Allied ships joining the fleet through alliances may not require wages at all.\nAdditionally, communication between ships is crucial. Den Den Mushi provide long-distance communication, allowing ships to share intelligence and coordinate attacks.\nFlagship. The primary vessel, commanded by the crew’s captain.\nFleet Commanders. Trusted lieutenants (PCs or NPCs) who helm additional ships in the fleet.\nFleet Officers & Crew. Each ship maintains its own officer structure, crew, and operations.",
+          "page": 18
+        },
+        {
+          "name": "Fleet Wages",
+          "text": "Fleets require upkeep to maintain. Use the table below to determine how much the cost of maintaining your fleet will cost. Do not factor in your own vessel when determining the cost.",
+          "page": 18
+        },
+        {
+          "name": "Fleet Wage Table",
+          "text": "฿\n฿\n฿\n฿ ฿",
+          "page": 18,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Fleet Amount",
+                  "Weekly Cost (total)"
+                ]
+              ],
+              "page": 18
+            },
+            {
+              "rows": [
+                [
+                  "1-2",
+                  "1,500,000"
+                ]
+              ],
+              "page": 18
+            },
+            {
+              "rows": [
+                [
+                  "3-4",
+                  "3,000,000"
+                ]
+              ],
+              "page": 18
+            },
+            {
+              "rows": [
+                [
+                  "5-7",
+                  "5,000,000"
+                ]
+              ],
+              "page": 18
+            },
+            {
+              "rows": [
+                [
+                  "8+",
+                  "10,000,000 +",
+                  "1,000,000 per additional ship"
+                ]
+              ],
+              "page": 18
+            }
+          ]
+        },
+        {
+          "name": "Fleet Orders",
+          "text": "Fleet commanders may embark on side missions or independent expeditions under orders from the captain. When a fleet vessel ventures off alone, the DM rolls on the Fleet Event Table each time it reaches a new island or region. They arrive at said islands every time the Flagship reaches one in their travels.",
+          "page": 19
+        },
+        {
+          "name": "Fleet Event Table",
+          "text": "฿",
+          "page": 19,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d20",
+                  "Event"
+                ],
+                [
+                  "1-5",
+                  "Grow Influence. The fleet spreads your flag across the island, granting your influence over the territory. The Flagship gains passive income from the region, adding"
+                ]
+              ],
+              "page": 19
+            },
+            {
+              "rows": [
+                [
+                  "200,000 per week to the players earnings for every island in their territory."
+                ],
+                [
+                  "6-",
+                  "Plunder. The fleet finds enough bellies to pay for the fleet’s"
+                ],
+                [
+                  "10",
+                  "wages for the week."
+                ],
+                [
+                  "11-",
+                  "Warded Off. The fleet was not able to make their way inland"
+                ],
+                [
+                  "15",
+                  "and disembarked to a new island."
+                ],
+                [
+                  "15-",
+                  "Fleet Tragedy. Roll on the Fleet Tragedy Table."
+                ],
+                [
+                  "20"
+                ]
+              ],
+              "page": 19
+            }
+          ]
+        },
+        {
+          "name": "Fleet Tragedy Table",
+          "text": "",
+          "page": 19,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d20",
+                  "Tragedy"
+                ],
+                [
+                  "1-5",
+                  "Minor Damage. The ship withstands insignificant scratches and dents which can easily be patched over the remaining duration of the trip."
+                ],
+                [
+                  "6-7",
+                  "Major Damage. The ship withstands serious damage and the hit points of its hull are reduced by 50% of its maximum"
+                ],
+                [
+                  "8-9",
+                  "Broken Parts. A random component other than the hull of the ship is completely destroyed during the encounter."
+                ],
+                [
+                  "10-",
+                  "Plague. The crew becomes diseased during the encounter."
+                ],
+                [
+                  "11",
+                  "1d100 percent of the crew dies."
+                ],
+                [
+                  "12-",
+                  "Deadly Poison. The crew is poisoned during the encounter."
+                ],
+                [
+                  "13",
+                  "Half of the crew dies."
+                ],
+                [
+                  "14-",
+                  "Captured. The ship and crew are captured by enemies"
+                ],
+                [
+                  "15",
+                  "during the encounter."
+                ],
+                [
+                  "16-",
+                  "Launched. The ship and crew are suddenly sprung onto a"
+                ],
+                [
+                  "17",
+                  "nearby sky island and become stranded."
+                ],
+                [
+                  "18-",
+                  "Mysterious Disappearance. The ship and crew drop all"
+                ],
+                [
+                  "19",
+                  "communication during the encounter and the entire crew vanishes for unknown reasons. However, the ship can still be recovered."
+                ],
+                [
+                  "20",
+                  "Complete Annihilation. The ship is completely destroyed and sinks to the bottom of the ocean along with the crew."
+                ]
+              ],
+              "page": 19
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule.character_dreams",
+      "kind": "rule",
+      "name": "Character Dreams",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 66
+      },
+      "text": "To keep players invested and eagerly rushing to the table each session, especially if this is a long-running campaign, it is key to give motivation to every player and character. The most powerful motivator may come in the form of an individual character’s dream. This dream could be something vague or extremely difficult to achieve. Regardless, it should be something that becomes more and more feasible to accomplish and characters advance throughout the story and grow stronger.\nFor example, a character may dream of creating the greatest pirate ship the world has ever seen. As the story progresses, the crew may gather more materials and wealth to upgrade the ship, slowly allowing for this character’s dream to come to fruition. Accomplishing this dream toward the end of the story is important, but it is far more imperative to drive the player and character’s ambition throughout the journey to build up to such a grand dream being accomplished.\nFor a player to determine what their character’s dream may be, it is a good idea to pull from that character’s race, class, crew role, background, ideals, or bonds to develop a fitting dream. This dream should be overarching and overshadow any other less important bonds or objectives your character has. Alternatively, you may choose an option from the table below or roll to decide what your character’s dream will be. You can have multiple dreams or combine them together.",
+      "sections": [
+        {
+          "name": "Example Dream Table",
+          "text": "",
+          "page": 66,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "2d20 Example Character Dream 2 To become the greatest of your race or occupation 3 To research every type of plant or animal 4 To spread your ideals or religion to every nation 5 To find a certain type of powerful Devil Fruit 6 To tame every type of monster in the world 7 To become the wealthiest person alive 8 To restore absolute justice to the world 9 To reach the moon or a certain planet 10 To defeat the Navy or World Government 11 To uncover a lost civilization 12 To bring peace and unity between your race and others 13 To find an old friend or family member 14 To build the ultimate ship that will sail the world 15 To uncover the true history of the world 16 To surpass a legendary person or creature 17 To become a brave warrior of the sea 18 To become the strongest fighter or swordsman 19 To map out the entire planet 20 To find the One Piece and become Pirate King 21 To create a floating island or city 22 To collect every type of rare artifact or treasure 23 To cure an incurable disease 24 To write the most famous book in history 25 To become a legendary chef known across the seas 26 To build a kingdom where no one suffers 27 To explore every island in the Grand Line 28 To awaken and master all forms of Haki 29 To avenge a fallen crew or loved one 30 To live forever and witness the world’s future 31 To host the world’s greatest tournament 32 To craft the world’s strongest weapon 33 To have your name etched into history forever 34 To save a dying species or ecosystem 35 To bring down the Celestial Dragons 36 To master every known style of combat 37 To steal from every major world power 38 To find and raise a legendary sea king 39 To visit the ends of the world and return 40 To laugh at the end of the world, no matter what"
+                ]
+              ],
+              "page": 66
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

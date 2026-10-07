@@ -152,3 +152,10 @@ export interface TrackerDef {
   page?: number;
   levels?: { value: number; label: string; text?: string }[];
 }
+
+export interface TraitDef {
+  name: string;
+  text: string;
+  page: number;
+  tables?: TableDef[];
+}

@@ -26,6 +26,7 @@ import {
   type TableDef,
   type RuleEntry,
   type ToggleDef,
+  type TraitDef,
   type TrackerDef,
   type UsesDef,
 } from './types';
@@ -157,6 +158,10 @@ export interface Sheet {
   counters: SheetCounter[];
   attacks: SheetAttack[];
   features: SheetFeature[];
+  /** The Special Reactions every character has, with the book's text when the general rules are loaded. */
+  specialReactions: { id: string; resource: string; name: string; text: string; page: number; roll?: string }[];
+  /** Book text of the universal rules the sheet applies (Dream Points, Healing Surge …), by name. */
+  generalRules: Record<string, SectionDef>;
   /** Effects in force right now (resistances, advantage, exhaustion). */
   notes: { label: string; from: string }[];
   warnings: string[];
@@ -303,6 +308,13 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const first = sources[0];
   const saveProfs = new Set<Ability>([...((first?.cls.savingThrows as Ability[] | undefined) ?? []), ...(doc.extraSaves ?? [])]);
   const skillProfs = new Set(doc.skills);
+  const background = doc.background ? rules.get(doc.background.id) : undefined;
+  const crewRole = doc.crewRole ? rules.get(doc.crewRole.id) : undefined;
+  if (doc.background && !background) warnings.push(`Background "${doc.background.id}" is not in the rules data.`);
+  if (doc.crewRole && !crewRole) warnings.push(`Crew role "${doc.crewRole.id}" is not in the rules data.`);
+  for (const granted of [background, crewRole]) {
+    for (const skill of (granted?.skills ?? []) as string[]) skillProfs.add(skill);
+  }
   for (const e of ofType('proficiency')) if (typeof e.effect.skill === 'string') skillProfs.add(e.effect.skill);
 
   const saves = {} as Sheet['saves'];
@@ -368,6 +380,13 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
 
   const carryLines: BreakdownLine[] = [{ label: `Strength ${scores.str} × 15 lb`, value: scores.str * 15 }];
   const multiply = (label: string, factor: number) => carryLines.push({ label, value: sum(carryLines) * (factor - 1) });
+  const race = doc.race.id ? rules.get(doc.race.id) : undefined;
+  const subrace = doc.race.subraceId ? rules.get(doc.race.subraceId) : undefined;
+  if (doc.race.id && !race) warnings.push(`Race "${doc.race.id}" is not in the rules data.`);
+  const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
+  for (const { trait } of racialTraits) {
+    if (/one size larger when determining (?:your|their) carrying capacity/i.test(trait.text)) multiply(`${trait.name}: counts as one size larger, × 2`, 2);
+  }
   for (let i = 0; i < (doc.race.sizeSteps ?? 0); i++) multiply('Counts as one size larger: × 2', 2);
   for (const e of ofType('carryMultiplier')) multiply(`${e.from}: × ${amount(e)}`, amount(e));
   const carry = stat(doc, 'carry', 'Carrying capacity', { value: sum(carryLines), lines: carryLines, page: 10 });
@@ -384,6 +403,8 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
 
   // 8. Resources: class pools, limited-use features, and the rules every character has.
   const resourceDefs: { def: ResourceDef; source?: Source; page?: number }[] = [];
+  // Features that don't come from a class (race, background, crew role, feats) see the whole character's level.
+  const plainScope: ExprScope = { level, prof: prof.value, mod, on, noArmor: doc.armor === null, noShield: !doc.shield, bruiserWeapon: false };
   for (const source of sources) {
     for (const def of ((source.entry as ClassEntry).resources ?? [])) {
       if (source.classLevel >= (def.minLevel ?? 1)) resourceDefs.push({ def, source, page: source.entry.source.page });
@@ -403,7 +424,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   }
   const resources: SheetResource[] = resourceDefs.flatMap(({ def, source, page }) => {
     const key = `resource.${def.id}`;
-    const calculated = evaluateNumber(def.max, source ? scopeFor(source) : {});
+    const calculated = evaluateNumber(def.max, source ? scopeFor(source) : plainScope);
     const max = stat(doc, key, def.name, { value: calculated, lines: [] }).value;
     // Nothing to track yet (5th-level slots at level 3): leave it off the sheet.
     if (max <= 0) return [];
@@ -411,9 +432,20 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   });
   const general = (id: string, name: string, max: number) =>
     resources.push({ id, name, max, remaining: Math.max(0, max - (doc.state.spent[id] ?? 0)), recharge: 'short', page: 11 });
-  general('sr.parry', 'Parry Blow', specialReactionUses(prof.value));
-  general('sr.deflect', 'Deflect Projectile', specialReactionUses(prof.value));
+  // Special Reactions: all five from the general rules when they are loaded, else the two the formulas name.
+  const reactionRules = (rules.get('rule.special_reactions')?.sections ?? []) as SectionDef[];
+  const reductionRoll = specialReactionReduction(level).text;
+  const reactionList = reactionRules.length
+    ? reactionRules.map((r) => ({ name: r.name, text: r.text, page: r.page }))
+    : [{ name: 'Deflect Projectile', text: '', page: 11 }, { name: 'Parry Blow', text: '', page: 11 }];
+  const specialReactions: Sheet['specialReactions'] = reactionList.map((r) => {
+    const id = slug(r.name).split('_')[0]!;
+    general(`sr.${id}`, r.name, specialReactionUses(prof.value));
+    return { id, resource: `sr.${id}`, name: r.name, text: r.text, page: r.page, roll: /1d10 \+ their player level/.test(r.text) || !r.text ? reductionRoll : undefined };
+  });
   general('healing_surge', 'Healing Surge', 1);
+  const generalRules: Sheet['generalRules'] = {};
+  for (const section of (rules.get('rule.universal_features')?.sections ?? []) as SectionDef[]) generalRules[section.name] = section;
 
   // 9. Toggles, trackers and counters.
   const toggles: SheetToggle[] = toggleDefs.map(({ def, feature }) => ({
@@ -515,6 +547,41 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     };
   });
 
+  // Race traits, the background's and crew role's features, and feats: shown with the class features.
+  const extra = (key: string, name: string, text: string, page: number, entry: RuleEntry, from: string, more: Partial<SheetFeature> = {}) =>
+    features.push({ key, name, text, page, book: entry.source.book, from, rolls: [], displays: [], onUse: [], sections: [], tables: [], ...more });
+  for (const { trait, entry } of racialTraits) {
+    // Descriptive traits stay in the Library; the sheet lists the ones a player uses.
+    if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) continue;
+    extra(`${entry.id}/${slug(trait.name)}`, trait.name, trait.text, trait.page, entry, entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name, { tables: trait.tables ?? [] });
+  }
+  for (const [granted, label] of [[background, 'Background'], [crewRole, 'Crew role']] as const) {
+    for (const section of (granted?.sections ?? []) as SectionDef[]) {
+      const m = /^(Feature|Pirate Prestige Ability): (.+)$/.exec(section.name);
+      if (m) extra(`${granted!.id}/${slug(m[2]!)}`, m[2]!, section.text, section.page, granted!, `${label}: ${granted!.name}${m[1] === 'Feature' ? '' : ' (Pirate Prestige)'}`, { tables: section.tables ?? [] });
+    }
+  }
+  for (const id of doc.feats ?? []) {
+    const feat = rules.get(id);
+    if (!feat || feat.kind !== 'feat') {
+      warnings.push(`Feat "${id}" is not in the rules data.`);
+      continue;
+    }
+    const uses = feat.uses as UsesDef | undefined;
+    let resource: string | undefined;
+    if (uses && typeof uses === 'object') {
+      resource = `use.${slug(feat.name)}`;
+      const max = evaluateNumber(uses.max, plainScope);
+      if (max > 0) resources.push({ id: resource, name: feat.name, max, remaining: Math.max(0, max - (doc.state.spent[resource] ?? 0)), recharge: uses.recharge, page: feat.source.page });
+    }
+    extra(`${feat.id}`, feat.name, String(feat.text ?? ''), feat.source.page, feat, 'Feat', {
+      resource,
+      action: feat.action as string | undefined,
+      sections: (feat.sections ?? []) as SectionDef[],
+      tables: (feat.tables ?? []) as TableDef[],
+    });
+  }
+
   const classTable: Sheet['classTable'] = [];
   for (const source of sources) {
     if (source.entry !== source.cls) continue;
@@ -557,6 +624,8 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     specialReactionReduction: specialReactionReduction(level).text,
     attacksPerAction: Math.max(1, ...ofType('attacksPerAction').map((e) => amount(e))),
     classTable,
+    specialReactions,
+    generalRules,
     resources,
     toggles,
     trackers,
