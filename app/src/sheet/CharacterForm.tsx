@@ -64,8 +64,17 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const cls = classes.find((c) => c.id === classId) ?? classes[0]!;
   const subclassLevel = cls.subclass?.level ?? 3;
   const styles = mainSubclasses(cls.id);
-  const picks = choiceFeatures(cls, level >= subclassLevel ? subclass : undefined).filter((f) => f.level <= level);
-  const allowed = (expr: number | string) => evaluateNumber(expr, classScope({ cls, classLevel: level, scores }));
+  // Every feature that asks for picks: the main class and its subclass, then each multiclass and its subclass.
+  const pickFrom = [
+    { of: cls, at: level, sub: level >= subclassLevel ? subclass : undefined },
+    ...otherClasses.flatMap((other) => {
+      const of = classes.find((c) => c.id === other.id);
+      return of ? [{ of, at: other.level, sub: other.level >= (of.subclass?.level ?? 3) ? other.subclass : undefined }] : [];
+    }),
+  ];
+  const picks = pickFrom.flatMap(({ of, at, sub }) =>
+    choiceFeatures(of, sub).filter((f) => f.level <= at).map((f) => ({ ...f, known: evaluateNumber(f.choices.count, classScope({ cls: of, classLevel: at, scores })), book: of.source.book })),
+  );
   const classSkills = cls.proficiencies as { skills?: { choose?: number; from?: string[] | string; text?: string } } | undefined;
   const skillHint = classSkills?.skills?.choose
     ? `${cls.name}: choose ${classSkills.skills.choose} from ${Array.isArray(classSkills.skills.from) ? classSkills.skills.from.map((id) => SKILLS.find((k) => k.id === id)?.name ?? id).join(', ') : 'any skills'}`
@@ -231,10 +240,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       )}
       {picks.map((feature) => {
         const picked = choices[feature.choices.id] ?? [];
-        const known = allowed(feature.choices.count);
+        const known = feature.known;
         return (
           <fieldset key={feature.choices.id}>
-            <legend className="label">{feature.from === cls.name ? '' : `${feature.from}: `}{feature.name} options: {picked.length} of {known} · {cite(cls.source.book, feature.page)}</legend>
+            <legend className="label">{feature.from === cls.name ? '' : `${feature.from}: `}{feature.name} options: {picked.length} of {known} · {cite(feature.book, feature.page)}</legend>
             {picked.length > known && <p className="notice">That is more than the {known} the rules give at this level. It's your call.</p>}
             {feature.options.map((option) => (
               <label key={option.id} className="check">

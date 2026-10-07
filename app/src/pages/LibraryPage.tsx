@@ -23,7 +23,8 @@ function Feature({ feature, book }: { feature: FeatureDef | OptionDef; book: str
   // A feature whose sub-headed parts became a list to pick from still shows them here, as the book prints them.
   const choices = (feature as FeatureDef).choices;
   const options = choices ? ((rules.get(choices.from)?.options ?? []) as OptionDef[]) : [];
-  const inText = (option: OptionDef) => feature.text.includes(`${option.name}. `);
+  const tabled = new Set(((feature as FeatureDef).tables ?? []).flatMap((t) => t.rows.map((row) => String(row[0]))));
+  const inText = (option: OptionDef) => feature.text.includes(`${option.name}. `) || tabled.has(option.name);
   const sections = (feature as FeatureDef).sections ?? options.filter((o) => !inText(o)).map((o) => ({ name: o.name, text: o.text, page: o.page, tables: o.tables }));
   return (
     <details className="feature">

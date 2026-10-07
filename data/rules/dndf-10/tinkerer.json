@@ -829,7 +829,17 @@
           "level": 6,
           "name": "Power Surge",
           "text": "Starting at 6th level, you can store power and energy within your gadgets to later empower your damaging Creation Powers (Spells). In its stored form, this energy is called a Power Surge.\nYou gain the Dispel Magic and Counterspell spells. These spells are always prepared.\nYou can store a maximum number of Power Surges equal to your Intelligence modifier (minimum of one). Whenever you finish a Long Rest, your number of Power Surges resets to one. Whenever you successfully end a spell with Dispel Magic or Counterspell, you gain one Power Surge, as you steal energy from the spell you foiled. If you end a Short Rest with no Power Surges, you gain one Power Surge.\nOnce per turn when you deal damage to a creature or object with a Tinkerer creation power (spell), you can spend one Power Surge to deal extra force damage to that target. The extra damage equals your Tinkerer level.",
-          "page": 186
+          "page": 186,
+          "rolls": [
+            {
+              "label": "Extra force damage",
+              "dice": "{level}",
+              "kind": "damage"
+            }
+          ],
+          "cost": {
+            "power_surges": 1
+          }
         },
         {
           "level": 10,
@@ -855,6 +865,16 @@
           "level": 14,
           "name": "Deflecting Shroud",
           "text": "At 14th level, your Deflector Shield becomes infused with deadly energy. When you use your Deflector Shield feature, you can cause power to arc from you. Up to three creatures of your choice that you can see within 60 feet of you each take force damage equal to half your Tinkerer level.",
+          "page": 186
+        }
+      ],
+      "trackers": [
+        {
+          "id": "power_surges",
+          "name": "Power Surges",
+          "min": 0,
+          "max": "max(1, mod.int)",
+          "minLevel": 6,
           "page": 186
         }
       ],
@@ -1160,91 +1180,54 @@
           "level": 2,
           "name": "Steamtech Devices",
           "text": "Also at 2nd level, you learn to construct steam-powered gadgets that function as mechanical extensions of your abilities. You can build two Steamtech Devices of your choice from the Steam Device Table that any creature can use. You may swap out your devices when you finish a long rest by spending at least 1 hour modifying your blueprints.\nEach device requires PGPs to function and has a signature spell associated with it. Device spells can be upcast by 1 spell level at 6th level, upcast by 2 spell levels at 10th level, and upcast by 3 spell levels at 14th level. Each upcast level increases the PGPs cost by +1. If the spell requires a saving throw, use your Tinkerer spell save DC.\nAll devices use points from the table as a shared collective instead of each device getting its own point total.",
-          "page": 189
-        },
-        {
-          "level": 6,
-          "name": "Overclock",
-          "text": "Starting at 6th level, your ability to maximize steam output allows you to push your devices beyond their limits. As a bonus action, you can increase the spell",
-          "page": 189,
-          "sections": [
-            {
-              "name": "Steamtech Device Table",
-              "text": "level of your devices signature spell by 2 if the spell can be upcast. After the spell is cast roll a d20, if you roll a 10 or lower the device overheats and inflicts an amount of automatic damage to you equal to the level the spell was cast x 4.\nAdditionally, you can now craft a third Steamtech Device.",
-              "page": 189
-            }
-          ]
-        },
-        {
-          "level": 10,
-          "name": "Integrated Pressure Core",
-          "text": "Beginning at 10th level, you enhance your Steam Devices to become more energy-efficient. When you take a short rest, you regain 2 PGPs per hit dice you spend. If you spend hit dice this way you cannot regain hit points.\nAdditionally, you unlock the ability to create a fourth Steamtech Device.",
-          "page": 189
-        },
-        {
-          "level": 14,
-          "name": "Steam Conversion",
-          "text": "At 14th level, your mastery over Steam Pressure allows you to reroute energy instantly. When you roll initiative, you immediately regain 3 PGPs.\nAdditionally, you unlock the ability to create a fifth Steamtech Device.",
           "page": 189,
           "tables": [
             {
               "rows": [
                 [
-                  "Steamtech",
-                  "PGP"
-                ],
-                [
-                  "Device",
+                  "Steamtech Device",
                   "Description",
-                  "Cost"
+                  "PGP Cost"
                 ],
                 [
-                  "Gatling Gun As an action, cast the Magic Missile spell at 1st level from the device.",
+                  "Gatling Gun",
+                  "As an action, cast the Magic Missile spell at 1st level from the device.",
                   "1"
                 ],
                 [
-                  "Grappling",
-                  "As an action, cast the Lightning Lure cantrip on a target or surface from the device. If cast on a surface, you",
+                  "Grappling Hook",
+                  "As an action, cast the Lightning Lure cantrip on a target or surface from the device. If cast on a surface, you pull yourself 15 ft. in the surface’s direction, ignoring opportunity attacks.",
                   "1"
                 ],
                 [
-                  "Hook",
-                  "pull yourself 15 ft. in the surface’s direction, ignoring opportunity attacks."
-                ],
-                [
-                  "Multiarm",
-                  "As an action, cast the Mage Hand cantrip from the device. While the mage hand is active, you can use a bonus",
+                  "Multiarm Apparatus",
+                  "As an action, cast the Mage Hand cantrip from the device. While the mage hand is active, you can use a bonus action to have the hand grant the help action.",
                   "1"
                 ],
                 [
-                  "Apparatus",
-                  "action to have the hand grant the help action."
-                ],
-                [
-                  "Pneumatic",
+                  "Pneumatic Gauntlet",
                   "As an action, cast the Burning Hands spell at 1st level from the device.",
-                  "1 Gauntlet"
+                  "1"
                 ],
                 [
-                  "Steam Shield As a reaction when you are hit by an attack or targeted by the Magic Missile spell, cast the Shield spell at 1st",
-                  "1 level."
+                  "Steam Shield",
+                  "As a reaction when you are hit by an attack or targeted by the Magic Missile spell, cast the Shield spell at 1st level.",
+                  "1"
                 ],
                 [
-                  "Steam Vent",
+                  "Steam Vent Boots",
                   "As an action, cast the Thunderwave spell at 1st level from the device.",
-                  "1 Boots"
+                  "1"
                 ],
                 [
-                  "Rocket Spear As an action, cast the Aganazzar’s Scorcher spell at 2nd level from the device.",
+                  "Rocket Spear",
+                  "As an action, cast the Aganazzar’s Scorcher spell at 2nd level from the device.",
                   "2"
                 ],
                 [
-                  "Steam-Powered As an action, place the turret in unoccupied space within 5 ft. of you. As a reaction, cast the Gust of Wind spell",
+                  "Steam-Powered Turret",
+                  "As an action, place the turret in unoccupied space within 5 ft. of you. As a reaction, cast the Gust of Wind spell at 2nd level from the turrets location.",
                   "2"
-                ],
-                [
-                  "Turret",
-                  "at 2nd level from the turrets location."
                 ],
                 [
                   "Jetpack",
@@ -1252,24 +1235,192 @@
                   "3"
                 ],
                 [
-                  "Pressure Mine",
-                  "As an action, place up to 3 mines in unoccupied space within 5 ft. of you. When a creature steps on this",
+                  "Pressure Mine Dispenser",
+                  "As an action, place up to 3 mines in unoccupied space within 5 ft. of you. When a creature steps on this device, cast the Fireball spell at 3rd level on the mines location. Once a mine uses its signature spell, the device self destructs. You may only have 3 mine activate at a time.",
                   "3"
-                ],
-                [
-                  "Dispenser",
-                  "device, cast the Fireball spell at 3rd level on the mines location. Once a mine uses its signature spell, the device self destructs. You may only have 3 mine activate at a time."
                 ]
               ],
               "page": 189
             }
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Spell levels a device can be upcast (+1 PGP each)",
+              "expr": "level>=14 ? 3 : level>=10 ? 2 : level>=6 ? 1 : 0"
+            }
+          ],
+          "choices": {
+            "id": "steamtechDevices",
+            "count": "level>=14 ? 5 : level>=10 ? 4 : level>=6 ? 3 : 2",
+            "from": "optionGroup.tinkerer_steamtech_steamtech_devices"
+          }
+        },
+        {
+          "level": 6,
+          "name": "Overclock",
+          "text": "Starting at 6th level, your ability to maximize steam output allows you to push your devices beyond their limits. As a bonus action, you can increase the spell level of your devices signature spell by 2 if the spell can be upcast. After the spell is cast roll a d20, if you roll a 10 or lower the device overheats and inflicts an amount of automatic damage to you equal to the level the spell was cast x 4.\nAdditionally, you can now craft a third Steamtech Device.",
+          "page": 189
+        },
+        {
+          "level": 10,
+          "name": "Integrated Pressure Core",
+          "text": "Beginning at 10th level, you enhance your Steam Devices to become more energy-efficient. When you take a short rest, you regain 2 PGPs per hit dice you spend. If you spend hit dice this way you cannot regain hit points.\nAdditionally, you unlock the ability to create a fourth Steamtech Device.",
+          "page": 189,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Short rest: regain 2 PGPs per hit die spent (no hit points from those dice)"
+            }
           ]
+        },
+        {
+          "level": 14,
+          "name": "Steam Conversion",
+          "text": "At 14th level, your mastery over Steam Pressure allows you to reroute energy instantly. When you roll initiative, you immediately regain 3 PGPs.\nAdditionally, you unlock the ability to create a fifth Steamtech Device.",
+          "page": 189,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Rolling initiative: regain 3 PGPs"
+            }
+          ]
+        }
+      ],
+      "resources": [
+        {
+          "id": "pgp",
+          "name": "Pressure Gauge Points",
+          "max": "level>=14 ? 20 : level>=10 ? 15 : level>=6 ? 10 : 5",
+          "recharge": "long",
+          "minLevel": 2
         }
       ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
           "page": 197
+        }
+      }
+    },
+    {
+      "id": "optionGroup.tinkerer_steamtech_steamtech_devices",
+      "kind": "optionGroup",
+      "name": "Steamtech: Steamtech Devices",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 189
+      },
+      "options": [
+        {
+          "id": "gatling_gun",
+          "name": "Gatling Gun",
+          "page": 189,
+          "text": "As an action, cast the Magic Missile spell at 1st level from the device.",
+          "cost": {
+            "pgp": 1
+          },
+          "action": "action"
+        },
+        {
+          "id": "grappling_hook",
+          "name": "Grappling Hook",
+          "page": 189,
+          "text": "As an action, cast the Lightning Lure cantrip on a target or surface from the device. If cast on a surface, you pull yourself 15 ft. in the surface’s direction, ignoring opportunity attacks.",
+          "cost": {
+            "pgp": 1
+          },
+          "action": "action"
+        },
+        {
+          "id": "multiarm_apparatus",
+          "name": "Multiarm Apparatus",
+          "page": 189,
+          "text": "As an action, cast the Mage Hand cantrip from the device. While the mage hand is active, you can use a bonus action to have the hand grant the help action.",
+          "cost": {
+            "pgp": 1
+          },
+          "action": "action"
+        },
+        {
+          "id": "pneumatic_gauntlet",
+          "name": "Pneumatic Gauntlet",
+          "page": 189,
+          "text": "As an action, cast the Burning Hands spell at 1st level from the device.",
+          "cost": {
+            "pgp": 1
+          },
+          "action": "action"
+        },
+        {
+          "id": "steam_shield",
+          "name": "Steam Shield",
+          "page": 189,
+          "text": "As a reaction when you are hit by an attack or targeted by the Magic Missile spell, cast the Shield spell at 1st level.",
+          "cost": {
+            "pgp": 1
+          },
+          "action": "reaction"
+        },
+        {
+          "id": "steam_vent_boots",
+          "name": "Steam Vent Boots",
+          "page": 189,
+          "text": "As an action, cast the Thunderwave spell at 1st level from the device.",
+          "cost": {
+            "pgp": 1
+          },
+          "action": "action"
+        },
+        {
+          "id": "rocket_spear",
+          "name": "Rocket Spear",
+          "page": 189,
+          "text": "As an action, cast the Aganazzar’s Scorcher spell at 2nd level from the device.",
+          "cost": {
+            "pgp": 2
+          },
+          "action": "action"
+        },
+        {
+          "id": "steam_powered_turret",
+          "name": "Steam-Powered Turret",
+          "page": 189,
+          "text": "As an action, place the turret in unoccupied space within 5 ft. of you. As a reaction, cast the Gust of Wind spell at 2nd level from the turrets location.",
+          "cost": {
+            "pgp": 2
+          },
+          "action": "action"
+        },
+        {
+          "id": "jetpack",
+          "name": "Jetpack",
+          "page": 189,
+          "text": "As an action, cast the Fly spell at 3rd level from the device.",
+          "cost": {
+            "pgp": 3
+          },
+          "action": "action"
+        },
+        {
+          "id": "pressure_mine_dispenser",
+          "name": "Pressure Mine Dispenser",
+          "page": 189,
+          "text": "As an action, place up to 3 mines in unoccupied space within 5 ft. of you. When a creature steps on this device, cast the Fireball spell at 3rd level on the mines location. Once a mine uses its signature spell, the device self destructs. You may only have 3 mine activate at a time.",
+          "cost": {
+            "pgp": 3
+          },
+          "action": "action"
+        }
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 198
         }
       }
     },
