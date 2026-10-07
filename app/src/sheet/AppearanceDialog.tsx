@@ -1,13 +1,14 @@
 import type { SheetAppearance } from '@dndf/engine';
 import { useRef, useState } from 'react';
 import { Dialog } from '../components/Dialog';
-import { BACKGROUND_PRESETS, DEFAULT_BACKGROUND, MIN_CARD_OPACITY } from '../lib/backgrounds';
+import { BACKGROUND_PRESETS, CARD_COLORS, DEFAULT_BACKGROUND, DEFAULT_CARD_COLOR, MIN_CARD_OPACITY } from '../lib/backgrounds';
+import { sheetPalette } from '../lib/palette';
 import { prepareImage } from '../lib/image';
 import type { CharacterStore } from '../lib/store';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { cardOpacity } from './SheetBackground';
 
-/** Pick a built-in background or upload a picture, and set how see-through the cards are. Changes show at once. */
+/** Pick a background (built-in or your own picture), a box color, and how see-through the boxes are. Changes show at once. */
 export function AppearanceDialog({ live, store, id, onClose }: { live: LiveCharacter; store: CharacterStore; id: string; onClose: () => void }) {
   const { doc } = live;
   const appearance = doc.appearance ?? {};
@@ -46,7 +47,7 @@ export function AppearanceDialog({ live, store, id, onClose }: { live: LiveChara
   const selected = background?.kind === 'preset' ? background.id : background ? null : DEFAULT_BACKGROUND;
 
   return (
-    <Dialog title="Sheet background" onClose={onClose}>
+    <Dialog title="Sheet appearance" onClose={onClose}>
       <fieldset>
         <legend className="label">Built-in backgrounds</legend>
         <div className="swatches">
@@ -84,6 +85,26 @@ export function AppearanceDialog({ live, store, id, onClose }: { live: LiveChara
             : 'Only you and your DM can see it. Pictures are shrunk to 1920 px before uploading.'}
         </p>
         {error && <p className="notice" role="alert">{error}</p>}
+      </fieldset>
+
+      <fieldset>
+        <legend className="label">Box color</legend>
+        <div className="swatches">
+          {CARD_COLORS.map((choice) => {
+            const on = (appearance.cardColor ?? null)?.toLowerCase() === (choice.color?.toLowerCase() ?? null);
+            const palette = sheetPalette(choice.color ?? DEFAULT_CARD_COLOR);
+            return (
+              <button key={choice.label} className={on ? 'swatch swatch-on' : 'swatch'} aria-pressed={on} onClick={() => set({ ...appearance, cardColor: choice.color ?? undefined }, 'Sheet box color changed')}>
+                <span className="swatch-color swatch-text" style={{ backgroundColor: palette?.card, color: palette?.ink, borderColor: palette?.line }}>Aa</span>
+                <span>{choice.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        <label className="field-inline color-pick">
+          <input type="color" value={appearance.cardColor ?? DEFAULT_CARD_COLOR} onChange={(e) => set({ ...appearance, cardColor: e.target.value })} aria-label="Pick any box color" />
+          <span>Pick any color. The text color is chosen to match it and stay readable.</span>
+        </label>
       </fieldset>
 
       <label className="field">

@@ -1,6 +1,8 @@
 import type { SheetAppearance } from '@dndf/engine';
 import { useEffect, useState } from 'react';
-import { BACKGROUND_PRESETS, DEFAULT_BACKGROUND, DEFAULT_CARD_OPACITY, MIN_CARD_OPACITY } from '../lib/backgrounds';
+import type { CSSProperties } from 'react';
+import { BACKGROUND_PRESETS, DEFAULT_BACKGROUND, DEFAULT_CARD_COLOR, DEFAULT_CARD_OPACITY, MIN_CARD_OPACITY } from '../lib/backgrounds';
+import { paletteVars, sheetPalette } from '../lib/palette';
 import type { CharacterStore } from '../lib/store';
 
 export function cardOpacity(appearance: SheetAppearance | undefined): number {
@@ -8,7 +10,19 @@ export function cardOpacity(appearance: SheetAppearance | undefined): number {
   return Math.min(100, Math.max(MIN_CARD_OPACITY, value));
 }
 
-/** Paints the character's chosen background behind the sheet and makes the cards let it show through. */
+/**
+ * The sheet's own colors as CSS variables: see-through boxes, and when the player picked a box
+ * color, the text, borders and tiles worked out to go with it.
+ */
+export function sheetThemeVars(appearance: SheetAppearance | undefined): CSSProperties {
+  const palette = appearance?.cardColor ? sheetPalette(appearance.cardColor) : null;
+  return {
+    ...(palette ? paletteVars(palette) : {}),
+    '--card-bg': `color-mix(in srgb, ${palette?.card ?? DEFAULT_CARD_COLOR} ${cardOpacity(appearance)}%, transparent)`,
+  } as CSSProperties;
+}
+
+/** Paints the character's chosen background behind the sheet. */
 export function SheetBackground({ appearance, store }: { appearance: SheetAppearance | undefined; store: CharacterStore }) {
   const background = appearance?.background;
   const ref = background?.kind === 'image' ? background.ref : null;
@@ -23,15 +37,6 @@ export function SheetBackground({ appearance, store }: { appearance: SheetAppear
       current = false;
     };
   }, [ref, store]);
-
-  const opacity = cardOpacity(appearance);
-  useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty('--card-bg', `color-mix(in srgb, var(--card) ${opacity}%, transparent)`);
-    return () => {
-      root.style.removeProperty('--card-bg');
-    };
-  }, [opacity]);
 
   const presetId = background?.kind === 'preset' ? background.id : DEFAULT_BACKGROUND;
   const preset = BACKGROUND_PRESETS.find((p) => p.id === presetId) ?? BACKGROUND_PRESETS[0]!;

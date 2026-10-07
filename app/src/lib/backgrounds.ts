@@ -20,3 +20,18 @@ export const BACKGROUND_PRESETS: BackgroundPreset[] = [
 
 export const DEFAULT_CARD_OPACITY = 88;
 export const MIN_CARD_OPACITY = 50;
+
+/** Box colors that go with the built-in backgrounds. Any other color can be picked too. */
+export const CARD_COLORS: { label: string; color: string | null }[] = [
+  { label: 'Parchment', color: null },
+  { label: 'Poster', color: '#FBF3DD' },
+  { label: 'Sea foam', color: '#D9EEE6' },
+  { label: 'Deep water', color: '#1F5E57' },
+  { label: 'Sand', color: '#F4D6BC' },
+  { label: 'Terracotta', color: '#8E3B1C' },
+  { label: 'Lilac', color: '#E8DDF2' },
+  { label: 'Devil Fruit', color: '#5A3E8A' },
+  { label: 'Ink', color: '#3B2A1A' },
+];
+
+export const DEFAULT_CARD_COLOR = '#F8EED4';
