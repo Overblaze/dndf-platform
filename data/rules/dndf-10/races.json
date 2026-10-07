@@ -1,0 +1,2319 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "rule.new_races_and_updates",
+      "kind": "rule",
+      "name": "New Races and Updates",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 67
+      },
+      "text": "While not big changes, I have changed the fact that some of the original Dungeons and Devil Fruits races lock you into specific stats. Now most races that aren’t Optional Races use a pool of stat points to spend instead of preassigned stat points. Here are all of the original races but with the changes added to them.\nIn addition, cyborg has been moved to Optional Races."
+    },
+    {
+      "id": "race.human",
+      "kind": "race",
+      "name": "Human",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 67
+      },
+      "optional": false,
+      "text": "The changes to humans are as follows. Additionally, Torino Humans have been added as a new playable race option.\nYour human character will have these traits.",
+      "traits": [
+        {
+          "name": "Age",
+          "text": "Humans reach adulthood in their teens and live for around a century.",
+          "page": 67
+        },
+        {
+          "name": "Alignment",
+          "text": "There is no clear alignment that is consistent among all humans. Just about any alignment can be justified.",
+          "page": 67
+        },
+        {
+          "name": "Size",
+          "text": "Humans in the One Piece World are typically 5- 6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 67
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 67
+        }
+      ],
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "size",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Human Subraces",
+          "text": "Subrace. Humans from all across the One Piece World have lived in relative isolation from each other, creating unique and different cultures and body types.",
+          "page": 67
+        }
+      ]
+    },
+    {
+      "id": "subrace.human.standard",
+      "kind": "subrace",
+      "name": "Standard",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 67
+      },
+      "parent": "race.human",
+      "text": "While many humans vary in shape and size, your human character will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your ability scores each increase by 1.",
+          "page": 67
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 1,
+          "dex": 1,
+          "con": 1,
+          "int": 1,
+          "wis": 1,
+          "cha": 1
+        }
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.human.variant",
+      "kind": "subrace",
+      "name": "Variant",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 67
+      },
+      "parent": "race.human",
+      "text": "Some humans can be noticeably different in their abilities and skills. For this reason, you may choose to instead replace the standard Human Ability Score Increase with these traits instead:",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Two different ability scores of your choice increase by 1",
+          "page": 67
+        },
+        {
+          "name": "Skills",
+          "text": "You gain proficiency in one skill of your choice.",
+          "page": 67
+        },
+        {
+          "name": "Feat",
+          "text": "You gain one Character Feat of your choice that you meet the prerequisite for in Chapter 6 of the Dungeons and Devil Fruits Player’s Handbook. You may only choose a Haki-related feat if you receive DM permission.",
+          "page": 67
+        }
+      ]
+    },
+    {
+      "id": "subrace.human.giant",
+      "kind": "subrace",
+      "name": "Giant",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 67
+      },
+      "parent": "race.human",
+      "text": "Very rarely, some humans may grow to be astonishingly larger than most others in the One Piece world, sometimes even doubling the average human height and weight. If your human character happens to fall under this category, you may choose to replace the standard Human Ability Score Increase with these traits instead:",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 2 points to spend on ability scores.",
+          "page": 67
+        },
+        {
+          "name": "Size",
+          "text": "Human giants are between 7 and 12 feet tall and weigh between 280 and 340 pounds. Your size is Large.",
+          "page": 67
+        },
+        {
+          "name": "Natural Athlete",
+          "text": "You have proficiency in the Athletics skill.",
+          "page": 67
+        },
+        {
+          "name": "Warrior Training",
+          "text": "You have proficiency with the Battleaxe, Handaxe, Light Hammer, Longsword, Club, and Spear.",
+          "page": 67
+        },
+        {
+          "name": "Giant’s Endurance",
+          "text": "You can focus yourself to occasionally shrug off injury. When you take damage, you can use your reaction to roll a d12. Add your Constitution modifier to the number rolled, and reduce the damage by that total. After you use this trait, you can’t use it again until you finish a short or long rest.",
+          "page": 67
+        },
+        {
+          "name": "Powerful Build",
+          "text": "You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.",
+          "page": 67
+        }
+      ],
+      "abilityIncrease": {
+        "points": 2
+      },
+      "size": "Large",
+      "auto": [
+        "abilityIncrease",
+        "size"
+      ]
+    },
+    {
+      "id": "subrace.human.kuja",
+      "kind": "subrace",
+      "name": "Kuja",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 68
+      },
+      "parent": "race.human",
+      "text": "If your human character is female, you may choose to take this Kuja variant subrace. If you do so, you may choose to replace the standard Human Ability Score Increase with these traits instead:",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 2 points to spend on ability scores.",
+          "page": 68
+        },
+        {
+          "name": "Skills",
+          "text": "You gain proficiency with longbows, shortbows, shortswords, and spears.",
+          "page": 68
+        },
+        {
+          "name": "Beginner Haki",
+          "text": "You can choose to take the Color of Armament Training feat from the Dungeons and Devil Fruits Player’s Handbook if you meet the prerequisite.",
+          "page": 68
+        }
+      ],
+      "abilityIncrease": {
+        "points": 2
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.human.torino",
+      "kind": "subrace",
+      "name": "Torino",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 68
+      },
+      "parent": "race.human",
+      "text": "The Torino people are a race of short and rotund humans that hail from the Torino Kingdom in South Blue. While they dress primitively and live a simple hunter/gatherer lifestyle, they are actually very advanced in the field of medicine, even having a library dedicated to cataloging their medical findings, and they can also create missile launcher-like spears.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 2 points to spend on ability scores.",
+          "page": 68
+        },
+        {
+          "name": "Size",
+          "text": "Humans of the Torino Kingdom are typically around 3-4 feet tall. Some can rest outside this range, but your size will count as small.",
+          "page": 68
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 25 feet.",
+          "page": 68
+        },
+        {
+          "name": "Medical Mastery",
+          "text": "Torino Humans gain proficiency with the Medicine skill. Additionally, they can use a herbalism kit to create basic healing supplies. Once during a long rest, you can craft a standard bandage from Chapter 9: Medical Log. You may also craft your explosive spear during your long rest.",
+          "page": 68
+        },
+        {
+          "name": "Hunter’s Agility",
+          "text": "Despite their small size and large gut, Torino Humans are nimble and adept at moving through their environment. They gain advantage on Dexterity (Stealth) checks made in natural environments.",
+          "page": 68
+        },
+        {
+          "name": "Explosive Spear Crafter",
+          "text": "Torino Humans are proficient with spears. Additionally, once per long rest, you craft a one time use explosive spear that when thrown deals an 2d8 additional fire damage on hit. You may also craft a standard bandage during your long rest.",
+          "page": 68
+        },
+        {
+          "name": "Compact Strength",
+          "text": "Although small, Torino Humans are surprisingly strong for their size. They count as one size larger when determining their carrying capacity and the weight they can push, drag, or lift.",
+          "page": 68
+        }
+      ],
+      "abilityIncrease": {
+        "points": 2
+      },
+      "size": "Small",
+      "speed": 25,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.fishman",
+      "kind": "race",
+      "name": "Fishman",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 69
+      },
+      "optional": false,
+      "text": "The changes to fish-men are as follows. Additionally, Cookiecutter Shark and Fighting Fish Fish-Men have been added as a new playable race option.\nYour fish-man character will have these traits.",
+      "traits": [
+        {
+          "name": "Age",
+          "text": "Fish-men reach adulthood in their teens and live for around a century.",
+          "page": 69
+        },
+        {
+          "name": "Alignment",
+          "text": "Most fish-men are lawful and many stay true to their values, though some lean toward being neutral. Fish-men can live in harmony with other sea creatures, but may turn violent against humans. For this reason, a fish-man can range from being good to evil.",
+          "page": 69
+        },
+        {
+          "name": "Size",
+          "text": "Fish-men are between 7 and 8 feet tall and weigh between 280 and 340 pounds on average. Your size is medium.",
+          "page": 69
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet, and you have a Swimming speed of 35 feet.",
+          "page": 69
+        },
+        {
+          "name": "Amphibious",
+          "text": "You can breathe air and water.",
+          "page": 69
+        },
+        {
+          "name": "Underwater Athlete",
+          "text": "You have proficiency in the Athletics skill. While underwater, you face no penalties or disadvantage as a result of underwater combat rules.",
+          "page": 69
+        },
+        {
+          "name": "Adapted to the Sea",
+          "text": "With the ability to adapt to extreme underwater depths, you have Resistance to cold damage.",
+          "page": 69
+        },
+        {
+          "name": "Darkvision",
+          "text": "You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.",
+          "page": 69
+        }
+      ],
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "size",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Fish-Man Subraces",
+          "text": "Subrace. Breeding among fish-people resulted in six main subraces: Cookiecutter, Fighting Fish, Manta Ray, Octopus, Shark, or Smelt-Whiting variants. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
+          "page": 69
+        }
+      ]
+    },
+    {
+      "id": "subrace.fishman.cookiecutter",
+      "kind": "subrace",
+      "name": "Cookiecutter",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 69
+      },
+      "parent": "race.fishman",
+      "text": "Cookiecutter fish-men are known to use powerful jaws as a way of traveling, by swiftly eating out tunnels underground.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 69
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet, a Swimming speed of 30 feet, and a burrow speed of 30.",
+          "page": 69
+        },
+        {
+          "name": "Tunneling Bite",
+          "text": "Cookiecutter Shark Fish-Men can use their bite to tunnel through soft ground, clay, sand, or gravel. As an action, you can burrow through non-rocky earth up to your burrow speed without leaving a tunnel behind.",
+          "page": 69
+        },
+        {
+          "name": "Powerful Leap",
+          "text": "Your strong legs and agile body allow you to make extraordinary leaps. You can jump three times the normal distance, though you must still adhere to the rule that you can cover a number of feet up to your Strength score if you move at least 10 feet immediately before the jump. This enhancement applies to both long jumps and high jumps. Additionally, you do not incur falling damage from heights of 20 feet or less.",
+          "page": 69
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "speed"
+      ]
+    },
+    {
+      "id": "subrace.fishman.fighting_fish",
+      "kind": "subrace",
+      "name": "Fighting Fish",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 69
+      },
+      "parent": "race.fishman",
+      "text": "Fighting Fish fish-men are known to have violent tendencies than other fish-men, craving a good fight.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 69
+        },
+        {
+          "name": "Berserker’s Charge",
+          "text": "Once per long rest, as a bonus action, you can enter a frenzied state that lasts for 1 minute. During this state, when you move at least 20 feet straight toward a target and then hit it with a melee weapon attack on the same turn, the attack deals an extra 1d6 damage of the weapon’s type. Additionally, while in this frenzied state, you have advantage on all Strength checks and Strength saving throws.",
+          "page": 69
+        },
+        {
+          "name": "Thick-Skinned",
+          "text": "Reflecting their tough, battle- hardened nature, Fighting Fish Fish-Men have a natural resilience. You gain a +1 bonus to your Armor Class.",
+          "page": 69
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.fishman.manta_ray",
+      "kind": "subrace",
+      "name": "Manta Ray",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 69
+      },
+      "parent": "race.fishman",
+      "text": "These fish-men are known to have wide side-fins and light-blue skin, moving at high speeds underwater.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 69
+        },
+        {
+          "name": "Underwater Acrobatics",
+          "text": "You gain proficiency in the Acrobatics skill. You have advantage on acrobatics checks made while underwater.",
+          "page": 69
+        },
+        {
+          "name": "Sea Glide",
+          "text": "You have a Swimming speed of 40 feet.",
+          "page": 69
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.fishman.octopus",
+      "kind": "subrace",
+      "name": "Octopus",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 69
+      },
+      "parent": "race.fishman",
+      "text": "Octopus fish-men tend to have six arms and red or brown-tinted skin, with a lot of flexibility with their multiple appendages.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 1 point in each score.",
+          "page": 69
+        },
+        {
+          "name": "Deadly Precision",
+          "text": "You gain proficiency in one of the following: sleight of hand or an Artisan’s tool of your choice.",
+          "page": 69
+        },
+        {
+          "name": "Multi-Armed",
+          "text": "You have four additional arms, six in total. While you cannot efficiently wield weapons with these arms, you may use them to hold smaller items such as potions and trinkets. Additionally, you have advantage on grapple checks with your arms.",
+          "page": 69
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.fishman.shark",
+      "kind": "subrace",
+      "name": "Shark",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 70
+      },
+      "parent": "race.fishman",
+      "text": "These fish-men are known to have sharp shark-like teeth, light blue-tinted skin, large back fins, and extreme strength.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 70
+        },
+        {
+          "name": "Apex Predator",
+          "text": "You have proficiency in the Intimidation skill.",
+          "page": 70
+        },
+        {
+          "name": "Bite",
+          "text": "Your razor-sharp teeth are a natural weapon, which you can use to make unarmed strikes. If you hit with it, you deal piercing damage equal to 1d6 + your Strength modifier, instead of the bludgeoning damage normal for an Unarmed Strike.",
+          "page": 70
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.fishman.smelt_whiting",
+      "kind": "subrace",
+      "name": "Smelt-Whiting",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 70
+      },
+      "parent": "race.fishman",
+      "text": "Smelt-whiting fish-men are known to have more dominant fish-like characteristics compared to other fish-men, and can spit water at their enemies.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 70
+        },
+        {
+          "name": "Big-Mouthed",
+          "text": "You gain proficiency in the Deception or Persuasion skill (your choice).",
+          "page": 70
+        },
+        {
+          "name": "Hydro Cannon",
+          "text": "You have the natural ability to shoot concentrated blasts of water out of your mouth. You can cast Ray of Frost with this trait. Starting at 3rd Level, you can cast Ice Knife with it. Once you Cast a Spell with this trait, you can’t cast that spell with it again until you finish a Long Rest. Charisma is your Spellcasting Ability for these Spells.",
+          "page": 70
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "race.merfolk",
+      "kind": "race",
+      "name": "Merfolk",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 71
+      },
+      "optional": false,
+      "text": "The changes to fish-men are as follows. Additionally, Merfolk has been changed to Smelt-Whiting and the Shark Merfolk has been added as a new playable race option.\nYour merfolk character will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 1 point in each score.",
+          "page": 71
+        },
+        {
+          "name": "Age",
+          "text": "Merfolk reach adulthood in their teens, mature considerably in their 30s, and live for around a century.",
+          "page": 71
+        },
+        {
+          "name": "Alignment",
+          "text": "Most merfolk are neutral or lawful good. However, few may turn violent against humans and become evil. They are rarely chaotic in nature.",
+          "page": 71
+        },
+        {
+          "name": "Size",
+          "text": "Merfolk are between 6 and 7 feet long and weigh between 160 and 240 pounds on average. Your size is medium.",
+          "page": 71
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 10 feet, and you have a Swimming speed of 50 feet. Once you reach level 5, your walking speed becomes 30 feet.",
+          "page": 71
+        },
+        {
+          "name": "Amphibious",
+          "text": "You can breathe air and water.",
+          "page": 71
+        },
+        {
+          "name": "Adapted to the Sea",
+          "text": "With the ability to adapt to extreme underwater depths, you have Resistance to cold damage.",
+          "page": 71
+        },
+        {
+          "name": "Darkvision",
+          "text": "You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.",
+          "page": 71
+        },
+        {
+          "name": "Flotation Bubble",
+          "text": "As an action, create a floating bubble around your hips. While wearing this bubble, you are under the effect of the Feather Fall spell, your walking speed increases by 15 ft., and you ignore difficult terrain. If you take an amount of damage equal to your proficiency bonus x 5 from a single attack or you fall unconscious, the bubble pops.",
+          "page": 71
+        },
+        {
+          "name": "Languages",
+          "text": "Merfolk can all speak and understand the universal spoken language of this world. Additionally, using gestures and sounds, you can communicate simple ideas with any beast that has an innate Swimming speed.",
+          "page": 71
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "size": "Medium",
+      "speed": 10,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Merfolk Subraces",
+          "text": "Subrace. Just like the fish-men, mermaids are born into a variety of different subraces.",
+          "page": 71
+        }
+      ]
+    },
+    {
+      "id": "subrace.merfolk.scale_fish",
+      "kind": "subrace",
+      "name": "Scale Fish",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 71
+      },
+      "parent": "race.merfolk",
+      "text": "Your scale fish merfolk character will have these traits.",
+      "traits": [
+        {
+          "name": "Crashing Waves",
+          "text": "When you hit a Devil Fruit user with any spells with cold damage, you reduce that target’s damage from all of its attacks and features equal to your proficiency bonus until the beginning of your next turn.",
+          "page": 71
+        },
+        {
+          "name": "Ocean Currents",
+          "text": "Being trained in underwater combat, you can control the flow of water to attack your enemies. You can cast Ray of Frost with this trait. Starting at 3rd Level, you can cast Ice Knife with it, and starting at 5th Level, you can also cast Rime’s Binding Ice with it. Once you Cast a Spell with this trait, you can’t cast that spell with it again until you finish a Long Rest. Charisma is your Spellcasting Ability for these spells.",
+          "page": 71
+        },
+        {
+          "name": "Merfolk’s Charm",
+          "text": "Due to your impeccable genetics, you can cast Charm Person with this trait. You can’t cast this spell with this feature again until you finish a Short or Long Rest. Charisma is your Spellcasting DC for this spell.",
+          "page": 71
+        }
+      ]
+    },
+    {
+      "id": "subrace.merfolk.shark",
+      "kind": "subrace",
+      "name": "Shark",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 71
+      },
+      "parent": "race.merfolk",
+      "text": "Your shark merfolk character will have these traits.",
+      "traits": [
+        {
+          "name": "Future Sight",
+          "text": "Your mystical connection to the future is manifest in your ability to cast certain spells. You can innately cast the following spells, requiring no material components. Starting at 3rd Level you can cast True Seeing, starting at 5th Level you can cast Scrying, and starting at 7th level you can cast Foresight (with a 10 minute duration). Once you Cast a Spell with this trait, you can’t cast that spell with it again until you finish a Long Rest. Wisdom is your Spellcasting Ability for these spells.",
+          "page": 71
+        },
+        {
+          "name": "Guidance of the Depths",
+          "text": "Your keen insights, drawn from both the mystical and the natural world, allow you to guide and protect your allies. As a reaction, when you or a creature you can see within 30 feet of you makes an ability check, an attack roll, or a saving throw, you can grant them a bonus to the roll equal to your Wisdom modifier (minimum of +1). You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a long rest.",
+          "page": 71
+        }
+      ]
+    },
+    {
+      "id": "subrace.merfolk.eel",
+      "kind": "subrace",
+      "name": "Eel",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 71
+      },
+      "parent": "race.merfolk",
+      "text": "Your eel merfolk character will have these traits.",
+      "traits": [
+        {
+          "name": "Merfolk Training",
+          "text": "You have proficiency with the spear, trident, and net. When wielding a spear or trident in one hand and a net in the other, the spear or trident is treated as if it has the versatile property. Additionally, you can throw a net as a bonus action without disadvantage.",
+          "page": 71
+        },
+        {
+          "name": "Slippery Body",
+          "text": "Your slick form makes you difficult to restrain. You have advantage on ability checks and saving throws made to escape a grapple or restraints, and you ignore movement penalties caused by nonmagical difficult terrain while swimming or using your flotation bubble.",
+          "page": 71
+        },
+        {
+          "name": "Whirlpool Lunge",
+          "text": "When you move at least 20 ft. in a straight line forwards a target, your next melee attack against them has advantage.\nYou can use this trait a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.",
+          "page": 71
+        }
+      ]
+    },
+    {
+      "id": "race.sky_islander",
+      "kind": "race",
+      "name": "Sky Islander",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 72
+      },
+      "optional": false,
+      "text": "The changes to sky islanders are as follows.\nYour sky islander will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 72
+        },
+        {
+          "name": "Age",
+          "text": "Sky islanders reach adulthood in their teens and live for around a century.",
+          "page": 72
+        },
+        {
+          "name": "Alignment",
+          "text": "Sky islanders vary in alignment, ranging from good to evil, lawful to chaotic, but are typically neutral in some way.",
+          "page": 72
+        },
+        {
+          "name": "Size",
+          "text": "Sky islanders in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 72
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 72
+        },
+        {
+          "name": "Protection of the Clouds",
+          "text": "You are able to form fluffy floating clouds around you to reduce the speed of your fall. You gain the ability to cast Feather Fall. Once you use this ability, you cannot use it again until you complete a Short or Long rest.",
+          "page": 72
+        },
+        {
+          "name": "Dial Proficiency",
+          "text": "You innately understand dials that have come from sky islands and can carry one with you. Roll once on the Simple Dial Table in Chapter 5 to determine which one you start with.",
+          "page": 72
+        },
+        {
+          "name": "Languages",
+          "text": "Sky islanders can all speak and understand the universal spoken language of this world.",
+          "page": 72
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Sky Islander Subraces",
+          "text": "Subrace. The separation of groups living on the “Fairy Vearth” resulted in four main subraces splitting off: Shandian, Birkan, Skypiean, or Merveillian variants. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "subrace.sky_islander.shandians",
+      "kind": "subrace",
+      "name": "Shandians",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 72
+      },
+      "parent": "race.sky_islander",
+      "text": "Your Shandian heritage has gifted you with great strength and combat expertise.",
+      "traits": [
+        {
+          "name": "Shandian Weapon Training",
+          "text": "You have proficiency with the quarterstaff, halberd, pike, glaive, spear, and heavy firearms.",
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "subrace.sky_islander.birkans",
+      "kind": "subrace",
+      "name": "Birkans",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 72
+      },
+      "parent": "race.sky_islander",
+      "text": "Your Birkan heritage has gifted you with powerful observation and foresight through mantra.",
+      "traits": [
+        {
+          "name": "Mantra Specialist",
+          "text": "You gain 1 uncommon Spirit Surge from Chapter 5: Spirit Surges. You may only spend this surge on Color of Observation Haki features.",
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "subrace.sky_islander.skypieans",
+      "kind": "subrace",
+      "name": "Skypieans",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 72
+      },
+      "parent": "race.sky_islander",
+      "text": "Your Skypiean heritage has gifted you with great knowledge of dials.",
+      "traits": [
+        {
+          "name": "Advanced Dial Proficiency",
+          "text": "You start with an additional Dial, allowing you to roll once more on the Simple Dial Table to determine what other Dial you start with. Additionally, you gain advantage on all checks made to find a dial.",
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "subrace.sky_islander.merveillians",
+      "kind": "subrace",
+      "name": "Merveillians",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 72
+      },
+      "parent": "race.sky_islander",
+      "text": "Your heritage has gifted you with the ability to fly.",
+      "traits": [
+        {
+          "name": "Inherited Flight",
+          "text": "Due to your forearm wings, you have a flying speed equal to your walking speed. You can’t use this flying speed if you’re wearing medium or heavy armor.",
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "race.mink",
+      "kind": "race",
+      "name": "Mink",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 73
+      },
+      "optional": false,
+      "text": "The changes to minks are as follows.\nYour mink will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 1 point in each score.",
+          "page": 73
+        },
+        {
+          "name": "Age",
+          "text": "Minks reach adulthood in their teens and live for around a century.",
+          "page": 73
+        },
+        {
+          "name": "Alignment",
+          "text": "Most minks are neutral or lawful good. However, few may turn chaotic and give into their primal urges if exposed to the full moon for long enough.",
+          "page": 73
+        },
+        {
+          "name": "Size",
+          "text": "Minks in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 73
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 73
+        },
+        {
+          "name": "Darkvision",
+          "text": "You have an animal’s keen Senses, especially in the dark. You can see in dim light within 60 feet of you as if it were bright light, and in Darkness as if it were dim light. You can’t discern color in Darkness, only Shades of Gray.",
+          "page": 73
+        },
+        {
+          "name": "Beast’s Slash",
+          "text": "Because of your beast-like features, you have a climbing speed of 20 feet. In addition, your body is a natural Weapon, which you can use to make unarmed strikes. You can choose to deal slashing for your unarmed strikes, and your unarmed strike damage dice becomes a minimum of 1d6.",
+          "page": 73
+        },
+        {
+          "name": "Animal Instinct",
+          "text": "You have proficiency in the Perception and Stealth Skills.",
+          "page": 73
+        },
+        {
+          "name": "Electro",
+          "text": "You know the Shocking Grasp cantrip. Wisdom is your Spellcasting Ability for this Spell. Additionally, you are Resistant to lightning damage.",
+          "page": 73
+        },
+        {
+          "name": "Animal Characteristics",
+          "text": "Your body possesses a unique mammalian trait, granting you abilities associated with that animal. You can pick two of the following:\nRetractable Claws. You have retractable claws, which you can use for combat. Your unarmed strikes deal an additional 1d4 slashing damage while you have no weapons equipped.\nNimble Climber. You have a climbing speed equal to your walking speed.\nEnhanced Agility. You are exceptionally nimble. When you make a long jump, you can cover twice the normal distance. Additionally, you have advantage on Dexterity (Acrobatics) checks to avoid being knocked prone.\nExcellent Senses. You have an exceptional sense of smell and hearing, giving you advantage on Perception checks that rely on scent and sight. You can detect invisible or hidden creatures within 10 feet if they have a distinctive scent.\nBrute Strength. Your upper body strength allows you to grapple with ease. You gain proficiency in Athletics, and when you hit with an unarmed strike, you can attempt to grapple the target as a bonus action.\nFleet Footed. Your powerful legs grant you speed. Your base walking speed increases by 10 feet.\nGood Swimmer. You have a swimming speed equal to your walking speed and can hold your breath for up to 15 minutes.\nHunter Prowess. You are adept at moving quietly. You gain advantage when rolling Stealth checks, and difficult terrain doesn’t cost you extra movement while you are moving in stealth.\nTough Hide. Your thick hide grants you additional protection. Your Armor Class increases by 1 while you are not wearing heavy armor.\nScavenger Resilience. When you drop to 0 hit points but aren’t killed outright, you can drop to 1 hit point instead. You can’t use this feature again until you finish a long rest.\nOpposable Thumbs. You have agile hands and can use your feet for delicate tasks. You gain proficiency in Sleight of Hand, and you can manipulate simple objects with your feet as though they were hands.\nLeap. You can make powerful pouncing attacks. When you jump at least 10 feet toward a creature and hit it with a melee attack, you can deal an extra 1d6 damage. Additionally, the target must succeed on a Strength save DC equal to 8 + your Strength modifier + your proficiency bonus, or be knocked prone.\nFerocity. You can use your action to make a reckless attack, gaining advantage on melee attack rolls until the end of your turn. However, attack rolls against you also have advantage until the start of your next turn. You can use this feature once per short or long rest.\nThick Coat. You have adapted to colder environments. You have resistance to cold damage and advantage on Constitution saving throws against the effects of extreme cold.",
+          "page": 73
+        },
+        {
+          "name": "Sulong Transformation",
+          "text": "Starting at 3rd Level, if you can see the full moon, you can use your action to channel moonlight energy into your body and transform into a powerful bright white primal form with longer hair and enhanced size, bolstering your strength, speed, and electro.\nYour transformation lasts for 10 minutes or until you end it as a Bonus Action. During it, your speed increases by 60 feet, you have advantage on strength and dexterity checks, advantage on attack rolls, and you can deal extra lightning damage when you deal damage with an Attack or a spell. The extra lightning damage equals your level. When this feature ends, gain 1 exhaustion. Once you use this trait, you can’t use it again until you finish a Long Rest.",
+          "page": 73
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.yokai_tribesman",
+      "kind": "race",
+      "name": "Yokai Tribesman",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 74
+      },
+      "optional": false,
+      "text": "The changes to yokai tribesmen are as follows.\nYour yokai tribesman will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 74
+        },
+        {
+          "name": "Age",
+          "text": "Yokai Tribesmen reach adulthood in their teens and live for around a century.",
+          "page": 74
+        },
+        {
+          "name": "Alignment",
+          "text": "Yokai Tribesmen display various alignments, but many are seen as evil. However, any alignment can be reasonably chosen.",
+          "page": 74
+        },
+        {
+          "name": "Tribal Charisma",
+          "text": "The pride of your race and features has made you unbelievably confident in conversations. You have proficiency in the Intimidation and Persuasion skills.",
+          "page": 74
+        },
+        {
+          "name": "Crafty",
+          "text": "You gain proficiency in one tool or instrument of your choice.",
+          "page": 74
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "auto": [
+        "abilityIncrease"
+      ],
+      "sections": [
+        {
+          "name": "Yokai Tribesman Subraces",
+          "text": "Subrace. There are several variants of yokai tribesmen: the longleg tribesmen, the longarm tribesmen, and the three-eye tribesmen. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
+          "page": 74
+        }
+      ]
+    },
+    {
+      "id": "subrace.yokai_tribesman.longleg_tribesman",
+      "kind": "subrace",
+      "name": "Longleg Tribesman",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 74
+      },
+      "parent": "race.yokai_tribesman",
+      "text": "Your longleg tribesman has been gifted with magnificent long legs that grant them the following traits.",
+      "traits": [
+        {
+          "name": "Size",
+          "text": "Longleg tribesmen in the One Piece World are typically 7-8 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 74
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 35 feet.",
+          "page": 74
+        },
+        {
+          "name": "Longleg Stride",
+          "text": "Your massive legs allow you to move with a burst of speed. When you move on Your Turn in Combat, you can double your speed until the end of the turn. Once you use this trait, you can’t use it again until you move 0 feet on one of your turns.",
+          "page": 74
+        }
+      ],
+      "size": "Medium",
+      "speed": 35,
+      "auto": [
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "subrace.yokai_tribesman.longarm_tribesman",
+      "kind": "subrace",
+      "name": "Longarm Tribesman",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 74
+      },
+      "parent": "race.yokai_tribesman",
+      "text": "Your longarm tribesman has been gifted with long and lanky arms that grant immense strength and reach.",
+      "traits": [
+        {
+          "name": "Size",
+          "text": "Longarm tribesmen in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 74
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 74
+        },
+        {
+          "name": "Long-Limbed",
+          "text": "When you make a melee Attack on Your Turn, your reach for it is 5 feet greater than normal.",
+          "page": 74
+        },
+        {
+          "name": "Powerful Build",
+          "text": "You count as one size larger when determining your carrying Capacity and the weight you can push, drag, or lift.",
+          "page": 74
+        }
+      ],
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "subrace.yokai_tribesman.snakeneck_tribesman",
+      "kind": "subrace",
+      "name": "Snakeneck Tribesman",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 74
+      },
+      "parent": "race.yokai_tribesman",
+      "text": "Your snakeneck tribesman is gifted with a very long snake-like neck.",
+      "traits": [
+        {
+          "name": "Size",
+          "text": "Snakeneck tribesmen in the One Piece World are typically 6-8 feet tall due to their long neck. Some can rest far outside this range, but your size will count as medium.",
+          "page": 74
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 74
+        },
+        {
+          "name": "Quick Reflexes",
+          "text": "You can add your proficiency bonus to your initiative rolls.",
+          "page": 74
+        },
+        {
+          "name": "Serpentine Senses",
+          "text": "You have proficiency in the Perception skill.",
+          "page": 74
+        }
+      ],
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "subrace.yokai_tribesman.three_eyed_tribesman",
+      "kind": "subrace",
+      "name": "Three-eyed Tribesman",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 74
+      },
+      "parent": "race.yokai_tribesman",
+      "text": "Your three-eyed tribesman is gifted with a third eye on the center of their forehead which grants them mysterious powers.",
+      "traits": [
+        {
+          "name": "Size",
+          "text": "Three-eyed tribesmen in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 74
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 74
+        },
+        {
+          "name": "Darkvision",
+          "text": "You can see in dim light within 60 feet of you as if it were bright light, and in Darkness as if it were dim light. You can’t discern color in Darkness, only Shades of Gray.",
+          "page": 74
+        },
+        {
+          "name": "All-Seeing",
+          "text": "You have blindsight with a range of 10 feet. Within that range, you can effectively see anything that isn’t behind total cover, even if you’re blinded or in darkness.",
+          "page": 74
+        },
+        {
+          "name": "Third Eye (Optional)",
+          "text": "Three-eyed tribesmen can all speak and understand the universal spoken language of this world. Additionally, some can awaken their third eye to be able to read and understand the language of the Poneglyphs (up to DM discretion).",
+          "page": 74
+        }
+      ],
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "rule.optional_races",
+      "kind": "rule",
+      "name": "Optional Races",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 75
+      },
+      "text": "As said in the Dungeons and Devil Fruits Player’s Handbook. These optional races are intended to be used for games where the Dungeon Master approves of the use of races that might interfere with the game balance in a way that might feel unfair to some.\nIf these races don’t fit into the way you want to run your game, feel free to leave them out or repurpose them for use as NPCs."
+    },
+    {
+      "id": "race.cyborg",
+      "kind": "race",
+      "name": "Cyborg",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 75
+      },
+      "optional": true,
+      "text": "The changes to cyborgs are as follows.\nYour cyborg will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Constitution score increases by 2, and one other ability score of your choice increases by 1.",
+          "page": 75
+        },
+        {
+          "name": "Age",
+          "text": "Depending on how much of their body has been modified, cyborgs may have longer lifespans compared to other races. In theory, they should still remain mortal so long as parts of them still remain organic.",
+          "page": 75
+        },
+        {
+          "name": "Alignment",
+          "text": "It can be assumed that many cyborgs act Lawfully, but they can technically fall under any alignment.",
+          "page": 75
+        },
+        {
+          "name": "Size",
+          "text": "Cyborgs in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 75
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 75
+        },
+        {
+          "name": "Steel Skin",
+          "text": "Your body has a layer of defensive metal beneath or replacing your skin, which can be enhanced with armor:\nYou gain a +1 bonus to Armor Class.\nTo reinforce your metal skin, first you must disassemble a piece of mundane or magical armor. After doing so, you must spend an hour consistently incorporating these parts into your skin. Once you are finished, you gain the AC and bonuses of your chosen armor as if you were wearing it, as well as all of the side-effects of that armor. To remove this armor, you must spend an hour replacing it with artificial skin.\nThis metal skin cannot be removed from your body against your will.",
+          "page": 75
+        },
+        {
+          "name": "Robotic Resistance",
+          "text": "You have advantage on Saving Throws against being Poisoned, and you have Resistance to poison damage.",
+          "page": 75
+        },
+        {
+          "name": "Refueling",
+          "text": "In place of eating food and drinking water each day, you must instead consume an equivalent amount of fuel to what a normal creature of your size would eat. The type of fuel you use can range from cola to gasoline (your choice), which costs roughly ฿5,000. Starvation rules apply to consuming fuel as they would with food for another race.",
+          "page": 75
+        },
+        {
+          "name": "Maintenance",
+          "text": "Instead of sleeping each day, you instead conduct maintenance on your body during a Long Rest. This includes oiling your joints, repairing any dents or broken parts, or fixing anything else you’d need to maintain. This takes at least six hours to complete. You are able to see and hear normally while you complete these tasks.",
+          "page": 75
+        },
+        {
+          "name": "Cyborg Upgrades",
+          "text": "You install 2 weapon or tool features of your choice listed below into your body. Each time you level up, you can choose to completely replace one of these features with another one. You can choose an additional upgrade at levels 4, 8, 12, 16, and 20th level:\nFlail Arm. When you make an unarmed strike or melee weapon attack on your turn that requires your arms to use, you can choose to extend its reach for that attack by 5 feet. You can only use this once on a single melee attack per turn.\nFlame Breath. You learn the Create Bonfire cantrip, which you produce from your mouth. Constitution is your Spellcasting Ability for this Spell.\nRefrigerated Stomach. You may store up to 30 pounds of gear in your body, concealed and protected by your metallic flesh. This also acts to chill and preserve any food or fuel you may want to store.\nAir Blast. You learn the Thunderclap cantrip, which you produce from air emitted from your body. Constitution is your Spellcasting Ability for this Spell.\nPropeller Body. Your limbs can rotate at extreme speeds in water, acting as a boat propeller. You gain a swimming speed of 25 feet.\nCentaur Form. Using an action to morph your lower body into the form of a horse, your speed increases by 10 feet for one minute. Additionally, you have advantage on all Strength checks and you can allow a medium or smaller creature to use you as a mount for the duration. Once you use this feature, you cannot use it again until you complete a short or long rest.\nShape-Memory Alloy Body. You gain one skill proficiency and one tool proficiency of your choice, which you can choose to swap out each time you level up.\nArsenal Infusion. You can spend an hour incorporating a single weapon you are proficient with into your body. Upon doing so, you can use this weapon as you normally would. Additionally, this weapon cannot be taken or removed from your body against your will. You may spend an hour removing this weapon from your body.\nNight Lens. You can see in dim light within 60 feet of you as if it were bright light, and in Darkness as if it were dim light. You can’t discern color in Darkness, only Shades of Gray.\nHeadlights. Lights on your body emit bright light in a 20-foot radius and dim light for an additional 20 feet.\nExtended Flail. This is an upgrade of the Flail Arm Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. Your Flail Arm reach extends to 10 feet.\nFlamethrower. This is an upgrade of the Flame Breath Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Burning Hands spell cast at the 2nd-Level, which acts as a powerful spray of fire emitted from your body. Constitution is your Spellcasting Ability for this Spell. Once you use this feature, you cannot use it again until you complete a long rest.\nRadical Beam. This is an upgrade of the Air Blast Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Aganazzar’s Scorcher spell, which acts as a powerful explosive laser beam emitted from your body. Constitution is your Spellcasting Ability for this Spell and the damage is radiant instead of fire. Once you use this feature, you cannot use it again until you complete a long rest.\nGeneral Cannon. This is an upgrade of the Air Blast Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Shatter spell, which you produce from air emitted from your body. Constitution is your Spellcasting Ability for this Spell. Once you use this feature, you cannot use it again until you complete a long rest.\nLarger Propellers. This is an upgrade of the Propeller Body Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You can now spin parts of your body like a propeller to lift you into the air. You now have a flying speed of 10 feet.\nGeneral Form. This is an upgrade of the Centaur Form Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You can now transform your body into a larger robotic form until you run out of energy. You can cast the Enlarge/Reduce spell on yourself once with this trait, using only the spell’s enlarge option, appearing to transform into a larger metal version of yourself. You regain the ability to cast this spell with this trait when you finish a long rest.\nAdvanced Shape-Memory Alloy. This is an upgrade of the Shape-Memory Alloy Body Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn an additional Skill of your choice. Additionally, you learn the Shield spell. Once you use this feature, you cannot use it again until you complete a long rest.\nGrand Arsenal. This is an upgrade of the Arsenal Infusion Feature, meaning you must also have that Upgrade learned in order to learn and use this one as well. You are able to implement one more weapon into your body using Arsenal Infusion.",
+          "page": 75
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "con": 2
+        }
+      },
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.dwarf",
+      "kind": "race",
+      "name": "Dwarf",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 77
+      },
+      "optional": true,
+      "text": "The changes to Dwarves are as follows.\nYour dwarf will have these traits",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Dexterity score increases by 1.",
+          "page": 77
+        },
+        {
+          "name": "Age",
+          "text": "Dwarves reach adulthood in their teens and live for around a century.",
+          "page": 77
+        },
+        {
+          "name": "Alignment",
+          "text": "Dwarves are typically Lawful Good, though they may sometimes fall under different alignments.",
+          "page": 77
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 77
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "dex": 1
+        }
+      },
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Dwarf Subraces",
+          "text": "Subrace. There are three variants of dwarves: the Tontatta Tribesman, the Automata, and the Kinokobito. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
+          "page": 77
+        }
+      ]
+    },
+    {
+      "id": "subrace.dwarf.tontatta_tribe",
+      "kind": "subrace",
+      "name": "Tontatta Tribe",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 77
+      },
+      "parent": "race.dwarf",
+      "text": "Your tontatta tribesman has been granted supernatural agility, strength, and mastery over cultivating plants.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength score increases by 4.",
+          "page": 77
+        },
+        {
+          "name": "Size",
+          "text": "Dwarves in the One Piece World are typically 6- 12 inches tall. Your size is tiny.",
+          "page": 77
+        },
+        {
+          "name": "Hard to Detect",
+          "text": "Your tiny size and evasiveness gives you proficiency in the Stealth and Acrobatics skills.\nGlass Cannon Your hit point maximum decreases by 2, and it decreases by 2 every time you gain a level.",
+          "page": 77
+        },
+        {
+          "name": "Super Strength",
+          "text": "You are considered medium size when calculating push, pull, drag, or carry weight. You also roll normally on grapple checks and saves.",
+          "page": 77
+        },
+        {
+          "name": "Swift Fury",
+          "text": "When you reach 3rd level, you can cast the Zephyr Strike spell as a 1st-level spell once with this trait and regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the Kinetic Jaunt spell once with this trait and regain the ability to do so when you finish a long rest.",
+          "page": 77
+        },
+        {
+          "name": "Master Cultivators",
+          "text": "Your mastery of plants and plant products grants you resistance to poison damage and immunity to the Poisoned condition.",
+          "page": 77
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 4
+        }
+      },
+      "size": "Tiny",
+      "auto": [
+        "abilityIncrease",
+        "size"
+      ]
+    },
+    {
+      "id": "subrace.dwarf.automata",
+      "kind": "subrace",
+      "name": "Automata",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 77
+      },
+      "parent": "race.dwarf",
+      "text": "Your automata is a race of robots that resemble dwarves and have the ability to travel through outer space and live on the moon.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Constitution score increases by 4.",
+          "page": 77
+        },
+        {
+          "name": "Size",
+          "text": "Automata are between 3 and 4 feet tall. Your size is small.",
+          "page": 77
+        },
+        {
+          "name": "Programmed Minds",
+          "text": "You are immune to abilities that allow other creatures to read your thoughts.",
+          "page": 77
+        },
+        {
+          "name": "Robotic Resilience",
+          "text": "You were created to have remarkable Fortitude, represented by the following benefits:\nYou have advantage on Saving Throws against being Poisoned, and you have Resistance to poison damage.\nYou don’t need to eat, drink, or breathe.\nYou are immune to disease.\nYou don’t need to sleep, and magic can’t put you to sleep.",
+          "page": 77
+        },
+        {
+          "name": "Militaristic Design",
+          "text": "You gain one skill proficiency and one weapon proficiency of your choice.",
+          "page": 77
+        },
+        {
+          "name": "Electric-Powered",
+          "text": "You are immune to lightning damage. Additionally, if you are hit by an ability that would deal lightning damage, your attack rolls have advantage until the end of your next turn.",
+          "page": 77
+        },
+        {
+          "name": "Iron Shell",
+          "text": "Your metallic body grants you a +1 bonus to Armor Class.",
+          "page": 77
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "con": 4
+        }
+      },
+      "size": "Small",
+      "auto": [
+        "abilityIncrease",
+        "size"
+      ]
+    },
+    {
+      "id": "subrace.dwarf.kinokobito",
+      "kind": "subrace",
+      "name": "Kinokobito",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 77
+      },
+      "parent": "race.dwarf",
+      "text": "Your kinokobito heritage gives you a connection to the forest and resilience through your mushroom-like body structure.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Wisdom score increases by 4.",
+          "page": 77
+        },
+        {
+          "name": "Size",
+          "text": "Kinokobito are typically 8-16 inches tall. Your size is tiny.",
+          "page": 77
+        },
+        {
+          "name": "Resilient Biology",
+          "text": "You have resistance to poison damage and advantage on saving throws against being poisoned. Additionally, you are immune to diseases.",
+          "page": 77
+        },
+        {
+          "name": "Photosynthetic Sustenance",
+          "text": "You do not need to eat, as you absorb nutrients from sunlight or moonlight. As long as you spend at least 4 hours in natural light per day, you can maintain your health without consuming food.",
+          "page": 77
+        },
+        {
+          "name": "Fungal Camouflage",
+          "text": "Your connection to the natural world allows you to blend into forested or plant-dense environments. You gain proficiency in the Stealth skill, and you can attempt to hide even when only lightly obscured by foliage, mist, or other natural phenomena.",
+          "page": 77
+        },
+        {
+          "name": "Spore Burst",
+          "text": "Starting at 3rd level, as a bonus action, you can release a burst of spores in a 10-foot radius around you. Each creature in that area must succeed on a Constitution save DC equal to 8 + your Wisdom modifier + your proficiency bonus or be poisoned until the end of your next turn. You can use this ability an amount of times equal to your proficiency bonus, regaining all charges after a long rest.",
+          "page": 77
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "wis": 4
+        }
+      },
+      "size": "Tiny",
+      "auto": [
+        "abilityIncrease",
+        "size"
+      ]
+    },
+    {
+      "id": "race.lunarian",
+      "kind": "race",
+      "name": "Lunarian",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 78
+      },
+      "optional": true,
+      "text": "The changes to lunarians are as follows.\nYour lunarian will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Dexterity score increases by 3, and your Constitution score increases by 3.",
+          "page": 78
+        },
+        {
+          "name": "Age",
+          "text": "Lunarians live for an unknown period of time, but it can be assumed that they reach adulthood in their teens and live for around a century.",
+          "page": 78
+        },
+        {
+          "name": "Alignment",
+          "text": "There is no clear alignment that is consistent among all lunarians. Just about any alignment can be justified.",
+          "page": 78
+        },
+        {
+          "name": "Size",
+          "text": "Lunarians in the One Piece World are typically very tall, perhaps between 7 and 8 feet tall and weigh between 280 and 340 pounds. Your size is Medium.",
+          "page": 78
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 25 feet.",
+          "page": 78
+        },
+        {
+          "name": "Flight",
+          "text": "You have a flying speed of 50 feet. To use this speed, you can’t be wearing medium or heavy armor.",
+          "page": 78
+        },
+        {
+          "name": "Fire Resistance",
+          "text": "You have resistance to fire damage.",
+          "page": 78
+        },
+        {
+          "name": "Ignite",
+          "text": "You know the Produce Flame cantrip. When you reach 3rd level, you can cast the Burning Hands spell as a 2nd-level spell once with this trait and regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the Flame Blade spell once with this trait and regain the ability to do so when you finish a long rest. Constitution is your spellcasting ability for these spells.",
+          "page": 78
+        },
+        {
+          "name": "Eternal Flame",
+          "text": "A flame appears from your spine. As an action, while in this form, you have resistance to all damage types except force, but all of your attack rolls have disadvantage and your flight speed decreases by 20 ft. until you use a bonus action to remove this effect.",
+          "page": 78
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "dex": 3,
+          "con": 3
+        }
+      },
+      "size": "Medium",
+      "speed": 25,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.fish_man_wotan",
+      "kind": "race",
+      "name": "Fish-Man, Wotan",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 78
+      },
+      "optional": true,
+      "text": "Wotans are smaller than giants but are still massive by the standards of most fish-men, and also possess some of the special attributes of their fish-men fish species. Like giants and fish-men, they also possess tremendous strength. Their overall size is comparable to that of a large-sized human.\nYour wotan fish-man will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength and Constitution scores increase by 3. Your Dexterity score decreases by 1, and your Intelligence score decreases by 1.",
+          "page": 78
+        },
+        {
+          "name": "Age",
+          "text": "Fish-men reach adulthood in their teens and live for around a century.",
+          "page": 78
+        },
+        {
+          "name": "Alignment",
+          "text": "Most fish-men are lawful and many stay true to their values, though some lean toward being neutral. Fish-men can live in harmony with other sea creatures, but may turn violent against humans. For this reason, a fish-man can range from being good to evil.",
+          "page": 78
+        },
+        {
+          "name": "Size",
+          "text": "Fish-men are between 10 and 16 feet tall. Your size is large or huge.",
+          "page": 78
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet, and you have a Swimming speed of 35 feet.",
+          "page": 78
+        },
+        {
+          "name": "Amphibious",
+          "text": "You can breathe air and water.",
+          "page": 78
+        },
+        {
+          "name": "Underwater Athlete",
+          "text": "You have proficiency in the Athletics skill. While underwater, you face no penalties or disadvantage as a result of underwater combat rules.",
+          "page": 78
+        },
+        {
+          "name": "Adapted to the Sea",
+          "text": "With the ability to adapt to extreme underwater depths, you have Resistance to cold damage.",
+          "page": 78
+        },
+        {
+          "name": "Darkvision",
+          "text": "You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.",
+          "page": 78
+        },
+        {
+          "name": "Colossal Strike",
+          "text": "Due to your massive size and strength, Wotans can deliver particularly devastating blows. When you score a critical hit with a melee weapon attack, you can roll one of the weapon’s damage dice one additional time and add it to the extra damage of the critical hit.",
+          "page": 78
+        },
+        {
+          "name": "Wotan Vigor",
+          "text": "You have advantage on saving throws against being poisoned, and you have resistance to poison damage. Additionally, once per long rest, you can regain hit points equal to 1d12 + your Constitution modifier as a result of your rapid regenerative abilities.",
+          "page": 78
+        }
+      ],
+      "size": "Large",
+      "speed": 30,
+      "auto": [
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.buccaneer",
+      "kind": "race",
+      "name": "Buccaneer",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 79
+      },
+      "optional": true,
+      "text": "Buccaneers are a nearly-extinct special race of humanoids. Unlike the other hybrid races, buccaneers are all descended from common ancestors. They carry at least some giant blood.\nYour buccaneer will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength score increases by 2 and your Constitution score increases by 3.",
+          "page": 79
+        },
+        {
+          "name": "Age",
+          "text": "Buccaneers reach adulthood in their teens and live for around a century.",
+          "page": 79
+        },
+        {
+          "name": "Alignment",
+          "text": "It can be assumed that many Buccaneers are good, but they can technically fall under any alignment.",
+          "page": 79
+        },
+        {
+          "name": "Size",
+          "text": "Buccaneers are between 8 and 10 feet tall and weigh between 280 and 340 pounds. Your size is Large.",
+          "page": 79
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 79
+        },
+        {
+          "name": "Giant’s Blood",
+          "text": "Due to their giant ancestry, Buccaneers have advantage on Strength-based checks and saving throws against being frightened.",
+          "page": 79
+        },
+        {
+          "name": "Maritime Adaptation",
+          "text": "Buccaneers have a history connected to the sea. They have proficiency in the Athletics or Survival skill.",
+          "page": 79
+        },
+        {
+          "name": "Sturdy Build",
+          "text": "Your large size and resilient nature provide you with a natural armor bonus. When not wearing armor, your AC is 13 + your Constitution modifier.",
+          "page": 79
+        },
+        {
+          "name": "Powerful Build",
+          "text": "You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.",
+          "page": 79
+        },
+        {
+          "name": "Anchor Throw",
+          "text": "Once per short or long rest, as an action, you can leverage your giant strength to pick up a loose object up to 3000 lbs. with great force. During the same action or a future separate action, you can make a ranged attack with the object, treating it as an improvised ranged weapon with a normal range of 20 feet and a long range of 60 feet. On a hit, it deals 1d12 in bludgeoning damage, gaining an extra dice at level 5, 11 and 17.",
+          "page": 79
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 2,
+          "con": 3
+        }
+      },
+      "size": "Large",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.oni",
+      "kind": "race",
+      "name": "Oni",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 79
+      },
+      "optional": true,
+      "text": "The Oni Tribe are a race of Giants that have demonic features and are generally larger than most races. Although they are nearly extinct today, during the Void Century, they roamed the seas as warriors of mass destruction.\nYour oni will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength score increases by 3 and your Constitution score increases by 2.",
+          "page": 79
+        },
+        {
+          "name": "Age",
+          "text": "Oni reach adulthood in their teens and live for around a century.",
+          "page": 79
+        },
+        {
+          "name": "Alignment",
+          "text": "It can be assumed that many Oni are chaotic, but they can technically fall under any alignment.",
+          "page": 79
+        },
+        {
+          "name": "Size",
+          "text": "Oni are between 8 and 16 feet tall and weigh between 280 and 340 pounds. Your size is Large or Huge.",
+          "page": 79
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 35 feet.",
+          "page": 79
+        },
+        {
+          "name": "Demonic Resilience",
+          "text": "Due to their demonic nature, Oni have resistance to fire and poison damage.",
+          "page": 79
+        },
+        {
+          "name": "Terrifying Presence",
+          "text": "As an action, you can unleash the fearsome presence of an Oni to frighten your enemies. Once per long rest, you can force all creatures of your choice within 30 feet to make a Wisdom saving throw or be frightened for 1 minute. The DC for this saving throw equals 8 + your proficiency bonus + your Charisma modifier. Creatures can reroll their failed saves at the end of their turns.",
+          "page": 79
+        },
+        {
+          "name": "Giant’s Reach",
+          "text": "When you make a melee attack on your turn, your reach for it is 5 feet greater than normal.",
+          "page": 79
+        },
+        {
+          "name": "Warrior’s Heritage",
+          "text": "You have proficiency with two martial weapons of your choice and heavy armor.",
+          "page": 79
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 3,
+          "con": 2
+        }
+      },
+      "size": "Large",
+      "speed": 35,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.elbaf_giant",
+      "kind": "race",
+      "name": "Elbaf Giant",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 80
+      },
+      "optional": true,
+      "text": "Important Warning: If a player wishes to play this race,\nthey will not be able to fit in 90% of indoor spaces.\nYour giant will have these traits.\nYour giant will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength and Constitution scores increase by 4. Your maximum for those scores is now 24. Your Dexterity score decreases by 3.",
+          "page": 80
+        },
+        {
+          "name": "Age",
+          "text": "Giants can live for up to 300+ years.",
+          "page": 80
+        },
+        {
+          "name": "Alignment",
+          "text": "It can be assumed that many giants are neutral, but they can technically fall under any alignment.",
+          "page": 80
+        },
+        {
+          "name": "Size",
+          "text": "Giants in the One Piece World are typically 50- 60 feet tall. Some can rest far outside this range, but your size will count as gargantuan.",
+          "page": 80
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 40 feet.",
+          "page": 80
+        },
+        {
+          "name": "Sheer Size",
+          "text": "You have proficiency in the Athletics and Intimidation skills.",
+          "page": 80
+        },
+        {
+          "name": "Warrior Training",
+          "text": "You have proficiency with the Battleaxe, Handaxe, Light Hammer, Longsword, Club, and Spear.",
+          "page": 80
+        },
+        {
+          "name": "Giant’s Reach",
+          "text": "When you make a melee attack on your turn, your reach for it is 5 feet greater than normal.",
+          "page": 80
+        },
+        {
+          "name": "Fighting Courage",
+          "text": "Your confidence and stature in battle inspires your allies. Whenever you roll initiative in combat or roll a critical hit on a weapon attack, grant any amount of allied creatures of your choice up to 60 ft. away an amount of temporary hit points equal to half of your level (rounded up) + your proficiency bonus.",
+          "page": 80
+        },
+        {
+          "name": "Sun God’s Assault",
+          "text": "Channeling their devotion to the Sun God, Elbaf Giants can unleash a devastating sweeping strike. When you score a critical hit with a melee weapon attack, you may choose to forgo the critical damage. If you do, the attack becomes a line 30 feet long and 10 feet wide, originating from the target you hit and extending in a direction of your choice within a 180-degree arc away from you. All creatures within the line are automatically hit by the attack, taking normal weapon damage.",
+          "page": 80
+        }
+      ],
+      "speed": 40,
+      "auto": [
+        "speed"
+      ]
+    },
+    {
+      "id": "race.punk_experiment",
+      "kind": "race",
+      "name": "Punk Experiment",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 81
+      },
+      "optional": true,
+      "text": "Created through unnatural methods, Experiments are beings whose physiology has been altered, splicing animal traits with humanoid forms. From Punk Hazard’s experiments to the mysterious Numbers of Wano, Experiments are diverse, each type possessing unique abilities and quirks based on their specific alterations.\nYour experiment character has the following traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Constitution score increases by 2.",
+          "page": 81
+        },
+        {
+          "name": "Age",
+          "text": "Experiments age similarly to their base species, though their unique physiology may cause them to mature faster or have unpredictable lifespans.",
+          "page": 81
+        },
+        {
+          "name": "Alignment",
+          "text": "Due to their altered existence, Experiments can be of any alignment, often shaped by their experiences as outcasts or subjects.",
+          "page": 81
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 81
+        },
+        {
+          "name": "Unnatural Origin",
+          "text": "You have resistance to poison damage and advantage on saving throws against being poisoned.",
+          "page": 81
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "con": 2
+        }
+      },
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Punk Experiment Subraces",
+          "text": "There are four main types of Experiments: Satyr, Centaur, Harpy, and Number. Choose one of these subraces and add its traits to your racial features.",
+          "page": 81
+        }
+      ]
+    },
+    {
+      "id": "subrace.punk_experiment.satyr",
+      "kind": "subrace",
+      "name": "Satyr",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 81
+      },
+      "parent": "race.punk_experiment",
+      "text": "Satyrs are a mix of human and goat traits, often gaining agility and heightened senses.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Dexterity score increases by 1.",
+          "page": 81
+        },
+        {
+          "name": "Size",
+          "text": "Satyrs are medium in size.",
+          "page": 81
+        },
+        {
+          "name": "Goatlike Agility",
+          "text": "You have proficiency in the Acrobatics skill.",
+          "page": 81
+        },
+        {
+          "name": "Mountain Adaptation",
+          "text": "You ignore difficult terrain caused by rocky or mountainous terrain.",
+          "page": 81
+        },
+        {
+          "name": "Bounding Leap",
+          "text": "Your powerful goat legs allow you to jump greater distances. Your jump distance is doubled, and you can jump your full distance without needing a running start.",
+          "page": 81
+        },
+        {
+          "name": "Ramming Speed",
+          "text": "When you move at least 20 feet in a straight line and hit with a melee attack, you deal an extra 1d6 bludgeoning damage.",
+          "page": 81
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "dex": 1
+        }
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.punk_experiment.centaur",
+      "kind": "subrace",
+      "name": "Centaur",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 81
+      },
+      "parent": "race.punk_experiment",
+      "text": "Centaurs have the lower body of a four legged animal and the upper body of a human coming from the animals neck, granting them speed and endurance.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength score increases by 1.",
+          "page": 81
+        },
+        {
+          "name": "Size",
+          "text": "Centaurs size depends on the user’s original height, choose your size from either Medium, Large, or Huge.",
+          "page": 81
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed increases to 40 feet.",
+          "page": 81
+        },
+        {
+          "name": "Animalistic Build",
+          "text": "You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.",
+          "page": 81
+        },
+        {
+          "name": "Kick",
+          "text": "Your hind legs are natural weapons, which you can use to make unarmed strikes. They deal 1d4 bludgeoning or slashing (depending on the animal legs you choose) damage on a hit.",
+          "page": 81
+        },
+        {
+          "name": "Charge",
+          "text": "If you move at least 30 feet straight toward a target and then hit it with a melee attack on the same turn, the target must succeed on a Strength save DC equal to 8 + your Strength modifier + your proficiency bonus, or be knocked prone.",
+          "page": 81
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 1
+        }
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.punk_experiment.harpy",
+      "kind": "subrace",
+      "name": "Harpy",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 81
+      },
+      "parent": "race.punk_experiment",
+      "text": "Harpies possess avian features, particularly wings, giving them limited flight.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Dexterity score increases by 1.",
+          "page": 81
+        },
+        {
+          "name": "Size",
+          "text": "Harpies are medium.",
+          "page": 81
+        },
+        {
+          "name": "Glide",
+          "text": "You cannot fly, but you can use your wings to glide. When falling, you can slow your descent to 60 feet per round and move up to 10 feet horizontally for every 5 feet you fall. You take no falling damage if you land at the end of a glide.",
+          "page": 81
+        },
+        {
+          "name": "Talons",
+          "text": "Your feet end in sharp talons, which you can use as natural weapons. They deal 1d4 slashing damage on a hit.",
+          "page": 81
+        },
+        {
+          "name": "Avian Vision",
+          "text": "You have advantage on Wisdom (Perception) checks that rely on sight.",
+          "page": 81
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "dex": 1
+        }
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    },
+    {
+      "id": "subrace.punk_experiment.number",
+      "kind": "subrace",
+      "name": "Number",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 81
+      },
+      "parent": "race.punk_experiment",
+      "text": "Important Warning: If a player wishes to play this race,\nthey will not be able to fit in 90% of indoor spaces.\nNumbers are a unique type of Experiment, their forms altered to giant sizes and immense strength.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Constitution score increases by an additional 2 and your Strength score increases by 2. Your maximum for those scores is now 24. Your Dexterity score decreases by 2, and your Intelligence score decreases by 3.",
+          "page": 81
+        },
+        {
+          "name": "Size",
+          "text": "Giants in the One Piece World are typically 50- 60 feet tall. Some can rest far outside this range, but your size will count as gargantuan.",
+          "page": 81
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 35 feet.",
+          "page": 81
+        },
+        {
+          "name": "Intimidating Presence",
+          "text": "You have proficiency in the Athletics and Intimidation skills.",
+          "page": 81
+        },
+        {
+          "name": "Brute Endurance",
+          "text": "Starting at 5th level, your durability grows with your size. When you take damage, you can use your reaction to reduce the damage by an amount equal to your Constitution modifier + your proficiency bonus.",
+          "page": 81
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 2
+        }
+      },
+      "speed": 35,
+      "auto": [
+        "abilityIncrease",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.void_century_automaton",
+      "kind": "race",
+      "name": "Void Century Automaton",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 82
+      },
+      "optional": true,
+      "text": "Your automaton will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Constitution score increases by 3, and one other ability score of your choice increases by 1.",
+          "page": 82
+        },
+        {
+          "name": "Age",
+          "text": "It is unknown how long you have been functioning or when you reawakened in this new age.",
+          "page": 82
+        },
+        {
+          "name": "Creature Type",
+          "text": "You are a Construct.",
+          "page": 82
+        },
+        {
+          "name": "Automaton Size",
+          "text": "Your size is Small, Medium, Large, Huge, or Gargantuan (your choice).",
+          "page": 82
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 82
+        },
+        {
+          "name": "Metal Mending",
+          "text": "If the Mending spell is cast on you, you can spend a Hit Die, roll it, and regain a number of hit points equal to the roll plus your Constitution modifier (minimum of 1 hit point). In addition, you benefit from several spells that normally don’t affect Constructs: Cure Wounds, Healing Word, Mass Cure Wounds, Mass Healing Word, and Spare the Dying.",
+          "page": 82
+        },
+        {
+          "name": "Constructed Resilience",
+          "text": "You were created to have remarkable fortitude, represented by the following benefits:\nYou have advantage on saving throws against being poisoned, charmed, or frightened, and you have resistance to poison damage.\nYou don’t need to eat, drink, or breathe.\nYou are immune to disease.\nYou don’t need to sleep, and magic can’t put you to sleep.\nWhile you aren’t wearing armor, your base Armor Class is 15 + your Wisdom modifier.",
+          "page": 82
+        },
+        {
+          "name": "Centuries Rest",
+          "text": "When you take a long rest, you must spend at least six hours in an inactive, motionless state, rather than sleeping. In this state, you appear inert, but it doesn’t render you unconscious, and you can see and hear as normal.",
+          "page": 82
+        },
+        {
+          "name": "Immutable Form",
+          "text": "Due to your ancient haki you are immune to any spell or effect that would alter your form.",
+          "page": 82
+        },
+        {
+          "name": "Expel the Devil",
+          "text": "If you attempt to consume a Devil Fruit, it has no effect, and the fruit’s power is expelled from your system. The Devil Fruit’s abilities are then instantly reincarnated into a new fruit elsewhere in the world, as though it had never been eaten.",
+          "page": 82
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "con": 3
+        }
+      },
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.yeti",
+      "kind": "race",
+      "name": "Yeti",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 82
+      },
+      "optional": true,
+      "text": "Towering and furred, the Yeti are a mysterious race of white-furred giants with supernatural agility and silence. Rumored to be a subrace of giants or an entirely different species, Yeti are found most commonly in arctic environments.\nYour Yeti will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength score increases by 2 and your Constitution score increases by 3.",
+          "page": 82
+        },
+        {
+          "name": "Age",
+          "text": "Yeti mature quickly but live long lives. They reach adulthood by age 15 and can live up to 200 years.",
+          "page": 82
+        },
+        {
+          "name": "Alignment",
+          "text": "Most yeti lean toward Neutral alignments, focused on survival and completing contracts. Some develop codes of honor or loyalty to specific employers or clans.",
+          "page": 82
+        },
+        {
+          "name": "Size",
+          "text": "Yetis in the One Piece World are typically 60-80 feet tall. Some might rest far outside this range, but your size will count as gargantuan.",
+          "page": 82
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 40 feet.",
+          "page": 82
+        },
+        {
+          "name": "Arctic Ambusher",
+          "text": "You are well adapted to cold environments and high-speed ambushes.\nYou have resistance to cold damage.\nYou can move across difficult terrain made of ice or snow without expending extra movement.\nYou have advantage on Stealth checks made in snowy or icy environments.",
+          "page": 82
+        },
+        {
+          "name": "Frost Camouflage",
+          "text": "When you take the Hide action in an area with snow, ice, or fog, you can attempt to hide even if only lightly obscured, and you do not leave visible footprints behind unless you choose to.",
+          "page": 82
+        },
+        {
+          "name": "Blurred Bulk",
+          "text": "Despite your massive size, your instincts are lightning-fast. When you roll initiative, you may immediately move up to half your speed without provoking opportunity attacks. You may use this trait a number of times equal to your proficiency bonus, and regain all uses after a long rest.",
+          "page": 82
+        },
+        {
+          "name": "Glacial Grasp",
+          "text": "Starting at 3rd level, you can momentarily chill the air around your limbs to deliver bone cold strikes. Once per turn, when you hit a creature with an unarmed strike or a melee weapon attack, you may force it to make a Constitution saving throw equal to 8 + your proficiency bonus + your Strength modifier. On a failed save, the creature’s speed is reduced by 10 feet until the end of your next turn.\nYou may use this feature a number of times equal to your proficiency bonus, and regain all uses after a long rest.",
+          "page": 82
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 2,
+          "con": 3
+        }
+      },
+      "speed": 40,
+      "auto": [
+        "abilityIncrease",
+        "speed"
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

@@ -253,6 +253,21 @@ class Table:
     def texts(self) -> list[list[str]]:
         return [[c.text for c in row] for row in self.rows]
 
+    def merged(self) -> list[list[str]]:
+        """Rows as text, with wrapped lines folded back into the cell they continue."""
+        if not self.rows:
+            return []
+        start = min(row[0].left for row in self.rows)
+        width = max(len(row) for row in self.rows)
+        out: list[list[str]] = []
+        for row in self.rows:
+            wrapped = out and len(row) < max(2, width) and row[0].left > start + 6 and len(row) == 1
+            if wrapped:
+                out[-1][-1] += " " + row[0].text
+            else:
+                out.append([c.text for c in row])
+        return out
+
 
 @dataclass
 class Quote:
@@ -345,7 +360,8 @@ def to_blocks(lines: list[Line]) -> list[Block]:
                 new = False
             elif listed:
                 # Inside a list: a new item starts after a line that ends a sentence.
-                new = not para_listed or forced
+                # A bold lead-in ("Fleet Footed.") opens a bullet even when the line above filled the column.
+                new = not para_listed or forced or bool(line.lead and re.search(r"[.:]$", line.lead))
             elif para_listed:
                 new = True
             elif 9 <= indent <= 16:
@@ -364,6 +380,9 @@ def to_blocks(lines: list[Line]) -> list[Block]:
                 not same_flow or line.top - prev.top > 19 or _ENDS_SENTENCE.search(prev.text) or para_lines[0].lead
             ):
                 new = True
+            # Definition lists: "Skill Proficiencies …", "Tool Proficiencies …", each led by bold words.
+            if line.lead and len(line.lead) >= 3 and para_lines and para_lines[0].lead and not listed:
+                new = True
             if new:
                 flush()
                 para_listed = listed
@@ -371,7 +390,15 @@ def to_blocks(lines: list[Line]) -> list[Block]:
             prev = line
         i += 1
     flush()
-    return blocks
+    # A heading that wraps arrives as two headings in a row ("Void Century" / "Automaton [Optional]").
+    merged: list[Block] = []
+    for block in blocks:
+        last = merged[-1] if merged else None
+        if isinstance(block, Heading) and isinstance(last, Heading) and last.level == block.level and last.page == block.page and not last.stat:
+            last.text += " " + block.text
+        else:
+            merged.append(block)
+    return merged
 
 
 def line_height(line: Line) -> int:

@@ -161,7 +161,7 @@
           "sections": [
             {
               "name": "War Stance",
-              "text": "Active. When an allied creature within 30 feet of you hits with a melee weapon attack, they can roll an additional die equal to your Leadership Die and add it to the damage dealt. A creature can only benefit from this bonus once during the stance’s duration. You do not gain the benefits of this active. Passive. Allied creatures within 30 feet of you gain a +2 bonus to Damage Rolls with melee weapons. You do not gain the benefits of this passive.",
+              "text": "Active. When an allied creature within 30 feet of you hits with a melee weapon attack, they can roll an additional die equal to your Leadership Die and add it to the damage dealt. A creature can only benefit from this bonus once during the stance’s duration. You do not gain the benefits of this active.\nPassive. Allied creatures within 30 feet of you gain a +2 bonus to Damage Rolls with melee weapons. You do not gain the benefits of this passive.",
               "page": 106
             },
             {
@@ -374,7 +374,7 @@
           "sections": [
             {
               "name": "Royal Stance",
-              "text": "Active. Allied creatures within 10 feet of you are immune to being frightened, charmed, grappled, or restrained. You do not gain the benefits of this active. Passive. Allied creatures within 10 feet of you gain a +1 bonus to AC and attack rolls and cannot be knocked prone or moved against their will. You do not gain the benefits of this passive.",
+              "text": "Active. Allied creatures within 10 feet of you are immune to being frightened, charmed, grappled, or restrained. You do not gain the benefits of this active.\nPassive. Allied creatures within 10 feet of you gain a +1 bonus to AC and attack rolls and cannot be knocked prone or moved against their will. You do not gain the benefits of this passive.",
               "page": 109
             }
           ]
@@ -503,7 +503,7 @@
           "sections": [
             {
               "name": "Supreme King Stance",
-              "text": "Active. You can activate a Supreme King Haki feature without expending its normal resource cost. Once you do so for that feature, it cannot benefit from this effect again until you finish a long rest. Passive. You can activate a Supreme King Haki feature as a bonus action instead of an action. Once you do so, you cannot do so again until the start of your next turn.",
+              "text": "Active. You can activate a Supreme King Haki feature without expending its normal resource cost. Once you do so for that feature, it cannot benefit from this effect again until you finish a long rest.\nPassive. You can activate a Supreme King Haki feature as a bonus action instead of an action. Once you do so, you cannot do so again until the start of your next turn.",
               "page": 110
             }
           ]

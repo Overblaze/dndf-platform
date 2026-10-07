@@ -437,7 +437,7 @@
           "sections": [
             {
               "name": "Additional Beast Abilities",
-              "text": "Willpower Strikes. At 5th level, the beast’s attacks count as magical for overcoming resistances. Resilience. At 9th level, the beast gains resistance to bludgeoning, piercing, and slashing from nonmagical attacks.\nBattle Leech. At 13th level, when the beast damages a creature, it heals for the amount dealt to the target.",
+              "text": "Willpower Strikes. At 5th level, the beast’s attacks count as magical for overcoming resistances.\nResilience. At 9th level, the beast gains resistance to bludgeoning, piercing, and slashing from nonmagical attacks.\nBattle Leech. At 13th level, when the beast damages a creature, it heals for the amount dealt to the target.",
               "page": 144
             },
             {
@@ -728,16 +728,7 @@
             {
               "rows": [
                 [
-                  "Ranged Weapon"
-                ],
-                [
-                  "Damage. 1d8 Bludgeoning damage"
-                ],
-                [
-                  "Reach. 30/60"
-                ],
-                [
-                  "Properties. Finesse"
+                  "Ranged Weapon Damage. 1d8 Bludgeoning damage Reach. 30/60 Properties. Finesse"
                 ]
               ],
               "page": 146
@@ -747,7 +738,7 @@
         {
           "level": 3,
           "name": "Rope Tricks",
-          "text": "Also at 3rd level, you develop techniques to enhance your rope-based combat. You learn two Rope Tricks from the list below. You gain an additional trick at 7th and 15th levels.\nWhiplash. When you hit a creature with a ranged rope attack and grapple them, you may choose to pull a creature to you, keep the creature where it is, or pull yourself next to the grappled targets space. Tether Throw. You can use your rope to swing an ally to safety. As a reaction when an ally within 30 feet is hit by an attack, you can move them up to 15 feet in any direction. This movement doesn’t provoke opportunity attacks.\nTripwire. When you hit a creature with a rope weapon attack, you can force them to make a Dexterity saving throw or fall prone.\nHookshot. As a bonus action, you can use your rope to pull yourself to an unoccupied space within 30 feet.\nYou can use each of your Rope Tricks a number of times equal to double your proficiency bonus per short rest.\nAdditionally, you can use the Rope Trick spell an amount of times equal to your proficiency bonus per long rest.",
+          "text": "Also at 3rd level, you develop techniques to enhance your rope-based combat. You learn two Rope Tricks from the list below. You gain an additional trick at 7th and 15th levels.\nWhiplash. When you hit a creature with a ranged rope attack and grapple them, you may choose to pull a creature to you, keep the creature where it is, or pull yourself next to the grappled targets space.\nTether Throw. You can use your rope to swing an ally to safety. As a reaction when an ally within 30 feet is hit by an attack, you can move them up to 15 feet in any direction. This movement doesn’t provoke opportunity attacks.\nTripwire. When you hit a creature with a rope weapon attack, you can force them to make a Dexterity saving throw or fall prone.\nHookshot. As a bonus action, you can use your rope to pull yourself to an unoccupied space within 30 feet.\nYou can use each of your Rope Tricks a number of times equal to double your proficiency bonus per short rest.\nAdditionally, you can use the Rope Trick spell an amount of times equal to your proficiency bonus per long rest.",
           "page": 146,
           "uses": {
             "max": "prof*2",
@@ -854,7 +845,7 @@
         {
           "level": 7,
           "name": "Tactical Ensnaptrapment",
-          "text": "At 7th level, your traps become more versatile, allowing you to manipulate your enemies more effectively. When you create a snap trap, choose one additional effect:\nSticky Snap Trap. The creature is restrained until the end of your next turn.\nPuffing Snap Trap. The trap creates a 20-foot-radius cloud of smoke, heavily obscuring the area for 1 minute.\nBooming Snap Trap. The trap explodes in a 10-foot radius, dealing 1d6 fire damage to all creatures in the area.\nBig Snap Trap. The damage of your snap trap increases by an additional 2d6 damage.\nMagnetic Snap Trap. The creature who steps on this trap must make a Strength saving throw equal to your Tactic save DC. On a failed save the creatures metal weapon and shield is pulled from their hand and is magnetized to the trap. A creature must make an action to remove the weapon from the snap trap. Dial Snap Trap. You infuse a dial you own into the snap trap. A creature that activates this trap activates the dial you set within it.\nPop Green Snap Trap. You infuse a pop green you own into the snap trap. A creature that activates this trap activates the pop green you set within it. Blinding Snap Trap. The creature is blinded until the end of your next turn.\nAdditionally, you can use a bonus action instead of an action to set a trap.",
+          "text": "At 7th level, your traps become more versatile, allowing you to manipulate your enemies more effectively. When you create a snap trap, choose one additional effect:\nSticky Snap Trap. The creature is restrained until the end of your next turn.\nPuffing Snap Trap. The trap creates a 20-foot-radius cloud of smoke, heavily obscuring the area for 1 minute.\nBooming Snap Trap. The trap explodes in a 10-foot radius, dealing 1d6 fire damage to all creatures in the area.\nBig Snap Trap. The damage of your snap trap increases by an additional 2d6 damage.\nMagnetic Snap Trap. The creature who steps on this trap must make a Strength saving throw equal to your Tactic save DC. On a failed save the creatures metal weapon and shield is pulled from their hand and is magnetized to the trap. A creature must make an action to remove the weapon from the snap trap.\nDial Snap Trap. You infuse a dial you own into the snap trap. A creature that activates this trap activates the dial you set within it.\nPop Green Snap Trap. You infuse a pop green you own into the snap trap. A creature that activates this trap activates the pop green you set within it.\nBlinding Snap Trap. The creature is blinded until the end of your next turn.\nAdditionally, you can use a bonus action instead of an action to set a trap.",
           "page": 148
         },
         {

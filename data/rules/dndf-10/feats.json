@@ -1,0 +1,1630 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "rule.feats",
+      "kind": "rule",
+      "name": "Feats",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "text": "A feat defines how your character’s abilities develop in relation to their fields of expertise over the course of the adventure. Many of these feats are very much necessary throughout this type of campaign as it provides tools for characters to deal with the likes of Devil Fruit Users and other new types of enemies.\nAdditionally, many of these feats require certain unique prerequisites to be met before unlocking them, unless your class or race tells you otherwise. These prerequisites may be in the form of ability score minimums, already having certain feats unlocked, or being a certain race."
+    },
+    {
+      "id": "feat.abyssal_lure",
+      "kind": "feat",
+      "name": "Abyssal Lure",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "prerequisite": "Merfolk",
+      "text": "You have awakened a monstrous trait of the deep, taking on the qualities of an angler fish.\nYou grow a bioluminescent lure that sheds bright light in a 30-foot radius and dim light for an additional 30 feet. This light is magical and penetrates both magical and nonmagical darkness. You can fully dim or rekindle the light as a bonus action.\nIncrease your swimming speed by an additional 10 ft.\nWhile underwater, you have advantage on attack rolls against creatures that do not have a Swimming speed."
+    },
+    {
+      "id": "feat.alert",
+      "kind": "feat",
+      "name": "Alert",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "text": "Always on the lookout for danger, you gain the following benefits:\nYou can’t be surprised while you are conscious. You gain a +5 bonus to initiative.\nOther creatures don’t gain advantage on attack rolls against you as a result of being unseen by you."
+    },
+    {
+      "id": "feat.anchor_comet",
+      "kind": "feat",
+      "name": "Anchor Comet",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "prerequisite": "Buccaneer",
+      "text": "Your giant blood awakens further, turning you into an unstoppable force.\nIncrease your Strength or Constitution by 1, to a maximum of 20.\nWhen you use your Anchor Throw, you can choose to make it erupt in a shockwave on impact. Each creature within 10 ft. of the point of impact must succeed on a Strength saving throw equal to 8 + your proficiency bonus + your Strength modifier or be knocked prone and take half the damage of the throw."
+    },
+    {
+      "id": "feat.armor_breaker",
+      "kind": "feat",
+      "name": "Armor Breaker",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "text": "Your mace swings crash through defenses, battering armor and shields.\nYou gain a +1 bonus to attack rolls with maces. When you hit a creature wearing heavy armor or using a shield with a mace, you deal an extra 1d6 bludgeoning damage."
+    },
+    {
+      "id": "feat.armor_piercer",
+      "kind": "feat",
+      "name": "Armor Piercer",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "text": "You drive your war pick into the weakest points of armor and natural defenses.\nWhen you hit a creature wearing armor or using natural armor, you roll one additional weapon damage die.\nWhen you hit a creature with a war pick, you ignore resistance to nonmagical bludgeoning, piercing, or slashing damage."
+    },
+    {
+      "id": "feat.assassins_strike",
+      "kind": "feat",
+      "name": "Assassin’s Strike",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "text": "You’ve perfected the art of striking with deadly precision at close range.\nYou gain a +1 bonus to attack rolls with shortswords. When you attack a creature with a shortsword while you have advantage on the attack roll, you deal an additional 1d6 damage.\nOnce per turn, when you reduce a creature to 0 hit points with a shortsword, you may immediately make a Dexterity (Stealth) check to hide as a bonus action. If used in the battle of combat and out in the open, enemies cannot see you until the end of your next turn."
+    },
+    {
+      "id": "feat.athlete",
+      "kind": "feat",
+      "name": "Athlete",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "text": "You have undergone extensive physical training to gain the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nWhen you are prone, standing up uses only 5 feet of your movement.\nClimbing doesn’t halve your speed.\nYou can make a running long jump or a running high jump after moving only 5 feet on foot, rather than 10 feet."
+    },
+    {
+      "id": "feat.avatar_of_nika",
+      "kind": "feat",
+      "name": "Avatar of Nika",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 52
+      },
+      "prerequisite": "Elbaf Giant",
+      "text": "The blood of the Sun God burns brightly within you, making your every step and strike legendary. When you reduce a creature to 0 hit points, you may use Sun God’s Assault on another creature in your melee attack range for free."
+    },
+    {
+      "id": "feat.barbed_snare",
+      "kind": "feat",
+      "name": "Barbed Snare",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "text": "You’ve mastered the use of spiked, reinforced nets to trap and maim your enemies.\nYou no longer suffer disadvantage when making a ranged net attack against a creature within 5 feet of you.\nA creature can escape with a DC 18 Strength check, or by destroying the net (AC 18, 15 slashing damage).\nA creature restrained by your net takes 1d4 piercing damage at the start of each of its turns."
+    },
+    {
+      "id": "feat.big_eater",
+      "kind": "feat",
+      "name": "Big Eater",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "text": "Your stomach has expanded far beyond the size of any ordinary stomach to gain the following benefits:\nIncrease your Constitution score by 1, to a maximum of 20.\nYou may store any quantity of food in your pockets and you count as one size larger when determining your carrying capacity. You may take out and eat up to 20 lbs of food from your pockets or within 5 ft. of you as an action.\nYou can now recover injuries by consuming large quantities of food. For every 4 lbs of food you consume, you recover 1 hit point. If you are at full hit points, you instead gain temporary hit points for every 4 lbs of food you consume, up to a maximum of your character level."
+    },
+    {
+      "id": "feat.boarding_cutlass",
+      "kind": "feat",
+      "name": "Boarding Cutlass",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "text": "You fight with great agility, darting in and out of combat.\nYou gain a +1 bonus to attack rolls with cutlasses. When you hit a creature with a cutlass, you may immediately move up to 10 feet without provoking opportunity attacks."
+    },
+    {
+      "id": "feat.bonebreaker",
+      "kind": "feat",
+      "name": "Bonebreaker",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "text": "You wield the humble club with great strength, turning simple strikes into brutal finishers.\nYou gain a +1 bonus to damage rolls with clubs. Clubs gain the Finisher weapon property.\nOn a critical hit with a club, the target must succeed on a Constitution saving throw equal to 8 + your Strength modifier + your proficiency bonus or be knocked prone."
+    },
+    {
+      "id": "feat.burglar",
+      "kind": "feat",
+      "name": "Burglar",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "text": "You pride yourself on your quickness and your close study of certain clandestine activities. You gain the following benefits:\nIncrease your Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with thieves’ tools. If you are already proficient with them, you add double your proficiency bonus to checks you make with them."
+    },
+    {
+      "id": "feat.chainbreaker",
+      "kind": "feat",
+      "name": "Chainbreaker",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "text": "You wield the flail with such precision that you become one with the chain.\nWhen you hit a creature with a flail, you ignore the AC bonus granted by shields.\nOnce per turn when you hit a creature with a flail, you can force it to make a Strength saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the creature is knocked prone or disarmed (your choice)."
+    },
+    {
+      "id": "feat.color_of_armament_training",
+      "kind": "feat",
+      "name": "Color of Armament Training",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "prerequisite": "Constitution 11 or higher",
+      "text": "You gain one Uncommon Armament Haki advancement feature."
+    },
+    {
+      "id": "feat.color_of_observation_training",
+      "kind": "feat",
+      "name": "Color of Observation Training",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "prerequisite": "Wisdom 11 or higher",
+      "text": "You gain one Uncommon Observation Haki advancement feature."
+    },
+    {
+      "id": "feat.color_of_the_supreme_king_training",
+      "kind": "feat",
+      "name": "Color of the Supreme King Training",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "prerequisite": "Charisma 11 or higher, DM permission",
+      "text": "You gain one Uncommon Supreme King Haki advancement feature, assuming you meet all prerequisites listed by it in Chapter 5: Spirit Surges."
+    },
+    {
+      "id": "feat.coward",
+      "kind": "feat",
+      "name": "Coward",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 53
+      },
+      "text": "You’ve mastered the art of surviving by making yourself look pathetic, shifting enemy attention so your allies can strike true. As an action, you can throw yourself into a display of cowardice — stumbling, groveling, or pleading for mercy. Until the start of your next turn, the first attack roll made against each creature of your choice within 15 feet of you has advantage, provided that creature can see you.\nAdditionally, when a creature misses you with a melee attack, you can use your reaction to move up to half your speed without provoking opportunity attacks."
+    },
+    {
+      "id": "feat.crescent_sweep",
+      "kind": "feat",
+      "name": "Crescent Sweep",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "When you take the Attack action, you may forgo making any of your normal glaive attacks to perform a sweeping strike in a 10-foot cone. Each creature in the cone must make a Dexterity saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, a creature takes damage equal to your normal glaive damage roll. On a success, it takes half as much."
+    },
+    {
+      "id": "feat.crimson_tip",
+      "kind": "feat",
+      "name": "Crimson Tip",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "When you hit a creature with a kunai, it begins to bleed. At the start of each of its turns, it takes 1 piercing damage for each successful kunai hit it has taken from you. This bleed effect stacks with each new kunai hit.\nA bleeding creature may use both its action and bonus action on its turn to staunch the wound and end the effect. The bleed also ends if the creature regains hit points from any source."
+    },
+    {
+      "id": "feat.crushing_blows",
+      "kind": "feat",
+      "name": "Crushing Blows",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "Your brutal swings with the kanabo batter down defenses and leave foes staggered.\nWhen you hit a creature with a kanabo, you can choose to force it to make a Strength saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the target is knocked prone. You can use this feature a number of times equal to your proficiency bonus per long rest. On a critical hit with a kanabo, roll one additional damage die.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.dead_mans_range",
+      "kind": "feat",
+      "name": "Dead Man’s Range",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "Your shotgun turns close-quarters combat into a death zone. When you fire a shotgun at a creature within 15 feet, you deal an additional 1d8 piercing damage on a hit."
+    },
+    {
+      "id": "feat.deadly_tip",
+      "kind": "feat",
+      "name": "Deadly Tip",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "You’ve honed your skill with daggers to strike with deadly accuracy.\nWhen you attack with a dagger, you score a critical hit on a roll of 19–20. On a critical hit with a dagger, roll one additional weapon damage die.\nWhen you make a thrown attack with a dagger at a creature within 20 feet, you can add your Dexterity modifier to the damage twice instead of once."
+    },
+    {
+      "id": "feat.defensive_duelist",
+      "kind": "feat",
+      "name": "Defensive Duelist",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "prerequisite": "Dexterity 13 or higher",
+      "text": "When you are wielding a finesse weapon with which you are proficient and another creature hits you with a melee attack, you can use your reaction to add your proficiency bonus to your AC for that attack, potentially causing the attack to miss you."
+    },
+    {
+      "id": "feat.deflective_guard",
+      "kind": "feat",
+      "name": "Deflective Guard",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "You use tonfas not just as weapons but as extensions of your defense. When you take the Dodge action while wielding one or more tonfas, you gain an additional +1 AC for each tonfa you are holding until the start of your next turn."
+    },
+    {
+      "id": "feat.devil_fruit_training",
+      "kind": "feat",
+      "name": "Devil Fruit Training",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "prerequisite": "Devil Fruit user",
+      "text": "You gain one Uncommon Devil Fruit advancement feature listed in Chapter 7."
+    },
+    {
+      "id": "feat.dial_expert",
+      "kind": "feat",
+      "name": "Dial Expert",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "Through studying and locating the various Dials found on the Sky Islands, you gain the following benefits:\nIncrease your Intelligence score by 1, to a maximum of 20.\nYou gain proficiency in using all Dials.\nYou find two Simple Dials of your choice that have mysteriously fallen from a Sky Island.\nYou can immediately identify and understand the properties of any dial you find."
+    },
+    {
+      "id": "feat.disarming_strike",
+      "kind": "feat",
+      "name": "Disarming Strike",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "You’ve mastered the jitte’s hooked guard, using it to strip weapons from your foes. When you hit a creature with a jitte, you may forgo your damage roll to attempt to disarm it as part of the same attack. The target must succeed on a Strength saving throw equal to 8 + your Strength modifier + your proficiency bonus or drop one weapon or item of your choice that it is holding. The item lands at its feet."
+    },
+    {
+      "id": "feat.dual_pistols",
+      "kind": "feat",
+      "name": "Dual Pistols",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 54
+      },
+      "text": "You’ve mastered the art of fighting with a pistol in each hand.\nOnce per turn when you make an attack with a pistol as part of the Attack action, you can fire your off- hand pistol as part of the same action.\nReloading pistols while wielding two no longer requires a free hand; you can reload one pistol as part of the same action you use to reload the other."
+    },
+    {
+      "id": "feat.dungeon_delver",
+      "kind": "feat",
+      "name": "Dungeon Delver",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "text": "Alert to the hidden traps and secret doors found in many dungeons, you gain the following benefits:\nWhen you roll a Hit Die to regain hit points, the minimum number of hit points you regain from the roll equals twice your Constitution modifier (minimum of 2).\nYou have advantage on Wisdom (Perception) and Intelligence (Investigation) checks made to detect the presence of secret doors.\nYou have advantage on saving throws made to avoid or resist traps.\nYou have resistance to the damage dealt by traps. You can search for traps while travelling at a normal pace, instead of only at a slow pace."
+    },
+    {
+      "id": "feat.durable",
+      "kind": "feat",
+      "name": "Durable",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "text": "Hardy and resilient, you gain the following benefits:\nIncrease your Constitution score by 1, to a maximum of 20.\nWhen you roll a Hit Die to regain hit points, the minimum number of hit points you regain from the roll equals twice your Constitution modifier (minimum of 2)."
+    },
+    {
+      "id": "feat.dwarf_resolve",
+      "kind": "feat",
+      "name": "Dwarf Resolve",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "prerequisite": "Dwarf",
+      "text": "Your dwarven heritage grants you superior endurance in the face of hardship.\nYou gain proficiency in Constitution saving throws. Once per long rest, when you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.eagle_shot",
+      "kind": "feat",
+      "name": "Eagle Shot",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "text": "Your mastery of the longbow allows you to strike targets at incredible ranges.\nWhen you take the Attack action with a longbow, you may choose to forgo making any attacks this turn to prepare a focused shot. On your next turn, you may use your action to release the prepared shot.\nThe prepared shot doubles the longbow’s normal and maximum range (becoming 300/1200).\nThe shot ignores disadvantage imposed by long- range attacks and half or three-quarters cover. While preparing the shot, your speed is reduced to 0, and attack rolls against you have advantage until the start of your next turn."
+    },
+    {
+      "id": "feat.earthshatter",
+      "kind": "feat",
+      "name": "Earthshatter",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "text": "When you take the Attack action, you may forgo making any of your normal maul attacks to perform a crushing slam. Each creature of your choice within a 10-foot radius centered on a point you can reach must make a Strength saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, a creature takes your maul’s normal weapon damage and is knocked prone. On a success, it takes half damage and is not knocked prone."
+    },
+    {
+      "id": "feat.electro_conduit",
+      "kind": "feat",
+      "name": "Electro Conduit",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "prerequisite": "Mink",
+      "text": "You’ve refined your control over your Electro, becoming a conduit of power. If you start your turn with no heavy armor equipped, you can choose to spark your fur with electricity with a bonus action. While sparking, creatures that hit you with a melee attack take lightning damage equal to your proficiency bonus for 1 minute. You regain this feature after a short or long rest."
+    },
+    {
+      "id": "feat.elemental_adept",
+      "kind": "feat",
+      "name": "Elemental Adept",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "prerequisite": "The ability to cast at least one spell",
+      "text": "When you gain this feat, choose one of the following damage types: acid, cold, fire, lightning, or thunder. Spells you cast ignore resistance to damage of the chosen type. In addition, when you roll damage for a spell you cast that deals damage of that type, you can treat any 1 on a damage die as a 2.\nYou can select this feat multiple times. Each time you do so, you must choose a different damage type."
+    },
+    {
+      "id": "feat.executioners_chop",
+      "kind": "feat",
+      "name": "Executioner’s Chop",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "text": "You specialize in powerful, finishing blows with your greataxe. You deal an extra 2d8 slashing damage against creatures that are prone or restrained when wielding a greataxe."
+    },
+    {
+      "id": "feat.explosive_impact",
+      "kind": "feat",
+      "name": "Explosive Impact",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "text": "You’ve learned to turn every bazooka shot into a fiery blast. When you hit a creature with a bazooka attack, each other creature within 5 feet of the target takes 1d6 fire damage."
+    },
+    {
+      "id": "feat.extendable_rod",
+      "kind": "feat",
+      "name": "Extendable Rod",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 55
+      },
+      "text": "You’ve mastered the use of specialized quarterstaffs that can extend and retract, allowing you to strike from further away. As a bonus action, you can extend or retract your quarterstaff. While extended, your quarterstaff gains the reach property, increasing its reach by 5 feet."
+    },
+    {
+      "id": "feat.fan_of_steel",
+      "kind": "feat",
+      "name": "Fan of Steel",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 56
+      },
+      "text": "You wield the war fan as both shield and snare.\nWhile wielding a war fan, when you are hit by a ranged weapon attack, you can use your reaction to reduce the damage by 1d8 + your Dexterity modifier + your proficiency bonus. If this reduces the damage to 0, you can make a ranged attack with another light thrown weapon you have equipped as part of the same reaction.\nWhen you hit a creature with a war fan, you may immediately attempt to grapple the target as part of the same attack. You may use Dexterity (Acrobatics) instead of Strength (Athletics) for this grapple."
+    },
+    {
+      "id": "feat.fell_handed",
+      "kind": "feat",
+      "name": "Fell Handed",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 56
+      },
+      "text": "You master the handaxe, battleaxe, greataxe, warhammer, and maul. You gain the following benefits when using any of them:\nYou gain a +1 bonus to attack rolls you make with the weapon.\nWhenever you have advantage on a melee attack roll you make with the weapon and hit, you can knock the target prone if the lower of the two d20 rolls would also hit the target.\nWhenever you have disadvantage on a melee attack roll you make with the weapon, the target takes bludgeoning damage equal to your Strength modifier (minimum of 0) if the attack misses but the higher of the two d20 rolls would have hit.\nIf you use the Help action to aid an ally’s melee attack while you’re wielding the weapon, you knock the target’s shield aside momentarily. In addition to the ally gaining advantage on the attack roll, the ally gains a +2 bonus to the roll if the target is using a shield."
+    },
+    {
+      "id": "feat.fencers_flourish",
+      "kind": "feat",
+      "name": "Fencer’s Flourish",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 56
+      },
+      "text": "You’ve mastered the art of fencing.\nWhen you hit a creature with a rapier, you can take the Dash or Disengage action as a bonus action. Once per turn, when you miss a rapier attack, you may deal damage equal to your proficiency bonus to the target as a glancing strike.\nOn your turn, if you successfully make an attack against a single creature with a rapier, you gain advantage on the next rapier attack you make on your turn. If the attack hits add your proficiency bonus to the damage."
+    },
+    {
+      "id": "feat.freezing_inferno",
+      "kind": "feat",
+      "name": "Freezing Inferno",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 56
+      },
+      "prerequisite": "Lunarian",
+      "text": "Your heritage mutates your natural flame into a chilling, otherworldly fire that burns with frost instead of heat.\nWhenever you cast a spell granted by your Ignite trait, you may choose whether it deals fire damage or cold damage.\nYour Ignite trait grants you the Frostbite cantrip. You can cast Fireball once with Ignite starting at 3rd level.\nWhenever you cast a spell from your Ignite trait, your Fire Resistance shifts to either Cold or Fire resistance, depending on the damage type you chose for the spell. This change lasts until you cast another Ignite spell with the opposite damage type."
+    },
+    {
+      "id": "feat.friend_of_the_sea",
+      "kind": "feat",
+      "name": "Friend of the Sea",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 56
+      },
+      "prerequisite": "Fish-man, Merfolk, or Wotan",
+      "text": "Your friendship with sea creatures mystically deepens thanks to your racial abilities. You gain the following benefits:\nYou gain proficiency in the Animal Handling skill. If you’re already proficient, your proficiency bonus is doubled for any check you make with it.\nYou learn the Speak with Animals spell and can cast it at will, but only targeting beasts with an innate swimming speed (not including Sea Kings).\nYou learn the Animal Friendship spell. You can cast it once without expending a spell slot, regaining the ability to do so after a long rest. You can only target aquatic beasts with this spell.\nYou learn the Find Familiar spell. When you cast it, your familiar must take the form of an aquatic creature (such as a fish, crab, octopus, or seahorse)."
+    },
+    {
+      "id": "feat.gentlemans_gambit",
+      "kind": "feat",
+      "name": "Gentleman’s Gambit",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 56
+      },
+      "text": "You fight with elegance and subtlety, disguising your weapon until the moment of the strike.\nWhen you roll initiative while holding a cane sword sheathed, your next attack with the cane sword is made with advantage.\nWhen you hit a creature with a cane sword attack immediately after drawing it, you may instead deal the damage at the end of your target’s turn. When you deal damage in this way the damage increases by 1d6 additional slashing damage. You may only make this attack once per target per day."
+    },
+    {
+      "id": "feat.giants_draw",
+      "kind": "feat",
+      "name": "Giant’s Draw",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "text": "You wield the greatbow with overwhelming force, drawing it back for devastating shots.\nWhen you take the Attack action with a greatbow, you may choose to forgo making any attacks this turn to prepare a single, overwhelming shot. On your next turn, you may use your action to release the prepared shot.\nThe prepared shot deals 6d6 piercing damage on a hit. Including your normal modifiers in the damage roll.\nWhile preparing the shot, your speed is reduced to 10 ft., and attack rolls against you have advantage until the start of your next turn."
+    },
+    {
+      "id": "feat.grappler",
+      "kind": "feat",
+      "name": "Grappler",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "prerequisite": "Strength 13 or higher",
+      "text": "You’ve developed the skills necessary to hold your own in close-quarters grappling. You gain the following benefits:\nYou have advantage on attack rolls against a creature you are grappling.\nYou can use your action to try to pin a creature grappled by you. To do so, make another grapple check. If you succeed, you and the creatures are both restrained until the grapple ends.\nCreatures that are one size larger than you don’t automatically succeed on checks to escape your grapple."
+    },
+    {
+      "id": "feat.great_weapon_master",
+      "kind": "feat",
+      "name": "Great Weapon Master",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "text": "You’ve learnt to use your weapon’s momentum to power your strikes. You gain the following benefits:\nOn your turn, when you score a critical hit with a melee weapon or reduce a creature to 0 hit points with one, you can make one melee weapon attack as a bonus action.\nBefore you make a melee attack with a heavy weapon that you are proficient with, you can choose to take a - 5 penalty to the attack roll. If the attack hits, you add +10 to the attack’s damage."
+    },
+    {
+      "id": "feat.hack_and_chop",
+      "kind": "feat",
+      "name": "Hack and Chop",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "text": "You specialize in a flurry of attacks when wielding battleaxes. You can use a bonus action to make a single attack with a battleaxe weapon. This attack does not add your ability modifier to the damage roll."
+    },
+    {
+      "id": "feat.hammer_flinger",
+      "kind": "feat",
+      "name": "Hammer Flinger",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "text": "You’ve mastered the art of throwing light hammers with deadly speed.\nWhen you make a ranged attack with a light hammer, its normal range increases to 30 feet and its long range increases to 90 feet.\nOnce per turn when you hit with a thrown light hammer, you can deal an extra 1d6 damage."
+    },
+    {
+      "id": "feat.hammer_of_authority",
+      "kind": "feat",
+      "name": "Hammer of Authority",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "text": "You wield your warhammer with crushing discipline, breaking defenses and staggering foes.\nOnce per turn, when you hit a creature with a warhammer, you may force it to make a Strength saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the creature is knocked prone.\nWhen you hit a creature using a shield, it loses the AC bonus from that shield until the start of its next turn.\nOn a critical hit with a warhammer, you roll one additional damage die and the target is pushed 10 feet away from you."
+    },
+    {
+      "id": "feat.harvest_the_weak",
+      "kind": "feat",
+      "name": "Harvest the Weak",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "text": "Your deadly precision with a sickle lets you reap foes with efficiency.\nYou gain a +1 bonus to attack rolls with sickles. When you hit a creature with a sickle and it has less than half its hit points remaining, you deal an additional 2d4 slashing damage.\nIf you reduce a creature to 0 hit points with a sickle, you may make another attack with a sickle against a different creature within reach as part of the same action."
+    },
+    {
+      "id": "feat.hatchet_fury",
+      "kind": "feat",
+      "name": "Hatchet Fury",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 57
+      },
+      "text": "You wield handaxes with ferocity, carving through enemies in close quarters.\nYou gain a +1 bonus to damage rolls with handaxes. When you take the Attack action and hit a creature with a handaxe, you may make an additional attack with a different handaxe against a different creature within 5 feet of the first as part of the same action. You can use this feature once per turn."
+    },
+    {
+      "id": "feat.heavily_armored",
+      "kind": "feat",
+      "name": "Heavily Armored",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "prerequisite": "Proficiency with medium armor",
+      "text": "You have trained to master the use of heavy armor, gaining the following benefits:\nIncrease your Strength score by 1, to a maximum of 20.\nYou gain proficiency with heavy armor."
+    },
+    {
+      "id": "feat.heavy_armor_master",
+      "kind": "feat",
+      "name": "Heavy Armor Master",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "prerequisite": "Proficiency with heavy armor",
+      "text": "You can use your armor to deflect strikes that would kill others. You gain the following benefits:\nIncrease your Strength score by 1, to a maximum of 20.\nWhile you are wearing heavy armor, bludgeoning, piercing, and slashing damage that you take are reduced by 3."
+    },
+    {
+      "id": "feat.heavy_thrower",
+      "kind": "feat",
+      "name": "Heavy Thrower",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "prerequisite": "Strength 20+",
+      "text": "You become a much better thrower, gaining the following:\nYou gain a bonus to your attack and damage rolls with thrown weapons equal to your proficiency bonus.\nYou are now proficient with throwing cannon balls, and they gain the thrown property when you hold one. The cannon ball’s range becomes 60/120 when you throw it, dealing 2d6 bludgeoning damage plus an extra +2 for every 10 ft. thrown beyond 60 range. All other thrown weapons range increases by an additional +20 normal range and +40 long range."
+    },
+    {
+      "id": "feat.its_my_lucky_day",
+      "kind": "feat",
+      "name": "Its My Lucky Day",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "text": "You have a knack for finding exactly the right item when you need it the most.\nAs an action, you may stumble upon an item you need at the right time, what luck! The item must be a single weapon or piece of adventuring gear worth no more than ฿500,000. When you do so, roll a 1d20, on a roll of 10 or higher, the item is successfully found.\nOnce you use this feature, you cannot use it again until you finish a long rest.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.knights_lance",
+      "kind": "feat",
+      "name": "Knight’s Lance",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "text": "You’ve trained in the knightly art of wielding a lance alongside a shield.\nWhen you wield a lance while also holding a shield, you may treat the lance as a one-handed weapon. If you move at least 20 feet in a straight line before hitting a creature with a lance, you deal an extra 1d8 piercing damage."
+    },
+    {
+      "id": "feat.lightly_armored",
+      "kind": "feat",
+      "name": "Lightly Armored",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "text": "You have trained to master the use of light armor, gaining the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with light armor."
+    },
+    {
+      "id": "feat.limitless_adaptability",
+      "kind": "feat",
+      "name": "Limitless Adaptability",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "prerequisite": "Human",
+      "text": "Your versatility allows you to learn and unlearn skills as quickly as the world changes. At the end of each long rest, you may choose one proficiency to gain until the end of your next long rest. You gain expertise in the chosen proficiency."
+    },
+    {
+      "id": "feat.linguist_pongelyphs",
+      "kind": "feat",
+      "name": "Linguist (Pongelyphs)",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "prerequisite": "Archaeologist, DM Permission",
+      "text": "You have studied ancient languages and codes, gaining the following benefits:\nIncrease your Intelligence score by 1, to a maximum of 20.\nYou learn the language of the Poneglyphs\nYou can ably create written ciphers. Others can’t decipher a code you create unless you teach them, they succeed on an Intelligence check (DC equal to your Intelligence score + your proficiency bonus), or they use an ability to decipher it."
+    },
+    {
+      "id": "feat.living_fortress",
+      "kind": "feat",
+      "name": "Living Fortress",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "text": "You fight with your pillar weapon as both weapon and shield, turning massive stone and metal into a tool defense.\nWhile wielding a pillar weapon, you gain +2 AC against ranged weapon attacks, as you use the pillar to block incoming fire.\nWhen you take the Attack action and hit with a pillar weapon, you may choose to deal half damage instead and impose disadvantage on the target’s next attack roll before the start of your next turn.\nIf you are subject to an effect that forces you to make a Strength or Constitution saving throw, you can reroll the saving throw once per long rest as you plant your pillar into the ground for support.",
+      "uses": {
+        "max": 1,
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.love_radar",
+      "kind": "feat",
+      "name": "Love Radar",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 58
+      },
+      "text": "You have a sixth sense for knowing where to find those you hold dear. You may assign up to 3 creatures with the Endeared condition. This condition allows you to find them at any time in a 600 ft sphere centered around you.\nYou may reassign the Endeared condition at will."
+    },
+    {
+      "id": "feat.lucky",
+      "kind": "feat",
+      "name": "Lucky",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 59
+      },
+      "text": "You have inexplicable luck that seems to kick in at just the right moment.\nYou have 3 luck points. Whenever you make an attack roll, an ability check, or a saving throw, you can spend one luck point to roll an additional d20. You can choose to spend one of your luck points after you roll the die, but before the outcome is determined. You choose which of the d20s is used for the attack roll, ability check, or saving throw.\nYou can also spend one luck point when an attack roll is made against you. Roll a d20 and then choose whether the attack uses the attacker’s roll or yours.\nIf more than one creature spends a luck point to influence the outcome of a roll, the points cancel each other out; no additional dice are rolled.\nYou regain your expended luck points when you finish a long rest."
+    },
+    {
+      "id": "feat.master_of_disguise",
+      "kind": "feat",
+      "name": "Master of Disguise",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 59
+      },
+      "text": "You have honed your ability to shape your personality and to read the personalities of others. You gain the following benefits:\nIncrease your Charisma score by 1, to a maximum of 20.\nYou gain proficiency with the disguise kit. If you are already proficient with it, you add double your proficiency bonus to checks you make with it.\nIf you spend 1 hour observing a creature, you can then spend 8 hours crafting a disguise you can quickly don to mimic that creature. Making the disguise requires a disguise kit. You must make checks as normal to disguise yourself, but you can assume the disguise as an action."
+    },
+    {
+      "id": "feat.medium_armor_master",
+      "kind": "feat",
+      "name": "Medium Armor Master",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 59
+      },
+      "prerequisite": "Proficiency with medium armor",
+      "text": "You have practiced moving in medium armor to gain the following benefits:\nWearing medium armor doesn’t impose disadvantage on your Dexterity (Stealth) checks. When you wear medium armor, you can add 3, rather than 2, to your AC if you have a Dexterity of 16 or higher."
+    },
+    {
+      "id": "feat.mobile",
+      "kind": "feat",
+      "name": "Mobile",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 59
+      },
+      "text": "You are exceptionally speedy and agile. You gain the following benefits:\nYour speed increases by 10 feet.\nWhen you use the Dash action, difficult terrain doesn’t cost you extra movement on that turn. When you make a melee attack against a creature, you don’t provoke opportunity attacks from that creature for the rest of the turn, whether you hit or not."
+    },
+    {
+      "id": "feat.moderately_armored",
+      "kind": "feat",
+      "name": "Moderately Armored",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 59
+      },
+      "prerequisite": "Proficiency with light armor",
+      "text": "You have trained to master the use of medium armor and shields, gaining the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with medium armor and shields."
+    },
+    {
+      "id": "feat.mounted_combatant",
+      "kind": "feat",
+      "name": "Mounted Combatant",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 59
+      },
+      "text": "You are a dangerous foe to face while mounted. While you are mounted and aren’t incapacitated, you gain the following benefits:\nYou have advantage on melee attack rolls against any unmounted creature that is smaller than your mount.\nYou can force an attack targeted at your mount to target you instead.\nIf your mount is subjected to an effect that allows it to make a Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw, and only half damage if it fails."
+    },
+    {
+      "id": "feat.mutagenic_resilience",
+      "kind": "feat",
+      "name": "Mutagenic Resilience",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 59
+      },
+      "prerequisite": "Punk Experiment",
+      "text": "Your body has adapted further to the unnatural changes forced upon it. When you are reduced to 0 hit points but not killed outright, your unstable body erupts with a burst of energy. You remain conscious and do not fall unconscious from dropping to 0 hit points until the end of your next turn. While in this state, you can move and take actions as normal, and your weapon attacks deal an additional 1d12 damage. At the end of your next turn, you fall unconscious as normal if you have not regained any hit points. You gain 1 exhaustion when healed while this feat is in effect."
+    },
+    {
+      "id": "feat.mysterious_power",
+      "kind": "feat",
+      "name": "Mysterious Power",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "text": "Choose a class from this system. You learn two cantrips of your choice from that class’s spell list in chapter 8.\nIn addition, choose one 1st-level spell from that same list. You learn that spell and can cast it at its lowest level. Once you cast it, you must finish a long rest before you can cast it again.\nYour spellcasting ability for these spells depends on the class you choose (e.g. Intelligence for tinkerer)."
+    },
+    {
+      "id": "feat.needle_storm",
+      "kind": "feat",
+      "name": "Needle Storm",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "text": "You’ve learned how to rapidly fire and conceal simple darts.\nDarts gain the Concealed weapon property.\nWhen you take the Attack action and attack with a dart, you may make one additional dart attack as part of the same action.\nYou can draw or stow darts as part of the attack you make with them."
+    },
+    {
+      "id": "feat.phalanx_fighter",
+      "kind": "feat",
+      "name": "Phalanx Fighter",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "text": "You fight with the discipline of a trained soldier, keeping enemies at bay.\nWhen wielding a spear with two hands, its reach increases by 5 feet.\nWhen a creature enters your reach, you can make a melee attack with your spear against it as a reaction. You may set your spear against a charge. If a creature uses a charge feature and enters your reach and you spend a reaction to attack it, you attack with advantage and deal an extra 3d6 damage to the target."
+    },
+    {
+      "id": "feat.phantom_of_the_blizzard",
+      "kind": "feat",
+      "name": "Phantom of the Blizzard",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "prerequisite": "Yeti",
+      "text": "You learn to become a vanishing assassin, slipping through snow and fog with supernatural speed. When you are hidden and in snowy, icy, or foggy terrain, you may cast Misty Step without expending any spell slot. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.\nWhen you cast Misty Step in this way, you may immediately make a Stealth check to attempt to remain hidden after teleporting.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.piercing_hew",
+      "kind": "feat",
+      "name": "Piercing Hew",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "text": "When you take the Attack action, you may forgo making any of your normal halberd attacks to perform a line strike. Each creature in a 15-foot line originating from you and within your halberd’s reach must make a Dexterity saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, a creature takes your halberd’s normal weapon damage. On a success, it takes half as much."
+    },
+    {
+      "id": "feat.piercing_volley",
+      "kind": "feat",
+      "name": "Piercing Volley",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "text": "You’ve mastered the art of throwing javelins with devastating force.\nWhen you make a ranged attack with a javelin and hit, choose one creature within 10 ft. and in a straight line directly behind the target. That creature must succeed on a Dexterity saving throw equal to 8 + your Strength modifier + your proficiency bonus or take half of the initial damage (rounded up) as the javelin punches through.\nYou gain a +10 foot bonus to the normal and long range of javelins."
+    },
+    {
+      "id": "feat.pike_wall",
+      "kind": "feat",
+      "name": "Pike Wall",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "text": "You wield the pike as a weapon of denial, holding foes at bay.\nWhile you are wielding a pike, creatures provoke opportunity attacks from you even if they take the Disengage action.\nYou may set your pike against a charge. If a creature uses a charge feature and enters your reach and you spend a reaction to attack it, you attack with advantage and deal an extra 3d10 damage to the target."
+    },
+    {
+      "id": "feat.polearm_master",
+      "kind": "feat",
+      "name": "Polearm Master",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 60
+      },
+      "text": "You can keep your enemies at bay with reach weapons. You gain the following benefits:\nWhen you take the Attack action and attack with only a glaive, halberd, or quarterstaff, you can use a bonus action to make a melee attack with the opposite end of the weapon. The weapon’s damage die for this attack is a d4, and the attack deals bludgeoning damage.\nWhile you are wielding a glaive, halberd, pike, or quarterstaff, other creatures provoke an opportunity attack from you when they enter your reach."
+    },
+    {
+      "id": "feat.reapers_sweep",
+      "kind": "feat",
+      "name": "Reaper’s Sweep",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "You’ve mastered the scythe’s wide, deadly arcs, cutting down multiple foes in a single swing.\nWhen you take the Attack action and hit a creature with a scythe, as a bonus action you can choose another creature within 5 feet of the original target and within your reach. Make a separate attack roll against the second creature. On a hit, it takes weapon damage equal to half the damage you dealt to the first target (rounded down).\nOn a critical hit with a scythe, you may hit a second target without spending the bonus action."
+    },
+    {
+      "id": "feat.resilient",
+      "kind": "feat",
+      "name": "Resilient",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "Choose one ability score. You gain the following benefits:\nIncrease the chosen ability score by 1, to a maximum of 20.\nYou gain proficiency in saving throws using the chosen ability."
+    },
+    {
+      "id": "feat.returning_arc",
+      "kind": "feat",
+      "name": "Returning Arc",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "You can curve and recall your chakram with practiced precision.\nChakrams gain the Ricochet weapon property. When you make a ranged attack with a chakram, you can curve its path to ignore half and three-quarters cover."
+    },
+    {
+      "id": "feat.ricochet_madness",
+      "kind": "feat",
+      "name": "Ricochet Madness",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "You’ve mastered the wild flight of a boomerang, turning every throw into a storm of ricochets. By spending a bonus action when you hit a creature with a ranged attack using a boomerang, the weapon ricochets violently. Each other creature of your choice within 5 feet of the original target takes damage equal to your proficiency bonus. The damage type matches the boomerang’s."
+    },
+    {
+      "id": "feat.saber_dance",
+      "kind": "feat",
+      "name": "Saber Dance",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "You fight with a saber in flowing arcs, dispatching foes with grace.\nYou gain a +1 bonus to attack rolls with sabers. When you take the Attack action and hit a creature with a saber, you may immediately make a second attack against another creature within 5 feet of the first as a bonus action.\nWhen you score a critical hit with a saber, you may move up to 10 feet without provoking opportunity attacks."
+    },
+    {
+      "id": "feat.samurai_warrior",
+      "kind": "feat",
+      "name": "Samurai Warrior",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "The katana is a difficult blade to use, but you have spent countless hours mastering it. You gain the following benefits:\nYou gain a +1 bonus to attack rolls you make with a katana.\nThe first time you use your attack action to attack a creature with a katana in combat and it is sheathed, you gain advantage on the attack roll.\nYou can deliver a sweep attack to fleeing enemies. When you hit with an opportunity attack using a katana, the target must succeed on a Strength saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or be knocked prone."
+    },
+    {
+      "id": "feat.savage_attacker",
+      "kind": "feat",
+      "name": "Savage Attacker",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "Once per turn when you roll damage for a melee weapon attack, you can reroll the weapon’s damage dice and use either total."
+    },
+    {
+      "id": "feat.siege_breaker",
+      "kind": "feat",
+      "name": "Siege Breaker",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "You wield your greatclub like a battering ram, striking with such overwhelming force that enemies crumble before you.\nYour greatclub deals triple damage to objects and structures.\nOn a critical hit with a greatclub, you deal one additional damage die and may immediately push the target 10 feet away from you."
+    },
+    {
+      "id": "feat.sentinel",
+      "kind": "feat",
+      "name": "Sentinel",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 61
+      },
+      "text": "You have mastered techniques to take advantage of every drop in any enemy’s guard, gaining the following benefits:\nWhen you hit a creature with an opportunity attack, the creature’s speed becomes 0 for the rest of the turn.\nCreatures within 5 feet of you provoke opportunity attacks from you even if they take the Disengage action before leaving your reach.\nWhen a creature within 5 feet of you makes an attack against a target other than you (and that target doesn’t have this feat), you can use your reaction to make a melee weapon attack against the attacking creature."
+    },
+    {
+      "id": "feat.sentinel_gunner",
+      "kind": "feat",
+      "name": "Sentinel Gunner",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "text": "You have a quick hand and keen eye when employing firearms, granting you the following benefits:\nIncrease your Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with all firearms.\nYou ignore the loading property of firearms.\nBeing within 5 feet of a hostile creature doesn’t impose disadvantage on your ranged attack rolls."
+    },
+    {
+      "id": "feat.sharkskin",
+      "kind": "feat",
+      "name": "Sharkskin",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "prerequisite": "Fish-man",
+      "text": "Due to your fish-man features and rough skin, you are difficult to touch without getting injured. You gain the following benefits:\nIncrease your Constitution score by 1, up to a maximum of 20.\nYour rough skin deals 1d6 piercing damage to any creature grappling you or any creature grappled by you.\nYou gain proficiency in the Intimidation skill. If you’re already proficient in it, your proficiency bonus is doubled for any check you make with it."
+    },
+    {
+      "id": "feat.sharpshooter",
+      "kind": "feat",
+      "name": "Sharpshooter",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "text": "You have mastered ranged weapons and can make shots that others find impossible. You gain the following benefits:\nAttacking at long range doesn’t impose disadvantage on your ranged weapon attack rolls.\nYour ranged weapon attacks ignore half cover and three-quarters cover.\nBefore you make an attack with a ranged weapon that you are proficient with, you can choose to take a -5 penalty to the attack roll. If the attack hits, you add +10 to the attack’s damage."
+    },
+    {
+      "id": "feat.shield_master",
+      "kind": "feat",
+      "name": "Shield Master",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "text": "You use shields not just for protection but also for offense. You gain the following benefits while you are wielding a shield.\nIf you take the Attack action on your turn, you can use a bonus action to try to shove a creature within 5 feet of you with your shield.\nIf you aren’t incapacitated, you can add your shield’s AC bonus to any Dexterity saving throw you make against a spell or other harmful effect that targets only you.\nIf you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you can use your reaction to take no damage if you succeed on the saving throw, interposing your shield between yourself and the source of the effect."
+    },
+    {
+      "id": "feat.silent_hunter",
+      "kind": "feat",
+      "name": "Silent Hunter",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "text": "You have mastered the art of silent ranged kills, turning the blowgun into a weapon of fit for an assassin. When you make a ranged attack with a blowgun while hidden, you do not reveal your position on a hit. Enemies cannot determine the direction the shot came from.\nA blowgun shot is considered silent; creatures cannot hear the attack.\nAdditionally, your blowgun’s damage is increased to 1d6 piercing."
+    },
+    {
+      "id": "feat.skilled",
+      "kind": "feat",
+      "name": "Skilled",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "text": "You gain proficiency in any combination of three skills or tools of your choice."
+    },
+    {
+      "id": "feat.skirmishers_volley",
+      "kind": "feat",
+      "name": "Skirmisher’s Volley",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "text": "You use the shortbow as a fast, mobile weapon, loosing arrows in quick succession.\nWhen you take the Attack action and attack with a shortbow, you may make one additional shortbow attack as part of the same action. You can use this feature a number of times equal to your proficiency bonus per long rest.\nOnce per turn when you hit a creature with a shortbow, you may move 10 feet without provoking opportunity attacks.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.skulker",
+      "kind": "feat",
+      "name": "Skulker",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 62
+      },
+      "prerequisite": "Dexterity 13 or higher",
+      "text": "You are expert at slinking through shadows. You gain the following benefits:\nYou can try to hide when you are lightly obscured from the creature from which you are hiding. When you are hidden from a creature and miss it with a ranged weapon attack, making the attack doesn’t reveal your position.\nDim light doesn’t impose disadvantage on your Wisdom (Perception) checks relying on sight."
+    },
+    {
+      "id": "feat.sky_mastery",
+      "kind": "feat",
+      "name": "Sky Mastery",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "prerequisite": "Sky Islander",
+      "text": "You have discovered the secrets of the sky and refined your mastery over its relics.\nIncrease your Wisdom or Intelligence by 1, to a maximum of 20.\nYou can cast Feather Fall a number of times equal to your proficiency bonus without expending a spell slot, regaining all uses after a long rest.\nWhenever you use a dial, you may add your proficiency bonus to attack rolls, saving throw DCs, or damage rolls associated with that dial’s effect."
+    },
+    {
+      "id": "feat.sling_king",
+      "kind": "feat",
+      "name": "Sling King",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "text": "Your sling skills have grown, and you gain these benefits:\nYou gain a +1 bonus to attack rolls you make with a sling.\nWhen you use a sling, its damage die changes from a d4 to a d6, and from a d8 to a d10 when wielded with two hands. (This benefit has no effect if another feature has already improved the weapon’s die.) Your maximum range with slings now also counts as your minimum."
+    },
+    {
+      "id": "feat.snag_and_twist",
+      "kind": "feat",
+      "name": "Snag and Twist",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "text": "When you hit a creature with a trident, you may force it to make a Strength saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the creature is disarmed (drops one weapon of your choice) or knocked prone (your choice).\nYou can use this feature a number of times equal to your proficiency bonus per long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.spell_sniper",
+      "kind": "feat",
+      "name": "Spell Sniper",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "prerequisite": "The ability to cast at least one spell",
+      "text": "You have learned techniques to enhance your attacks with certain kinds of spells, gaining the following benefits:\nWhen you cast a spell that requires you to make an attack roll, the spell’s range is doubled.\nYour ranged spell attacks ignore half cover and three-quarters cover.\nYou learn one cantrip that requires an attack roll. Choose the cantrip from the bard, Chemist, Devilforged, Hybrid, Priest, Skald, or Tinkerer spell list. Your spellcasting ability for this cantrip depends on the spell list you chose from: Charisma for Skald, Hybrid, and Devilforged; Wisdom for Priest or Chemist; or Intelligence for Tinkerer."
+    },
+    {
+      "id": "feat.spellcaster_disruptor",
+      "kind": "feat",
+      "name": "Spellcaster Disruptor",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "text": "You have practiced techniques useful in melee combat against tinkerers and other spell users, gaining the following benefits:\nWhen a creature within 5 feet of you casts a spell, you can use your reaction to make a melee weapon attack against that creature.\nWhen you damage a creature that is concentrating on a spell, that creature has disadvantage on the saving throw it makes to maintain its concentration. You have advantage on saving throws against spells cast by creatures within 5 feet of you."
+    },
+    {
+      "id": "feat.spin_to_win",
+      "kind": "feat",
+      "name": "Spin to Win",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "text": "When you take the Attack action, you may forgo making any of your normal greatsword attacks to perform a whirlwind attack. Each creature of your choice within 5 feet of you must make a Dexterity saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, a creature takes your normal greatsword weapon damage. On a success, it takes half as much."
+    },
+    {
+      "id": "feat.spray_and_pray",
+      "kind": "feat",
+      "name": "Spray and Pray",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "text": "You’ve learned to unleash wild bursts of fire, scattering bullets across the battlefield. When you make an attack with a machine gun to a single target, you may instead attack up to 4 different targets, dealing 1d4 piercing damage instead of 3d4."
+    },
+    {
+      "id": "feat.staggering_swing",
+      "kind": "feat",
+      "name": "Staggering Swing",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 63
+      },
+      "text": "You wield the morningstar as a hybrid weapon, its spikes tearing through armor and shields.\nWhen you hit a creature wearing armor or using a shield, you deal an extra 1d6 piercing damage. Once per turn, when you hit a creature with a morningstar, you can forgo the damage roll and you can force the target to make a Constitution saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the target is staggered until the start of your next turn, giving it disadvantage on its next weapon attack roll."
+    },
+    {
+      "id": "feat.super_cyborg_upgrade",
+      "kind": "feat",
+      "name": "Super Cyborg Upgrade",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "prerequisite": "Cyborg",
+      "text": "When you take this feat, you can install four additional cyborg upgrades of your choice.\nYou can select this feat multiple times. Each time you do so, you must choose different upgrades."
+    },
+    {
+      "id": "feat.tavern_brawler",
+      "kind": "feat",
+      "name": "Tavern Brawler",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "text": "Accustomed to rough-and-tumble fighting using whatever weapons happen to be at hand, you gain the following benefits:\nIncrease your Strength or Constitution score by 1, to a maximum of 20.\nYou are proficient with improvised weapons and unarmed strikes.\nYour unarmed strike uses a d4 for damage.\nWhen you hit a creature with an unarmed strike or an improvised weapon on your turn, you can use a bonus action to attempt to grapple the target."
+    },
+    {
+      "id": "feat.three_weapon_style",
+      "kind": "feat",
+      "name": "Three-Weapon Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "prerequisite": "Two-Weapon Style Feat",
+      "text": "You master fighting with three weapons, gaining the following benefits:\nYour Two-Weapon Style bonus to AC increases to +2.\nYou can hold an additional offhand weapon with another appendage or with your mouth, and it doesn’t have to be light. You can’t make attacks with it.\nChoose one one-handed weapon you are proficient with held in either hand during your turn, you may combine attacks made with that weapon with your third weapon to increase the chosen weapon’s damage dice by one stage for the remainder of your turn. For example, a d4 damage die made with the weapon would become a d6 to hit, a d6 would become a d8, a d8 would become a d10, and a d10 would become a d12. The maximum the damage dice can increase to is a d12.\nYou can draw or stow three one-handed weapons when you would normally be able to draw or stow only one."
+    },
+    {
+      "id": "feat.thunder_bagua",
+      "kind": "feat",
+      "name": "Thunder Bagua",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "prerequisite": "Oni",
+      "text": "Your power surges beyond its usual limits, turning your attacks into overwhelming strikes.\nIncrease your Charisma by 1, to a maximum of 20. You can use your Terrifying Presence one additional time per long rest.\nWhile a creature is frightened of you, your melee attacks against that creature deal an extra 1d8 thunder damage."
+    },
+    {
+      "id": "feat.tidal_colossus",
+      "kind": "feat",
+      "name": "Tidal Colossus",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "prerequisite": "Wotan Fish-Man",
+      "text": "Your titanic physique and connection to the sea let you channel your strength like a crashing tidal wave. When you make a melee weapon attack underwater, you can instead choose to create a tidal shockwave.\nYou create a tidal surge in a 60 feet long and 20 feet wide line from you in a direction you choose. Each creature that starts its turn in the line must succeed on a Strength saving throw equal to 8 + your proficiency bonus + your Strength modifier or be pushed 15 ft. away from you in a direction following the line."
+    },
+    {
+      "id": "feat.titanic_weapon_style",
+      "kind": "feat",
+      "name": "Titanic Weapon Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "prerequisite": "Two-Weapon Style Feat",
+      "text": "You master fighting with two colossal weapons:\nIncrease your Strength by 1, to a maximum of 20. You can now wield any two-handed weapon as if it had the light property instead of the two-handed property."
+    },
+    {
+      "id": "feat.tough",
+      "kind": "feat",
+      "name": "Tough",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "text": "Your hit point maximum increases by an amount equal to twice your level when you gain this feat. Whenever you gain a level thereafter, your hit point maximum increases by an additional 2 hit points."
+    },
+    {
+      "id": "feat.tribesman_presence",
+      "kind": "feat",
+      "name": "Tribesman Presence",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "prerequisite": "Yokai Tribesman",
+      "text": "You embody the charisma of your tribe, granting you the knowledge to bend another’s views.\nIncrease your Charisma by 1, to a maximum of 20. When you make an Intimidation or Persuasion check, you can roll with advantage a number of times equal to your proficiency bonus per long rest.",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ]
+    },
+    {
+      "id": "feat.two_weapon_style",
+      "kind": "feat",
+      "name": "Two-Weapon Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 64
+      },
+      "text": "You master fighting with two weapons, gaining the following benefits:\nYou gain a +1 bonus to AC while you are wielding a separate melee weapon in each hand.\nYou can use two-weapon fighting even when the one- handed melee weapons you are wielding aren’t light. You can draw or stow two one-handed weapons when you would normally be able to draw or stow only one."
+    },
+    {
+      "id": "feat.versatile_mastery",
+      "kind": "feat",
+      "name": "Versatile Mastery",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 65
+      },
+      "text": "You’ve mastered the adaptable style of the longsword, flowing between one and two-handed stances.\nWhen you wield a longsword in one hand, you gain a +1 bonus to AC.\nWhen you wield a longsword in two hands, you roll one additional damage die on a critical hit."
+    },
+    {
+      "id": "feat.war_caster",
+      "kind": "feat",
+      "name": "War Caster",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 65
+      },
+      "prerequisite": "The ability to cast at least one spell",
+      "text": "You have practiced casting spells in the midst of combat, learning techniques that grant you the following benefits:\nYou have advantage on Constitution saving throws that you make to maintain your concentration on a spell when you take damage.\nYou can perform the somatic components of spells even when you have weapons or a shield in one or both hands.\nWhen a hostile creature’s movement provokes an opportunity attack from you, you can use your reaction to cast a spell at the creature, rather than making an opportunity attack. The spell must have a casting time of 1 action and must target only that creature."
+    },
+    {
+      "id": "feat.weapon_master",
+      "kind": "feat",
+      "name": "Weapon Master",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 65
+      },
+      "text": "You have practiced extensively with a variety of weapons, gaining the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with four weapons of your choice."
+    },
+    {
+      "id": "feat.whiplash",
+      "kind": "feat",
+      "name": "Whiplash",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 65
+      },
+      "text": "You’ve learned to use the whip as a tool of control.\nOnce per combat encounter per creature, when you hit a creature with a whip, you may force it to make a Strength saving throw equal to 8 + your Strength or Dexterity modifier + your proficiency bonus. On a failed save, the creature is either pulled 5 feet toward you or disarmed (your choice).\nYou can use a whip to grapple a creature up to 10 feet away, rather than 5 feet. You may use Dexterity (Sleight of Hand) instead of Strength (Athletics) for this grapple.\nOn a critical hit with a whip, the target is restrained until the start of your next turn."
+    },
+    {
+      "id": "feat.whirling_blades",
+      "kind": "feat",
+      "name": "Whirling Blades",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 65
+      },
+      "text": "You fight with a scimitar in fluid, whirling motions.\nYou gain a +1 bonus to damage rolls with scimitars. When you wield two scimitars, your off-hand attack adds your ability modifier to its damage rolls.\nIf you hit two different creatures with scimitar attacks on your turn, you gain a +2 bonus to AC until the start of your next turn."
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

@@ -678,10 +678,7 @@
                       "White",
                       "Calm",
                       "Radiant Gain +2 to passive perception.",
-                      "Must use an Action to use a Bonus"
-                    ],
-                    [
-                      "Action."
+                      "Must use an Action to use a Bonus Action."
                     ],
                     [
                       "Grey",
@@ -711,10 +708,7 @@
                     [
                       "Yellow",
                       "Insecurity Lightning Gain advantage on Dexterity saving throws.",
-                      "Has disadvantage on attack rolls against"
-                    ],
-                    [
-                      "you."
+                      "Has disadvantage on attack rolls against you."
                     ],
                     [
                       "Green",
@@ -734,10 +728,7 @@
                       "Indigo",
                       "Grief",
                       "Psychic Gain advantage on saving throws against spell effects.",
-                      "Inflicts your priest level in psychic"
-                    ],
-                    [
-                      "damage."
+                      "Inflicts your priest level in psychic damage."
                     ],
                     [
                       "Violet",

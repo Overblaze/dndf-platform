@@ -11,6 +11,12 @@ export interface NewCharacterInput {
   scores: AbilityScores;
   raceName?: string;
   speed?: number;
+  /** Race and subrace entry ids, when picked from the book. */
+  raceId?: string;
+  subraceId?: string;
+  backgroundId?: string;
+  crewRoleId?: string;
+  feats?: string[];
   subclass?: string;
   skills?: string[];
   /** Picks from option groups, by choice id. */
@@ -30,7 +36,10 @@ export function newCharacter(input: NewCharacterInput, rules: Map<string, RuleEn
     schema: 1,
     name: input.name,
     rulesVersion: 'dndf-10',
-    race: { name: input.raceName ?? 'Human (Standard)', speed: input.speed ?? 30 },
+    race: { id: input.raceId, subraceId: input.subraceId, name: input.raceName ?? 'Human (Standard)', speed: input.speed ?? 30 },
+    background: input.backgroundId ? { id: input.backgroundId } : undefined,
+    crewRole: input.crewRoleId ? { id: input.crewRoleId } : undefined,
+    feats: input.feats,
     classes: [{ id: classId, level: input.level, subclass: input.level >= subclassLevel ? input.subclass : undefined }],
     scores: input.scores,
     skills: input.skills ?? [],

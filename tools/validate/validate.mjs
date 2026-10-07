@@ -66,6 +66,9 @@ for (const { entry, report } of entries) {
   if (entry.kind === 'subclass' && !resolves(entry.parent, 'class')) {
     report(`${entry.id} has parent "${entry.parent}", which is not a class in the same version`);
   }
+  if (entry.kind === 'subrace' && !resolves(entry.parent, 'race')) {
+    report(`${entry.id} has parent "${entry.parent}", which is not a race in the same version`);
+  }
   const parent = entry.kind === 'subclass' ? seen.get(`${entry.versions[0]} ${entry.parent}`) : entry;
   const resources = new Set((parent?.resources ?? []).map((r) => r.id));
   const optionIds = new Set();
