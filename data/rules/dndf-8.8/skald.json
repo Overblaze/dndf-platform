@@ -474,13 +474,25 @@
           "level": 2,
           "name": "Jack of All Trades",
           "text": "Starting at 2nd Level, you can add half your Proficiency Bonus, rounded down, to any ability check you make that doesn’t already include your Proficiency Bonus.",
-          "page": 185
+          "page": 185,
+          "effects": [
+            {
+              "type": "halfProficiency"
+            }
+          ]
         },
         {
           "level": 2,
           "name": "Song of the Sea",
           "text": "Beginning at 2nd Level, you can use soothing music or oration to help Revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your Performance regain Hit Points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 Hit Points.\nThe extra Hit Points increase when you reach certain levels in this class: to 1d8 at 9th level, to 1d10 at 13th level, and to 1d12 at 17th level.",
-          "page": 185
+          "page": 185,
+          "rolls": [
+            {
+              "label": "Extra hit points",
+              "dice": "{level>=17 ? '1d12' : level>=13 ? '1d10' : level>=9 ? '1d8' : '1d6'}",
+              "kind": "heal"
+            }
+          ]
         },
         {
           "level": 3,
@@ -538,6 +550,24 @@
           "name": "Battle Chords",
           "text": "At 20th level, when you roll Initiative manifest 3 chords of your choice.",
           "page": 186
+        }
+      ],
+      "formulas": {
+        "spiritDC": {
+          "label": "Spirit save DC",
+          "expr": "8 + prof + mod.cha"
+        },
+        "spiritAttack": {
+          "label": "Spirit attack modifier",
+          "expr": "prof + mod.cha"
+        }
+      },
+      "trackers": [
+        {
+          "id": "chords",
+          "name": "Floating Chords",
+          "min": 0,
+          "max": 3
         }
       ]
     },

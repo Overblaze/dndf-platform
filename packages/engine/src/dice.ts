@@ -36,7 +36,13 @@ export function parseDice(text: string): DiceSpec {
   let consumed = 0;
   for (let m = pattern.exec(compact); m; m = pattern.exec(compact)) {
     const sign = m[1] === '-' ? -1 : 1;
-    if (m[3]) spec.terms.push({ count: Number(m[2] || 1), sides: Number(m[3]), sign });
+    if (m[3]) {
+      // "1d8 + 1d8" is 2d8: dice of the same size are counted together.
+      const term = { count: Number(m[2] || 1), sides: Number(m[3]), sign } as DiceTerm;
+      const same = spec.terms.find((t) => t.sides === term.sides && t.sign === term.sign);
+      if (same) same.count += term.count;
+      else spec.terms.push(term);
+    }
     else spec.bonus += sign * Number(m[4]);
     consumed = pattern.lastIndex;
   }

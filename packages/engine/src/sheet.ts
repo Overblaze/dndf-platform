@@ -112,6 +112,7 @@ export interface SheetTracker {
   min: number;
   max: number;
   value: number;
+  reset?: string;
   page?: number;
   levels?: TrackerDef['levels'];
 }
@@ -150,6 +151,8 @@ export interface Sheet {
   healingSurgeDice: number;
   specialReactionReduction: string;
   attacksPerAction: number;
+  /** Numbers a class defines by formula (Ki save DC, Spirit attack modifier …), each with its breakdown. */
+  formulas: (Stat & { from: string })[];
   /** This level's row of each class table (Ki Points 7, Martial Arts Die 1d8 …), spell slots left out. */
   classTable: { key: string; label: string; value: number | string; from: string }[];
   resources: SheetResource[];
@@ -182,6 +185,20 @@ export function isBruiserWeapon(weapon: WeaponDef): boolean {
   if (weapon.ranged) return false;
   if (weapon.category === 'improvised' || /^(cutlass|kanabo)$/i.test(weapon.name.trim())) return true;
   return weapon.category === 'simple' && !weapon.twoHanded;
+}
+
+/** Martial Arts' definition: shortswords and simple melee weapons without two-handed or heavy — p150. */
+export function isMartialArtistWeapon(weapon: WeaponDef): boolean {
+  if (weapon.ranged) return false;
+  if (/^shortsword$/i.test(weapon.name.trim())) return true;
+  return weapon.category === 'simple' && !weapon.twoHanded && !weapon.heavy;
+}
+
+/** Whether a class's fighting-style die applies to a weapon; every style covers unarmed strikes. */
+function styleCovers(style: unknown, weapon: WeaponDef): boolean {
+  if (style === 'martialArtist') return isMartialArtistWeapon(weapon);
+  if (style === 'unarmedOnly') return false;
+  return isBruiserWeapon(weapon);
 }
 
 /** "leadershipDice" → "Leadership Dice". */
@@ -267,15 +284,22 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const toggleDefs = active.flatMap((a) => (a.def.toggle ? [{ def: a.def.toggle as ToggleDef, feature: a }] : []));
   const on: ExprScope = {};
   for (const { def } of toggleDefs) on[def.id] = Boolean(doc.state.toggles[def.id]);
+  // Tracker values (Hybrid Points held) are visible to expressions as tracker.<id>.
+  const tracker: ExprScope = {};
+  for (const source of sources) {
+    for (const def of (source.entry.trackers ?? []) as TrackerDef[]) tracker[def.id] = doc.state.trackers[def.id] ?? def.min;
+  }
   const scopeFor = (source: Source, extra: ExprScope = {}): ExprScope => ({
     level: source.classLevel,
     prof: prof.value,
     mod,
     col: classColumns(source.cls, source.classLevel),
     on,
+    tracker,
     noArmor: doc.armor === null,
     noShield: !doc.shield,
     bruiserWeapon: false,
+    melee: false,
     ...extra,
   });
 
@@ -296,7 +320,10 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const amount = (e: ActiveEffect, extra?: ExprScope) => (e.effect.expr ? evaluateNumber(e.effect.expr, scopeFor(e.source, extra)) : e.effect.value ?? 0);
   const ofType = (type: string, extra?: ExprScope) => effects.filter((e) => e.effect.type === type && applies(e, extra));
   const bonusLines = (type: string, extra?: ExprScope): BreakdownLine[] =>
-    ofType(type, extra).map((e) => ({ label: e.from, value: amount(e, extra) }));
+    ofType(type, extra)
+      .map((e) => ({ label: e.from, value: amount(e, extra) }))
+      // A bonus worked out from something that can be zero (Hybrid Points held) is left out while it is zero.
+      .filter((line, i) => line.value !== 0 || !ofType(type, extra)[i]!.effect.expr);
 
   const notes: Sheet['notes'] = ofType('note').map((e) => ({ label: String(e.effect.label ?? ''), from: e.from }));
   const exhaustion = doc.state.exhaustion;
@@ -324,11 +351,14 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     saves[a] = { ...stat(doc, `save.${a}`, `${ABILITY_NAMES[a]} save`, { value: sum(lines), lines }), proficient: saveProfs.has(a) };
   }
 
+  // Jack of All Trades: half proficiency on ability checks that don't already include it.
+  const halfProf = ofType('halfProficiency').slice(0, 1);
   const skills: SheetSkill[] = SKILLS.map((skill) => {
     const proficient = skillProfs.has(skill.id);
     const expertise = proficient && doc.expertise.includes(skill.id);
     const lines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[skill.ability]} modifier`, value: mod[skill.ability]! }];
     if (proficient) lines.push({ label: expertise ? 'Proficiency bonus × 2 (expertise)' : 'Proficiency bonus', value: prof.value * (expertise ? 2 : 1) });
+    else for (const e of halfProf) lines.push({ label: `${e.from}: half proficiency, rounded down`, value: Math.floor(prof.value / 2) });
     return { ...stat(doc, `skill.${skill.id}`, skill.name, { value: sum(lines), lines }), id: skill.id, ability: skill.ability, proficient, expertise };
   });
   const perception = skills.find((s) => s.id === 'perception')!;
@@ -367,6 +397,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const speed = stat(doc, 'speed', 'Speed', { value: sum(speedLines), lines: speedLines });
 
   const initLines: BreakdownLine[] = [{ label: 'Dexterity modifier', value: mod.dex! }, ...bonusLines('initiative')];
+  for (const e of halfProf) initLines.push({ label: `${e.from}: half proficiency, rounded down`, value: Math.floor(prof.value / 2) });
   const initiative = stat(doc, 'initiative', 'Initiative', { value: sum(initLines), lines: initLines, page: 52 });
 
   const hpLines: BreakdownLine[] = [];
@@ -404,7 +435,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   // 8. Resources: class pools, limited-use features, and the rules every character has.
   const resourceDefs: { def: ResourceDef; source?: Source; page?: number }[] = [];
   // Features that don't come from a class (race, background, crew role, feats) see the whole character's level.
-  const plainScope: ExprScope = { level, prof: prof.value, mod, on, noArmor: doc.armor === null, noShield: !doc.shield, bruiserWeapon: false };
+  const plainScope: ExprScope = { level, prof: prof.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, bruiserWeapon: false, melee: false };
   for (const source of sources) {
     for (const def of ((source.entry as ClassEntry).resources ?? [])) {
       if (source.classLevel >= (def.minLevel ?? 1)) resourceDefs.push({ def, source, page: source.entry.source.page });
@@ -463,7 +494,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     ((source.entry.trackers ?? []) as TrackerDef[]).map((def) => {
       const max = evaluateNumber(def.max, scopeFor(source));
       const value = Math.min(max, Math.max(def.min, doc.state.trackers[def.id] ?? def.min));
-      return { id: def.id, name: def.name, min: def.min, max, value, page: def.page ?? source.entry.source.page, levels: def.levels };
+      return { id: def.id, name: def.name, min: def.min, max, value, page: def.page ?? source.entry.source.page, levels: def.levels, reset: def.reset };
     }),
   );
 
@@ -475,38 +506,44 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   });
 
   // 10. Attacks.
-  const scrapper = ofType('unarmedDie')[0];
-  const scrapperDice = scrapper ? `1${evaluate(scrapper.effect.expr!, scopeFor(scrapper.source))}` : null;
+  // A class's fighting-style die (Scrapper, Martial Arts, Close Quarters Training) replaces a smaller
+  // weapon die on unarmed strikes and the weapons that style covers.
+  const styles = ofType('unarmedDie').map((e) => {
+    const value = String(evaluate(e.effect.expr!, scopeFor(e.source)));
+    return { from: e.from, dice: /^d/.test(value) ? `1${value}` : value, covers: e.effect.weapons, dexterity: e.effect.finesse === true };
+  });
   const weaponProfs = new Set(sources.flatMap((s) => ((s.cls.proficiencies as { weapons?: string[] } | undefined)?.weapons ?? [])));
   const unarmed: WeaponDef = { id: 'unarmed', name: 'Unarmed strike', damage: '1', damageType: 'bludgeoning', category: 'simple', proficient: true };
 
   const attacks: SheetAttack[] = [unarmed, ...doc.weapons].map((weapon) => {
     const isUnarmed = weapon.id === 'unarmed';
-    const bruiserWeapon = isUnarmed || isBruiserWeapon(weapon);
-    const extra: ExprScope = { bruiserWeapon };
-    const useScrapper = scrapperDice !== null && bruiserWeapon;
+    const covering = styles.filter((style) => isUnarmed || styleCovers(style.covers, weapon));
+    const style = covering.reduce<(typeof styles)[number] | undefined>((best, c) => (!best || averageOf(c.dice) > averageOf(best.dice) ? c : best), undefined);
+    const extra: ExprScope = { bruiserWeapon: covering.length > 0, melee: !weapon.ranged };
     const attackNotes: string[] = [];
 
     let ability: Ability = 'str';
-    if (weapon.ranged) ability = 'dex';
-    else if (weapon.finesse && !useScrapper && mod.dex! > mod.str!) ability = 'dex';
-    if (weapon.finesse && useScrapper) attackNotes.push('Finesse can\'t be used with a bruiser weapon');
+    const dexAllowed = covering.some((c) => c.dexterity);
+    if (weapon.ability) ability = weapon.ability;
+    else if (weapon.ranged) ability = 'dex';
+    else if ((dexAllowed || (weapon.finesse && covering.length === 0)) && mod.dex! > mod.str!) ability = 'dex';
+    if (weapon.finesse && covering.length > 0 && !dexAllowed && !weapon.ability) attackNotes.push('Finesse can\'t be used with a bruiser weapon');
 
     const proficient = weapon.proficient ?? (weaponProfs.has(weapon.category) || weaponProfs.has(slug(weapon.name)));
     const hitLines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[ability]} modifier`, value: mod[ability]! }];
     if (proficient) hitLines.push({ label: 'Proficiency bonus', value: prof.value });
     else attackNotes.push('Not proficient');
     if (weapon.bonus) hitLines.push({ label: 'Item bonus', value: weapon.bonus });
-    hitLines.push(...bonusLines('attack', extra));
+    hitLines.push(...bonusLines('attack', extra).filter((l) => l.value !== 0));
 
-    let dice = weapon.damage;
-    if (useScrapper && averageOf(scrapperDice) > averageOf(weapon.damage)) dice = scrapperDice;
+    const useStyle = style !== undefined && averageOf(style.dice) > averageOf(weapon.damage);
+    const dice = useStyle ? style.dice : weapon.damage;
     const damageLines: BreakdownLine[] = [
-      { label: dice === scrapperDice && useScrapper ? `${scrapper!.from} die` : 'Weapon die', value: dice },
+      { label: useStyle ? `${style.from} die` : 'Weapon die', value: dice },
       { label: `${ABILITY_NAMES[ability]} modifier`, value: mod[ability]! },
     ];
     if (weapon.bonus) damageLines.push({ label: 'Item bonus', value: weapon.bonus });
-    damageLines.push(...bonusLines('damage', extra));
+    damageLines.push(...bonusLines('damage', extra).filter((l) => l.value !== 0));
     const spec = parseDice(dice);
     spec.bonus += damageLines.slice(1).reduce((total, l) => total + Number(l.value), 0);
 
@@ -582,6 +619,13 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     });
   }
 
+  const formulas: Sheet['formulas'] = sources.flatMap((source) =>
+    Object.entries((source.entry.formulas ?? {}) as Record<string, { label: string; expr: string; page?: number }>).map(([id, formula]) => ({
+      ...stat(doc, `formula.${id}`, formula.label, { ...explain(formula.expr, scopeFor(source)), page: formula.page ?? source.entry.source.page }),
+      from: source.entry.name,
+    })),
+  );
+
   const classTable: Sheet['classTable'] = [];
   for (const source of sources) {
     if (source.entry !== source.cls) continue;
@@ -623,6 +667,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     healingSurgeDice: healingSurgeMaxDice(level, Math.max(0, level - doc.state.hitDiceSpent)),
     specialReactionReduction: specialReactionReduction(level).text,
     attacksPerAction: Math.max(1, ...ofType('attacksPerAction').map((e) => amount(e))),
+    formulas,
     classTable,
     specialReactions,
     generalRules,

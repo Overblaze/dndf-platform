@@ -221,19 +221,58 @@
           "level": 1,
           "name": "Close Quarters Training",
           "text": "Also at 1st level, You gain proficiency with unarmed strikes. Your unarmed strikes deal 1d8 bludgeoning damage and you can use Dexterity or Strength for the attack and damage rolls.",
-          "page": 131
+          "page": 131,
+          "effects": [
+            {
+              "type": "unarmedDie",
+              "expr": "'1d8'",
+              "weapons": "unarmedOnly",
+              "finesse": true
+            }
+          ]
         },
         {
           "level": 2,
           "name": "Power Threshold",
           "text": "Starting at 2nd level, you gain passive benefits as you maintain a stockpile of Hybrid Points. These bonuses are cumulative and remain active as long as your current Hybrid Points are equal to or greater than the listed threshold.\nYou gain a +1 bonus to melee weapon damage rolls for every 2 points you are holding.\nYou gain a +1 bonus to your AC for every 5 points you are holding.\nYou gain a +1 bonus to melee weapon attack rolls for every 3 points you are holding.\nWhen you cast a spell with your hybrid points while holding 10 points at the time of casting, its damage is doubled.",
-          "page": 132
+          "page": 132,
+          "effects": [
+            {
+              "type": "damage",
+              "expr": "floor(tracker.hybrid_points / 2)",
+              "when": "melee"
+            },
+            {
+              "type": "ac",
+              "expr": "floor(tracker.hybrid_points / 5)"
+            },
+            {
+              "type": "attack",
+              "expr": "floor(tracker.hybrid_points / 3)",
+              "when": "melee"
+            }
+          ]
         },
         {
           "level": 2,
           "name": "Energy Transfer",
           "text": "At 2nd level, you can release a concentrated chain of energy at a distant target, slightly recharging yourself as you absorb some of their energy. As an action, you target one hostile creature within 30 ft. of you that you can see. The attack automatically hits and the target takes 1d4 force damage. When you use this feature, you gain 2 Hybrid Points.",
-          "page": 132
+          "page": 132,
+          "action": "action",
+          "rolls": [
+            {
+              "label": "Force damage",
+              "dice": "1d4",
+              "kind": "damage"
+            }
+          ],
+          "onUse": [
+            {
+              "type": "addTracker",
+              "tracker": "hybrid_points",
+              "value": 2
+            }
+          ]
         },
         {
           "level": 3,
@@ -284,6 +323,14 @@
           },
           "auto": [
             "uses"
+          ],
+          "action": "reaction",
+          "onUse": [
+            {
+              "type": "addTracker",
+              "tracker": "hybrid_points",
+              "value": 1
+            }
           ]
         },
         {
@@ -303,7 +350,11 @@
           "level": 6,
           "name": "Defensive Augment",
           "text": "Starting at 6th level, you can temporarily boost your defenses. As a bonus action, you can expend 2 Hybrid Points to gain a +1 bonus to AC until the start of your next turn. This bonus increases by +1 for each additional hostile creature above 1 within 5 feet of you.",
-          "page": 132
+          "page": 132,
+          "action": "bonus",
+          "cost": {
+            "hybrid_points": 2
+          }
         },
         {
           "level": 6,
@@ -353,6 +404,25 @@
           "auto": [
             "uses"
           ]
+        }
+      ],
+      "formulas": {
+        "hybridDC": {
+          "label": "Hybrid save DC",
+          "expr": "8 + prof + mod.cha"
+        },
+        "hybridAttack": {
+          "label": "Hybrid attack modifier",
+          "expr": "prof + mod.cha"
+        }
+      },
+      "trackers": [
+        {
+          "id": "hybrid_points",
+          "name": "Hybrid Points",
+          "min": 0,
+          "max": "col.powerThresholdMaximum",
+          "reset": "long"
         }
       ]
     },

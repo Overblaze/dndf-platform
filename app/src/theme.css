@@ -452,6 +452,10 @@ legend {
   width: 84px;
 }
 
+.field-inline select.wide-select {
+  width: 132px;
+}
+
 .check {
   display: flex;
   align-items: center;

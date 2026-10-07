@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, SKILLS, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type AbilityScores, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, SKILLS, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { useState } from 'react';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -36,6 +36,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const [scores, setScores] = useState<AbilityScores>(initial?.scores ?? BLANK_SCORES);
   const [subclass, setSubclass] = useState(first?.subclass ?? '');
   const [skills, setSkills] = useState<string[]>(initial?.skills ?? []);
+  const [expertise, setExpertise] = useState<string[]>(initial?.expertise ?? []);
   const [choices, setChoices] = useState<Record<string, string[]>>(initial?.choices ?? {});
   const [armor, setArmor] = useState(initial?.armor ?? null);
   const [shield, setShield] = useState(initial?.shield ?? false);
@@ -74,7 +75,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleId: crewRoleId || undefined, feats,
     };
     if (!initial) {
-      const doc = { ...newCharacter(shared, rules), armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
+      const doc = { ...newCharacter(shared, rules), expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return onSave(doc, `Created ${doc.name}`);
     }
@@ -91,6 +92,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...base.classes.slice(1)],
       scores,
       skills,
+      expertise,
       choices: keptChoices,
       armor,
       shield,
@@ -245,6 +247,21 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         </div>
       </fieldset>
       <fieldset>
+        <legend className="label">Expertise (proficiency bonus doubled): {expertise.length}</legend>
+        <div className="chips">
+          {expertise.map((id) => (
+            <button type="button" key={id} className="chip chip-btn chip-on" onClick={() => setExpertise(expertise.filter((x) => x !== id))} aria-label={`Remove expertise in ${SKILLS.find((k) => k.id === id)?.name ?? id}`}>
+              {SKILLS.find((k) => k.id === id)?.name ?? id} ×
+            </button>
+          ))}
+        </div>
+        <select value="" onChange={(e) => e.target.value && setExpertise([...expertise, e.target.value])} aria-label="Add expertise in a skill">
+          <option value="">Add expertise in a skill…</option>
+          {SKILLS.filter((skill) => !expertise.includes(skill.id)).map((skill) => <option key={skill.id} value={skill.id}>{skill.name}</option>)}
+        </select>
+        <p className="page-ref">Expertise only counts for skills the character is proficient in.</p>
+      </fieldset>
+      <fieldset>
         <legend className="label">Armor and shield</legend>
         <select
           value=""
@@ -319,6 +336,13 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
                   <span>{flag === 'twoHanded' ? 'Two-handed' : flag[0]!.toUpperCase() + flag.slice(1)}</span>
                 </label>
               ))}
+              <label className="field-inline">
+                <span className="label">Attacks with</span>
+                <select className="wide-select" value={weapon.ability ?? ''} onChange={(e) => setWeapon(i, { ability: (e.target.value || undefined) as Ability | undefined })} aria-label={`Ability ${weapon.name} attacks with`}>
+                  <option value="">Automatic</option>
+                  {ABILITIES.map((a) => <option key={a} value={a}>{ABILITY_NAMES[a]}</option>)}
+                </select>
+              </label>
               <label className="field-inline">
                 <span className="label">Bonus</span>
                 <input type="number" inputMode="numeric" value={weapon.bonus ?? 0} onChange={(e) => setWeapon(i, { bonus: clamp(Number(e.target.value), -5, 10) })} />

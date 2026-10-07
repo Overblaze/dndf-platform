@@ -11,6 +11,9 @@ export interface WeaponDef {
   ranged?: boolean;
   finesse?: boolean;
   twoHanded?: boolean;
+  heavy?: boolean;
+  /** Use this ability for attack and damage, whatever the weapon would normally use (Harmonic Weaponry, Hell's Duelist). */
+  ability?: Ability;
   /** Item bonus to attack and damage. */
   bonus?: number;
   /** Set to force proficiency on or off; otherwise it comes from the class. */

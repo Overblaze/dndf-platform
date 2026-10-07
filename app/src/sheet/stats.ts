@@ -13,7 +13,7 @@ export function formatStat(value: number, kind: StatKind): string {
 export function findStat(sheet: Sheet, key: string): Stat | undefined {
   const all: (Stat | null)[] = [
     sheet.prof, sheet.ac, sheet.speed, sheet.initiative, sheet.maxHp, sheet.carry, sheet.willpower, sheet.hakiSaveDc,
-    sheet.hakiAttack, sheet.passivePerception, ...Object.values(sheet.saves), ...sheet.skills, ...sheet.attacks.map((a) => a.toHit),
+    sheet.hakiAttack, sheet.passivePerception, ...Object.values(sheet.saves), ...sheet.skills, ...sheet.attacks.map((a) => a.toHit), ...sheet.formulas,
   ];
   return all.find((s) => s?.key === key) ?? undefined;
 }

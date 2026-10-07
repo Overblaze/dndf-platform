@@ -118,8 +118,10 @@ export interface RollDef {
 }
 
 export interface OnUseDef {
-  type: 'refill' | 'regain';
-  resource: string;
+  /** refill / regain act on a resource; addTracker moves a tracker (Hybrid Points) by `value`. */
+  type: 'refill' | 'regain' | 'addTracker';
+  resource?: string;
+  tracker?: string;
   value?: number | string;
 }
 
@@ -149,6 +151,8 @@ export interface TrackerDef {
   name: string;
   min: number;
   max: number | string;
+  /** Rest that puts the tracker back to its minimum. */
+  reset?: string;
   page?: number;
   levels?: { value: number; label: string; text?: string }[];
 }
