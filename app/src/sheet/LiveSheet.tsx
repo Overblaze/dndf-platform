@@ -11,7 +11,7 @@ import { CombatTab } from './CombatTab';
 import { FeaturesTab } from './FeaturesTab';
 import { RestDialog } from './RestDialog';
 import { RollTray } from './RollTray';
-import { SheetBackground } from './SheetBackground';
+import { SheetBackground, sheetThemeVars } from './SheetBackground';
 import { SkillsTab } from './SkillsTab';
 import { StatDialog } from './StatDialog';
 import { findStat, type StatKind } from './stats';
@@ -52,6 +52,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
 
   return (
     <RollsProvider>
+      <div className="sheet-theme" style={sheetThemeVars(doc.appearance)}>
       <SheetBackground appearance={doc.appearance} store={store} />
       <section className="card sheet-head">
         <div>
@@ -66,7 +67,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           </span>
           <button className="btn btn-primary" onClick={() => setDialog('rest')}>Rest</button>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
-          <button className="btn" onClick={() => setDialog('look')}>Background</button>
+          <button className="btn" onClick={() => setDialog('look')}>Appearance</button>
           <Link className="btn" to="/sheet">All characters</Link>
         </div>
         {live.saveError && <p className="notice" role="alert">{live.saveError}. Your changes are kept on screen and will be retried on the next change.</p>}
@@ -97,6 +98,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           <CharacterForm initial={doc} onCancel={() => setDialog(null)} onSave={(next, log) => { live.setDoc(next, log); setDialog(null); }} />
         </Dialog>
       )}
+      </div>
     </RollsProvider>
   );
 }

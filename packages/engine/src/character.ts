@@ -54,6 +54,8 @@ export interface SheetAppearance {
   background?: { kind: 'preset'; id: string } | { kind: 'image'; ref: string };
   /** How solid the cards are over the background, 50–100 (percent). */
   cardOpacity?: number;
+  /** Box color as #rrggbb. Text, borders and tiles are worked out from it. Unset = the theme's parchment. */
+  cardColor?: string;
 }
 
 export interface CharacterDoc {
