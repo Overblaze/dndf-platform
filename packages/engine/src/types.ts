@@ -25,6 +25,8 @@ export interface Derived<T = number> {
   value: T;
   lines: BreakdownLine[];
   page?: number;
+  /** The book `page` is in; on a sheet, the character's handbook unless said otherwise. */
+  book?: string;
 }
 
 export interface Source {

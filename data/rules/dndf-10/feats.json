@@ -55,6 +55,12 @@
         "page": 52
       },
       "text": "Always on the lookout for danger, you gain the following benefits:\nYou can’t be surprised while you are conscious. You gain a +5 bonus to initiative.\nOther creatures don’t gain advantage on attack rolls against you as a result of being unseen by you.",
+      "effects": [
+        {
+          "type": "initiative",
+          "value": 5
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -96,6 +102,13 @@
         "page": 52
       },
       "text": "Your mace swings crash through defenses, battering armor and shields.\nYou gain a +1 bonus to attack rolls with maces. When you hit a creature wearing heavy armor or using a shield with a mace, you deal an extra 1d6 bludgeoning damage.",
+      "effects": [
+        {
+          "type": "attack",
+          "value": 1,
+          "when": "weapon == 'mace'"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -136,6 +149,13 @@
         "page": 52
       },
       "text": "You’ve perfected the art of striking with deadly precision at close range.\nYou gain a +1 bonus to attack rolls with shortswords. When you attack a creature with a shortsword while you have advantage on the attack roll, you deal an additional 1d6 damage.\nOnce per turn, when you reduce a creature to 0 hit points with a shortsword, you may immediately make a Dexterity (Stealth) check to hide as a bonus action. If used in the battle of combat and out in the open, enemies cannot see you until the end of your next turn.",
+      "effects": [
+        {
+          "type": "attack",
+          "value": 1,
+          "when": "weapon == 'shortsword'"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -217,6 +237,12 @@
         "page": 53
       },
       "text": "Your stomach has expanded far beyond the size of any ordinary stomach to gain the following benefits:\nIncrease your Constitution score by 1, to a maximum of 20.\nYou may store any quantity of food in your pockets and you count as one size larger when determining your carrying capacity. You may take out and eat up to 20 lbs of food from your pockets or within 5 ft. of you as an action.\nYou can now recover injuries by consuming large quantities of food. For every 4 lbs of food you consume, you recover 1 hit point. If you are at full hit points, you instead gain temporary hit points for every 4 lbs of food you consume, up to a maximum of your character level.",
+      "effects": [
+        {
+          "type": "carryMultiplier",
+          "value": 2
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -235,7 +261,14 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 53
       },
-      "text": "You fight with great agility, darting in and out of combat.\nYou gain a +1 bonus to attack rolls with cutlasses. When you hit a creature with a cutlass, you may immediately move up to 10 feet without provoking opportunity attacks."
+      "text": "You fight with great agility, darting in and out of combat.\nYou gain a +1 bonus to attack rolls with cutlasses. When you hit a creature with a cutlass, you may immediately move up to 10 feet without provoking opportunity attacks.",
+      "effects": [
+        {
+          "type": "attack",
+          "value": 1,
+          "when": "weapon == 'cutlass'"
+        }
+      ]
     },
     {
       "id": "feat.bonebreaker",
@@ -886,6 +919,12 @@
       },
       "text": "Your friendship with sea creatures mystically deepens thanks to your racial abilities. You gain the following benefits:\nYou gain proficiency in the Animal Handling skill. If you’re already proficient, your proficiency bonus is doubled for any check you make with it.\nYou learn the Speak with Animals spell and can cast it at will, but only targeting beasts with an innate swimming speed (not including Sea Kings).\nYou learn the Animal Friendship spell. You can cast it once without expending a spell slot, regaining the ability to do so after a long rest. You can only target aquatic beasts with this spell.\nYou learn the Find Familiar spell. When you cast it, your familiar must take the form of an aquatic creature (such as a fish, crab, octopus, or seahorse).",
       "prerequisite": "Fish-man, Merfolk, or Wotan",
+      "auto": [
+        "skills"
+      ],
+      "skills": [
+        "animal_handling"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1033,6 +1072,13 @@
         "page": 57
       },
       "text": "Your deadly precision with a sickle lets you reap foes with efficiency.\nYou gain a +1 bonus to attack rolls with sickles. When you hit a creature with a sickle and it has less than half its hit points remaining, you deal an additional 2d4 slashing damage.\nIf you reduce a creature to 0 hit points with a sickle, you may make another attack with a sickle against a different creature within reach as part of the same action.",
+      "effects": [
+        {
+          "type": "attack",
+          "value": 1,
+          "when": "weapon == 'sickle'"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1346,6 +1392,12 @@
         "page": 59
       },
       "text": "You are exceptionally speedy and agile. You gain the following benefits:\nYour speed increases by 10 feet.\nWhen you use the Dash action, difficult terrain doesn’t cost you extra movement on that turn. When you make a melee attack against a creature, you don’t provoke opportunity attacks from that creature for the rest of the turn, whether you hit or not.",
+      "effects": [
+        {
+          "type": "speed",
+          "value": 10
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1662,6 +1714,13 @@
         "page": 61
       },
       "text": "You fight with a saber in flowing arcs, dispatching foes with grace.\nYou gain a +1 bonus to attack rolls with sabers. When you take the Attack action and hit a creature with a saber, you may immediately make a second attack against another creature within 5 feet of the first as a bonus action.\nWhen you score a critical hit with a saber, you may move up to 10 feet without provoking opportunity attacks.",
+      "effects": [
+        {
+          "type": "attack",
+          "value": 1,
+          "when": "weapon == 'saber'"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1776,6 +1835,12 @@
       },
       "text": "Due to your fish-man features and rough skin, you are difficult to touch without getting injured. You gain the following benefits:\nIncrease your Constitution score by 1, up to a maximum of 20.\nYour rough skin deals 1d6 piercing damage to any creature grappling you or any creature grappled by you.\nYou gain proficiency in the Intimidation skill. If you’re already proficient in it, your proficiency bonus is doubled for any check you make with it.",
       "prerequisite": "Fish-man",
+      "auto": [
+        "skills"
+      ],
+      "skills": [
+        "intimidation"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -2190,6 +2255,12 @@
         "page": 64
       },
       "text": "Your hit point maximum increases by an amount equal to twice your level when you gain this feat. Whenever you gain a level thereafter, your hit point maximum increases by an additional 2 hit points.",
+      "effects": [
+        {
+          "type": "hp",
+          "expr": "level * 2"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -2339,6 +2410,13 @@
         "page": 65
       },
       "text": "You fight with a scimitar in fluid, whirling motions.\nYou gain a +1 bonus to damage rolls with scimitars. When you wield two scimitars, your off-hand attack adds your ability modifier to its damage rolls.\nIf you hit two different creatures with scimitar attacks on your turn, you gain a +2 bonus to AC until the start of your next turn.",
+      "effects": [
+        {
+          "type": "damage",
+          "value": 1,
+          "when": "weapon == 'scimitar'"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

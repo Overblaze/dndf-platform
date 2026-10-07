@@ -1,4 +1,4 @@
-import { applyDamage, applyHealing, gainTempHp, type Stat } from '@dndf/engine';
+import { applyDamage, applyHealing, cite, gainTempHp, type Stat } from '@dndf/engine';
 import { useState } from 'react';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { formatStat, type StatKind } from './stats';
@@ -10,7 +10,7 @@ export function Tile({ stat, kind, label, sub, onOpen, rollable }: { stat: Stat;
     <button className={stat.overridden ? 'tile tile-btn edited' : 'tile tile-btn'} onClick={() => onOpen(stat, kind, rollable)}>
       <span className="label">{label ?? stat.label}</span>
       <span className="big num">{formatStat(stat.value, kind)}</span>
-      <span className="page-ref">{stat.overridden ? 'edited' : sub ?? (stat.page ? `p.${stat.page}` : ' ')}</span>
+      <span className="page-ref">{stat.overridden ? 'edited' : sub ?? (stat.page ? cite(stat.book, stat.page) : ' ')}</span>
     </button>
   );
 }

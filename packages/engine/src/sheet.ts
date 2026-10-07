@@ -1,9 +1,11 @@
 // Turns a saved character + the rules data into every number on the sheet, each with
 // its line-by-line breakdown. The website and the Discord bot both call this.
 import { DEFAULT_SETTINGS, SKILLS, type CampaignSettings, type CharacterDoc, type WeaponDef } from './character';
+import { GENERAL_PAGES, HANDBOOKS } from './citations';
 import { classColumns } from './classes';
 import { abilityMod, maxHp, proficiencyBonus } from './core';
 import { fillTemplate, formatDice, parseDice } from './dice';
+import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
 import { dreamPointsMax, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
@@ -47,6 +49,7 @@ export interface SheetResource {
   recharge: string;
   confirm?: string;
   page?: number;
+  book?: string;
 }
 
 export interface SheetRoll {
@@ -145,7 +148,10 @@ export interface Sheet {
   hakiSaveDc: Stat;
   /** Table ruling; null when the campaign switches it off. */
   hakiAttack: Stat | null;
-  hitDice: { die: number; total: number; remaining: number };
+  /** `die` is the first class's; `pool` lists every class's dice, largest first, for multiclass characters. */
+  hitDice: { die: number; total: number; remaining: number; pool: { die: number; count: number }[] };
+  /** The character's handbook: the book every page on the sheet is in unless a feature names another. */
+  book: string;
   dreamPoints: { max: number; remaining: number };
   prestigeMax: number;
   healingSurgeDice: number;
@@ -175,7 +181,8 @@ const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '_').re
 function stat(doc: CharacterDoc, key: string, label: string, derived: Derived): Stat {
   const own = doc.overrides[key];
   const overridden = typeof own === 'number' && Number.isFinite(own);
-  return { key, label, value: overridden ? own : derived.value, calculated: derived.value, overridden, lines: derived.lines, page: derived.page };
+  const book = derived.page === undefined ? undefined : derived.book ?? HANDBOOKS[doc.rulesVersion];
+  return { key, label, value: overridden ? own : derived.value, calculated: derived.value, overridden, lines: derived.lines, page: derived.page, book };
 }
 
 const sum = (lines: BreakdownLine[]) => lines.reduce((total, l) => total + Number(l.value), 0);
@@ -277,7 +284,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const prof = stat(doc, 'prof', 'Proficiency bonus', {
     value: proficiencyBonus(level),
     lines: [{ label: 'Base', value: 2 }, { label: `Level ${level}: (level − 1) ÷ 4, rounded down`, value: Math.floor((level - 1) / 4) }],
-    page: 209,
+    page: GENERAL_PAGES[doc.rulesVersion].proficiency,
   });
 
   // 3. What rules expressions can see.
@@ -305,24 +312,52 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     melee: false,
     ranged: false,
     twoHanded: false,
+    weapon: '',
     ...extra,
   });
 
+  // Features that don't come from a class (race, background, crew role, feats) see the whole character's level.
+  const plainScope: ExprScope = {
+    level, prof: prof.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, wearingArmor: doc.armor !== null,
+    heavyArmor: doc.armor?.dexCap === 0, bruiserWeapon: false, melee: false, ranged: false, twoHanded: false, weapon: '',
+  };
+
+  // The character's race, background, crew role and feats, from the rules data.
+  const race = doc.race.id ? rules.get(doc.race.id) : undefined;
+  const subrace = doc.race.subraceId ? rules.get(doc.race.subraceId) : undefined;
+  if (doc.race.id && !race) warnings.push(`Race "${doc.race.id}" is not in the rules data.`);
+  const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
+  const background = doc.background ? rules.get(doc.background.id) : undefined;
+  const crewRole = doc.crewRole ? rules.get(doc.crewRole.id) : undefined;
+  if (doc.background && !background) warnings.push(`Background "${doc.background.id}" is not in the rules data.`);
+  if (doc.crewRole && !crewRole) warnings.push(`Crew role "${doc.crewRole.id}" is not in the rules data.`);
+  const feats: RuleEntry[] = [];
+  for (const id of doc.feats ?? []) {
+    const feat = rules.get(id);
+    if (feat?.kind === 'feat') feats.push(feat);
+    else warnings.push(`Feat "${id}" is not in the rules data.`);
+  }
+
   interface ActiveEffect {
     effect: EffectDef;
-    source: Source;
+    /** What the effect's expressions can see: its class's table and level, or the whole character for a feat. */
+    scopeOf: (extra?: ExprScope) => ExprScope;
     from: string;
+    page?: number;
   }
   const effects: ActiveEffect[] = [];
   for (const a of active) {
-    for (const effect of (a.def.effects ?? []) as EffectDef[]) effects.push({ effect, source: a.source, from: a.def.name });
+    for (const effect of (a.def.effects ?? []) as EffectDef[]) effects.push({ effect, scopeOf: (x) => scopeFor(a.source, x), from: a.def.name, page: a.def.page });
   }
   for (const { def, feature } of toggleDefs) {
     if (!on[def.id]) continue;
-    for (const effect of def.effects ?? []) effects.push({ effect, source: feature.source, from: feature.def.name });
+    for (const effect of def.effects ?? []) effects.push({ effect, scopeOf: (x) => scopeFor(feature.source, x), from: feature.def.name, page: feature.def.page });
   }
-  const applies = (e: ActiveEffect, extra?: ExprScope) => !e.effect.when || Boolean(evaluate(e.effect.when, scopeFor(e.source, extra)));
-  const amount = (e: ActiveEffect, extra?: ExprScope) => (e.effect.expr ? evaluateNumber(e.effect.expr, scopeFor(e.source, extra)) : e.effect.value ?? 0);
+  for (const feat of feats) {
+    for (const effect of (feat.effects ?? []) as EffectDef[]) effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from: feat.name, page: feat.source.page });
+  }
+  const applies = (e: ActiveEffect, extra?: ExprScope) => !e.effect.when || Boolean(evaluate(e.effect.when, e.scopeOf(extra)));
+  const amount = (e: ActiveEffect, extra?: ExprScope) => (e.effect.expr ? evaluateNumber(e.effect.expr, e.scopeOf(extra)) : e.effect.value ?? 0);
   const ofType = (type: string, extra?: ExprScope) => effects.filter((e) => e.effect.type === type && applies(e, extra));
   const bonusLines = (type: string, extra?: ExprScope): BreakdownLine[] =>
     ofType(type, extra)
@@ -340,11 +375,8 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const first = sources[0];
   const saveProfs = new Set<Ability>([...((first?.cls.savingThrows as Ability[] | undefined) ?? []), ...(doc.extraSaves ?? [])]);
   const skillProfs = new Set(doc.skills);
-  const background = doc.background ? rules.get(doc.background.id) : undefined;
-  const crewRole = doc.crewRole ? rules.get(doc.crewRole.id) : undefined;
-  if (doc.background && !background) warnings.push(`Background "${doc.background.id}" is not in the rules data.`);
-  if (doc.crewRole && !crewRole) warnings.push(`Crew role "${doc.crewRole.id}" is not in the rules data.`);
-  for (const granted of [background, crewRole]) {
+  // Skills granted outright by a background, crew role, feat or racial trait.
+  for (const granted of [background, crewRole, ...feats, ...racialTraits.map((t) => t.trait as unknown as RuleEntry)]) {
     for (const skill of (granted?.skills ?? []) as string[]) skillProfs.add(skill);
   }
   for (const e of ofType('proficiency')) if (typeof e.effect.skill === 'string') skillProfs.add(e.effect.skill);
@@ -390,7 +422,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     });
   }
   for (const e of ofType('acFormula')) {
-    acOptions.push({ label: e.from, lines: explain(e.effect.expr!, scopeFor(e.source)).lines, page: (e.source.entry.features?.find((f) => f.name === e.from)?.page) });
+    acOptions.push({ label: e.from, lines: explain(e.effect.expr!, e.scopeOf()).lines, page: e.page });
   }
   const bestAc = acOptions.reduce((best, option) => (sum(option.lines) > sum(best.lines) ? option : best));
   const acLines = [...bestAc.lines];
@@ -415,15 +447,13 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     if (!cls?.hitDie) return;
     hpLines.push(...maxHp({ hitDie: cls.hitDie, level: picked.level, conMod: mod.con!, rolls: picked.hpRolls, first: i === 0 }).lines);
   });
+  // Feats and traits that add hit points per level (Tough).
+  hpLines.push(...bonusLines('hp'));
   if (exhaustion >= 4) hpLines.push({ label: `Exhaustion ${exhaustion}: maximum halved`, value: -Math.ceil(sum(hpLines) / 2) });
   const maxHpStat = stat(doc, 'maxHp', 'Hit point maximum', { value: sum(hpLines), lines: hpLines, page: first?.cls.source.page });
 
   const carryLines: BreakdownLine[] = [{ label: `Strength ${scores.str} × 15 lb`, value: scores.str * 15 }];
   const multiply = (label: string, factor: number) => carryLines.push({ label, value: sum(carryLines) * (factor - 1) });
-  const race = doc.race.id ? rules.get(doc.race.id) : undefined;
-  const subrace = doc.race.subraceId ? rules.get(doc.race.subraceId) : undefined;
-  if (doc.race.id && !race) warnings.push(`Race "${doc.race.id}" is not in the rules data.`);
-  const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
   for (const { trait } of racialTraits) {
     if (/one size larger when determining (?:your|their) carrying capacity/i.test(trait.text)) multiply(`${trait.name}: counts as one size larger, × 2`, 2);
   }
@@ -443,11 +473,6 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
 
   // 8. Resources: class pools, limited-use features, and the rules every character has.
   const resourceDefs: { def: ResourceDef; source?: Source; page?: number }[] = [];
-  // Features that don't come from a class (race, background, crew role, feats) see the whole character's level.
-  const plainScope: ExprScope = {
-    level, prof: prof.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, wearingArmor: doc.armor !== null,
-    heavyArmor: doc.armor?.dexCap === 0, bruiserWeapon: false, melee: false, ranged: false, twoHanded: false,
-  };
   for (const source of sources) {
     for (const def of ((source.entry as ClassEntry).resources ?? [])) {
       if (source.classLevel >= (def.minLevel ?? 1)) resourceDefs.push({ def, source, page: source.entry.source.page });
@@ -465,13 +490,38 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
       resourceDefs.push({ def: { id, name: a.def.name, max: uses.max, recharge: uses.recharge }, source: a.source, page: a.def.page });
     }
   }
-  const resources: SheetResource[] = resourceDefs.flatMap(({ def, source, page }) => {
-    const key = `resource.${def.id}`;
-    const calculated = evaluateNumber(def.max, source ? scopeFor(source) : plainScope);
-    const max = stat(doc, key, def.name, { value: calculated, lines: [] }).value;
+  // Multiclass spellcasters: the classes the handbook names pool their levels and read the
+  // Multiclass Spellcaster table; every other class keeps the slots of its own table.
+  const pooled = sources.filter((source) => source.entry === source.cls && COMBINED_CASTERS.includes(source.cls.id));
+  const pooledLevel = pooled.reduce((total, source) => total + source.classLevel, 0);
+  const merged = new Map<string, { def: ResourceDef; calculated: number; page?: number; book?: string }>();
+  for (const { def, source, page } of resourceDefs) {
+    const slot = /^slots(\d)$/.exec(def.id);
+    let calculated = evaluateNumber(def.max, source ? scopeFor(source) : plainScope);
+    if (slot && pooled.length > 1 && source && pooled.some((p) => p.cls === source.cls)) {
+      // Counted once, for the first pooled class; the others add nothing more.
+      calculated = source.cls === pooled[0]!.cls ? multiclassSlots(pooledLevel, Number(slot[1])) : 0;
+    }
+    const same = merged.get(def.id);
+    // The same pool from two classes (spell slots of the same level) is one pool on the sheet.
+    if (same) same.calculated += calculated;
+    else merged.set(def.id, { def, calculated, page, book: source?.entry.source.book });
+  }
+  if (pooled.length > 1) {
+    for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
+      const id = `slots${spellLevel}`;
+      const count = multiclassSlots(pooledLevel, spellLevel);
+      if (count > 0 && !merged.has(id)) {
+        const ordinal = `${spellLevel}${spellLevel === 1 ? 'st' : spellLevel === 2 ? 'nd' : spellLevel === 3 ? 'rd' : 'th'}`;
+        merged.set(id, { def: { id, name: `${ordinal}-level slots`, max: count, recharge: 'long' }, calculated: count, page: GENERAL_PAGES[doc.rulesVersion].multiclassing + 1, book: HANDBOOKS[doc.rulesVersion] });
+      }
+    }
+  }
+  const resources: SheetResource[] = [...merged.values()].flatMap(({ def, calculated, page, book }) => {
+    const max = stat(doc, `resource.${def.id}`, def.name, { value: calculated, lines: [] }).value;
     // Nothing to track yet (5th-level slots at level 3): leave it off the sheet.
     if (max <= 0) return [];
-    return [{ id: def.id, name: def.name, max, remaining: Math.max(0, max - (doc.state.spent[def.id] ?? 0)), recharge: def.recharge, confirm: def.confirm, page }];
+    return [{ id: def.id, name: def.name, max, remaining: Math.max(0, max - (doc.state.spent[def.id] ?? 0)), recharge: def.recharge, confirm: def.confirm, page, book }];
   });
   const general = (id: string, name: string, max: number) =>
     resources.push({ id, name, max, remaining: Math.max(0, max - (doc.state.spent[id] ?? 0)), recharge: 'short', page: 11 });
@@ -521,7 +571,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   // A class's fighting-style die (Scrapper, Martial Arts, Close Quarters Training) replaces a smaller
   // weapon die on unarmed strikes and the weapons that style covers.
   const styles = ofType('unarmedDie').map((e) => {
-    const value = String(evaluate(e.effect.expr!, scopeFor(e.source)));
+    const value = String(evaluate(e.effect.expr!, e.scopeOf()));
     return { from: e.from, dice: /^d/.test(value) ? `1${value}` : value, covers: e.effect.weapons, dexterity: e.effect.finesse === true };
   });
   const weaponProfs = new Set(sources.flatMap((s) => ((s.cls.proficiencies as { weapons?: string[] } | undefined)?.weapons ?? [])));
@@ -531,7 +581,8 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     const isUnarmed = weapon.id === 'unarmed';
     const covering = styles.filter((style) => isUnarmed || styleCovers(style.covers, weapon));
     const style = covering.reduce<(typeof styles)[number] | undefined>((best, c) => (!best || averageOf(c.dice) > averageOf(best.dice) ? c : best), undefined);
-    const extra: ExprScope = { bruiserWeapon: covering.length > 0, melee: !weapon.ranged, ranged: Boolean(weapon.ranged), twoHanded: Boolean(weapon.twoHanded) };
+    // `weapon` is the weapon's name in the singular ("mace"), for feats that favour one kind of weapon.
+    const extra: ExprScope = { bruiserWeapon: covering.length > 0, melee: !weapon.ranged, ranged: Boolean(weapon.ranged), twoHanded: Boolean(weapon.twoHanded), weapon: slug(weapon.name) };
     const attackNotes: string[] = [];
 
     let ability: Ability = 'str';
@@ -610,12 +661,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
       if (m) extra(`${granted!.id}/${slug(m[2]!)}`, m[2]!, section.text, section.page, granted!, `${label}: ${granted!.name}${m[1] === 'Feature' ? '' : ' (Pirate Prestige)'}`, { tables: section.tables ?? [] });
     }
   }
-  for (const id of doc.feats ?? []) {
-    const feat = rules.get(id);
-    if (!feat || feat.kind !== 'feat') {
-      warnings.push(`Feat "${id}" is not in the rules data.`);
-      continue;
-    }
+  for (const feat of feats) {
     const uses = feat.uses as UsesDef | undefined;
     let resource: string | undefined;
     if (uses && typeof uses === 'object') {
@@ -649,6 +695,19 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
 
   const hitDie = first?.cls.hitDie ?? 8;
   const dreamMax = dreamPointsMax(level);
+  // "Add together the Hit Dice granted by all your classes to form your pool of Hit Dice."
+  const dice = new Map<number, number>();
+  for (const picked of doc.classes) {
+    const die = (rules.get(picked.id) as ClassEntry | undefined)?.hitDie;
+    if (die) dice.set(die, (dice.get(die) ?? 0) + picked.level);
+  }
+  const hitDicePool = [...dice].map(([die, count]) => ({ die, count })).sort((a, b) => b.die - a.die);
+  warnings.push(
+    ...multiclassWarnings(sources.filter((s) => s.entry === s.cls).map((s) => s.cls.name), doc.scores, rules).map(
+      (w) => `${w} (${HANDBOOKS[doc.rulesVersion] === 'DnDF Expanded Handbook v10' ? 'EH10' : 'EH8.8'} p.${GENERAL_PAGES[doc.rulesVersion].multiclassing})`,
+    ),
+  );
+
   const classText = doc.classes
     .map((c) => {
       const sub = c.subclass ? rules.get(c.subclass)?.name : undefined;
@@ -673,7 +732,8 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     willpower: wp,
     hakiSaveDc: hakiDc,
     hakiAttack,
-    hitDice: { die: hitDie, total: level, remaining: Math.max(0, level - doc.state.hitDiceSpent) },
+    hitDice: { die: hitDie, total: level, remaining: Math.max(0, level - doc.state.hitDiceSpent), pool: hitDicePool },
+    book: HANDBOOKS[doc.rulesVersion],
     dreamPoints: { max: dreamMax, remaining: Math.max(0, dreamMax - doc.state.dreamPointsSpent) },
     prestigeMax: piratePrestigeMax(level),
     healingSurgeDice: healingSurgeMaxDice(level, Math.max(0, level - doc.state.hitDiceSpent)),

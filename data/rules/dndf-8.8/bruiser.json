@@ -546,7 +546,16 @@
           "level": 3,
           "name": "Bonus Proficiency",
           "text": "Your rigorous training has unlocked the upper limits of your physical prowess. You gain proficiency in the Athletics skill. If you are already proficient in Athletics, you instead gain proficiency in Acrobatics or Insight (your choice).",
-          "page": 89
+          "page": 89,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "athletics"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 3,

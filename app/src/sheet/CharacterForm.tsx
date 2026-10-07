@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, SKILLS, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { useState } from 'react';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -17,6 +17,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     setVersion(next);
     if (!other.rules.has(classId)) setClassId('class.bruiser');
     setSubclass('');
+    setOtherClasses([]);
     setChoices({});
     setFeats(feats.filter((id) => other.rules.has(id)));
     if (!other.rules.has(raceId)) pickRace('', '');
@@ -33,6 +34,9 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const [feats, setFeats] = useState<string[]>(initial?.feats ?? []);
   const [classId, setClassId] = useState(first?.id ?? 'class.bruiser');
   const [level, setLevel] = useState(first?.level ?? 1);
+  // Levels in further classes (multiclassing).
+  const [otherClasses, setOtherClasses] = useState<CharacterClass[]>(initial?.classes.slice(1) ?? []);
+  const setOther = (i: number, patch: Partial<CharacterClass>) => setOtherClasses(otherClasses.map((c, j) => (j === i ? { ...c, ...patch } : c)));
   const [scores, setScores] = useState<AbilityScores>(initial?.scores ?? BLANK_SCORES);
   const [subclass, setSubclass] = useState(first?.subclass ?? '');
   const [skills, setSkills] = useState<string[]>(initial?.skills ?? []);
@@ -75,7 +79,8 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleId: crewRoleId || undefined, feats,
     };
     if (!initial) {
-      const doc = { ...newCharacter(shared, rules), expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
+      const built = newCharacter(shared, rules);
+      const doc = { ...built, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return onSave(doc, `Created ${doc.name}`);
     }
@@ -89,7 +94,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       background: shared.backgroundId ? { id: shared.backgroundId } : undefined,
       crewRole: shared.crewRoleId ? { id: shared.crewRoleId } : undefined,
       feats,
-      classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...base.classes.slice(1)],
+      classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...otherClasses],
       scores,
       skills,
       expertise,
@@ -155,7 +160,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       </div>
       <div className="grid-2">
         <label className="field">
-          <span className="label">Class · p.{cls.source.page}</span>
+          <span className="label">Class · {cite(cls.source.book, cls.source.page)}</span>
           <select value={cls.id} onChange={(e) => { setClassId(e.target.value); setSubclass(''); }}>
             {classes.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
@@ -165,6 +170,43 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           <input type="number" inputMode="numeric" min={1} max={20} value={level} onChange={(e) => setLevel(clamp(Number(e.target.value), 1, 20))} />
         </label>
       </div>
+      <fieldset>
+        <legend className="label">Multiclassing: levels in other classes · {cite(HANDBOOKS[version], version === 'dndf-10' ? 209 : 208)}</legend>
+        {otherClasses.map((other, i) => {
+          const otherClass = classes.find((c) => c.id === other.id);
+          const otherStyles = mainSubclasses(other.id);
+          return (
+            <div key={i} className="weapon-edit">
+              <div className="grid-3">
+                <label className="field">
+                  <span className="label">Class</span>
+                  <select value={other.id} onChange={(e) => setOther(i, { id: e.target.value, subclass: undefined })}>
+                    {classes.filter((c) => c.id !== cls.id).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  </select>
+                </label>
+                <label className="field">
+                  <span className="label">Levels</span>
+                  <input type="number" inputMode="numeric" min={1} max={20} value={other.level} onChange={(e) => setOther(i, { level: clamp(Number(e.target.value), 1, 20) })} aria-label={`Levels in ${otherClass?.name ?? 'the other class'}`} />
+                </label>
+                {other.level >= (otherClass?.subclass?.level ?? 3) && otherStyles.length > 0 && (
+                  <label className="field">
+                    <span className="label">{otherClass?.subclass?.label ?? 'Subclass'}</span>
+                    <select value={other.subclass ?? ''} onChange={(e) => setOther(i, { subclass: e.target.value || undefined })}>
+                      <option value="">Not chosen yet</option>
+                      {otherStyles.map((style) => <option key={style.id} value={style.id}>{style.name}</option>)}
+                    </select>
+                  </label>
+                )}
+              </div>
+              <button type="button" className="btn" onClick={() => setOtherClasses(otherClasses.filter((_, j) => j !== i))}>Remove this class</button>
+            </div>
+          );
+        })}
+        <button type="button" className="btn" onClick={() => setOtherClasses([...otherClasses, { id: classes.find((c) => c.id !== cls.id && !otherClasses.some((o) => o.id === c.id))?.id ?? classes[0]!.id, level: 1 }])}>
+          Add another class
+        </button>
+        {otherClasses.length > 0 && <p className="page-ref">Total level {level + otherClasses.reduce((n, c) => n + c.level, 0)}. The class above is the first class: it gives the saving throws and the full first hit die.</p>}
+      </fieldset>
       <fieldset>
         <legend className="label">Ability scores (after race and improvements)</legend>
         <div className="grid-6">
@@ -190,7 +232,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         const known = allowed(feature.choices.count);
         return (
           <fieldset key={feature.choices.id}>
-            <legend className="label">{feature.name} options: {picked.length} of {known} · p.{feature.page}</legend>
+            <legend className="label">{feature.name} options: {picked.length} of {known} · {cite(cls.source.book, feature.page)}</legend>
             {picked.length > known && <p className="notice">That is more than the {known} the rules give at this level. It's your call.</p>}
             {feature.options.map((option) => (
               <label key={option.id} className="check">
@@ -377,11 +419,11 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       </fieldset>
       {version === 'dndf-10' ? (
         <label className="field">
-          <span className="label">Strengthen Self taken for Willpower (+2 each, total capped at 20) · p.222</span>
+          <span className="label">Strengthen Self taken for Willpower (+2 each, total capped at 20) · {cite(HANDBOOKS[version], 222)}</span>
           <input type="number" inputMode="numeric" min={0} value={strengthenSelf} onChange={(e) => setStrengthenSelf(clamp(Number(e.target.value), 0, 10))} />
         </label>
       ) : (
-        <p className="page-ref">In v8.8, Strengthen Self raises an ability score, not Willpower, so add it to the scores above · p.222</p>
+        <p className="page-ref">In v8.8, Strengthen Self raises an ability score, not Willpower, so add it to the scores above · {cite(HANDBOOKS[version], 222)}</p>
       )}
       <div className="row">
         <button type="submit" className="btn btn-primary">{initial ? 'Save changes' : 'Create character'}</button>

@@ -230,7 +230,11 @@
         {
           "name": "Animal Instinct",
           "text": "You have proficiency in the Perception and Stealth Skills.",
-          "page": 73
+          "page": 73,
+          "skills": [
+            "perception",
+            "stealth"
+          ]
         },
         {
           "name": "Electro",

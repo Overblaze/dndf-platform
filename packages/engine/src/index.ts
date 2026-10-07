@@ -1,4 +1,5 @@
 export * from './types';
+export * from './citations';
 export * from './core';
 export * from './dndf';
 export * from './expr';
@@ -12,7 +13,9 @@ export * from './devilforged';
 export * from './character';
 export * from './hp';
 export * from './items';
+export * from './multiclass';
 export * from './sheet';
 export * from './actions';
 export * from './rests';
 export * from './sample';
+export * from './testCharacters';

@@ -773,7 +773,20 @@
           "level": 3,
           "name": "Hunter’s Intuition",
           "text": "Also at 3rd level, your experience with traps sharpens your senses. You gain proficiency in the Perception and Survival skills if you don’t already have them and you have advantage on check when looking for traps or ambushes.",
-          "page": 153
+          "page": 153,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "perception"
+            },
+            {
+              "type": "proficiency",
+              "skill": "survival"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 7,

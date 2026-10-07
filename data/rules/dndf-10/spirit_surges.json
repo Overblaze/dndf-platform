@@ -1540,7 +1540,10 @@
       "amateur": true,
       "repeatable": false,
       "text": "You naturally inspire others and sway their actions, as though born with a quiet authority that draws people to you.\nYou gain proficiency in the Deception and Persuasion skills.\nUpgrades to Voice of Influence when you reach character level 5\nThis advancement can be chosen once.",
-      "prerequisite": "Qualities of a King, Character level 1-4"
+      "prerequisite": "Qualities of a King, Character level 1-4",
+      "auto": [
+        "effects"
+      ]
     },
     {
       "id": "hakiFeature.intimidating_look",
@@ -1559,7 +1562,10 @@
       "amateur": true,
       "repeatable": false,
       "text": "You emanate a presence that makes others feel an inexplicable sense of helplessness.\nYou gain proficiency in the Intimidation skill.\nUpgrades to Roar of the Monarch when you reach character level 5\nThis advancement can be chosen once.",
-      "prerequisite": "Qualities of a King, Character level 1-4"
+      "prerequisite": "Qualities of a King, Character level 1-4",
+      "auto": [
+        "effects"
+      ]
     },
     {
       "id": "hakiFeature.kings_companion",
@@ -1655,7 +1661,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "effects"
       ]
     },
     {
@@ -1681,7 +1688,8 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "effects"
       ]
     },
     {

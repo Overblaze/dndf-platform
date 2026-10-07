@@ -12,7 +12,14 @@
         "book": "DnDF Expanded Handbook v8.8",
         "page": 53
       },
-      "text": "You fight with the great agility, darting in and out of combat.\nYou gain a +1 bonus to attack rolls with cutlasses. When you hit a creature with a cutlass, you may immediately move up to 10 feet without provoking opportunity attacks."
+      "text": "You fight with the great agility, darting in and out of combat.\nYou gain a +1 bonus to attack rolls with cutlasses. When you hit a creature with a cutlass, you may immediately move up to 10 feet without provoking opportunity attacks.",
+      "effects": [
+        {
+          "type": "attack",
+          "value": 1,
+          "when": "weapon == 'cutlass'"
+        }
+      ]
     },
     {
       "id": "feat.dead_mans_range",

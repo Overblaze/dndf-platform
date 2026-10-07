@@ -406,7 +406,8 @@
           "items": {
             "enum": [
               "uses",
-              "action"
+              "action",
+              "effects"
             ]
           },
           "uniqueItems": true
@@ -492,7 +493,8 @@
           "items": {
             "enum": [
               "uses",
-              "action"
+              "action",
+              "effects"
             ]
           },
           "uniqueItems": true
@@ -1102,6 +1104,13 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/table"
+          }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
           }
         }
       }

@@ -1,4 +1,4 @@
-import { gainTempHp, setToggle, setTracker, spendResource, activateFeature, type SheetFeature, type SheetResource } from '@dndf/engine';
+import { cite, gainTempHp, setToggle, setTracker, spendResource, activateFeature, type SheetFeature, type SheetResource } from '@dndf/engine';
 import { Pips } from '../components/Pips';
 import { RuleText } from '../components/RuleText';
 import { useRolls } from '../lib/rolls';
@@ -24,7 +24,7 @@ function ResourceRow({ res, live }: { res: SheetResource; live: LiveCharacter })
       <div>
         <div className="resource-name">{res.name}</div>
         <div className="page-ref">
-          {res.recharge} rest{res.page ? ` · p.${res.page}` : ''}
+          {res.recharge} rest{res.page ? ` · ${cite(res.book ?? live.sheet.book, res.page)}` : ''}
         </div>
       </div>
       <Pips remaining={res.remaining} max={res.max} label={res.name} />
@@ -61,7 +61,7 @@ function FeatureAction({ feature, live }: { feature: SheetFeature; live: LiveCha
         <div>
           <div className="resource-name">{feature.name}</div>
           <div className="page-ref">
-            {feature.from} · p.{feature.page}
+            {feature.from} · {cite(feature.book, feature.page)}
             {costs.length > 0 && ` · costs ${costs.join(', ')}`}
           </div>
         </div>
@@ -84,7 +84,7 @@ function FeatureAction({ feature, live }: { feature: SheetFeature; live: LiveCha
       </div>
       <details className="rule-text">
         <summary>Rules text</summary>
-        <RuleText text={feature.text} sections={feature.sections} tables={feature.tables} />
+        <RuleText text={feature.text} sections={feature.sections} tables={feature.tables} book={feature.book} />
       </details>
     </div>
   );
@@ -210,7 +210,7 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
                 <div className="resource">
                   <div>
                     <div className="resource-name">{tracker.name}</div>
-                    <div className="page-ref">{at ? at.label : `max ${tracker.max}`}{tracker.reset ? ` · back to ${tracker.min} on a ${tracker.reset} rest` : ''}{tracker.page ? ` · p.${tracker.page}` : ''}</div>
+                    <div className="page-ref">{at ? at.label : `max ${tracker.max}`}{tracker.reset ? ` · back to ${tracker.min} on a ${tracker.reset} rest` : ''}{tracker.page ? ` · ${cite(sheet.book, tracker.page)}` : ''}</div>
                   </div>
                   <span className="big num">{tracker.value}</span>
                   <div className="row">
@@ -243,7 +243,7 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
             <h2>{group.title}</h2>
             {special && (
               <>
-                <p className="page-ref">2 per round · each {sheet.resources.find((r) => r.id === 'sr.parry')?.max} times per short rest · separate from your normal reaction · p.11</p>
+                <p className="page-ref">2 per round · each {sheet.resources.find((r) => r.id === 'sr.parry')?.max} times per short rest · separate from your normal reaction · {cite(sheet.book, 11)}</p>
                 {sheet.specialReactions.map((reaction) => {
                   const res = sheet.resources.find((r) => r.id === reaction.resource)!;
                   return (
@@ -251,7 +251,7 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
                       <div className="resource">
                         <div>
                           <div className="resource-name">{reaction.name}</div>
-                          <div className="page-ref">{reaction.roll ? `reduce the damage by ${reaction.roll} · ` : ''}p.{reaction.page}</div>
+                          <div className="page-ref">{reaction.roll ? `reduce the damage by ${reaction.roll} · ` : ''}{cite(sheet.book, reaction.page)}</div>
                         </div>
                         <Pips remaining={res.remaining} max={res.max} label={res.name} />
                         <button className="btn btn-primary" onClick={() => specialReaction(reaction)}>Use</button>
@@ -259,7 +259,7 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
                       {reaction.text && (
                         <details className="rule-text">
                           <summary>Rules text</summary>
-                          <RuleText text={reaction.text} />
+                          <RuleText text={reaction.text} book={sheet.book} />
                         </details>
                       )}
                     </div>

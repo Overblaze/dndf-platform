@@ -330,6 +330,36 @@ STRUCTURE = {
     },
 }
 
+def weapon_feat(weapon: str, plural: str, kind: str = "attack") -> dict:
+    return {"expect": f"+1 bonus to {'attack' if kind == 'attack' else 'damage'} rolls with {plural}", "effects": [{"type": kind, "value": 1, "when": f"weapon == '{weapon}'"}]}
+
+
+# Feats whose numbers the sheet can apply. A feat's "+1 to an ability score" is left to the player,
+# who types final ability scores; everything conditional on a choice or a situation stays text.
+FEAT_STRUCTURE = {
+    "Alert": {"expect": "You gain a +5 bonus to initiative", "effects": [{"type": "initiative", "value": 5}]},
+    "Mobile": {"expect": "Your speed increases by 10 feet", "effects": [{"type": "speed", "value": 10}]},
+    "Tough": {"expect": "hit point maximum increases by an amount equal to twice your level", "effects": [{"type": "hp", "expr": "level * 2"}]},
+    "Big Eater": {"expect": "you count as one size larger when determining your carrying capacity", "effects": [{"type": "carryMultiplier", "value": 2}]},
+    "Armor Breaker": weapon_feat("mace", "maces"),
+    "Assassin’s Strike": weapon_feat("shortsword", "shortswords"),
+    "Boarding Cutlass": weapon_feat("cutlass", "cutlasses"),
+    "Harvest the Weak": weapon_feat("sickle", "sickles"),
+    "Saber Dance": weapon_feat("saber", "sabers"),
+    "Whirling Blades": weapon_feat("scimitar", "scimitars", "damage"),
+}
+
+
+def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
+    fields = FEAT_STRUCTURE.get(feat["name"])
+    if not fields:
+        return
+    if fields["expect"] not in feat["text"]:
+        problems.append(f"feat {feat['name']} ({version}) is worded differently here, so its numbers were not applied")
+        return
+    feat["effects"] = fields["effects"]
+
+
 FEATURE_FIELDS = ("effects", "toggle", "uses", "action", "rolls", "onUse", "counter", "choices", "cost")
 
 

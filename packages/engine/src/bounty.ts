@@ -43,7 +43,7 @@ export function bounty(input: BountyInput): Derived {
     [`Nobles ${input.noblesHarmed ?? 0} × ฿100M`, (input.noblesHarmed ?? 0) * 100 * M],
   ];
   const lines = parts.filter(([, value]) => value !== 0).map(([label, value]) => ({ label, value }));
-  return { value: lines.reduce((sum, l) => sum + l.value, 0), lines, page: 107 };
+  return { value: lines.reduce((sum, l) => sum + l.value, 0), lines, page: 107, book: 'DnDF DM Guide' };
 }
 
 /** ฿112M, ฿1.5B, ฿250K. */

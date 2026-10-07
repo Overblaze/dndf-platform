@@ -371,6 +371,217 @@
           ]
         }
       ]
+    },
+    {
+      "id": "rule.multiclassing_starting_wealth",
+      "kind": "rule",
+      "name": "Multiclassing & Starting Wealth",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 208
+      },
+      "text": "Because these classes haven’t been thoroughly tested and balanced for multiclassing, it is possible that multiclassing may break some of the game balance in a campaign. If you still insist on doing so, here are the the rules, prerequisites, and proficiencies you will gain from multiclassing using classes in this pdf.",
+      "sections": [
+        {
+          "name": "Prerequisites",
+          "text": "To qualify for a new class, you must meet the ability score prerequisites for both your current class and your new one, as shown in the Multiclassing Prerequisites table. For example, a bruiser who decides to multiclass into the skald class must have both Strength and Charisma scores of 13 or higher. Without the full training that a beginning character receives, you must be a quick study in your new class, having a natural aptitude that is reflected by higher-than-average ability scores.",
+          "page": 208
+        },
+        {
+          "name": "Multiclassing Prerequisites",
+          "text": "",
+          "page": 208,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Class",
+                  "Ability Score Minimum"
+                ],
+                [
+                  "Bruiser",
+                  "Strength 13 and Constitutiton 13"
+                ],
+                [
+                  "Chemist",
+                  "Wisdom 13"
+                ],
+                [
+                  "Conqueror",
+                  "Strength 13 and Wisdom 13"
+                ],
+                [
+                  "Devilforged",
+                  "Charisma 13"
+                ],
+                [
+                  "Hybrid",
+                  "Cannot Multiclass Into"
+                ],
+                [
+                  "Marksman",
+                  "Dexterity 13 and Wisdom 13"
+                ],
+                [
+                  "Martial Artist",
+                  "Dexterity 13 and Wisdom 13"
+                ],
+                [
+                  "Oracle",
+                  "Wisdom 13"
+                ],
+                [
+                  "Priest",
+                  "Wisdom 13"
+                ],
+                [
+                  "Rogue",
+                  "Dexterity 13"
+                ],
+                [
+                  "Skald",
+                  "Charisma 13"
+                ],
+                [
+                  "Tinkerer",
+                  "Intelligence 13"
+                ],
+                [
+                  "Warrior",
+                  "Strength 13 or Dexterity 13"
+                ]
+              ],
+              "page": 208
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule.starting_wealth",
+      "kind": "rule",
+      "name": "Starting Wealth",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 208
+      },
+      "text": "Every character starts with a selection of equipment and adventuring gear in their inventory. When creating your character, after selecting your class and background, you may decide to start with the equipment listed in your class’s starting equipment or start with a set amount of Belly (฿) to spend on equipment of your choice listed in this chapter.\nIf you opt to forgo taking your class’s starting equipment, you may roll the amount of starting wealth you have on the table below based on your class. Then, buy any amount of equipment you’d like from the stores listed in this chapter, not including exotic or black market equipment.",
+      "sections": [
+        {
+          "name": "Starting Wealth by Class",
+          "text": "",
+          "page": 208,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Class",
+                  "Funds"
+                ],
+                [
+                  "Bruiser",
+                  "2d4 x ฿100,000"
+                ],
+                [
+                  "Chemist",
+                  "2d4 x ฿100,000"
+                ],
+                [
+                  "Conqueror",
+                  "3d4 x ฿100,000"
+                ],
+                [
+                  "Devilforged",
+                  "4d4 x ฿100,000"
+                ],
+                [
+                  "Hybrid",
+                  "3d4 x ฿100,000"
+                ],
+                [
+                  "Marksman",
+                  "5d4 x ฿100,000"
+                ],
+                [
+                  "Martial Artist",
+                  "5d4 x ฿100,000"
+                ],
+                [
+                  "Oracle",
+                  "3d4 x ฿100,000"
+                ],
+                [
+                  "Priest",
+                  "5d4 x ฿100,000"
+                ],
+                [
+                  "Rogue",
+                  "4d4 x ฿100,000"
+                ],
+                [
+                  "Skald",
+                  "5d4 x ฿100,000"
+                ],
+                [
+                  "Tinkerer",
+                  "4d4 x ฿100,000"
+                ],
+                [
+                  "Warrior",
+                  "5d4 x ฿100,000"
+                ]
+              ],
+              "page": 208
+            }
+          ]
+        },
+        {
+          "name": "Experience Points",
+          "text": "The experience point cost to gain a level is always based on your total character level, as shown in the Character Advancement table, not your level in a particular class.",
+          "page": 208
+        },
+        {
+          "name": "Hit Points and Hit Dice",
+          "text": "You gain the hit points from your new class as described for levels after 1st. You gain the 1st-level hit points for a class only when you are a 1st-level character.\nYou add together the Hit Dice granted by all your classes to form your pool of Hit Dice. If the Hit Dice are the same die type, you can simply pool them together.",
+          "page": 208
+        },
+        {
+          "name": "Proficiency Bonus",
+          "text": "Your proficiency bonus is always based on your total character level, not your level in a particular class.",
+          "page": 208
+        },
+        {
+          "name": "Class Features",
+          "text": "When you gain a new level in a class, you get its features for that level. You don’t, however, receive the class’s starting equipment, and a few features have additional rules when you’re multiclassing: Channel Divinity, Extra Attack, Unarmored Defense, and Spellcasting.",
+          "page": 208
+        },
+        {
+          "name": "Channel Divinity",
+          "text": "If you already have the Channel Divinity feature and gain a level in a class that also grants the feature, you gain the Channel Divinity effects granted by that class, but getting the feature again doesn’t give you an additional use of it. You gain additional uses only when you reach a class level that explicitly grants them to you.",
+          "page": 208
+        },
+        {
+          "name": "Extra Attack",
+          "text": "If you gain the Extra Attack class feature from more than one class, the features don’t add together. You can’t make more than two attacks with this feature unless it says you do (as the warrior’s version of Extra Attack does).",
+          "page": 208
+        },
+        {
+          "name": "Unarmored Defense",
+          "text": "If you already have the Unarmored Defense feature, you can’t gain it again from another class.",
+          "page": 209
+        },
+        {
+          "name": "Spellcasting",
+          "text": "Your capacity for spellcasting depends partly on your combined levels in all your spellcasting classes and partly on your individual levels in those classes. Once you have the Spellcasting feature from more than one class, use the rules below. If you multiclass but have the Spellcasting feature from only one class, you follow the rules as described in that class.\nSpells Known and Prepared. You determine what spells you know and can prepare for each class individually, as if you were a single-classed member of that class.\nEach spell you know and prepare is associated with one of your classes, and you use the spellcasting ability of that class when you cast the spell. Similarly, a spellcasting focus, such as a holy symbol, can be used only for the spells from the class associated with that focus.\nSpell Slots. You determine your available spell slots by adding together all your levels in the priest, skald, and tinkerer classes. Use this total to determine your spell slots by consulting the Multiclass Spellcaster table.\nIf you have more than one spellcasting class, this table might give you spell slots of a level that is higher than the spells you know or can prepare. You can use those slots, but only to cast your lower-level spells. If a lower-level spell that you cast, like burning hands, has an enhanced effect when cast using a higher-level slot, you can use the enhanced effect, even though you don’t have any spells of that higher level.",
+          "page": 209
+        }
+      ]
     }
   ],
   "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
