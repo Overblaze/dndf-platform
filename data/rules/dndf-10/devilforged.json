@@ -517,7 +517,20 @@
           "level": 3,
           "name": "Bestial Infusion",
           "text": "When you choose this Devilsmith at 3rd level, you gain proficiency with carpenter’s tools and vehicles (water).\nIn addition, you can use your Infuse Devil Fruit feature to infuse one ship with a Zoan Devil Fruit. A vessel infused this way is called a Zoan Vessel.\nYour Zoan Vessel has the following properties:\nThe Zoan Vessel does not benefit from your base Devilforged class features unless a feature specifically states otherwise.\nOnly you can use the vessel’s Infusion Properties, activate features through it, or command its Zoan abilities unless a feature states otherwise.\nThe vessel gains a walking speed of 25 feet. The form this movement takes should reflect the Zoan fruit sealed within it, such as legs, claws, hooves, fins, wings used as limbs, or a serpentine body. The vessel can carry creatures and cargo as normal while walking, but it must have enough open space to move.\nThe vessel gains one natural attack appropriate to its Zoan form, such as a bite, claw, horn, tail, stomp, or ram. As an action while aboard the vessel, you can command it to make this attack against one target within 10 feet of the vessel. This attack scales as normal using the Zoan rules.\nThe vessel can move on land or make its natural attack only while you are aboard it.\nA Zoan Vessel counts as a Devil Fruit-infused item and counts against your maximum number of Devil Fruit infusions. You can maintain only one Zoan Vessel at a time. If you infuse a new vessel, the previous Zoan Vessel loses its infusion.\nIf your Zoan Vessel is reduced to 25 or less hit points, touches any amount of seastone, or is completely submerged, it loses its walking speed and attacks. If you willingly remove its infusion during an 8-hour crafting process, or if you die, the Zoan Devil Fruit sealed within the vessel reconstitutes in the nearest unoccupied space inside the vessel’s hull.",
-          "page": 120
+          "page": 120,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Carpenter’s tools"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Vehicles"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 3,
@@ -584,6 +597,19 @@
           "name": "Hell’s Duelist",
           "text": "Also at 3rd level, you gain proficiency with medium armor and shields.\nIn addition, while you are wielding a melee weapon infused with at least one Devil Fruit, you gain a +1 bonus to your AC.",
           "page": 121,
+          "effects": [
+            {
+              "type": "armorProficiency",
+              "armor": "medium"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "shields"
+            }
+          ],
+          "auto": [
+            "effects"
+          ],
           "toggle": {
             "id": "infused_blade",
             "label": "Wielding an infused melee weapon",
@@ -660,6 +686,15 @@
               "text": "Elemental Blast. While wielding this shield, you can use your action to make a ranged Devilforged attack against one creature you can see within 60 feet of you. On a hit, the target takes 1d10 damage. The damage type should reflect the element of the infused Logia fruit, subject to the DM’s approval. This damage increases as you gain levels in this class, becoming 2d10 at 5th level, 3d10 at 11th level, and 4d10 at 17th level.\nDeflecting Barrier. When you or an allied creature benefiting from this shield’s cover is hit by an attack, you can use your reaction to reinforce the barrier around the target. The target gains a bonus to its AC against the triggering attack equal to your Intelligence modifier, potentially causing the attack to miss.\nFruit Spells. This shield can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, you gain a +2 bonus to spell attack rolls made through this shield.",
               "page": 122
             }
+          ],
+          "effects": [
+            {
+              "type": "armorProficiency",
+              "armor": "shields"
+            }
+          ],
+          "auto": [
+            "effects"
           ]
         },
         {
@@ -733,7 +768,20 @@
           "level": 3,
           "name": "Ranged Infusion Mastery",
           "text": "When you choose this Devilsmith at 3rd level, you gain proficiency with simple and martial ranged weapons.\nIn addition, you can use your Infuse Devil Fruit feature to infuse ranged weapons. A ranged weapon infused this way follows all normal rules for your Devil Fruit-infused weapons.",
-          "page": 123
+          "page": 123,
+          "effects": [
+            {
+              "type": "weaponProficiency",
+              "weapon": "simple_ranged"
+            },
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial_ranged"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 3,
@@ -809,7 +857,16 @@
           "level": 3,
           "name": "Logia Armor Infusion",
           "text": "When you choose this Devilsmith at 3rd level, you gain proficiency with heavy armor.\nIn addition, you can use your Infuse Devil Fruit feature to infuse one suit of nonmagical heavy armor with a Logia Devil Fruit. Armor infused this way is called Mechadevil Armor. Your Mechadevil Armor has the following properties:\nThe armor counts as a Devil Fruit-infused item and counts against your maximum number of Devil Fruit infusions.\nWhen a Devilforged class feature refers to a Devil Fruit-infused weapon you created, you can treat your Mechadevil Armor as though it were a Devil Fruit- infused weapon for the purpose of that feature, unless the feature specifically requires a weapon attack.\nOnly you can use the armor’s Infusion Properties, activate features through it, or cast spells through it unless a feature states otherwise.\nIf your Mechadevil Armor is destroyed, if you willingly remove its infusion during an 8-hour crafting process, or if you die, the Logia Devil Fruit sealed within the armor reconstitutes in the nearest unoccupied space beside the armor or your body, as appropriate.",
-          "page": 125
+          "page": 125,
+          "effects": [
+            {
+              "type": "armorProficiency",
+              "armor": "heavy"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 3,

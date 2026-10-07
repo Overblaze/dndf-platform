@@ -300,6 +300,64 @@ def skills_granted(text: str) -> list[str]:
     return found
 
 
+GRANTS_PROFICIENCY = re.compile(r"\b(?:gain|gains|have|has) proficiency (?:with|in) (?:the )?([^.;:()]{3,110}?)(?=\.|;|:|\(| if you| and (?:you|any|can|gain)\b|, (?:which|essential|and (?:you|any))|$)", re.I)
+ARMOR_WORDS = {"light armor": "light", "medium armor": "medium", "heavy armor": "heavy", "shields": "shields", "shield": "shields"}
+WEAPON_GROUPS = {"simple weapons": ["simple"], "martial weapons": ["martial"], "martial melee weapons": ["martial_melee"], "martial ranged weapons": ["martial_ranged"],
+                 "simple ranged weapons": ["simple_ranged"], "simple melee weapons": ["simple_melee"],
+                 "simple and martial ranged weapons": ["simple_ranged", "martial_ranged"], "simple and martial weapons": ["simple", "martial"]}
+TOOL_WORD = re.compile(r"\b(kit|tools?|supplies|utensils|instruments?|vehicles|dials)\b", re.I)
+_weapon_names: set[str] | None = None
+
+
+def weapon_names() -> set[str]:
+    """Weapon names in the armory already extracted, for "proficiency with darts, blowguns, and giant slings"."""
+    global _weapon_names
+    if _weapon_names is None:
+        _weapon_names = set()
+        for path in (ROOT / "data/rules").glob("*/armory.json"):
+            for entry in json.loads(path.read_text())["entries"]:
+                if entry.get("itemType") == "weapon":
+                    _weapon_names.add(slug(entry["name"]))
+    return _weapon_names
+
+
+def proficiencies_granted(text: str) -> list[dict]:
+    """Armor, weapon and tool proficiencies a text grants outright. A choice ("one tool of your choice",
+    "smith’s tools or mason’s tools") grants nothing here; skills are read by skills_granted."""
+    effects: list[dict] = []
+
+    def add(effect: dict) -> None:
+        if effect not in effects:
+            effects.append(effect)
+
+    for m in GRANTS_PROFICIENCY.finditer(text):
+        listed = re.sub(r"\bsimple and martial (ranged |melee )?weapons\b", lambda g: f"simple {g.group(1) or ''}weapons, martial {g.group(1) or ''}weapons", m.group(1).strip(), flags=re.I)
+        for part in re.split(r",\s*(?:and\s+)?|\s+and\s+|\s+as well as (?:proficiency with )?", listed):
+            item = re.sub(r"^(?:(?:the|a|an)\s+|using all\s+)", "", part.strip(), flags=re.I)
+            low = item.lower()
+            if not item or re.search(r"\bor\b|choice|choose|either|one of|\bany\b|\bone (?:other|additional)\b|as improvised", low):
+                continue
+            if low in ARMOR_WORDS:
+                add({"type": "armorProficiency", "armor": ARMOR_WORDS[low]})
+            elif low in WEAPON_GROUPS:
+                for group in WEAPON_GROUPS[low]:
+                    add({"type": "weaponProficiency", "weapon": group})
+            elif slug(low) in weapon_names() or slug(re.sub(r"s$", "", low)) in weapon_names():
+                add({"type": "weaponProficiency", "weapon": slug(low) if slug(low) in weapon_names() else slug(re.sub(r"s$", "", low))})
+            elif TOOL_WORD.search(low) and slug(low) not in SKILL_IDS and len(low) <= 40:
+                add({"type": "toolProficiency", "label": item[0].upper() + item[1:]})
+    return effects
+
+
+def keep_proficiencies(features: list[dict]) -> None:
+    """Hand-entered effects replace the detector's, so put back the armor, weapon and tool proficiencies the text grants."""
+    for feature in features:
+        effects = feature.get("effects")
+        if effects is None or "effects" in feature.get("auto", []):
+            continue
+        effects.extend(e for e in proficiencies_granted(feature["text"]) if e not in effects)
+
+
 DICE = re.compile(r"\b(\d{1,2}d(?:4|6|8|10|12|20|100))\b(?:\s*\+\s*(\d{1,2})\b(?!d))?")
 
 
@@ -362,9 +420,9 @@ def derive_structure(feature: dict) -> None:
     if rolls:
         feature["rolls"] = rolls
         auto.append("rolls")
-    skills = skills_granted(text)
-    if skills and "effects" not in feature:
-        feature["effects"] = [{"type": "proficiency", "skill": skill} for skill in skills]
+    granted = [{"type": "proficiency", "skill": skill} for skill in skills_granted(text)] + proficiencies_granted(text)
+    if granted and "effects" not in feature:
+        feature["effects"] = granted
         auto.append("effects")
     if auto:
         feature["auto"] = auto
@@ -592,6 +650,7 @@ def extract_class(version: str, key: str) -> dict:
 
     entry["features"] = features
     entries.extend(apply_structure(key, version, entry, problems))
+    keep_proficiencies(entry["features"])
     return {"$schemaVersion": 1, "entries": entries, "$note": f"Extracted from {book['book']} (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."}
 
 
@@ -646,6 +705,7 @@ def make_subclass(version, key, class_id, group_title, heading, blocks, strip, g
             problems.append(f"{heading.text}: '{after['name']}' reads as level {after['level']} but follows '{before['name']}' at {before['level']} (p{after['page']})")
     entry["features"] = features
     groups = apply_subclass_structure(version, entry, problems)
+    keep_proficiencies(features)
     for group in groups:
         for option in group["options"]:
             # Dice an option's text names become its roll buttons, unless they were entered by hand.

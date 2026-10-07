@@ -1443,7 +1443,16 @@
           "level": 3,
           "name": "Amateur Cultivator",
           "text": "Starting when you choose this profession at 3rd level, you gain proficiency with the Herbalism Kit. If you already have this proficiency, you gain proficiency in Nature or Survival instead, and you gain a 3 Pop Green Husks. In addition, you gain the following benefits when creating Pop Greens:\nYou can maintain one Husk Plant even outside a warm or tropical climate, provided you spend at least 10 minutes caring for it each day.\nWhen you harvest Pop Seed Husks from a Husk Plant, you may add your Intelligence modifier to the Nature or Survival check.\nWhen a Husk Plant you care for successfully produces husks, it produces one additional Pop Seed Husks.\nWhen you create a Pop Green of a spell level you can cast, you reduce its crafting time and price by half. This reduction applies before using Miracle Fertilizer.",
-          "page": 190
+          "page": 190,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Herbalism Kit"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 8,
@@ -1478,7 +1487,16 @@
           "level": 3,
           "name": "Dial Engineer",
           "text": "Starting when you pick this profession at 3rd level, you gain proficiency with Dials. Whenever you use a Dial or Dial Invention that you crafted, you may use your Creation save DC in place of any saving throw DC listed by the item, and your Creation attack modifier in place of any attack bonus listed by the item.\nYou can craft any Dial or Dial Invention as part of a long rest up to Rare rarity, provided you possess at least one seashell and an amount of money equal to the cost of the Dial or Dial Invention.",
-          "page": 190
+          "page": 190,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Dials"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 8,
@@ -1583,7 +1601,20 @@
           "level": 3,
           "name": "Ammunition Specialist",
           "text": "Starting when you pick this profession at 3rd level, you gain proficiency with smith’s tools or mason’s tools as well as proficiency with simple and martial ranged weapons.\nYou can craft Stars and Special Ammo without needing proficiency in Arcana or Sleight of Hand. In addition, when you craft special ammunition, you produce a number of identical projectiles equal to your proficiency bonus instead of only one, using the normal time and cost for a single projectile.",
-          "page": 192
+          "page": 192,
+          "effects": [
+            {
+              "type": "weaponProficiency",
+              "weapon": "simple_ranged"
+            },
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial_ranged"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 8,

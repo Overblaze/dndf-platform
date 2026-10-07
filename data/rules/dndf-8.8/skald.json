@@ -590,7 +590,24 @@
           "level": 3,
           "name": "Bonus Proficiencies",
           "text": "When you join the School of Battlehymn at 3rd level, you gain proficiency with Medium Armor, Shields, and Martial Weapons.",
-          "page": 186
+          "page": 186,
+          "effects": [
+            {
+              "type": "armorProficiency",
+              "armor": "medium"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "shields"
+            },
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 3,

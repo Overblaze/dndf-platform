@@ -767,6 +767,10 @@
               "type": "display",
               "label": "Ramen save DC",
               "expr": "8 + prof + mod.con"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Cook’s Utensils"
             }
           ],
           "rolls": [

@@ -80,3 +80,5 @@ Writes to `~/dndf/secret/` only. The script refuses any other destination, print
 The hand-verified `data/rules/dndf-10/bruiser.json` is never rewritten, so its subclass switches are entered in that file directly.
 
 A subclass patch can also carry `choose`: the feature's sub-headed parts (or, with `inline`, the paragraphs of its text that open with the names given) become an `optionGroup` entry, and the feature gets `choices` pointing at it. `each` gives every option the same fields (its own uses); `options` adds numbers to one option, guarded by `expect` like everything else.
+
+`proficiencies_granted` reads "you gain proficiency with …" in class features, subclass features and feats into `armorProficiency`, `weaponProficiency` and `toolProficiency` effects; a choice grants nothing. They are added even to a feature whose other effects were entered by hand.

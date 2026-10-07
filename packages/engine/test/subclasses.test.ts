@@ -378,6 +378,80 @@ describe('Steamtech and Power Surges', () => {
   });
 });
 
+describe('armor, weapon and tool proficiencies', () => {
+  const ids = (list: { id: string }[]) => list.map((p) => p.id).sort();
+  const longbow = { id: 'w', name: 'Longbow', damage: '1d8', damageType: 'piercing', category: 'martial' as const, ranged: true };
+  const longsword = { id: 'w', name: 'Longsword', damage: '1d8', damageType: 'slashing', category: 'martial' as const };
+  const plate = { name: 'Plate', base: 18, dexCap: 0 };
+  const unproficient = (sheet: Sheet) => notes(sheet).filter((n) => n.startsWith('Not proficient with'));
+
+  it.each(BOTH)('a class gives its own: Warrior all armor, shields, simple and martial weapons; Oracle light armor and simple weapons (%s)', (version) => {
+    const rules = loadRules(version);
+    const warrior = deriveSheet(newCharacter({ name: 'T', rulesVersion: version, classId: 'class.warrior', level: 1, scores: base }, rules), rules);
+    expect(ids(warrior.proficiencies.armor)).toEqual(['heavy', 'light', 'medium', 'shields']);
+    expect(ids(warrior.proficiencies.weapons)).toEqual(['martial', 'simple']);
+    const oracle = deriveSheet(newCharacter({ name: 'T', rulesVersion: version, classId: 'class.oracle', level: 1, scores: base }, rules), rules);
+    expect(ids(oracle.proficiencies.armor)).toEqual(['light']);
+    expect(oracle.proficiencies.armor[0]).toMatchObject({ name: 'Light armor', from: 'Oracle' });
+  });
+
+  it.each(BOTH)('Priest, Sky Domain adds Dials, martial weapons and heavy armor; a longsword then adds proficiency → Str 2 + prof 2 = +4 (%s)', (version) => {
+    const sub = 'subclass.priest.sky';
+    const sky = build(version, 'class.priest', sub, 1, { str: 14 }, [], { weapons: [longsword], armor: plate });
+    expect(ids(sky.proficiencies.armor)).toEqual(['heavy', 'light', 'medium', 'shields']);
+    expect(sky.proficiencies.armor.find((p) => p.id === 'heavy')!.from).toBe('Bonus Proficiencies');
+    expect(sky.proficiencies.tools.map((p) => p.name)).toContain('Dials');
+    expect(sky.attacks[1]!.toHit.value).toBe(4);
+    expect(unproficient(sky)).toEqual([]);
+    const cherry = build(version, 'class.priest', 'subclass.priest.cherry_blossom', 1, { str: 14 }, [], { weapons: [longsword], armor: plate });
+    expect(cherry.attacks[1]!.toHit.value).toBe(2); // no martial weapons: Str 2 only
+    expect(cherry.attacks[1]!.notes).toContain('Not proficient');
+    expect(unproficient(cherry)).toEqual(['Not proficient with heavy armor: disadvantage on Strength and Dexterity checks, saves and attack rolls, and you can’t cast spells']);
+    expect(cherry.proficiencies.tools.map((p) => p.name)).toContain('Herbalism Kit');
+    expect(cherry.warnings).toEqual([]); // said plainly, never blocked
+  });
+
+  it('“martial ranged weapons” covers a longbow and not a longsword (Tinkerer, Munition Expert, v10)', () => {
+    const sheet = build(V10, 'class.tinkerer', 'subclass.tinkerer.munition_expert', 3, { str: 14, dex: 14 }, [], { weapons: [longbow, { ...longsword, id: 'x' }] });
+    expect(ids(sheet.proficiencies.weapons)).toEqual(expect.arrayContaining(['martial_ranged', 'simple_ranged']));
+    expect(sheet.attacks[1]!.toHit.value).toBe(4); // Dex 2 + prof 2
+    expect(sheet.attacks[2]!.toHit.value).toBe(2); // Str 2, not proficient
+  });
+
+  it('subclass armor: Warmonger heavy armor, Battlehymn heavy armor and shields (v10), Skald Battlehymn medium armor (v8.8), Devil Blade medium armor', () => {
+    expect(ids(build(V10, 'class.conqueror', 'subclass.conqueror.warmonger', 3).proficiencies.armor)).toEqual(['heavy', 'light', 'medium', 'shields']);
+    expect(ids(build(V10, 'class.conqueror', 'subclass.conqueror.warmonger', 2).proficiencies.armor)).toEqual(['light', 'medium', 'shields']);
+    expect(ids(build(V10, 'class.virtuoso', 'subclass.virtuoso.battlehymn', 3).proficiencies.armor)).toEqual(['heavy', 'light', 'shields']);
+    expect(ids(build(V88, 'class.skald', 'subclass.skald.battlehymn', 3).proficiencies.armor)).toEqual(['light', 'medium', 'shields']);
+    expect(ids(build(V10, 'class.devilforged', 'subclass.devilforged.devil_blade', 3).proficiencies.armor)).toEqual(['light', 'medium', 'shields']);
+  });
+
+  it.each(BOTH)('feats: Heavily Armored, Moderately Armored and Burglar add theirs; a shield with no proficiency is noted; the player can overrule armor (%s)', (version) => {
+    const rules = loadRules(version);
+    const feat = (name: string) => [...rules.values()].find((e) => e.kind === 'feat' && e.name.startsWith(name))!.id;
+    const make = (feats: string[], extra: Partial<CharacterDoc> = {}) =>
+      deriveSheet({ ...newCharacter({ name: 'T', rulesVersion: version, classId: 'class.oracle', level: 1, scores: base, feats }, rules), ...extra }, rules);
+    expect(ids(make([feat('Heavily Armored')]).proficiencies.armor)).toEqual(['heavy', 'light']);
+    expect(ids(make([feat('Moderately Armor')]).proficiencies.armor)).toEqual(['light', 'medium', 'shields']);
+    expect(make([feat('Burglar')]).proficiencies.tools.map((p) => p.id)).toContain('thieves_tools');
+    expect(unproficient(make([], { shield: true }))).toHaveLength(1);
+    expect(unproficient(make([feat('Moderately Armor')], { shield: true }))).toEqual([]);
+    expect(unproficient(make([], { armor: plate }))).toHaveLength(1);
+    expect(unproficient(make([], { armor: { ...plate, proficient: true } }))).toEqual([]);
+    expect(unproficient(make([feat('Heavily Armored')], { armor: { ...plate, proficient: false } }))).toHaveLength(1);
+  });
+
+  it.each(BOTH)('feats that name dice have roll buttons on the sheet (%s)', (version) => {
+    const rules = loadRules(version);
+    const withDice = [...rules.values()].filter((e) => e.kind === 'feat' && Array.isArray(e.rolls) && e.rolls.length > 0);
+    expect(withDice.length).toBeGreaterThan(5);
+    for (const e of [...rules.values()].filter((x) => x.kind === 'feat' && (x.auto as string[] | undefined)?.includes('rolls'))) expect(e.rolls, e.name).toBeDefined();
+    const sheet = deriveSheet(newCharacter({ name: 'T', rulesVersion: version, classId: 'class.warrior', level: 1, scores: base, feats: [withDice[0]!.id] }, rules), rules);
+    const shown = sheet.features.find((f) => f.name === withDice[0]!.name)!;
+    expect(shown.rolls.map((r) => r.dice)).toEqual((withDice[0]!.rolls as { dice: string }[]).map((r) => r.dice));
+  });
+});
+
 describe('every wired subclass feature', () => {
   it.each(BOTH)('shows its standing resistances and immunities under “In effect” (%s)', (version) => {
     const cases: [string, string, number, string][] = [

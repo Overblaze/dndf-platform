@@ -450,7 +450,24 @@
           "level": 1,
           "name": "Hell’s Duelist",
           "text": "At 1st level, you acquire the training necessary to effectively arm yourself for battle. You gain proficiency with medium armor, shields, and martial melee weapons.\nThe experience you have gained in working with infusing various devil fruit powers into weapons has allowed you to become proficient with various weapons. When you finish a long rest, you can touch one weapon that you are proficient with and that lacks the two- handed property. When you attack with that weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for the attack and damage rolls. This benefit lasts until you finish a long rest.",
-          "page": 116
+          "page": 116,
+          "effects": [
+            {
+              "type": "armorProficiency",
+              "armor": "medium"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "shields"
+            },
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial_melee"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 6,
@@ -542,7 +559,20 @@
           "level": 1,
           "name": "Tool Proficiency",
           "text": "When you choose this subclass at 1st level, you gain proficiency with Alchemist’s Supplies and Tinker’s Tools, essential for crafting and modifying your bombs.",
-          "page": 117
+          "page": 117,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Alchemist’s Supplies"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Tinker’s Tools"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,
@@ -1184,8 +1214,15 @@
               "kind": "other"
             }
           ],
+          "effects": [
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial_ranged"
+            }
+          ],
           "auto": [
-            "rolls"
+            "rolls",
+            "effects"
           ],
           "uses": {
             "max": "prof",
@@ -1295,13 +1332,35 @@
           "level": 1,
           "name": "Tool Proficiency",
           "text": "Starting at 1st level, you gain proficiency with Smith’s Tools. If you already have this tool proficiency, you gain proficiency with one other type of tool of your choice.",
-          "page": 120
+          "page": 120,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Smith’s Tools"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,
           "name": "Armored Up",
           "text": "At 1st level, you are able to use your infused equipment to grant you additional protection from harm. You gain proficiency with medium armor and shields.\nIn addition, you gain a +1 bonus to Armor Class while you have your infused devil fruit item equipped or held.",
           "page": 121,
+          "effects": [
+            {
+              "type": "armorProficiency",
+              "armor": "medium"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "shields"
+            }
+          ],
+          "auto": [
+            "effects"
+          ],
           "toggle": {
             "id": "infused_item",
             "label": "Infused item equipped or held",
@@ -1418,7 +1477,16 @@
           "level": 1,
           "name": "Tool Proficiency",
           "text": "At 1st level, you gain proficiency with smith’s tools. If already proficient, choose another artisan tool.",
-          "page": 121
+          "page": 121,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Smith’s tools"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,
@@ -1628,8 +1696,15 @@
               "kind": "damage"
             }
           ],
+          "effects": [
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial"
+            }
+          ],
           "auto": [
-            "rolls"
+            "rolls",
+            "effects"
           ]
         },
         {
@@ -1734,7 +1809,20 @@
           "level": 1,
           "name": "Tool Proficiency",
           "text": "When you choose this subclass at 1st level, you gain proficiency with Alchemist’s Supplies and Tinker’s Tools, essential for synthesizing compounds to control and enhance your beasts.",
-          "page": 123
+          "page": 123,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Alchemist’s Supplies"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Tinker’s Tools"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,
@@ -2617,7 +2705,16 @@
           "group": "Gear Smithing Emanations",
           "text": "You are able to infuse any tool with your Devil Fruit Infusion to make it your Infused Item. When you do so, the tool becomes multipurpose, transforming into any tool you need. You also gain proficiency with all tools.",
           "page": 133,
-          "prerequisite": "Gear Smithing"
+          "prerequisite": "Gear Smithing",
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "All tools"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "id": "greater_armor_infusion",

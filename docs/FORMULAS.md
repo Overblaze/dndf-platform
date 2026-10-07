@@ -225,6 +225,19 @@ Power Surges "reset to one" on a long rest and are gained in play; the sheet kee
 Standing resistances, immunities and advantages a subclass gives are listed on the sheet under "In effect" (word for word in the feature); they change no number.
 Dice named in a feature's text ("takes 2d8 fire damage") become roll buttons on that feature automatically; these are marked `auto: ["rolls"]` in the data.
 
+## Armor, weapon and tool proficiencies (both versions)
+Tested in `packages/engine/test/subclasses.test.ts`. Shown on the Skills tab, each with where it comes from.
+
+| Rule | How the sheet works it out |
+|---|---|
+| A class's proficiencies | the armor, weapons and tools in its class entry ("all armor" is light, medium and heavy) |
+| A subclass feature or feat that says "you gain proficiency with …" | read from the text automatically: armor kinds, shields, simple / martial (melee / ranged) weapons, named weapons, named tools |
+| Attack roll with a weapon | adds the proficiency bonus when the character has its category, its category and reach ("martial ranged"), or its name |
+| Armor kind | no Dex limit: light; Dex limit above 0: medium; no Dex: heavy |
+| Armor or shield without proficiency | noted under "In effect" (disadvantage on Strength and Dexterity checks, saves and attack rolls; no spellcasting — SRD); never blocks, and the form can overrule it |
+
+Not read: a proficiency that is a choice ("one tool of your choice", "four weapons of your choice"), and racial traits. In a multiclass build every class's full list is counted.
+
 ## Multiclassing (both versions)
 | Number | Formula | Sample | Page |
 |---|---|---|---|
