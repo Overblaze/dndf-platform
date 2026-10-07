@@ -3,6 +3,7 @@ import { AppShell } from './components/AppShell';
 import { AuthProvider } from './lib/auth';
 import { ComingSoon } from './pages/ComingSoon';
 import { DmPage } from './pages/DmPage';
+import { LibraryPage } from './pages/LibraryPage';
 import { SheetPage } from './pages/SheetPage';
 
 export function App() {
@@ -23,15 +24,8 @@ export function App() {
                 </ComingSoon>
               }
             />
-            <Route
-              path="library"
-              element={
-                <ComingSoon title="Library" phase={3}>
-                  Every race, class, background, feat, crew role and Haki feature from both rules versions, word for word
-                  with page numbers.
-                </ComingSoon>
-              }
-            />
+            <Route path="library" element={<LibraryPage />} />
+            <Route path="library/:id" element={<LibraryPage />} />
             <Route
               path="ship"
               element={

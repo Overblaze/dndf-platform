@@ -1,0 +1,89 @@
+// Every class in data/rules, at every level and with every subclass, must produce a sheet:
+// no missing data, hit points by the book's formula, and each limited use a number.
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import { deriveSheet, indexRules, newCharacter, type ClassEntry, type RuleEntry, type RulesFile } from '../src';
+
+const dir = join(import.meta.dirname, '..', '..', '..', 'data', 'rules', 'dndf-10');
+const files = readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as RulesFile);
+const rules = indexRules(files);
+const classes = [...rules.values()].filter((e): e is ClassEntry => e.kind === 'class');
+const subclassesOf = (cls: ClassEntry) => [...rules.values()].filter((e) => e.kind === 'subclass' && e.parent === cls.id);
+const scores = { str: 14, dex: 14, con: 14, int: 14, wis: 14, cha: 14 };
+
+describe('rules data for v10', () => {
+  it('has the thirteen classes of the Expanded Handbook', () => {
+    expect(classes.map((c) => c.name).sort()).toEqual([
+      'Bruiser', 'Chemist', 'Conqueror', 'Devilforged', 'Hybrid', 'Marksman', 'Martial Artist', 'Oracle', 'Priest', 'Renegade', 'Tinkerer', 'Virtuoso', 'Warrior',
+    ]);
+  });
+
+  describe.each(classes.map((c) => [c.name, c] as const))('%s', (_name, cls) => {
+    const subs = subclassesOf(cls);
+
+    it('has a full class table, book pages on everything, and features in level order', () => {
+      for (const column of Object.values(cls.progression?.columns ?? {})) expect(column).toHaveLength(20);
+      expect(cls.features.length).toBeGreaterThan(5);
+      expect(cls.features.map((f) => f.level)).toEqual([...cls.features.map((f) => f.level)].sort((a, b) => a - b));
+      expect(cls.subclass?.level).toBeGreaterThanOrEqual(1);
+      expect(subs.length).toBeGreaterThanOrEqual(6);
+      for (const entry of [cls, ...subs] as RuleEntry[]) {
+        for (const feature of entry.features ?? []) {
+          expect(feature.text.length, `${entry.name}: ${feature.name}`).toBeGreaterThan(20);
+          expect(feature.page, `${entry.name}: ${feature.name}`).toBeGreaterThanOrEqual(entry.source.page);
+          expect(feature.level).toBeGreaterThanOrEqual(1);
+          expect(feature.level).toBeLessThanOrEqual(20);
+        }
+      }
+    });
+
+    it('gives its first subclass features at the level the class grants a subclass', () => {
+      const firstGroup = subs[0]!.group;
+      for (const sub of subs.filter((s) => s.group === firstGroup)) {
+        expect(sub.features![0]!.level, sub.name).toBe(cls.subclass!.level);
+      }
+    });
+
+    it('derives a sheet at every level, with every subclass', () => {
+      for (const subclass of [undefined, ...subs.map((s) => s.id)]) {
+        for (let level = 1; level <= 20; level++) {
+          const doc = newCharacter({ name: 'Test', classId: cls.id, level, scores, subclass }, rules);
+          const sheet = deriveSheet(doc, rules);
+          expect(sheet.warnings, `${cls.name} ${level} ${subclass}`).toEqual([]);
+          const con = sheet.abilities.con.mod; // after features that raise it (The King)
+          expect(sheet.maxHp.value).toBe(cls.hitDie + (level - 1) * (cls.hitDie / 2 + 1) + con * level);
+          expect(doc.state.hp).toBe(sheet.maxHp.value);
+          for (const resource of sheet.resources) {
+            expect(Number.isInteger(resource.max) && resource.max > 0, `${cls.name} ${level}: ${resource.name} = ${resource.max}`).toBe(true);
+          }
+          const expected = cls.features.filter((f) => f.level <= level).length;
+          expect(sheet.features.filter((f) => f.key.startsWith(`${cls.id}/`)).length).toBeGreaterThanOrEqual(Math.min(expected, 1));
+        }
+      }
+    });
+  });
+
+  it('shows casters their spell slots and class table values', () => {
+    const priest = deriveSheet(newCharacter({ name: 'P', classId: 'class.priest', level: 5, scores }, rules), rules);
+    expect(priest.resources.filter((r) => r.id.startsWith('slots')).map((r) => [r.name, r.max, r.recharge])).toEqual([
+      ['1st-level slots', 4, 'long'],
+      ['2nd-level slots', 3, 'long'],
+      ['3rd-level slots', 2, 'long'],
+    ]);
+    expect(priest.classTable).toEqual([{ key: 'cantripsKnown', label: 'Cantrips Known', value: 4, from: 'Priest' }]);
+
+    const monk = deriveSheet(newCharacter({ name: 'M', classId: 'class.martial_artist', level: 7, scores }, rules), rules);
+    expect(monk.resources.find((r) => r.id === 'ki')).toMatchObject({ max: 7, recharge: 'short' });
+    expect(monk.classTable.map((c) => [c.label, c.value])).toEqual([['Martial Arts Die', '1d8'], ['Ki', 7], ['Unarmored Movement', '+15ft']]);
+    expect(deriveSheet(newCharacter({ name: 'M', classId: 'class.martial_artist', level: 1, scores }, rules), rules).resources.find((r) => r.id === 'ki')).toBeUndefined();
+  });
+
+  it('keeps sub-headings and tables with their feature', () => {
+    const chemist = deriveSheet(newCharacter({ name: 'C', classId: 'class.chemist', level: 2, scores }, rules), rules);
+    const mutation = chemist.features.find((f) => f.name === 'Monster Mutation')!;
+    expect(mutation.sections.map((s) => s.name)).toEqual(['Abomination']);
+    expect(mutation.sections[0]!.tables![0]!.rows[0]).toEqual(['Large monstrosity, any alignment']);
+    expect(chemist.resources.find((r) => r.name === 'Monster Mutation')).toMatchObject({ max: 2, recharge: 'short' });
+  });
+});

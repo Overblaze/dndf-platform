@@ -1,0 +1,1364 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.tinkerer",
+      "kind": "class",
+      "name": "Tinkerer",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 180
+      },
+      "flavor": "The Tinkerer is an ingenious inventor who blends advanced technology and magic to create powerful gadgets and mechanical wonders. By studying blueprints and mastering complex tools, they craft devices capable of extraordinary feats, from launching devastating attacks to providing essential support in battle. Tinkerers are the brilliant minds behind the fusion of science and arcane energy, always tinkering with their creations to push the boundaries of what is possible.",
+      "quote": "MY NAME IS “CYBORG” FRANKY! YOUR ATTACKS ARE NOTHING TO MY STEEL BODY! --- Franky",
+      "hitDie": 6,
+      "savingThrows": [
+        "int",
+        "wis"
+      ],
+      "proficiencies": {
+        "armor": [],
+        "weapons": [
+          "dagger",
+          "dart",
+          "sling",
+          "quarterstaff",
+          "musket"
+        ],
+        "tools": [
+          "Thieves’ tools",
+          "tinker’s tools",
+          "two types of artisan’s tools of your choice"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "arcana",
+            "history",
+            "insight",
+            "investigation",
+            "medicine",
+            "religion"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a Quarterstaff or (b) a Dagger",
+        "a gadget of choice and blueprints",
+        "thieves’ tools and a dungeoneer’s pack"
+      ],
+      "progression": {
+        "columns": {
+          "cantripsKnown": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "slots1": [
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots2": [
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots3": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots4": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots5": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3
+          ],
+          "slots6": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2
+          ],
+          "slots8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slots9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "slots1",
+          "name": "1st-level slots",
+          "max": "col.slots1",
+          "recharge": "long"
+        },
+        {
+          "id": "slots2",
+          "name": "2nd-level slots",
+          "max": "col.slots2",
+          "recharge": "long"
+        },
+        {
+          "id": "slots3",
+          "name": "3rd-level slots",
+          "max": "col.slots3",
+          "recharge": "long"
+        },
+        {
+          "id": "slots4",
+          "name": "4th-level slots",
+          "max": "col.slots4",
+          "recharge": "long"
+        },
+        {
+          "id": "slots5",
+          "name": "5th-level slots",
+          "max": "col.slots5",
+          "recharge": "long"
+        },
+        {
+          "id": "slots6",
+          "name": "6th-level slots",
+          "max": "col.slots6",
+          "recharge": "long"
+        },
+        {
+          "id": "slots7",
+          "name": "7th-level slots",
+          "max": "col.slots7",
+          "recharge": "long"
+        },
+        {
+          "id": "slots8",
+          "name": "8th-level slots",
+          "max": "col.slots8",
+          "recharge": "long"
+        },
+        {
+          "id": "slots9",
+          "name": "9th-level slots",
+          "max": "col.slots9",
+          "recharge": "long"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Tinkerer Study",
+        "level": 2,
+        "featureLevels": [
+          2,
+          6,
+          10,
+          14
+        ]
+      },
+      "subclassIntro": {
+        "text": "Tinkerers all love to pursue scientific innovation and developing new inventions, but many specialize in different fields depending on their profession. Different types of studies will produce different results for the technology created. The personality, profession, and goals of your tinkerer may affect what studies they utilize.",
+        "page": 185
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Creation Power (Spellcasting)",
+          "text": "As a Student of robotics and advanced technology , you have Gadget of choice along with blueprints containing Creations (spells) that show the first glimmerings of your true abilities. This class uses the Tinkerer Spell List in Chapter 4.",
+          "page": 180,
+          "sections": [
+            {
+              "name": "Gadget & Blueprints (Spellbook)",
+              "text": "At 1st level, you create a specialized Gadget and a set of Blueprints that contain the technical designs for your Creation Powers. Your Gadget is a unique device that you build, customize, and improve over time. It might be a plain metallic staff that can be disassembled, an attached segment of a weapon you are proficient with, a mechanical gauntlet, a backpack-mounted engine, or a complex contraption with interlocking parts and robotic protrusions.\nYour Gadget counts as a Power Source, as described in Chapter 7: Expanded Armory under “Adventuring Gear,” and functions as your spellcasting focus for your Tinkerer Creation Powers.\nYour Blueprints contain five 1st level Tinkerer Creation Powers of your choice.",
+              "page": 181
+            },
+            {
+              "name": "Tools Required",
+              "text": "To build, modify, repair, or use your Gadget, you must use one type of artisan’s tools of your choice. You must be proficient with the chosen tool to use it in this way.",
+              "page": 181
+            },
+            {
+              "name": "Natural Abilities (Cantrips)",
+              "text": "At 1st level, you know three Natural Abilities of your choice from the Tinkerer spell list. You learn additional Tinkerer Natural Abilities of your choice at higher levels, as shown in the Natural Abilities Known column of the Tinkerer table.\nYour Natural Abilities do not need to be recorded in your Blueprints and can be used with or without your Gadget, provided you have access to the materials, devices, or methods needed to produce them.",
+              "page": 181
+            },
+            {
+              "name": "Preparing and Using Creations (Casting Spells)",
+              "text": "The Tinkerer table shows how many Creation Power slots you have to use your Creation Powers of 1st level and higher. To use one of these Creation Powers, you must expend a slot of the power’s level or higher. You regain all expended Creation Power slots when you finish a long rest.\nYou prepare and install a list of Tinkerer Creation Powers into your Gadget. To do so, choose a number of Creation Powers from your Blueprints equal to your Intelligence modifier + your Tinkerer level, minimum of one Creation Power. The chosen powers must be of a level for which you have Creation Power slots.\nYou can change your list of prepared Creation Powers whenever you finish a long rest. Preparing a new list requires time spent reviewing your Blueprints and installing the necessary components into your Gadget using your tools: at least 1 minute per Creation Power level for each power on your list.",
+              "page": 181
+            },
+            {
+              "name": "Creation Power Ability (Spellcasting Ability)",
+              "text": "Intelligence is your Creation Power ability for your Tinkerer Creation Powers. In addition, you use your Intelligence modifier when setting the saving throw DC for a Tinkerer Creation Power you use and when making an attack roll with one.\nCreation save DC = 8 + your Proficiency Bonus + your Intelligence modifier\nCreation Attack modifier = your Proficiency Bonus + your Intelligence modifier",
+              "page": 181
+            },
+            {
+              "name": "Creating New Blueprints",
+              "text": "The Creation Powers you add to your Blueprints represent your personal research, technological breakthroughs, and continued experimentation.\nYou do not automatically gain leveled Creation Powers for free when you gain levels in this class. You may add new Creation Powers to your Blueprints through research and experimentation. These Creation Powers must be from the Tinkerer spell list and must be of a level for which you have Creation Power slots.\nYou may add a Creation Power to your Blueprints by spending downtime and materials to develop it. For each level of the Creation Power, the process takes 2 hours and costs ฿500,000. This cost represents prototype components, tools, failed experiments, specialized materials, and modifications made to your Gadget. Once the process is complete, the Creation Power is added to your Blueprints.",
+              "page": 181
+            },
+            {
+              "name": "Replacing Your Blueprints or Gadget",
+              "text": "You can copy a Creation Power from your own Blueprints into another set of Blueprints, such as when creating a backup copy. This process is faster and easier than creating a new power, since you already understand your own notation and design principles. For each level of the copied Creation Power, the process takes 1 hour and costs ฿100,000.\nIf you lose your Blueprints, you can use the same process to transcribe any Creation Powers you currently have prepared into a new set of Blueprints. Any other Creation Powers must be recreated through research and experimentation as normal.\nIf your Gadget is lost or destroyed, you can rebuild it if you have your tools. You must spend at least 1 hour rebuilding your Gadget during a short or long rest before you can use it again. If you do not have your tools, you can purchase a new Power Source instead, which becomes your new Gadget.",
+              "page": 181
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Recharging",
+          "text": "You have learned how to restore bits of power to your Gadget by recharging it during a rest. Once per day when you finish a Short Rest, you can choose expended Creation Power (Spell) Slots to recover. The Creation Power Slots can have a combined level that is equal to or less than half your Tinkerer level (rounded up), and none of the slots can be 6th level or higher.\nFor example, if you’re a 4th-level Tinkerer, you can recover up to two levels worth of Spell Slots. You can recover either a 2nd-level spell slot or two 1st-level Spell Slots.",
+          "page": 182
+        },
+        {
+          "level": 1,
+          "name": "Basic Crafter",
+          "text": "Additionally at 1st level, You gain the knowledge to craft any non-magical adventuring gear from Chapter 7: Expanded Armory.\nAfter tinkering for 1 hour uninterrupted, you can craft one item with a total market value not exceeding ฿10,000, and you must expend raw materials worth half the total market value. If something you want to craft has a market value greater than ฿10,000, you must spend 1 additional hour in ฿10,000 increments until you reach the market value of the item. Crafting in this way can coincide with a short or long rest you may pause your progress at any time, starting back up where you left off.\nAdditionally, if you wish to create a custom item not in the adventuring gear section or create something in the special equipment section, work with your Dungeon Master to balance and create it for your game.",
+          "page": 182
+        },
+        {
+          "level": 2,
+          "name": "Tinkerer Study",
+          "text": "When you reach 2nd Level, you choose your study, shaping your knowledge and practice of inventing through various schools: Holo Science, Meteorology, Military Science, Plague Engineer, Robotics, and Steamtech, all detailed at the end of the class description. Your choice grants you features at 2nd Level and again at 6th, 10th, and 14th level.",
+          "page": 182,
+          "grantsSubclass": true
+        },
+        {
+          "level": 2,
+          "name": "Tool Upgrades",
+          "text": "Starting at 2nd level, your proficiency bonus is now doubled for any ability check you make that uses your proficiency with a tool.\nAdditionally, you may create one set of artisan’s tools. This creation requires 1 hour of uninterrupted work, which can coincide with a short or long rest.",
+          "page": 182
+        },
+        {
+          "level": 3,
+          "name": "Tinkerer Profession",
+          "text": "When you reach 3rd Level, you choose a specialized profession, shaping the way you tinker and invent: Gardener, Heavenly Technician, Innovator, Meito Smith, and Munition Expert, all detailed at the end of the subclass descriptions. Your choice grants you features at 3rd Level and again at 7th, and 11th level.",
+          "page": 182
+        },
+        {
+          "level": 3,
+          "name": "Adaptive Cantrip Technology",
+          "text": "At 3rd level, whenever you finish a long rest, you can replace one tinkerer cantrip you know with another cantrip from the tinkerer spell list.",
+          "page": 182
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th Level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 182,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Inventive Breakthrough",
+          "text": "Starting at 5th level, and again when you reach 8th, 11th, 14th, and 17th level in this class, your mastery of applied science allows you to permanently refine your favorite Creation Powers into custom inventions. Choose one Tinkerer Creation Power of 1st level or higher in your Blueprints. The chosen Creation Power must be of a level you can prepare.\nWhen you upgrade a Creation Power, choose one of the following modifications for it. It is always prepared for you and does not count against the number of Creation Powers you can prepare each day. Once a Creation Power has been upgraded, it cannot be upgraded again:\nAltered Output. You change the Creation Power’s visible or sensory effects. You may alter its color, sound, smell, texture, or other harmless cosmetic details. This does not change the Creation Power’s damage type, area, range, targets, or mechanical effects.\nComponent Refinement. You can remove a material component with no listed cost, or you can remove either the verbal or somatic component. You cannot remove a consumed component or a component with a listed cost.\nReinforced Concentration. If the Creation Power requires concentration, damage alone cannot cause you to lose concentration on it. You must still make concentration checks caused by other effects, and your concentration still ends if you are incapacitated, die, or choose to end it.\nDamage Conversion. If the Creation Power deals damage, choose one of its damage types and replace it with one of the following damage types: acid, cold, fire, lightning, necrotic, poison, or thunder. If the Creation Power deals multiple damage types, only one damage type is changed.\nExtended Projection. If the Creation Power has a range of at least 5 feet and does not have a range of self, increase its range by a number of feet equal to 10 times your Tinkerer level.\nRitual Framework. If the Creation Power has a casting time of at least 10 minutes and does not have the ritual tag, it gains the ritual tag.\nSelective Targeting. If the Creation Power affects one or more creatures and does not have a range of self, you can refine its targeting matrix. When you use the Creation Power, choose allies or enemies. Creatures of the chosen type are affected by the Creation Power, while creatures of the other type are unaffected.",
+          "page": 182
+        },
+        {
+          "level": 6,
+          "name": "Adept Crafter",
+          "text": "At 6th level, using your Basic Crafter feature, you may now craft non-magical armors, weapons, or shields from Chapter 7: Expanded Armory.\nAdditionally, if you wish to create a custom weapon or armor not in the setting, work with your Dungeon Master to balance and create it for your game.",
+          "page": 183
+        },
+        {
+          "level": 10,
+          "name": "Savant Crafter",
+          "text": "At 10th level, using the table below and the rules from Basic Crafter and Adept Crafter, when you create weapons or equipment or wish to upgrade an existing peice of gear made by Basic or Adept Crafter, you may add additional stats to the equipment.\n฿\n฿\n฿\n฿\n฿",
+          "page": 183,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Unlocks at Level Upgrade",
+                  "Additional Cost"
+                ]
+              ],
+              "page": 183
+            },
+            {
+              "rows": [
+                [
+                  "10th",
+                  "+1",
+                  "500,000 worth of raw materials"
+                ]
+              ],
+              "page": 183
+            },
+            {
+              "rows": [
+                [
+                  "12th",
+                  "+2",
+                  "1,000,000 worth of raw materials"
+                ]
+              ],
+              "page": 183
+            },
+            {
+              "rows": [
+                [
+                  "14th",
+                  "+3",
+                  "2,500,000 worth of raw materials"
+                ]
+              ],
+              "page": 183
+            },
+            {
+              "rows": [
+                [
+                  "16th",
+                  "+4",
+                  "5,000,000 worth of raw materials"
+                ]
+              ],
+              "page": 183
+            },
+            {
+              "rows": [
+                [
+                  "18th",
+                  "+5",
+                  "10,000,000 worth of raw materials"
+                ]
+              ],
+              "page": 183
+            }
+          ]
+        },
+        {
+          "level": 16,
+          "name": "Master Crafter",
+          "text": "At 16th level, when crafting a weapon using the Basic Crafter or Adept Crafter rules, you can spend an additional ฿1,000,000 worth of raw materials per effect selected below to add onto your gear. You may not have more than one of the same named effect per item.",
+          "page": 183,
+          "sections": [
+            {
+              "name": "Radiant Sheen",
+              "text": "Weapon Effect\nYour weapon changes its damage type to radiant and emits 20 feet of bright sunlight.",
+              "page": 183
+            },
+            {
+              "name": "Dark Steel",
+              "text": "Weapon Effect\nYour weapon changes its damage type to necrotic and creates a 20-foot radius of darkness that lightly obscures the area.",
+              "page": 183
+            },
+            {
+              "name": "Bleeding Edge",
+              "text": "Weapon Effect\nCreatures cannot heal for 1 round when damaged by this weapon.",
+              "page": 183
+            },
+            {
+              "name": "Stronger Core",
+              "text": "Weapon Effect\nYour weapon deals an additional 2d6 damage.",
+              "page": 183
+            },
+            {
+              "name": "Leeching Metal",
+              "text": "Weapon Effect\nHeals you for damage dealt when you roll a critical hit on your attack roll.",
+              "page": 183
+            },
+            {
+              "name": "Extending Mechanism",
+              "text": "Weapon Effect\nYour weapons reach is doubled.",
+              "page": 183
+            },
+            {
+              "name": "Giant Slayer",
+              "text": "Weapon Effect\nYour weapon deals additional 1d6 damage for every size larger than you a target is.",
+              "page": 183
+            },
+            {
+              "name": "Demolisher",
+              "text": "Weapon Effect\nYour weapon deals double damage against structures.",
+              "page": 183
+            },
+            {
+              "name": "Greased Joints",
+              "text": "Armor Effect\nWhile wearing this armor, gain +1 to your Dexterity ability score.",
+              "page": 183
+            },
+            {
+              "name": "Thicker Material",
+              "text": "Armor Effect\nWhile wearing this armor, gain +1 to your Constitution ability score.",
+              "page": 183
+            },
+            {
+              "name": "Night Vision Module",
+              "text": "Armor Effect\nWhile wearing this armor, you gain Darkvision to 30 feet, unless you already have it, in which case, your range extends to 60 feet.",
+              "page": 183
+            },
+            {
+              "name": "Inflatable Air Padding",
+              "text": "Armor Effect\nWhile wearing this armor, you can spend an action to give yourself 40 temporary hit points. These hit points last until the end of your next turn. This ability recharges after a long rest.",
+              "page": 183
+            },
+            {
+              "name": "Corrosive Proof Lining",
+              "text": "Armor Effect\nWhile wearing this armor, you gain resistance to Acid damage.",
+              "page": 184
+            },
+            {
+              "name": "See-Through Metal",
+              "text": "Armor Effect\nWhile wearing this armor, you can spend an action to turn invisible for 1 round. This ability recharges after a short or long rest.",
+              "page": 184
+            },
+            {
+              "name": "Momentum Springs",
+              "text": "Armor Effect\nWhile wearing this armor, for every 15 feet of movement you haven’t used at the end of your turn, your AC increases by +1 until the beginning of your next turn.",
+              "page": 184
+            },
+            {
+              "name": "Stick Proof Soles",
+              "text": "Armor Effect\nWhile wearing this armor, your movement speed is always 30 feet, even if something else would reduce or increase it.",
+              "page": 184
+            }
+          ]
+        },
+        {
+          "level": 18,
+          "name": "Master of Innovation",
+          "text": "At 18th level, you have achieved such mastery over certain Creation Powers (Spells) that you can cast them at will. Choose a 1st-level Tinkerer Creation Power (spell) and a 2nd-level Tinkerer spell that are in your Spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal.\nBy spending 8 hours in study, you can exchange one or both of the Spells you chose for different spells of the same levels.",
+          "page": 184
+        },
+        {
+          "level": 20,
+          "name": "Ultimate Technology",
+          "text": "When you reach 20th level, you gain mastery over two powerful Creation Powers (Spells) and can cast them with little effort. Choose two 3rd-level Tinkerer creation powers in your spellbook as your signature creation powers . You always have these creation powers prepared, they don’t count against the number of creation powers you have prepared, and you can cast each of them once at 3rd Level without expending a creation power (spell) slot. When you do so, you can’t do so again until you finish a short or Long Rest.\nIf you want to cast either creation power at a higher level, you must expend a creation power slot as normal.",
+          "page": 184
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.holo_science",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Holo Science",
+      "group": "Tinkerer Studies",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 185
+      },
+      "flavor": "Masters of light and projection, Holo-Scientists specialize in crafting illusions, hard-light constructs, and advanced holographic technology. Whether used for deception, communication, or battlefield control, their inventions allow them to bend light itself to their will.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Holo-Projector",
+          "text": "Starting at 2nd level, you develop a compact Holo- Projector, an advanced device capable of generating realistic holograms. As an action, you can project an illusion in an unoccupied space within 30 feet. The illusion can be an object, creature, or simple scene no larger than a 10-foot cube and lasts for up to 10 minutes.\nA creature can use its action to inspect the hologram, making an Intelligence (Investigation) check against your Creation Power save DC. On a success, they recognize the illusion for what it is.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once), regaining all expended uses when you finish a long rest.\nAdditionally, you learn the Minor Illusion natural ability (cantrip) if you don’t already know it.",
+          "page": 185,
+          "uses": {
+            "max": "max(1, mod.int)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Light Manipulation",
+          "text": "Also at 2nd level, you can manipulate ambient light and the appearance of your holograms. As an action, you can:\nBrighten or dim a light source within 30 feet. Change the color of light or holograms within range. Create minor visual distortions, such as flickering, static, or shifting patterns.\nThese effects last for 1 minute and can be dismissed as a bonus action.",
+          "page": 185
+        },
+        {
+          "level": 6,
+          "name": "Hard-Light Constructs",
+          "text": "Starting at 6th level, you can create semi-solid holographic constructs. When you cast an illusion spell or use your Holo-Projector, you can choose to make parts of the illusion tangible. These constructs remain weightless but can interact with objects and creatures within their space.\nAdditionally, you can create a Hard-Light Barrier as a reaction when you or an ally within 30 feet is hit by an attack. The barrier grants a +2 bonus to AC until the start of your next turn.\nYou can use this reaction a number of times equal to your Intelligence modifier (minimum of once), regaining all expended uses when you finish a long rest.",
+          "page": 185,
+          "uses": {
+            "max": "max(1, mod.int)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Tactical Holography",
+          "text": "Beginning at 10th level, you master the art of battlefield control through advanced holograms. As an action, you can project Holo-Doubles, creating two mirage-like copies of yourself or an ally within 60 feet. These duplicates stand next to the targeted creature you duplicated and mimic exact movements and actions for 1 minute but deal no damage. While active, the targeted creature gains the following benefits:\nAttack rolls against the target creature are made with disadvantage.\nThe first attack the creature makes on each of its turns has advantage.\nThe duplicates vanish if the affected creature takes damage from a critical hit.\nYou can use this feature once per long rest, or you can expend a 2nd-level or higher Creation Power slot to use it again.",
+          "page": 185,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Photon Overload",
+          "text": "At 14th level, you can unleash a devastating surge of concentrated light energy. As an action, you activate your Holo-Projector to release a blinding pulse in a 30- foot radius centered on you. Creatures of your choice within the area must make a Constitution saving throw against your Creation Power save DC. On a failed save, they take 6d8 radiant damage and are blinded for 1 minute. A blinded creature can repeat the saving throw at the end of each of its turns, ending the effect on a success. On a successful save, a creature takes half damage and isn’t blinded.\nOnce you use this feature, you can’t do so again until you finish a long rest.",
+          "page": 185,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.meteorology",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Meteorology",
+      "group": "Tinkerer Studies",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 186
+      },
+      "flavor": "Those who study meteorology and weather science are often known for designing a numerous machines and tools that allow them to manipulate weather and storms. Some hail from places such as Weatheria, and some may simply develop these technologies on their own.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Cloud Surfing",
+          "text": "Starting at 2nd level, you can use a Bonus Action on Your Turn to create a floating cloud beneath you that that pulls you in any direction using an air current, immediately before or after you Cast a Creation Power (Spell) of 1st level or higher. Doing so allows you to fly up to 10 feet without provoking Opportunity Attacks.",
+          "page": 186
+        },
+        {
+          "level": 6,
+          "name": "Storm Forecasting",
+          "text": "At 6th level, you gain Resistance to lightning and thunder damage while holding your gadget. In addition, whenever you start Casting a Creation Power (Spell) of 1st level or higher that deals lightning or thunder damage, storm clouds emerge from your gadget. This eruption causes creatures of your choice that you can see within 10 feet of you to take lightning or thunder damage (choose each time this ability activates) equal to half your Tinkerer level.\nAt 18th level, you become immune to lightning and thunder damage while holding your gadget.",
+          "page": 186
+        },
+        {
+          "level": 10,
+          "name": "Weather Control",
+          "text": "At 10th level, you gain the ability to create and control weather around you.\nIf it is raining, you can use an action to cause the rain to stop Falling or wind to change direction in a 20-foot- radius Sphere centered on you. You can end this Effect as a Bonus Action.\nAs an action, you can cause clouds to form in a 20- foot-radius Sphere around you and create rain and wind in that area for 1 minute. Up to 10 gallons of water will fall from this rain altogether onto whatever surface is beneath it, extinguishing any small flames, and reducing all fire damage dealt in the area by an amount equal to your intelligence modifier. The wind will disperse any fog within 20 feet of you while this Effect is active. You can also end this Effect as a Bonus Action. You can use this effect a number of times equal to your proficiency bonus until you complete a Long Rest. If you are out of uses of this feature, you may expend a creation power (spell) slot to use it again.",
+          "page": 186,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Thunder Counter",
+          "text": "Starting at 14th level, when you are hit by a melee Attack, you can use your Reaction to deal thunder damage to the attacker. The damage equals your Tinkerer level. The attacker must also make a Strength saving throw against your Tinkerer creation (spell) save DC. On a failed save, the attacker is pushed in a straight line up to 20 feet away from you.",
+          "page": 186
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.military_science",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Military Science",
+      "group": "Tinkerer Studies",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 186
+      },
+      "flavor": "Those who study military science are heavily trained in using their knowledge and abilities for war or battle. It enhances a tinkerer’s offensive and defensive capabilities in battle, making them primarily versatile in fights.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Deflector Shield",
+          "text": "At 2nd Level, you have learned to create technology that fortifies yourself against harm. When you are hit by an Attack or you fail a saving throw, you can use your Reaction to gain a +2 bonus to your AC against that Attack or a +4 bonus to that saving throw.\nWhen you use this feature, you can’t cast Creation Powers (Spells) other than Natural Abilities (Cantrips) until the end of your next turn.",
+          "page": 186
+        },
+        {
+          "level": 2,
+          "name": "Tactical Mind",
+          "text": "Starting at 2nd Level, your quick wit and tactical thinking allows you to react fast in battle. You gain a bonus to your Initiative rolls equal to your Intelligence modifier.",
+          "page": 186
+        },
+        {
+          "level": 6,
+          "name": "Power Surge",
+          "text": "Starting at 6th level, you can store power and energy within your gadgets to later empower your damaging Creation Powers (Spells). In its stored form, this energy is called a Power Surge.\nYou gain the Dispel Magic and Counterspell spells. These spells are always prepared.\nYou can store a maximum number of Power Surges equal to your Intelligence modifier (minimum of one). Whenever you finish a Long Rest, your number of Power Surges resets to one. Whenever you successfully end a spell with Dispel Magic or Counterspell, you gain one Power Surge, as you steal energy from the spell you foiled. If you end a Short Rest with no Power Surges, you gain one Power Surge.\nOnce per turn when you deal damage to a creature or object with a Tinkerer creation power (spell), you can spend one Power Surge to deal extra force damage to that target. The extra damage equals your Tinkerer level.",
+          "page": 186
+        },
+        {
+          "level": 10,
+          "name": "Durable Tech",
+          "text": "Beginning at 10th level, your technology is made to be incredibly tough and difficult to disrupt. While you maintain Concentration on a spell, you have a +2 bonus to AC and all Saving Throws.",
+          "page": 186
+        },
+        {
+          "level": 14,
+          "name": "Deflecting Shroud",
+          "text": "At 14th level, your Deflector Shield becomes infused with deadly energy. When you use your Deflector Shield feature, you can cause power to arc from you. Up to three creatures of your choice that you can see within 60 feet of you each take force damage equal to half your Tinkerer level.",
+          "page": 186
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.plague_engineer",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Plague Engineer",
+      "group": "Tinkerer Studies",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 187
+      },
+      "flavor": "Harnessing the science of chemical warfare, plague engineers create mechanical marvels that spread pestilence and chaos. From airborne viruses to debilitating toxins, your inventions afflict foes with debilitating conditions while keeping you safe behind your mechanical defenses.\nAll diseases can be found in Chapter 9: Medical Log",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Tinkerer Injectable"
+            ],
+            [
+              "Level",
+              "Diseases",
+              "Airborne Diseases"
+            ],
+            [
+              "2nd",
+              "Blue Disease,",
+              "Kiss Kiss Germ, Vocal Disease"
+            ],
+            [
+              "Filth Disease"
+            ],
+            [
+              "6th",
+              "Shivering",
+              "Feminization/Masculinization"
+            ],
+            [
+              "Disease, Sight",
+              "Disease, Laughter Disease"
+            ],
+            [
+              "Disease"
+            ],
+            [
+              "10th",
+              "Mondolin",
+              "Madness Disease"
+            ],
+            [
+              "Sickness"
+            ],
+            [
+              "14th",
+              "Ice Oni Plague Mummy Plague"
+            ]
+          ],
+          "page": 187
+        }
+      ],
+      "features": [
+        {
+          "level": 2,
+          "name": "Pathogen Injector",
+          "text": "Starting at 2nd level, you develop a Pathogen Injector, a device that delivers debilitating diseases through weapon strikes. When you hit a creature with a weapon attack, you can expend a reaction to inject one of the Injectable Diseases from the Plague Engineer Disease Table that you know. The target must make a Constitution saving throw against your Creation Power save DC or become infected for 1 minute. While infected, the target suffers the Active Effect of the disease. At the end of each of its turns, the target can repeat the saving throw, ending the disease on a success.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once). You regain all expended uses when you finish a long rest.\nAdditionally, when you reach 6th level in Tinkerer, you gain an extra melee attack per attack action and increase the damage of your melee attacks by your Intelligence modifier.",
+          "page": 187,
+          "uses": {
+            "max": "max(1, mod.int)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Contagion Canister",
+          "text": "Also at 2nd level, you create Contagion Canisters, throwable devices that release airborne pathogens. As an action, you can throw a canister to a point within 30 feet, creating a 10-foot-radius cloud that lasts for 1 minute. Choose an Airborne Disease from the Plague Engineer Disease Table. Creatures that start their turn in the cloud or enter it for the first time must make a Constitution saving throw against your Creation Power save DC or suffer the disease’s Active Effect for 1 minute. The cloud disperses early if subjected to strong wind.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once), regaining all uses after a long rest.",
+          "page": 187
+        },
+        {
+          "level": 6,
+          "name": "Viral Immunity",
+          "text": "Starting at 6th level, your continued exposure to pathogens strengthens your resilience and plaguecraft. You are immune to diseases, gain resistance to poison damage, and can spend 1 minute using your gadget to cure any disease affecting yourself or another creature within 5 feet.\nAdditionally, when a creature succeeds on a saving throw against one of your disease effects, you can use your reaction to redirect the disease to another creature within 10 feet.",
+          "page": 187
+        },
+        {
+          "level": 10,
+          "name": "Epidemic Protocol",
+          "text": "Beginning at 10th level, you develop advanced techniques to deliver pathogens with precision through your technological creations. When you cast a single- target spell that requires an attack roll, you can expend one use of your Pathogen Injector to infuse the spell with an Injectable Disease from the Plague Engineer Disease Table. If the spell hits, they must also make a Constitution saving throw against your Creation Power save DC. On a failure, they suffer the Active Effect of the chosen disease for 1 minute. They can repeat the saving throw at the end of each of their turns, ending the effect on a success. The disease’s effects apply after the damage is dealt.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once), regaining all expended uses after a long rest.",
+          "page": 187
+        },
+        {
+          "level": 14,
+          "name": "Pandemic",
+          "text": "At 14th level, you become a true master of plaguecraft. As an action, choose a diseased creature within 60 feet. All creatures within 10 feet of that target must make a Constitution saving throw or suffer the same disease for 1 minute. They can repeat the saving throw at the end of each of their turns, ending the effect on a success.",
+          "page": 187
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.robotics",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Robotics",
+      "group": "Tinkerer Studies",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 188
+      },
+      "flavor": "Those who study robotics love to design automatons and robotic constructs or devices. These types of tinkerers can craft robots and mobile devices that aid them in simple tasks or combat.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Expanded Creation Power (Spell) List",
+          "text": "The Robotics subclass lets you choose from an expanded list of spells when you learn a tinkerer spell. The following spells are added to the tinkerer spell list for you.",
+          "page": 188,
+          "sections": [
+            {
+              "name": "Robotics Expanded Spells",
+              "text": "",
+              "page": 188,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Creation Power (Spell)"
+                    ],
+                    [
+                      "Level",
+                      "Creation Power (Spell)"
+                    ],
+                    [
+                      "1st",
+                      "Find Familiar"
+                    ],
+                    [
+                      "2nd",
+                      "Find Steed, Summon Beast"
+                    ],
+                    [
+                      "3rd",
+                      "Conjure Animals, Summon Fey"
+                    ],
+                    [
+                      "4th",
+                      "Find Greater Steed, Summon"
+                    ],
+                    [
+                      "Construct"
+                    ],
+                    [
+                      "5th",
+                      "Summon Celestial, Summon"
+                    ],
+                    [
+                      "Draconic Spirit"
+                    ],
+                    [
+                      "6th",
+                      "Conjure Fey"
+                    ],
+                    [
+                      "7th",
+                      "Conjure Celestial"
+                    ]
+                  ],
+                  "page": 188
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Machine Summoning",
+          "text": "Starting at 2nd Level, whenever you summon a creature using a Conjuration Creation Power (spell), it will appear as a machine or robot that you crafted. It will also be considered a Construct, but retain all other properties. The money and time you must spend to copy a Conjuration creation power into Your Gadget is halved.",
+          "page": 188
+        },
+        {
+          "level": 2,
+          "name": "Simple Robots",
+          "text": "At 2nd Level, you can use your action to quickly craft a short robot in your hand or on the ground in an unoccupied space that you can see within 5 feet of you. This robot counts as a tiny or small Construct and weighs no more than 10 pounds, and it can only be made of simple materials and metals. Its AC is equal to 8 + your Intelligence Modifier, and its HP is 1. It can function and move within 30 feet of you while you hold your Gadget. Once it leaves this radius, it will power down and become useless. It can walk, swim, or fly (pick one) at a speed of 30 feet while it is active, and carry up to half of its weight. As an action on your turn, you can tell it to perform a simple task such as retrieving an object nearby, opening a small door, or fitting through a tight space.\nAdditionally, you can instead create an inanimate contraption in your hand or on the ground in an unoccupied space that you can see within 5 feet of you. This object can be no larger than 3 feet on a side and weigh no more than 10 pounds, and its shape must be that of a simple object that you have seen. The object is electrically powered, radiating bright light in a 20-foot radius and dim light for an additional 20 feet if you use a bonus action to turn it on.\nThis robot or contraption falls apart and gets destroyed after 1 hour unless you spend an action to maintain it at the end of the hour. It will also be destroyed if it takes at least a point of damage, or if you make another robot or contraption.",
+          "page": 188
+        },
+        {
+          "level": 6,
+          "name": "Quantum Teleportation",
+          "text": "Starting at 6th level, you can use your action to teleport up to 30 feet to an unoccupied space that you can see. Alternatively, you can choose a space within range that is occupied by a robot, contraption, or Construct that you have created or summoned. You both teleport, swapping places.\nOnce you use this feature, you can’t use it again until you finish a Long Rest or you cast a Conjuration creation power (spell) of 1st level or higher.",
+          "page": 188,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Autopilot Controls",
+          "text": "Beginning at 10th level, while you are concentrating on a Conjuration creation power (spell), your Concentration can’t be broken as a result of taking damage.",
+          "page": 188
+        },
+        {
+          "level": 14,
+          "name": "Reinforced Exterior",
+          "text": "Starting at 14th level, any creature that you summon or create with a Conjuration creation power (spell) has 30 Temporary Hit Points.",
+          "page": 188
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.steamtech",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Steamtech",
+      "group": "Tinkerer Studies",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 188
+      },
+      "flavor": "Harnessing the raw power of steam and clockwork engineering, Steamtech inventors push the boundaries of technology. From rapid-firing weaponry to mechanized enhancements, you overwhelm enemies with an onslaught of gadgets, each powered by the hiss and hum of pressurized steam.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Pressure Gauge System",
+          "text": "Starting at 2nd level, you develop a system to harness Pressure Gauge Points (PGPs), a resource that fuels your steam-powered inventions. The amount of PGPs you have is based on your Tinkerer level, as shown in the Pressure Gauge Points Table below.",
+          "page": 188,
+          "sections": [
+            {
+              "name": "Pressure Gauge Points Table",
+              "text": "Your Steam Devices use up Steam Pressure Points to activate their effects. Each device can cast one signature spell, with the spell’s level determining the PGP cost. You regain all expended points when you finish a long rest.",
+              "page": 188,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Tinkerer Level",
+                      "Pressure Gauge Points"
+                    ],
+                    [
+                      "2nd",
+                      "5"
+                    ],
+                    [
+                      "6th",
+                      "10"
+                    ],
+                    [
+                      "10th",
+                      "15"
+                    ],
+                    [
+                      "14th",
+                      "20"
+                    ]
+                  ],
+                  "page": 188
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Steamtech Devices",
+          "text": "Also at 2nd level, you learn to construct steam-powered gadgets that function as mechanical extensions of your abilities. You can build two Steamtech Devices of your choice from the Steam Device Table that any creature can use. You may swap out your devices when you finish a long rest by spending at least 1 hour modifying your blueprints.\nEach device requires PGPs to function and has a signature spell associated with it. Device spells can be upcast by 1 spell level at 6th level, upcast by 2 spell levels at 10th level, and upcast by 3 spell levels at 14th level. Each upcast level increases the PGPs cost by +1. If the spell requires a saving throw, use your Tinkerer spell save DC.\nAll devices use points from the table as a shared collective instead of each device getting its own point total.",
+          "page": 189
+        },
+        {
+          "level": 6,
+          "name": "Overclock",
+          "text": "Starting at 6th level, your ability to maximize steam output allows you to push your devices beyond their limits. As a bonus action, you can increase the spell",
+          "page": 189,
+          "sections": [
+            {
+              "name": "Steamtech Device Table",
+              "text": "level of your devices signature spell by 2 if the spell can be upcast. After the spell is cast roll a d20, if you roll a 10 or lower the device overheats and inflicts an amount of automatic damage to you equal to the level the spell was cast x 4.\nAdditionally, you can now craft a third Steamtech Device.",
+              "page": 189
+            }
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Integrated Pressure Core",
+          "text": "Beginning at 10th level, you enhance your Steam Devices to become more energy-efficient. When you take a short rest, you regain 2 PGPs per hit dice you spend. If you spend hit dice this way you cannot regain hit points.\nAdditionally, you unlock the ability to create a fourth Steamtech Device.",
+          "page": 189
+        },
+        {
+          "level": 14,
+          "name": "Steam Conversion",
+          "text": "At 14th level, your mastery over Steam Pressure allows you to reroute energy instantly. When you roll initiative, you immediately regain 3 PGPs.\nAdditionally, you unlock the ability to create a fifth Steamtech Device.",
+          "page": 189,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Steamtech",
+                  "PGP"
+                ],
+                [
+                  "Device",
+                  "Description",
+                  "Cost"
+                ],
+                [
+                  "Gatling Gun As an action, cast the Magic Missile spell at 1st level from the device.",
+                  "1"
+                ],
+                [
+                  "Grappling",
+                  "As an action, cast the Lightning Lure cantrip on a target or surface from the device. If cast on a surface, you",
+                  "1"
+                ],
+                [
+                  "Hook",
+                  "pull yourself 15 ft. in the surface’s direction, ignoring opportunity attacks."
+                ],
+                [
+                  "Multiarm",
+                  "As an action, cast the Mage Hand cantrip from the device. While the mage hand is active, you can use a bonus",
+                  "1"
+                ],
+                [
+                  "Apparatus",
+                  "action to have the hand grant the help action."
+                ],
+                [
+                  "Pneumatic",
+                  "As an action, cast the Burning Hands spell at 1st level from the device.",
+                  "1"
+                ],
+                [
+                  "Gauntlet"
+                ],
+                [
+                  "Steam Shield As a reaction when you are hit by an attack or targeted by the Magic Missile spell, cast the Shield spell at 1st",
+                  "1"
+                ],
+                [
+                  "level."
+                ],
+                [
+                  "Steam Vent",
+                  "As an action, cast the Thunderwave spell at 1st level from the device.",
+                  "1"
+                ],
+                [
+                  "Boots"
+                ],
+                [
+                  "Rocket Spear As an action, cast the Aganazzar’s Scorcher spell at 2nd level from the device.",
+                  "2"
+                ],
+                [
+                  "Steam-Powered As an action, place the turret in unoccupied space within 5 ft. of you. As a reaction, cast the Gust of Wind spell",
+                  "2"
+                ],
+                [
+                  "Turret",
+                  "at 2nd level from the turrets location."
+                ],
+                [
+                  "Jetpack",
+                  "As an action, cast the Fly spell at 3rd level from the device.",
+                  "3"
+                ],
+                [
+                  "Pressure Mine",
+                  "As an action, place up to 3 mines in unoccupied space within 5 ft. of you. When a creature steps on this",
+                  "3"
+                ],
+                [
+                  "Dispenser",
+                  "device, cast the Fireball spell at 3rd level on the mines location. Once a mine uses its signature spell, the"
+                ],
+                [
+                  "device self destructs. You may only have 3 mine activate at a time."
+                ]
+              ],
+              "page": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.gardener",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Gardener",
+      "group": "Tinkerer Professions",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 190
+      },
+      "flavor": "Tinkerers who choose the Gardener profession specialize in cultivating Pop Greens.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Amateur Cultivator",
+          "text": "Starting when you choose this profession at 3rd level, you gain proficiency with the Herbalism Kit. If you already have this proficiency, you gain proficiency in Nature or Survival instead, and you gain a 3 Pop Green Husks. In addition, you gain the following benefits when creating Pop Greens:\nYou can maintain one Husk Plant even outside a warm or tropical climate, provided you spend at least 10 minutes caring for it each day.\nWhen you harvest Pop Seed Husks from a Husk Plant, you may add your Intelligence modifier to the Nature or Survival check.\nWhen a Husk Plant you care for successfully produces husks, it produces one additional Pop Seed Husks.\nWhen you create a Pop Green of a spell level you can cast, you reduce its crafting time and price by half. This reduction applies before using Miracle Fertilizer.",
+          "page": 190
+        },
+        {
+          "level": 8,
+          "name": "Experienced Botanist",
+          "text": "Starting at 8th level, whenever you use a Pop Green, you can choose for it to use your Creation save DC and Creation attack modifier instead of the normal Pop Green Spellcasting values. In addition, Pop Greens you create gain the following benefits while active:\nThe plant’s hit points increase by an amount equal to your Tinkerer level.\nThe plant’s AC increases by 2.\nThe plant has advantage on saving throws made to maintain concentration.\nWhen you plant a Pop Green, you can also choose a number of creatures up to your Intelligence modifier, minimum of one creature. The chosen creatures are ignored by the Pop Green’s spell effects if the spell would normally affect them, provided the spell does not have a range of Self.",
+          "page": 190
+        },
+        {
+          "level": 12,
+          "name": "Greenhouse Masterwork",
+          "text": "Starting at 12th level, when you finish a long rest, you can create one Lesser Pop Green without spending berries, materials, or a Pop Seed Husk. The Lesser Pop Green must store a spell from the Druid spell list of 3rd level or lower. It lasts until you finish your next long rest, after which it withers and becomes unusable. In addition, Pop Greens you create gain the following benefits:\nThe plant is no longer vulnerable to fire damage. The plant’s hit points become 10 × the stored spell’s level instead of 5 × the stored spell’s level.\nWhen a Pop Green you created is reduced to 0 hit points before its spell ends, you can use your reaction to force it to release a final bloom. The plant immediately repeats one damage roll, healing roll, or non-damaging spell effect from the stored spell against one valid target within the spell’s range, then withers.",
+          "page": 190
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.heavenly_technician",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Heavenly Technician",
+      "group": "Tinkerer Professions",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 190
+      },
+      "flavor": "Heavenly Technicians are Tinkerers who specialize in the shell-based technology of the Sky Islands.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Dial Engineer",
+          "text": "Starting when you pick this profession at 3rd level, you gain proficiency with Dials. Whenever you use a Dial or Dial Invention that you crafted, you may use your Creation save DC in place of any saving throw DC listed by the item, and your Creation attack modifier in place of any attack bonus listed by the item.\nYou can craft any Dial or Dial Invention as part of a long rest up to Rare rarity, provided you possess at least one seashell and an amount of money equal to the cost of the Dial or Dial Invention.",
+          "page": 190
+        },
+        {
+          "level": 8,
+          "name": "Refined Shellcraft",
+          "text": "Starting at 8th level, when one of your crafted Dials or Dial Inventions regains charges, it regains additional charges equal to your Intelligence modifier, up to its normal maximum, and your Dials or Dial Inventions damage die increases by an additional die.\nYou can craft any Dial or Dial Invention as part of a long rest up to Very Rare rarity.",
+          "page": 190
+        },
+        {
+          "level": 12,
+          "name": "Supreme Dial Innovation",
+          "text": "Starting at 12th level, whenever you finish crafting a Dial or Dial Invention, you may designate it as a Supreme Dial Innovation. You can maintain a number of Supreme Dial Innovations equal to your Intelligence modifier, minimum of one. If you designate another item beyond this limit, one existing Supreme Dial Innovation of your choice loses this benefit. Creatures that don’t have proficiency with dials may use your Dial Inventions without proficiency.\nA Supreme Dial Innovation that has charges increases its maximum number of charges by an amount equal to your proficiency bonus. Whenever it regains charges, it regains additional charges equal to your proficiency bonus.\nIn addition, your Dials or Dial Inventions damage die increases by an additional die.",
+          "page": 191
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.innovator",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Innovator",
+      "group": "Tinkerer Professions",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 191
+      },
+      "flavor": "Innovators are Tinkerers who reject the limits of conventional invention, pursuing technologies that seem impossibly advanced even by Grand Line standards.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Future Scientist",
+          "text": "Starting when you pick this profession at 3rd level, you gain proficiency with one other artisan’s tool of your choice.\nYou can craft any Future Gadget as part of a long rest, provided you possess an amount of money equal to the cost of the Future Gadget.",
+          "page": 191
+        },
+        {
+          "level": 8,
+          "name": "Optimized Technology",
+          "text": "Starting at 8th level, whenever you use a Future Gadget that you crafted, you may use your Creation save DC in place of any saving throw DC listed by the item, and your Creation attack modifier in place of any attack bonus listed by the item.\nIn addition, if a Future Gadget you crafted grants a numerical bonus to AC, attack rolls, damage rolls, ability checks, or saving throws, that bonus increases by 1. If the gadget has a number of charges, uses, or rounds of daily operation, that amount increases by an amount equal to your Intelligence modifier, minimum of one.",
+          "page": 191
+        },
+        {
+          "level": 12,
+          "name": "Scientific Masterpiece",
+          "text": "Starting at 12th level, whenever you finish crafting a Future Gadget, you may designate it as a Scientific Masterpiece. You can maintain a number of Scientific Masterpieces equal to your Intelligence modifier, minimum of one. If you designate another item beyond this limit, one existing Scientific Masterpiece of your choice loses this benefit.\nA Scientific Masterpiece is exceptionally efficient. If it has charges or limited uses, it regains one expended charge or use whenever you finish a short rest, up to its normal maximum. If it provides a movement speed, such as a flying, hovering, or increased walking speed, that speed increases by 15 feet. If it deals damage, you may add your Intelligence modifier to the damage roll.\nIn addition, when a Scientific Masterpiece you are using would become damaged, lose its benefits, or cease functioning due to an ordinary mechanical failure described in the item’s rules, you may ignore that failure once. Once an item ignores a failure in this way, it cannot do so again until you finish a long rest.",
+          "page": 191
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.meito_smith",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Meito Smith",
+      "group": "Tinkerer Professions",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 191
+      },
+      "flavor": "Meito Smiths are Tinkerers who devote themselves to the rarest and most revered form of craftsmanship: the forging of legendary weapons.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Master Smith",
+          "text": "Starting when you pick this profession at 3rd level, you become a Master Smith for the purpose of upgrading weapons into Grade Meitos. You can personally fulfill the Master Smith requirement of the Meito crafting process, allowing you to reforge or enhance weapons into Grade Meitos without seeking out another renowned smith.",
+          "page": 191
+        },
+        {
+          "level": 8,
+          "name": "Efficient Forging",
+          "text": "Starting at 8th level, whenever you upgrade a weapon into a Grade Meito, the cost of the enhancement is reduced by a fourth of the original cost.",
+          "page": 191
+        },
+        {
+          "level": 12,
+          "name": "Mastered Metallurgy",
+          "text": "Starting at 12th level, whenever you upgrade a weapon into a Grade Meito, the cost of the enhancement is reduced by half of the original cost instead of a fourth.",
+          "page": 191
+        }
+      ]
+    },
+    {
+      "id": "subclass.tinkerer.munition_expert",
+      "kind": "subclass",
+      "parent": "class.tinkerer",
+      "name": "Munition Expert",
+      "group": "Tinkerer Professions",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 192
+      },
+      "flavor": "Munition Experts are Tinkerers who practice crafting specialized projectiles, from elemental bullets to blinding shots.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Ammunition Specialist",
+          "text": "Starting when you pick this profession at 3rd level, you gain proficiency with smith’s tools or mason’s tools as well as proficiency with simple and martial ranged weapons.\nYou can craft Stars and Special Ammo without needing proficiency in Arcana or Sleight of Hand. In addition, when you craft special ammunition, you produce a number of identical projectiles equal to your proficiency bonus instead of only one, using the normal time and cost for a single projectile.",
+          "page": 192
+        },
+        {
+          "level": 8,
+          "name": "Enhanced Munitions",
+          "text": "Starting at 8th level, whenever a piece of special ammunition you crafted forces a creature to make a saving throw, you may use your Creation save DC in place of the ammunition’s listed saving throw DC.\nIn addition, damage caused by your ammunition increases by an amount equal to your Intelligence modifier.",
+          "page": 192
+        },
+        {
+          "level": 12,
+          "name": "Creation Cartridge",
+          "text": "Starting at 12th level, as part of a long rest, you may expend Tinkerer Creation Power spell slots to infuse up to 3 pieces of nonmagical ammunition with a Tinkerer Creation Power of 5th level or lower from your Blueprints. The chosen Creation Power must be of a level no higher than the expended slot, must have a casting time of 1 action or 1 bonus action, and cannot have a range of Self.\nYou can have no more than three pieces of ammunition infused by this feature at one time. If you attempt to infuse additional ammunition beyond this limit, one previously infused piece of ammunition of your choice immediately loses its stored Creation Power.\nWhen a piece of infused ammunition is fired, the stored Creation Power is released from the projectile’s point of impact, whether the attack hits or misses. If the Creation Power requires a saving throw, it uses your Creation save DC. If it requires an attack roll, it uses your Creation attack modifier.\nOnce the stored Creation Power is released, the ammunition is destroyed.",
+          "page": 192
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

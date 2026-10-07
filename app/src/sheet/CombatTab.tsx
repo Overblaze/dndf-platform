@@ -1,5 +1,6 @@
 import { gainTempHp, setToggle, setTracker, spendResource, activateFeature, type SheetFeature, type SheetResource } from '@dndf/engine';
 import { Pips } from '../components/Pips';
+import { RuleText } from '../components/RuleText';
 import { useRolls } from '../lib/rolls';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { formatStat } from './stats';
@@ -83,7 +84,7 @@ function FeatureAction({ feature, live }: { feature: SheetFeature; live: LiveCha
       </div>
       <details className="rule-text">
         <summary>Rules text</summary>
-        <p>{feature.text}</p>
+        <RuleText text={feature.text} sections={feature.sections} tables={feature.tables} />
       </details>
     </div>
   );
@@ -166,6 +167,20 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
           </div>
         ))}
       </section>
+
+      {sheet.classTable.length > 0 && (
+        <section className="card">
+          <h2>Class table</h2>
+          <div className="chips">
+            {sheet.classTable.map((column) => (
+              <span key={`${column.from}/${column.key}`} className="chip chip-lg">
+                {column.label} <strong className="num">{column.value}</strong>
+              </span>
+            ))}
+          </div>
+          <p className="page-ref">This level's row of the {[...new Set(sheet.classTable.map((c) => c.from))].join(' and ')} table.</p>
+        </section>
+      )}
 
       {pools.length > 0 && (
         <section className="card">

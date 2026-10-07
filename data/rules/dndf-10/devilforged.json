@@ -1,0 +1,942 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.devilforged",
+      "kind": "class",
+      "name": "Devilforged",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 113
+      },
+      "flavor": "The Devilforged are weapon masters who harness the mysterious powers of Devil Fruits through infused items, wielding incredible abilities that bend the forces of nature and magic to their will. By synthesizing the lineage factors of these fruits into their gear, Devilforged enhance their weapons with explosive elemental power, shaping their combat style through relentless experimentation. Their bound equipment becomes an extension of their very being, capable of great destruction, but always tied to the unique essence of the Sea Devil’s curse.",
+      "quote": "… SCIENCE WOULD NEVER PROGRESS IF YOU SPEND ALL DAYS WORRYING ABOUT STUFF LIKE THAT! --- Vegapunk Stella",
+      "hitDie": 8,
+      "savingThrows": [
+        "con",
+        "int"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor"
+        ],
+        "weapons": [
+          "simple",
+          "martial"
+        ],
+        "tools": [
+          "Smith’s tools",
+          "Tinker’s tools",
+          "one type of artisan tool of your choice"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "arcana",
+            "deception",
+            "history",
+            "intimidation",
+            "investigation",
+            "nature",
+            "religion"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a musket and 20 ammunition or (b) any simple weapon",
+        "a tool of your choice",
+        "(a) a dungeoneer’s pack or (b) an explorer’s pack Thick shirt, any simple weapon, and two daggers a Devil Forged Weapon (see Infuse Devil Fruit feature)"
+      ],
+      "progression": {
+        "columns": {
+          "maxInfusedWeapons": [
+            1,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5
+          ],
+          "maxArsenalModifications": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ]
+        }
+      },
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Devilsmith",
+        "level": 3,
+        "featureLevels": [
+          3,
+          6,
+          10,
+          14
+        ]
+      },
+      "subclassIntro": {
+        "text": "Devilforged have a variety of methods of infusing Devil Fruit powers into their equipment and items. However, whichever type of items you tend to infuse the most will determine your Devilsmith style.",
+        "page": 120
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Infuse Devil Fruit",
+          "text": "Starting when you take this class at 1st level, through a delicate process of Green Blood synthesis, you can seal the lineage factors of a Devil Fruit into a melee weapon, creating a Devil Fruit-infused weapon.\nDuring an 8-hour crafting process, which can be completed as part of a long rest, you can infuse one Devil Fruit into one nonmagical melee weapon. You must have access to both the Devil Fruit and the weapon for the full duration of the process. At the end of the process, the Devil Fruit is consumed and the melee weapon becomes infused with part of that fruit’s power.\nThe infused weapon retains its normal statistics and properties, but becomes a Devil Fruit-infused weapon of the same type and subtype as the fruit sealed within it. For example, a weapon infused with a Body Enhancer Paramecia becomes a Body Enhancer Paramecia-infused weapon.\nA Devil Fruit-infused weapon counts as magical for the purpose of overcoming resistance and immunity to nonmagical attacks. You cannot upgrade a Devil Fruit-infused weapon using the Meito upgrade system in Chapter 7: Expanded Armory.\nYou can maintain a number of Devil Fruit-infused weapons equal to the value shown in the Infused Weapons column of the Devilforged class table. At 1st level, you can maintain one infused weapon at a time. If you attempt to infuse a weapon or item beyond this limit, such as through subclass infusion features, you must choose one of your existing infused weapons to lose its infusion.\nIf a Devil Fruit-infused weapon is destroyed, if you willingly remove its infusion during an 8-hour crafting process, or if you die, the Devil Fruit sealed within the weapon reconstitutes in the nearest unoccupied space beside the item or your body, as appropriate.\nYou cannot add spirit surges into your infused devil fruit items.",
+          "page": 114,
+          "sections": [
+            {
+              "name": "Devil Fruit Infusion Charges",
+              "text": "Starting at 3rd level, you learn to draw out the spell-like powers sealed within your Devil Fruit-infused weapons. While wielding a Devil Fruit-infused weapon with the Fruit Conduit property, you can expend Devil Fruit Infusion Charges to cast a feature or spell from the infused Devil Fruit’s spell list.\nTo cast a spell or feature in this way, you must expend a number of Devil Fruit Infusion Charges equal to the spell’s level. You cannot cast a spell from an infused weapon unless you have enough charges to pay the spell’s full cost.\nIf a spell or feature you cast through an infused item requires a saving throw or spell attack roll, use your Devilforged save DC and Devilforged attack modifier.\nDevilforged save DC = 8 + your proficiency bonus + your Intelligence modifier\nDevilforged attack modifier = your proficiency bonus + your Intelligence modifier\nThe number of Devil Fruit Infusion Charges you have depends on the type of infused weapon you are wielding, as shown on the Devil Fruit Infusion Charges table. You regain all expended Devil Fruit Infusion Charges when you finish a short or long rest.\nYou use the charge pool of the infused weapon you are currently wielding. Expended charges are tied to you, not to an individual weapon. Switching weapons does not restore expended charges.",
+              "page": 114,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Character Level",
+                      "Paramecia Charges",
+                      "Logia Charges"
+                    ],
+                    [
+                      "3rd",
+                      "2",
+                      "3"
+                    ],
+                    [
+                      "5th",
+                      "3",
+                      "5"
+                    ],
+                    [
+                      "8th",
+                      "5",
+                      "7"
+                    ],
+                    [
+                      "12th",
+                      "7",
+                      "9"
+                    ],
+                    [
+                      "16th",
+                      "9",
+                      "11"
+                    ]
+                  ],
+                  "page": 114
+                }
+              ]
+            },
+            {
+              "name": "Zoan Fruit Rarity Limit",
+              "text": "The rarity of Zoan Devil Fruit you can safely bind into a weapon depends on your level in this class. If a Zoan Devil Fruit’s rarity is higher than the maximum shown for your level, you cannot infuse that fruit into a weapon.\nA weapon cannot be infused with more than one Devil Fruit at a time.",
+              "page": 114
+            },
+            {
+              "name": "Sea Weakness",
+              "text": "A Devil Fruit-infused weapon carries traces of the Sea Devil’s curse. While the weapon is more than half- submerged in standing water or in direct contact with seastone, it cannot grant you any benefits from your Devilforged class features, and you cannot activate any feature, technique, or spell through that weapon.",
+              "page": 114
+            },
+            {
+              "name": "Infusion Properties",
+              "text": "When you infuse a Devil Fruit into a weapon, the weapon gains the properties associated with that fruit’s type and subtype.\nA property that refers to the infused Devil Fruit’s stat sheet uses the version of the fruit sealed into the weapon. Unless a property says otherwise, you cannot choose a feature that is an Awakening, a feature that grants resistance or immunity to damage, or a feature that would be impossible to express through a weapon.\nWhen an infused weapon deals elemental damage, the damage type is chosen when the weapon is infused and should reflect the nature of the Devil Fruit, subject to the DM’s approval.",
+              "page": 114
+            },
+            {
+              "name": "Body Enhancer Paramecia Infusion",
+              "text": "Body Enhancer fruits grant physical augmentation powers that extend to the infused weapon.\nDamage Boost. Increase the weapon’s damage die by one size up to d12 (e.g., d6 to d8, d8 to d10). Enhanced Strikes. Add a +2 bonus to attack and damage rolls.\nFruit Effect. When you create the infusion, choose one non-Awakening feature from the infused Devil Fruit’s stat sheet, with the DM’s approval. The chosen feature becomes part of the weapon’s infusion and must be usable in a manner appropriate for an infused weapon. You cannot choose a feature that grants resistance or immunity to damage.",
+              "page": 115
+            },
+            {
+              "name": "Environment Altering Paramecia Infusion",
+              "text": "Environment Altering fruits affect the surroundings, enabling infused weapons to manipulate the battlefield.\nEnhanced Strikes. Add a +1 bonus to attack and damage rolls.\nFruit Effect. When you create the infusion, choose one non-Awakening feature from the infused Devil Fruit’s stat sheet, with the DM’s approval. The chosen feature becomes part of the weapon’s infusion and must be usable in a manner appropriate for an infused weapon. You cannot choose a feature that grants resistance or immunity to damage. Fruit Spells. This weapon can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, add a +1 bonus to spell attack rolls.",
+              "page": 115
+            },
+            {
+              "name": "Substance Generator Paramecia Infusion",
+              "text": "Substance Generator fruits create materials, which the infused weapon uses for offense or utility.\nEnhanced Strikes. Add a +1 bonus to attack and damage rolls.\nSubstance Generation. When you create the infusion, the weapon gains one of it’s non-awakening substance generation features from the fruit’s stat sheet. The substance comes out of the weapon. Fruit Spells. This weapon can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, add a +1 bonus to spell attack rolls.",
+              "page": 115
+            },
+            {
+              "name": "Special Paramecia Infusion",
+              "text": "Special Paramecia fruits grant unusual and versatile abilities to the infused weapon.\nSubstance Generation. When you create the infusion, the weapon gains one of it’s non-awakening substance generation features from the fruit’s stat sheet. The substance comes out of the weapon. Fruit Effect. When you create the infusion, choose one non-Awakening feature from the infused Devil Fruit’s stat sheet, with the DM’s approval. The chosen feature becomes part of the weapon’s infusion and must be usable in a manner appropriate for an infused weapon. You cannot choose a feature that grants resistance or immunity to damage. Fruit Spells. This weapon can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, add a +2 bonus to spell attack rolls.",
+              "page": 115
+            },
+            {
+              "name": "Zoan Infusion",
+              "text": "Zoan fruits channel animalistic traits into the infused weapon.\nDamage Boost. Increase the weapon’s damage die by one size up to d12 (e.g., d6 to d8, d8 to d10). Enhanced Strikes. Add a +2 bonus to attack and damage rolls.\nBeastial Morph. When you make an attack with the weapon, you can cause part of the Zoan beast to manifest from it. The weapon’s reach increases by 5 feet for that attack. Additionally, once per round when you make an attack with the weapon, you may use one of the beast form’s attacks in place of the weapon’s normal attack. This attack scales as normal in Zoan Rules.",
+              "page": 115
+            },
+            {
+              "name": "Gaseous Logia Infusion",
+              "text": "Gaseous Logia fruits allow the weapon to harness intangible elemental properties.\nElemental Damage. The weapon deals an additional 1d6 damage on a hit. The damage type should reflect the nature of the infused Devil Fruit.\nExtend Reach. When you make an attack with the weapon, its reach increases by 10 feet for that attack. Fruit Spells. This weapon can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, add a +2 bonus to spell attack rolls.",
+              "page": 115
+            },
+            {
+              "name": "Liquid Logia Infusion",
+              "text": "Liquid Logia fruits allow infused weapons to flow and express the unusual properties of their elemental substance.\nElemental Damage. The weapon deals an additional 1d6 damage on a hit. The damage type should reflect the nature of the infused Devil Fruit.\nFruit Effect. When you create the infusion, choose one non-Awakening feature from the infused Devil Fruit’s stat sheet, with the DM’s approval. The chosen feature becomes part of the weapon’s infusion and must be usable in a manner appropriate for an infused weapon. You cannot choose a feature that grants resistance or immunity to damage. Fruit Spells. This weapon can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, add a +2 bonus to spell attack rolls.",
+              "page": 116
+            },
+            {
+              "name": "Solid Logia Infusion",
+              "text": "Solid Logia fruits grant infused weapons durable elemental force and the ability to erupt into splinters.\nElemental Damage. The weapon deals an additional 1d6 damage on a hit. The damage type should reflect the nature of the infused Devil Fruit.\nShattering Impact. Once on each of your turns when you hit a creature with the weapon, you can cause fragments of the Logia element to erupt from the point of impact. Each creature of your choice within 5 feet of the target takes 1d6 damage of the weapon’s elemental damage type.\nFruit Spells. This weapon can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, add a +2 bonus to spell attack rolls.",
+              "page": 116
+            },
+            {
+              "name": "Special Logia Infusion",
+              "text": "Special Logia fruits allow the weapon to harness darkness related elemental properties.\nElemental Damage. The weapon deals an additional 1d6 damage on a hit. The damage type should reflect the nature of the infused Devil Fruit.\nFruit Effect. When you create the infusion, choose one non-Awakening feature from the infused Devil Fruit’s stat sheet, with the DM’s approval. The chosen feature becomes part of the weapon’s infusion and must be usable in a manner appropriate for an infused weapon. You cannot choose a feature that grants resistance or immunity to damage. Fruit Spells. This weapon can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, add a +2 bonus to spell attack rolls.",
+              "page": 116
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Infused Arsenal",
+          "text": "At 1st level, your fighting style shifts according to the Devil Fruit power bound into the weapon you wield. While you are wielding a Devil Fruit-infused weapon, you gain the following benefits based on the type of fruit sealed within it.",
+          "page": 116,
+          "sections": [
+            {
+              "name": "Zoan Armament",
+              "text": "While you wield a Zoan-infused weapon, the creature sealed within it guides your strikes.\nYou can use Intelligence, instead of Strength or Dexterity, for the attack and damage rolls of that weapon.\nOnce on each of your turns when you hit a creature with that weapon, you deal additional damage equal to your Intelligence modifier. The damage is of the weapon’s type.",
+              "page": 116
+            },
+            {
+              "name": "Paramecia Armament",
+              "text": "While you wield a Paramecia-infused weapon, its properties transform your attacks.\nYou can use Intelligence, instead of Strength or Dexterity, for the attack and damage rolls of that weapon.\nOnce on each of your turns, when you use a feature granted by that weapon’s Infusion Properties that normally requires an action, you can use that feature as a bonus action instead. Once you use a feature in this way, you cannot use that same feature again until the start of your next turn. You can use this feature a number of times equal to your proficiency bonus per long rest.",
+              "page": 116
+            },
+            {
+              "name": "Logia Armament",
+              "text": "While you wield a Logia-infused weapon, you can discharge elemental attacks better through it.\nWhen you cast a spell that has a range of 5 feet or greater, you can increase the range of the spell by half of the original range.\nWhen you make a devil fruit spell attack against a creature, the target takes an one additional die of the spell’s damage. the spell gains another additional damage die when you reach 11th level in this class.",
+              "page": 116
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Devil Swap",
+          "text": "Beginning at 2nd level, you can quickly shift between your infused weapons in the middle of battle. Once on each of your turns, you can stow one Devil Fruit infused weapon and draw one other Devil Fruit infused weapon you created as part of the same object interaction.\nIn addition, if you are wielding more than one Devil Fruit infused weapon, you choose which one is your active infused weapon at the start of each of your turns. Only your active infused weapon grants you the benefits of your Devilforged class features.\nAdditionally, when you roll initiative, you can draw one Devil Fruit-infused weapon you created, provided the weapon is on your person and you are not incapacitated.",
+          "page": 117
+        },
+        {
+          "level": 2,
+          "name": "Field Calibration",
+          "text": "Also at 2nd level, you learn to make quick adjustments to your Devil Fruit-infused weapons, altering how their Green Blood channels through the item. When you finish a short or long rest, choose one Devil Fruit- infused weapon you created and apply one of the following calibrations to it. The calibration only applies to the weapon while you are wielding it and lasts until you use this feature again.\nReinforce Calibration. The first time each turn you deal damage with the weapon, you gain temporary hit points equal to your proficiency bonus. Aggression Calibration. Once on each of your turns when you deal damage with the weapon, you can deal additional damage equal to your proficiency bonus. The damage type is the same as the weapon’s damage, or the weapon’s elemental damage if it has one.\nControl Calibration. When you make an attack roll with the weapon, you can add +1 to the roll. Conduction Calibration. Once per turn when you activate a feature or spell through the weapon that forces a creature to make a saving throw, you can give one target of that effect a penalty to its first saving throw against the effect equal to half your proficiency bonus, rounded down.",
+          "page": 117
+        },
+        {
+          "level": 3,
+          "name": "Devilsmith",
+          "text": "At 3rd level, you have developed a particular style of devilsmithing which determines the types of equipment or items you specialize at infusing with. You can choose between Bestial Klabautermann, Devil Blade, Devil Bulwark, Devil Gunner, Mechadevil, or No Mi Trainer, all detailed at the end of the class description. Your choice grants you features at 3rd level and again at 6th, 10th, and 14th level.",
+          "page": 117,
+          "grantsSubclass": true
+        },
+        {
+          "level": 3,
+          "name": "Green Blood Infusion",
+          "text": "At 3rd level, you learn to draw greater power from a Devil Fruit-infused weapon while it is in your hands. While you are wielding a Devil Fruit-infused weapon you created, you gain an additional benefit based on the type of Devil Fruit sealed within it.",
+          "page": 117,
+          "sections": [
+            {
+              "name": "Paramecia Infusion",
+              "text": "While your active infused weapon is a Paramecia- infused weapon, you can access one additional feature from the infused Devil Fruit. Choose one additional non- Awakening feature from the infused Devil Fruit’s stat sheet, with the DM’s approval. While you wield the weapon, you can use the chosen feature as though it were one of the weapon’s Infusion Properties.\nThe chosen feature must be usable in a manner appropriate for an infused weapon. You cannot choose a feature that grants resistance or immunity to damage.\nIf no existing feature from the Devil Fruit’s stat sheet fits the weapon’s infusion, you may create a new feature with your DM’s approval. A feature created this way should reflect the fruit’s theme, should be similar in power to the fruit’s existing non-Awakening features, and should not replicate an Awakening.\nYou can learn another paramecia devil fruit feature from this infusion at 11th level.",
+              "page": 117
+            },
+            {
+              "name": "Zoan Infusion",
+              "text": "While your active infused weapon is a Zoan-infused weapon, you can release the beast sealed inside it.\nAs a bonus action while holding the weapon, you can cause it to transform into the beast form of the infused Zoan fruit, using the Zoan rules as your guide. The creature retains visual elements of the weapon’s original appearance.\nThe infused beast acts on its own turn immediately after yours. It has the appropriate statistics, Intelligence, and instincts of its beast form, but obeys the commands of the creature it recognizes as its wielder. Any non- elemental damage it deals uses the infused weapon’s damage type, and it gains the infused weapon’s basic weapon attack as an additional action option.\nThe beast can transform back into its weapon form as a bonus action on its turn. It also returns to weapon form if it is reduced to 0 hit points, if it moves more than 60 feet away from you, or if you use a bonus action to recall it while it is within 60 feet of you. When recalled this way, it returns to your hand, provided you have a free hand.\nYou can only use this feature once per long rest. You also cannot wield this weapon while it is transformed.",
+              "page": 117
+            },
+            {
+              "name": "Logia Infusion",
+              "text": "While your active infused weapon is a Logia infused weapon, you can cast a selection of spells through the elemental lineage sealed within it. You learn two cantrips from the infused Devil Fruit’s spell list. You learn additional cantrips and spells from the infused Devil Fruit’s spell list, as shown on the table below. These spells count as Logia Spells for the weapon. While you wield the weapon, you can cast its Logia Spells by expending Devil Fruit Infusion Charges, as described by your Devil Fruit Infusion Charges feature.",
+              "page": 118,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devilforged",
+                      "Additional",
+                      "Additional Logia",
+                      "Maximum"
+                    ],
+                    [
+                      "Level",
+                      "Cantrip Total",
+                      "Spell Total",
+                      "Spell Level"
+                    ],
+                    [
+                      "3rd",
+                      "2",
+                      "1",
+                      "1st"
+                    ],
+                    [
+                      "5th",
+                      "2",
+                      "2",
+                      "2nd"
+                    ],
+                    [
+                      "7th",
+                      "2",
+                      "3",
+                      "3rd"
+                    ],
+                    [
+                      "9th",
+                      "2",
+                      "4",
+                      "4th"
+                    ],
+                    [
+                      "11th",
+                      "3",
+                      "5",
+                      "5th"
+                    ],
+                    [
+                      "17th",
+                      "4",
+                      "6",
+                      "5th"
+                    ]
+                  ],
+                  "page": 118
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.\nAdditionally, when you reach a level in this class that grants the Ability Score Improvement feature, you can replace one cantrip you learned from this class with another cantrip from the devilforged spell list.",
+          "page": 118,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "Beginning at 5th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn. Moreover, you can cast one of your cantrips in place of one of those attacks.",
+          "page": 118
+        },
+        {
+          "level": 6,
+          "name": "Arsenal Modifications",
+          "text": "At 6th level, you learn to refine the Green Blood channels within your infused weapons, allowing them to express specialized adaptations. Each weapon you infuse gains one Arsenal Modification Point. When you finish a long rest, you can spend each weapon’s Arsenal Modification Points to install Arsenal Modifications into that weapon. An Arsenal Modification applies only to the weapon it is installed in and only activated while you are wielding the weapon. You may only gain one of each Modification per weapon.\nIf an infused weapon loses its infusion, its Arsenal Modifications are removed. If you later infuse that weapon again, you can install Arsenal Modifications into it as normal when you finish a long rest.\nAt level 11, each weapon you infuse gains 2 Arsenal Modification Points instead. At level 14, the Arsenal Modification Points gained are instead 3.",
+          "page": 118,
+          "sections": [
+            {
+              "name": "Accuracy Modification",
+              "text": "Prerequisites: Paramecia or Zoan Infused Weapon This weapon gains a +1 bonus to attack and damage rolls.",
+              "page": 118
+            },
+            {
+              "name": "Amplification Modification",
+              "text": "Prerequisites: Logia Infused Weapon When you cast a spell through this weapon, you can add your Intelligence modifier to one damage roll of that spell.",
+              "page": 118
+            },
+            {
+              "name": "Barrier Modification",
+              "text": "Prerequisites: Logia Infused Weapon When you cast a spell through this weapon, you gain temporary hit points equal to your Intelligence modifier + your proficiency bonus. These temporary hit points last until the start of your next turn.",
+              "page": 118
+            },
+            {
+              "name": "Defense Modification",
+              "text": "Prerequisites: Paramecia Infused Weapon When you use your Paramecia Armament to use a Devil Fruit feature as a bonus action, you gain a +2 bonus to your AC until the start of your next turn.",
+              "page": 118
+            },
+            {
+              "name": "Efficiency Modification",
+              "text": "Prerequisites: Logia Infused Weapon Once per turn, when you cast a spell through this weapon by expending Devil Fruit Infusion Charges, you can reduce the spell’s charge cost by 1, to a minimum cost of 1 charge.",
+              "page": 118
+            },
+            {
+              "name": "Evolution Modification",
+              "text": "Prerequisites: Zoan Infused Weapon The rarity of the Zoan devil fruit inside of your weapon increases by one step for the purpose of determining the beast form, features, statistics, and other benefits granted by the infused Zoan fruit.\n2",
+              "page": 118
+            },
+            {
+              "name": "Evolution Modification",
+              "text": "Prerequisites: Evolution Modification and a Zoan Infused Weapon The rarity of the Zoan devil fruit inside of your weapon increases by one step for the purpose of determining the beast form, features, statistics, and other benefits granted by the infused Zoan fruit.",
+              "page": 118
+            },
+            {
+              "name": "Material Modification",
+              "text": "Prerequisites: Zoan Infused Weapon The weapon’s damage die increases by one size, to a maximum of a d12. For example, a d6 damage die becomes a d8, and a d8 damage die becomes a d10.\nIf the weapon already has a d12 damage die, you instead gain a +2 bonus to damage rolls made with it.",
+              "page": 118
+            },
+            {
+              "name": "Range Modification",
+              "text": "Prerequisites: Paramecia or Logia Infused Weapon When you use a feature or spell granted by this weapon’s Infusion Properties, increase the range of that feature or spell by 10 feet. If the feature or spell affects an area, you can instead increase the radius, cone, or line by 5 feet.",
+              "page": 119
+            },
+            {
+              "name": "Speed Modification",
+              "text": "Prerequisites: Paramecia Infused Weapon When you use your Paramecia Armament to use a Devil Fruit feature as a bonus action, you can move up to 10 feet after using the feature. This movement does not provoke opportunity attacks.",
+              "page": 119
+            },
+            {
+              "name": "Stabilization Modification",
+              "text": "Prerequisites: Paramecia or Logia Infused Weapon When you cast a devil fruit spell through this weapon, its spell attack roll and spell DC increases by +1.",
+              "page": 119
+            },
+            {
+              "name": "Strength Modification",
+              "text": "Prerequisites: Paramecia or Zoan Infused Weapon Once on each of your turns when you hit a creature with this weapon, you can cause the attack to deal additional damage equal to your proficiency bonus.",
+              "page": 119
+            }
+          ]
+        },
+        {
+          "level": 12,
+          "name": "Lineage Imitation",
+          "text": "At 12th level, you learn to briefly replicate Devil Fruit techniques by analyzing their lineage expression.\nWhen a creature you can see other than yourself within 60 feet of you uses a Devil Fruit feature, you can use your reaction to copy the structure of that feature, provided you are wielding a Devil Fruit-infused weapon of the same type as the feature’s source fruit: Zoan, Paramecia, or Logia.\nThe copied feature is stored in your active infused weapon until the end of your next turn. While it is stored, you can use the copied feature once, requiring the same action, bonus action, or reaction that the original feature required. If the copied feature requires a saving throw or attack roll, it uses your Devilforged save DC or Devilforged attack modifier.\nWhen you use the copied feature, apply the following changes:\nAny damage dealt by the copied feature is halved. Any range of the copied feature is halved.\nIf the feature creates an area of effect, halve each of the area’s dimensions.\nIf the feature has a duration longer than 1 minute, its duration becomes 1 minute.\nIf the feature has limited uses, special resources, or a cost, you do not pay that cost, but you cannot copy a feature that consumes a permanent resource or requires the user to sacrifice a Devil Fruit, body part, soul, or other irreplaceable component.\nYou cannot copy an Awakening, transformation, passive trait, resistance, immunity, Legendary action, lair action, regional effect, or feature granted by another infused weapon.\nOnce you successfully copy a devil fruit feature with this feature, you cannot do so again until you finish a short or long rest.",
+          "page": 119
+        },
+        {
+          "level": 14,
+          "name": "Devil Duplication",
+          "text": "At 14th level, you learn to create duplicate devil fruits. Pick a devil fruit from the devil fruit generation table, you can spend ฿100,000,000 and 1 week of uninterrupted work to create a duplicate of that fruit.\nWhen you finish your duplication, pick 3 mishaps of your choice from the correct list below to infuse into the devil fruit and 1 cosmetic change of your choice (your zoan forms are pink, your lighting is green, ect).\nAt 18th level you only need to pick 2 mishaps.",
+          "page": 119,
+          "sections": [
+            {
+              "name": "Paramecia Duplication Mishaps",
+              "text": "The amount of charges this devil fruit has is reduced by half (rounded up).\nThis devil fruit loses any resistances and immunities to damage types and gains vulnerability to a damage type (DMs choice).\nThis devil fruit loses its spell list.\nYou cannot awaken this fruit.",
+              "page": 119
+            },
+            {
+              "name": "Zoan Duplication Mishaps",
+              "text": "The devil fruits rarity is uncommon.\nBeast Forms hit points are reduced by half (rounded up).\nHybrid Forms temporary ability score boosts cannot exceed 20.\nWhen this fruit awakens you may only choose the Cursed Awakening.",
+              "page": 119
+            },
+            {
+              "name": "Logia Duplication Mishaps",
+              "text": "The amount of charges this devil fruit has is reduced by half (rounded up).\nYou may only stay in your elemental form for 1 minute.\nStats gained from Elemental Form are halved (rouned up).\nYou cannot awaken this fruit.",
+              "page": 119
+            }
+          ]
+        },
+        {
+          "level": 20,
+          "name": "Devil’s Bounty",
+          "text": "At 20th level, by spending 1 uninterrupted minute focusing on a Devil Fruit-infused weapon you created, you regain all expended Paramecia Infusion and Logia Infusion Charges.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+          "page": 119,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.bestial_klabautermann",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Bestial Klabautermann",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 120
+      },
+      "flavor": "Bestial Klabautermann is a vessel bound with a Zoan type devil fruits, transforming ships into living beasts capable of walking across land and fighting alongside their crew.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Bestial Infusion",
+          "text": "When you choose this Devilsmith at 3rd level, you gain proficiency with carpenter’s tools and vehicles (water).\nIn addition, you can use your Infuse Devil Fruit feature to infuse one ship with a Zoan Devil Fruit. A vessel infused this way is called a Zoan Vessel.\nYour Zoan Vessel has the following properties:\nThe Zoan Vessel does not benefit from your base Devilforged class features unless a feature specifically states otherwise.\nOnly you can use the vessel’s Infusion Properties, activate features through it, or command its Zoan abilities unless a feature states otherwise.\nThe vessel gains a walking speed of 25 feet. The form this movement takes should reflect the Zoan fruit sealed within it, such as legs, claws, hooves, fins, wings used as limbs, or a serpentine body. The vessel can carry creatures and cargo as normal while walking, but it must have enough open space to move.\nThe vessel gains one natural attack appropriate to its Zoan form, such as a bite, claw, horn, tail, stomp, or ram. As an action while aboard the vessel, you can command it to make this attack against one target within 10 feet of the vessel. This attack scales as normal using the Zoan rules.\nThe vessel can move on land or make its natural attack only while you are aboard it.\nA Zoan Vessel counts as a Devil Fruit-infused item and counts against your maximum number of Devil Fruit infusions. You can maintain only one Zoan Vessel at a time. If you infuse a new vessel, the previous Zoan Vessel loses its infusion.\nIf your Zoan Vessel is reduced to 25 or less hit points, touches any amount of seastone, or is completely submerged, it loses its walking speed and attacks. If you willingly remove its infusion during an 8-hour crafting process, or if you die, the Zoan Devil Fruit sealed within the vessel reconstitutes in the nearest unoccupied space inside the vessel’s hull.",
+          "page": 120
+        },
+        {
+          "level": 3,
+          "name": "Figurehead Form",
+          "text": "At 3rd level, as an action while touching your Zoan Vessel, you can cause it to transform into its Figurehead Form. While in this form, the vessel becomes a Tiny chibi creature that resembles a living version of the ship’s figurehead, mast, sail emblem, or another iconic part of the vessel, mixed with traits from the Zoan fruit sealed within it.\nWhile in Figurehead Form, the vessel has the statistics of a harmless Tiny creature with the following changes:\nIts AC equals your Devilforged save DC.\nIts hit points equal twice your Devilforged level. It has a walking speed of 30 feet.\nIt has no attacks.\nIt can understand your commands and obeys you to the best of its ability.\nIt can speak only one word of your choice, chosen when it enters Figurehead Form.\nThe Figurehead Form can carry only what a Tiny creature could reasonably carry. Any creatures, cargo, mounted weapons, or objects aboard the ship when it transforms are safely merged into the Figurehead Form’s body and cannot be accessed until the vessel returns to ship form.\nAs an action while the Figurehead Form is within earshot of you, you can command it to return to its ship form in the nearest unoccupied space large enough to contain the vessel. The transformation fails if there is not enough space for the ship to appear.\nWhile in Figurehead Form, the vessel cannot use its walking speed from Bestial Hull, natural attack, ship equipment, mounted weapons, or vehicle statistics. If the Figurehead Form is reduced to 0 hit points, it immediately attempts to return to ship form in the nearest unoccupied space large enough to contain it. If no such space exists, it remains in Figurehead Form and is incapacitated until repaired.",
+          "page": 120,
+          "action": "action",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Vessel Maneuvers",
+          "text": "Starting at 6th level, while you are aboard your Zoan Vessel, you can use an action to command it to perform one of the following maneuvers. If a maneuver requires a saving throw, it uses your Devilforged save DC.\nRam. The vessel moves up to half its walking speed in a straight line and makes one natural attack against a creature or object at the end of that movement. On a hit, the attack deals two additional damage dice.\nTrample. The vessel moves up to half its walking speed in a straight line. Each creature of your choice in the vessel’s path must make a Dexterity saving throw. On a failed save, a creature takes damage equal to the vessel’s natural attack damage and is knocked prone. On a successful save, it takes half as much damage and is not knocked prone.\nGuard. The vessel braces itself, raising protective barriers. Until the start of your next turn, creatures of your choice aboard the vessel gain half cover.",
+          "page": 121
+        },
+        {
+          "level": 10,
+          "name": "Hybrid Hull Form",
+          "text": "Starting at 10th level, as an action while aboard your Zoan Vessel, you can cause it to enter its Hybrid Hull form for 1 minute. While in this form, the vessel gains the following benefits:\nIts walking speed increases to 50 feet.\nIt gains temporary hit points equal to five times your Devilforged level.\nIts natural attack deals one additional damage die. It ignores nonmagical difficult terrain while moving on land.\nCreatures of your choice aboard the vessel have advantage on saving throws against being knocked prone or forcibly moved.\nThe transformation ends early if the vessel is reduced to 0 hit points, if you are no longer aboard it, or if you dismiss it as a bonus action.\nOnce you use this feature, you cannot use it again until you finish a long rest.",
+          "page": 121,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "action": "action",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Siege Vessel",
+          "text": "When you reach 14th level, your Zoan Vessel’s natural attacks deal double damage to objects and structures. In addition, when your vessel hits a Gargantuan or smaller creature, vehicle, or object with its natural attack, you can force the target to make a Strength saving throw against your Devilforged save DC. On a failed save, the target is pushed up to 20 feet away from the vessel and knocked prone if it is a creature.",
+          "page": 121
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.devil_blade",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Devil Blade",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 121
+      },
+      "flavor": "Devil Blades are Devilforged who compress two Devil Fruit lineages into a single melee weapon. Their Twin Devil Blades are unstable but volatile weapons.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Twin Devil Blade",
+          "text": "When you choose this Devilsmith at 3rd level, when you infuse a melee weapon using your Infuse Devil Fruit feature, you can infuse that weapon with up to two Devil Fruits instead of one. A weapon infused this way is called a Twin Devil Blade.\nA single Twin Devil Blade counts as two Devil Fruit- infused weapons against your maximum number of infused weapons. The weapon gains the Infusion Properties of both infused Devil Fruits.\nWhile wielding your Twin Devil Blade, you can use Devilforged features through either fruit sealed within the weapon. If a feature requires your active infused weapon to be a specific Devil Fruit type, the Twin Devil Blade qualifies if at least one of its sealed fruits is of that type.\nHowever, a Twin Devil Blade gains only the normal number of Arsenal Modification Points for one infused weapon, and an Arsenal Modification installed in it applies only once, even if both fruits would qualify for it.\nIf your Twin Devil Blade is destroyed, if you willingly remove its infusion, or if you die, both Devil Fruits sealed within the weapon reconstitute as normal.",
+          "page": 121
+        },
+        {
+          "level": 3,
+          "name": "Hell’s Duelist",
+          "text": "Also at 3rd level, you gain proficiency with medium armor and shields.\nIn addition, while you are wielding a melee weapon infused with at least one Devil Fruit, you gain a +1 bonus to your AC.",
+          "page": 121
+        },
+        {
+          "level": 6,
+          "name": "Dual Lineage Strike",
+          "text": "At 6th level, once on each of your turns when you hit a creature with your Twin Devil Blade, you can cause the attack to express both fruits at once. Choose one of the following effects:\nSplit Impact. The attack deals additional damage equal to your Intelligence modifier. The damage type should reflect one of the Devil Fruits sealed within the weapon, subject to the DM’s approval.\nHybrid Effect. You apply one effect from one fruit sealed in the weapon, then deal additional damage equal to your proficiency bonus using the damage type or weapon damage type of the other fruit. Crossed Conduit. If one of the weapon’s sealed fruits has the Fruit Conduit property, you can cast one cantrip from that fruit’s spell list in place of one attack when you take the Attack action.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a short or long rest.",
+          "page": 121,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Volatile Fusion",
+          "text": "At 10th level, when you use a feature, technique, or spell through one of the Devil Fruits sealed within your Twin Devil Blade, you can empower it with the other fruit sealed in the weapon. Choose one of the following benefits:\nExpanded Fusion. If the effect has a range of 5 feet or greater, increase its range by 10 feet. If it affects an area, you can instead increase one dimension of that area by 5 feet.\nPunishing Fusion. One creature damaged by the effect takes additional damage equal to your Devilforged level. The damage type should reflect the second fruit sealed within the weapon.\nDisruptive Fusion. One creature forced to make a saving throw against the effect takes a penalty to its first saving throw against the effect equal to half your proficiency bonus, rounded down.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a short or long rest.",
+          "page": 122,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Masterwork Twin Devil Blade",
+          "text": "At 14th level, your Twin Devil Blade gains the following benefits:\nWhen you roll initiative and have no uses of Dual Lineage Strike remaining, you regain one expended use.\nOnce on each of your turns when you hit a creature with the weapon, you can change the damage type of the weapon’s bonus damage from one of your Devilforged features to a damage type appropriate to either Devil Fruit sealed within it.",
+          "page": 122
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.devil_bulwark",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Devil Bulwark",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 122
+      },
+      "flavor": "Devil Bulwarks are defensive Devilforged who bind Zoan and Logia powers into shields. They stand at the center of battle, turning their infused shield into an unbreakable line between their crew and the dangers of the grand line.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Shield Infusion",
+          "text": "When you choose this Devilsmith at 3rd level, gain proficiency with shields. You can infuse shields with devil fruits.\nWhen you infuse a Devil Fruit into a shield through this Devilsmith, the shield gains the properties associated with the fruit’s type below. A Devil Fruit- infused shield can only contain a Zoan or Logia Devil Fruit.\nA shield infused this way counts as a Devil Fruit- infused item. When a Devilforged feature refers to a Devil Fruit-infused weapon you created, you can treat your Devil Fruit-infused shield as a Devil Fruit-infused weapon for the purpose of that feature.",
+          "page": 122,
+          "sections": [
+            {
+              "name": "Zoan Infusion",
+              "text": "Beast Shield. While wielding this shield and no other weapon, you can use the shield as a melee weapon. You can attack with this shield only once on each of your turns, choosing one attack from the infused Zoan’s beast form. This attack scales as normal using the Zoan rules.\nEnhanced Guard. The shield gains a +2 bonus to attack and damage rolls made with its Beast Shield attack.\nBestial Counter. When a creature you can see misses you with a melee attack while you are wielding this shield, you can use your reaction to cause the beast within the shield to attack. Make one Beast Shield attack against the triggering creature.",
+              "page": 122
+            },
+            {
+              "name": "Logia Infusion",
+              "text": "Elemental Blast. While wielding this shield, you can use your action to make a ranged Devilforged attack against one creature you can see within 60 feet of you. On a hit, the target takes 1d10 damage. The damage type should reflect the element of the infused Logia fruit, subject to the DM’s approval. This damage increases as you gain levels in this class, becoming 2d10 at 5th level, 3d10 at 11th level, and 4d10 at 17th level.\nDeflecting Barrier. When you or an allied creature benefiting from this shield’s cover is hit by an attack, you can use your reaction to reinforce the barrier around the target. The target gains a bonus to its AC against the triggering attack equal to your Intelligence modifier, potentially causing the attack to miss.\nFruit Spells. This shield can serve as a conduit for spells granted by the infused Devil Fruit, as described in your Devilforged features. Additionally, you gain a +2 bonus to spell attack rolls made through this shield.",
+              "page": 122
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Bulwark Stance",
+          "text": "At 3rd level, as a bonus action while wielding your Devil Fruit-infused shield, you can expand it for 1 minute. While expanded, the shield becomes oversized and grants the following benefits:\nYou gain three-quarters cover.\nAllied creatures of your choice within 5 ft. of you gain half cover.\nYour speed is reduced by 10 feet.\nYou cannot wield any weapons while the shield is expanded.\nThe expanded shield ends early if you are incapacitated, if you drop the shield, or if you dismiss it as a bonus action.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.",
+          "page": 122,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "action": "bonus",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Defenders Leap",
+          "text": "Starting at 6th level, while you are wielding a Devil Fruit-infused shield you created, the AC bonus granted by that shield increases by 1. This bonus increases as you gain levels in this class, becoming +2 at 10th level and +3 at 14th level.\nIn addition, when an allied creature you can see within 15 ft. of you is targeted by an attack, you can use your reaction to leap up to 15 ft. toward that creature without provoking opportunity attacks. If this movement brings you within 5 ft. of the allied creature, you become the target of the attack instead.",
+          "page": 123
+        },
+        {
+          "level": 10,
+          "name": "Improved Bulwark Stance",
+          "text": "Starting at 10th level, while your Expanding Bulwark is active, its benefits improve, replacing the feature with the following:\nYou gain three-quarters cover.\nAllied creatures of your choice within 10 ft. of you gain half cover.\nGain an amount of temporary hit points equal to double your devilforged level.\nYou cannot wield any weapons while the shield is expanded.",
+          "page": 123
+        },
+        {
+          "level": 14,
+          "name": "Unbreakable",
+          "text": "When you reach 14th level, when an allied creature within 5 ft. of you is targeted by a ranged attack or spell, you can choose to become the target instead, provided you are also within the attack or the spells range. When you take damage from the attack or spell, you take only half damage.",
+          "page": 123
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.devil_gunner",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Devil Gunner",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 123
+      },
+      "flavor": "Devil Gunners alter each shot through specialized Green Blood configurations, from sniping, launching explosive blasts, draining vitality, freezing targets in place, to guiding shots.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Ranged Infusion Mastery",
+          "text": "When you choose this Devilsmith at 3rd level, you gain proficiency with simple and martial ranged weapons.\nIn addition, you can use your Infuse Devil Fruit feature to infuse ranged weapons. A ranged weapon infused this way follows all normal rules for your Devil Fruit-infused weapons.",
+          "page": 123
+        },
+        {
+          "level": 3,
+          "name": "Range Configurations",
+          "text": "Also at 3rd level, whenever you create a Devil Fruit- infused ranged weapon, you can install one Range Configuration into it. The configuration can be used only by you while you are wielding the weapon.\nEach Devil Fruit-infused ranged weapon can have only one Range Configuration installed at a time, and you cannot choose the same configuration for more than one of your infused ranged weapons.\nWhen a configuration forces a creature to make a saving throw, it uses your Devilforged save DC.\nSniper Configuration. The weapon’s normal range and long range are doubled.\nBlast Configuration. When you hit a target with the weapon, you can cause the attack to explode outward from the point of impact. Instead of dealing damage only to the target, the attack affects creatures in a 15-foot cone originating from the target in any direction of your choice.\nEach creature in the cone must make a Dexterity saving throw. On a failed save, a creature takes the attack’s damage. On a successful save, it takes half as much damage.\nLeech Configuration. The weapon’s normal range becomes 15/30. You no longer gain disadvantage when a hostile creature is within 5 ft. of you.\nWhen you deal damage to a creature with the weapon, you regain hit points equal to your proficiency bonus + your intelligence modifier. Freezing Configuration. When you hit a creature with the weapon, its speed is reduced by 5 feet until the start of your next turn. This speed reduction is cumulative for multiple hits.\nSeeker Configeration. When you attack with the weapon, you can choose not to make an attack roll. If you do, the attack automatically hits one creature within the weapon’s normal range, but the attack’s damage is halved.\nThis configuration cannot target a creature behind total cover.",
+          "page": 123
+        },
+        {
+          "level": 6,
+          "name": "Configuration Combination",
+          "text": "At 6th level, as a bonus action, you can stow one Devil Fruit-infused ranged weapon and draw another Devil Fruit-infused ranged weapon you created.\nWhen you do so, the first attack you make with the newly drawn weapon before the end of your turn gains the Range Configuration of the weapon you stowed, in addition to the Range Configuration of the newly drawn weapon. If your configerations have effects that counteract with each other, instead take the configeration of the drawn weapon.\nOnce you combine configurations in this way, you cannot do so again until the start of your next turn.",
+          "page": 123,
+          "action": "bonus",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Configuration Improvements",
+          "text": "Beginning at 10th level, your Range Configurations improve as described below for all your currently infused ranged weapons.\nImproved Sniper Configuration. The weapon’s normal range and long range are doubled. In addition, once on each of your turns when you hit a creature with the weapon, the attack deals an additional 2d6 damage of the weapon’s damage type. Improved Blast Configuration. When you trigger this configuration, you can choose for the attack to affect either a 15-foot cone originating from the target or a 15-foot-radius sphere centered on the target.\nEach creature in the area must make a Dexterity saving throw. On a failed save, a creature takes the attack’s damage. On a successful save, it takes half as much damage.\nImproved Leech Configuration. The weapon’s normal range becomes 15/30. You no longer gain disadvantage when a hostile creature is within 5 ft. of you.\nWhen you deal damage to a creature with the weapon, you regain hit points equal to double your proficiency bonus + your intelligence modifier. Improved Freezing Configuration. When you hit a creature with the weapon, its speed is reduced by 5 feet until the start of your next turn. This speed reduction is cumulative for multiple hits.\nIn addition, if you successfully hit the same creature with two or more infused ranged weapon attacks you make against it during your turn, that creature is restrained until the start of your next turn.\nImproved Seeker Configeration. When you attack with the weapon, you can choose not to make an attack roll. If you do, the attack automatically hits one creature within the weapon’s normal range, but the attack’s damage is halved.\nThis attack ignores half cover and three-quarters cover but cannot target a creature behind total cover.",
+          "page": 124
+        },
+        {
+          "level": 14,
+          "name": "Enhance Configerations",
+          "text": "At 14th level, when you make an attack with a Devil Fruit-infused ranged weapon that has a Range Configuration, you can enhance that configuration for that attack. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest. If you used Configuration Combination immediately before this ability, enhance both configerations used.\nEnhance Sniper Configuration. The weapon’s normal range and long range are doubled for the attack. If the attack hits, it deals an additional 6d6 damage of the weapon’s damage type.\nEnhance Blast Configuration. When you trigger this configuration, you can choose for the attack to affect either a 30-foot cone originating from the target or a 30-foot-radius sphere centered on the target.\nEach creature in the area must make a Dexterity saving throw. On a failed save, a creature takes the attack’s damage. On a successful save, it takes half as much damage.\nEnhance Leech Configuration. The weapon’s normal range becomes 15/30. You no longer gain disadvantage when a hostile creature is within 5 ft. of you.\nWhen you deal damage to a creature with the weapon, you regain hit points equal to double your proficiency bonus + your intelligence modifier + half of your devilforged level (rounded up).\nEnhance Freezing Configuration. When you hit a creature with the weapon, the target is restrained until the start of your next turn.\nEnhance Seeker Configeration. When you attack with the weapon, you can choose not to make an attack roll. If you do, the attack automatically hits one creature within the weapon’s normal range. This attack ignores half cover and three-quarters cover. If you cannot see the target, you must still know the target’s location, and the attack is made with disadvantage instead of automatically hitting. This configuration cannot target a creature behind total cover.",
+          "page": 124,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.mechadevil",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Mechadevil",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 125
+      },
+      "flavor": "Mechadevils build powered suits that channel Logia lineage factors directly across the body, turning its wearer into a flying weapon.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Logia Armor Infusion",
+          "text": "When you choose this Devilsmith at 3rd level, you gain proficiency with heavy armor.\nIn addition, you can use your Infuse Devil Fruit feature to infuse one suit of nonmagical heavy armor with a Logia Devil Fruit. Armor infused this way is called Mechadevil Armor. Your Mechadevil Armor has the following properties:\nThe armor counts as a Devil Fruit-infused item and counts against your maximum number of Devil Fruit infusions.\nWhen a Devilforged class feature refers to a Devil Fruit-infused weapon you created, you can treat your Mechadevil Armor as though it were a Devil Fruit- infused weapon for the purpose of that feature, unless the feature specifically requires a weapon attack.\nOnly you can use the armor’s Infusion Properties, activate features through it, or cast spells through it unless a feature states otherwise.\nIf your Mechadevil Armor is destroyed, if you willingly remove its infusion during an 8-hour crafting process, or if you die, the Logia Devil Fruit sealed within the armor reconstitutes in the nearest unoccupied space beside the armor or your body, as appropriate.",
+          "page": 125
+        },
+        {
+          "level": 3,
+          "name": "Mechadevil Mark 1",
+          "text": "Also at 3rd level, while wearing your Mechadevil Armor, you can use it as a conduit for the Logia fruit sealed within it. Your Mechadevil Armor gains the following benefits:\nElemental Blast. While wearing your Mechadevil Armor, you can use your action to make a ranged spell attack against one creature you can see within 60 feet of you. On a hit, the target takes damage equal to 1d10 + your intelligence modifier. The damage type should reflect the element of the infused Logia fruit, subject to the DM’s approval. This damage increases as you gain levels in this class, becoming 2d10 at 5th level, 3d10 at 11th level, and 4d10 at 17th level.\nArmor Conduit. Your Mechadevil Armor can serve as a conduit for spells granted by the infused Logia Devil Fruit, as described in your Devilforged features. You gain a +2 bonus to spell attack rolls made through the armor.\nPowered Frame. You ignore the Strength requirement of heavy armor. In addition, while wearing your Mechadevil Armor, your movement speed is not reduced by wearing heavy armor. Mechanics. While you wear this armor, gain a flying speed of 30 ft., resistance to Bludgeoning, Piercing, and Slashing from nonmagical attacks, immunity to Poison and the Poisoned condition.",
+          "page": 125
+        },
+        {
+          "level": 6,
+          "name": "Mechadevil Mark 2",
+          "text": "At 6th level, when you finish a long rest, choose two of the following weapon systems. While wearing your Mechadevil Armor, you can use an action to activate one weapon system you have chosen. If a weapon system requires a saving throw, it uses your Devilforged save DC. If it requires an attack roll, it uses your Devilforged attack modifier.\nYou can replace one chosen weapon system with another whenever you finish a long rest.\nSwarm Cannons. When you activate this weapon, both cannons fire a swarm of 12 missiles at a creature or object within 90 feet of you. Each dart hits a creature of your choice that you can see within range. A single missile deals 1d4 of the armor’s elemental damage type. The darts all strike simultaneously, and you can direct them to hit one creature or several. Each creature targeted must make a Dexterity saving throw against your Spell save DC or take the damage of all missile directed at them.\nEnergy Blast. When you activate this weapon, the mech releases a blast of searing energy in a 15-foot cone. Each creature in the area must make a Constitution saving throw against your Spell save DC. On a failed save, a creature takes 6d6 of the armor’s elemental damage type and is blinded until the end of their next turn. On a successful save, a creature takes half damage.\nEnergy Lance. When you activate this weapon, you unleash a lance of lightning in a line 30 ft. long and 5 ft. wide. Creatures in the line must succeed on a Dexterity saving throw against your Spell save DC, or take 4d8 of the armor’s elemental damage type and their armor class is reduced by -2 until the end if the creatures next turn.\nRailcannon. When you activate this weapon, you fire a hypervelocity slug at a target you can see within 300 ft. Make a ranged spell attack. On a hit, the target takes 6d10 of the armor’s elemental damage type.\nPower Fist. You make a melee attack usuing intelligence as the modifier against one creature within 5 feet of you. On a hit, the target takes 4d8 damage of the armor’s elemental damage type and is pushed up to 30 feet away from you.\nYou can activate each weapon system a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a short or long rest.\nWhen you get to 10th level gain 1 additional weapon option, and at 14th level gain another weapon option.",
+          "page": 125,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Mechadevil Mark 3",
+          "text": "At 10th level, while wearing your Mechadevil Armor, you gain the following benefits:\nYou gain a flying speed of 60 feet.\nYou gain resistance to the damage type associated with the armor’s infused Logia fruit and magical bludgeoning, piercing, and slashing damage.\nWhen you cast a Logia spell through the armor, you gain temporary hit points equal to your Intelligence modifier + your proficiency bonus.",
+          "page": 126
+        },
+        {
+          "level": 14,
+          "name": "Mechadevil Mark 4",
+          "text": "At 14th level, while wearing your Mechadevil Armor, you gain the following benefits:\nYour flying speed increases to 120 feet.\nYour Elemental Blast can target two creatures within range instead of one.\nYou can move through the space of other creatures as if they were difficult terrain. The first time you move through a creature’s space on your turn, that creature takes damage equal to your proficiency bonus. The damage type is the same as your armor’s elemental damage type.",
+          "page": 126
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.no_mi_trainer",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "No Mi Trainer",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 126
+      },
+      "flavor": "As a No Mi Trainer, you specialize in blending Zoan devil fruits with an element of their choice to create powerful elemental beasts. Through the combination of beastly ferocity and raw elemental power, your creations become formidable allies on the battlefield, growing stronger and gaining new abilities as they gain battle experience.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Infusion Specialist",
+          "text": "When you choose this Devilsmith at 3rd level, gain +1 additional Max Infused Weapons slot.\nAdditionally, you may immediately infuse this slot with a Uncommon Zoan fruit of your choice using the No Mi Star Synthesis feature below.",
+          "page": 126
+        },
+        {
+          "level": 3,
+          "name": "No Mi Star Synthesis",
+          "text": "At 3rd level, you can use your Infuse Devil Fruit feature to infuse a Zoan Devil Fruit into a Tiny star-shaped object instead of a weapon. A star infused this way is called a No Mi Star. A No Mi Star has the following properties:\nIt counts as a Devil Fruit-infused item and counts against your maximum number of Devil Fruit infusions.\nIt can only be infused with a Zoan Devil Fruit.\nThe infused fruit must obey your Zoan Fruit Rarity Limit from the Devilforged class.\nIt does not benefit from your base Devilforged class features unless a feature specifically states otherwise.\nOnly you can summon or command the beast bound to one of your No Mi Stars.\nIf a No Mi Star is destroyed, if you willingly remove its infusion during an 8-hour crafting process, or if you die, the Zoan Devil Fruit sealed within the star reconstitutes in the nearest unoccupied space beside the star or your body, as appropriate.\nEach No Mi Star can contain only one Bloodline Beast. When you create a No Mi Star, the beast uses the Bloodline Beast stat block, and you choose one element from the Bloodline Beast element options. The beast’s attacks and damage scale using the Zoan Beast rules, as determined by the Zoan Devil Fruit infused into the No Mi Star.\nYou can control your Bloodline Beast in the following ways:\nAs an action, you can summon one Bloodline Beast from one of your No Mi Stars. The beast appears in an unoccupied space you can see within 30 feet of you.\nYou can have only one Bloodline Beast summoned at a time. If you summon another Bloodline Beast while one is already active, the active beast is recalled into its No Mi Star.\nYou can recall your active Bloodline Beast into its No Mi Star as a bonus action.\nIn combat, your Bloodline Beast follows these rules:\nIt shares your initiative count and can take its turn anywhere within your turn.\nIt can move and use its reaction on its own.\nThe only action it takes on its turn is the Dodge action, unless you use a bonus action on your turn to command it to take another action.\nThe commanded action can be one in its stat block or another action it is capable of taking.\nIf you are incapacitated, the Bloodline Beast can take any action of its choice, not just Dodge.\nIf the Bloodline Beast’s feature forces a creature to make a saving throw, it uses your Devilforged save DC.\nYour Bloodline Beast cannot be permanently killed. If it is reduced to 0 hit points, it returns to its No Mi Star, and the star becomes red. While the star is red, the beast cannot be summoned. The star returns to its normal state after the beast is healed or after 1d8 hours have passed.",
+          "page": 126,
+          "sections": [
+            {
+              "name": "Beast’s Form",
+              "text": "The following is the default bloodline beast statblock. Use this when creating a beast.",
+              "page": 126
+            },
+            {
+              "name": "Bloodline Beast",
+              "text": "",
+              "page": 127,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "- monstrosity"
+                    ],
+                    [
+                      "Armor Class equal to chosen zoan creatures"
+                    ],
+                    [
+                      "Hit Points 2 x your Intelligence modifier + 5 x your devilforged"
+                    ],
+                    [
+                      "level (the beast has a number of Hit Dice [d8s] equal to your"
+                    ],
+                    [
+                      "devilforged level)"
+                    ],
+                    [
+                      "Speed equal to chosen zoan creatures"
+                    ],
+                    [
+                      "STR",
+                      "DEX",
+                      "CON",
+                      "INT",
+                      "WIS",
+                      "CHA"
+                    ],
+                    [
+                      "- (-)",
+                      "- (-)",
+                      "- (-)",
+                      "- (-)",
+                      "- (-)",
+                      "- (-)"
+                    ],
+                    [
+                      "Senses Vision -, passive Perception equals beasts wisdom"
+                    ],
+                    [
+                      "modifier + proficiency bonus"
+                    ],
+                    [
+                      "Languages understands common but can only say it’s given"
+                    ],
+                    [
+                      "name."
+                    ],
+                    [
+                      "Challenge -",
+                      "Proficiency Bonus equals your bonus"
+                    ],
+                    [
+                      "Features: All features your beast owns are taken from the"
+                    ],
+                    [
+                      "chosen zoan animal."
+                    ],
+                    [
+                      "Stats and Skills: All size, armor class, speed, ability scores,"
+                    ],
+                    [
+                      "saving throws, skills, damage resistances, damage immunities,"
+                    ],
+                    [
+                      "damage vulnerablities, condition immunities, and senses are"
+                    ],
+                    [
+                      "taken from the chosen zoan animal."
+                    ],
+                    [
+                      "Actions"
+                    ],
+                    [
+                      "Actions: All actions your beast owns are taken from the chosen"
+                    ],
+                    [
+                      "zoan animal."
+                    ]
+                  ],
+                  "page": 127
+                }
+              ]
+            },
+            {
+              "name": "Beast’s Element",
+              "text": "Choose one of the elements to infuse into your chosen beast.\nClay Element Type\nStat Boost: +1 to Constitution; +10 HP.\nDamage Resistance: Nonmagical slashing Feature - Molded Form: The beast can reshape its body to absorb damage, reducing all incoming damage by 1d6 points.\nDarkness Element Type\nStat Boost: +2 to Constitution; +2 to damage rolls. Damage Vulnerability: Bludgeoning, piercing, and slashing\nFeature - Shadow Grasp: As an action, the beast can extend darkness to bind an enemy within 15 feet, the creature must make a Strength saving throw or be restrained until the end of their next turn. This feature recharges after a long rest.\nFire Element Type\nStat Boost: +1 to Strength; +1 to damage rolls. Damage Resistance: Fire\nFeature - Flame Burst: The beast’s attacks ignite targets, dealing an extra 1d6 fire damage at the start of the enemy’s turn. The flames can be extinguished with an action or submerging it water.\nGas Element Type\nStat Boost: +2 bonus to AC against ranged attacks. Damage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Toxic Cloud: As an action, the beast can release a poisonous gas in a 15-foot radius, causing enemies to make a Constitution saving throw or be poisoned for 1d4 minute. This feature recharges after a short or long rest.\nGlass Element Type\nStat Boost: +3 to AC\nDamage Vulnerability: Nonmagical bludgeoning Feature - Reflective Shards: When the beast is hit by a melee attack, it can cause shards to explode outward, dealing 1d4 piercing damage to the attacker and imposing disadvantage on their next attack.\nIce Element Type\nStat Boost: +1 to Strength; +2 to AC against melee attacks.\nDamage Resistance: Cold\nFeature - Frostbite Touch: The beast’s attacks slow enemies, reducing their movement speed by 10 feet until the end of the target’s next turn.\nLight Element Type\nStat Boost: +1 to Dexterity; +1 to attack rolls. Damage Resistance: Radiant\nFeature - Blinding Flash: As an action, the beast emits a burst of light, causing enemies within 20 feet to make a Dexterity saving throw or be blinded until the end of their next turn. This feature recharges after a short or long rest.\nLightning Element Type\nStat Boost: +1 to Dexterity; +10 feet to movement speed.\nDamage Resistance: Lightning\nFeature - Static Charge: The beast’s melee attacks gain an additional 1d6 lightning damage.\nMagma Element Type\nStat Boost: +1 to Strength; +1 to attack and damage rolls.\nDamage Resistance: Fire\nFeature - Molten Armor: The beast is covered in molten rock, dealing 1d6 fire damage to any enemy that hits it with a melee attack.\nSand Element Type\nStat Boost: +1 to Dexterity; gains advantage on Dexterity saving throws.\nDamage Resistance: Fire\nDamage Vulnerability: Cold\nFeature - Sandstorm Cloak: As a bonus action, the beast can shroud itself in swirling sand, gaining half cover and imposing disadvantage on ranged attacks against it for 1 minute.\nSmoke Element Type\nStat Boost: advantage on Stealth checks.\nDamage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Smoke Screen: As an action, the beast can create a 10 ft. radius cloud of smoke centered around itself, causing the area to become heavily obscured for 1 minute and follows the beast. This feature recharges after a short or long rest.\nSnow Element Type\nStat Boost: +1 to Constitution; advantage on Constitution saving throws.\nDamage Resistance: Cold\nFeature - Freezing Aura: The beast radiates a cold aura, causing enemies within 5 feet to take 1d4 cold damage at the start of their turns.\nSoot Element Type\nStat Boost: +1 to Constitution; gain flight speed equal to walking speed.\nDamage Resistance: Fire\nFeature - Cinder Blast: The beast can unleash blasts of hot soot, the beast’s attack range for melee attacks increase by 10 ft. and the damage type is changed to fire damage.\nSwamp Element Type\nStat Boost: +1 to Strength; +15 temporary hit points at the start of combat.\nDamage Resistance: Necrotic\nFeature - Mire Grip: As an action, the beast can turn the ground into difficult terrain in a 30 ft. radius area center on itself for 1d4 minutes. This feature recharges after a short or long rest.\nTree Element Type\nStat Boost: +2 to Constitution; regenerates 2 hit points at the start of its turn if it is conscious and the currently active bloodline beast.\nDamage Vulnerability: Fire\nFeature - Root Snare: As an action, the beast can release vines to grapple an enemy within 10 feet, the creature must make a Strength saving throw or become grappled by them. The vines can be broken with a Strength save against your spell save DC.",
+              "page": 127
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Trainer’s Bond",
+          "text": "Also at 3rd level, when you use a bonus action to command your active Bloodline Beast, you can choose one of the following benefits to apply to that beast until the end of its turn:\nAggressive Command. The beast gains a bonus to its first damage roll this turn equal to your proficiency bonus.\nDefensive Command. The beast gains temporary hit points equal to your Devilforged level.\nSwift Command. The beast’s speed increases by 10 feet, and it does not provoke opportunity attacks during this movement.\nFocused Command. The beast gains a bonus to its first attack roll this turn equal to half your proficiency bonus, rounded down.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.",
+          "page": 128,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Enhanced Combat Efficiency",
+          "text": "At 6th level, your beast’s combat abilities are significantly enhanced, making it a more effective combatant. Choose one of the following enhancements for each of your beasts:\nMelee Empowerment: Your beast’s melee attacks deal an additional die of damage.\nHeightened Reflexes: Your beast gains a +2 bonus to AC and Dexterity saving throws.\nUnyielding Might: Your beast’s attacks now have a chance to hinder enemies. The target must succeed on a strength saving throw against your Devilforged save DC or they are knocked prone or pushed them back 10 feet (your choice).\nResistance Shatter: Choose a damage type other than force you deal with your beast’s abilities. They now ignore resistances to that damage type when using their abilities, unless the resistance is granted by Haki.\nFast Action: Your beast now activates their beast’s element feature faster. Feature that cost an action now cost a bonus action.\nSecond Chance: When your beast drops to 0 hitpoints, instead of transforming into a red star as stated in the Bloodline Beast Synthesis feature, they instead drop to 1 hitpoint. This feature recharges on a short or long rest.",
+          "page": 128
+        },
+        {
+          "level": 10,
+          "name": "Twin Beast Command",
+          "text": "At 10th level, when you summon a Bloodline Beast, you can summon up to two beasts from two different No Mi Stars. Both beasts appear in unoccupied spaces you can see within 30 feet of you.\nYou can have two Bloodline Beasts summoned at the same time. When you use a bonus action to command your Bloodline Beast, you can command both active beasts with the same bonus action. If you summon a third beast while two are already active, choose one of your active beasts to return to its No Mi Star.\nIn addition, each of your Bloodline Beasts gains one upgrade of your choice from the following list. You choose the upgrade when you create the No Mi Star. Whenever you finish a long rest, you can replace the upgrade of one of your Bloodline Beasts with another upgrade from this list.\nRelentless Assault: Your beast gains an extra attack on its turn.\nBurst Attack: Your beast’s melee attacks now create an area-of-effect burst, hitting multiple enemies within 5 feet of the target for an amount of damage equal to it’s proficiency bonus.\nAdaptive Defense: Your beast gains resistance to two types of damage other than force.\nSteadfast Senses: With the help and approval of your DM, choose three of the following conditions: Blinded, Charmed, Deafened, Frightened, Grappled, Paralyzed, Petrified, Poisoned, Prone, Stunned. Your beast is now immune to that condition.",
+          "page": 129
+        },
+        {
+          "level": 14,
+          "name": "Supreme Combat Mastery",
+          "text": "At 14th level, your beast reaches the pinnacle of its combat effectiveness, gaining Supreme Combat Mastery. This feature allows your beast to operate at peak performance, pushing its abilities beyond normal limits. Choose one of the following mastery upgrades for each beast:\nFrenzied Rampage: As a reaction, your beast can enter a frenzied state once per combat encounter, gaining advantage on all attack rolls and dealing critical hits on rolls of 19-20 for 1 minute. After the frenzy ends, the beast becoming stunned, regaining control of itself at the end of it’s next turn. Elemental Overdrive: Grant the bloodline beast immunity to its own beast’s element’s resistance type or removes the vulnerability of its element. Perfected Guardian: Your beast’s presence on the battlefield inspires allies, granting all allies within 30 feet a +1 bonus to AC and saving throws while the beast is active. Additionally, the beast gains an extra 20 hit points.\nUnholy Infusion: Choose one additional beast’s element to infuse into your bloodline beast.",
+          "page": 129
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

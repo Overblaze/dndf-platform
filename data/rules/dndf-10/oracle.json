@@ -1,0 +1,1005 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.oracle",
+      "kind": "class",
+      "name": "Oracle",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 157
+      },
+      "flavor": "The Oracle is a mysterious seer blessed with the power to glimpse the threads of fate, using their foresight to guide allies and alter the course of events. They stand as enigmatic figures on the battlefield, predicting future encounters and subtly bending reality to their will through divine insights and mystical visions. As masters of prophecy, Oracles wield the power of knowledge, shaping destiny in ways that few can comprehend, making them invaluable to any who seek to outmaneuver their foes and uncover hidden truths.",
+      "quote": "THE HUMAN WITH THE STRAW HAT…!! THE BOY, STRAW HAT LUFFY… BY HIS HANDS… FISHMAN ISLAND WILL BE DESTROYED!!! --- Shyarly",
+      "hitDie": 6,
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor"
+        ],
+        "weapons": [
+          "simple"
+        ],
+        "tools": [],
+        "skills": {
+          "choose": 3,
+          "from": [
+            "arcana",
+            "insight",
+            "medicine",
+            "perception",
+            "religion",
+            "survival"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a quarterstaff or (b) a simple weapon",
+        "(a) a component pouch or (b) a holy symbol",
+        "(a) a scholar’s pack or (b) an explorer’s pack",
+        "Thick shirt and a crystal ball"
+      ],
+      "progression": {
+        "columns": {
+          "cantripsKnown": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "powersKnown": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            22,
+            22,
+            22
+          ],
+          "slots1": [
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots2": [
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots3": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots4": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3
+          ],
+          "slots5": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots6": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2
+          ],
+          "slots8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slots9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "slots1",
+          "name": "1st-level slots",
+          "max": "col.slots1",
+          "recharge": "long"
+        },
+        {
+          "id": "slots2",
+          "name": "2nd-level slots",
+          "max": "col.slots2",
+          "recharge": "long"
+        },
+        {
+          "id": "slots3",
+          "name": "3rd-level slots",
+          "max": "col.slots3",
+          "recharge": "long"
+        },
+        {
+          "id": "slots4",
+          "name": "4th-level slots",
+          "max": "col.slots4",
+          "recharge": "long"
+        },
+        {
+          "id": "slots5",
+          "name": "5th-level slots",
+          "max": "col.slots5",
+          "recharge": "long"
+        },
+        {
+          "id": "slots6",
+          "name": "6th-level slots",
+          "max": "col.slots6",
+          "recharge": "long"
+        },
+        {
+          "id": "slots7",
+          "name": "7th-level slots",
+          "max": "col.slots7",
+          "recharge": "long"
+        },
+        {
+          "id": "slots8",
+          "name": "8th-level slots",
+          "max": "col.slots8",
+          "recharge": "long"
+        },
+        {
+          "id": "slots9",
+          "name": "9th-level slots",
+          "max": "col.slots9",
+          "recharge": "long"
+        }
+      ],
+      "asiLevels": [
+        4,
+        6,
+        8,
+        12,
+        14,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Divination Techniques",
+        "level": 2,
+        "featureLevels": [
+          2,
+          6,
+          8,
+          11,
+          17
+        ]
+      },
+      "subclassIntro": {
+        "text": "The Oracle’s connection to the divine and mystical realms grants them access to powerful Divination Techniques. These techniques are whispered secrets from ancient seers and prophetic visions that allow the Oracle to peer into the future, glimpse hidden truths, and subtly alter the course of events.",
+        "page": 159
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Predictions",
+          "text": "At the start of each in game day, you can write down up to 5 predictions about events that may occur. These predictions should be specific and plausible within the context of the day’s adventures or activities.\nThe following rules must be followed when making a prediction:\nYou cannot make a prediction about the outcome of a roll but you may make a single prediction about the outcome of a specific skill check on a specific player other than yourself.\nPredictions must be based on in-game knowledge and observations, not on player knowledge or meta- game tactics.\nYou may not predict events in combat but may predict combat. If you predict combat you must guess the groups involved.\nYou may predict meeting someone but you must either use their name, job title, or general age group (ex. 20’s)\nThe prediction must not be ambiguous or subjective. They must be clearly verifiable as true or false. You cannot have more than one of the same prediction type (ex. I predict we will fight and I predict there will be combat.)\nYou can make a prediction about another player using all of their spell slots.\nYou may predict an exact string of three or more actions another player will make.\nIf you push someone into making your prediction come true, or you are the one who made the prediction come true, the prediction becomes null and void and you cannot gain the benefits from completing it.\nOnce a day at any point, you may remake all unsuccessful predictions.\nFor each prediction that comes true, you gain a small buff until your next long rest. These buffs can only be chosen once each, resetting on the long rest. The nature of these buffs can be chosen from the following list:\nForesight: +2 to AC.\nClarity: +2 to all saving throws.\nVitality: Gain temporary hit points equal to your Wisdom modifier (minimum of 1) at the start of each of your turns in combat.\nInsight: +2 to attack rolls and spell attack rolls. Grace: +10 feet to your movement speed.\nIf you gain all prediction buffs, you regain all uses of your Perfect Outcome and Oracle’s Insight features and restore an amount of 1st level spell slots equal to your proficiency bonus. You may combine spell slots together to restore higher level slots (ex. if you combine 2 level 1 spell slots you restore a 2nd level slot).",
+          "page": 158
+        },
+        {
+          "level": 1,
+          "name": "Divination Power (Spellcasting)",
+          "text": "As an Oracle, you draw on the divine and arcane to cast spells. You have a unique spell list combining Bard and Cleric spells.",
+          "page": 158,
+          "sections": [
+            {
+              "name": "Cantrips",
+              "text": "At 1st level, you know three cantrips of your choice from the Oracle spell list. You learn additional Oracle cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Oracle table.",
+              "page": 158
+            },
+            {
+              "name": "Spell Slots",
+              "text": "The Oracle table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.",
+              "page": 158
+            },
+            {
+              "name": "Spells Known of 1st Level and Higher",
+              "text": "You know four 1st-level spells of your choice from the Oracle spell list. The Spells Known column of the Oracle table shows when you learn more Oracle spells of your choice. Each of these spells must be of a level for which you have spell slots.",
+              "page": 158
+            },
+            {
+              "name": "Spellcasting Ability",
+              "text": "Wisdom is your spellcasting ability for your Oracle spells, as your magic draws upon your insight and foresight. You use your Wisdom whenever a spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for an Oracle spell you cast and when making an attack roll with one.\nSpell save DC = 8 + your proficiency bonus + your Wisdom modifier\nSpell attack modifier = your proficiency bonus + your Wisdom modifier",
+              "page": 158
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Divination Techniques",
+          "text": "Starting at 2nd level, you gain access to divination techniques that enhance your ability to predict and influence events. Choose one of the following divination technique to learn from Bones of Sight, Eyes of the Future, Gambler of Fate, Occult Sigilist, Soul of the Present, and Voices of the Past. You gain additional techniques as you level up.",
+          "page": 158,
+          "grantsSubclass": true
+        },
+        {
+          "level": 2,
+          "name": "Perfect Outcome",
+          "text": "At 2nd level, when you use an Oracle feature or spell granted by the Divination Power (Spellcasting) feature that has a dice roll, you can instead use the maximum number for that roll. If you use this feature on a d20 roll, a 20 is not considered a critical hit. You can use this feature a number of times equal to your proficiency bonus per long rest.",
+          "page": 158,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Oracle’s Insight",
+          "text": "At 3rd level, you can use your bonus action to grant an ally insight into the future. Choose one ally within 30 feet. They gain advantage on their next attack roll, ability check, or saving throw. You can use this feature a number of times equal to your proficiency bonus. You regain all expended uses when you finish a long rest.",
+          "page": 159,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 6th, 8th, 12th, 14th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1.",
+          "page": 159,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Improved Predictions",
+          "text": "At 5th level, your predictions become more potent. You can now make up to 7 predictions each day, and the buffs you gain for correct predictions are enhanced:\nForesight: +3 to AC\nClarity: +3 to all saving throws\nVitality: Temporary hit points equal to twice your Wisdom modifier (minimum of 2)\nInsight: +3 to attack rolls and spell attack rolls Grace: +15 feet to your movement speed",
+          "page": 159
+        },
+        {
+          "level": 7,
+          "name": "Enhanced Divination",
+          "text": "At 7th level, your divination abilities have grown stronger. You gain the ability to cast the Divination spell once per day without expending a spell slot.\nAdditionally, you can use your Oracle’s Insight feature to grant advantage on two rolls instead of one when you use it.",
+          "page": 159
+        },
+        {
+          "level": 9,
+          "name": "Visionary Trance",
+          "text": "Starting at 9th level, you can enter a trance-like state to gain profound insights. As an action, you can enter a Visionary Trance for up to 1 minute. During this time, you have advantage on all Wisdom (Insight) and Intelligence (Investigation) checks. Additionally, once during the trance, you can ask the DM one question about a future event within the next 24 hours. The DM must answer truthfully, though the answer may be cryptic or vague. You can use this feature once per long rest.",
+          "page": 159,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Prophetic Expert",
+          "text": "At 14th level, your predictive powers reach their peak. The buffs you receive from correct predictions are further enhanced:\nForesight: +4 to AC\nClarity: +4 to all saving throws\nVitality: Temporary hit points equal to three times your Wisdom modifier (minimum of 3)\nInsight: +4 to attack rolls and spell attack rolls Grace: +20 feet to your movement speed\nFurthermore, when you make predictions, you can choose to designate one as a Prophetic Insight. This Prophetic Insight is guaranteed to come true, and the buff you receive from it is doubled (Ask the DM for a prediction that will come true). You can use this feature once per long rest.",
+          "page": 159,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 20,
+          "name": "Master of Prophecies",
+          "text": "At 20th level, you have reached the pinnacle of your prophetic abilities, gaining unparalleled mastery over fate and foresight. Your connection to the divine and mystical realms allows you to influence events on a grand scale.\nYour predictions are more potent, and each correct prediction provides a greater buff. The buffs are as follows:\nForesight: +5 to AC\nClarity: +5 to all saving throws\nVitality: Temporary hit points equal to four times your Wisdom modifier (minimum of 4)\nInsight: +5 to attack rolls and spell attack rolls Grace: +25 feet to your movement speed\nAdditionally, your mere presence on the battlefield can alter the course of events. You can use your reaction to automatically turn a missed/hit attack roll made by a creature within 30 feet into a hit/miss. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+          "page": 159,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.oracle.bones_of_sight",
+      "kind": "subclass",
+      "parent": "class.oracle",
+      "name": "Bones of Sight",
+      "group": "Divination Techniques",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 159
+      },
+      "flavor": "Through the whispers of the bones, you glimpse into fate’s hidden threads, foreseeing dangers and bending destiny to your will.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Whispering Bones",
+          "text": "When you choose this subclass at 2nd level, you can roll a set of marked bones to curse a target with bad luck. As an action, target a creature within 30 ft. of you to make a Wisdom saving throw against your Spell save DC. On a failed save the creature has disadvantage on its next attack roll or saving throw.\nYou can use this feature a number of times equal to your proficiency bonus, regaining expended uses after a long rest.",
+          "page": 159
+        },
+        {
+          "level": 6,
+          "name": "Death’s Rattle",
+          "text": "Starting at 6th level, the bones now reveal more than just the future, they expose the threads of mortality. When a creature within 30 feet of you drops to 0 hit points, you can use your reaction to roll your bones and choose one of the following outcomes.\nGain temporary hit points equal to twice your Oracle level.\nCause another creature within 30 feet to take psychic damage equal to your Oracle level.\nAdditionally, you gain advantage on death saving throws.",
+          "page": 160
+        },
+        {
+          "level": 8,
+          "name": "Speaker of the Dead",
+          "text": "At 8th level, your connection to the spirits deepens, allowing you to glimpse through the veil. You gain the ability to cast Speak with Dead once per long rest without expending a spell slot and resistance to necrotic damage.\nAdditionally, as an action, you can ask the spirits of the bones for guidance. Roll a d6:",
+          "page": 160,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d6",
+                  "Effect"
+                ],
+                [
+                  "1-",
+                  "The bones are silent."
+                ],
+                [
+                  "2"
+                ],
+                [
+                  "3-",
+                  "The bones whisper, granting you advantage on your next"
+                ],
+                [
+                  "4",
+                  "Wisdom (Insight) or Intelligence (Investigation) check."
+                ],
+                [
+                  "5-",
+                  "The bones scream a warning, allowing you to immediately"
+                ],
+                [
+                  "6",
+                  "sense the direction of the nearest creature with hostile"
+                ],
+                [
+                  "intent within 1 mile."
+                ]
+              ],
+              "page": 160
+            }
+          ],
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Sight Beyond the Grave",
+          "text": "Starting at 11th level, you stand at the precipice of fate, communing with spirits as though they were your own thoughts. You can now cast Commune and True Seeing once per long rest without expending a spell slot.\nAdditionally, when you roll death saving throws, if you roll a natural 20 on a death saving throw, you immediately regain hit points equal to half your Oracle level instead of just 1 (rounded down).",
+          "page": 160,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 17,
+          "name": "The Chosen Bone",
+          "text": "At 17th level, when you make predictions at the start of the day, you can mark one of them as inevitable. If that prediction would fail, fate twists in your favor, forcing it to come true in an unexpected way (subject to DM approval).",
+          "page": 160
+        }
+      ]
+    },
+    {
+      "id": "subclass.oracle.eyes_of_the_future",
+      "kind": "subclass",
+      "parent": "class.oracle",
+      "name": "Eyes of the Future",
+      "group": "Divination Techniques",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 160
+      },
+      "flavor": "You see into the near future, ghostly images passing through your vision. While honing this power, the oracle focuses on providing allies with timely advantages and insights, helping them succeed in critical moments.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Prophetic Vision",
+          "text": "When you choose this subclass at 2nd level, you gain the ability to see brief glimpses of the immediate future, allowing you to react swiftly to unfolding events. You gain proficiency in Insight.\nAdditionally, when you or an ally within 30 feet of you makes an ability check, attack roll, or saving throw, you can use your reaction to expend one die of eternity adding the result of the die to the roll.",
+          "page": 160
+        },
+        {
+          "level": 5,
+          "name": "Dice of Eternity",
+          "text": "You have an amount of dice of eternity equal to your proficiency bonus, which are d4s. A die of eternity is expended when you use it. You regain all of your expended dice of eternity when you finish a short or long rest.\nAdditionally, at 5th level the die turn into a d6, at 9th level the die turn into a d8, at 13th level the die turn into a d10, and at 17th level the die turn into a d12.",
+          "page": 160
+        },
+        {
+          "level": 6,
+          "name": "Precognitive Reflexes",
+          "text": "Starting at 6th level, your ability to foresee danger grants you and your allies swift reactions. When you or an ally within 30 feet is targeted by an attack, you can use your reaction to expend one die of eternity, granting the targeted creature a bonus to their AC equal to the number rolled until the start of their next turn.",
+          "page": 160
+        },
+        {
+          "level": 8,
+          "name": "Foresightful Defense",
+          "text": "At 8th level, when another creature damages you with a melee attack, you can use your reaction and expend one die of eternity to reduce the damage by the number you roll on your die of eternity + your Wisdom modifier.",
+          "page": 160
+        },
+        {
+          "level": 8,
+          "name": "Dual Visions",
+          "text": "At 8th level, your connection to future events deepens, allowing you to respond to multiple threats. You can take a second reaction each round. This second reaction can be used only for features granted by your Oracle class, such as Precognitive Reflexes or Prophetic Vision.",
+          "page": 160
+        },
+        {
+          "level": 11,
+          "name": "Prophetic Guidance",
+          "text": "Starting at 11th level, your ability to foresee outcomes is unparalleled. If a creature misses an ally, you can use your reaction to expend one die of eternity, granting an ally within 30 feet an immediate and free attack action against the attacking creature. If the attack hits, add the die of eternity to the weapon’s damage roll.",
+          "page": 160
+        },
+        {
+          "level": 17,
+          "name": "Vision of Victory",
+          "text": "At 17th level, when you use any class or subclass feature that require a reaction to use, you may instead target three allies or enemies instead of one, depending on the feature. Using the features that way causes the feature to last until the end of the targets turn.",
+          "page": 161
+        }
+      ]
+    },
+    {
+      "id": "subclass.oracle.gambler_of_fate",
+      "kind": "subclass",
+      "parent": "class.oracle",
+      "name": "Gambler of Fate",
+      "group": "Divination Techniques",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 161
+      },
+      "flavor": "Fate is a game of chance, and you are its boldest player. As a Gambler of Fate, you manipulate the threads of destiny through luck, intuition, and sheer audacity. Your choices and predictions shape the battlefield, and the odds bend to your will—though not without risk.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Gifts of Chance",
+          "text": "When you choose this subclass at 2nd level, your predictions grant you additional boons. Whenever you complete a prediction, roll a d6 and gain one of the following benefits:\nYou gain these bonuses until your next long rest.",
+          "page": 161,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d6",
+                  "Dice Benefit"
+                ],
+                [
+                  "1",
+                  "You gain 20 temporary hit points."
+                ],
+                [
+                  "2",
+                  "Your walking speed increases by 5 feet."
+                ],
+                [
+                  "3",
+                  "Your AC increases by 1."
+                ],
+                [
+                  "4",
+                  "You gain a +1 bonus to attack rolls."
+                ],
+                [
+                  "5",
+                  "You gain a +1 bonus to damage rolls."
+                ],
+                [
+                  "6",
+                  "You gain resistance to one damage type of your choice"
+                ],
+                [
+                  "(other than force)."
+                ]
+              ],
+              "page": 161
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Fates Hand",
+          "text": "Starting at 6th level, you can conjure a protective ward of enchanted cards. As an action, you summon 1d12 cards that float around you for 8 hours or until all cards are expended.\nWhenever you take damage, one card disappears, reducing the damage by 1d12. A roll of 12 heals you for the full damage taken instead of reducing the damage.\nOnce you use this feature, you can’t do so again until you finish a long rest.",
+          "page": 161,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Winning Hand",
+          "text": "At 8th level, you can alter the odds of your strikes. When you deal damage with a weapon or spell attack, you can roll a d12 to determine the damage type of the attack, replacing its original damage type, and deal an additional 1d10 damage of the new type.\nBludgeoning, Piercing and Slashing damage types are considered non-magical unless cast by a spell.\nYou can use this feature a number of times equal to twice your proficiency bonus, and you regain all expended uses when you finish a short or long rest.",
+          "page": 161,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d6",
+                  "Damage Type",
+                  "d6",
+                  "Damage Type"
+                ],
+                [
+                  "1",
+                  "Bludgeoning",
+                  "7",
+                  "Lightning"
+                ],
+                [
+                  "2",
+                  "Piercing",
+                  "8",
+                  "Thunder"
+                ],
+                [
+                  "3",
+                  "Slashing",
+                  "9",
+                  "Poison"
+                ],
+                [
+                  "4",
+                  "Acid",
+                  "10",
+                  "Psychic"
+                ],
+                [
+                  "5",
+                  "Cold",
+                  "11",
+                  "Necrotic"
+                ],
+                [
+                  "6",
+                  "Fire",
+                  "12",
+                  "Radiant"
+                ]
+              ],
+              "page": 161
+            }
+          ],
+          "uses": {
+            "max": "prof*2",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Shuffle Odds",
+          "text": "Starting at 11th level, you can turn the tide of battle through sheer chance. When you are hit by an attack roll, you may choose to roll a d6 and apply the effect:",
+          "page": 161,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d6",
+                  "Dice Effect"
+                ],
+                [
+                  "1",
+                  "The attacker deals critical damage."
+                ],
+                [
+                  "2-5",
+                  "The damage is reduced by your proficiency bonus."
+                ],
+                [
+                  "6",
+                  "The damage is reflected back to the attacker."
+                ]
+              ],
+              "page": 161
+            }
+          ]
+        },
+        {
+          "level": 17,
+          "name": "Improved Odds",
+          "text": "At 17th level, your control over fate deepens. Whenever you roll a die for one of your Gambler of Fate features, roll three dice instead of one and choose which result to use.",
+          "page": 161
+        }
+      ]
+    },
+    {
+      "id": "subclass.oracle.occult_sigilist",
+      "kind": "subclass",
+      "parent": "class.oracle",
+      "name": "Occult Sigilist",
+      "group": "Divination Techniques",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 161
+      },
+      "flavor": "Mastering the forbidden art of sigil carving, you inscribe your will upon the world through elder symbols of power.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Sacrificial Sigil Creation",
+          "text": "When you choose this subclass at 2nd level, you unlock the secrets of sigil magic, inscribing symbols that shape reality at a cost. You gain a number of sigil dice equal to twice your proficiency bonus, with each die being a 1d4. Before activating a sigil, you must take automatic damage equal to a single sigil dice roll. This damage cannot be reduced or avoided unless otherwise stated and you may not fall below 1 hit point when taking the sigil dice damage. You gain access to the following sigils:\nSigil of Searing. You draw a flame-shaped sigil into the air as an action, marking an enemy within 60 feet of you. They must succeed on a Dexterity saving throw against your Spell save DC or take an amount of fire damage equal to your current sigil dice pool. On a successful save the creatures take half the fire damage.\nSigil of Solidification. You draw an eye-shaped sigil into the air as an action. Choose a creature within 60 feet of you. They must succeed on a Wisdom saving throw against your Spell save DC or take an amount of psychic damage equal to your current sigil dice pool and become paralyzed until the start of your next turn.\nSigil of Transference. You draw a fang-shaped sigil into the air as a bonus action, draining vitality from one creature and transferring it to another. A willing creature within 60 feet of you takes an amount of necrotic damage equal to your current sigil dice pool to a minimum of 1 hit point. Another willing creature within range regains an amount of hit points equal to the damage inflicted.\nSigil of Freedom. You draw a wing-shaped sigil into the air as a bonus action, temporarily boosting the movement of a creature within 60 feet of you. The creature does not provoke opportunity attacks and gains additional walking speed equal to 5 x your current sigil dice pool for 1 minute. They may not dash while this sigil is in use.\nSigil of Shielding. You draw a shield-shaped sigil into the air as an reaction when you or an ally within 60 feet of you is struck by an attack roll, gain an amount of temporary hit points equal to your current sigil dice pool.\nSigil of Hinderance. You draw a broken sword- shaped sigil into the air as an reaction when a weapon attack targets you or a creature within 60 feet of you. You impose a penalty to the attack roll equal to your current sigil dice pool. You must declare this before or after the attack is rolled but before the result is revealed.\nOnce you use a sigil, reduce the current amount of sigil dice you possess by 1. You may not draw any more sigils if you have 0 sigil dice. You regain all expended dice when you finish a long rest.\nAdditionally, at certain levels, your sigils grow in potency, increasing the size of your sigil dice. At 5th level your sigil dice become 1d6, 11th level equal to 1d8, and 17th level equal to 1d10.",
+          "page": 161
+        },
+        {
+          "level": 6,
+          "name": "Leeching Grasp",
+          "text": "Starting at 6th level, as an action, you cast the mage hand cantrip. When using a sigil that affects a target within 60 feet, you may originate the effect from the mage hand instead.\nAdditionally, you may use a bonus action to cause your mage hand to leech a creature within 30 feet of it. The creature takes necrotic damage equal to a single sigil dice roll and you heal for the amount inflicted.",
+          "page": 162,
+          "action": "action",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Occult Devotion",
+          "text": "At 8th level, Your mastery of sigils has deepened, allowing you to carve them with greater efficiency. Once per day, you may use a sigil without taking necrotic damage. You regain this ability after a long rest.\nAdditionally, if all of your predictions from your Predictions feature come true within the same day, you regain all expended sigil dice.",
+          "page": 162
+        },
+        {
+          "level": 11,
+          "name": "Adept Carver",
+          "text": "Starting at 11th level, You have unlocked advanced sigils, allowing for more potent sigils. When you draw a sigil, double the outcome of the sigil dice roll. You may use this feature an amount of times equal to your proficiency bonus, regaining all uses after a long rest.",
+          "page": 162,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 17,
+          "name": "Sigil of Horizons",
+          "text": "At 17th level, you have learned to break the boundary between this world and the unknown, allowing you to traverse between your sigils. As an action, you expend half of your maximum sigil dice to draw a colossal, permanent pentagram-shaped sigil into the ground underneath you. You may only have 3 sigils of horizons at a time. If you draw another sigil of horizons past your 3 sigil limit, the oldest sigil vanishes.\nWhen you are standing on your sigil of horizons, as an action, you may teleport yourself and an amount of willing creatures equal to your proficiency bonus to another sigil of horizon you have created.\nOnce you use this feature to teleport, you must take a long rest to use it again.",
+          "page": 162
+        }
+      ]
+    },
+    {
+      "id": "subclass.oracle.soul_of_the_present",
+      "kind": "subclass",
+      "parent": "class.oracle",
+      "name": "Soul of the Present",
+      "group": "Divination Techniques",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 162
+      },
+      "flavor": "You enhance the minds and bodies of your allies in the present, emphasizing using temporary hit points to sustain and protect allies.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Soul Aura",
+          "text": "When you choose this subclass at 2nd level, you gain the ability to create a soul aura that grants temporary hit points to your allies. As a bonus action, you can choose one ally within 30 feet of you (including yourself) to gain temporary hit points equal to your Wisdom modifier + your Oracle level (minimum of 1). These temporary hit points last for 1 hour. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+          "page": 162,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Resilient Soul",
+          "text": "Starting at 6th level, you can enhance your soul aura to grant additional resilience. When you grant temporary hit points using your Soul Aura, the recipient also gains resistance to one type of damage (choose from bludgeoning, piercing, slashing, fire, cold, lightning, or thunder) until the temporary hit points are depleted or for 1 hour, whichever comes first.",
+          "page": 162
+        },
+        {
+          "level": 8,
+          "name": "Hastened Soul",
+          "text": "At 8th level, When you grant temporary hit points using your Soul Aura, the recipient also gains an addition action until the temporary hit points are depleted or for 1 hour, whichever comes first. The target cannot use this extra action to make a non-cantrip spell attack.",
+          "page": 162
+        },
+        {
+          "level": 11,
+          "name": "Sustained Vitality",
+          "text": "Starting at 11th level, your ability to sustain your allies’ vitality improves. Allies who receive temporary hit points from you also gain a bonus to their attack rolls, saving throws, and ability checks equal to your Wisdom modifier until the temporary hit points are depleted or for 1 hour, whichever comes first.\nAdditionally, you can use your Soul Aura feature a number of times equal to double your proficiency bonus before needing to take a long rest.",
+          "page": 163
+        },
+        {
+          "level": 17,
+          "name": "Guardian Spirit",
+          "text": "At 17th level, your protective powers reach their peak. When you grant temporary hit points to an ally, if the amount of temporary hit points are equal to or above the allies current hit points, the amount of tempory hit points you provide is doubled.",
+          "page": 163
+        }
+      ]
+    },
+    {
+      "id": "subclass.oracle.voices_of_the_past",
+      "kind": "subclass",
+      "parent": "class.oracle",
+      "name": "Voices of the Past",
+      "group": "Divination Techniques",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 163
+      },
+      "flavor": "Drawing on ancient knowledge, the oracle empowers allies and enhance their abilities using the souls of the past.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Ancestral Echoes",
+          "text": "When you choose this subclass at 2nd level, you gain the ability to channel the wisdom and power of ancient spirits to aid your allies. As a bonus action, you can choose one ally, without ancestral echoes cast on them, within 30 feet of you (including yourself) to gain an Ancestral Echo, which provides a +1 bonus to attack rolls, damage rolls, and saving throws for 1 minute. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.\nAdditionally, you gain proficiency in History and one other skill of your choice from the Oracle’s skill list.",
+          "page": 163,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Spirit Infusion",
+          "text": "Starting at 6th level, your connection to the spirits of the past allows you to infuse their power into your spells. When you cast a spell that grants a beneficial effect to an ally (such as a buff or healing spell), you can also grant them an additional effect based on the type of spell cast:\nHealing Spell: The ally gains temporary hit points equal to your Wisdom modifier + your Oracle level. Buff Spell: The ally gains a +1 bonus to AC and saving throws until the start of your next turn.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
+          "page": 163,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Empowered Echoes",
+          "text": "At 8th level, the power of your Ancestral Echoes is further enhanced. Allies who receive an Ancestral Echo from you also gain a +1 bonus to their AC and an additional 1d4 radiant damage to their weapon attacks for the duration of the Echo.\nThe damage increases to 2d4 at 11th level, and 3d4 at 17th level.",
+          "page": 163
+        },
+        {
+          "level": 11,
+          "name": "Echoing Presence",
+          "text": "Starting at 11th level, the presence of the ancestral spirits you channel becomes more potent. Allies who receive an Ancestral Echo from you also gain two of the following resistances of your choice for the duration of the Ancestral Echo: Bludgeoning, Piercing, Slashing, Fire, Cold, Lightning, and Thunder.",
+          "page": 163
+        },
+        {
+          "level": 17,
+          "name": "Spirit Overload",
+          "text": "At 17th level, your mastery of the ancient spirits allows you to unleash their full power. When you use your Ancestral Echoes feature, you can choose to grant the Ancestral Echo to up to three allies within 30 feet of you. Additionally, the bonus provided by Ancestral Echoes increases to +2 for attack rolls, damage rolls, and saving throws, and the effect duration extends to 2 minutes.\nFurthermore, allies effected with an Ancestral Echo can add your Wisdom modifier to the damage of their first successful attack each turn.",
+          "page": 163
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

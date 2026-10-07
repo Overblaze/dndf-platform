@@ -1,48 +1,58 @@
-import { ABILITIES, ABILITY_NAMES, SKILLS, deriveSheet, levelUp, newBruiser, proficiencyBonus, type AbilityScores, type CharacterDoc, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, SKILLS, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, type AbilityScores, type CharacterDoc, type WeaponDef } from '@dndf/engine';
 import { useState } from 'react';
-import { bruiserStyles, furyOptions, rules } from '../lib/rules';
+import { choiceFeatures, classes, mainSubclasses, rules } from '../lib/rules';
 
 const BLANK_SCORES: AbilityScores = { str: 15, dex: 13, con: 14, int: 8, wis: 12, cha: 10 };
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, Math.floor(Number.isFinite(n) ? n : min)));
 
-/** Create a Bruiser or edit one. The full builder (every class, the book's 12 steps) comes in phase 4. */
+/** Create a character of any class, or edit one. The full builder (the book's 12 steps) comes in phase 4. */
 export function CharacterForm({ initial, onSave, onCancel }: { initial: CharacterDoc | null; onSave: (doc: CharacterDoc, log: string) => void; onCancel: () => void }) {
   const first = initial?.classes[0];
   const [name, setName] = useState(initial?.name ?? '');
   const [raceName, setRaceName] = useState(initial?.race.name ?? 'Human (Standard)');
   const [speed, setSpeed] = useState(initial?.race.speed ?? 30);
+  const [classId, setClassId] = useState(first?.id ?? 'class.bruiser');
   const [level, setLevel] = useState(first?.level ?? 1);
   const [scores, setScores] = useState<AbilityScores>(initial?.scores ?? BLANK_SCORES);
   const [subclass, setSubclass] = useState(first?.subclass ?? '');
   const [skills, setSkills] = useState<string[]>(initial?.skills ?? []);
-  const [fury, setFury] = useState<string[]>(initial?.choices.furyFeatures ?? []);
+  const [choices, setChoices] = useState<Record<string, string[]>>(initial?.choices ?? {});
   const [armor, setArmor] = useState(initial?.armor ?? null);
   const [shield, setShield] = useState(initial?.shield ?? false);
   const [weapons, setWeapons] = useState<WeaponDef[]>(initial?.weapons ?? []);
   const [strengthenSelf, setStrengthenSelf] = useState(initial?.willpower.strengthenSelf ?? 0);
 
-  const furyKnown = level >= 2 ? proficiencyBonus(level) : 0;
+  const cls = classes.find((c) => c.id === classId) ?? classes[0]!;
+  const subclassLevel = cls.subclass?.level ?? 3;
+  const styles = mainSubclasses(cls.id);
+  const picks = choiceFeatures(cls).filter((f) => f.level <= level);
+  const allowed = (expr: number | string) => evaluateNumber(expr, classScope({ cls, classLevel: level, scores }));
+  const classSkills = cls.proficiencies as { skills?: { choose?: number; from?: string[] | string; text?: string } } | undefined;
+  const skillHint = classSkills?.skills?.choose
+    ? `${cls.name}: choose ${classSkills.skills.choose} from ${Array.isArray(classSkills.skills.from) ? classSkills.skills.from.map((id) => SKILLS.find((k) => k.id === id)?.name ?? id).join(', ') : 'any skills'}`
+    : classSkills?.skills?.text ?? '';
+  const keptChoices = Object.fromEntries(picks.map((f) => [f.choices.id, choices[f.choices.id] ?? []]));
   const toggle = (list: string[], id: string) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id]);
   const setWeapon = (i: number, patch: Partial<WeaponDef>) => setWeapons(weapons.map((w, j) => (j === i ? { ...w, ...patch } : w)));
 
   const save = () => {
-    const shared = { name: name.trim() || 'Unnamed', level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, furyFeatures: fury };
+    const shared = { name: name.trim() || 'Unnamed', classId: cls.id, level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, choices: keptChoices };
     if (!initial) {
-      const doc = { ...newBruiser(shared, rules), armor, shield, weapons, willpower: { strengthenSelf } };
+      const doc = { ...newCharacter(shared, rules), armor, shield, weapons, willpower: { strengthenSelf } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return onSave(doc, `Created ${doc.name}`);
     }
     const oldMax = deriveSheet(initial, rules).maxHp.value;
     // Going up exactly one level is a level-up (Dream Points reset); anything else is a plain edit.
-    const base = level === first!.level + 1 ? levelUp(initial) : initial;
+    const base = level === first!.level + 1 && cls.id === first!.id ? levelUp(initial) : initial;
     const doc: CharacterDoc = {
       ...base,
       name: shared.name,
       race: { ...initial.race, name: shared.raceName, speed },
-      classes: [{ ...base.classes[0]!, level, subclass: level >= 3 ? shared.subclass : undefined }, ...base.classes.slice(1)],
+      classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...base.classes.slice(1)],
       scores,
       skills,
-      choices: { ...initial.choices, furyFeatures: level >= 2 ? fury : [] },
+      choices: keptChoices,
       armor,
       shield,
       weapons,
@@ -72,8 +82,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       </div>
       <div className="grid-2">
         <label className="field">
-          <span className="label">Class</span>
-          <input value="Bruiser (rules v10)" disabled />
+          <span className="label">Class (rules v10) · p.{cls.source.page}</span>
+          <select value={cls.id} onChange={(e) => { setClassId(e.target.value); setSubclass(''); }}>
+            {classes.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+          </select>
         </label>
         <label className="field">
           <span className="label">Level</span>
@@ -91,29 +103,34 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           ))}
         </div>
       </fieldset>
-      {level >= 3 && (
+      {level >= subclassLevel && styles.length > 0 && (
         <label className="field">
-          <span className="label">Brawling Style · p.87</span>
+          <span className="label">{cls.subclass?.label ?? 'Subclass'} · level {subclassLevel}</span>
           <select value={subclass} onChange={(e) => setSubclass(e.target.value)}>
             <option value="">Not chosen yet</option>
-            {bruiserStyles.map((style) => <option key={style.id} value={style.id}>{style.name}</option>)}
+            {styles.map((style) => <option key={style.id} value={style.id}>{style.name}</option>)}
           </select>
         </label>
       )}
-      {level >= 2 && (
-        <fieldset>
-          <legend className="label">Fury features: {fury.length} of {furyKnown} · p.86</legend>
-          {fury.length > furyKnown && <p className="notice">That is more than the {furyKnown} the rules give at this level. It's your call.</p>}
-          {furyOptions.map((option) => (
-            <label key={option.id} className="check">
-              <input type="checkbox" checked={fury.includes(option.id)} onChange={() => setFury(toggle(fury, option.id))} />
-              <span>{option.name}</span>
-            </label>
-          ))}
-        </fieldset>
-      )}
+      {picks.map((feature) => {
+        const picked = choices[feature.choices.id] ?? [];
+        const known = allowed(feature.choices.count);
+        return (
+          <fieldset key={feature.choices.id}>
+            <legend className="label">{feature.name} options: {picked.length} of {known} · p.{feature.page}</legend>
+            {picked.length > known && <p className="notice">That is more than the {known} the rules give at this level. It's your call.</p>}
+            {feature.options.map((option) => (
+              <label key={option.id} className="check">
+                <input type="checkbox" checked={picked.includes(option.id)} onChange={() => setChoices({ ...choices, [feature.choices.id]: toggle(picked, option.id) })} />
+                <span>{option.name}</span>
+              </label>
+            ))}
+          </fieldset>
+        );
+      })}
       <fieldset>
         <legend className="label">Skill proficiencies (class, background and others)</legend>
+        {skillHint && <p className="page-ref">{skillHint}</p>}
         <div className="grid-checks">
           {SKILLS.map((skill) => (
             <label key={skill.id} className="check">

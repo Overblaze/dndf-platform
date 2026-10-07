@@ -1,0 +1,691 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.martial_artist",
+      "kind": "class",
+      "name": "Martial Artist",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 149
+      },
+      "flavor": "The Martial Artist is a disciplined warrior who channels the flow of inner energy, known as ki, to achieve physical or spiritual mastery. Trained in a wide range of techniques, they combine precise strikes with extraordinary agility, mastering not only the art of combat but also their own body’s spirit.",
+      "quote": "A MASTER OF THE S POWERS IS STRONG AS A HUNDRED MEN. IX --- Rob Lucci",
+      "hitDie": 8,
+      "savingThrows": [
+        "str",
+        "dex"
+      ],
+      "proficiencies": {
+        "armor": [],
+        "weapons": [
+          "simple",
+          "shortsword",
+          "chakram",
+          "jitte",
+          "war_fan"
+        ],
+        "tools": [
+          "Choose one type of artisan’s tools or one musical Instrument"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "acrobatics",
+            "athletics",
+            "history",
+            "insight",
+            "religion",
+            "stealth"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a shortsword or (b) any simple weapon",
+        "(a) a pirate’s pack or (b) an explorer’s pack",
+        "(a) 10 darts or (b) two daggers"
+      ],
+      "progression": {
+        "columns": {
+          "martialArtsDie": [
+            "1d6",
+            "1d6",
+            "1d6",
+            "1d6",
+            "1d8",
+            "1d8",
+            "1d8",
+            "1d8",
+            "1d8",
+            "1d8",
+            "1d10",
+            "1d10",
+            "1d10",
+            "1d10",
+            "1d10",
+            "1d10",
+            "1d12",
+            "1d12",
+            "1d12",
+            "1d12"
+          ],
+          "ki": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "unarmoredMovement": [
+            "—",
+            "+10ft",
+            "+10ft",
+            "+10ft",
+            "+10ft",
+            "+15ft",
+            "+15ft",
+            "+15ft",
+            "+15ft",
+            "+20ft",
+            "+20ft",
+            "+20ft",
+            "+20ft",
+            "+25ft",
+            "+25ft",
+            "+25ft",
+            "+25ft",
+            "+30ft",
+            "+30ft",
+            "+30ft"
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "ki",
+          "name": "Ki Points",
+          "max": "col.ki",
+          "recharge": "short",
+          "minLevel": 2,
+          "confirm": "Spent at least 30 minutes of the rest meditating"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Martial Arts School",
+        "level": 3,
+        "featureLevels": [
+          3,
+          6,
+          11,
+          17
+        ]
+      },
+      "subclassIntro": {
+        "text": "There are several different schools that teach martial arts. Although anyone strong enough can learn from these schools in theory, only a select group can successfully enter and learn these ways of fighting.",
+        "page": 152
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Unarmored Defense",
+          "text": "Beginning at 1st level, while you are wearing no armor and not wielding a Shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
+          "page": 149
+        },
+        {
+          "level": 1,
+          "name": "Martial Arts",
+          "text": "At 1st level, your practice of Martial Arts gives you mastery of Combat styles that use unarmed strikes and martial artist Weapons, which are shortswords and any simple melee weapons that don’t have the Two-Handed or heavy property.\nYou gain the following benefits while you are unarmed or wielding only martial artist Weapons and you aren’t wearing armor or wielding a shield:\nYou can use Dexterity instead of Strength for the Attack and Damage Rolls of your unarmed strikes and martial artist Weapons.\nYou can roll a d6 in place of the normal damage of your Unarmed Strike or martial artist weapon. This die changes as you gain martial artist levels, as shown in the Martial Arts column of the Martial Artist table.\nWhen you use the Attack action with an Unarmed Strike or a martial artist weapon on Your Turn, you can make one Unarmed Strike as a bonus action. For example, if you take the Attack action and Attack with a Quarterstaff, you can also make an Unarmed Strike as a bonus action, assuming you haven’t already taken a bonus action this turn.\nCertain martial arts schools use specialized forms of the martial artist Weapons. For example, you might use a club that is two lengths of wood connected by a short chain (called a nunchaku) or a Sickle with a shorter, straighter blade (called a kama). Whatever name you use for a martial artist weapon, you can use the game statistics provided for the weapon.",
+          "page": 150
+        },
+        {
+          "level": 2,
+          "name": "Unarmored Movement",
+          "text": "Starting at 2nd level, your speed increases by 10 feet while you are not wearing armor or wielding a Shield. This bonus increases when you reach certain martial artist levels, as shown in the Martial Artist table.",
+          "page": 150
+        },
+        {
+          "level": 2,
+          "name": "Ki",
+          "text": "Starting at 2nd level, your training allows you to harness The Spiritual energy of ki. Your access to this energy is represented by a number of ki points. Your martial artist level determines the number of points you have, as shown in the Ki Points column of the Martial Artist table.\nYou can spend these points to fuel various ki features. You start knowing three such features: Swift Barrage, Shifting Body, and Whirlwind Step. You learn more ki features as you gain levels in this class.\nWhen you spend a ki point, it is unavailable until you finish a short or long rest, at the end of which you draw all of your expended ki back into yourself. You must spend at least 30 minutes of the rest meditating to regain your ki points.\nSome of your ki features require your target to make a saving throw to resist the feature’s Effects. The saving throw DC is calculated as follows:\nKi save DC = 8 + your Proficiency Bonus + your Wisdom modifier",
+          "page": 150,
+          "sections": [
+            {
+              "name": "Swift Barrage",
+              "text": "Immediately after you take the Attack action on Your Turn, you can spend 1 ki point to make two unarmed strikes as a bonus action.",
+              "page": 150
+            },
+            {
+              "name": "Shifting Body",
+              "text": "You can spend 1 ki point to take the Dodge action as a bonus action on Your Turn.",
+              "page": 150
+            },
+            {
+              "name": "Whirlwind Step",
+              "text": "You can spend 1 ki point to take the Disengage and Dash action as a bonus action on Your Turn, and your jump distance is doubled for the turn.",
+              "page": 150
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Soul Weapon",
+          "text": "Also at 2nd level, you train yourself to use a variety of weapons as martial artist weapons, not just simple melee weapons and shortswords. Whenever you finish a short or long rest, you can touch one weapon, focus your ki on it, and then count that weapon as a martial artist weapon until you use this feature again.\nThe chosen weapon must meet these criteria:\nThe weapon must be a simple or martial weapon. You must be proficient with it.\nIt must lack the heavy and special properties.",
+          "page": 150
+        },
+        {
+          "level": 3,
+          "name": "Martial Arts School",
+          "text": "When you reach 3rd level, you commit yourself to a school of martial arts: Black Leg Style, Combustion Boxer, Fish-Man Karate, New Kama Kenpo, Six Powers, or Wano Ninpo, all detailed at the end of the class description. Your school grants you features at 3rd level and again at 6th, 11th, and 17th level.",
+          "page": 150,
+          "grantsSubclass": true
+        },
+        {
+          "level": 3,
+          "name": "Deflect Projectile",
+          "text": "Starting at 3rd level, you can use your reaction to deflect ranged attacks that deal bludgeoning, piercing, or slashing damage. When you do so, the damage you take from the attack is reduced by 1d10 + your Dexterity modifier + your martial artist level.\nIf you reduce the damage to 0, you can spend 1 ki point to redirect the attack toward another creature. If you do so, choose a creature within 60 feet of yourself that isn’t behind Total Cover. That creature must succeed on a Dexterity saving throw or take damage equal to two rolls of your Martial Arts die. The damage is the same type dealt by the attack.",
+          "page": 150
+        },
+        {
+          "level": 3,
+          "name": "Ki-Fueled Attack",
+          "text": "Also at 3rd level, you may spend 1 ki point after your attack roll to increase the amount of base damage dice rolled by your unarmed or monk weapon by 1.",
+          "page": 151
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 151,
+          "asi": true
+        },
+        {
+          "level": 4,
+          "name": "Slow Fall",
+          "text": "Beginning at 4th level, you can use your reaction when you fall to reduce any falling damage you take by an amount equal to five times your martial artist level.",
+          "page": 151
+        },
+        {
+          "level": 4,
+          "name": "Heart Chakra",
+          "text": "At 4th level, you have complete control over your heart chakra. As an action, you can spend 2 ki points and roll a Martial Arts die. You regain a number of hit points equal to the number rolled plus your proficiency bonus.",
+          "page": 151
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "Beginning at 5th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn.",
+          "page": 151
+        },
+        {
+          "level": 5,
+          "name": "Stunning Strike",
+          "text": "Starting at 5th level, you can interfere with the flow of ki in an opponent’s body. When you hit another creature with a melee weapon Attack, you can spend 1 ki point to attempt a Stunning Strike. The target must succeed on a Constitution saving throw or be Stunned until the start of your next turn.",
+          "page": 151
+        },
+        {
+          "level": 5,
+          "name": "Focused Aim",
+          "text": "Beginning at 5th level, when you miss with an attack roll, you can spend 1 to 3 ki points to increase your attack roll by 2 for each of these ki points you spend, potentially turning the miss into a hit.",
+          "page": 151
+        },
+        {
+          "level": 6,
+          "name": "Solar Plexus Chakra",
+          "text": "Starting at 6th level, through control over your solar plexus chakra, your Unarmed Strikes can deal Force damage or its normal damage type (your choice).",
+          "page": 151
+        },
+        {
+          "level": 7,
+          "name": "Evasion",
+          "text": "At 7th level, your instinctive agility lets you dodge out of the way of certain area Effects, such as an exploding missile. When you are subjected to an Effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+          "page": 151
+        },
+        {
+          "level": 7,
+          "name": "Stomach Chakra",
+          "text": "Starting at 7th level, through control over your stomach chakra, if you spend at least 1 minute resting, you can give yourself all the benefits of a Short Rest. Once you use this feature, you can’t use it again until you finish a Long Rest.",
+          "page": 151,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 9,
+          "name": "Acrobatic Movement",
+          "text": "At 9th level, while you aren’t wearing armor or wielding a Shield, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the movement.",
+          "page": 151
+        },
+        {
+          "level": 10,
+          "name": "Root Chakra",
+          "text": "At 10th level, through control over your root chakra, you can use a Bonus Action to remove one of the following conditions from yourself: Charmed, Frightened, or Poisoned.\nIn addition, forgoing food and drink doesn’t give you levels of exhaustion.",
+          "page": 151
+        },
+        {
+          "level": 13,
+          "name": "Throat Chakra",
+          "text": "Starting at 13th level, through control over your throat chakra, you gain the ability to communicate using your mind and spirit to connect with others and understand their intent. You gain telepathy up to 30 feet.",
+          "page": 151
+        },
+        {
+          "level": 13,
+          "name": "Deflect Energy",
+          "text": "At 13th level, you can now use your Deflect Missiles feature against a ranged attack that deals any type of damage.",
+          "page": 151
+        },
+        {
+          "level": 14,
+          "name": "Crown Chakra",
+          "text": "Beginning at 14th level, through control over your crown chakra, you gain proficiency in all Saving Throws.\nAdditionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result.",
+          "page": 151
+        },
+        {
+          "level": 15,
+          "name": "Sacral Chakra",
+          "text": "At 15th level, through control over your sacral chakra, when you roll Initiative and have 3 Ki Points or fewer, you regain expended Ki Points until you have 4.",
+          "page": 151
+        },
+        {
+          "level": 18,
+          "name": "Third Eye Chakra",
+          "text": "Beginning at 18th level, through control over your third eye chakra, you can use your action to spend 3 ki points to perfectly brace yourself against harm for 1 minute or until you are incapacitated. During that time, you have resistance to all damage except force damage.",
+          "page": 151
+        },
+        {
+          "level": 20,
+          "name": "Death Chakra",
+          "text": "At 20th level, if you drop to 0 hit points, you can spend 4 ki points, roll four Martial Arts dice, and add the dice together. Your number of Hit Points instead changes to the total rolled.\nEach time you use this feature after the first, the ki point cost increases by 2. When you finish a short or long rest, the Ki Point cost resets to 4.",
+          "page": 152
+        }
+      ]
+    },
+    {
+      "id": "subclass.martial_artist.black_leg_style",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "Black Leg Style",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 152
+      },
+      "flavor": "Mastering the art of combat through sheer agility and devastating kicks, practitioners of the Black Leg Style turn their legs into weapons of unrivaled power.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Black Leg Combatant",
+          "text": "Starting at 3rd level, you adopt the legendary Black Leg Style, enhancing your kicking techniques and mobility in combat. You gain an additional 1d6 damage with your unarmed strikes made with your legs.\nAdditionally, When you make an unarmed kick attack on your turn, you can use a bonus action to move up to 15 feet without provoking opportunity attacks. You can use this feature a number of times equal to your proficiency bonus per short or long rest.",
+          "page": 152,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Stylish Boost",
+          "text": "Also at 3rd level, your confidence and swagger in battle invigorate you. As an action, you can perform a thematic action such as lighting a cigarette, putting your hands in your pockets, adjusting your tie, striking a confident pose, or talking about what you stand for. Until the end of your next turn you gain the following:\nYou gain temporary hit points equal to half you Martial Artist level rounded up.\nYou have advantage on unarmed kick attack rolls. Your unarmed kicks deal +2 bonus damage. Each subsequent hit with an unarmed kick against the same creature increases this bonus by an additional +2.\nYou may not use this feature again until you complete a short or long rest.",
+          "page": 152
+        },
+        {
+          "level": 6,
+          "name": "Sky Step",
+          "text": "Starting at 6th level, as a bonus action you launch yourself into the air. Until the beginning of your next turn, you gain a flying (hovering) speed equal to your walking speed. To stay in the air, you must spend another bonus action at the beginning of your turns too keep yourself hovering, otherwise you fall as normal. You can use this ability to take off from the ground a number of times equal to your proficiency bonus per long rest.\nAdditionally, your walking speed increases by an additional 10 feet.",
+          "page": 152,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "action": "bonus",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Flaming Leg Technique",
+          "text": "Starting at 11th level, through rigorous training, your kicks generate explosive power. As a reaction, you can ignite your leg with intense heat, enhancing your strikes for 1 minute. While active you gain the following effects:\nYour unarmed kicks now deal fire damage instead of bludgeoning.\nYou can re-roll 1s on damage rolls for your unarmed kicks.\nEnemies hit by your unarmed kicks must succeed on a Constitution saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or lose their reaction until the start of your next turn.\nYou can use this feature once per short or long rest.",
+          "page": 152,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Windmill Kick",
+          "text": "Also at 11th level, when you use your Whirlwind Step feature, you can make 2 additional attacks.",
+          "page": 152
+        },
+        {
+          "level": 17,
+          "name": "Hell’s Fury",
+          "text": "At 17th level, as an action, you can deliver a rapid barrage of kicks to a single creature within range. you attack the creature 8 times with unarmed kick attacks. After you deliver your attacks, the creature is knocked back 20 feet and falls prone. You can use this feature once per long rest.",
+          "page": 152,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "action": "action",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.martial_artist.combustion_boxer",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "Combustion Boxer",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 153
+      },
+      "flavor": "A living explosion in motion, the Combustion Boxer masters the art of controlled devastation, using their own fists to generate concussive blasts that send enemies flying.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Explosive Fist",
+          "text": "Starting at 3rd level, when you choose this school, your strikes generate explosive force, intensifying the damage you deal. You gain the following benefits:\nYour unarmed strikes deal 1d6 additional fire damage.\nWhen you score a critical hit with an unarmed strike, the explosion engulfs the target and all hostile creatures within 5 feet, dealing fire damage equal to your Martial Arts die.",
+          "page": 153
+        },
+        {
+          "level": 3,
+          "name": "Hakai-Ho",
+          "text": "Also at 3rd level, you unleash an explosive burst of force with your fists. As a reaction, you can expend 2 ki points to make a special attack, creating a 20 ft. cone of fire. Each creature in the area must make a Dexterity saving throw against your Ki Save DC. On a failure, they take fire damage equal to two rolls of your Martial Arts die and are pushed 10 feet away. On a success, they take half damage and are not pushed.\nThe damage increases to three rolls at 11th level and four rolls at 17th level.",
+          "page": 153
+        },
+        {
+          "level": 6,
+          "name": "Blast Back",
+          "text": "Starting at 6th level, the force of your strikes becomes so intense that your opponents are sent flying. When you hit a creature with an unarmed strike, you can expend 1 ki point to force them to make a Strength saving throw against your Ki Save DC. On a failure, the target is launched 10 feet per hit taken that turn. If they collide with a surface or another creature, they take bludgeoning damage equal to half the distance traveled. If the target succeeds, they are still pushed half the total distance.",
+          "page": 153
+        },
+        {
+          "level": 11,
+          "name": "Toughened Body",
+          "text": "Starting at 11th level, through sheer endurance, you’ve trained your body to withstand your own fiery explosions:\nYou gain resistance to fire damage.\nYou add your Constitution modifier to your Unarmored Defense AC.\nIf a creature within 5 feet hits you with a melee attack, you can use your reaction to deal fire damage equal to your Martial Arts die to them.",
+          "page": 153
+        },
+        {
+          "level": 11,
+          "name": "Unleash Detonation",
+          "text": "Also at 11th level, when you are reduced to 0 hit points, you can choose to remain standing and unleash a massive detonation. Each creature of your choice within 30 feet of you takes fire damage equal to four rolls of your Martial Arts die. You then fall unconscious. You must finish a long rest before using this again.",
+          "page": 153
+        },
+        {
+          "level": 17,
+          "name": "Compressed Force Perfection",
+          "text": "At 17th level, when you take the Ready action, you can store energy in your punch. The next unarmed strike you make is an automatic critical hit, and the target must succeed on a Strength saving throw or be thrown 30 feet and knocked prone. You must spend 2 ki points to use this feature.",
+          "page": 153
+        }
+      ]
+    },
+    {
+      "id": "subclass.martial_artist.fish_man_karate",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "Fish-Man Karate",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 153
+      },
+      "flavor": "Through mastery of fish-man karate, which is often used alongside fish-man jujutsu, you begin to learn how to control the water around you and within your opponent’s body. Water can be drawn and manipulated anywhere, even the atmosphere, to emit devastating shockwaves of energy that can even affect devil fruit users. This martial arts is learned primarily by fish-men, but can also be learned by humans or other races occasionally. It would be unthinkable to learn this style of martial arts as a devil fruit user.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Water Adept",
+          "text": "Starting at 3rd level, your strikes, whether you’re on land or in seawater, are now infused with the water around you. When you make a melee weapon attack, you can choose to use cold damage for the damage type and you can touch Logia Devil Fruit users.\nAdditionally, when you hit a Devil Fruit user with any fish-man karate feature or cold damage from this feature, you reduce that target’s damage from all of its attacks and features equal to your proficiency bonus until the beginning of your next turn.",
+          "page": 153
+        },
+        {
+          "level": 3,
+          "name": "Arabesque Tile True Punch",
+          "text": "Starting at 3rd level, you can manipulate and control the direction of water in and around your enemy’s body. Whenever you hit a creature with one of the attacks granted by your Swift Barrage, you can impose one of the following Effects on that target:\nIt must succeed on a Dexterity saving throw or be knocked prone.\nIt must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.\nIt can’t take Reactions until the end of your next turn.",
+          "page": 153
+        },
+        {
+          "level": 6,
+          "name": "Five Thousand Tile True Punch",
+          "text": "At 6th level, you gain the ability to channel your ki into devastating waves of water-infused energy. Immediately after you take the Attack action on Your Turn, as a bonus action, you can spend 2 ki points to force each creature in a 15-foot cone to make a Dexterity saving throw against your Ki Save DC. A creature takes three Martial Arts dice in cold damage on a failed save, or half as much damage on a successful one.\nYou can spend additional ki points to add an additional one Martial Arts die to the damage.",
+          "page": 154
+        },
+        {
+          "level": 6,
+          "name": "Wrath of the Sea",
+          "text": "Also at 6th level, your attacks made with your unarmed strikes, martial artist weapon, or martial artist features deal additional cold damage equal to half your proficiency bonus (rounded up).",
+          "page": 154
+        },
+        {
+          "level": 11,
+          "name": "Sharkskin Palm Block",
+          "text": "At 11th level, the power of your water-infused ki now radiates from you, protecting your allies from harm and punishing any who raise arms against them. As a bonus action, you can take a defensive stance to create a protective aura of water that emerges 30 feet from you for 1 minute. Choose acid, cold, fire, lightning, or poison damage, and for the duration, you gain the following effects:\nYou and your allies within your aura gain resistance to the chosen damage type.\nWaves of water-infused aura flow out from you and your allies when any of you are attacked. When you or one of your allies in the aura is hit by an attack made by another creature within the aura, the target of the attack can use their reaction to deal an amount of cold damage equal to one roll of your Martial Arts die to the attacker.\nOnce you use this bonus action, you can’t use it again until you finish a long rest, unless you expend 4 ki points to use it again.",
+          "page": 154,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 17,
+          "name": "Shark Pack Attack",
+          "text": "At 17th level, you can release a pack of watery sharks that tear apart any creatures they catch. As an action, you can spend up to any number of ki points and conjure a number of shark projectiles equal to ki points spent to hurl at targets within 120 feet of you. You can hurl them at one target or several. Make a ranged spell attack for each shark using your proficiency bonus + Wisdom modifier for the attack modifier. On a hit, the target takes 2 Martial Arts die in cold damage and is restrained until the start of your next turn, when the sharks evaporate.",
+          "page": 154
+        }
+      ]
+    },
+    {
+      "id": "subclass.martial_artist.new_kama_kenpo",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "New Kama Kenpo",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 154
+      },
+      "flavor": "New Kama Kenpo is the ultimate form of fighting used by the 99 masters of New Kama Kenpo and their Queen from Kamabakka Kingdom. This style has inspired other similar forms and schools of martial arts, but is considered the strongest of its kind. It is largely used by those who consider themselves “Okamas”, but it can be learned by anyone who dedicates themselves to the teachings of this martial arts.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Okama Way",
+          "text": "When you choose this school at 3rd level, your dazzling strikes can overwhelm both body and mind. When you hit a creature with an attack or feature three times within a minute, you may choose to charm them until the end of your next turn. While charmed in this way, the creature cannot target you with attacks or harmful abilities, and the next attack made against them by any source deals double damage. This charm effect ends immediately after that attack is resolved.\nOnce you charm a creature this way, you cannot do so again against that creature until you finish a short or long rest.",
+          "page": 154
+        },
+        {
+          "level": 3,
+          "name": "Spinning Spa",
+          "text": "Starting at 3rd level, you learn how to spin and dance gracefully as part of your Swift Barrage. Whenever you use Swift Barrage, you gain the benefit of the Disengage action, and your walking speed increases by 20 feet until the end of your turn.\nAdditionally, your Unarmored Defense and Ki Save DCs can use Charisma in place of Wisdom, and as long as you aren’t Grappled, Restrained or Unconscious you are considered under the effects of the Jump spell at all times.",
+          "page": 154
+        },
+        {
+          "level": 6,
+          "name": "Kick Claw First Pointe",
+          "text": "Beginning at 6th level, you can leap to intercept the movement of an enemy during battle. When a creature moves within 15 feet of you for the first time during its turn, you can use your reaction to spin or flip and leap up to 15 feet toward a space adjacent to it. If you do, you make an unarmed attack against the creature immediately at the end of the movement. If you hit, the creature’s speed becomes 0 for the rest of the turn. If the creature is in the air, it also falls to the ground.\nAdditionally, you do not expend movement when getting up from the prone condition and your movement speed also now cannot be reduced by non-magical means, including through exhaustion.",
+          "page": 154
+        },
+        {
+          "level": 11,
+          "name": "Awakening of the Maiden",
+          "text": "Starting at 11th level, you can always spin in and out of danger at the right moment. When you make an ability check, attack roll, or a saving throw and have disadvantage on the roll, you can spend 2 ki points to cancel the disadvantage for that roll.\nAdditionally, you can spend 1 Ki Point to cast one of the following spells: Charm Person, Command, Suggestion.",
+          "page": 155
+        },
+        {
+          "level": 17,
+          "name": "Galaxy Spin",
+          "text": "Starting at 17th level, whenever you use your Swift Barrage, you create a number of spinning afterimages that make you more difficult to hit and allow you make an extra attack. When you use your Swift Barrage, you can make an additional attack with it (up to a total of three Swift Barrage attacks). Also, whenever you hit an enemy with your Swift Barrage, they have disadvantage on attacks against you until the end of their next turn.",
+          "page": 155
+        }
+      ]
+    },
+    {
+      "id": "subclass.martial_artist.six_powers",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "Six Powers",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 155
+      },
+      "flavor": "Six Powers is a special, superhuman martial arts style utilized by many trained government assassins and agents. Those that master this style can have the strength of up to a hundred men. Though this style often requires intense training from a young age, some can learn certain parts of the six powers with enough intense training at a later age. Most users of the six powers belong to the World Government and Navy, though rarely some pirates and other factions have been shown to know it.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Finger Pistol",
+          "text": "Starting at 3rd level, your fingers become as sharp as daggers. When you make a melee unarmed strike, you use piercing damage for the damage type.\nAdditional, your unarmed attacks ignore spells and reaction features that increase a creature’s AC.",
+          "page": 155
+        },
+        {
+          "level": 3,
+          "name": "Tempest Kick",
+          "text": "Also at 3rd level, you can make ranged air slices with your legs or other available limbs. Your unarmed attacks gain a range of 30 feet and deal slashing damage.\nYou may spend 1 ki point to increase the ranged of your Tempest Kick attacks to 60 feet until the end of your turn.\nYou do not gain the benefits from your Finger Pistol feature when you make these ranged unarmed attacks.",
+          "page": 155
+        },
+        {
+          "level": 6,
+          "name": "Iron Body and Paper Art",
+          "text": "Starting at 6th level, your muscles become stronger than steel. Your Deflect Bullets feature can now work against melee attacks that deal bludgeoning, piercing, or slashing damage.\nYou can use this feature this way a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest. While you have no uses available, you can spend 1 additional ki point to use this feature again.\nAdditionally, if you reduce the damage of a melee attack to 0 with this feature, you can completely shift your body to redirect the attack toward another enemy by spending 1 ki point as part of the same reaction. By redirecting the attack, you can force it to hit a creature of your choice, other than the attacker, within 5 feet of you.",
+          "page": 155,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Shave",
+          "text": "Starting at 11th level, you gain the ability to move or fly at extremely high speeds, appearing to teleport. You can use a bonus action to teleport up to 60 feet to an unoccupied space you can see . You then have advantage on the first melee Attack you make before the end of the turn.\nYou can use this feature a number of times equal to your proficiency bonus. After you’ve expended all these uses, you can only use Shave again by spending 1 ki point to activate it. You regain all uses of this feature after you complete a long rest.",
+          "page": 155
+        },
+        {
+          "level": 11,
+          "name": "Moon Walk",
+          "text": "Also at 11th level, when you use your Whirlwind Step, you can now kick the air with such force that you begin to propel yourself. While you do this, you have a flying speed equal to your walking speed until the end of your next turn.\nAdditionally, using the Slow Fall feature now reduces any Falling damage you take to 0.",
+          "page": 155
+        },
+        {
+          "level": 17,
+          "name": "Six King Gun",
+          "text": "At 17th level, you learn the secret seventh technique of the Six Powers. When you hit a creature with an Unarmed strike within 5 feet of you, you can spend 3 ki points to force it to make a Constitution saving throw. If it fails, it is reduced to 0 Hit Points. If it succeeds, it takes 10d10 force damage. Until the end of your next turn, you can’t take an Action on your turn, as a wave of lethargy sweeps over you.",
+          "page": 155
+        }
+      ]
+    },
+    {
+      "id": "subclass.martial_artist.wano_ninpo",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "Wano Ninpo",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 156
+      },
+      "flavor": "Hidden deep within the remote regions of Wano, there are shadowy martial artist assassins called “Ninja”. Be it fists or weapons, they are trained to kill you at a moments notice at the drop of a hat.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Shadow Budoka",
+          "text": "Starting at 3rd level, you are an expert at being unseen, gaining expertise in Stealth.\nIn addition, when you hit a creature with a ranged weapon attack while hidden, you deal an extra 1d6 damage if the creature is unaware of your presence (determined by a successful Stealth check contested by its passive Perception).\nAfter making the attack, you do not immediately reveal your position. However, the target may attempt a Perception check after the attack, contested by your Stealth check. On a success, the target spots you.",
+          "page": 156
+        },
+        {
+          "level": 3,
+          "name": "Ninpo: Enton no Jutsu",
+          "text": "Also at 3rd level, you can create smoke bombs for a quick escape. As a reaction when targeted by an attack, or as a bonus action on your turn, you can expend 1 ki point to cast Fog Cloud centered on yourself. The spell lasts for 1 minute and uses your Ki Save DC. You can see in your own fog cloud.\nAdditionally, if you make a Stealth check immediately after using this feature and succeed against all creatures’ Passive Perception, you are considered invisible to those creatures until the end of your next turn.",
+          "page": 156
+        },
+        {
+          "level": 6,
+          "name": "Ninpo: Kage Shisso",
+          "text": "Starting at 6th level, your ability to move through stealth boggles imagination. As a reaction, while in fog, dim light, or darkness, you can teleport up to 60 feet to an unoccupied space in fog, dim light, or darkness that you can see. Your next melee attack before the end of the turn has advantage and deals bonus damage equal to your proficiency bonus.",
+          "page": 156
+        },
+        {
+          "level": 11,
+          "name": "Ninpo: Odako",
+          "text": "Starting at 11th level, you can unfurl your ninja suit to reveal a large kite strapped to your back. When you use Step of the Wind, you gain a flying speed equal to your movement speed until the end of your next turn.\nAdditionally, your Slow Fall feature now reduces all falling damage to 0, regardless of distance.",
+          "page": 156
+        },
+        {
+          "level": 11,
+          "name": "Ninpo: Daisuki no Jutsu",
+          "text": "Also at 11th level, you learn to lure your opponent into a false sense of security and embrace them. As an action, you can embrace a creature within 5 feet of you, forcing them to make a Charisma saving throw against your Ki Save DC. On a failure, the creature is Charmed by you for 1 minute. They may repeat the saving throw at the end of each of their turns, ending the effect on a success.",
+          "page": 156
+        },
+        {
+          "level": 17,
+          "name": "Ninpo: Kintama-Tsubushi",
+          "text": "At 17th level, you learn a legendary and devastating strike feared by all, this ultimate technique targets an opponent’s most vulnerable point. When you hit a creature with a ranged or melee attack, you can expend 5 ki points to attempt a precise, crippling strike. The target must make a Constitution saving throw against your Ki Save DC. On a failure, they take 8d12 bludgeoning damage and are knocked prone from sheer agony. On a success, they take half damage and remain standing.",
+          "page": 156
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

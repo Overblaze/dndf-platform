@@ -1,31 +1,41 @@
-// Starting points: a blank Bruiser, and Kaito, the sample character of docs/FORMULAS.md.
+// Starting points: a blank character of any class, and Kaito, the sample character of docs/FORMULAS.md.
 import { freshState, type CharacterDoc } from './character';
 import { deriveSheet } from './sheet';
-import type { AbilityScores, RuleEntry } from './types';
+import type { AbilityScores, ClassEntry, RuleEntry } from './types';
 
-export interface NewBruiserInput {
+export interface NewCharacterInput {
   name: string;
+  /** Class entry id; defaults to the Bruiser. */
+  classId?: string;
   level: number;
   scores: AbilityScores;
   raceName?: string;
   speed?: number;
   subclass?: string;
   skills?: string[];
+  /** Picks from option groups, by choice id. */
+  choices?: Record<string, string[]>;
+  /** Shorthand for choices.furyFeatures. */
   furyFeatures?: string[];
 }
 
-/** A v10 Bruiser at any level, at full hit points with nothing spent. */
-export function newBruiser(input: NewBruiserInput, rules: Map<string, RuleEntry>): CharacterDoc {
+/** A v10 character of any class and level, at full hit points with nothing spent. */
+export function newCharacter(input: NewCharacterInput, rules: Map<string, RuleEntry>): CharacterDoc {
+  const classId = input.classId ?? 'class.bruiser';
+  const cls = rules.get(classId) as ClassEntry | undefined;
+  const subclassLevel = cls?.subclass?.level ?? 3;
+  const choices = { ...input.choices };
+  if (input.furyFeatures && input.level >= 2) choices.furyFeatures = input.furyFeatures;
   const doc: CharacterDoc = {
     schema: 1,
     name: input.name,
     rulesVersion: 'dndf-10',
     race: { name: input.raceName ?? 'Human (Standard)', speed: input.speed ?? 30 },
-    classes: [{ id: 'class.bruiser', level: input.level, subclass: input.level >= 3 ? input.subclass : undefined }],
+    classes: [{ id: classId, level: input.level, subclass: input.level >= subclassLevel ? input.subclass : undefined }],
     scores: input.scores,
     skills: input.skills ?? [],
     expertise: [],
-    choices: { furyFeatures: input.level >= 2 ? input.furyFeatures ?? [] : [] },
+    choices,
     armor: null,
     shield: false,
     weapons: [],
@@ -37,6 +47,9 @@ export function newBruiser(input: NewBruiserInput, rules: Map<string, RuleEntry>
   doc.state = freshState(deriveSheet(doc, rules).maxHp.value);
   return doc;
 }
+
+/** A v10 Bruiser: the class the sheet was first built on. */
+export const newBruiser = newCharacter;
 
 /** Kaito Rourke, Human (Standard) Bruiser 7: every "Kaito" value in docs/FORMULAS.md comes from this. */
 export function kaito(rules: Map<string, RuleEntry>): CharacterDoc {

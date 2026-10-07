@@ -1,0 +1,1139 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.priest",
+      "kind": "class",
+      "name": "Priest",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 164
+      },
+      "flavor": "The Priest is a conduit of divine power, drawing strength from their unwavering faith and connection to higher beings. Through prayer, devotion, and spiritual willpower, they channel holy energy to protect allies, banish evil, and invoke miracles that shape the battlefield. Priests are not just healers but defenders of will, wielding sacred powers to inspire hope in a world fraught with darkness.",
+      "quote": "PROTECTING IS NOT THE SAME AS FIGHTING. --- Pell",
+      "hitDie": 8,
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor",
+          "medium_armor",
+          "shields"
+        ],
+        "weapons": [
+          "simple"
+        ],
+        "tools": [],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "history",
+            "insight",
+            "medicine",
+            "persuasion",
+            "religion"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a mace or (b) a Warhammer (if proficient)",
+        "(a) Scale Mail, (b) Thick Shirt, or (c) Chain Mail (if proficient)",
+        "(a) a Musket and 20 gun bullets or (b) any simple weapon",
+        "(a) a priest’s pack or (b) an explorer’s pack",
+        "A Shield and a holy symbol"
+      ],
+      "progression": {
+        "columns": {
+          "cantripsKnown": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "slots1": [
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots2": [
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots3": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots4": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3
+          ],
+          "slots5": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots6": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2
+          ],
+          "slots8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slots9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "slots1",
+          "name": "1st-level slots",
+          "max": "col.slots1",
+          "recharge": "long"
+        },
+        {
+          "id": "slots2",
+          "name": "2nd-level slots",
+          "max": "col.slots2",
+          "recharge": "long"
+        },
+        {
+          "id": "slots3",
+          "name": "3rd-level slots",
+          "max": "col.slots3",
+          "recharge": "long"
+        },
+        {
+          "id": "slots4",
+          "name": "4th-level slots",
+          "max": "col.slots4",
+          "recharge": "long"
+        },
+        {
+          "id": "slots5",
+          "name": "5th-level slots",
+          "max": "col.slots5",
+          "recharge": "long"
+        },
+        {
+          "id": "slots6",
+          "name": "6th-level slots",
+          "max": "col.slots6",
+          "recharge": "long"
+        },
+        {
+          "id": "slots7",
+          "name": "7th-level slots",
+          "max": "col.slots7",
+          "recharge": "long"
+        },
+        {
+          "id": "slots8",
+          "name": "8th-level slots",
+          "max": "col.slots8",
+          "recharge": "long"
+        },
+        {
+          "id": "slots9",
+          "name": "9th-level slots",
+          "max": "col.slots9",
+          "recharge": "long"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Divine Domain",
+        "level": 1,
+        "featureLevels": [
+          1,
+          2,
+          6,
+          8,
+          17
+        ]
+      },
+      "subclassIntro": {
+        "text": "Divine domains are used to define your god, religion, and spiritual beliefs. These are important to how your spirit shapes your powers and abilities by channeling divine energy from the beyond.",
+        "page": 166
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Holy Power (Spellcasting)",
+          "text": "As a conduit for divine energy, you can cast Priest Holy Powers (Spells). Priest holy powers count as Priest Spells in Chapter 4.",
+          "page": 165,
+          "sections": [
+            {
+              "name": "Natural Abilities (Cant rips)",
+              "text": "At 1st Level, you know three Cantrips of your choice from the Priest spell list. You learn additional Priest cant rips of your choice at higher levels, as shown in the Natural Abilities Known (Can trips Known) column of the Priest table.\nAdditionally, whenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace one natural ability (cantrip) you learned from this class’s Special Ability feature with another cantrip from the priest spell list.",
+              "page": 165
+            },
+            {
+              "name": "Preparing and Casting Holy Powers (Spells)",
+              "text": "The Priest table shows how many Holy Power Slots (Spell Slots) you have to cast your Priest Holy Powers of 1st Level and higher. To cast one of these holy powers , you must expend a slot of the holy power’s level or higher. You regain all expended Spell Slots when you finish a long rest.\nYou prepare the list of Holy Powers (Spells) that are available for you to cast, choosing from the Priest spell list. When you do so, choose a number of Priest holy powers equal to your Wisdom modifier + your Priest level (minimum of one holy power). The holy power must be of a level for which you have Holy Power Slots.\nFor example, if you are a 3rd-level Priest, you have four 1st-level and two 2nd-level Holy Power Slots. With a Wisdom of 16, your list of prepared Holy Powers can include six holy powers of 1st or 2nd Level, in any combination. If you prepare the 1st-level holy power (spell) Cure Wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the holy power doesn’t remove it from your list of prepared holy powers.\nYou can change your list of prepared holy powers when you finish a long rest. Preparing a new list of Priest holy powers requires time spent in prayer and meditation: at least 1 minute per Holy Power Level for each holy power on your list.",
+              "page": 165
+            },
+            {
+              "name": "Special Power Ability (Spellcasting)",
+              "text": "Wisdom is your Special Power (Spellcasting) ability for your Priest Holy Powers (Spells). The strength of your holy powers comes from your devotion to your God. You use your Wisdom whenever a Priest holy power (spell) refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a Priest holy power you cast and when making an Attack roll with one.\nSpell save DC = 8 + your proficiency bonus + your Wisdom modifier\nSpell attack modifier = your proficiency bonus + your Wisdom modifier",
+              "page": 165
+            },
+            {
+              "name": "Ritual Casting",
+              "text": "You can cast a Priest holy power as a ritual if that holy power has the ritual tag and you have the holy power prepared.",
+              "page": 165
+            },
+            {
+              "name": "Special Power Focus (Spellcasting Focus)",
+              "text": "You can use a holy symbol as a special power focus for your Priest Holy Powers.",
+              "page": 165
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Divine Domain",
+          "text": "Choose one domain related to your teachings: Cherry Blossom, Color, Death, Desert, Infernal, or Sky Domain, all detailed at the end of the class description. Your choice grants you domain Spells and other features when you choose it at 1st Level. It also grants you additional ways to use Channel Divinity when you gain that feature at 2nd Level, and additional benefits at 6th, 8th, and 17th levels.",
+          "page": 165,
+          "sections": [
+            {
+              "name": "Domain Holy Powers (Spells)",
+              "text": "Each domain has a list of holy powers (spells)—its domain holy powers—that you gain at the Priest levels noted in the domain description. Once you gain a domain holy power, you always have it prepared, and it doesn’t count against the number of Holy Powers you can prepare each day.\nIf you have a domain holy power (spell) that doesn’t appear on the Priest spell list, the holy power is nonetheless a Priest holy power for you.",
+              "page": 165
+            }
+          ],
+          "grantsSubclass": true
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity",
+          "text": "At 2nd level, you gain the ability to channel divine energy directly from your spiritual willpower, using that energy to fuel special powers. You start with two such effects: Will of Divine and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description.\nWhen you use your Channel Divinity, you choose which effect to create. You can use this feature twice, regaining all used when you finish a short or long rest to use your Channel Divinity again.\nSome Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your priest holy power save DC.\nBeginning at 6th level, you can use your Channel Divinity three times between rests, and beginning at 18th level, you can use it four times between rests.",
+          "page": 165,
+          "sections": [
+            {
+              "name": "Channel Divinity: Will of Divine",
+              "text": "As an action, you present your holy symbol and speak a prayer. Each enemy humanoid that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. The creature may repeat the save at the end of it’s turns.\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
+              "page": 166
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Kami’s Will",
+          "text": "Starting at 3rd level, the divine willpower flowing through your soul makes you immune to the disease and poisoned conditions and resistant to poison damage.\nAdditionally, you have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your priest level x 5.\nAs an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool.\nAlternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Kami’s Will, expending hit points separately for each one.",
+          "page": 166
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.\nAdditionally, whenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace one natural ability (cantrip) you learned from this class’s Special Ability feature with another cantrip from the priest spell list.",
+          "page": 166,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Overwhelming Willpower",
+          "text": "Starting at 5th level, when a humanoid fails its saving throw against your Will of Divine feature, the creature is instantly knocked unconscious if its challenge rating is at or below a certain threshold, as shown in the Overwhelming Willpower table.",
+          "page": 166,
+          "sections": [
+            {
+              "name": "Overwhelming Willpower",
+              "text": "",
+              "page": 166,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Priest Level",
+                      "Effects Creatures of CR…"
+                    ],
+                    [
+                      "5th",
+                      "1/2 or lower"
+                    ],
+                    [
+                      "8th",
+                      "1 or lower"
+                    ],
+                    [
+                      "11th",
+                      "2 or lower"
+                    ],
+                    [
+                      "14th",
+                      "3 or lower"
+                    ],
+                    [
+                      "17th",
+                      "4 or lower"
+                    ]
+                  ],
+                  "page": 166
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Blessed Strikes",
+          "text": "When you reach 8th level, you are blessed with divine might in battle. When a creature takes damage from one of your cantrips or weapon attacks, you can also deal 1d8 radiant damage to that creature. Once you deal this damage, you can’t use this feature again until the start of your next turn.",
+          "page": 166
+        },
+        {
+          "level": 10,
+          "name": "Spiritual Willpower",
+          "text": "Beginning at 10th level, you can channel your spiritual willpower directly through yourself to manifest it and wish for greater power.\nChanneling this divine energy to make a wish requires an action. Describe the effect you want, and roll percentile dice. If you roll a number equal to or lower than your Priest level, your wish comes true. The DM chooses the Nature of the wish; the Effect of any Priest spell or Priest domain spell would be appropriate.\nIf this effect succeeds, you can’t use this feature again for 7 days. Otherwise, you can use it again after you finish a long rest.\nAt 20th level, your Spiritual Willpower succeeds automatically, no roll required.",
+          "page": 166
+        },
+        {
+          "level": 14,
+          "name": "Dispelling Hand",
+          "text": "Starting at 14th level, you can use your action to end one condition on yourself or on one willing creature that you touch.\nYou can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain expended uses when you finish a long rest.",
+          "page": 166,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.priest.cherry_blossom",
+      "kind": "subclass",
+      "parent": "class.priest",
+      "name": "Cherry Blossom Domain",
+      "group": "Divine Domains",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 166
+      },
+      "flavor": "Priests of the Cherry Blossom Domain embody the renewal and joy of life, drawing upon the beauty and vitality of nature to inspire and heal. Like the cherry blossom, they remind others of life’s fleeting yet precious moments, fostering happiness, growth, and serenity wherever they go.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Priest Level",
+              "Holy Powers"
+            ],
+            [
+              "1st",
+              "Bless, Cure Wounds"
+            ],
+            [
+              "3rd",
+              "Aid, Calm Emotion"
+            ],
+            [
+              "5th",
+              "Aura of Vitality, Mass Healing Word"
+            ],
+            [
+              "7th",
+              "Aura of Life, Aura of Purity"
+            ],
+            [
+              "9th",
+              "Commune, Mass Cure Wounds"
+            ]
+          ],
+          "page": 167
+        }
+      ],
+      "features": [
+        {
+          "level": 1,
+          "name": "Bonus Proficiencies",
+          "text": "At 1st level, your connection to the natural world grants you profound understanding and practical knowledge. You gain proficiency in the Nature skill. If you are already proficient, you can choose another skill of your choice.\nAdditionally, you gain proficiency with the Herbalism Kit.",
+          "page": 167
+        },
+        {
+          "level": 1,
+          "name": "Cherry Chanoyu",
+          "text": "Also at 1st level, you can prepare a restorative cherry tea infused with divine energy. During a short rest, you can choose a number of creatures equal to 1 + your proficiency bonus. Those creatures add your Wisdom modifier to the hit points they regain by spending Hit Dice during that short rest.\nAdditionally, short rests end the poisoned condition on all allied creatures and yourself.",
+          "page": 167
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity: Blossom Joy",
+          "text": "Starting at 2nd Level, you can use your Channel Divinity to spread joy and protect your allies. As an action, you present your holy symbol and invoke the power of your domain, choosing one of the following effects:\nPetals of Joy. Pink petals swirl around you, filling the air with a sweet cherry aroma. For 1 minute, you gain a +5 bonus to all Charisma (Persuasion) and Charisma (Performance) checks.\nHardened Sap. The hardening sap within a cherry blossom tree inspires you to protect your allies. Each friendly creature within 30 feet of you gains temporary hit points equal to your Wisdom modifier + half your Priest level (minimum of 1).",
+          "page": 167
+        },
+        {
+          "level": 6,
+          "name": "Calming Branches",
+          "text": "At 6th level, your serene presence calms aggressors. When a creature within 10 feet of you makes a melee attack against you or an ally, you can use your reaction to impose disadvantage on the attack roll.\nYou can use this feature a number of times equal to your proficiency bonus. You regain one use of this feature after a short rest and all expended uses after a long rest.",
+          "page": 167
+        },
+        {
+          "level": 8,
+          "name": "Potent Healing Blossoms",
+          "text": "At 8th level, you add your Wisdom modifier to the outcome of all healing Priest spells.",
+          "page": 167
+        },
+        {
+          "level": 17,
+          "name": "Rain of Petals",
+          "text": "At 17th level, you can summon a magnificent cherry blossom tree, its pink petals filling the air with divine energy. As an action, you summon the tree in a space within 30 feet of you. The tree lasts for 1 minute and radiates an aura with a 30-foot radius centered on its location.\nEach friendly creature in the area, including you, regains hit points equal to your Priest level and can end one condition affecting them (blinded, charmed, deafened, frightened, paralyzed, poisoned, or stunned) at the beginning of their turns until the tree disappears.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+          "page": 167,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.priest.color",
+      "kind": "subclass",
+      "parent": "class.priest",
+      "name": "Color Domain",
+      "group": "Divine Domains",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 167
+      },
+      "flavor": "The Color Domain represents the vibrant spectrum of life, creativity, and emotion. Priests of this domain channel the symbolic power of colors, drawing upon their hues to inspire allies and weaken foes.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Priest Level",
+              "Holy Powers"
+            ],
+            [
+              "1st",
+              "Command, Sanctuary"
+            ],
+            [
+              "3rd",
+              "Calm Emotion, Hold Person"
+            ],
+            [
+              "5th",
+              "Fast Friends, Incite Greed"
+            ],
+            [
+              "7th",
+              "Freedom of Movement, Locate Creature"
+            ],
+            [
+              "9th",
+              "Contagion, Hallow"
+            ]
+          ],
+          "page": 167
+        }
+      ],
+      "features": [
+        {
+          "level": 1,
+          "name": "Bonus Proficiencies",
+          "text": "At 1st level, you gain proficiency with Painter’s Supplies, which also serve as your holy symbol for casting spells. To use any of your Color Domain features, you must have Painter’s Supplies in hand.",
+          "page": 167
+        },
+        {
+          "level": 1,
+          "name": "Artistic Prowess",
+          "text": "Also at 1st level, your knowledge with the spectrum of colors enhances your versatility. During a short rest, you can choose one color from the Color Table and gain its Color Effect. Your clothing, armor, or other personal items take on the hues of your chosen color.\nAs a bonus action, you can change your chosen color, altering your color effect accordingly. You can use this feature a number of times equal to your proficiency bonus and regain all expended uses when you finish a long rest.",
+          "page": 167,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity: Creative Overflow",
+          "text": "Starting at 2nd Level, you can use your Channel Divinity to paint the world with divine energy. As an action, choose a number of friendly creatures equal to double your proficiency bonus within 30 ft. and assign a color to each of them from the Color Table. Each creature gains the Color Effect of their chosen color for 1 minute.\nStarting at 8th level, any creature affected by this feature can change the damage type of their weapon attacks to match their assigned color in the Damage Type column.",
+          "page": 167,
+          "sections": [
+            {
+              "name": "Color Table",
+              "text": "",
+              "page": 168,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Color",
+                      "Damage"
+                    ],
+                    [
+                      "Type",
+                      "Emotion",
+                      "Type",
+                      "Color Effect",
+                      "Color Mark"
+                    ],
+                    [
+                      "White",
+                      "Calm",
+                      "Radiant Gain +2 to passive perception.",
+                      "Must use an Action to use a Bonus"
+                    ],
+                    [
+                      "Action."
+                    ],
+                    [
+                      "Grey",
+                      "Apathy",
+                      "Slashing Gain +1 AC when not wearing heavy armor.",
+                      "Cannot use reactions."
+                    ],
+                    [
+                      "Black",
+                      "Fear",
+                      "Necrotic Gain +1 bonus to death saves.",
+                      "Inflicts frightened condition."
+                    ],
+                    [
+                      "Red",
+                      "Rage",
+                      "Fire",
+                      "Gain +1 to damage rolls.",
+                      "Must attack the closest creature."
+                    ],
+                    [
+                      "Orange",
+                      "Anger",
+                      "Thunder Gain proficiency with all weapons.",
+                      "Cannot critically hit with attack rolls"
+                    ],
+                    [
+                      "Yellow",
+                      "Insecurity Lightning Gain advantage on Dexterity saving throws.",
+                      "Has disadvantage on attack rolls against"
+                    ],
+                    [
+                      "you."
+                    ],
+                    [
+                      "Green",
+                      "Envy",
+                      "Acid",
+                      "Gain advantage on Constitution saving throws.",
+                      "Reduces AC by -2."
+                    ],
+                    [
+                      "Blue",
+                      "Laziness",
+                      "Cold",
+                      "Gain +10 ft. of movement.",
+                      "Reduces movement speed by 10 ft."
+                    ],
+                    [
+                      "Indigo",
+                      "Grief",
+                      "Psychic Gain advantage on saving throws against spell effects.",
+                      "Inflicts your priest level in psychic"
+                    ],
+                    [
+                      "damage."
+                    ],
+                    [
+                      "Violet",
+                      "Content",
+                      "Poison",
+                      "Gain an additional attack per turn when making an attack",
+                      "Reduces healing and regeneration"
+                    ],
+                    [
+                      "action if the creature does not have extra attack.",
+                      "received by half of your priest level."
+                    ]
+                  ],
+                  "page": 168
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Color Mark",
+          "text": "At 6th level, you can imbue your attacks with a mark of divine artistry. When you hit a creature with a melee attack, you can use a bonus action to mark it with a color of your choice from the Color Table.\nAt the start of the marked creature’s turn, it must succeed on a Wisdom saving throw against your spell save DC or suffer the corresponding effect from the Color Mark column. The mark lasts for 1 minute or until you apply a new mark, which ends the previous one, or a different creature uses it’s action to wipe off the color mark.\nYou can use this feature a number of times equal to your proficiency bonus and regain all expended uses when you finish a long rest.",
+          "page": 168,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Hue Strike",
+          "text": "At 8th level, you gain the ability to infuse your weapon strikes with the divine essence of your chosen color. Once on each of your turns, when you hit a creature with a weapon attack, you can deal an additional 1d8 damage. The Damage Type corresponds to the color you have chosen from the Color Table.\nWhen you reach 14th level, the additional damage increases to 2d8.",
+          "page": 168
+        },
+        {
+          "level": 17,
+          "name": "Color Theory",
+          "text": "At 17th level, your mastery of divine artistry allows you to blend multiple colors into your form. You can now pick up to three colors from the Color Table active at the same time on any of your features, gaining the benefits of all three simultaneously. The Hue Strike feature gains an additional 1d8 damage to a total of 3d8, with each 1d8 being a different color if your choose.\nAdditionally, you can now change up to two of your active colors as part of your Artistic Prowess feature.",
+          "page": 168
+        }
+      ]
+    },
+    {
+      "id": "subclass.priest.death",
+      "kind": "subclass",
+      "parent": "class.priest",
+      "name": "Death Domain",
+      "group": "Divine Domains",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 168
+      },
+      "flavor": "Devout worshippers of Death, the Reaper, the Devil, and all that brings about ruin and despair, priests that fall under this domain are blessed by the powers of negative energy and forces that cause death.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Priest Level",
+              "Holy Powers"
+            ],
+            [
+              "1st",
+              "False Life, Ray of Sickness"
+            ],
+            [
+              "3rd",
+              "Blindness/Deafness, Ray of Enfeeblement"
+            ],
+            [
+              "5th",
+              "Animate Dead, Vampiric Touch"
+            ],
+            [
+              "7th",
+              "Blight, Death Ward"
+            ],
+            [
+              "9th",
+              "Antilife Shell, Cloudkill"
+            ]
+          ],
+          "page": 168
+        }
+      ],
+      "features": [
+        {
+          "level": 1,
+          "name": "Bonus Proficiency",
+          "text": "When the Priest chooses this domain at 1st level, they gain proficiency with Martial Weapons.",
+          "page": 168
+        },
+        {
+          "level": 1,
+          "name": "Reap",
+          "text": "At 1st level, the Priest learns one Necromancy natural ability (cantrip) of his or her choice from any spell list. When the Priest casts a Necromancy cantrip that normally Targets only one creature, the spell can instead target two creatures within range and within 5 feet of each other.",
+          "page": 168
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity: Sudden Decay",
+          "text": "Starting at 2nd Level, the Priest can use Channel Divinity to destroy another creature’s life force by touch.\nWhen the Priest hits a creature with a melee Attack, the Priest can use Channel Divinity to deal extra necrotic damage to the target. The damage equals 5 + twice their Priest level.",
+          "page": 168
+        },
+        {
+          "level": 6,
+          "name": "Withering Grasp",
+          "text": "Starting at 6th level, the priest’s ability to channel negative energy becomes more potent. Necrotic damage dealt by the character’s Priest Holy Powers and Channel Divinity options ignores Resistance to necrotic damage.",
+          "page": 169
+        },
+        {
+          "level": 8,
+          "name": "Siphoning Strike",
+          "text": "At 8th level, the Priest gains the ability to infuse their weapon strikes with necrotic energy. Once on each of the priest’s turns when they hit a creature with a weapon Attack, the Priest can cause the Attack to deal an extra 1d8 necrotic damage to the target. When the Priest reaches 14th level, the extra damage increases to 2d8.",
+          "page": 169
+        },
+        {
+          "level": 17,
+          "name": "Improved Reap",
+          "text": "Starting at 17th level, when the Priest casts a Necromancy holy power (spell) of 1st through 5th Level that Targets only one creature, the holy power can instead target two creatures within range and within 5 feet of each other. If the holy power consumes its Material Components, the Priest must provide them for each target.",
+          "page": 169
+        }
+      ]
+    },
+    {
+      "id": "subclass.priest.desert",
+      "kind": "subclass",
+      "parent": "class.priest",
+      "name": "Desert Domain",
+      "group": "Divine Domains",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 169
+      },
+      "flavor": "Fierce holy warriors of the desert, defenders of sacred land, priests of the desert domain often reside in various kingdoms of the desert. These priests utilize the harsh elements present in the dry, scorching lands they were born in. Divine energy radiates from these lands, giving each warrior of this domain holy powers.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Priest Level",
+              "Holy Powers"
+            ],
+            [
+              "1st",
+              "Burning Hands, Faerie Fire"
+            ],
+            [
+              "3rd",
+              "Flaming Sphere, Scorching Ray"
+            ],
+            [
+              "5th",
+              "Daylight, Fireball"
+            ],
+            [
+              "7th",
+              "Guardian of Faith, Wall of Fire"
+            ],
+            [
+              "9th",
+              "Flame Strike, Scrying"
+            ]
+          ],
+          "page": 169
+        }
+      ],
+      "features": [
+        {
+          "level": 1,
+          "name": "Bonus Natural Ability (Cantrip)",
+          "text": "When you choose this domain at 1st level, you gain the light natural ability (cantrip) if you don’t already know it.",
+          "page": 169
+        },
+        {
+          "level": 1,
+          "name": "Blinding Sands",
+          "text": "Also at 1st level, you can whirl up a sandstorm between yourself and an attacking enemy. When you are attacked by a creature within 30 feet of you that you can see, you can use your Reaction to impose disadvantage on the Attack roll, causing sand to momentarily blind the attacker before it hits or misses. An attacker that can’t be Blinded is immune to this feature.\nYou can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest.",
+          "page": 169,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity: Scorching Sun",
+          "text": "Starting at 2nd Level, you can use your Channel Divinity to harness scorching sunlight, banishing darkness and dealing radiant damage to your foes.\nAs an action, you present your holy symbol , and any magical darkness within 30 feet of you is dispelled. Additionally, each Hostile creature within 30 feet of you must make a Constitution saving throw. A creature takes radiant damage equal to 2d10 + your Priest level on a failed saving throw, and half as much damage on a successful one. A creature that has total cover from you is not affected.",
+          "page": 169
+        },
+        {
+          "level": 6,
+          "name": "Crippling Sands",
+          "text": "Starting at 6th level, you can also use your Blinding Sands feature when a creature that you can see within 30 feet of you attacks a creature other than you.",
+          "page": 169
+        },
+        {
+          "level": 8,
+          "name": "Rising Heat",
+          "text": "Starting at 8th level, you add fire or radiant damage equal to your Wisdom modifier to the damage you deal with any priest cantrip.",
+          "page": 169
+        },
+        {
+          "level": 17,
+          "name": "Desert Aura",
+          "text": "Starting at 17th level, you can use your action to activate an aura of sunlight and burning sands that lasts for 1 minute or until you dismiss it using another action. You emit bright light in a 60-foot radius and dim light 30 feet beyond that. Your enemies in the bright light have disadvantage on Saving Throws against any spell that deals fire or radiant damage.",
+          "page": 169
+        }
+      ]
+    },
+    {
+      "id": "subclass.priest.infernal",
+      "kind": "subclass",
+      "parent": "class.priest",
+      "name": "Infernal Domain",
+      "group": "Divine Domains",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 169
+      },
+      "flavor": "Priests of the Infernal Domain wield the scorching power of hellfire and the resilience of fiendish entities. They walking the line between divinity and damnation, or simply embracing the raw destructive power of flame.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Priest Level",
+              "Holy Powers"
+            ],
+            [
+              "1st",
+              "Burning Hands, Hellish Rebuke"
+            ],
+            [
+              "3rd",
+              "Blindness/Deafness, Scorching Ray"
+            ],
+            [
+              "5th",
+              "Fireball, Stinking Cloud"
+            ],
+            [
+              "7th",
+              "Fire Shield, Wall of Fire"
+            ],
+            [
+              "9th",
+              "Hold Monster, Immolation"
+            ]
+          ],
+          "page": 169
+        }
+      ],
+      "features": [
+        {
+          "level": 1,
+          "name": "Bonus Proficiencies",
+          "text": "At 1st level, you gain proficiency with martial weapons.",
+          "page": 169
+        },
+        {
+          "level": 1,
+          "name": "Fiendish Skin",
+          "text": "Also at 1st level, your flesh begins to take on the hardened texture of infernal scales, shielding you from harm. While you are not wearing armor, your AC equals 10 + your proficiency bonus + your Wisdom modifier. You cannot gain additional benefit from the Unarmored Defense class feature while benefitting from this feature.",
+          "page": 169
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity: Flaming Aura",
+          "text": "Starting at 2nd Level, you can use your Channel Divinity to wreathe yourself in hellish flames. As an action, you create a fiery aura that extends 30 feet from you for 1 minute or until you are incapacitated.\nWhenever a hostile creature enters the aura for the first time on a turn or starts its turn there, it must make a Wisdom saving throw against your spell save DC. On a failed save, the creature takes fire damage equal to your Wisdom modifier + half your Priest level (rounded down). On a success, it takes half as much damage.",
+          "page": 170
+        },
+        {
+          "level": 6,
+          "name": "Diabolic Resilience",
+          "text": "At 6th level, your infernal nature grants you resistance to corruption and flame. You gain the following benefits:\nResistance to fire and poison damage.\nAdvantage on saving throws against poisoned, charmed, and frightened conditions.\nAll fire damage you deal with spells gains an additional 1d8 damage.",
+          "page": 170
+        },
+        {
+          "level": 8,
+          "name": "Unholy Strike",
+          "text": "At 8th level, your attacks burn with a wrath of hatred. Once on each of your turns, when you hit a creature with a weapon attack, you can cause the attack to deal an additional 1d8 fire damage.\nAt 14th level, this damage is increased to 2d8.",
+          "page": 170
+        },
+        {
+          "level": 17,
+          "name": "Hellfire",
+          "text": "At 17th level, your mastery of infernal fire reaches its peak, allowing you to burn even the most fire-resistant creatures. All fire damage you deal ignores resistance and downgrades fire immunity to fire resistance.",
+          "page": 170
+        }
+      ]
+    },
+    {
+      "id": "subclass.priest.sky",
+      "kind": "subclass",
+      "parent": "class.priest",
+      "name": "Sky Domain",
+      "group": "Divine Domains",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 170
+      },
+      "flavor": "Many priests under the Sky Domain hail from the sky islands and the various holy lands that can be found around them. Priests here primarily derive their power from Mantra and Dials to become powerful fighters.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Priest Level",
+              "Holy Powers"
+            ],
+            [
+              "1st",
+              "Fog Cloud, Thunderwave"
+            ],
+            [
+              "3rd",
+              "Gust of Wind, Shatter"
+            ],
+            [
+              "5th",
+              "Call Lightning, Sleet Storm"
+            ],
+            [
+              "7th",
+              "Control Water, Ice Storm"
+            ],
+            [
+              "9th",
+              "Destructive Wave, Insect Plague"
+            ]
+          ],
+          "page": 170
+        }
+      ],
+      "features": [
+        {
+          "level": 1,
+          "name": "Bonus Proficiencies",
+          "text": "At 1st level, you gain proficiency with Dials, Martial Weapons, and Heavy Armor, and you gain resistance to thunder and lightning damage.",
+          "page": 170
+        },
+        {
+          "level": 1,
+          "name": "Thunderous Dial Strike",
+          "text": "Also at 1st level, you can thunderously rebuke attackers with dials built into your clothing or gear. When a creature within 5 feet of you that you can see hits you with an Attack, you can use your Reaction to cause the creature to make a Dexterity saving throw. The creature takes 2d8 lightning or thunder damage (your choice) on a failed saving throw, and half as much damage on a successful one.\nYou can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest.",
+          "page": 170,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity: Destructive Wrath",
+          "text": "Starting at 2nd Level, you can use your Channel Divinity to wield the power of your dials with unchecked ferocity.\nWhen you roll lightning or thunder damage, you can use your Channel Divinity to deal maximum damage, instead of rolling.",
+          "page": 170
+        },
+        {
+          "level": 6,
+          "name": "Dial Ritual",
+          "text": "At 6th level, you may occasionally manufacture Dials of your own. You may spend 24 hours touching and altering a normal shell as a ritual to turn it into a powerful Dial. When the 24 hours are over, roll on the Rare Dial Table in Chapter 5. The shell you are holding becomes that Dial.\nYou cannot perform this ritual again until you reach the 8th, 11th, 14th, or 17th levels. You can only perform this ritual once during each of those levels, and it must be used to transform your current ritually created dial into a new dial by rolling on the Rare Dial Table to change its effects into something different.\nAdditionally, once on each of your turns, when you cast a spell or make a weapon attack that deals lightning or thunder damage, you can empower the attack or spell with storm energy. This causes the attack or spell to deal an extra 1d8 lightning or thunder damage (your choice) to one target you hit.",
+          "page": 170
+        },
+        {
+          "level": 8,
+          "name": "Dial Infusion",
+          "text": "At 8th level, you gain the ability to combine your weapon strikes with dial-infused power. Once on each of your turns when you hit a creature with a spell or weapon attack, you can cause the Attack to deal an extra 1d8 thunder damage to the target. When you reach 14th level, the extra damage increases to 2d8.\nAdditionally, the target must succeed on a Constitution saving throw equal to your Spell save DC or be pushed back 10 feet or knocked prone (your choice).",
+          "page": 170
+        },
+        {
+          "level": 17,
+          "name": "Dial Glide",
+          "text": "At 17th level, using your dials, you gain a flying speed equal to double your current walking speed.",
+          "page": 170
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

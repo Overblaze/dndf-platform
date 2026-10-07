@@ -1,15 +1,12 @@
-# Phase 2 — Engine + live sheet (task list for Claude Code)
+# Phase 3 — Extract all rules (task list for Claude Code)
 
-Read CLAUDE.md, docs/SPEC.md, docs/FORMULAS.md and docs/THEME.md first. Work on a branch named `phase-2-engine-sheet` and finish with one pull request. Phase 1 (foundation) is merged and live.
+Read CLAUDE.md, docs/SPEC.md and docs/EXTRACTION.md first. Phases 1 and 2 are merged and live. Phase 3 is done as several pull requests, one per part, so each can be read and checked on its own. Source PDFs are in `~/dndf/sources`; nothing secret goes into the repository.
 
-1. **Every row of docs/FORMULAS.md has an engine test**: Core 5e, DnDF, Bruiser, Rests, Ships and the Devilforged (v8.8) example. Kaito's values come from deriving his saved character, not from calling formulas one by one.
-2. **Character document**: one JSON `doc` per character (saved in `characters.doc`), pinned to a rules version, holding choices, equipment, overrides and play state. `deriveSheet(doc, rules)` in `packages/engine` turns it into every number on the sheet with a line-by-line breakdown.
-3. **Data-driven features**: class tables, resources, toggles, trackers, dice and "when used" effects are read from `data/rules/`; structured fields may be added to `bruiser.json`, book text may not change.
-4. **Live sheet** (phone first), built on the Bruiser: HP and temp HP with damage/heal, AC, initiative, speed, proficiency, Willpower and Haki DC, abilities/saves/skills with one-tap rolls, attacks, actions grouped by Action / Bonus action / Reaction / Special Reaction, resources as pips, toggles that change the numbers, trackers, conditions, exhaustion, death saves (Dream Point rescue, "I Won't Abandon My Dreams"), word-for-word text with page on tap.
-5. **Overrides**: tap any number for its breakdown; set your own value; "use calculated" brings the book value back. Edited values are outlined.
-6. **Rests**: short (hit dice rolled for you, Fury needs the training confirmed), long (all hit dice back by table ruling) and dawn, each with a preview before applying.
-7. **Saving**: signed-in players' characters live in Supabase (`characters`, with a `character_history` line per action); signed-out visitors can try the sheet with characters kept in the browser.
-8. **Creating a character**: a simple Bruiser form and a one-tap sample (Kaito). The book's 12-step builder is phase 4.
-9. Open the pull request with `gh pr create`; its description lists what to click to test.
+1. **Part 1 — toolkit and v10 classes** (branch `phase-3-extraction`): the PDF reader, the class extractor, all thirteen v10 classes with their subclasses and option lists, a Library page to read them, and a character form that can pick any class. Done when `extract_classes.py --check` reports 0 differences from the hand-verified Bruiser and the tests build a sheet for every class, level and subclass.
+2. **Part 2 — v10 chapters 1 and 2**: universal features and Special Reactions (word-for-word text for the sheet), crew roles, backgrounds, feats, character dreams, races and optional races. The character form picks race and background from the data.
+3. **Part 3 — structure pass on the classes**: the numbers each class adds to the sheet (unarmored AC formulas, damage dice, pools, toggles), added by hand as for the Bruiser, with rows in docs/FORMULAS.md and tests. Review of the `auto` fields.
+4. **Part 4 — v10 chapters 4, 5 and 7**: spell lists, Spirit Surges and Haki (public parts), the armory (armor, weapons, gear, Meitos).
+5. **Part 5 — v8.8**: the same content from the v8.8 handbook. Identical entries are stored once and tagged with both versions; changed ones get per-version copies or `overrides`.
+6. **Part 6 — secret data, to `~/dndf/secret` only**: Devil Fruits from the three encyclopedias and v8.8, generation tables, fruit Spirit Surges, DM chapters, the licensed Volo's stat blocks. Loading them into private Supabase tables is phase 6.
 
-Out of scope for phase 2: other classes and races (phase 3), the builder and level-up wizard (4), the Discord bot (5), Haki features, Spirit Surges and Devil Fruits (6), inventory and spells (7), ships, bounty and the party view (8).
+Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (5), granting and revealing fruits (6).

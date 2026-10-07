@@ -47,11 +47,26 @@ export interface EffectDef {
   [key: string]: unknown;
 }
 
+export interface TableDef {
+  rows: string[][];
+  page: number;
+}
+
+/** A named part of a feature printed under its own smaller heading. */
+export interface SectionDef {
+  name: string;
+  text: string;
+  page: number;
+  tables?: TableDef[];
+}
+
 export interface FeatureDef {
   level: number;
   name: string;
   text: string;
   page: number;
+  sections?: SectionDef[];
+  tables?: TableDef[];
   effects?: EffectDef[];
   uses?: UsesDef | string;
   choices?: { id: string; count: number | string; from: string; relearn?: string };
@@ -82,7 +97,10 @@ export interface RuleEntry {
 export interface ClassEntry extends RuleEntry {
   kind: 'class';
   hitDie: number;
+  savingThrows?: Ability[];
   features: FeatureDef[];
+  /** The feature that grants the subclass, and the levels its features arrive. */
+  subclass?: { label: string; level: number; featureLevels: number[] };
   progression?: { columns: Record<string, (number | string)[]> };
   resources?: ResourceDef[];
   formulas?: Record<string, { label: string; expr: string }>;

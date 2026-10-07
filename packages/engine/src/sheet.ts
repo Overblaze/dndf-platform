@@ -22,6 +22,8 @@ import {
   type OptionDef,
   type ResourceDef,
   type RollDef,
+  type SectionDef,
+  type TableDef,
   type RuleEntry,
   type ToggleDef,
   type TrackerDef,
@@ -70,6 +72,8 @@ export interface SheetFeature {
   displays: { label: string; value: string }[];
   onUse: OnUseDef[];
   counter?: string;
+  sections: SectionDef[];
+  tables: TableDef[];
 }
 
 export interface SheetToggle {
@@ -145,6 +149,8 @@ export interface Sheet {
   healingSurgeDice: number;
   specialReactionReduction: string;
   attacksPerAction: number;
+  /** This level's row of each class table (Ki Points 7, Martial Arts Die 1d8 …), spell slots left out. */
+  classTable: { key: string; label: string; value: number | string; from: string }[];
   resources: SheetResource[];
   toggles: SheetToggle[];
   trackers: SheetTracker[];
@@ -171,6 +177,12 @@ export function isBruiserWeapon(weapon: WeaponDef): boolean {
   if (weapon.ranged) return false;
   if (weapon.category === 'improvised' || /^(cutlass|kanabo)$/i.test(weapon.name.trim())) return true;
   return weapon.category === 'simple' && !weapon.twoHanded;
+}
+
+/** "leadershipDice" → "Leadership Dice". */
+export function columnLabel(key: string): string {
+  const spaced = key.replace(/([a-z])([A-Z0-9])/g, '$1 $2');
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
 const averageOf = (dice: string) => parseDice(dice).terms.reduce((total, t) => total + (t.count * (t.sides + 1)) / 2, 0);
@@ -389,11 +401,13 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
       resourceDefs.push({ def: { id, name: a.def.name, max: uses.max, recharge: uses.recharge }, source: a.source, page: a.def.page });
     }
   }
-  const resources: SheetResource[] = resourceDefs.map(({ def, source, page }) => {
+  const resources: SheetResource[] = resourceDefs.flatMap(({ def, source, page }) => {
     const key = `resource.${def.id}`;
     const calculated = evaluateNumber(def.max, source ? scopeFor(source) : {});
     const max = stat(doc, key, def.name, { value: calculated, lines: [] }).value;
-    return { id: def.id, name: def.name, max, remaining: Math.max(0, max - (doc.state.spent[def.id] ?? 0)), recharge: def.recharge, confirm: def.confirm, page };
+    // Nothing to track yet (5th-level slots at level 3): leave it off the sheet.
+    if (max <= 0) return [];
+    return [{ id: def.id, name: def.name, max, remaining: Math.max(0, max - (doc.state.spent[def.id] ?? 0)), recharge: def.recharge, confirm: def.confirm, page }];
   });
   const general = (id: string, name: string, max: number) =>
     resources.push({ id, name, max, remaining: Math.max(0, max - (doc.state.spent[id] ?? 0)), recharge: 'short', page: 11 });
@@ -496,8 +510,19 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
         .map((e) => ({ label: String(e.label ?? def.name), value: String(evaluate(e.expr!, scope)) })),
       onUse: (def.onUse ?? []) as OnUseDef[],
       counter: (def.counter as CounterDef | undefined)?.id,
+      sections: (def.sections ?? []) as SectionDef[],
+      tables: (def.tables ?? []) as TableDef[],
     };
   });
+
+  const classTable: Sheet['classTable'] = [];
+  for (const source of sources) {
+    if (source.entry !== source.cls) continue;
+    for (const [key, value] of Object.entries(classColumns(source.cls, source.classLevel))) {
+      if (/^slots\d$/.test(key) || value === '—') continue;
+      classTable.push({ key, label: columnLabel(key), value, from: source.cls.name });
+    }
+  }
 
   const hitDie = first?.cls.hitDie ?? 8;
   const dreamMax = dreamPointsMax(level);
@@ -531,6 +556,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     healingSurgeDice: healingSurgeMaxDice(level, Math.max(0, level - doc.state.hitDiceSpent)),
     specialReactionReduction: specialReactionReduction(level).text,
     attacksPerAction: Math.max(1, ...ofType('attacksPerAction').map((e) => amount(e))),
+    classTable,
     resources,
     toggles,
     trackers,

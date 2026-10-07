@@ -1,0 +1,876 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.marksman",
+      "kind": "class",
+      "name": "Marksman",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 141
+      },
+      "flavor": "The Marksman is a master of precision and deadly focus, honing their skills to strike from a distance with unrivaled accuracy. Whether hunting dangerous prey or eliminating foes on the battlefield, they combine sharp instincts with calculated tactics, always striking at the perfect moment.",
+      "quote": "SNIPER ISLAND IS NOT A PLACE IT IS IN YOUR HEARTS. --- Sogeking",
+      "hitDie": 10,
+      "savingThrows": [
+        "str",
+        "dex"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor",
+          "medium_armor",
+          "shields"
+        ],
+        "weapons": [
+          "simple",
+          "martial"
+        ],
+        "tools": [
+          "Tinker’s Tools"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "acrobatics",
+            "insight",
+            "investigation",
+            "history",
+            "perception",
+            "sleight_of_hand",
+            "stealth",
+            "survival"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) scale mail or (b) thick shirt",
+        "(a) two shortswords or (b) two simple melee weapons",
+        "(a) a dungeoneer’s pack or (b) an explorer’s pack",
+        "(a) A rifle and 20 bullets or (b) a pistol and 20 bullets A set of Tinker’s Tools"
+      ],
+      "progression": {
+        "columns": {
+          "tacticsKnown": [
+            0,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            7,
+            7,
+            8,
+            8,
+            9,
+            9,
+            10,
+            10,
+            11,
+            11
+          ],
+          "slots1": [
+            0,
+            2,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots2": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots3": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots4": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots5": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            2,
+            2
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "slots1",
+          "name": "1st-level slots",
+          "max": "col.slots1",
+          "recharge": "long"
+        },
+        {
+          "id": "slots2",
+          "name": "2nd-level slots",
+          "max": "col.slots2",
+          "recharge": "long"
+        },
+        {
+          "id": "slots3",
+          "name": "3rd-level slots",
+          "max": "col.slots3",
+          "recharge": "long"
+        },
+        {
+          "id": "slots4",
+          "name": "4th-level slots",
+          "max": "col.slots4",
+          "recharge": "long"
+        },
+        {
+          "id": "slots5",
+          "name": "5th-level slots",
+          "max": "col.slots5",
+          "recharge": "long"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Marksman Archetypes",
+        "level": 3,
+        "featureLevels": [
+          3,
+          7,
+          11,
+          15
+        ]
+      },
+      "subclassIntro": {
+        "text": "Marksmen are renowned for their steady aim and impressive gun or sling training. What separates them is their ability to fire quickly, snipe at a distance, or effectively hunt their targets.",
+        "page": 144
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Hawk-Eyed",
+          "text": "At 1st level, your proficiency bonus is doubled when making Perception checks. If your proficiency bonus is already doubled for the perception skill, you may choose another skill that uses your Wisdom modifier. Your proficiency bonus is now doubled for any ability check that uses the chosen proficiency instead",
+          "page": 141
+        },
+        {
+          "level": 1,
+          "name": "Lock-On",
+          "text": "Beginning at 1st level, you focus your aim and killing intent onto one creature to target their weak points. When you hit a creature with a marksman weapon attack, you can mark the target for 1 minute.\nThe first time on each of your turns that you hit the marked enemy and deal damage to it, including when you mark it, you increase that damage by 2d4.\nYou may only have 1 marked target at a time. When you hit a different creature, you can choose to move your mark to the newly targeted creature if it is on another creature.\nThis feature’s extra damage increases when you reach certain levels in this class: to 3d4 at 6th level and to 4d4 at 14th level.",
+          "page": 142
+        },
+        {
+          "level": 2,
+          "name": "Fighting Style",
+          "text": "At 2nd level, you adopt a particular style of fighting as your specialty: choose one of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.",
+          "page": 142,
+          "sections": [
+            {
+              "name": "Close Quarters Shooter",
+              "text": "When making a ranged weapon attack while you are within 5 feet of a hostile creature, you now have advantage on the attack roll. Your ranged weapon attacks ignore half cover and three-quarters cover against targets within 30 feet of you. You have a +1 bonus to attack rolls on ranged attacks.",
+              "page": 142
+            },
+            {
+              "name": "Improved Aiming",
+              "text": "You gain a +3 bonus to attack rolls you make with ranged weapon attacks.",
+              "page": 142
+            },
+            {
+              "name": "Sharpened Shot",
+              "text": "You gain a bonus to damage rolls you make with two- handed ranged weapons equal to twice your proficiency bonus.",
+              "page": 142
+            },
+            {
+              "name": "Combat Pistol",
+              "text": "When you engage in two-weapon fighting with at least one pistol, you can add your ability modifier to the damage of the second weapon.",
+              "page": 142
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Special Tactics (Spellcasting)",
+          "text": "By the time you reach 2nd level, you have learned to use special tactics and abilities to better deal with your targets. Special tactics are the equivalent of “Spells” in 5th edition, and tactic slots are the same as “Spell Slots”. Make sure to view the “Casting a Spell” section in the Player’s Handbook for understanding Spellcasting in 5th Edition D&D.",
+          "page": 142,
+          "sections": [
+            {
+              "name": "Tactic Slots (Spell Slots)",
+              "text": "The Marksman table shows how many spell slots you have to cast your Marksman tactics of 1st level and higher. To use one of these tactics, you must expend a slot of the tactics’s level or higher. You regain all expended tactic slots when you finish a long rest.\nFor example, if you know the 1st-level tactic Snare and have a 1st-level and a 2nd-level tactic slot available, you can cast Snare using either slot.",
+              "page": 142
+            },
+            {
+              "name": "Tactics Known of 1st Level and Higher",
+              "text": "You know two 1st-level tactics of your choice, taken from from the marksman spell list.\nThe Tactics Known column of the Marksman table shows when you learn more marksman tactics of your choice. The term “tactic level” is equivalent to “spell level”. Each of these tactics must be of a level for which you have tactic slots. For instance, when you reach 5th level in this class, you can learn one new tactic of 1st or 2nd level.\nAdditionally, when you gain a level in this class, you can choose one of the marksman tactics you know and replace it with another from the marksman spell list, which also must be of a level for which you have tactic slots.",
+              "page": 142
+            },
+            {
+              "name": "Special Tactic Ability (Spellcasting Ability)",
+              "text": "Wisdom is your special tactic ability for your marksman tactics, since your skills come from your attunement to your surroundings. You use your Wisdom whenever a tactic (spell) refers to your special tactic (spellcasting) ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a marksman tactic you use and when making an attack roll with one.\nTactic save DC = 8 + your proficiency bonus + your Wisdom modifier\nTactic attack modifier = your proficiency bonus + your Wisdom modifier",
+              "page": 142
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Basic Ammo Crafter",
+          "text": "Beginning at 2nd level, you can use your Tinker’s Tools to craft any type of nonmagical firearm or sling and ammunition for a weapon you possess by spending half of the standard cost. During a successful long rest, you must have spent at least 1 hour during it to completely build one firearm or up to five pieces of ammunition. You cannot repeat this process until the next time you complete a long rest.",
+          "page": 142
+        },
+        {
+          "level": 3,
+          "name": "Marksman Archetypes",
+          "text": "At 3rd level, you choose the archetype that best suits your own style and profession. Choose the Beast Tamer, Bounty Hunter, Gunslinger, Rope Master, Sniper, or Trapper subclass, all detailed at the end of the class description. Your choice grants you a unique feature when you choose it at 3rd level. It also grants you additional benefits at 7th, 11th, and 15th level.",
+          "page": 143,
+          "grantsSubclass": true
+        },
+        {
+          "level": 3,
+          "name": "Prey Awareness",
+          "text": "Beginning at 3rd level, you can use your action to expend 1 Tactic Slot to focus your awareness on the region around you. For 1 minute per Tactic Slot you expend, you can sense whether any humanoids are present within 600 feet of you. This feature doesn’t reveal the humanoids’ location but you do know how many there are they have hostile intent.",
+          "page": 143
+        },
+        {
+          "level": 3,
+          "name": "Ahead of the Curve",
+          "text": "Also at 3rd level, are are more adept at self learning observation haki. When you gain a Spirit Surge, if you use the surge on a Color of Observation Haki feature, you may choose to upgrade the surge to 1 rarity higher up to a max of Very Rare (Uncommon to Rare or Rare to Very Rare) once as you journey across the world.",
+          "page": 143
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 143,
+          "asi": true
+        },
+        {
+          "level": 4,
+          "name": "Expert Reload",
+          "text": "At 4th level, choose one type of firearm you possess. You ignore the loading properties of only that firearm type (such as bazooka). You can choose a different firearm type when you gain an extra level in this class.",
+          "page": 143
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "Starting at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.\nThe number of attacks increases to three when you reach 14th level in this class.",
+          "page": 143
+        },
+        {
+          "level": 5,
+          "name": "Adaptable Hunter",
+          "text": "At 5th level, once per combat encounter, you gain one additional bonus action on your turn.",
+          "page": 143
+        },
+        {
+          "level": 6,
+          "name": "Greater Lock-On",
+          "text": "At 6th level, you can add your wisdom modifier to the damage dealt by Lock-On.\nAdditionally, you have advantage on saving throws against the spells and abilities used by a creature with lock-on applied to it.",
+          "page": 143
+        },
+        {
+          "level": 6,
+          "name": "Advanced Ammo Crafter",
+          "text": "At 6th level, when you craft ammunition found in “Chapter 7: Expanded Armory” under “Stars and Special Ammo” the crafting cost is reduced by half.",
+          "page": 143
+        },
+        {
+          "level": 8,
+          "name": "Fleet of Foot",
+          "text": "Beginning at 8th level, you can use the Dash action as a bonus action on your turn.",
+          "page": 143,
+          "action": "bonus",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Trick Shot",
+          "text": "Starting at 10th level, once per turn you can target a specific location on a foe’s body, so long as the foe’s body has the location you want to target. When you hit with with a ranged weapon attack, you may add an additional effect based on the targeted location. A target creature hit by must make a saving throw against your Tactic save DC.\nArmshot. On a hit, the target must succeed on a Constitution saving throw or drop a single held item of your choice.\nBodyshot. On a hit, the target must succeed on a Constitution saving throw or has disadvantage on all Dexterity saving throws and cannot speak until the start of your next turn.\nHeadshot. On a hit, the target must succeed on a Constitution saving throw or become disoriented, as if affected by the Confusion spell, until the start of your next turn.\nLegshot. On a hit, the target must succeed on a Constitution saving throw or fall prone.\nWingshot. On a hit, the target must make a Constitution saving throw or have its flying speed reduced to 0 until the start of your next turn.\nYou may add a trick shot effect a number of times equal to your proficiency bonus and regain all uses when you finish a long rest. At the 20th level, you may a trickshot an unlimited amount of times, but only once per turn.",
+          "page": 143,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Silencer Shot",
+          "text": "Starting at 14th level, you can use the Hide action as a bonus action on your turn. Also, you can’t be tracked by nonmagical means, unless you choose to leave a trail, and the sound of your firearms do not immediately give away your exact location.",
+          "page": 143,
+          "action": "bonus",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 18,
+          "name": "Ascended Awareness",
+          "text": "Starting at 18th level, you may unlock any one “Very Rare” or lower Color of Observation Haki Advancement feat from Chapter 5. If you have already taken all the very rare and lower observation haki feats, you may take a very rare or lower haki advancement feat under a different color of haki, assuming you meet the prerequisites.",
+          "page": 144
+        },
+        {
+          "level": 20,
+          "name": "One Shot One Kill",
+          "text": "At 20th level, you become an unparalleled marksman. Once on each of your turns when you hit a creature with a marksman weapon attack, you attempt to execute the creature. If the creature has 50 or less hit points after your attack’s initial damage has already been dealt, it must succeed on a Constitution saving throw against your Tactic save DC or it dies instantly.",
+          "page": 144
+        }
+      ]
+    },
+    {
+      "id": "subclass.marksman.beast_tamer",
+      "kind": "subclass",
+      "parent": "class.marksman",
+      "name": "Beast Tamer",
+      "group": "Marksman Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 144
+      },
+      "flavor": "Some marksmen rely on their precision, others on their weapons—but you have forged a bond with a beast that fights by your side.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Bonded Companion",
+          "text": "Starting at 3rd level, you gain a beast companion that fights alongside you. You gain expertise in Animal Handling. You bond with an animal of your choice whose CR is 1/2 or lower for 8 hours, after the allotted time is over, the beast becomes your friend. The beast acts independently but obeys your commands in battle. You beasts grow stronger as you level up, to determine its stats use the rules below. You may bond with another animal of your choice if your current beast dies or goes missing.\nThe beast shares your proficiency bonus instead of its own.\nThe beast’s hit points equal the beasts normal hit points + your marksman level x your proficiency bonus.\nIt acts on your initiative and takes the Dodge action unless commanded.\nYou can use a free action to command it to Attack, Dash, Disengage, Help, or Hide.",
+          "page": 144,
+          "sections": [
+            {
+              "name": "Additional Beast Abilities",
+              "text": "Willpower Strikes. At 5th level, the beast’s attacks count as magical for overcoming resistances. Resilience. At 9th level, the beast gains resistance to bludgeoning, piercing, and slashing from nonmagical attacks.\nBattle Leech. At 13th level, when the beast damages a creature, it heals for the amount dealt to the target.",
+              "page": 144
+            },
+            {
+              "name": "Beast Progression",
+              "text": "Additionally, if you mount and ride your beast companion, you gain the following benefits:\nYou can force an attack targeted at your beast companion to target you instead.\nIf your beast companion is subjected to an effect that allows it to make Dexterity saving throw to take only half damage, it instead takes no damage if it succeeds on the saving throw, and only half damage if it fails.",
+              "page": 144,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Marksman Level Beast Max CR Level Damage Dice Amount"
+                    ],
+                    [
+                      "3rd",
+                      "1/2",
+                      "-"
+                    ],
+                    [
+                      "5th",
+                      "1",
+                      "+1"
+                    ],
+                    [
+                      "9th",
+                      "2",
+                      "+2"
+                    ],
+                    [
+                      "13th",
+                      "4",
+                      "+3"
+                    ],
+                    [
+                      "17th",
+                      "8",
+                      "+4"
+                    ]
+                  ],
+                  "page": 144
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Coordinated Strike",
+          "text": "Also at 3rd level, when you hit a creature with an attack, your beast can use its reaction to make an attack against the same or another target.",
+          "page": 144
+        },
+        {
+          "level": 7,
+          "name": "Tactical Tackle",
+          "text": "At 7th level, your coordination with your beast reaches new heights. When you take the Attack action, if your beast is within 60 ft. of your target, you can forgo one of your attacks to command your beast to make a pounce action instead.\nThe beast dashes towards the target, ignoring attacks of opportunity, and makes a grapple action against the creature, the target must succeed on a Strength saving throw against the beast’s Strength Check or be knocked prone and grappled. If the target is grappled, the beast can make one attack against it. This attack does not affect the beast’s action on it’s turn.\nAdditionally, you and your beast gain advantage on Perception and Survival checks while tracking prey.",
+          "page": 144
+        },
+        {
+          "level": 11,
+          "name": "Predator’s Instinct",
+          "text": "At 11th level, your beast’s reflexes are heightened. Your companion gains Extra Attack, and when you hit a target with a ranged attack, your beast’s next attack against that same target has advantage.",
+          "page": 144
+        },
+        {
+          "level": 15,
+          "name": "Alpha Bond",
+          "text": "At 15th level, your connection with your beast has reached its peak. When you or your beast land a critical hit, the other can make an attack for free. When you roll initiative, the beast gains temporary hit points equal to your marksman level.",
+          "page": 144
+        }
+      ]
+    },
+    {
+      "id": "subclass.marksman.bounty_hunter",
+      "kind": "subclass",
+      "parent": "class.marksman",
+      "name": "Bounty Hunter",
+      "group": "Marksman Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 145
+      },
+      "flavor": "Bounty hunters excel at hunting a single target for the purposes of cashing in their bounty.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Bounty Hunter Tactics",
+          "text": "Starting at 3rd level, you learn an additional tactic when you reach certain levels in this class, as shown in the Bounty Hunter Tactics table. The tactic counts as a marksman tactic for you, but it doesn’t count against the number of marksman tactics you know.",
+          "page": 145,
+          "sections": [
+            {
+              "name": "Bounty Hunter Tactics",
+              "text": "",
+              "page": 145,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Marksman Level",
+                      "Tactics"
+                    ],
+                    [
+                      "3rd",
+                      "Protection from Evil and Good"
+                    ],
+                    [
+                      "5th",
+                      "Hold Person"
+                    ],
+                    [
+                      "9th",
+                      "Magic Circle"
+                    ],
+                    [
+                      "13th",
+                      "Otiluke’s Resilient Sphere"
+                    ],
+                    [
+                      "17th",
+                      "Hold Monster"
+                    ]
+                  ],
+                  "page": 145
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Hunter’s Sense",
+          "text": "At 3rd level, you gain the ability to peer at a creature and magically discern how best to hurt it. As an action, choose one creature you can see within 60 feet of you. You immediately learn whether the creature has any damage immunities, resistances, or vulnerabilities and what they are. If the creature is hidden from divination magic, you sense that it has no damage immunities, resistances, or vulnerabilities.\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once). You regain all expended uses of it when you finish a long rest.",
+          "page": 145,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Bounty’s Brand",
+          "text": "Starting at 3rd level, you can focus your ire on one foe, increasing the harm you inflict on it. As a bonus action, you designate one creature you can see within 60 feet of you as the target of this feature. The first time each turn that you hit that target with a weapon attack, it takes an extra 1d6 damage from the weapon.\nThis benefit lasts until you finish a short or long rest. It ends early if you designate a different creature.",
+          "page": 145
+        },
+        {
+          "level": 3,
+          "name": "Treasure Funds",
+          "text": "Also at 3rd level, when you or an ally defeat or kill a creature with a bounty on its head, you immediately gain money equal to 10% of the reward from its bounty.",
+          "page": 145
+        },
+        {
+          "level": 7,
+          "name": "Stalker’s Caution",
+          "text": "At 7th level, you gain extra resilience against your prey’s assaults on your mind and body. Whenever a creature marked by your Bounty’s Brand forces you to make a saving throw and whenever you make an ability check to escape that target’s grapple, add 1d6 to your roll.",
+          "page": 145
+        },
+        {
+          "level": 11,
+          "name": "Tactical Counter",
+          "text": "At 11th level, you gain the ability to thwart someone else’s tactics (magic). When you see a creature using a tactic (casting a spell) or teleporting within 60 feet of you, you can use your reaction to try to foil it. The creature must succeed on a Wisdom saving throw against your Tactic save DC, or its tactic (spell) or teleport fails and is wasted.\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
+          "page": 145,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 15,
+          "name": "Professional Hunter",
+          "text": "At 15th level, you gain the ability to counterattack when your target tries to sabotage you. If the target of your Bounty’s Brand forces you to make a saving throw, you can use your reaction to make one weapon attack against the quarry. You make this attack immediately before making the saving throw. If the attack hits, your save automatically succeeds, in addition to the attack’s normal effects.",
+          "page": 145
+        }
+      ]
+    },
+    {
+      "id": "subclass.marksman.gunslinger",
+      "kind": "subclass",
+      "parent": "class.marksman",
+      "name": "Gunslinger",
+      "group": "Marksman Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 145
+      },
+      "flavor": "Gunslingers are noted for their speed and skill in handling and shooting their weapons. They shoot to kill, and rarely miss.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Quick-draw",
+          "text": "At 3rd level, you master the art of quickly drawing your weapon at the start of battle. You can give yourself a bonus to your initiative rolls equal to your Wisdom modifier.\nAt the start of your first turn of each combat, your walking speed increases by 10 feet, which lasts until the end of that turn. If you take the Attack action with a sling or firearm on turn 1, you can make one additional weapon attack with that weapon as part of the action. If that attack hits, the target takes an extra 2d8 damage of the weapon’s damage type.",
+          "page": 145
+        },
+        {
+          "level": 3,
+          "name": "Gunslinger Tactics",
+          "text": "From 3rd level, you have darkvision with a range of 90 feet. You also gain access to additional tactics at 3rd, 5th, 9th, 13th, and 15th level. You are always able to use these tactics, and they do not count against your number of Marksman tactics known.",
+          "page": 145,
+          "sections": [
+            {
+              "name": "Gunslinger Tactics",
+              "text": "",
+              "page": 145,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Marksman Level",
+                      "Tactics"
+                    ],
+                    [
+                      "3rd",
+                      "Disguise Self"
+                    ],
+                    [
+                      "5th",
+                      "Rope Trick"
+                    ],
+                    [
+                      "9th",
+                      "Glyph of Warding"
+                    ],
+                    [
+                      "13th",
+                      "Greater Invisibility"
+                    ],
+                    [
+                      "17th",
+                      "Seeming"
+                    ]
+                  ],
+                  "page": 145
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 7,
+          "name": "Iron Mind",
+          "text": "At 7th level, you gain proficiency in Wisdom saving throws.",
+          "page": 145
+        },
+        {
+          "level": 11,
+          "name": "High Noon",
+          "text": "Starting at 11th level, you have the ability to ensure that your attacks count. If you miss with a firearm or sling attack during your turn, you can immediately make an additional ranged attack with that weapon. You can gain one additional attack during your turn with this ability.",
+          "page": 146
+        },
+        {
+          "level": 15,
+          "name": "Quick-Step",
+          "text": "At 15th level, you master the ability to disrupt and maneuver around an opponent’s attacks. If a creature attacks you and does not have advantage on the attack roll, you can use your reaction to grant it disadvantage on the attack roll. You must use this ability before you know the result of the attack.",
+          "page": 146
+        }
+      ]
+    },
+    {
+      "id": "subclass.marksman.rope_master",
+      "kind": "subclass",
+      "parent": "class.marksman",
+      "name": "Rope Master",
+      "group": "Marksman Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 146
+      },
+      "flavor": "Masters of entanglement, Rope Masters turn simple cords into deadly weapons. Whether lashing enemies, swinging allies to safety, or maneuvering with acrobatic finesse, they weave their way through combat with unmatched tactical creativity.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Rope Techniques",
+          "text": "Starting at 3rd level, your mastery of ropes allows you to wield them as versatile weapons and tools. You gain proficiency with ropes as improvised ranged weapons. Ropes have the following properties.\nRope, Improvised\nWhen attacking with a rope, you can attempt to grapple the target instead of dealing damage. Targets must succeed on a Strength saving throw equal to your Tactic save DC or become grappled from afar.\nAdditionally, ropes do not count as ranged for disadvantage when a enemy creature is standing next to you.",
+          "page": 146,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Ranged Weapon"
+                ],
+                [
+                  "Damage. 1d8 Bludgeoning damage"
+                ],
+                [
+                  "Reach. 30/60"
+                ],
+                [
+                  "Properties. Finesse"
+                ]
+              ],
+              "page": 146
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Rope Tricks",
+          "text": "Also at 3rd level, you develop techniques to enhance your rope-based combat. You learn two Rope Tricks from the list below. You gain an additional trick at 7th and 15th levels.\nWhiplash. When you hit a creature with a ranged rope attack and grapple them, you may choose to pull a creature to you, keep the creature where it is, or pull yourself next to the grappled targets space. Tether Throw. You can use your rope to swing an ally to safety. As a reaction when an ally within 30 feet is hit by an attack, you can move them up to 15 feet in any direction. This movement doesn’t provoke opportunity attacks.\nTripwire. When you hit a creature with a rope weapon attack, you can force them to make a Dexterity saving throw or fall prone.\nHookshot. As a bonus action, you can use your rope to pull yourself to an unoccupied space within 30 feet.\nYou can use each of your Rope Tricks a number of times equal to double your proficiency bonus per short rest.\nAdditionally, you can use the Rope Trick spell an amount of times equal to your proficiency bonus per long rest.",
+          "page": 146,
+          "uses": {
+            "max": "prof*2",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 7,
+          "name": "Knotwork Mania",
+          "text": "At 7th level, your skill with ropes grants you unparalleled versatility in battle. When a creature within 10 feet of you misses an attack, you can use your reaction to attempt to grapple them using your Rope Technique feature.\nAdditionally, when you use your rope to grapple a creature, you can target two additional creatures within 10 feet of the target with the same action, pulling them together.",
+          "page": 146
+        },
+        {
+          "level": 11,
+          "name": "Rope Dance",
+          "text": "At 11th level, you become a blur of rope-wielding precision, controlling the battlefield effortlessly. You gain the following:\nWhen you take the Attack action, you can make two additional rope attacks as part of the same action. When you use a Rope Trick, you can make a rope weapon attack as a bonus action.\nYou gain advantage on checks and saving throws made to escape grapples or restraints.",
+          "page": 146
+        },
+        {
+          "level": 15,
+          "name": "Deckhand’s Tangle",
+          "text": "At 15th level, your mastery over ropes reaches its pinnacle. As an action, you can create an area of entangled ropes in a 30-foot radius centered on yourself. The area is difficult terrain for creatures other than you, and any creature other than you that starts its turn in the area or enters it for the first time must make a Strength saving throw equal to your Tactic save DC or become restrained. The area effect lasts for 1 hour or until you dismiss it as a bonus action. You must take a long rest to use this feature again.\nAdditionally, when you restrain a creature with your rope, they take 2d6 bludgeoning damage at the beginning of their turns from the tightening ropes.",
+          "page": 146
+        }
+      ]
+    },
+    {
+      "id": "subclass.marksman.sniper",
+      "kind": "subclass",
+      "parent": "class.marksman",
+      "name": "Sniper",
+      "group": "Marksman Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 147
+      },
+      "flavor": "Snipers are marksmen that try to maximize their range and stealth when hunting a target using camoflauge and distance. They will rarely ever be spotted or caught out when gunning down their prey from a safe location. These marksmen are horrifying to deal with from far away.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Scoping",
+          "text": "At 3rd level, your range with firearms and slings becomes 150/600 feet unless its already a greater amount.",
+          "page": 147
+        },
+        {
+          "level": 3,
+          "name": "Empowered Bullet",
+          "text": "Starting at 3rd level, you learn to craft special bullets using your gunsmithing abilities.\nWhen you hit with a firearm or sling attack, you can expend a Tactic Slot to deal additional damage to a target. The extra damage is equal to 2d6 for a 1st-level Tactic Slot, plus 1d6 for each Tactic Slot higher than 1st.",
+          "page": 147
+        },
+        {
+          "level": 7,
+          "name": "Sniper’s Nest",
+          "text": "At 7th level, you learn how to take advantage of hidden vantage points. When combat begins, if you are positioned outside the battlefield in an elevated position, the battle map is an outdoors location, and continue to remain outside of it, you can establish a hidden firing position.\nWhile in your Sniper’s Nest, you are not considered to be on the battlefield and cannot be targeted by creatures within it unless a feature, effect, or the DM specifically allows them to perceive or reach you.\nAt the start of each of your turns, you may choose one creature on the battlefield that is not inside total cover (such as being fully within a building or otherwise completely enclosed). You can make one ranged weapon attack against that creature. You may make only 1 attack per turn.\nThis attack ignores normal range penalties.\nYou cannot make more than one attack on your turn while using this feature, regardless of other features such as Extra Attack.\nThis effect ends immediately, returning you to a side of the combat map of your choice (unless you are forced to enter by the DM), if:\nYou enter the battlefield as an action.\nYou are forcibly moved into the battlefield.\nYou are no longer able to see the battlefield.\nThe DM determines your position is no longer outside the encounter area.",
+          "page": 147
+        },
+        {
+          "level": 11,
+          "name": "Sniper’s Support",
+          "text": "At 11th level, you can support and draw attention away from your allies while they are fighting your target up close. When a creature is marked by your Lock-On, allied creatures have advantage on attack rolls against it until the mark ends. Additionally, the marked creature sheds dim light in a 10-foot radius, becoming clearly outlined.",
+          "page": 147
+        },
+        {
+          "level": 15,
+          "name": "Extreme Range",
+          "text": "At 15th level, your precision and power increase with distance. When you hit a creature with a ranged weapon attack, you deal additional damage equal to +1 for every 25 ft. between you and the target or between the edge of the map and the target if you are using Sniper’s Nest.",
+          "page": 147
+        }
+      ]
+    },
+    {
+      "id": "subclass.marksman.trapper",
+      "kind": "subclass",
+      "parent": "class.marksman",
+      "name": "Trapper",
+      "group": "Marksman Archetypes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 147
+      },
+      "flavor": "Trappers are marksmen who excel in creating dangerous environments for their targets. Using snares, pitfalls, and hidden mechanisms, they can control the battlefield from a distance.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Snap Trap Specialist",
+          "text": "Starting at 3rd level, you can craft and set traps with ease, turning the battlefield into a dangerous maze for your foes. As an action, you can place a snap trap in a unoccupied 5 ft. space within 30 feet of you. The snap trap is hidden and requires a successful Perception check equal to your Tactic save DC to spot if the creature did not see you placing the trap. A creature that enters the trap’s space triggers it. The trap deals 2d6 piercing damage and reduces the target’s movement speed by half until the end of its next turn.\nDuring a short or long rest, you can craft up to three snap traps.",
+          "page": 147
+        },
+        {
+          "level": 3,
+          "name": "Hunter’s Intuition",
+          "text": "Also at 3rd level, your experience with traps sharpens your senses. You gain proficiency in the Perception and Survival skills if you don’t already have them and you have advantage on check when looking for traps or ambushes.",
+          "page": 147
+        },
+        {
+          "level": 7,
+          "name": "Tactical Ensnaptrapment",
+          "text": "At 7th level, your traps become more versatile, allowing you to manipulate your enemies more effectively. When you create a snap trap, choose one additional effect:\nSticky Snap Trap. The creature is restrained until the end of your next turn.\nPuffing Snap Trap. The trap creates a 20-foot-radius cloud of smoke, heavily obscuring the area for 1 minute.\nBooming Snap Trap. The trap explodes in a 10-foot radius, dealing 1d6 fire damage to all creatures in the area.\nBig Snap Trap. The damage of your snap trap increases by an additional 2d6 damage.\nMagnetic Snap Trap. The creature who steps on this trap must make a Strength saving throw equal to your Tactic save DC. On a failed save the creatures metal weapon and shield is pulled from their hand and is magnetized to the trap. A creature must make an action to remove the weapon from the snap trap. Dial Snap Trap. You infuse a dial you own into the snap trap. A creature that activates this trap activates the dial you set within it.\nPop Green Snap Trap. You infuse a pop green you own into the snap trap. A creature that activates this trap activates the pop green you set within it. Blinding Snap Trap. The creature is blinded until the end of your next turn.\nAdditionally, you can use a bonus action instead of an action to set a trap.",
+          "page": 148
+        },
+        {
+          "level": 11,
+          "name": "Master Trapper",
+          "text": "At 11th level, your traps become deadlier and harder to avoid. You gain the following:\nCreatures have disadvantage on saving throws against finding your snap traps.\nSnap traps you set deal an additional 1d6 damage of your choice, excluding force.\nWhen a creature triggers your snap trap, you can use your reaction to make a ranged weapon attack against that creature.",
+          "page": 148
+        },
+        {
+          "level": 15,
+          "name": "Battlefield Architect",
+          "text": "At 15th level, you control the flow of battle with devastating traps and precision. you gain the following:\nWhen a snap trap is triggered, you can choose any other amount of snap traps within 20 feet of it to also trigger.\nYour snap traps ignore resistance to nonmagical damage.\nYou can set up two snap traps at once.",
+          "page": 148
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

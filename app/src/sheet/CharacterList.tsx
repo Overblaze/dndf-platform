@@ -47,7 +47,7 @@ export function CharacterList({ store }: { store: CharacterStore }) {
         )}
         {error && <p className="notice" role="alert">{error}</p>}
         {!characters && !error && <p>Checking the crew list…</p>}
-        {characters?.length === 0 && <p>No characters yet. Create a Bruiser, or add the sample character to look around.</p>}
+        {characters?.length === 0 && <p>No characters yet. Create one, or add the sample character to look around.</p>}
         {characters?.map((character) => {
           const sheet = deriveSheet(character.doc, rules);
           return (
@@ -61,14 +61,14 @@ export function CharacterList({ store }: { store: CharacterStore }) {
           );
         })}
         <div className="row wrap">
-          <button className="btn btn-primary" onClick={() => setCreating(true)}>New Bruiser</button>
+          <button className="btn btn-primary" onClick={() => setCreating(true)}>New character</button>
           <button className="btn" onClick={() => create(kaito(rules))}>Add the sample: Kaito, Bruiser 7</button>
         </div>
-        <p className="page-ref">Only the Bruiser (rules v10) is available so far. The other classes arrive in phase 3 and the full builder in phase 4.</p>
+        <p className="page-ref">All thirteen classes of the v10 handbook are available. Races, backgrounds and the step-by-step builder are still to come, so those are typed in by hand for now.</p>
       </section>
 
       {creating && (
-        <Dialog title="New Bruiser" onClose={() => setCreating(false)}>
+        <Dialog title="New character" onClose={() => setCreating(false)}>
           <CharacterForm initial={null} onCancel={() => setCreating(false)} onSave={(doc) => { setCreating(false); void create(doc); }} />
         </Dialog>
       )}
