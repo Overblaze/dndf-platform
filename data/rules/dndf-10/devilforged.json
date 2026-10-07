@@ -576,7 +576,17 @@
           "level": 3,
           "name": "Hell’s Duelist",
           "text": "Also at 3rd level, you gain proficiency with medium armor and shields.\nIn addition, while you are wielding a melee weapon infused with at least one Devil Fruit, you gain a +1 bonus to your AC.",
-          "page": 121
+          "page": 121,
+          "toggle": {
+            "id": "infused_blade",
+            "label": "Wielding an infused melee weapon",
+            "effects": [
+              {
+                "type": "ac",
+                "value": 1
+              }
+            ]
+          }
         },
         {
           "level": 6,
@@ -664,7 +674,17 @@
           "level": 6,
           "name": "Defenders Leap",
           "text": "Starting at 6th level, while you are wielding a Devil Fruit-infused shield you created, the AC bonus granted by that shield increases by 1. This bonus increases as you gain levels in this class, becoming +2 at 10th level and +3 at 14th level.\nIn addition, when an allied creature you can see within 15 ft. of you is targeted by an attack, you can use your reaction to leap up to 15 ft. toward that creature without provoking opportunity attacks. If this movement brings you within 5 ft. of the allied creature, you become the target of the attack instead.",
-          "page": 123
+          "page": 123,
+          "toggle": {
+            "id": "infused_shield",
+            "label": "Wielding your infused shield",
+            "effects": [
+              {
+                "type": "ac",
+                "expr": "level>=14 ? 3 : level>=10 ? 2 : 1"
+              }
+            ]
+          }
         },
         {
           "level": 10,
@@ -721,7 +741,17 @@
           "level": 10,
           "name": "Configuration Improvements",
           "text": "Beginning at 10th level, your Range Configurations improve as described below for all your currently infused ranged weapons.\nImproved Sniper Configuration. The weapon’s normal range and long range are doubled. In addition, once on each of your turns when you hit a creature with the weapon, the attack deals an additional 2d6 damage of the weapon’s damage type.\nImproved Blast Configuration. When you trigger this configuration, you can choose for the attack to affect either a 15-foot cone originating from the target or a 15-foot-radius sphere centered on the target.\nEach creature in the area must make a Dexterity saving throw. On a failed save, a creature takes the attack’s damage. On a successful save, it takes half as much damage.\nImproved Leech Configuration. The weapon’s normal range becomes 15/30. You no longer gain disadvantage when a hostile creature is within 5 ft. of you.\nWhen you deal damage to a creature with the weapon, you regain hit points equal to double your proficiency bonus + your intelligence modifier.\nImproved Freezing Configuration. When you hit a creature with the weapon, its speed is reduced by 5 feet until the start of your next turn. This speed reduction is cumulative for multiple hits.\nIn addition, if you successfully hit the same creature with two or more infused ranged weapon attacks you make against it during your turn, that creature is restrained until the start of your next turn.\nImproved Seeker Configeration. When you attack with the weapon, you can choose not to make an attack roll. If you do, the attack automatically hits one creature within the weapon’s normal range, but the attack’s damage is halved.\nThis attack ignores half cover and three-quarters cover but cannot target a creature behind total cover.",
-          "page": 124
+          "page": 124,
+          "rolls": [
+            {
+              "label": "2d6 damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 14,
@@ -732,8 +762,16 @@
             "max": "prof",
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "6d6 damage",
+              "dice": "6d6",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         }
       ]
@@ -763,7 +801,32 @@
           "level": 3,
           "name": "Mechadevil Mark 1",
           "text": "Also at 3rd level, while wearing your Mechadevil Armor, you can use it as a conduit for the Logia fruit sealed within it. Your Mechadevil Armor gains the following benefits:\nElemental Blast. While wearing your Mechadevil Armor, you can use your action to make a ranged spell attack against one creature you can see within 60 feet of you. On a hit, the target takes damage equal to 1d10 + your intelligence modifier. The damage type should reflect the element of the infused Logia fruit, subject to the DM’s approval. This damage increases as you gain levels in this class, becoming 2d10 at 5th level, 3d10 at 11th level, and 4d10 at 17th level.\nArmor Conduit. Your Mechadevil Armor can serve as a conduit for spells granted by the infused Logia Devil Fruit, as described in your Devilforged features. You gain a +2 bonus to spell attack rolls made through the armor.\nPowered Frame. You ignore the Strength requirement of heavy armor. In addition, while wearing your Mechadevil Armor, your movement speed is not reduced by wearing heavy armor.\nMechanics. While you wear this armor, gain a flying speed of 30 ft., resistance to Bludgeoning, Piercing, and Slashing from nonmagical attacks, immunity to Poison and the Poisoned condition.",
-          "page": 125
+          "page": 125,
+          "rolls": [
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            },
+            {
+              "label": "2d10",
+              "dice": "2d10",
+              "kind": "other"
+            },
+            {
+              "label": "3d10",
+              "dice": "3d10",
+              "kind": "other"
+            },
+            {
+              "label": "4d10",
+              "dice": "4d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
@@ -774,8 +837,31 @@
             "max": "prof",
             "recharge": "short"
           },
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            },
+            {
+              "label": "6d6",
+              "dice": "6d6",
+              "kind": "other"
+            },
+            {
+              "label": "4d8",
+              "dice": "4d8",
+              "kind": "other"
+            },
+            {
+              "label": "6d10",
+              "dice": "6d10",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -906,6 +992,16 @@
               "text": "Choose one of the elements to infuse into your chosen beast.\nClay Element Type\nStat Boost: +1 to Constitution; +10 HP.\nDamage Resistance: Nonmagical slashing\nFeature - Molded Form: The beast can reshape its body to absorb damage, reducing all incoming damage by 1d6 points.\nDarkness Element Type\nStat Boost: +2 to Constitution; +2 to damage rolls.\nDamage Vulnerability: Bludgeoning, piercing, and slashing\nFeature - Shadow Grasp: As an action, the beast can extend darkness to bind an enemy within 15 feet, the creature must make a Strength saving throw or be restrained until the end of their next turn. This feature recharges after a long rest.\nFire Element Type\nStat Boost: +1 to Strength; +1 to damage rolls.\nDamage Resistance: Fire\nFeature - Flame Burst: The beast’s attacks ignite targets, dealing an extra 1d6 fire damage at the start of the enemy’s turn. The flames can be extinguished with an action or submerging it water.\nGas Element Type\nStat Boost: +2 bonus to AC against ranged attacks.\nDamage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Toxic Cloud: As an action, the beast can release a poisonous gas in a 15-foot radius, causing enemies to make a Constitution saving throw or be poisoned for 1d4 minute. This feature recharges after a short or long rest.\nGlass Element Type\nStat Boost: +3 to AC\nDamage Vulnerability: Nonmagical bludgeoning\nFeature - Reflective Shards: When the beast is hit by a melee attack, it can cause shards to explode outward, dealing 1d4 piercing damage to the attacker and imposing disadvantage on their next attack.\nIce Element Type\nStat Boost: +1 to Strength; +2 to AC against melee attacks.\nDamage Resistance: Cold\nFeature - Frostbite Touch: The beast’s attacks slow enemies, reducing their movement speed by 10 feet until the end of the target’s next turn.\nLight Element Type\nStat Boost: +1 to Dexterity; +1 to attack rolls.\nDamage Resistance: Radiant\nFeature - Blinding Flash: As an action, the beast emits a burst of light, causing enemies within 20 feet to make a Dexterity saving throw or be blinded until the end of their next turn. This feature recharges after a short or long rest.\nLightning Element Type\nStat Boost: +1 to Dexterity; +10 feet to movement speed.\nDamage Resistance: Lightning\nFeature - Static Charge: The beast’s melee attacks gain an additional 1d6 lightning damage.\nMagma Element Type\nStat Boost: +1 to Strength; +1 to attack and damage rolls.\nDamage Resistance: Fire\nFeature - Molten Armor: The beast is covered in molten rock, dealing 1d6 fire damage to any enemy that hits it with a melee attack.\nSand Element Type\nStat Boost: +1 to Dexterity; gains advantage on Dexterity saving throws.\nDamage Resistance: Fire\nDamage Vulnerability: Cold\nFeature - Sandstorm Cloak: As a bonus action, the beast can shroud itself in swirling sand, gaining half cover and imposing disadvantage on ranged attacks against it for 1 minute.\nSmoke Element Type\nStat Boost: advantage on Stealth checks.\nDamage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Smoke Screen: As an action, the beast can create a 10 ft. radius cloud of smoke centered around itself, causing the area to become heavily obscured for 1 minute and follows the beast. This feature recharges after a short or long rest.\nSnow Element Type\nStat Boost: +1 to Constitution; advantage on Constitution saving throws.\nDamage Resistance: Cold\nFeature - Freezing Aura: The beast radiates a cold aura, causing enemies within 5 feet to take 1d4 cold damage at the start of their turns.\nSoot Element Type\nStat Boost: +1 to Constitution; gain flight speed equal to walking speed.\nDamage Resistance: Fire\nFeature - Cinder Blast: The beast can unleash blasts of hot soot, the beast’s attack range for melee attacks increase by 10 ft. and the damage type is changed to fire damage.\nSwamp Element Type\nStat Boost: +1 to Strength; +15 temporary hit points at the start of combat.\nDamage Resistance: Necrotic\nFeature - Mire Grip: As an action, the beast can turn the ground into difficult terrain in a 30 ft. radius area center on itself for 1d4 minutes. This feature recharges after a short or long rest.\nTree Element Type\nStat Boost: +2 to Constitution; regenerates 2 hit points at the start of its turn if it is conscious and the currently active bloodline beast.\nDamage Vulnerability: Fire\nFeature - Root Snare: As an action, the beast can release vines to grapple an enemy within 10 feet, the creature must make a Strength saving throw or become grappled by them. The vines can be broken with a Strength save against your spell save DC.",
               "page": 127
             }
+          ],
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
           ]
         },
         {

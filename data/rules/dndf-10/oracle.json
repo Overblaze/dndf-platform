@@ -541,7 +541,13 @@
           "level": 6,
           "name": "Death’s Rattle",
           "text": "Starting at 6th level, the bones now reveal more than just the future, they expose the threads of mortality. When a creature within 30 feet of you drops to 0 hit points, you can use your reaction to roll your bones and choose one of the following outcomes.\nGain temporary hit points equal to twice your Oracle level.\nCause another creature within 30 feet to take psychic damage equal to your Oracle level.\nAdditionally, you gain advantage on death saving throws.",
-          "page": 160
+          "page": 160,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on death saving throws"
+            }
+          ]
         },
         {
           "level": 8,
@@ -588,6 +594,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to necrotic damage"
+            }
           ]
         },
         {
@@ -752,8 +764,16 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "1d12",
+              "dice": "1d12",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -814,8 +834,16 @@
             "max": "prof*2",
             "recharge": "short"
           },
+          "rolls": [
+            {
+              "label": "1d10 damage",
+              "dice": "1d10",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -881,7 +909,32 @@
           "level": 2,
           "name": "Sacrificial Sigil Creation",
           "text": "When you choose this subclass at 2nd level, you unlock the secrets of sigil magic, inscribing symbols that shape reality at a cost. You gain a number of sigil dice equal to twice your proficiency bonus, with each die being a 1d4. Before activating a sigil, you must take automatic damage equal to a single sigil dice roll. This damage cannot be reduced or avoided unless otherwise stated and you may not fall below 1 hit point when taking the sigil dice damage. You gain access to the following sigils:\nSigil of Searing. You draw a flame-shaped sigil into the air as an action, marking an enemy within 60 feet of you. They must succeed on a Dexterity saving throw against your Spell save DC or take an amount of fire damage equal to your current sigil dice pool. On a successful save the creatures take half the fire damage.\nSigil of Solidification. You draw an eye-shaped sigil into the air as an action. Choose a creature within 60 feet of you. They must succeed on a Wisdom saving throw against your Spell save DC or take an amount of psychic damage equal to your current sigil dice pool and become paralyzed until the start of your next turn.\nSigil of Transference. You draw a fang-shaped sigil into the air as a bonus action, draining vitality from one creature and transferring it to another. A willing creature within 60 feet of you takes an amount of necrotic damage equal to your current sigil dice pool to a minimum of 1 hit point. Another willing creature within range regains an amount of hit points equal to the damage inflicted.\nSigil of Freedom. You draw a wing-shaped sigil into the air as a bonus action, temporarily boosting the movement of a creature within 60 feet of you. The creature does not provoke opportunity attacks and gains additional walking speed equal to 5 x your current sigil dice pool for 1 minute. They may not dash while this sigil is in use.\nSigil of Shielding. You draw a shield-shaped sigil into the air as an reaction when you or an ally within 60 feet of you is struck by an attack roll, gain an amount of temporary hit points equal to your current sigil dice pool.\nSigil of Hinderance. You draw a broken sword- shaped sigil into the air as an reaction when a weapon attack targets you or a creature within 60 feet of you. You impose a penalty to the attack roll equal to your current sigil dice pool. You must declare this before or after the attack is rolled but before the result is revealed.\nOnce you use a sigil, reduce the current amount of sigil dice you possess by 1. You may not draw any more sigils if you have 0 sigil dice. You regain all expended dice when you finish a long rest.\nAdditionally, at certain levels, your sigils grow in potency, increasing the size of your sigil dice. At 5th level your sigil dice become 1d6, 11th level equal to 1d8, and 17th level equal to 1d10.",
-          "page": 161
+          "page": 161,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            },
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            },
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            },
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
@@ -1014,6 +1067,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "history"
+            }
           ]
         },
         {
@@ -1033,7 +1092,27 @@
           "level": 8,
           "name": "Empowered Echoes",
           "text": "At 8th level, the power of your Ancestral Echoes is further enhanced. Allies who receive an Ancestral Echo from you also gain a +1 bonus to their AC and an additional 1d4 radiant damage to their weapon attacks for the duration of the Echo.\nThe damage increases to 2d4 at 11th level, and 3d4 at 17th level.",
-          "page": 163
+          "page": 163,
+          "rolls": [
+            {
+              "label": "1d4 radiant damage",
+              "dice": "1d4",
+              "kind": "damage"
+            },
+            {
+              "label": "2d4",
+              "dice": "2d4",
+              "kind": "other"
+            },
+            {
+              "label": "3d4",
+              "dice": "3d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 11,

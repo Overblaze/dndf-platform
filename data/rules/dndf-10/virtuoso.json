@@ -610,7 +610,13 @@
           "level": 3,
           "name": "Battle Proficiencies",
           "text": "When you join the School of Battlehymn at 3rd level, you gain proficiency with Heavy Armor, Shields, and Martial Weapons. Additionally, your hit point maximum increases by an amount equal to twice your virtuoso level when you gain this feature. Whenever you gain a level in virtuoso thereafter, your hit point maximum increases by an additional 2 hit points.",
-          "page": 196
+          "page": 196,
+          "effects": [
+            {
+              "type": "hp",
+              "expr": "level * 2"
+            }
+          ]
         },
         {
           "level": 3,
@@ -622,7 +628,13 @@
           "level": 6,
           "name": "Fury of the Battlehym",
           "text": "Starting at 6th level, you can Attack twice, instead of once, whenever you take the Attack action on your turn and you may cast a cantrip you know from your virtuoso spell list.",
-          "page": 196
+          "page": 196,
+          "effects": [
+            {
+              "type": "attacksPerAction",
+              "value": 2
+            }
+          ]
         },
         {
           "level": 14,
@@ -651,7 +663,32 @@
           "level": 3,
           "name": "Pain-Numbing Chord",
           "text": "When you join the School of Hypnotism at 3rd level, you hypnotize your allies to allow them to ignore pain.\nWhen an ally is hit with a damaging attack, you can use your reaction to expend one of your floating chords (your choice). The target gains all benefits from the chord normally plus temporary hit points equal to 2d6.\nThe temporary hit points increase when you reach certain levels in this class, increasing to 3d6 at 5th level, 5d6 at 10th level, and 8d6 at 15th level.",
-          "page": 196
+          "page": 196,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "3d6",
+              "dice": "3d6",
+              "kind": "other"
+            },
+            {
+              "label": "5d6",
+              "dice": "5d6",
+              "kind": "other"
+            },
+            {
+              "label": "8d6",
+              "dice": "8d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 3,
@@ -726,7 +763,17 @@
           "level": 3,
           "name": "Verbal Sabotage",
           "text": "At 3rd level, your biting remarks can disrupt your enemies’ focus at critical moments. When a creature within 60 feet of you that can hear you makes an attack roll, ability check, or damage roll, you can use your reaction to expend a floating chord (your choice) and force the creature to roll a Charisma saving throw against your Spirit save DC. On a failed save, subtract 1d4 from the triggering roll.",
-          "page": 197
+          "page": 197,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
@@ -870,7 +917,17 @@
           "level": 3,
           "name": "Perfectly Placed Words",
           "text": "At 3rd level, you know exactly what to say to tip any conversation in your favor. You gain expertise in Persuasion.\nAdditionally, when you make a Charisma (Persuasion) or Charisma (Deception) check, you can treat a d20 roll of 9 or lower as a 10.",
-          "page": 199
+          "page": 199,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "persuasion"
+            },
+            {
+              "type": "expertise",
+              "skill": "persuasion"
+            }
+          ]
         },
         {
           "level": 6,

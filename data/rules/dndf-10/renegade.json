@@ -148,17 +148,17 @@
           "name": "Press the Attack",
           "text": "At 5th level, you learn to build momentum with each successful strike. Whenever you hit a creature with a weapon attack made as part of your Dueling Strikes, you gain 1 stack of Press the Attack.\nFor each stack of Press the Attack you have, you gain a +1 bonus to attack rolls you make with your Dueling Strikes up to +3, and your Dueling Strikes attacks deal an additional stacking 1d4 damage on a hit up to half of your Renegade level (rounded up).\nYou lose all stacks of Press the Attack if you miss with a weapon attack made as part of your Dueling Strikes, use your Finishing Act, or combat ends.",
           "page": 172,
-          "effects": [
-            {
-              "type": "attack",
-              "expr": "min(3, tracker.press_the_attack)"
-            }
-          ],
           "rolls": [
             {
               "label": "Extra damage for the stacks held",
               "dice": "{max(1, tracker.press_the_attack)}d4",
               "kind": "damage"
+            }
+          ],
+          "effects": [
+            {
+              "type": "attack",
+              "expr": "min(3, tracker.press_the_attack)"
             }
           ]
         },
@@ -272,7 +272,17 @@
           "level": 17,
           "name": "Ultimate Subterfuge",
           "text": "Beginning at 17th level, your skill in deception and infiltration reaches unparalleled heights. You gain the following benefits:\nWhen you make a Dexterity (Stealth), Charisma (Persuasion), or Charisma (Deception) check, you can treat a roll of 13 or lower on the d20 as a 14. As an action, you can perfectly mimic a creature you’ve observed for at least 1 minute, replicating their voice, mannerisms, clothing style, and behavior. Creatures must succeed on an Intelligence (Investigation) check against your Charisma (Deception) roll to discern the impersonation. Once per turn, when you attack a creature unaware of your true identity (such as while disguised or hidden), you can deal an additional 4d6 damage.",
-          "page": 174
+          "page": 174,
+          "rolls": [
+            {
+              "label": "4d6 damage",
+              "dice": "4d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
@@ -363,8 +373,16 @@
           "text": "Also at 3rd level, as a bonus action, you can coat a weapon, piece of ammunition, or a 5-foot square surface with a poison from your inventory. The poison remains potent for 1 hour or until triggered. When you hit a creature with a poisoned weapon or piece of ammunition, you gain the following benefits:\nThe creature has disadvantage on its first saving throw made against the poison.\nWhen applied to a surface, the poison is triggered when a creature touches or interacts with it, as determined by the DM.\nOnce you inflict a target with the poison covered weapon, ammunition, or surface, the poison dissipates. Poisons do not stack, and only 1 poison can be on a target at once. If you inflict a creature with a higher severity poison than they currently have, the higher severity poison takes effect.\nAdditionally, your strikes exploit poisoned enemies. Once per turn, when you hit a poisoned creature with a weapon attack made as part of your Dueling Strikes, the attack deals an additional 1d6 poison damage.",
           "page": 175,
           "action": "bonus",
+          "rolls": [
+            {
+              "label": "1d6 poison damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "action"
+            "action",
+            "rolls"
           ]
         },
         {
@@ -419,7 +437,17 @@
           "level": 3,
           "name": "Trick Rider",
           "text": "When you choose this archetype at 3rd level, you gain expertise in the Acrobatics and Performance skills if you do not already have them.\nYou also learn to fight while riding or balancing on circus props, such as a unicycle, giant ball, stilts, ladder, barrel, or another appropriate object approved by the DM. While using such a prop, you gain the following benefits:\nYour walking speed increases by 25 feet.\nStanding up from prone costs you only 5 feet of movement.\nYou can mount or dismount the prop without spending additional movement. If your prop is destroyed, lost, or unavailable, you can replace it during a long rest.",
-          "page": 176
+          "page": 176,
+          "toggle": {
+            "id": "trick_rider",
+            "label": "Riding your prop",
+            "effects": [
+              {
+                "type": "speed",
+                "value": 25
+              }
+            ]
+          }
         },
         {
           "level": 3,
@@ -431,7 +459,27 @@
           "level": 5,
           "name": "Circus Flow",
           "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nOld Man’s Flame. You exhale a burst of flame at one creature within 5 feet of you. The target must succeed on a Dexterity saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or take 1d6 fire damage and be unable to take reactions until the start of your next turn.\nThe fire damage increases to 2d6 when you reach 9th level in this class and 3d6 when you reach 17th level in this class.\nMurder at the Steam Bath. You spin your weapon or circus prop against the ground, kicking up dust or debris. Choose one creature within 5 feet of you. Until the start of your next turn, the next attack roll made against that creature has advantage.\nDance of One Hundred Tops. You scatter spinning tops, blades, or small weighted props in a 10 by 10 foot square within 15 feet of you. The first creature other than you that enters that space before the start of your next turn must succeed on a Dexterity saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or take damage equal to your Renegade level and have its speed reduced by 10 feet until the end of its turn.",
-          "page": 176
+          "page": 176,
+          "rolls": [
+            {
+              "label": "1d6 fire damage",
+              "dice": "1d6",
+              "kind": "damage"
+            },
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "3d6",
+              "dice": "3d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 9,
@@ -443,7 +491,14 @@
           "level": 13,
           "name": "Mountain Climb",
           "text": "At 13th level, while using your Trick Rider prop, you gain a climbing speed equal to your walking speed, and you can move along vertical surfaces and across narrow surfaces without making an ability check. If you end your turn on a vertical surface, you must have at least one hand free to remain there. Otherwise, you fall.\nIn addition, when you use the Tumble option from your Combo Flow feature, you can move an additional 10 feet.",
-          "page": 177
+          "page": 177,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Climbing speed equal to your walking speed",
+              "when": "on.trick_rider"
+            }
+          ]
         },
         {
           "level": 17,
@@ -480,6 +535,13 @@
           "name": "Stage of Battle",
           "text": "When you choose this archetype at 3rd level, combat is your stage, and each movement enhances your deadly performance. Once per turn, when you make a Dueling Strike attack with a finesse weapon, you can perform a flourish, choosing one of the following effects:\nYou gain a +2 bonus to AC until the start of your next turn.\nYou add an extra 1d6 damage to the attack.\nYou also gain proficiency in the Performance skill if you don’t already have it.",
           "page": 177,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
           "effects": [
             {
               "type": "proficiency",
@@ -487,6 +549,7 @@
             }
           ],
           "auto": [
+            "rolls",
             "effects"
           ]
         },
@@ -547,13 +610,49 @@
           "level": 3,
           "name": "Better’s Hand",
           "text": "Also at 3rd level, your daring instincts let you seize the first move. You gain a bonus to initiative rolls equal to your Charisma modifier.\nIn addition, when you begin a combo using Dueling Strikes, you can place a wager on the first attack in that combo. Before you roll the attack, choose one of the following wagers. You can place only one wager per combo.:\nSafe Bet. If the attack hits, you gain a +1 bonus to the next attack roll you make as part of your Dueling Strikes before the end of your turn. If the attack misses, reduce your movement speed by half for the turn.\nRisky Bet. If the attack hits, it deals an additional 2d6 damage. If the attack misses, you lose your bonus action and reaction for this combat round.\nAll In. If the attack hits, you gain a +3 bonus to the next attack roll you make as part of your Dueling Strikes before the end of your turn and this attack deals an additional 4d6 damage. If the attack misses, gain 1 exhaustion, you lose your bonus action and reaction for this combat round, and your turn immediately ends.",
-          "page": 178
+          "page": 178,
+          "rolls": [
+            {
+              "label": "2d6 damage",
+              "dice": "2d6",
+              "kind": "damage"
+            },
+            {
+              "label": "4d6 damage",
+              "dice": "4d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ],
+          "effects": [
+            {
+              "type": "initiative",
+              "expr": "max(0, mod.cha)"
+            }
+          ]
         },
         {
           "level": 5,
           "name": "Gambler’s Flow",
           "text": "Starting at 5th level, you gain additional options for your Combo Flow feature. Immediately after you make a weapon attack as part of your Dueling Strikes, you can use your bonus action to perform one of the following techniques.\nLoaded Step. Roll 1d4 and increase your movement speed by a number of feet equal to 5 times the number rolled for the rest of the turn.\nDice Roll. Roll 2d6 dice. On a roll of 12, your next attack automatically hits and it is considered a critical hit. On a roll of 2, your next attack automatically misses and gain 1 exhaustion until you make a successful attack roll.\nSweep. You make one melee weapon attack against a creature within your reach. On a hit, the attack deals no damage, but the target falls prone. If this attack hits, it counts as a successful Light Attack for the purpose of your Light Strike Combo and any class features that track successful Dueling Strikes.",
-          "page": 178
+          "page": 178,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            },
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 9,
@@ -587,6 +686,16 @@
               ],
               "page": 178
             }
+          ],
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
           ]
         },
         {
@@ -629,13 +738,29 @@
           "level": 3,
           "name": "Sneak Attack",
           "text": "When you choose this archetype at 3rd level, you learn how to strike subtly and exploit a foe’s distraction. Once per turn, you can deal an additional 2d6 damage to one creature you hit with a Dueling Strikes attack if you have advantage on the attack roll. The attack must use a finesse or ranged weapon.\nYou do not need advantage on the attack roll if another enemy of the target is within 5 feet of it, that enemy is not incapacitated, and you do not have disadvantage on the attack roll.",
-          "page": 179
+          "page": 179,
+          "rolls": [
+            {
+              "label": "2d6 damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 3,
           "name": "Thievery Skills",
           "text": "Starting at 3rd level, you gain advantage on Dexterity (Sleight of Hand) checks and using your thieves’ tools to disarm a trap or open a lock. You gain the ability to climb faster than normal; climbing no longer costs you extra movement.\nIn addition, when you make a running jump, the distance you cover increases by a number of feet equal to your Dexterity modifier.",
-          "page": 179
+          "page": 179,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on Sleight of Hand checks and on thieves’ tools checks to disarm a trap or open a lock"
+            }
+          ]
         },
         {
           "level": 5,
@@ -647,13 +772,29 @@
           "level": 9,
           "name": "Supreme Sneak",
           "text": "Starting at 9th level, you have advantage on a Dexterity (Stealth) checks.",
-          "page": 179
+          "page": 179,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on Dexterity (Stealth) checks"
+            }
+          ]
         },
         {
           "level": 13,
           "name": "Improved Sneak Attack",
           "text": "By 13th level, your Sneak Attack features damage increases to 4d6 damage.\nAdditionally, when you roll your Dexterity (Stealth) on advantage, you roll 3 dice instead of 2 and pick the highest.",
-          "page": 179
+          "page": 179,
+          "rolls": [
+            {
+              "label": "4d6 damage",
+              "dice": "4d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 17,

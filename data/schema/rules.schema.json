@@ -407,7 +407,8 @@
             "enum": [
               "uses",
               "action",
-              "effects"
+              "effects",
+              "rolls"
             ]
           },
           "uniqueItems": true
@@ -494,7 +495,8 @@
             "enum": [
               "uses",
               "action",
-              "effects"
+              "effects",
+              "rolls"
             ]
           },
           "uniqueItems": true

@@ -25,9 +25,27 @@
             "max": "prof",
             "recharge": "short"
           },
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "uses"
-          ]
+            "uses",
+            "rolls"
+          ],
+          "toggle": {
+            "id": "black_leg_guard",
+            "label": "Not wielding a weapon or shield",
+            "effects": [
+              {
+                "type": "ac",
+                "expr": "ceil(prof / 2)"
+              }
+            ]
+          }
         },
         {
           "level": 3,
@@ -48,6 +66,12 @@
           "auto": [
             "uses",
             "action"
+          ],
+          "effects": [
+            {
+              "type": "speed",
+              "value": 10
+            }
           ]
         },
         {
@@ -59,8 +83,16 @@
             "max": 1,
             "recharge": "short"
           },
+          "rolls": [
+            {
+              "label": "1d8 fire damage",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -142,7 +174,17 @@
           "level": 17,
           "name": "Six King Gun",
           "text": "At 17th level, you learn the secret seventh technique of the Six Powers. When you hit a creature with an Unarmed strike within 5 feet of you, you can spend 3 ki points to force it to make a Constitution saving throw. If it fails, it is reduced to 0 Hit Points. If it succeeds, it takes 10d10 force damage. Until the end of your next turn, you can’t take an Action on your turn, as a wave of lethargy sweeps over you.",
-          "page": 160
+          "page": 160,
+          "rolls": [
+            {
+              "label": "10d10 force damage",
+              "dice": "10d10",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     }

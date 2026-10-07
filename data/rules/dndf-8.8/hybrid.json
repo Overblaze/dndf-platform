@@ -222,6 +222,16 @@
           "name": "Close Quarters Training",
           "text": "Also at 1st level, You gain proficiency with unarmed strikes. Your unarmed strikes deal 1d8 bludgeoning damage and you can use Dexterity or Strength for the attack and damage rolls.",
           "page": 136,
+          "rolls": [
+            {
+              "label": "1d8 bludgeoning damage",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ],
           "effects": [
             {
               "type": "unarmedDie",
@@ -236,7 +246,6 @@
           "name": "Energy Transfer",
           "text": "Starting at 1st level, you can release a concentrated chain of energy at a distant target, slightly recharging yourself as you absorb some of their energy. As an action, you target one hostile creature within 30 ft. of you that you can see. The attack automatically hits and the target takes 1d4 force damage. When you use this feature, you gain 2 Hybrid Points.",
           "page": 137,
-          "action": "action",
           "rolls": [
             {
               "label": "Force damage",
@@ -244,6 +253,7 @@
               "kind": "damage"
             }
           ],
+          "action": "action",
           "onUse": [
             {
               "type": "addTracker",
@@ -414,8 +424,16 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "1d12",
+              "dice": "1d12",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         }
       ],
@@ -471,6 +489,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "ac",
+              "value": 2
+            }
           ]
         },
         {
@@ -483,7 +507,17 @@
           "level": 10,
           "name": "Integrate Siege Laser",
           "text": "Starting at 10th level, a high-powered energy cannon has been installed within your body which can be used in your zoan beast and hybrid forms. As an action and by spending 5 Hybrid Points, you can fire a beam of concentrated energy from your mouth. Choose a creature or object within 60 feet that you can see. Creatures must make a Dexterity saving throw against your Hybrid save DC. On a failed save, the target takes radiant damage equal to 1d4 x your Hybrid level. On a success, the target takes half as much damage. Creatures within 5 feet of the target take half the damage dealt with no damage on a successful save. Deals triple damage to objects, structures, and constructs.",
-          "page": 139
+          "page": 139,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 18,
@@ -496,6 +530,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Immune to being blinded, deafened, paralyzed, poisoned, or stunned"
+            }
           ]
         }
       ]
@@ -543,21 +583,54 @@
             "max": "max(1, mod.con)",
             "recharge": "short"
           },
+          "rolls": [
+            {
+              "label": "2d6 acid damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
           "level": 10,
           "name": "Jelly Core",
           "text": "Starting at 10th level, your living slime form becomes highly mutable, able to quickly reform and retaliate when struck. You gain the following benefits:\nWhen a creature hits you with a melee attack, you can use your reaction to launch a retaliatory splash of acidic ooze. The attacker must succeed on a Dexterity saving throw against your Hybrid save DC or take 1d6 acid damage and have their movement speed halved until the end of their next turn.\nWhen you take damage from a critical hit, you can reduce the damage by half.",
-          "page": 141
+          "page": 141,
+          "rolls": [
+            {
+              "label": "1d6 acid damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 18,
           "name": "Gelatinous Titan",
           "text": "Starting at 18th level, your ooze body reaches its perfected, monstrous state. A living tidal wave of biological experimentation. You gain the following benefits:\nYour reach increases by 10 feet for melee attacks and unarmed strikes. Additionally, your Engulf feature can now affect creatures up to your current size.\nCreatures engulfed by you have disadvantage on Strength checks made to escape, and you can choose to deal acid damage equal to 2d6 × your proficiency bonus at the start of each of your turns, instead of the standard Engulf damage.\nWhen reduced to 0 hit points, you may choose to erupt in a burst of volatile slime. All creatures within 15 feet must make a Dexterity saving throw against your Hybrid save DC or take 6d10 acid damage and be knocked prone, or half as much on a success. Once you use this feature, you must finish a short or long rest before doing so again.",
-          "page": 141
+          "page": 141,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "6d10 acid damage",
+              "dice": "6d10",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
@@ -613,7 +686,18 @@
           "level": 1,
           "name": "Combat Exoskeleton",
           "text": "Also at 1st level, your outer skin hardens into an armor- like shell, allowing you to shrug off attacks with ease. You gain the following benefits:\nWhile you are not wearing armor, your AC equals 13 + your Strength modifier.\nYour hit point maximum increases by 1, and it increases by 1 again whenever you gain a level in this class.\nWhen you are attacked and its a critical hit, gain 1 Hybrid Point.",
-          "page": 142
+          "page": 142,
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "13 + mod.str",
+              "when": "noArmor"
+            },
+            {
+              "type": "hp",
+              "expr": "level"
+            }
+          ]
         },
         {
           "level": 6,
@@ -630,8 +714,16 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "10d10 force damage",
+              "dice": "10d10",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -645,6 +737,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to all damage except force and psychic"
+            }
           ]
         }
       ]
@@ -668,7 +766,17 @@
           "level": 1,
           "name": "Knowledge of Forgotten Haki",
           "text": "Starting when you choose this lineage, gain Qualities of a King and 3 uncommon supreme king spirit surges.\nWhen casting a spell through your Hybrid Spellcasting feature the spell’s damage type is force and deals an extra 1d6 damage on hit.\nVariant Rule: If you are using the Amateur Haki ruling in Chapter 5, take 3 amateur Color of the Supreme King haki of your choice at 1st level.",
-          "page": 143
+          "page": 143,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 1,
@@ -680,6 +788,17 @@
               "name": "Void Century Automaton Traits",
               "text": "Your automaton will have these traits.\nAbility Score Increase. Your Constitution score increases by 3, and one other ability score of your choice increases by 1.\nAge. It is unknown how long you have been functioning or when you reawakened in this new age.\nCreature Type. You are a Construct.\nAutomaton Size. Your size is Small, Medium, Large, Huge, or Gargantuan (your choice).\nSpeed. Your base walking speed is 30 feet.\nMetal Mending. If the Mending spell is cast on you, you can spend a Hit Die, roll it, and regain a number of hit points equal to the roll plus your Constitution modifier (minimum of 1 hit point). In addition, you benefit from several spells that normally don’t affect Constructs: Cure Wounds, Healing Word, Mass Cure Wounds, Mass Healing Word, and Spare the Dying.\nConstructed Resilience. You were created to have remarkable fortitude, represented by the following benefits:\nYou have advantage on saving throws against being poisoned, charmed, or frightened, and you have resistance to poison damage.\nYou don’t need to eat, drink, or breathe.\nYou are immune to disease.\nYou don’t need to sleep, and magic can’t put you to sleep.\nWhile you aren’t wearing armor, your base Armor Class is 15 + your Wisdom modifier.\nCenturies Rest. When you take a long rest, you must spend at least six hours in an inactive, motionless state, rather than sleeping. In this state, you appear inert, but it doesn’t render you unconscious, and you can see and hear as normal.\nImmutable Form. Due to your ancient haki you are immune to any spell or effect that would alter your form.\nExpel the Devil. If you attempt to consume a Devil Fruit, it has no effect, and the fruit’s power is expelled from your system. The Devil Fruit’s abilities are then instantly reincarnated into a new fruit elsewhere in the world, as though it had never been eaten.",
               "page": 143
+            }
+          ],
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "15 + mod.wis",
+              "when": "noArmor"
+            },
+            {
+              "type": "note",
+              "label": "Resistance to poison damage; immune to disease; advantage on saves against being poisoned, charmed, or frightened"
             }
           ]
         },

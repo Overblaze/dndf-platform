@@ -2,7 +2,7 @@
 // no missing data, hit points by the book's formula, and each limited use a number.
 import { describe, expect, it } from 'vitest';
 import { deriveSheet, newCharacter, type ClassEntry, type RuleEntry, type RulesVersion } from '../src';
-import { loadRules } from './load';
+import { loadRules, subclassHitPoints } from './load';
 
 const CLASS_NAMES: Record<RulesVersion, string[]> = {
   'dndf-10': ['Bruiser', 'Chemist', 'Conqueror', 'Devilforged', 'Hybrid', 'Marksman', 'Martial Artist', 'Oracle', 'Priest', 'Renegade', 'Tinkerer', 'Virtuoso', 'Warrior'],
@@ -57,7 +57,7 @@ describe.each(['dndf-10', 'dndf-8.8'] as const)('rules data for %s', (version) =
           const sheet = deriveSheet(doc, rules);
           expect(sheet.warnings, `${cls.name} ${level} ${subclass}`).toEqual([]);
           const con = sheet.abilities.con.mod; // after features that raise it (The King)
-          expect(sheet.maxHp.value).toBe(cls.hitDie + (level - 1) * (cls.hitDie / 2 + 1) + con * level);
+          expect(sheet.maxHp.value, `${cls.name} ${level} ${subclass}`).toBe(cls.hitDie + (level - 1) * (cls.hitDie / 2 + 1) + con * level + subclassHitPoints(rules, subclass, level));
           expect(doc.state.hp).toBe(sheet.maxHp.value);
           for (const resource of sheet.resources) {
             expect(Number.isInteger(resource.max) && resource.max > 0, `${cls.name} ${level}: ${resource.name} = ${resource.max}`).toBe(true);

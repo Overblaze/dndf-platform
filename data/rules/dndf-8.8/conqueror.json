@@ -277,7 +277,17 @@
           "level": 18,
           "name": "King’s Spirit",
           "text": "At 18th level, your spiritual dominance bolsters allies and enhances haki.\nWhile you are conscious, allies within 30 feet of you cannot be frightened.\nOnce per turn, when you or an ally uses a Supreme King Haki feature, they may add 1d10 to one damage roll or healing roll made by that feature. When you roll initiative and have no Leadership Dice remaining, you regain 2 Leadership Dice.",
-          "page": 107
+          "page": 107,
+          "rolls": [
+            {
+              "label": "1d10",
+              "dice": "1d10",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 20,
@@ -435,7 +445,13 @@
           "level": 3,
           "name": "Battlefield Veteran",
           "text": "Starting when you choose this doctrine at 3rd level, you gain proficiency with heavy armor.\nWhen you use your Action to make a weapon attack, you can expend a Leadership Die to deal additional damage equal to the number rolled. If this attack reduces a creature to 0 hit points, you regain the expended die.\nAdditionally, you have advantage on saving throws against being frightened.",
-          "page": 110
+          "page": 110,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on saving throws against being frightened"
+            }
+          ]
         },
         {
           "level": 3,
@@ -460,7 +476,27 @@
           "level": 6,
           "name": "Warmonger’s Rage",
           "text": "Also at 6th level, when you take the Attack action on your turn, you can choose to enter a state of brutal momentum for 1 minute. While in this state:\nYour movement speed increases by 10 feet.\nYou can make one additional weapon attack when you take the Attack action.\nWhen you reduce a creature to 0 hit points, you gain an amount of hit points equal to your Conqueror level.\nOnce you use this feature, you must finish a long rest before using it again.",
-          "page": 110
+          "page": 110,
+          "toggle": {
+            "id": "warmongers_rage",
+            "label": "Warmonger’s Rage",
+            "effects": [
+              {
+                "type": "speed",
+                "expr": "level>=16 ? 30 : 10"
+              },
+              {
+                "type": "note",
+                "label": "One additional weapon attack when you take the Attack action",
+                "when": "level<16"
+              },
+              {
+                "type": "note",
+                "label": "Three additional weapon attacks when you take the Attack action",
+                "when": "level>=16"
+              }
+            ]
+          }
         },
         {
           "level": 12,

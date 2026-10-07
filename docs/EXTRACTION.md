@@ -71,3 +71,10 @@ Writes to `~/dndf/secret/` only. The script refuses any other destination, print
 - Fruit entries (Encyclopedia) all have: name, "Devil Fruit, <Rarity>", Type, Fruit appearance, Description, Sea Weakness, named features, Spells (with charge costs), Awakening. Output fruits ONLY to `~/dndf/secret/`. The same goes for the handbook's Devil Fruit generation tables, fruit Spirit Surges and Chapter 9 (DM only).
 - After extracting, `npm run validate` and `npm test` must pass: the tests build a sheet for every class at every level with every subclass, in both versions.
 - Numbers a class adds to the sheet (an unarmored AC formula, a damage die, a save DC, a pool) are written by hand in `tools/extract/structure.py` and applied after extraction, in every version that has the class. Each feature patch names a few words of the feature's text (`expect`); if a version words the feature differently the patch is skipped there and reported. Add the matching rows to `docs/FORMULAS.md` with tests. The Bruiser predates this and keeps its hand-verified file.
+
+## Subclass numbers and automatic dice
+`structure.py` has a second table, `SUBCLASS_STRUCTURE`, keyed by subclass id then feature name. Each patch quotes the feature's own words (`expect`); a list of patches covers a feature the two handbooks word differently, and `"only": "dndf-8.8"` marks a number only one handbook gives. A patch that never matches anything is reported by `extract_all.py`.
+
+`extract_classes.py` also turns dice named in any feature's text into roll buttons (`dice_in`): each distinct roll once, at most four, never a d20. They are flagged `auto: ["rolls"]` so hand-entered rolls always win.
+
+The hand-verified `data/rules/dndf-10/bruiser.json` is never rewritten, so its subclass switches are entered in that file directly.

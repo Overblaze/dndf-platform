@@ -144,6 +144,44 @@ Sample: Warrior 8 — Str 18, Dex 12.
 | Aura of Endurance (v10) | ceil(prof / 2) to saves | +2 | EH10 p.202 |
 | Fighting Style (pick 2) | Defense +1 AC in armor; Mariner +1 AC without heavy armor or shield; Aiming +1 ranged hit (v8.8: +2); Close Quarters Shooter +1 ranged hit; Interception 1d10 + prof | chain mail + Defense: AC 17 | EH10 p.201 |
 
+## Subclasses the sheet applies
+Tested in `packages/engine/test/subclasses.test.ts`. "Switch" means a toggle on the sheet: the number only counts while it is on.
+
+| Subclass, feature | Effect | Page |
+|---|---|---|
+| Hybrid, Beast Lineage: Prototype Augmentations | +2 AC | EH10 p.134 · EH8.8 p.138 |
+| Hybrid, Germa Lineage: Combat Exoskeleton | AC 13 + Str with no armor; +1 hit point per hybrid level | EH10 p.137 · EH8.8 p.142 |
+| Hybrid, Seraphim Lineage: S-Defensive Protocol (6th) | AC 13 + Con with no armor | EH10 p.139 · EH8.8 p.145 |
+| Hybrid, Mother Flame: Void Awakening | AC 15 + Wis with no armor | EH8.8 p.143 |
+| Priest, Infernal Domain: Fiendish Skin | AC 10 + prof + Wis with no armor | EH10 p.169 · EH8.8 p.174 |
+| Martial Artist, Combustion Boxer: Toughened Body (11th) | Unarmored Defense becomes 10 + Dex + Wis + Con | EH10 p.153 · EH8.8 p.158 |
+| Martial Artist, Black Leg Style: Black Leg Combatant | switch: + ceil(prof / 2) AC with no weapon or shield | EH8.8 p.157 |
+| Martial Artist, Black Leg Style: Sky Step (6th) | +10 ft walking speed | EH10 p.152 · EH8.8 p.157 |
+| Virtuoso, School of Battlehymn: Battle Proficiencies | +2 hit points per virtuoso level | EH10 p.196 |
+| Battlehymn: Fury of the Battlehym / Extra Attack (6th) | 2 attacks per Attack action | EH10 p.196 · EH8.8 p.186 |
+| Marksman, Gunslinger: Quick-draw | + Wis to initiative (never a penalty) | EH10 p.145 · EH8.8 p.151 |
+| Marksman, Gunslinger: Iron Mind (7th) | proficiency in Wisdom saves | EH10 p.145 · EH8.8 p.151 |
+| Swashbuckler: Better’s Hand (Renegade) / Rakish Audacity (Rogue) | + Cha to initiative | EH10 p.178 · EH8.8 p.182 |
+| Tinkerer, Military Science: Tactical Mind | + Int to initiative | EH10 p.186 · EH8.8 p.195 |
+| Tinkerer, Military Science: Durable Tech (10th) | switch: +2 AC while concentrating | EH10 p.186 · EH8.8 p.195 |
+| Devilforged, Devil Blade: Hell’s Duelist | switch: +1 AC with an infused melee weapon | EH10 p.121 |
+| Devilforged, Devil Bulwark: Defenders Leap (6th) | switch: +1 AC with the infused shield, +2 at 10th, +3 at 14th | EH10 p.123 |
+| Devilforged, Gear Smithing: Armored Up | switch: +1 AC with the infused item | EH8.8 p.121 |
+| Conqueror, Warmonger: Warmonger’s Rage (6th) | switch: +10 ft speed, +30 ft from 16th (Warmonger’s Fury) | EH10 p.111 · EH8.8 p.110 |
+| Renegade, Circus Tricks: Trick Rider | switch: +25 ft speed on the prop | EH10 p.176 |
+| Warrior, Cursed Soul: Silver Mist (15th) | switch: +2 AC | EH10 p.204 · EH8.8 p.202 |
+| Warrior, Ryuo Samurai: Ryuo Master (18th) | switch: +2 to attack and damage rolls | EH10 p.207 · EH8.8 p.207 |
+| Bruiser, Drunken Dragon: Liquid Courage, Sorrowful Stagger | switch: −10 ft speed | EH10 p.90 · EH8.8 p.90 |
+| Marksman, Beast Tamer: Bonded Companion | expertise in Animal Handling (v10); proficiency (v8.8) | EH10 p.144 · EH8.8 p.150 |
+| Martial Artist, Wano Ninpo: Shadow Budoka | expertise in Stealth | EH10 p.156 · EH8.8 p.161 |
+| Wordsmithing: Perfectly Placed Words | expertise in Persuasion | EH10 p.199 · EH8.8 p.189 |
+| Warrior, Kuja Huntress: Snake Companion | expertise in Acrobatics and Survival | EH10 p.204 · EH8.8 p.205 |
+| Oracle, Voices of the Past: Ancestral Echoes | proficiency in History | EH10 p.163 · EH8.8 p.168 |
+
+"You gain expertise in X" is read as proficiency with the bonus doubled, whether or not the character had the proficiency already.
+Standing resistances, immunities and advantages a subclass gives are listed on the sheet under "In effect" (word for word in the feature); they change no number.
+Dice named in a feature's text ("takes 2d8 fire damage") become roll buttons on that feature automatically; these are marked `auto: ["rolls"]` in the data.
+
 ## Multiclassing (both versions)
 | Number | Formula | Sample | Page |
 |---|---|---|---|

@@ -102,6 +102,9 @@
         "page": 52
       },
       "text": "Your mace swings crash through defenses, battering armor and shields.\nYou gain a +1 bonus to attack rolls with maces. When you hit a creature wearing heavy armor or using a shield with a mace, you deal an extra 1d6 bludgeoning damage.",
+      "auto": [
+        "rolls"
+      ],
       "effects": [
         {
           "type": "attack",
@@ -149,6 +152,9 @@
         "page": 52
       },
       "text": "You’ve perfected the art of striking with deadly precision at close range.\nYou gain a +1 bonus to attack rolls with shortswords. When you attack a creature with a shortsword while you have advantage on the attack roll, you deal an additional 1d6 damage.\nOnce per turn, when you reduce a creature to 0 hit points with a shortsword, you may immediately make a Dexterity (Stealth) check to hide as a bonus action. If used in the battle of combat and out in the open, enemies cannot see you until the end of your next turn.",
+      "auto": [
+        "rolls"
+      ],
       "effects": [
         {
           "type": "attack",
@@ -217,6 +223,9 @@
         "page": 53
       },
       "text": "You’ve mastered the use of spiked, reinforced nets to trap and maim your enemies.\nYou no longer suffer disadvantage when making a ranged net attack against a creature within 5 feet of you.\nA creature can escape with a DC 18 Strength check, or by destroying the net (AC 18, 15 slashing damage).\nA creature restrained by your net takes 1d4 piercing damage at the start of each of its turns.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -491,7 +500,10 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 54
       },
-      "text": "Your shotgun turns close-quarters combat into a death zone. When you fire a shotgun at a creature within 15 feet, you deal an additional 1d8 piercing damage on a hit."
+      "text": "Your shotgun turns close-quarters combat into a death zone. When you fire a shotgun at a creature within 15 feet, you deal an additional 1d8 piercing damage on a hit.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.deadly_tip",
@@ -784,6 +796,9 @@
         "page": 55
       },
       "text": "You specialize in powerful, finishing blows with your greataxe. You deal an extra 2d8 slashing damage against creatures that are prone or restrained when wielding a greataxe.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -804,6 +819,9 @@
         "page": 55
       },
       "text": "You’ve learned to turn every bazooka shot into a fiery blast. When you hit a creature with a bazooka attack, each other creature within 5 feet of the target takes 1d6 fire damage.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -842,7 +860,10 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 56
       },
-      "text": "You wield the war fan as both shield and snare.\nWhile wielding a war fan, when you are hit by a ranged weapon attack, you can use your reaction to reduce the damage by 1d8 + your Dexterity modifier + your proficiency bonus. If this reduces the damage to 0, you can make a ranged attack with another light thrown weapon you have equipped as part of the same reaction.\nWhen you hit a creature with a war fan, you may immediately attempt to grapple the target as part of the same attack. You may use Dexterity (Acrobatics) instead of Strength (Athletics) for this grapple."
+      "text": "You wield the war fan as both shield and snare.\nWhile wielding a war fan, when you are hit by a ranged weapon attack, you can use your reaction to reduce the damage by 1d8 + your Dexterity modifier + your proficiency bonus. If this reduces the damage to 0, you can make a ranged attack with another light thrown weapon you have equipped as part of the same reaction.\nWhen you hit a creature with a war fan, you may immediately attempt to grapple the target as part of the same attack. You may use Dexterity (Acrobatics) instead of Strength (Athletics) for this grapple.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.fell_handed",
@@ -943,7 +964,10 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 56
       },
-      "text": "You fight with elegance and subtlety, disguising your weapon until the moment of the strike.\nWhen you roll initiative while holding a cane sword sheathed, your next attack with the cane sword is made with advantage.\nWhen you hit a creature with a cane sword attack immediately after drawing it, you may instead deal the damage at the end of your target’s turn. When you deal damage in this way the damage increases by 1d6 additional slashing damage. You may only make this attack once per target per day."
+      "text": "You fight with elegance and subtlety, disguising your weapon until the moment of the strike.\nWhen you roll initiative while holding a cane sword sheathed, your next attack with the cane sword is made with advantage.\nWhen you hit a creature with a cane sword attack immediately after drawing it, you may instead deal the damage at the end of your target’s turn. When you deal damage in this way the damage increases by 1d6 additional slashing damage. You may only make this attack once per target per day.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.giants_draw",
@@ -958,6 +982,9 @@
         "page": 57
       },
       "text": "You wield the greatbow with overwhelming force, drawing it back for devastating shots.\nWhen you take the Attack action with a greatbow, you may choose to forgo making any attacks this turn to prepare a single, overwhelming shot. On your next turn, you may use your action to release the prepared shot.\nThe prepared shot deals 6d6 piercing damage on a hit. Including your normal modifiers in the damage roll.\nWhile preparing the shot, your speed is reduced to 10 ft., and attack rolls against you have advantage until the start of your next turn.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1032,6 +1059,9 @@
         "page": 57
       },
       "text": "You’ve mastered the art of throwing light hammers with deadly speed.\nWhen you make a ranged attack with a light hammer, its normal range increases to 30 feet and its long range increases to 90 feet.\nOnce per turn when you hit with a thrown light hammer, you can deal an extra 1d6 damage.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1072,6 +1102,9 @@
         "page": 57
       },
       "text": "Your deadly precision with a sickle lets you reap foes with efficiency.\nYou gain a +1 bonus to attack rolls with sickles. When you hit a creature with a sickle and it has less than half its hit points remaining, you deal an additional 2d4 slashing damage.\nIf you reduce a creature to 0 hit points with a sickle, you may make another attack with a sickle against a different creature within reach as part of the same action.",
+      "auto": [
+        "rolls"
+      ],
       "effects": [
         {
           "type": "attack",
@@ -1162,6 +1195,9 @@
       },
       "text": "You become a much better thrower, gaining the following:\nYou gain a bonus to your attack and damage rolls with thrown weapons equal to your proficiency bonus.\nYou are now proficient with throwing cannon balls, and they gain the thrown property when you hold one. The cannon ball’s range becomes 60/120 when you throw it, dealing 2d6 bludgeoning damage plus an extra +2 for every 10 ft. thrown beyond 60 range. All other thrown weapons range increases by an additional +20 normal range and +40 long range.",
       "prerequisite": "Strength 20+",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1209,6 +1245,9 @@
         "page": 58
       },
       "text": "You’ve trained in the knightly art of wielding a lance alongside a shield.\nWhen you wield a lance while also holding a shield, you may treat the lance as a one-handed weapon. If you move at least 20 feet in a straight line before hitting a creature with a lance, you deal an extra 1d8 piercing damage.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1451,7 +1490,10 @@
         "page": 59
       },
       "text": "Your body has adapted further to the unnatural changes forced upon it. When you are reduced to 0 hit points but not killed outright, your unstable body erupts with a burst of energy. You remain conscious and do not fall unconscious from dropping to 0 hit points until the end of your next turn. While in this state, you can move and take actions as normal, and your weapon attacks deal an additional 1d12 damage. At the end of your next turn, you fall unconscious as normal if you have not regained any hit points. You gain 1 exhaustion when healed while this feat is in effect.",
-      "prerequisite": "Punk Experiment"
+      "prerequisite": "Punk Experiment",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.mysterious_power",
@@ -1506,6 +1548,9 @@
         "page": 60
       },
       "text": "You fight with the discipline of a trained soldier, keeping enemies at bay.\nWhen wielding a spear with two hands, its reach increases by 5 feet.\nWhen a creature enters your reach, you can make a melee attack with your spear against it as a reaction. You may set your spear against a charge. If a creature uses a charge feature and enters your reach and you spend a reaction to attack it, you attack with advantage and deal an extra 3d6 damage to the target.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1594,6 +1639,9 @@
         "page": 60
       },
       "text": "You wield the pike as a weapon of denial, holding foes at bay.\nWhile you are wielding a pike, creatures provoke opportunity attacks from you even if they take the Disengage action.\nYou may set your pike against a charge. If a creature uses a charge feature and enters your reach and you spend a reaction to attack it, you attack with advantage and deal an extra 3d10 damage to the target.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1836,6 +1884,7 @@
       "text": "Due to your fish-man features and rough skin, you are difficult to touch without getting injured. You gain the following benefits:\nIncrease your Constitution score by 1, up to a maximum of 20.\nYour rough skin deals 1d6 piercing damage to any creature grappling you or any creature grappled by you.\nYou gain proficiency in the Intimidation skill. If you’re already proficient in it, your proficiency bonus is doubled for any check you make with it.",
       "prerequisite": "Fish-man",
       "auto": [
+        "rolls",
         "skills"
       ],
       "skills": [
@@ -1899,7 +1948,10 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 62
       },
-      "text": "You have mastered the art of silent ranged kills, turning the blowgun into a weapon of fit for an assassin. When you make a ranged attack with a blowgun while hidden, you do not reveal your position on a hit. Enemies cannot determine the direction the shot came from.\nA blowgun shot is considered silent; creatures cannot hear the attack.\nAdditionally, your blowgun’s damage is increased to 1d6 piercing."
+      "text": "You have mastered the art of silent ranged kills, turning the blowgun into a weapon of fit for an assassin. When you make a ranged attack with a blowgun while hidden, you do not reveal your position on a hit. Enemies cannot determine the direction the shot came from.\nA blowgun shot is considered silent; creatures cannot hear the attack.\nAdditionally, your blowgun’s damage is increased to 1d6 piercing.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.skilled",
@@ -2104,6 +2156,9 @@
         "page": 63
       },
       "text": "You’ve learned to unleash wild bursts of fire, scattering bullets across the battlefield. When you make an attack with a machine gun to a single target, you may instead attack up to 4 different targets, dealing 1d4 piercing damage instead of 3d4.",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -2122,7 +2177,10 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 63
       },
-      "text": "You wield the morningstar as a hybrid weapon, its spikes tearing through armor and shields.\nWhen you hit a creature wearing armor or using a shield, you deal an extra 1d6 piercing damage. Once per turn, when you hit a creature with a morningstar, you can forgo the damage roll and you can force the target to make a Constitution saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the target is staggered until the start of your next turn, giving it disadvantage on its next weapon attack roll."
+      "text": "You wield the morningstar as a hybrid weapon, its spikes tearing through armor and shields.\nWhen you hit a creature wearing armor or using a shield, you deal an extra 1d6 piercing damage. Once per turn, when you hit a creature with a morningstar, you can forgo the damage roll and you can force the target to make a Constitution saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the target is staggered until the start of your next turn, giving it disadvantage on its next weapon attack roll.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.super_cyborg_upgrade",
@@ -2193,6 +2251,9 @@
       },
       "text": "Your power surges beyond its usual limits, turning your attacks into overwhelming strikes.\nIncrease your Charisma by 1, to a maximum of 20. You can use your Terrifying Presence one additional time per long rest.\nWhile a creature is frightened of you, your melee attacks against that creature deal an extra 1d8 thunder damage.",
       "prerequisite": "Oni",
+      "auto": [
+        "rolls"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

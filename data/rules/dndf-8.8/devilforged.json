@@ -548,19 +548,49 @@
           "level": 1,
           "name": "Devilbomb Creation",
           "text": "Starting at 1st level, you gain the ability to create devilbombs. You can create one devilbomb per 10 minutes you spend undisturbed with your tinker tools. you can create a number of bombs equal to your proficiency bonus, regaining all expended uses after a long rest.\nEach time you create a devilbomb, roll on the “Explosive Infusions” table to determine the additional effect of the infusion. If a bomb you create calls for a creature to roll a saving throw use your spell save DC.\nAs an action, you can throw a devilbomb up to 30 feet. The bomb detonates on impact, dealing 2d6 thunder damage in a 10-foot radius. Creatures caught in the explosion must make a Dexterity saving throw against your spell save DC, taking half damage on a successful save, and emits a thunderous boom audible out to 300 feet.",
-          "page": 117
+          "page": 117,
+          "rolls": [
+            {
+              "label": "2d6 thunder damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
           "name": "Enhanced Explosive",
           "text": "At 6th level, your devilbombs become deadlier and more refined. The maximum range for throwing your bomb increases to 60 feet, the damage of your devilbomb increases to 3d6, and the explosion radius extends to 15 feet.",
-          "page": 117
+          "page": 117,
+          "rolls": [
+            {
+              "label": "3d6",
+              "dice": "3d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 10,
           "name": "Devastating Detonation",
           "text": "At 10th level, you further refine the destructive potential of your devilbomb. The damage increases to 4d6, and creatures that fail their saving throws are also stunned until the start of their next turn, as the concussive force disorients them.",
-          "page": 117
+          "page": 117,
+          "rolls": [
+            {
+              "label": "4d6",
+              "dice": "4d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 14,
@@ -1060,6 +1090,16 @@
                 }
               ]
             }
+          ],
+          "rolls": [
+            {
+              "label": "6d6 damage",
+              "dice": "6d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
           ]
         }
       ]
@@ -1127,13 +1167,34 @@
           "level": 1,
           "name": "Hellfire Artillery",
           "text": "At 1st level, you gain proficiency in martial ranged weapons.\nAdditionally, you learn how to transform your infused item to fight for you. As a bonus action, you can use your infused item to create an artillery cannon that emerges from it. This cannon lasts for 1 minute or until you dismiss it as a bonus action.\nWhile your cannon is active, you can make a ranged spell attack against one creature within 60 feet of you as a bonus action. On a hit, the target takes 1d8 + your Charisma modifier in fire, cold, or lightning damage (your choice). When you reach the 10th level in this class, the damage increases to 2d8 + your Charisma modifier.\nYou can summon this cannon using this feature a number of times equal to your porficiency bonus, and you regain all expended uses when you finish a long rest.",
-          "page": 120
+          "page": 120,
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            },
+            {
+              "label": "2d8",
+              "dice": "2d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 6,
           "name": "Nether Scope",
           "text": "At 6th level, your devil fruit item or weapon grants you enhanced sight and durability against flames. You gain the following benefits:\nYou gain darkvision up to 60 feet.\nYou gain proficiency in the Perception or Insight skill (your choice).\nYou gain resistance to fire damage.",
-          "page": 120
+          "page": 120,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to fire damage"
+            }
+          ]
         },
         {
           "level": 6,
@@ -1231,7 +1292,17 @@
           "level": 1,
           "name": "Armored Up",
           "text": "At 1st level, you are able to use your infused equipment to grant you additional protection from harm. You gain proficiency with medium armor and shields.\nIn addition, you gain a +1 bonus to Armor Class while you have your infused devil fruit item equipped or held.",
-          "page": 121
+          "page": 121,
+          "toggle": {
+            "id": "infused_item",
+            "label": "Infused item equipped or held",
+            "effects": [
+              {
+                "type": "ac",
+                "value": 1
+              }
+            ]
+          }
         },
         {
           "level": 6,
@@ -1261,8 +1332,16 @@
             "max": 1,
             "recharge": "short"
           },
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         }
       ]
@@ -1517,19 +1596,69 @@
           "level": 6,
           "name": "Mechadevil Mark 2",
           "text": "At 6th level, your training for combat with your mech is rewarded. You gain proficiency with martial weapons.\nAdditionally, you may mount 2 specialised weapons onto your Mechadevil Suit. While piloting your mech, you can use a action to activate one of the weapons you chose. You may switch out any amount of weapons for new ones during a long rest.\nSwarm Cannons. When you activate this weapon, both cannons fire a swarm of 16 missiles at a creature or object within 90 feet of you. Each dart hits a creature of your choice that you can see within range. A single missile deals 1d4 fire damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several. Each creature targeted must make a Dexterity saving throw against your Spell save DC or take the damage of all missile directed at them.\nIncinerator Beam. When you activate this weapon, the mech releases a blast of searing energy in a 15- foot cone. Each creature in the area must make a Constitution saving throw against your Spell save DC. On a failed save, a creature takes 6d6 fire damage. On a successful save, a creature takes half damage.\nLightning Lance. When you activate this weapon, you unleash a lance of lightning in a line 30 ft. long and 5 ft. wide. Creatures in the line must succeed on a Dexterity saving throw against your Spell save DC, or take 4d8 lightning damage.\nRailcannon. When you activate this weapon, you fire a hypervelocity slug at a target you can see within 300 ft. Make a ranged spell attack. On a hit, the target takes 5d10 piercing damage.\nCyclone Assault. When you activate this weapon, your Mechadevil begins a high-speed rotational assault. Each creature within 10 ft. of you must make a Dexterity saving throw. On a failed save, a creature takes 4d8 thunder damage. On a success, a creature takes half damage.\nPower Fist. When you activate this weapon, you slam a fist charged with explosive power towards a creature or object within 5 feet of you. Make a melee spell attack against the target. On a hit, the target takes thunder damage equal to 5d8 + your mech’s Strength modifier and is pushed up to 10 feet away from you.\nAdditionally, your Mechadevil Suit can attack with a weapon attack above and a mech strike on the same turn.",
-          "page": 122
+          "page": 122,
+          "rolls": [
+            {
+              "label": "1d4 fire damage",
+              "dice": "1d4",
+              "kind": "damage"
+            },
+            {
+              "label": "6d6 fire damage",
+              "dice": "6d6",
+              "kind": "damage"
+            },
+            {
+              "label": "4d8 lightning damage",
+              "dice": "4d8",
+              "kind": "damage"
+            },
+            {
+              "label": "5d10 piercing damage",
+              "dice": "5d10",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 10,
           "name": "Devil Reactor",
           "text": "At 10th level, you upgrade your Mechadevil’s reactor. The damage rolls of your Mechadevil’s Mech Strike attack increase by 2d8 and your Mechadevil gains a flying speed of 40 feet.",
-          "page": 122
+          "page": 122,
+          "rolls": [
+            {
+              "label": "2d8",
+              "dice": "2d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 14,
           "name": "Overclock Devil Reactor",
           "text": "At 14th level, you can overcharge your Mechadevil’s reactor as a last-ditch effort. When your Mecha is reduced to 0 hit points while you’re piloting it, you can cause it to self-destruct if you aren’t incapacitated (no action required). Alternatively, you can use your action while within 60 feet of your Mechadevil to doom it early, causing it to self-destruct.\nWhen your Mechadevil self-destructs, you eject if you were piloting it, landing in an unoccupied space you can see within 60 ft. of it, and your mech explodes. Your mech is destroyed, and each creature within 30 ft. of it must make a Dexterity saving throw against your Spell save DC. On a failed save, a creature takes 12d8 fire damage and 2d8 force damage. On a success, a creature takes half damage.",
-          "page": 123
+          "page": 123,
+          "rolls": [
+            {
+              "label": "12d8 fire damage",
+              "dice": "12d8",
+              "kind": "damage"
+            },
+            {
+              "label": "2d8 force damage",
+              "dice": "2d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
@@ -1695,6 +1824,16 @@
               "text": "Choose one of the elements to infuse into your chosen beast.\nClay Element Type\nStat Boost: +1 to Constitution; +10 HP.\nDamage Resistance: Nonmagical slashing\nFeature - Molded Form: The beast can reshape its body to absorb damage, reducing all incoming damage by 1d6 points.\nDarkness Element Type\nStat Boost: +2 to Constitution; +2 to damage rolls.\nDamage Vulnerability: Bludgeoning, piercing, and slashing\nFeature - Shadow Grasp: As an action, the beast can extend darkness to bind an enemy within 15 feet, the creature must make a Strength saving throw or be restrained until the end of their next turn. This feature recharges after a long rest.\nFire Element Type\nStat Boost: +1 to Strength; +1 to damage rolls.\nDamage Resistance: Fire\nFeature - Flame Burst: The beast’s attacks ignite targets, dealing an extra 1d6 fire damage at the start of the enemy’s turn. The flames can be extinguished with an action or submerging it water.\nGas Element Type\nStat Boost: +2 bonus to AC against ranged attacks.\nDamage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Toxic Cloud: As an action, the beast can release a poisonous gas in a 15-foot radius, causing enemies to make a Constitution saving throw or be poisoned for 1d4 minute. This feature recharges after a short or long rest.\nGlass Element Type\nStat Boost: +3 to AC\nDamage Vulnerability: Nonmagical bludgeoning\nFeature - Reflective Shards: When the beast is hit by a melee attack, it can cause shards to explode outward, dealing 1d4 piercing damage to the attacker and imposing disadvantage on their next attack.\nIce Element Type\nStat Boost: +1 to Strength; +2 to AC against melee attacks.\nDamage Resistance: Cold\nFeature - Frostbite Touch: The beast’s attacks slow enemies, reducing their movement speed by 10 feet until the end of the target’s next turn.\nLight Element Type\nStat Boost: +1 to Dexterity; +1 to attack rolls.\nDamage Resistance: Radiant\nFeature - Blinding Flash: As an action, the beast emits a burst of light, causing enemies within 20 feet to make a Dexterity saving throw or be blinded until the end of their next turn. This feature recharges after a short or long rest.\nLightning Element Type\nStat Boost: +1 to Dexterity; +10 feet to movement speed.\nDamage Resistance: Lightning\nFeature - Static Charge: The beast’s melee attacks gain an additional 1d6 lightning damage.\nMagma Element Type\nStat Boost: +1 to Strength; +1 to attack and damage rolls.\nDamage Resistance: Fire\nFeature - Molten Armor: The beast is covered in molten rock, dealing 1d6 fire damage to any enemy that hits it with a melee attack.\nSand Element Type\nStat Boost: +1 to Dexterity; gains advantage on Dexterity saving throws.\nDamage Resistance: Fire\nDamage Vulnerability: Cold\nFeature - Sandstorm Cloak: As a bonus action, the beast can shroud itself in swirling sand, gaining half cover and imposing disadvantage on ranged attacks against it for 1 minute.\nSmoke Element Type\nStat Boost: advantage on Stealth checks.\nDamage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Smoke Screen: As an action, the beast can create a 10 ft. radius cloud of smoke centered around itself, causing the area to become heavily obscured for 1 minute and follows the beast. This feature recharges after a short or long rest.\nSnow Element Type\nStat Boost: +1 to Constitution; advantage on Constitution saving throws.\nDamage Resistance: Cold\nFeature - Freezing Aura: The beast radiates a cold aura, causing enemies within 5 feet to take 1d4 cold damage at the start of their turns.\nSoot Element Type\nStat Boost: +1 to Constitution; gain flight speed equal to walking speed.\nDamage Resistance: Fire\nFeature - Cinder Blast: The beast can unleash blasts of hot soot, the beast’s attack range for melee attacks increase by 10 ft. and the damage type is changed to fire damage.\nSwamp Element Type\nStat Boost: +1 to Strength; +15 temporary hit points at the start of combat.\nDamage Resistance: Necrotic\nFeature - Mire Grip: As an action, the beast can turn the ground into difficult terrain in a 30 ft. radius area center on itself for 1d4 minutes. This feature recharges after a short or long rest.\nTree Element Type\nStat Boost: +2 to Constitution; regenerates 2 hit points at the start of its turn if it is conscious and the currently active bloodline beast.\nDamage Vulnerability: Fire\nFeature - Root Snare: As an action, the beast can release vines to grapple an enemy within 10 feet, the creature must make a Strength saving throw or become grappled by them. The vines can be broken with a Strength save against your spell save DC.",
               "page": 124
             }
+          ],
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
           ]
         },
         {
@@ -1971,7 +2110,17 @@
           "group": "Fifth Level Emanations",
           "text": "weapon Once per turn when you hit a creature with your paramecia weapon, you can expend a devilforged spell slot to deal an extra 1d8 force damage to the target, plus another 1d8 per level of the spell slot, and you can knock the target prone if it is Huge or smaller.",
           "page": 128,
-          "prerequisite": "5th Level Devilforged, Paramecia Infused"
+          "prerequisite": "5th Level Devilforged, Paramecia Infused",
+          "rolls": [
+            {
+              "label": "1d8 force damage",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "ricocheting_strike",
@@ -2234,7 +2383,17 @@
           "group": "Eighteenth Level Emanations",
           "text": "Infused weapon, Ultimate Paramecia Weapon Your paramecia infused weapon gains a +5 bonus to its attack and damage rolls, unless it is a weapon that already has a higher bonus to those rolls. Additionally, you deal an additional 2d8 force damage with your paramecia infused weapon.",
           "page": 131,
-          "prerequisite": "18th Level Devilforged, Paramecia"
+          "prerequisite": "18th Level Devilforged, Paramecia",
+          "rolls": [
+            {
+              "label": "2d8 force damage",
+              "dice": "2d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "sea_devils_duelist",
@@ -2322,7 +2481,17 @@
           "group": "Firearm Smithing Emanations",
           "text": "If your infused weapon is a longbow, you can create an arrow out of pure energy when attacking with it. When you hit a creature, you can expend a devilforged spell slot to deal an additional 2d8 radiant damage to the target per spell level. Additionally, you make this enhanced attack at advantage if the target creature is a devil fruit user.",
           "page": 133,
-          "prerequisite": "3rd Level Devilforged, Firearm Smithing"
+          "prerequisite": "3rd Level Devilforged, Firearm Smithing",
+          "rolls": [
+            {
+              "label": "2d8 radiant damage",
+              "dice": "2d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "id": "quickened_shot",

@@ -10,6 +10,7 @@ rule never silently inherits numbers that were written for the other version.
 """
 
 import json
+import re
 
 SPIRIT_CASTER = {
     "entry": {
@@ -363,6 +364,10 @@ def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
 FEATURE_FIELDS = ("effects", "toggle", "uses", "action", "rolls", "onUse", "counter", "choices", "cost")
 
 
+def note(label: str) -> dict:
+    return {"type": "note", "label": label}
+
+
 def _slug(text: str) -> str:
     import re
     return re.sub(r"[^a-z0-9]+", "_", text.lower().replace("’", "").replace("'", "")).strip("_")
@@ -417,3 +422,255 @@ def apply_structure(key: str, version: str, entry: dict, problems: list[str]) ->
             feature["choices"] = {"id": choose["id"], "count": choose["count"], "from": group_id}
             made.append({"id": group_id, "kind": "optionGroup", "name": name, "versions": [version], "source": {**entry["source"], "page": feature["page"]}, "options": options})
     return made
+
+
+# --- Subclasses ---------------------------------------------------------------------
+# The numbers a subclass keeps on the sheet all the time, or while something is switched on.
+# Keyed by subclass id, then feature name. Same rule as above: each quotes the feature's own words,
+# and is skipped (and reported) in a handbook that words the feature differently.
+NO_ARMOR = "noArmor"
+
+SUBCLASS_STRUCTURE: dict[str, dict[str, dict]] = {
+    # Hybrid
+    "subclass.hybrid.beast": {
+        "Prototype Augmentations": {"expect": "Your AC increases by +2", "effects": [{"type": "ac", "value": 2}]},
+        "Integrate Beastcore": {"expect": "You are immune to being blinded, deafened, paralyzed, poisoned, or stunned",
+                                "effects": [note("Immune to being blinded, deafened, paralyzed, poisoned, or stunned")]},
+    },
+    "subclass.hybrid.germa": {
+        "Combat Exoskeleton": {
+            "expect": "While you are not wearing armor, your AC equals 13 + your Strength modifier",
+            "effects": [{"type": "acFormula", "expr": "13 + mod.str", "when": NO_ARMOR}, {"type": "hp", "expr": "level"}],
+        },
+        "Genetic Pinnacle": {"expect": "You have resistance to all damage except force and psychic damage", "effects": [note("Resistance to all damage except force and psychic")]},
+    },
+    "subclass.hybrid.seraphim": {
+        "Prototype Seraphim Frame": {"expect": "You have resistance to fire damage", "effects": [note("Resistance to fire damage")]},
+        "S-Defensive Protocol": {"expect": "While you are not wearing armor, your AC equals 13 + your Constitution modifier",
+                                 "effects": [{"type": "acFormula", "expr": "13 + mod.con", "when": NO_ARMOR}]},
+    },
+    # Martial Artist
+    "subclass.martial_artist.combustion_boxer": {
+        "Toughened Body": {
+            "expect": "You add your Constitution modifier to your Unarmored Defense AC",
+            "effects": [{"type": "acFormula", "expr": "10 + mod.dex + mod.wis + mod.con", "when": "noArmor && noShield"}, note("Resistance to fire damage")],
+        },
+    },
+    # Priest
+    "subclass.priest.infernal": {
+        "Fiendish Skin": {"expect": "While you are not wearing armor, your AC equals 10 + your proficiency bonus + your Wisdom modifier",
+                          "effects": [{"type": "acFormula", "expr": "10 + prof + mod.wis", "when": NO_ARMOR}]},
+        "Diabolic Resilience": {"expect": "Resistance to fire and poison damage", "effects": [note("Resistance to fire and poison damage")]},
+    },
+    "subclass.priest.sky": {
+        "Bonus Proficiencies": {"expect": "you gain resistance to thunder and lightning damage", "effects": [note("Resistance to thunder and lightning damage")]},
+    },
+    # Virtuoso / Skald
+    "subclass.virtuoso.battlehymn": {
+        "Battle Proficiencies": {"expect": "your hit point maximum increases by an amount equal to twice your virtuoso level", "effects": [{"type": "hp", "expr": "level * 2"}]},
+    },
+    # Initiative bonuses
+    "subclass.marksman.gunslinger": {
+        "Quick-draw": {"expect": "bonus to your initiative rolls equal to your Wisdom modifier", "effects": [{"type": "initiative", "expr": "max(0, mod.wis)"}]},
+    },
+    "subclass.renegade.swashbuckler": {
+        "Better’s Hand": {"expect": "You gain a bonus to initiative rolls equal to your Charisma modifier", "effects": [{"type": "initiative", "expr": "max(0, mod.cha)"}]},
+    },
+    "subclass.tinkerer.military_science": {
+        "Tactical Mind": {"expect": "You gain a bonus to your Initiative rolls equal to your Intelligence modifier", "effects": [{"type": "initiative", "expr": "max(0, mod.int)"}]},
+        "Durable Tech": {"expect": "While you maintain Concentration on a spell, you have a +2 bonus to AC and all Saving Throws",
+                         "toggle": {"id": "durable_tech", "label": "Concentrating on a spell", "effects": [{"type": "ac", "value": 2}, note("+2 to all saving throws")]}},
+    },
+    # Things that are on only while something is true: a switch on the sheet.
+    "subclass.devilforged.devil_blade": {
+        "Hell’s Duelist": {"expect": "while you are wielding a melee weapon infused with at least one Devil Fruit, you gain a +1 bonus to your AC",
+                           "toggle": {"id": "infused_blade", "label": "Wielding an infused melee weapon", "effects": [{"type": "ac", "value": 1}]}},
+    },
+    "subclass.renegade.circus_tricks": {
+        "Trick Rider": {"expect": "Your walking speed increases by 25 feet",
+                        "toggle": {"id": "trick_rider", "label": "Riding your prop", "effects": [{"type": "speed", "value": 25}]}},
+    },
+    "subclass.conqueror.warmonger": {
+        "Warmonger’s Rage": {"expect": "Your movement speed increases by 10 feet",
+                             "toggle": {"id": "warmongers_rage", "label": "Warmonger’s Rage", "effects": [{"type": "speed", "expr": "level>=16 ? 30 : 10"}]}},
+    },
+    # Standing resistances and immunities, shown under "In effect".
+    "subclass.chemist.botany": {
+        "Botanist’s Antidote": {"expect": "you can’t be charmed or frightened and you are immune to poison and disease", "effects": [note("Can’t be charmed or frightened; immune to poison and disease")]},
+    },
+    "subclass.conqueror.celestial_doctrine": {
+        "Divine Right": {"expect": "you are immune to being charmed or frightened", "effects": [note("Immune to being charmed or frightened")]},
+    },
+    "subclass.oracle.bones_of_sight": {
+        "Speaker of the Dead": {"only": "dndf-10", "expect": "resistance to necrotic damage", "effects": [note("Resistance to necrotic damage")]},
+    },
+    "subclass.tinkerer.plague_engineer": {
+        "Viral Immunity": {"expect": "You are immune to diseases, gain resistance to poison damage", "effects": [note("Immune to diseases; resistance to poison damage")]},
+    },
+    "subclass.warrior.cursed_soul": {
+        "Shepard of Spirits": {"expect": "You have Resistance to psychic damage", "effects": [note("Resistance to psychic damage")]},
+    },
+    "subclass.warrior.ryuo_samurai": {
+        "Two Weapon Expert": {"expect": "you gain resistance to both magical and nonmagical slashing damage", "effects": [note("Resistance to slashing damage, magical and nonmagical")]},
+    },
+}
+
+SWASHBUCKLER_88 = {"expect": "You can give yourself a bonus to your initiative rolls equal to your Charisma modifier", "effects": [{"type": "initiative", "expr": "max(0, mod.cha)"}]}
+WORDSMITH = {"expect": "You gain expertise in Persuasion", "effects": [{"type": "proficiency", "skill": "persuasion"}, {"type": "expertise", "skill": "persuasion"}]}
+
+
+def more(subclass: str, features: dict[str, dict]) -> None:
+    SUBCLASS_STRUCTURE.setdefault(subclass, {}).update(features)
+
+
+more("subclass.bruiser.drunken_dragon", {
+    "Liquid Courage": {"expect": "but your movement speed is reduced by 10 feet",
+                       "toggle": {"id": "sorrowful_stagger", "label": "Sorrowful Stagger (rolled a 2)", "effects": [{"type": "speed", "value": -10}, note("Resistance to all damage")]}},
+})
+more("subclass.conqueror.warmonger", {
+    "Warmonger’s Rage": {
+        "expect": "Your movement speed increases by 10 feet",
+        "toggle": {"id": "warmongers_rage", "label": "Warmonger’s Rage", "effects": [
+            {"type": "speed", "expr": "level>=16 ? 30 : 10"},
+            {**note("One additional weapon attack when you take the Attack action"), "when": "level<16"},
+            {**note("Three additional weapon attacks when you take the Attack action"), "when": "level>=16"},
+        ]},
+    },
+    "Battlefield Veteran": {"expect": "you have advantage on saving throws against being frightened", "effects": [note("Advantage on saving throws against being frightened")]},
+})
+more("subclass.devilforged.devil_bulwark", {
+    "Defenders Leap": {"expect": "the AC bonus granted by that shield increases by 1",
+                       "toggle": {"id": "infused_shield", "label": "Wielding your infused shield", "effects": [{"type": "ac", "expr": "level>=14 ? 3 : level>=10 ? 2 : 1"}]}},
+})
+more("subclass.devilforged.gear_smithing", {
+    "Armored Up": {"expect": "you gain a +1 bonus to Armor Class while you have your infused devil fruit item equipped or held",
+                   "toggle": {"id": "infused_item", "label": "Infused item equipped or held", "effects": [{"type": "ac", "value": 1}]}},
+})
+more("subclass.devilforged.firearm_smithing", {
+    "Nether Scope": {"expect": "You gain resistance to fire damage", "effects": [note("Resistance to fire damage")]},
+})
+more("subclass.hybrid.mother_flame", {
+    "Void Awakening": {
+        "expect": "While you aren’t wearing armor, your base Armor Class is 15 + your Wisdom modifier",
+        "effects": [{"type": "acFormula", "expr": "15 + mod.wis", "when": NO_ARMOR},
+                    note("Resistance to poison damage; immune to disease; advantage on saves against being poisoned, charmed, or frightened")],
+    },
+})
+more("subclass.marksman.beast_tamer", {
+    "Bonded Companion": [
+        {"expect": "You gain expertise in Animal Handling", "effects": [{"type": "proficiency", "skill": "animal_handling"}, {"type": "expertise", "skill": "animal_handling"}]},
+        {"expect": "you gain proficiency in Animal Handling", "effects": [{"type": "proficiency", "skill": "animal_handling"}]},
+    ],
+})
+more("subclass.marksman.gunslinger", {
+    "Iron Mind": {"expect": "you gain proficiency in Wisdom saving throws", "effects": [{"type": "saveProficiency", "ability": "wis"}]},
+})
+more("subclass.marksman.rope_master", {
+    "Rope Dance": {"expect": "You gain advantage on checks and saving throws made to escape grapples or restraints", "effects": [note("Advantage on checks and saves to escape grapples or restraints")]},
+})
+more("subclass.martial_artist.black_leg_style", {
+    "Sky Step": {"expect": "your walking speed increases by an additional 10 feet", "effects": [{"type": "speed", "value": 10}]},
+    "Black Leg Combatant": {"only": "dndf-8.8", "expect": "you gain a bonus to your AC equal to your proficiency bonus / 2 (rounded up)",
+                            "toggle": {"id": "black_leg_guard", "label": "Not wielding a weapon or shield", "effects": [{"type": "ac", "expr": "ceil(prof / 2)"}]}},
+})
+more("subclass.martial_artist.wano_ninpo", {
+    "Shadow Budoka": {"expect": "gaining expertise in Stealth", "effects": [{"type": "proficiency", "skill": "stealth"}, {"type": "expertise", "skill": "stealth"}]},
+})
+more("subclass.oracle.bones_of_sight", {
+    "Death’s Rattle": {"expect": "you gain advantage on death saving throws", "effects": [note("Advantage on death saving throws")]},
+    "Sight Beyond the Grave": {"only": "dndf-8.8", "expect": "resistance to necrotic damage", "effects": [note("Resistance to necrotic damage")]},
+})
+more("subclass.oracle.voices_of_the_past", {
+    "Ancestral Echoes": {"expect": "you gain proficiency in History", "effects": [{"type": "proficiency", "skill": "history"}]},
+})
+more("subclass.priest.cherry_blossom", {
+    "Channel Divinity: Blossom Joy": {"expect": "you gain a +5 bonus to all Charisma (Persuasion) and Charisma (Performance) checks",
+                                      "toggle": {"id": "blossom_joy", "label": "Blossom Joy (1 minute)", "effects": [note("+5 to Charisma (Persuasion) and Charisma (Performance) checks")]}},
+})
+more("subclass.priest.sky", {
+    "Dial Glide": {"expect": "you gain a flying speed equal to double your current walking speed", "effects": [note("Flying speed equal to double your walking speed")]},
+})
+more("subclass.renegade.thief", {
+    "Thievery Skills": {"expect": "you gain advantage on Dexterity (Sleight of Hand) checks", "effects": [note("Advantage on Sleight of Hand checks and on thieves’ tools checks to disarm a trap or open a lock")]},
+    "Supreme Sneak": {"expect": "you have advantage on a Dexterity (Stealth) checks.", "effects": [note("Advantage on Dexterity (Stealth) checks")]},
+})
+more("subclass.renegade.circus_tricks", {
+    "Mountain Climb": {"expect": "you gain a climbing speed equal to your walking speed", "effects": [{**note("Climbing speed equal to your walking speed"), "when": "on.trick_rider"}]},
+})
+more("subclass.rogue.swashbuckler", {"Rakish Audacity": SWASHBUCKLER_88})
+more("subclass.tinkerer.meteorology", {
+    "Storm Forecasting": {
+        "expect": "you gain Resistance to lightning and thunder damage while holding your gadget",
+        "toggle": {"id": "holding_gadget", "label": "Holding your gadget", "effects": [
+            {**note("Resistance to lightning and thunder damage"), "when": "level<18"},
+            {**note("Immune to lightning and thunder damage"), "when": "level>=18"},
+        ]},
+    },
+})
+more("subclass.virtuoso.battlehymn", {
+    "Fury of the Battlehym": {"expect": "you can Attack twice, instead of once", "effects": [{"type": "attacksPerAction", "value": 2}]},
+})
+more("subclass.skald.battlehymn", {
+    "Extra Attack": {"expect": "you can Attack twice, instead of once", "effects": [{"type": "attacksPerAction", "value": 2}]},
+})
+more("subclass.virtuoso.wordsmithing", {"Perfectly Placed Words": WORDSMITH})
+more("subclass.skald.wordsmithing", {"Perfectly Placed Words": WORDSMITH})
+more("subclass.warrior.kuja_huntress", {
+    "Snake Companion": {"expect": "you gain expertise in the Acrobatics and Survival skills",
+                        "effects": [{"type": "proficiency", "skill": "acrobatics"}, {"type": "expertise", "skill": "acrobatics"}, {"type": "proficiency", "skill": "survival"}, {"type": "expertise", "skill": "survival"}]},
+})
+more("subclass.warrior.cursed_soul", {
+    "Silver Mist": {"expect": "gain a bonus of +2 to Armor Class",
+                    "toggle": {"id": "silver_mist", "label": "Silver Mist (1 minute)", "effects": [{"type": "ac", "value": 2}, note("Advantage on one attack each turn")]}},
+    "Jest of the Dead": {"expect": "advantage on saving throws against being blinded, deafened, stunned or knocked unconcious",
+                         "effects": [note("Advantage on saves against being blinded, deafened, stunned or knocked unconscious")]},
+})
+more("subclass.warrior.ryuo_samurai", {
+    "Ryuo Master": {"expect": "gain a +2 bonus to attack and damage rolls",
+                    "toggle": {"id": "black_blades", "label": "Attacking with your paired Black Blades", "effects": [{"type": "attack", "value": 2}, {"type": "damage", "value": 2}]}},
+})
+more("subclass.warrior.black_weapon", {
+    "Superior Sharpened Spirit": {"only": "dndf-8.8", "expect": "your weapon attacks score a critical hit on a roll of 17-20", "effects": [note("Weapon attacks score a critical hit on 17–20")]},
+})
+
+_seen_subclasses: set[str] = set()
+_missing: dict[tuple[str, str], list[str]] = {}
+_found: set[tuple[str, str]] = set()
+
+
+def unused_subclass_structure() -> list[str]:
+    """Subclass ids entered above that no handbook produced: a typo, or a renamed subclass."""
+    never = [f"{sub}: '{name}'" for (sub, name) in _missing if (sub, name) not in _found]
+    return sorted(set(SUBCLASS_STRUCTURE) - _seen_subclasses) + sorted(never)
+
+
+def apply_subclass_structure(version: str, entry: dict, problems: list[str]) -> None:
+    """A feature's patch is one dict, or a list of them when the handbooks word it differently.
+    "only" limits a patch to one handbook, for a number the other handbook does not give."""
+    patch = SUBCLASS_STRUCTURE.get(entry["id"])
+    if not patch:
+        return
+    _seen_subclasses.add(entry["id"])
+    squash = lambda t: re.sub(r"\s+", " ", t)
+    features = {f["name"]: f for f in entry["features"]}
+    for name, wordings in patch.items():
+        wordings = [w for w in (wordings if isinstance(wordings, list) else [wordings]) if w.get("only", version) == version]
+        feature = features.get(name)
+        if not wordings:
+            continue
+        if feature is None:
+            _missing.setdefault((entry["id"], name), []).append(version)
+            continue
+        _found.add((entry["id"], name))
+        text = squash(feature["text"] + " " + " ".join(s["text"] for s in feature.get("sections", [])))
+        fields = next((w for w in wordings if squash(w["expect"]) in text), None)
+        if fields is None:
+            problems.append(f"{entry['name']} ({version}): '{name}' is worded differently here, so its numbers were not applied")
+            continue
+        for field in FEATURE_FIELDS:
+            if field in fields:
+                feature[field] = fields[field]
+        if "auto" in feature:
+            feature["auto"] = [a for a in feature["auto"] if a not in fields]
+            if not feature["auto"]:
+                del feature["auto"]

@@ -222,6 +222,16 @@
           "name": "Close Quarters Training",
           "text": "Also at 1st level, You gain proficiency with unarmed strikes. Your unarmed strikes deal 1d8 bludgeoning damage and you can use Dexterity or Strength for the attack and damage rolls.",
           "page": 131,
+          "rolls": [
+            {
+              "label": "1d8 bludgeoning damage",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ],
           "effects": [
             {
               "type": "unarmedDie",
@@ -258,7 +268,6 @@
           "name": "Energy Transfer",
           "text": "At 2nd level, you can release a concentrated chain of energy at a distant target, slightly recharging yourself as you absorb some of their energy. As an action, you target one hostile creature within 30 ft. of you that you can see. The attack automatically hits and the target takes 1d4 force damage. When you use this feature, you gain 2 Hybrid Points.",
           "page": 132,
-          "action": "action",
           "rolls": [
             {
               "label": "Force damage",
@@ -266,6 +275,7 @@
               "kind": "damage"
             }
           ],
+          "action": "action",
           "onUse": [
             {
               "type": "addTracker",
@@ -407,8 +417,16 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "1d12",
+              "dice": "1d12",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         }
       ],
@@ -464,6 +482,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "ac",
+              "value": 2
+            }
           ]
         },
         {
@@ -476,7 +500,17 @@
           "level": 10,
           "name": "Integrated Siege Laser",
           "text": "Starting at 10th level, a high-powered energy cannon has been installed within your body which can be used in your zoan beast and hybrid forms. As an action and by spending 5 Hybrid Points, you can fire a beam of concentrated energy from your mouth. Choose a creature or object within 60 feet that you can see. Creatures must make a Dexterity saving throw against your Hybrid save DC. On a failed save, the target takes radiant damage equal to 1d4 x your Hybrid level. On a success, the target takes half as much damage. Creatures within 5 feet of the target take half the damage dealt with no damage on a successful save. Deals triple damage to objects not worn, structures and constructs. Objects and structures automatically fail the saving throw.",
-          "page": 134
+          "page": 134,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 18,
@@ -489,6 +523,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Immune to being blinded, deafened, paralyzed, poisoned, or stunned"
+            }
           ]
         }
       ]
@@ -531,19 +571,54 @@
           "level": 6,
           "name": "Ooze Artillery",
           "text": "Starting at 6th level, you gain the ability to eject a high- pressure glob of your ooze mass as a ranged attack. As a bonus action, you can launch a glob of ooze at a point you can see within 60 feet, marking the space with your ooze, which evaporates after 1 minute.\nA creature in the targeted space must succeed on a Dexterity saving throw against your Hybrid save DC or take acid damage equal to your engulf’s damage and you gain 1 Hybrid Point. On a successful save, the creature takes no damage and you gain no points.\nIf you target a point that is already marked with your ooze, you may choose to teleport to that location as part of the same bonus action. You reconstitute your body at the marked space, leaving behind a marked space in your original location. Each creature within 5 feet of you when you teleport must succeed on a Dexterity saving throw against your Hybrid save DC or take 2d6 acid damage and are pushed outside your token spaces.\nEach time you use this feature, your size decreases by one category, to a minimum of Tiny.\nAs an action, you can reassemble your body, returning to your normal size.",
-          "page": 135
+          "page": 135,
+          "rolls": [
+            {
+              "label": "2d6 acid damage",
+              "dice": "2d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 10,
           "name": "Jelly Core",
           "text": "Starting at 10th level, your living slime form becomes highly mutable, able to quickly reform and retaliate when struck. You gain the following benefits:\nWhen a creature hits you with a melee attack, the attacker takes 1d6 acid damage.\nWhen you take damage from a critical hit, you can reduce the damage by half for 2 Hybrid Points.",
-          "page": 136
+          "page": 136,
+          "rolls": [
+            {
+              "label": "1d6 acid damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 18,
           "name": "Gelatinous Titan",
           "text": "Starting at 18th level, your ooze body reaches its perfected, monstrous state. A living tidal wave of biological experimentation. You gain the following benefits:\nYour reach increases by 10 feet for melee attacks and unarmed strikes. Additionally, your Engulf feature can now affect creatures up to your current size.\nYou can advantage on contested saving throws made with your Engulf race feature. Additionally, you can choose to deal acid damage equal to 2d6 × your proficiency bonus at the start of each of your turns, instead of the standard Engulf damage.\nWhen reduced to 0 hit points, you may choose to erupt in a burst of volatile slime. All creatures within 15 feet must make a Dexterity saving throw against your Hybrid save DC or take 6d10 acid damage and be knocked prone, or half as much on a success. Once you use this feature, you must finish a short or long rest before doing so again.",
-          "page": 136
+          "page": 136,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "6d10 acid damage",
+              "dice": "6d10",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
@@ -599,7 +674,18 @@
           "level": 1,
           "name": "Combat Exoskeleton",
           "text": "Also at 1st level, your outer skin hardens into an armor- like shell, allowing you to shrug off attacks with ease. You gain the following benefits:\nWhile you are not wearing armor, your AC equals 13 + your Strength modifier.\nYour hit point maximum increases by 1, and it increases by 1 again whenever you gain a level in this class.\nWhen you are damaged by a critical hit, gain 1 Hybrid Point.",
-          "page": 137
+          "page": 137,
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "13 + mod.str",
+              "when": "noArmor"
+            },
+            {
+              "type": "hp",
+              "expr": "level"
+            }
+          ]
         },
         {
           "level": 6,
@@ -616,8 +702,16 @@
             "max": 1,
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "10d10 force damage",
+              "dice": "10d10",
+              "kind": "damage"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
           ]
         },
         {
@@ -631,6 +725,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to all damage except force and psychic"
+            }
           ]
         }
       ]
@@ -736,21 +836,67 @@
             "max": "prof",
             "recharge": "long"
           },
+          "rolls": [
+            {
+              "label": "2d8 radiant damage",
+              "dice": "2d8",
+              "kind": "damage"
+            },
+            {
+              "label": "3d8",
+              "dice": "3d8",
+              "kind": "other"
+            },
+            {
+              "label": "4d8",
+              "dice": "4d8",
+              "kind": "other"
+            },
+            {
+              "label": "6d8",
+              "dice": "6d8",
+              "kind": "other"
+            }
+          ],
           "auto": [
-            "uses"
+            "uses",
+            "rolls"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to fire damage"
+            }
           ]
         },
         {
           "level": 6,
           "name": "S-Defensive Protocol",
           "text": "Starting at 6th level, your Seraphim frame is upgraded with defensive countermeasures and improved energy control. You gain the following traits:\nV2 Pacifista Beam. Each creature within 5 ft. of the primary target must also make a Dexterity saving throw against your Hybrid save DC, taking half the beam’s damage on a failed save, or no damage on a success, and you can then immediately move up to 15 ft. without provoking opportunity attacks. In addition, you gain 1 Hybrid Point per creature you hit with the beam and its blast, up to an amount equal to your proficiency bonus.\nSeraphim Resilience. While you are not wearing armor, your AC equals 13 + your Constitution modifier.\nV2 L-Wings. Your flying speed increases by 10 feet.",
-          "page": 139
+          "page": 139,
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "13 + mod.con",
+              "when": "noArmor"
+            }
+          ]
         },
         {
           "level": 10,
           "name": "S-Offensive Protocol",
           "text": "Starting at 10th level, your frame evolves to adapt rapidly to threats, amplifying your destructive capabilities. You gain the following traits:\nV3 Pacifista Beam. The area of effect for your Pacifista Beam explosion increases to 10 feet.\nIntegrated Combustion. Your unarmed strikes and weapon attacks deal an additional 1d6 fire damage.\nV3 L-Wings. Your flying speed increases by 10 feet.",
-          "page": 140
+          "page": 140,
+          "rolls": [
+            {
+              "label": "1d6 fire damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 18,

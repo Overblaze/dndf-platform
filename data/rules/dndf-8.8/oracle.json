@@ -26,7 +26,13 @@
           "level": 6,
           "name": "Death’s Rattle",
           "text": "Starting at 6th level, the bones now reveal more than just the future, they expose the threads of mortality. When a creature within 30 feet of you drops to 0 hit points, you can use your reaction to roll your bones and choose one of the following outcomes.\nGain temporary hit points equal to twice your Oracle level.\nCause another creature within 30 feet to take psychic damage equal to your Oracle level.\nAdditionally, you gain advantage on death saving throws.",
-          "page": 165
+          "page": 165,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on death saving throws"
+            }
+          ]
         },
         {
           "level": 8,
@@ -73,6 +79,12 @@
           },
           "auto": [
             "uses"
+          ],
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to necrotic damage"
+            }
           ]
         },
         {

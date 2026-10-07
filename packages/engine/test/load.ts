@@ -14,3 +14,18 @@ export const allFiles: RulesFile[] = readdirSync(root, { recursive: true })
 export function loadRules(version: RulesVersion): Map<string, RuleEntry> {
   return indexRules(allFiles, version);
 }
+
+/** Hit points a subclass adds for each level in its class (Germa's exoskeleton, the Battlehymn school), worked out without the engine. */
+export function subclassHitPoints(rules: Map<string, RuleEntry>, subclass: string | undefined, level: number): number {
+  const perLevel: Record<string, number> = { level: 1, 'level * 2': 2 };
+  let total = 0;
+  for (const feature of (subclass ? rules.get(subclass)?.features ?? [] : []) as { level: number; effects?: { type: string; expr?: string }[] }[]) {
+    if (feature.level > level) continue;
+    for (const effect of feature.effects ?? []) {
+      if (effect.type !== 'hp') continue;
+      if (!(effect.expr! in perLevel)) throw new Error(`teach subclassHitPoints about "${effect.expr}"`);
+      total += perLevel[effect.expr!]! * level;
+    }
+  }
+  return total;
+}

@@ -94,17 +94,17 @@
             "max": 1,
             "recharge": "short"
           },
-          "auto": [
-            "uses"
-          ],
-          "action": "bonus",
           "rolls": [
             {
               "label": "Hit points regained",
               "dice": "1d10 + {level}",
               "kind": "heal"
             }
-          ]
+          ],
+          "auto": [
+            "uses"
+          ],
+          "action": "bonus"
         },
         {
           "level": 2,
@@ -125,15 +125,15 @@
             "max": "prof",
             "recharge": "long"
           },
-          "auto": [
-            "uses"
-          ],
           "rolls": [
             {
               "label": "Execute damage",
               "dice": "2d8",
               "kind": "damage"
             }
+          ],
+          "auto": [
+            "uses"
           ]
         },
         {
@@ -177,17 +177,17 @@
             "max": "prof",
             "recharge": "long"
           },
-          "auto": [
-            "uses"
-          ],
-          "action": "action",
           "rolls": [
             {
               "label": "Damage",
               "dice": "2d8 + {mod.str}",
               "kind": "damage"
             }
-          ]
+          ],
+          "auto": [
+            "uses"
+          ],
+          "action": "action"
         },
         {
           "level": 8,
@@ -198,17 +198,17 @@
             "max": "prof",
             "recharge": "long"
           },
-          "auto": [
-            "uses"
-          ],
-          "action": "action",
           "rolls": [
             {
               "label": "Damage",
               "dice": "3d6 + {max(mod.str, mod.dex)}",
               "kind": "damage"
             }
-          ]
+          ],
+          "auto": [
+            "uses"
+          ],
+          "action": "action"
         },
         {
           "level": 9,
@@ -265,7 +265,17 @@
           "level": 7,
           "name": "Blackened Armory",
           "text": "At 7th level, when you land a critical hit on an enemy with a melee weapon increase the damage by 1d8 and change the damage type to force, and all healing on the target you crit receives half of all healing and regeneration received for 1 minute.\nAdditionally you gain the Weapon Hardening armament haki feat if you don’t have it already and you can coat up to two weapons with a single use of it.",
-          "page": 202
+          "page": 202,
+          "rolls": [
+            {
+              "label": "1d8",
+              "dice": "1d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 10,
@@ -277,7 +287,13 @@
           "level": 15,
           "name": "Superior Sharpened Spirit",
           "text": "Starting at 15th level, your weapon attacks score a critical hit on a roll of 17-20 and can ignore bludgeoning, piercing, and slashing resistances.",
-          "page": 202
+          "page": 202,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Weapon attacks score a critical hit on 17–20"
+            }
+          ]
         },
         {
           "level": 18,
@@ -505,7 +521,27 @@
           "level": 3,
           "name": "Elemental Style",
           "text": "At 3rd level, you learn a ritual that creates a spiritual bond between yourself and one weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. The weapon must be within your reach throughout the ritual, at the conclusion of which you touch the weapon and forge the bond.\nOnce you have bonded a weapon to yourself, you can use any bonded weapon as a Spellcasting Focus for your Tinkerer Spells. Any spells you cast will emanate from your weapon as if channeling your spirit through your weapon and releasing the spell from it. For example, if you cast Fire Bolt, imagine a fire slash or wave being released from your weapon toward your target.\nAdditionally, when you attack and hit with a bonded weapon, you can expend one spell slot to deal fire, cold, or lightning damage to the target, in addition to the weapon’s damage. The extra damage is 2d6 for a 1st- level spell slot, plus 1d6 for each Spell Level higher than 1st, to a maximum of 5d6.\nYou can have up to three bonded Weapons. If you attempt to bond with a fourth weapon, you must break the bond with one of the other three.",
-          "page": 204
+          "page": 204,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            },
+            {
+              "label": "5d6",
+              "dice": "5d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 7,
@@ -552,7 +588,25 @@
           "level": 3,
           "name": "Snake Companion",
           "text": "Beginning when you choose this style at 3rd level, you gain expertise in the Acrobatics and Survival skills.\nAdditionally, you gain a Snake Weapon companion from Chapter 8: Dungeon Master Cabin in the Land Creature section. While you are within 5 ft. of your companion the Snake Weapon cannot be targeted by attacks or damaged in any way.\nIf your Snake Weapon companion dies, you can hatch a new one after a long rest.",
-          "page": 205
+          "page": 205,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "acrobatics"
+            },
+            {
+              "type": "expertise",
+              "skill": "acrobatics"
+            },
+            {
+              "type": "proficiency",
+              "skill": "survival"
+            },
+            {
+              "type": "expertise",
+              "skill": "survival"
+            }
+          ]
         },
         {
           "level": 3,

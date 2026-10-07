@@ -32,7 +32,10 @@
         "book": "DnDF Expanded Handbook v8.8",
         "page": 54
       },
-      "text": "You’re shotgun turns close-quarters combat into a death zone. When you fire a shotgun at a creature within 15 feet, you deal an additional 1d8 piercing damage on a hit."
+      "text": "You’re shotgun turns close-quarters combat into a death zone. When you fire a shotgun at a creature within 15 feet, you deal an additional 1d8 piercing damage on a hit.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.disarming_strike",
@@ -71,7 +74,10 @@
         "book": "DnDF Expanded Handbook v8.8",
         "page": 56
       },
-      "text": "You wield the war fan as both shield and snare.\nWhile wielding a war fan, when you are hit by a ranged weapon attack, you can use your reaction to reduce the damage by 1d8 + your Dexterity modifier + your proficiency bonus. If this reduces the damage to 0, you can make a ranged attack with another light thrown weapon you have equipt as part of the same reaction.\nWhen you hit a creature with a war fan, you may immediately attempt to grapple the target as part of the same attack. You may use Dexterity (Acrobatics) instead of Strength (Athletics) for this grapple."
+      "text": "You wield the war fan as both shield and snare.\nWhile wielding a war fan, when you are hit by a ranged weapon attack, you can use your reaction to reduce the damage by 1d8 + your Dexterity modifier + your proficiency bonus. If this reduces the damage to 0, you can make a ranged attack with another light thrown weapon you have equipt as part of the same reaction.\nWhen you hit a creature with a war fan, you may immediately attempt to grapple the target as part of the same attack. You may use Dexterity (Acrobatics) instead of Strength (Athletics) for this grapple.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.gentlemans_gambit",
@@ -84,7 +90,10 @@
         "book": "DnDF Expanded Handbook v8.8",
         "page": 56
       },
-      "text": "You fight with elegance and subtlety, disguising your weapon until the moment of the strike.\nWhen you roll initiative while holding a cane sword sheathed, your next attack with the cane sword is made with advantage.\nWhen you hit a creature with a cane sword attack immediately after drawing it, you may instead deal the damage at the end of your targets turn. When you deal damage in this way the damage increases by 1d6 additional slashing damage. You may only make this attack once per target per day."
+      "text": "You fight with elegance and subtlety, disguising your weapon until the moment of the strike.\nWhen you roll initiative while holding a cane sword sheathed, your next attack with the cane sword is made with advantage.\nWhen you hit a creature with a cane sword attack immediately after drawing it, you may instead deal the damage at the end of your targets turn. When you deal damage in this way the damage increases by 1d6 additional slashing damage. You may only make this attack once per target per day.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.hack_and_chop",
@@ -138,7 +147,10 @@
         "page": 59
       },
       "text": "Your body has adapted further to the unnatural changes forced upon it. When you are reduced to 0 hit points but not killed outright, your unstable body erupts with a burst of energy. You remain conscious and do not fall unconscious from dropping to 0 hit points until the end of your next turn. While in this state, you can move and take actions as normal, and your weapon attacks deal an additional 1d12 damage. At the end of your next turn, you fall unconscious as normal if you have not regained any hit points. You still gain exhaustion when healed from 0 hit points.",
-      "prerequisite": "Punk Experiment"
+      "prerequisite": "Punk Experiment",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.samurai_warrior",
@@ -190,7 +202,10 @@
         "book": "DnDF Expanded Handbook v8.8",
         "page": 63
       },
-      "text": "You wield the morningstar as a hybrid weapon, its spikes tearing through armor and shields.\nWhen you hit a creature wearing armor or using a shield, you deal an extra 1d6 piercing damage. Once per turn, when you hit a creature with a morningstar, you can forego the damage roll and you can force the target to make a Constitution saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the target is staggered until the start of your next turn, giving it disadvantage on its next weapon attack roll."
+      "text": "You wield the morningstar as a hybrid weapon, its spikes tearing through armor and shields.\nWhen you hit a creature wearing armor or using a shield, you deal an extra 1d6 piercing damage. Once per turn, when you hit a creature with a morningstar, you can forego the damage roll and you can force the target to make a Constitution saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the target is staggered until the start of your next turn, giving it disadvantage on its next weapon attack roll.",
+      "auto": [
+        "rolls"
+      ]
     },
     {
       "id": "feat.three_weapon_style",

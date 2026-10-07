@@ -19,7 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from pdfdoc import Block, Heading, Para, Quote, Table, read_blocks  # noqa: E402
-from structure import apply_structure  # noqa: E402
+from structure import apply_structure, apply_subclass_structure  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -300,6 +300,27 @@ def skills_granted(text: str) -> list[str]:
     return found
 
 
+DICE = re.compile(r"\b(\d{1,2}d(?:4|6|8|10|12|20|100))\b(?:\s*\+\s*(\d{1,2})\b(?!d))?")
+
+
+def dice_in(text: str) -> list[dict]:
+    """Dice a feature's text names, as roll buttons: "takes 2d8 fire damage" → a "2d8 fire damage" button.
+    Each distinct roll once, at most four; the label is the dice with the words that follow them."""
+    rolls: list[dict] = []
+    for m in DICE.finditer(text):
+        dice = m.group(1) + (f" + {m.group(2)}" if m.group(2) else "")
+        if dice.endswith("d20") or any(r["dice"] == dice for r in rolls):
+            continue  # a d20 is a check or a save, not something to roll here
+        after = text[m.end():m.end() + 60]
+        words = re.match(r"\s+((?:(?:additional|extra|bonus|temporary|acid|bludgeoning|cold|fire|force|lightning|necrotic|piercing|poison|psychic|radiant|slashing|thunder|or|and|,)\s*)*?(?:damage|hit points))", after)
+        label = f"{dice} {words.group(1)}" if words else dice
+        kind = "damage" if words and words.group(1).endswith("damage") else "other"
+        rolls.append({"label": re.sub(r"\s+", " ", label)[:60], "dice": dice, "kind": kind})
+        if len(rolls) == 4:
+            break
+    return rolls
+
+
 def recharge_of(rest: str) -> str:
     return "long" if rest.lower() == "long" else "short"
 
@@ -337,6 +358,10 @@ def derive_structure(feature: dict) -> None:
     if m:
         feature["action"] = {"bonus action": "bonus", "action": "action", "reaction": "reaction"}[m.group(1).lower()]
         auto.append("action")
+    rolls = dice_in(text)
+    if rolls:
+        feature["rolls"] = rolls
+        auto.append("rolls")
     skills = skills_granted(text)
     if skills and "effects" not in feature:
         feature["effects"] = [{"type": "proficiency", "skill": skill} for skill in skills]
@@ -619,6 +644,7 @@ def make_subclass(version, key, class_id, group_title, heading, blocks, strip, g
         if after["level"] < before["level"]:
             problems.append(f"{heading.text}: '{after['name']}' reads as level {after['level']} but follows '{before['name']}' at {before['level']} (p{after['page']})")
     entry["features"] = features
+    apply_subclass_structure(version, entry, problems)
     return entry
 
 

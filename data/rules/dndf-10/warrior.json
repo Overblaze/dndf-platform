@@ -120,17 +120,17 @@
             "max": 1,
             "recharge": "short"
           },
-          "auto": [
-            "uses"
-          ],
-          "action": "bonus",
           "rolls": [
             {
               "label": "Hit points regained",
               "dice": "1d10 + {level}",
               "kind": "heal"
             }
-          ]
+          ],
+          "auto": [
+            "uses"
+          ],
+          "action": "bonus"
         },
         {
           "level": 2,
@@ -151,15 +151,15 @@
             "max": "prof",
             "recharge": "long"
           },
-          "auto": [
-            "uses"
-          ],
           "rolls": [
             {
               "label": "Execute damage",
               "dice": "{col.executeDice}",
               "kind": "damage"
             }
+          ],
+          "auto": [
+            "uses"
           ]
         },
         {
@@ -197,17 +197,17 @@
             "max": "prof",
             "recharge": "long"
           },
-          "auto": [
-            "uses"
-          ],
-          "action": "action",
           "rolls": [
             {
               "label": "Damage",
               "dice": "2d8 + {mod.str}",
               "kind": "damage"
             }
-          ]
+          ],
+          "auto": [
+            "uses"
+          ],
+          "action": "action"
         },
         {
           "level": 8,
@@ -218,17 +218,17 @@
             "max": "prof",
             "recharge": "long"
           },
-          "auto": [
-            "uses"
-          ],
-          "action": "action",
           "rolls": [
             {
               "label": "Damage",
               "dice": "3d6 + {max(mod.str, mod.dex)}",
               "kind": "damage"
             }
-          ]
+          ],
+          "auto": [
+            "uses"
+          ],
+          "action": "action"
         },
         {
           "level": 9,
@@ -286,7 +286,17 @@
           "level": 7,
           "name": "Blackened Armory",
           "text": "At 7th level, when you land a critical hit on an enemy with a melee weapon increase the damage by 2d6 and change the damage type to force, and all healing on the target you crit receives half of all healing and regeneration received for 1 minute.",
-          "page": 203
+          "page": 203,
+          "rolls": [
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 10,
@@ -304,7 +314,17 @@
           "level": 18,
           "name": "Haki Weapon Master",
           "text": "At 18th level, your weapon attacks ignore magical and non-magical bludgeoning, piercing, and slashing immunities. Additionally, when you score a critical hit with a weapon attack, you heal for 6d8 hit points.",
-          "page": 203
+          "page": 203,
+          "rolls": [
+            {
+              "label": "6d8 hit points",
+              "dice": "6d8",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
@@ -369,19 +389,45 @@
           "level": 10,
           "name": "Shepard of Spirits",
           "text": "Beginning at 10th level, your ability to host and contain spirits has allowed your mind to grow stronger. You have Resistance to psychic damage. Moreover, if you start Your Turn Charmed or Frightened, you can expend a Cursed Spirit die and end every Effect on yourself subjecting you to those Conditions.",
-          "page": 204
+          "page": 204,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to psychic damage"
+            }
+          ]
         },
         {
           "level": 15,
           "name": "Silver Mist",
           "text": "Starting at 15th level, you can enhance yourself with an intense demonic aura which allows you to manifest spirital arms and weapons for a period of time. As a bonus action, you grow extra arms that give you advantage on one of your attacks made each turn and gain a bonus of +2 to Armor Class. This lasts for 1 minute or until you’re Incapacitated.\nOnce you take this bonus action, you can’t do so again until you finish a long rest, unless you expend 2 Cursed Spirit die to take it again.",
-          "page": 204
+          "page": 204,
+          "toggle": {
+            "id": "silver_mist",
+            "label": "Silver Mist (1 minute)",
+            "effects": [
+              {
+                "type": "ac",
+                "value": 2
+              },
+              {
+                "type": "note",
+                "label": "Advantage on one attack each turn"
+              }
+            ]
+          }
         },
         {
           "level": 18,
           "name": "Jest of the Dead",
           "text": "Beginning at 18th level, your Silver Mist feature is now enhanced even further. While using Silver Mist, you grow even more extra appendages and heads that give you these additional bonuses:\nWhen you hit a creature with an Attack, you can use your Reaction to force that creature to make a Strength saving throw. On a failed save, the creature is knocked prone, as if struck by several attacks at once.\nAdditionally, your extra heads give you advantage on saving throws against being blinded, deafened, stunned or knocked unconcious.\nYou can use your Demon Strike feature on any attack you make against a creature within 30 feet, instead of once per turn, by expending a Cursed Spirit die.",
-          "page": 204
+          "page": 204,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on saves against being blinded, deafened, stunned or knocked unconscious"
+            }
+          ]
         }
       ],
       "sources": {
@@ -494,6 +540,24 @@
                   "page": 204
                 }
               ]
+            }
+          ],
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "acrobatics"
+            },
+            {
+              "type": "expertise",
+              "skill": "acrobatics"
+            },
+            {
+              "type": "proficiency",
+              "skill": "survival"
+            },
+            {
+              "type": "expertise",
+              "skill": "survival"
             }
           ]
         },
@@ -777,7 +841,13 @@
           "level": 10,
           "name": "Two Weapon Expert",
           "text": "At 10th level, your bond with your blades deepens. You can no longer be disarmed of your paired weapons against your will and you gain resistance to both magical and nonmagical slashing damage.",
-          "page": 207
+          "page": 207,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Resistance to slashing damage, magical and nonmagical"
+            }
+          ]
         },
         {
           "level": 15,
@@ -789,7 +859,21 @@
           "level": 18,
           "name": "Ryuo Master",
           "text": "At 18th level, your dual weapons permanently awaken as Black Blades, infused with the highest form of Ryuo. Both weapons count as magical for overcoming resistance and immunity, gain a +2 bonus to attack and damage rolls, and critical hits with these weapons deal full damage.",
-          "page": 207
+          "page": 207,
+          "toggle": {
+            "id": "black_blades",
+            "label": "Attacking with your paired Black Blades",
+            "effects": [
+              {
+                "type": "attack",
+                "value": 2
+              },
+              {
+                "type": "damage",
+                "value": 2
+              }
+            ]
+          }
         }
       ],
       "sources": {
@@ -818,19 +902,59 @@
           "level": 3,
           "name": "Slow Style",
           "text": "Beginning when you choose this style at 3rd level, you abandon rapid attacks in favor of one decisive strike. When you take the Attack action on your turn, you must make only one weapon attack as part of that action, even if a feature such as Extra Attack or another source would allow you to make more attacks, and you add +1 to your attack roll per extra attack you are missing.\nWhen you hit a creature with this attack, the attack deals extra weapon damage equal to 1d12 for each attack you would have made with extra attack. This damage is the same type as the weapon’s damage.\nYou may not make an attack with this subclass as a bonus action. However, if you would use a bonus action to make an attack before making an action attack, instead make no attack and increase the extra attack missing counter by 1 for Slow Style.",
-          "page": 208
+          "page": 208,
+          "rolls": [
+            {
+              "label": "1d12",
+              "dice": "1d12",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 3,
           "name": "Lingering Cut",
           "text": "Also at 3rd level, your deliberate cuts leave wounds that worsen with each successful strike. When you hit a creature with a melee weapon attack, you can cause the target to begin bleeding for 3 rounds. At the start of each of the bleeding creature’s turns, it takes 1d6 non- resistable necrotic damage. When you successfully hit a bleeding creature with a melee weapon attack, the bleed damage increases by an additional 1d6 and the duration resets. The bleed ends early if a creature uses an action to stanch the wound.\nThe damage per turn of this feature deals increases as you gain levels in the warrior class. The damage becomes 2d6 at 8th level, and 3d6 at 14th level.",
-          "page": 208
+          "page": 208,
+          "rolls": [
+            {
+              "label": "1d6",
+              "dice": "1d6",
+              "kind": "other"
+            },
+            {
+              "label": "2d6",
+              "dice": "2d6",
+              "kind": "other"
+            },
+            {
+              "label": "3d6",
+              "dice": "3d6",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 7,
           "name": "Opening Cut",
           "text": "At 7th level, your slow cuts become harder to escape once they draw blood. When you hit a creature affected by your Lingering Cut with a melee weapon attack, you can choose one of the following effects:\nHamstring. The creature’s speed is reduced by 5 feet per lingering wound stack on the target until the start of your next turn.\nWeakening Cut. The creature subtracts 1d4 from the next attack roll it makes before the end of its next turn.",
-          "page": 208
+          "page": 208,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "level": 10,
@@ -848,7 +972,22 @@
           "level": 18,
           "name": "Perfected Cut",
           "text": "At 18th level, your slow, deliberate strikes deal additional overwhelming force. The additional damage granted by your Slow Style feature increases from 1d12 to 2d12 for each attack you would have made with extra attack.",
-          "page": 208
+          "page": 208,
+          "rolls": [
+            {
+              "label": "1d12",
+              "dice": "1d12",
+              "kind": "other"
+            },
+            {
+              "label": "2d12",
+              "dice": "2d12",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         }
       ]
     },
