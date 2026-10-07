@@ -68,6 +68,9 @@ export interface CharacterDoc {
   /** `id` / `subraceId` point at rules entries when the race was picked from the book; name and speed can be typed by hand. */
   race: { id?: string; subraceId?: string; name: string; speed: number; /** Extra "counts as one size larger" steps, for carrying. */ sizeSteps?: number };
   background?: { id: string };
+  /** Every crew role the character holds; a character can hold more than one (shipwright and helmsman). */
+  crewRoles?: { id: string }[];
+  /** How a single crew role was saved before `crewRoles`; still read, never written. */
   crewRole?: { id: string };
   /** Feat entry ids. */
   feats?: string[];
@@ -142,6 +145,12 @@ export const SKILLS: { id: string; name: string; ability: Ability }[] = [
 ];
 
 /** Fills in anything missing from a saved document, so older saves keep opening. Returns null if it isn't one. */
+/** The character's crew roles, each once, whichever way they were saved. */
+export function crewRolesOf(doc: Pick<CharacterDoc, 'crewRoles' | 'crewRole'>): { id: string }[] {
+  const ids = [...(doc.crewRoles ?? []), ...(doc.crewRole ? [doc.crewRole] : [])].map((r) => r?.id).filter((id): id is string => typeof id === 'string' && id.length > 0);
+  return [...new Set(ids)].map((id) => ({ id }));
+}
+
 export function normalizeDoc(raw: unknown): CharacterDoc | null {
   if (!raw || typeof raw !== 'object') return null;
   const doc = raw as Partial<CharacterDoc>;
@@ -152,7 +161,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     rulesVersion: doc.rulesVersion ?? 'dndf-10',
     race: doc.race ?? { name: 'Human (Standard)', speed: 30 },
     background: doc.background,
-    crewRole: doc.crewRole,
+    crewRoles: crewRolesOf(doc),
     feats: doc.feats,
     classes: doc.classes,
     scores: doc.scores,

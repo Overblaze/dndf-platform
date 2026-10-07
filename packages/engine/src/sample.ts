@@ -1,5 +1,5 @@
 // Starting points: a blank character of any class, and Kaito, the sample character of docs/FORMULAS.md.
-import { freshState, type CharacterDoc } from './character';
+import { crewRolesOf, freshState, type CharacterDoc } from './character';
 import { deriveSheet } from './sheet';
 import type { AbilityScores, ClassEntry, RuleEntry, RulesVersion } from './types';
 
@@ -18,6 +18,8 @@ export interface NewCharacterInput {
   subraceId?: string;
   backgroundId?: string;
   crewRoleId?: string;
+  /** More than one crew role; added to `crewRoleId` when both are given. */
+  crewRoleIds?: string[];
   feats?: string[];
   subclass?: string;
   skills?: string[];
@@ -40,7 +42,7 @@ export function newCharacter(input: NewCharacterInput, rules: Map<string, RuleEn
     rulesVersion: input.rulesVersion ?? 'dndf-10',
     race: { id: input.raceId, subraceId: input.subraceId, name: input.raceName ?? 'Human (Standard)', speed: input.speed ?? 30 },
     background: input.backgroundId ? { id: input.backgroundId } : undefined,
-    crewRole: input.crewRoleId ? { id: input.crewRoleId } : undefined,
+    crewRoles: crewRolesOf({ crewRoles: [...(input.crewRoleId ? [input.crewRoleId] : []), ...(input.crewRoleIds ?? [])].map((id) => ({ id })) }),
     feats: input.feats,
     classes: [{ id: classId, level: input.level, subclass: input.level >= subclassLevel ? input.subclass : undefined }],
     scores: input.scores,

@@ -1,6 +1,6 @@
 // Turns a saved character + the rules data into every number on the sheet, each with
 // its line-by-line breakdown. The website and the Discord bot both call this.
-import { DEFAULT_SETTINGS, SKILLS, type CampaignSettings, type CharacterDoc, type WeaponDef } from './character';
+import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type CharacterDoc, type WeaponDef } from './character';
 import { GENERAL_PAGES, HANDBOOKS } from './citations';
 import { classColumns } from './classes';
 import { abilityMod, maxHp, proficiencyBonus } from './core';
@@ -328,9 +328,13 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   if (doc.race.id && !race) warnings.push(`Race "${doc.race.id}" is not in the rules data.`);
   const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
   const background = doc.background ? rules.get(doc.background.id) : undefined;
-  const crewRole = doc.crewRole ? rules.get(doc.crewRole.id) : undefined;
+  const crewRoles: RuleEntry[] = [];
+  for (const { id } of crewRolesOf(doc)) {
+    const role = rules.get(id);
+    if (role) crewRoles.push(role);
+    else warnings.push(`Crew role "${id}" is not in the rules data.`);
+  }
   if (doc.background && !background) warnings.push(`Background "${doc.background.id}" is not in the rules data.`);
-  if (doc.crewRole && !crewRole) warnings.push(`Crew role "${doc.crewRole.id}" is not in the rules data.`);
   const feats: RuleEntry[] = [];
   for (const id of doc.feats ?? []) {
     const feat = rules.get(id);
@@ -376,7 +380,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const saveProfs = new Set<Ability>([...((first?.cls.savingThrows as Ability[] | undefined) ?? []), ...(doc.extraSaves ?? [])]);
   const skillProfs = new Set(doc.skills);
   // Skills granted outright by a background, crew role, feat or racial trait.
-  for (const granted of [background, crewRole, ...feats, ...racialTraits.map((t) => t.trait as unknown as RuleEntry)]) {
+  for (const granted of [background, ...crewRoles, ...feats, ...racialTraits.map((t) => t.trait as unknown as RuleEntry)]) {
     for (const skill of (granted?.skills ?? []) as string[]) skillProfs.add(skill);
   }
   for (const e of ofType('proficiency')) if (typeof e.effect.skill === 'string') skillProfs.add(e.effect.skill);
@@ -655,7 +659,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) continue;
     extra(`${entry.id}/${slug(trait.name)}`, trait.name, trait.text, trait.page, entry, entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name, { tables: trait.tables ?? [] });
   }
-  for (const [granted, label] of [[background, 'Background'], [crewRole, 'Crew role']] as const) {
+  for (const [granted, label] of [[background, 'Background'], ...crewRoles.map((role) => [role, 'Crew role'] as const)] as const) {
     for (const section of (granted?.sections ?? []) as SectionDef[]) {
       const m = /^(Feature|Pirate Prestige Ability): (.+)$/.exec(section.name);
       if (m) extra(`${granted!.id}/${slug(m[2]!)}`, m[2]!, section.text, section.page, granted!, `${label}: ${granted!.name}${m[1] === 'Feature' ? '' : ' (Pirate Prestige)'}`, { tables: section.tables ?? [] });

@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { useState } from 'react';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -20,6 +20,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     setOtherClasses([]);
     setChoices({});
     setFeats(feats.filter((id) => other.rules.has(id)));
+    setCrewRoleIds(crewRoleIds.filter((id) => other.rules.has(id)));
     if (!other.rules.has(raceId)) pickRace('', '');
     else if (!other.rules.has(subraceId)) setSubraceId('');
     if (!other.rules.has(backgroundId)) setBackgroundId('');
@@ -30,7 +31,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const [raceName, setRaceName] = useState(initial?.race.name ?? 'Human (Standard)');
   const [speed, setSpeed] = useState(initial?.race.speed ?? 30);
   const [backgroundId, setBackgroundId] = useState(initial?.background?.id ?? '');
-  const [crewRoleId, setCrewRoleId] = useState(initial?.crewRole?.id ?? '');
+  const [crewRoleIds, setCrewRoleIds] = useState<string[]>(initial ? crewRolesOf(initial).map((r) => r.id) : []);
   const [feats, setFeats] = useState<string[]>(initial?.feats ?? []);
   const [classId, setClassId] = useState(first?.id ?? 'class.bruiser');
   const [level, setLevel] = useState(first?.level ?? 1);
@@ -59,7 +60,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     const walk = sub?.speed ?? race.speed;
     if (typeof walk === 'number') setSpeed(walk);
   };
-  const granted = [rules.get(backgroundId), rules.get(crewRoleId)].flatMap((e) => ((e?.skills ?? []) as string[]).map((id) => `${SKILLS.find((k) => k.id === id)?.name ?? id} (${e!.name})`));
+  const granted = [rules.get(backgroundId), ...crewRoleIds.map((id) => rules.get(id))].flatMap((e) => ((e?.skills ?? []) as string[]).map((id) => `${SKILLS.find((k) => k.id === id)?.name ?? id} (${e!.name})`));
   const cls = classes.find((c) => c.id === classId) ?? classes[0]!;
   const subclassLevel = cls.subclass?.level ?? 3;
   const styles = mainSubclasses(cls.id);
@@ -76,7 +77,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const save = () => {
     const shared = {
       name: name.trim() || 'Unnamed', rulesVersion: version, classId: cls.id, level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, choices: keptChoices,
-      raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleId: crewRoleId || undefined, feats,
+      raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleIds, feats,
     };
     if (!initial) {
       const built = newCharacter(shared, rules);
@@ -92,7 +93,8 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       name: shared.name,
       race: { ...initial.race, id: shared.raceId, subraceId: shared.subraceId, name: shared.raceName, speed },
       background: shared.backgroundId ? { id: shared.backgroundId } : undefined,
-      crewRole: shared.crewRoleId ? { id: shared.crewRoleId } : undefined,
+      crewRoles: shared.crewRoleIds.map((id) => ({ id })),
+      crewRole: undefined,
       feats,
       classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...otherClasses],
       scores,
@@ -251,14 +253,21 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
             {backgrounds.map((bg) => <option key={bg.id} value={bg.id}>{bg.name}</option>)}
           </select>
         </label>
-        <label className="field">
-          <span className="label">Crew role</span>
-          <select value={crewRoleId} onChange={(e) => setCrewRoleId(e.target.value)}>
-            <option value="">None chosen</option>
-            {crewRoles.map((role) => <option key={role.id} value={role.id}>{role.name}</option>)}
-          </select>
-        </label>
       </div>
+      <fieldset>
+        <legend className="label">Crew roles: {crewRoleIds.length}</legend>
+        <div className="chips">
+          {crewRoleIds.map((id) => (
+            <button type="button" key={id} className="chip chip-btn chip-on" onClick={() => setCrewRoleIds(crewRoleIds.filter((r) => r !== id))} aria-label={`Remove ${rules.get(id)?.name ?? id}`}>
+              {rules.get(id)?.name ?? id} ×
+            </button>
+          ))}
+        </div>
+        <select value="" onChange={(e) => e.target.value && setCrewRoleIds([...crewRoleIds, e.target.value])} aria-label="Add a crew role">
+          <option value="">{crewRoleIds.length ? 'Add another crew role…' : 'Add a crew role…'}</option>
+          {crewRoles.filter((role) => !crewRoleIds.includes(role.id)).map((role) => <option key={role.id} value={role.id}>{role.name}</option>)}
+        </select>
+      </fieldset>
       <fieldset>
         <legend className="label">Feats: {feats.length}</legend>
         <div className="chips">
