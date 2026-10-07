@@ -551,7 +551,8 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   const extra = (key: string, name: string, text: string, page: number, entry: RuleEntry, from: string, more: Partial<SheetFeature> = {}) =>
     features.push({ key, name, text, page, book: entry.source.book, from, rolls: [], displays: [], onUse: [], sections: [], tables: [], ...more });
   for (const { trait, entry } of racialTraits) {
-    if (/^(age|alignment)$/i.test(trait.name)) continue;
+    // Descriptive traits stay in the Library; the sheet lists the ones a player uses.
+    if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) continue;
     extra(`${entry.id}/${slug(trait.name)}`, trait.name, trait.text, trait.page, entry, entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name, { tables: trait.tables ?? [] });
   }
   for (const [granted, label] of [[background, 'Background'], [crewRole, 'Crew role']] as const) {

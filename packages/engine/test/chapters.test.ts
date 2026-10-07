@@ -103,8 +103,7 @@ describe('the sheet with a race, background, crew role and feats', () => {
     expect(giant.carry.value).toBe(540);
     expect(giant.carry.lines.at(-1)!.label).toMatch(/^Powerful Build/);
     const traits = giant.features.filter((f) => f.from.startsWith('Human')).map((f) => f.name);
-    expect(traits).toEqual(expect.arrayContaining(['Size', 'Speed', 'Natural Athlete', 'Giant’s Endurance', 'Powerful Build']));
-    expect(traits).not.toContain('Age');
+    expect(traits).toEqual(['Natural Athlete', 'Warrior Training', 'Giant’s Endurance', 'Powerful Build']);
     expect(deriveSheet(kaito({ raceId: 'race.human', subraceId: 'subrace.human.standard' }), rules).carry.value).toBe(270);
   });
 

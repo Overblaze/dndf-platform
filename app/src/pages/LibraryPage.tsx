@@ -1,8 +1,8 @@
-import { ABILITY_NAMES, columnLabel, proficiencyBonus, signed, type Ability, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry } from '@dndf/engine';
-import { useMemo, useState } from 'react';
+import { ABILITY_NAMES, columnLabel, proficiencyBonus, signed, type Ability, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry, type SectionDef, type TableDef, type TraitDef } from '@dndf/engine';
+import { Fragment, useMemo, useState, type ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { RuleText } from '../components/RuleText';
-import { classes, optionGroupsOf, rules, subclassesOf } from '../lib/rules';
+import { backgrounds, classes, crewRoles, feats, generalRules, optionGroupsOf, races, rules, subclassesOf, subracesOf } from '../lib/rules';
 
 const link = (id: string) => `/library/${encodeURIComponent(id)}`;
 const ordinal = (n: number) => `${n}${n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'}`;
@@ -116,27 +116,105 @@ function ClassView({ cls }: { cls: ClassEntry }) {
   );
 }
 
+const KIND_LABEL: Record<string, string> = {
+  race: 'Race', subrace: 'Subrace', background: 'Background', feat: 'Feat', crewRole: 'Crew role', rule: 'Rules', subclass: 'Subclass', optionGroup: 'Options', class: 'Class',
+};
+
+const FACTS: [string, string][] = [
+  ['prerequisite', 'Prerequisite'], ['size', 'Size'], ['skillProficiencies', 'Skill proficiencies'], ['toolProficiencies', 'Tool proficiencies'],
+  ['languages', 'Languages'], ['equipment', 'Equipment'],
+];
+
 function EntryView({ entry }: { entry: RuleEntry }) {
   if (entry.kind === 'class') return <ClassView cls={entry as ClassEntry} />;
   const parent = typeof entry.parent === 'string' ? rules.get(entry.parent) : undefined;
   const options = (entry.options ?? []) as OptionDef[];
   const optionGroups = [...new Set(options.map((o) => String(o.group ?? '')))];
+  const traits = (entry.traits ?? []) as TraitDef[];
+  const subraces = entry.kind === 'race' ? subracesOf(entry.id) : [];
+  const facts = FACTS.filter(([key]) => typeof entry[key] === 'string');
+  const uses = entry.uses as { max: number | string; recharge: string } | undefined;
+  // Backgrounds repeat their proficiency lines as their text; those are shown as facts.
+  const text = entry.kind === 'background' ? '' : typeof entry.text === 'string' ? entry.text : '';
+  return (
+    <>
+      <section className="card">
+        <p className="page-ref">
+          <Link to="/library">Library</Link>
+          {parent && <> · <Link to={link(parent.id)}>{parent.name}</Link></>} · {KIND_LABEL[entry.kind] ?? entry.kind}
+          {entry.optional === true && ' (optional)'} · {entry.source.book}, p.{entry.source.page}
+        </p>
+        <h1>{entry.name}</h1>
+        {(facts.length > 0 || typeof entry.speed === 'number') && (
+          <dl className="facts facts-plain">
+            {typeof entry.speed === 'number' && <><dt>Walking speed</dt><dd>{entry.speed} ft</dd></>}
+            {facts.map(([key, label]) => (
+              <Fragment key={key}>
+                <dt>{label}</dt>
+                <dd>{String(entry[key])}</dd>
+              </Fragment>
+            ))}
+          </dl>
+        )}
+        {typeof entry.flavor === 'string' && <p className="feature-text">{entry.flavor}</p>}
+        {Boolean(text || entry.sections || entry.tables) && (
+          <RuleText text={text} sections={(entry.sections ?? []) as SectionDef[]} tables={(entry.tables ?? []) as TableDef[]} />
+        )}
+        {uses && typeof uses === 'object' && (
+          <p className="page-ref">Tracked on the sheet: {uses.max === 'prof' ? 'proficiency bonus' : uses.max} use{uses.max === 1 ? '' : 's'} per {uses.recharge} rest</p>
+        )}
+        {(entry.features ?? []).map((feature) => <Feature key={`${feature.level}/${feature.name}`} feature={feature} book={entry.source.book} />)}
+        {optionGroups.map((group) => (
+          <div key={group}>
+            {group && <h2>{group}</h2>}
+            {options.filter((o) => String(o.group ?? '') === group).map((option) => <Feature key={option.id} feature={option} book={entry.source.book} />)}
+          </div>
+        ))}
+      </section>
+      {traits.length > 0 && (
+        <section className="card">
+          <h2>Traits</h2>
+          {traits.map((trait) => (
+            <div key={trait.name} className="rule-section">
+              <h3>{trait.name} <span className="page-ref">p.{trait.page}</span></h3>
+              <RuleText text={trait.text} tables={trait.tables} />
+            </div>
+          ))}
+        </section>
+      )}
+      {subraces.length > 0 && (
+        <section className="card">
+          <h2>Subraces</h2>
+          <EntryLinks entries={subraces} detail={(sub) => `${(sub.traits as TraitDef[]).length} traits`} />
+        </section>
+      )}
+    </>
+  );
+}
+
+function EntryLinks({ entries, detail }: { entries: RuleEntry[]; detail?: (entry: RuleEntry) => string }) {
+  return (
+    <>
+      {entries.map((entry) => (
+        <Link key={entry.id} className="resource character-link" to={link(entry.id)}>
+          <span className="resource-name">{entry.name}</span>
+          <span className="page-ref">{[detail?.(entry), `p.${entry.source.page}`].filter(Boolean).join(' · ')}</span>
+        </Link>
+      ))}
+    </>
+  );
+}
+
+function Shelf({ title, count, children }: { title: string; count: number; children: ReactNode }) {
   return (
     <section className="card">
-      <p className="page-ref">
-        <Link to="/library">Library</Link>
-        {parent && <> · <Link to={link(parent.id)}>{parent.name}</Link></>} · {entry.source.book}, p.{entry.source.page}
-      </p>
-      <h1>{entry.name}</h1>
-      {typeof entry.flavor === 'string' && <p className="feature-text">{entry.flavor}</p>}
-      {typeof entry.text === 'string' && <p className="feature-text">{entry.text}</p>}
-      {(entry.features ?? []).map((feature) => <Feature key={`${feature.level}/${feature.name}`} feature={feature} book={entry.source.book} />)}
-      {optionGroups.map((group) => (
-        <div key={group}>
-          {group && <h2>{group}</h2>}
-          {options.filter((o) => String(o.group ?? '') === group).map((option) => <Feature key={option.id} feature={option} book={entry.source.book} />)}
-        </div>
-      ))}
+      <details className="shelf">
+        <summary>
+          <h2>{title}</h2>
+          <span className="page-ref">{count}</span>
+        </summary>
+        {children}
+      </details>
     </section>
   );
 }
@@ -153,13 +231,15 @@ function search(query: string): Hit[] {
   if (q.length < 2) return [];
   const hits: Hit[] = [];
   for (const entry of rules.values()) {
-    const kind = entry.kind === 'optionGroup' ? 'Options' : entry.kind === 'subclass' ? `${rules.get(String(entry.parent))?.name ?? ''} subclass` : 'Class';
+    const parent = typeof entry.parent === 'string' ? rules.get(entry.parent)?.name : undefined;
+    const kind = [parent, KIND_LABEL[entry.kind] ?? entry.kind].filter(Boolean).join(' ').replace(/ Subclass$/, ' subclass');
     if (entry.name.toLowerCase().includes(q)) hits.push({ id: entry.id, title: entry.name, where: kind, page: entry.source.page });
-    for (const item of [...(entry.features ?? []), ...((entry.options ?? []) as OptionDef[])]) {
-      if (item.name.toLowerCase().includes(q)) hits.push({ id: entry.id, title: item.name, where: entry.name, page: item.page });
+    const parts = [...(entry.features ?? []), ...((entry.options ?? []) as OptionDef[]), ...((entry.traits ?? []) as TraitDef[]), ...((entry.sections ?? []) as SectionDef[])];
+    for (const item of parts) {
+      if (item.name.toLowerCase().includes(q)) hits.push({ id: entry.id, title: item.name, where: parent ? `${parent}: ${entry.name}` : entry.name, page: item.page });
     }
   }
-  return hits.slice(0, 60);
+  return hits.slice(0, 80);
 }
 
 export function LibraryPage() {
@@ -181,10 +261,10 @@ export function LibraryPage() {
     <>
       <section className="card">
         <h1>Library</h1>
-        <p className="soft">The classes of the DnDF Expanded Handbook v10, word for word, with the page for every feature.</p>
+        <p className="soft">Chapters 1 to 3 of the DnDF Expanded Handbook v10, word for word, with the page for everything.</p>
         <label className="field">
-          <span className="label">Search classes, subclasses and features</span>
-          <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Ki, Brawling Style, Extra Attack…" />
+          <span className="label">Search everything by name</span>
+          <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Ki, Mink, Shipwright, Alert, Parry Blow…" />
         </label>
         {query.trim().length >= 2 && hits.length === 0 && <p>Nothing called that yet.</p>}
         {hits.map((hit, i) => (
@@ -204,7 +284,24 @@ export function LibraryPage() {
             </span>
           </Link>
         ))}
-        <p className="page-ref">Races, backgrounds, feats, crew roles, Haki and the armory are still to be added, as is the v8.8 handbook.</p>
+      </section>
+      <Shelf title="Races" count={races.length}>
+        <EntryLinks entries={races} detail={(race) => [race.optional ? 'optional' : '', subracesOf(race.id).length ? `${subracesOf(race.id).length} subraces` : ''].filter(Boolean).join(' · ')} />
+      </Shelf>
+      <Shelf title="Backgrounds" count={backgrounds.length}>
+        <EntryLinks entries={backgrounds} detail={(bg) => String(bg.skillProficiencies ?? '')} />
+      </Shelf>
+      <Shelf title="Crew roles" count={crewRoles.length}>
+        <EntryLinks entries={crewRoles} />
+      </Shelf>
+      <Shelf title="Feats" count={feats.length}>
+        <EntryLinks entries={feats} detail={(feat) => (feat.prerequisite ? `needs ${feat.prerequisite}` : '')} />
+      </Shelf>
+      <Shelf title="General rules" count={generalRules.length}>
+        <EntryLinks entries={generalRules} />
+      </Shelf>
+      <section className="card">
+        <p className="page-ref">Still to be added: spell lists, Haki and Spirit Surges, the armory, and the v8.8 handbook.</p>
       </section>
     </>
   );

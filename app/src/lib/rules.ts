@@ -11,6 +11,14 @@ export const classes = all.filter((e): e is ClassEntry => e.kind === 'class').so
 export const subclassesOf = (classId: string): RuleEntry[] => all.filter((e) => e.kind === 'subclass' && e.parent === classId);
 export const optionGroupsOf = (classKey: string): RuleEntry[] => all.filter((e) => e.kind === 'optionGroup' && e.id.startsWith(`optionGroup.${classKey}_`));
 
+const byName = (a: RuleEntry, b: RuleEntry) => a.name.localeCompare(b.name);
+export const races = all.filter((e) => e.kind === 'race');
+export const subracesOf = (raceId: string): RuleEntry[] => all.filter((e) => e.kind === 'subrace' && e.parent === raceId);
+export const backgrounds = all.filter((e) => e.kind === 'background').sort(byName);
+export const crewRoles = all.filter((e) => e.kind === 'crewRole');
+export const feats = all.filter((e) => e.kind === 'feat').sort(byName);
+export const generalRules = all.filter((e) => e.kind === 'rule');
+
 /** The subclasses a class's main choice picks from (Tinkerer Professions are a second, separate choice). */
 export function mainSubclasses(classId: string): RuleEntry[] {
   const subs = subclassesOf(classId);
