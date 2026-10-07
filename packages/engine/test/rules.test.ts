@@ -282,7 +282,7 @@ describe('Devilforged v8.8 — Marlo, Devilforged 5, Blade Smithing, Cha 18', ()
     expect(marlo.derived.spellAttack.value).toBe(7);
   });
 
-  it('Slots: L5 → 2 slots of 3rd, short rest (the full table arrives with the class in phase 3)', () => {
+  it('Slots: L5 → 2 slots of 3rd, short rest (checked against the class table in versions.test.ts)', () => {
     expect(marlo.spellcasting.slots).toMatchObject({ count: 2, level: 3, recharge: 'short', page: 112 });
   });
 

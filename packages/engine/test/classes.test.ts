@@ -1,22 +1,27 @@
 // Every class in data/rules, at every level and with every subclass, must produce a sheet:
 // no missing data, hit points by the book's formula, and each limited use a number.
-import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { deriveSheet, indexRules, newCharacter, type ClassEntry, type RuleEntry, type RulesFile } from '../src';
+import { deriveSheet, newCharacter, type ClassEntry, type RuleEntry, type RulesVersion } from '../src';
+import { loadRules } from './load';
 
-const dir = join(import.meta.dirname, '..', '..', '..', 'data', 'rules', 'dndf-10');
-const files = readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as RulesFile);
-const rules = indexRules(files);
-const classes = [...rules.values()].filter((e): e is ClassEntry => e.kind === 'class');
-const subclassesOf = (cls: ClassEntry) => [...rules.values()].filter((e) => e.kind === 'subclass' && e.parent === cls.id);
+const CLASS_NAMES: Record<RulesVersion, string[]> = {
+  'dndf-10': ['Bruiser', 'Chemist', 'Conqueror', 'Devilforged', 'Hybrid', 'Marksman', 'Martial Artist', 'Oracle', 'Priest', 'Renegade', 'Tinkerer', 'Virtuoso', 'Warrior'],
+  // v8.8 has the Rogue and the Skald where v10 has the Renegade and the Virtuoso.
+  'dndf-8.8': ['Bruiser', 'Chemist', 'Conqueror', 'Devilforged', 'Hybrid', 'Marksman', 'Martial Artist', 'Oracle', 'Priest', 'Rogue', 'Skald', 'Tinkerer', 'Warrior'],
+};
 const scores = { str: 14, dex: 14, con: 14, int: 14, wis: 14, cha: 14 };
 
-describe('rules data for v10', () => {
-  it('has the thirteen classes of the Expanded Handbook', () => {
-    expect(classes.map((c) => c.name).sort()).toEqual([
-      'Bruiser', 'Chemist', 'Conqueror', 'Devilforged', 'Hybrid', 'Marksman', 'Martial Artist', 'Oracle', 'Priest', 'Renegade', 'Tinkerer', 'Virtuoso', 'Warrior',
-    ]);
+describe.each(['dndf-10', 'dndf-8.8'] as const)('rules data for %s', (version) => {
+  const rules = loadRules(version);
+  const classes = [...rules.values()].filter((e): e is ClassEntry => e.kind === 'class');
+  const subclassesOf = (cls: ClassEntry) => [...rules.values()].filter((e) => e.kind === 'subclass' && e.parent === cls.id);
+
+  it('has the thirteen classes of that Expanded Handbook', () => {
+    expect(classes.map((c) => c.name).sort()).toEqual(CLASS_NAMES[version]);
+    for (const entry of rules.values()) {
+      expect(entry.versions, entry.id).toContain(version);
+      expect(entry.source.book, entry.id).toContain(version === 'dndf-10' ? 'v10' : 'v8.8');
+    }
   });
 
   describe.each(classes.map((c) => [c.name, c] as const))('%s', (_name, cls) => {
@@ -48,7 +53,7 @@ describe('rules data for v10', () => {
     it('derives a sheet at every level, with every subclass', () => {
       for (const subclass of [undefined, ...subs.map((s) => s.id)]) {
         for (let level = 1; level <= 20; level++) {
-          const doc = newCharacter({ name: 'Test', classId: cls.id, level, scores, subclass }, rules);
+          const doc = newCharacter({ name: 'Test', rulesVersion: version, classId: cls.id, level, scores, subclass }, rules);
           const sheet = deriveSheet(doc, rules);
           expect(sheet.warnings, `${cls.name} ${level} ${subclass}`).toEqual([]);
           const con = sheet.abilities.con.mod; // after features that raise it (The King)
@@ -63,6 +68,10 @@ describe('rules data for v10', () => {
       }
     });
   });
+});
+
+describe('v10 class details', () => {
+  const rules = loadRules('dndf-10');
 
   it('shows casters their spell slots and class table values', () => {
     const priest = deriveSheet(newCharacter({ name: 'P', classId: 'class.priest', level: 5, scores }, rules), rules);

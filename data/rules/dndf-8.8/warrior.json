@@ -1,0 +1,694 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.warrior",
+      "kind": "class",
+      "name": "Warrior",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 199
+      },
+      "flavor": "The Warrior is a battle-hardened fighter, trained to excel in the heat of combat with a wide range of tactics and techniques. Whether mastering weapons, enduring the hardships of battle, or protecting their allies, Warriors are relentless in their pursuit of victory. They are the frontline champions, pushing their bodies and minds to the limit, driven by an unyielding will to survive and conquer.",
+      "quote": "CONVEY MY WILL TO THIS BLADE… NOW LET’S SEE IF I AM ABLE TO CUT STEEL. --- Roronoa Zoro",
+      "hitDie": 10,
+      "savingThrows": [
+        "str",
+        "con"
+      ],
+      "proficiencies": {
+        "armor": [
+          "all_armor",
+          "shields"
+        ],
+        "weapons": [
+          "simple",
+          "martial"
+        ],
+        "tools": [],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "acrobatics",
+            "animal_handling",
+            "athletics",
+            "history",
+            "insight",
+            "intimidation",
+            "perception",
+            "survival"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) Chain Mail or (b) Thick Shirt, Rifle, and 20 Bullets",
+        "(a) a martial weapon and a Shield or (b) two Martial Weapons",
+        "(a) a Pistol and 20 gun bullets or (b) two handaxes",
+        "(a) a dungeoneer’s pack or (b) an explorer’s pack"
+      ],
+      "asiLevels": [
+        4,
+        6,
+        8,
+        12,
+        14,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Warrior Type",
+        "level": 3,
+        "featureLevels": [
+          3,
+          7,
+          10,
+          15,
+          18
+        ]
+      },
+      "subclassIntro": {
+        "text": "Fighters can vary by the types of weapons they use, what style of fighting they want to utilize, and what they want to provide for their allies. Once you have chosen the type of warrior you are, follow the subclass features listed below.",
+        "page": 202
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Fighting Style",
+          "text": "Starting at 1st level, you adopt a particular style of Fighting as your specialty. Choose two of the following options. You can’t take a Fighting Style option more than once, even if you later get to choose again.",
+          "page": 200,
+          "sections": [
+            {
+              "name": "Aiming",
+              "text": "You gain a +2 bonus to Attack Rolls you make with Ranged Weapons.",
+              "page": 200
+            },
+            {
+              "name": "Close Quarters Shooter",
+              "text": "When making a ranged attack while you are within 5 feet of a hostile creature, you do not have disadvantage on the attack roll. Your ranged attacks ignore half cover and three-quarters cover against targets within 30 feet of you. You have a +1 bonus to attack rolls on ranged attacks.",
+              "page": 200
+            },
+            {
+              "name": "Defense",
+              "text": "While you are wearing armor, you gain a +1 bonus to AC.",
+              "page": 200
+            },
+            {
+              "name": "Dueling",
+              "text": "When you are wielding a melee weapon in one hand and no other Weapons, you gain a +2 bonus to Damage Rolls with that weapon.",
+              "page": 200
+            },
+            {
+              "name": "Great Weapon Fighting",
+              "text": "When you roll a 1 or 2 on a damage die for an Attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the Two-Handed or Versatile property for you to gain this benefit.",
+              "page": 200
+            },
+            {
+              "name": "Interception",
+              "text": "When a creature you can see hits a target, other than you, within 5 feet of you with an attack, you can use your reaction to reduce the damage the target takes by 1d10 + your proficiency bonus (to a minimum of 0 damage). You must be wielding a shield or a simple or martial weapon to use this reaction.",
+              "page": 200
+            },
+            {
+              "name": "Mariner",
+              "text": "As long as you are not wearing heavy armor or using a shield, you have a swimming speed and a climbing speed equal to your normal speed, and you gain a +1 bonus to armor class.",
+              "page": 200
+            },
+            {
+              "name": "Protection",
+              "text": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your Reaction to impose disadvantage on the Attack roll. You must be wielding a shield .",
+              "page": 200
+            },
+            {
+              "name": "Thrown Weapon Fighting",
+              "text": "You can draw a weapon that has the Thrown property as part of the Attack you make with the weapon.\nIn addition, when you hit with a ranged Attack using a Thrown weapon, you gain a +2 bonus to the damage roll.",
+              "page": 200
+            },
+            {
+              "name": "Two-Weapon Fighting",
+              "text": "When you engage in Two-Weapon Fighting, you can add your ability modifier to the damage of the second Attack.",
+              "page": 200
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Second Wind",
+          "text": "Also at 1st level, you have a limited well of stamina that you can draw on to protect yourself from harm. On Your Turn, you can use a bonus action to regain Hit Points equal to 1d10 + your Warrior level. Once you use this feature, you must finish a short or long rest before you can use it again.",
+          "page": 200,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Action Surge",
+          "text": "Starting at 2nd Level, you can push yourself beyond your normal limits for a moment. On Your Turn, you can take one additional action.\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.",
+          "page": 200,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Execute",
+          "text": "Starting at 2nd level, once per turn, when you hit a creature with a melee weapon attack, you can to deal an extra 2d8 weapon damage to the target, in addition to the weapon’s normal damage. You may use this feature an amount of times equal to your proficiency bonus, regaining all uses after a long rest.\nAdditionally, at 5th level, when you cast Execute, you can choose one of the following effects.\nSearing Strike. Convert your extra damage into fire damage and cause the target to ignite in flames. At the start of each of its turns the target takes 1d6 fire damage. If the target or a creature within 5 feet of it uses an action to put out the flames, or if some other effect douses the flames (such as the target being submerged in water), the effect ends.\nThunderous Execution. Convert your extra damage into thunder damage and your weapon rings with thunder that is audible within 300 feet of you. Additionally, if the target is a creature, it must succeed on a DC Strength saving throw equal to 8 + your proficiency + your Strength or Dexterity modifier or be pushed 10 feet away from you and knocked prone.\nWrathful Slash. Convert your extra damage into psychic damage. Additionally, if the target is a creature, it must succeed on a DC Wisdom saving throw equal to 8 + your proficiency + your Strength or Dexterity modifier or be frightened of you for 1 minute. The creature can make the save at the end of each of it’s turns.\nBranding Judgement. Convert your extra damage into radiant damage. Additionally, the target becomes visible if it is invisible, and the target sheds dim light in a 5-foot radius and can’t become invisible for 1 minute.\nBlinding Wrath. Convert your extra damage into radiant damage. Additionally, the target must succeed on a DC Constitution saving throw equal to 8 + your proficiency + your Strength or Dexterity modifier or be blinded for 1 round.\nThe extra damage increases to 3d8 at 5th level, 4d8 at 13th level, and 5d8 at 17th level.",
+          "page": 200,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Warrior Type",
+          "text": "At 3rd level, you choose an archetype that you strive to emulate in your combat styles and Techniques. Choose Black Weapon, Cursed Soul, Elemental Weapon, Kuja Huntress, Ramen Kenpo, or Ryuo Samurai, all detailed at the end of the class description. The archetype you choose grants you features at 3rd level and again at 7th, 10th, 15th, and 18th level.",
+          "page": 201,
+          "grantsSubclass": true
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 6th, 8th, 12th, 14th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1.\nAdditionally, whenever you reach a level in this class that grants you an ability score improvement feature, you can replace a fighting style you know with another fighting style available to Warriors.",
+          "page": 201,
+          "asi": true
+        },
+        {
+          "level": 4,
+          "name": "Weapon Mastery",
+          "text": "At 4th level, gain 1 feat of your choice pertaining to a weapon that you are proficient with.",
+          "page": 201
+        },
+        {
+          "level": 5,
+          "name": "Extra Attack",
+          "text": "Beginning at 5th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn.\nThe number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
+          "page": 201
+        },
+        {
+          "level": 6,
+          "name": "Dashing Strike",
+          "text": "Starting at 6th level, you can use your action to rush forward in a straight line up to 20 feet, dealing damage to all creatures within 5 feet of the path. Each creature you pass must make a Dexterity save DC equal to 8 + your proficiency bonus + your Strength or Dexterity modifier or take damage equal to 2d8 + your Strength modifier, with the damage type of your main weapon. This movement does not provoke attacks of opportunity.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all uses after a long rest.",
+          "page": 201,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Crescent Strike",
+          "text": "Starting at 8th level, you can use your action to unleash a mighty swing that cuts through a 15-foot cone in front of you. Each creature in the area must make a Dexterity save DC equal to 8 + your proficiency bonus + your Strength or Dexterity modifier or take 3d6 + your Strength or Dexterity modifier, with the damage type of your main weapon.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all uses after a long rest.",
+          "page": 201,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 9,
+          "name": "Aura of Endurance",
+          "text": "Starting at 9th level, whenever you or a friendly creature within 10 feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Constitution modifier (with a minimum bonus of +1). You must be conscious to grant this bonus. If another Warrior is present, a creature can benefit from only one Aura of Endurance at a time\nAt 18th level, the range of this aura increases to 30 feet.",
+          "page": 201
+        },
+        {
+          "level": 10,
+          "name": "Aura of Bravery",
+          "text": "Starting at 10th level, you and friendly creatures within 10 feet of you can’t be frightened while you are conscious.\nAt 18th level, the range of this aura increases to 30 feet.",
+          "page": 201
+        },
+        {
+          "level": 12,
+          "name": "Hawk Strike",
+          "text": "Starting at 12th level, as an action, you can release a wave of force from your weapon, creating a ranged slashing attack that travels in a 30-foot line, 5 feet wide. Each creature in the line must make a Dexterity save DC equal to 8 + your proficiency bonus + your Strength or Dexterity modifier or take force damage equal to your current main weapon damage.",
+          "page": 201,
+          "action": "action",
+          "auto": [
+            "action"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.black_weapon",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Black Weapon",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 202
+      },
+      "flavor": "Black weapon users are born with incredibly powerful spirits and willpower, which they channel into their weapons. By utilizing armament haki, their weapons become darkened over time until they turn pitch black.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Sharpened Spirit",
+          "text": "Beginning when you choose this style at 3rd level, your weapon attacks score a critical hit on a roll of 19-20.",
+          "page": 202
+        },
+        {
+          "level": 7,
+          "name": "Blackened Armory",
+          "text": "At 7th level, when you land a critical hit on an enemy with a melee weapon increase the damage by 1d8 and change the damage type to force, and all healing on the target you crit receives half of all healing and regeneration received for 1 minute.\nAdditionally you gain the Weapon Hardening armament haki feat if you don’t have it already and you can coat up to two weapons with a single use of it.",
+          "page": 202
+        },
+        {
+          "level": 10,
+          "name": "Reaper’s Blade",
+          "text": "At 10th level, when you land a critical hit you automatically apply Execute for free (no charges needed or turn limit restriction).\nAdditionally, you can use your Execute feature a number of times equal to double your proficiency bonus.",
+          "page": 202
+        },
+        {
+          "level": 15,
+          "name": "Superior Sharpened Spirit",
+          "text": "Starting at 15th level, your weapon attacks score a critical hit on a roll of 17-20 and can ignore bludgeoning, piercing, and slashing resistances.",
+          "page": 202
+        },
+        {
+          "level": 18,
+          "name": "Haki Weapon Master",
+          "text": "At 18th level, you may now use your Execute feature once per turn for free.",
+          "page": 202
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.elemental_weapon",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Elemental Weapon",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 203
+      },
+      "flavor": "Through learning how to channel elemental energy through your weapon, you can coat your attacks in an element of your choice. Many Wano Kuni samurai have mastered this style.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Elementalist (Spellcasting)",
+          "text": "When you reach 3rd level, you augment your martial Prowess with the ability to use Elemental Powers (Cast Spells). See “Casting a Spell” for the general rules of Spellcasting in the Standard D&D 5th Edition Player’s Handbook. You use the Tinkerer spell list in Chapter 4.\nNatural Abilities (Cantrips). You learn two Natural Abilities (Cantrips) of your choice from the Tinkerer spell list. You learn an additional tinkerer cantrip of your choice at 10th level.\nElemental Power (Spell) Slots. The Elemental Weapon Powers (Spellcasting) table shows how many Spell Slots you have to cast your tinkerer Spells of 1st level and higher. To cast one of these spells , you must expend a slot of the spell’s level or higher. You regain all expended Spell Slots when you finish a long rest.\nFor example, if you know the 1st-level spell Shield and have a 1st-level and a 2nd-level spell slot available, you can cast shield using either slot.\nElemental Powers (Spells) Known of 1st-Level and\nHigher. You know three 1st-level Tinkerer Spells of your choice, two of which you must choose from the Abjuration and Evocation spells on the Tinkerer spell list.\nThe Spells Known column of the Elemental Weapon Spellcasting table shows when you learn more Tinkerer spells of 1st level or higher. Each of these spells must be an Abjuration or Evocation spell of your choice, and must be of a level for which you have Spell Slots. For instance, when you reach 7th level in this class, you can learn one new spell of 1st or 2nd Level.\nThe Spells you learn at 8th, 14th, and 20th level can come from any school of magic.",
+          "page": 203,
+          "sections": [
+            {
+              "name": "Elemental Weapon Powers (Spellcasting)",
+              "text": "Whenever you gain a level in this class, you can replace one of the Tinkerer spells you know with another spell of your choice from the Tinkerer spell list. The new spell must be of a level for which you have Spell Slots, and it must be an Abjuration or Evocation spell, unless you’re replacing the spell you gained at 3rd, 8th, 14th, or 20th level from any school of magic.\nSpecial Power (Spellcasting) Ability. Intelligence is your Spellcasting Ability for your Tinkerer spells , since you learn your spells through study and memorization. You use your Intelligence whenever a spell refers to your spellcasting ability. In addition, you use your Intelligence modifier when setting the saving throw DC for a Tinkerer spell you cast and when Making an Attack roll with one.\nSpecial Power save DC = 8 + your Proficiency Bonus + your Intelligence modifier\nSpecial Power Attack modifier = your Proficiency Bonus + your Intelligence modifier",
+              "page": 204,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Natural Abilities",
+                      "Elemental Powers",
+                      "Spell Slots per",
+                      "Spell Slots per Spell",
+                      "Spell Slots per",
+                      "Spell Slots per"
+                    ],
+                    [
+                      "Level",
+                      "(Cantrips) Known",
+                      "(Spells) Known",
+                      "Spell Level : 1st",
+                      "Level : 2nd",
+                      "Spell Level : 3rd",
+                      "Spell Level : 4th"
+                    ],
+                    [
+                      "3rd",
+                      "2",
+                      "3",
+                      "2",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "4th",
+                      "2",
+                      "4",
+                      "3",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "5th",
+                      "2",
+                      "4",
+                      "3",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "6th",
+                      "2",
+                      "4",
+                      "3",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "7th",
+                      "2",
+                      "5",
+                      "4",
+                      "2",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "8th",
+                      "2",
+                      "6",
+                      "4",
+                      "2",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "9th",
+                      "2",
+                      "6",
+                      "4",
+                      "2",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "10th",
+                      "3",
+                      "7",
+                      "4",
+                      "3",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "11th",
+                      "3",
+                      "8",
+                      "4",
+                      "3",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "12th",
+                      "3",
+                      "8",
+                      "4",
+                      "3",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "13th",
+                      "3",
+                      "9",
+                      "4",
+                      "3",
+                      "2",
+                      "-"
+                    ],
+                    [
+                      "14th",
+                      "3",
+                      "10",
+                      "4",
+                      "3",
+                      "2",
+                      "-"
+                    ],
+                    [
+                      "15th",
+                      "3",
+                      "10",
+                      "4",
+                      "3",
+                      "2",
+                      "-"
+                    ],
+                    [
+                      "16th",
+                      "3",
+                      "11",
+                      "4",
+                      "3",
+                      "3",
+                      "-"
+                    ],
+                    [
+                      "17th",
+                      "3",
+                      "11",
+                      "4",
+                      "3",
+                      "3",
+                      "-"
+                    ],
+                    [
+                      "18th",
+                      "3",
+                      "11",
+                      "4",
+                      "3",
+                      "3",
+                      "-"
+                    ],
+                    [
+                      "19th",
+                      "3",
+                      "12",
+                      "4",
+                      "3",
+                      "3",
+                      "1"
+                    ],
+                    [
+                      "20th",
+                      "3",
+                      "13",
+                      "4",
+                      "3",
+                      "3",
+                      "1"
+                    ]
+                  ],
+                  "page": 204
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Elemental Style",
+          "text": "At 3rd level, you learn a ritual that creates a spiritual bond between yourself and one weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. The weapon must be within your reach throughout the ritual, at the conclusion of which you touch the weapon and forge the bond.\nOnce you have bonded a weapon to yourself, you can use any bonded weapon as a Spellcasting Focus for your Tinkerer Spells. Any spells you cast will emanate from your weapon as if channeling your spirit through your weapon and releasing the spell from it. For example, if you cast Fire Bolt, imagine a fire slash or wave being released from your weapon toward your target.\nAdditionally, when you attack and hit with a bonded weapon, you can expend one spell slot to deal fire, cold, or lightning damage to the target, in addition to the weapon’s damage. The extra damage is 2d6 for a 1st- level spell slot, plus 1d6 for each Spell Level higher than 1st, to a maximum of 5d6.\nYou can have up to three bonded Weapons. If you attempt to bond with a fourth weapon, you must break the bond with one of the other three.",
+          "page": 204
+        },
+        {
+          "level": 7,
+          "name": "Dance of Elements",
+          "text": "Beginning at 7th level, when you use your action to cast a cantrip, you can make one weapon Attack as a Bonus Action.",
+          "page": 204
+        },
+        {
+          "level": 10,
+          "name": "Water Siphon",
+          "text": "At 10th level, you learn how to make your weapon strikes undercut a creature’s Resistance to your Spells. When you hit a creature with a weapon Attack, that creature has disadvantage on the next saving throw it makes against a spell you cast before the end of your next turn.",
+          "page": 204
+        },
+        {
+          "level": 15,
+          "name": "Lightning Dash",
+          "text": "At 15th level, you gain the ability to teleport up to 30 feet to an unoccupied space you can see when you use your Action Surge. You can teleport before or after the additional action.",
+          "page": 204
+        },
+        {
+          "level": 18,
+          "name": "Improved Dance of Elements",
+          "text": "Starting at 18th level, when you use your action to Cast a Spell, you can make one additional weapon Attack as a Bonus Action.",
+          "page": 204
+        }
+      ]
+    },
+    {
+      "id": "subclass.warrior.kuja_huntress",
+      "kind": "subclass",
+      "parent": "class.warrior",
+      "name": "Kuja Huntress",
+      "group": "Warrior Types",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 205
+      },
+      "flavor": "Subclass Prerequisite: Kuja Background Kuja Huntresses are fierce warriors with unmatched agility and precision, often wielding bow and blade in tandem. Trained in the arts of the hunt, they combine their physical prowess with a deep connection to the natural world, using their instincts and keen senses to strike down their enemies with deadly accuracy.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Snake Companion",
+          "text": "Beginning when you choose this style at 3rd level, you gain expertise in the Acrobatics and Survival skills.\nAdditionally, you gain a Snake Weapon companion from Chapter 8: Dungeon Master Cabin in the Land Creature section. While you are within 5 ft. of your companion the Snake Weapon cannot be targeted by attacks or damaged in any way.\nIf your Snake Weapon companion dies, you can hatch a new one after a long rest.",
+          "page": 205
+        },
+        {
+          "level": 3,
+          "name": "Haki-Infused Serpent",
+          "text": "Also at 3rd level, with a steady breath and unwavering focus, you channel your inner energy, infusing your Snake Weapon companion’s weapon form feature with the power of your spirit. When you hit a creature with the weapon form’s bow or quarterstaff weapon attacks, you can channel your inner power to enhance the strike. Once per turn, you can deal extra force damage equal to your proficiency bonus.\nAdditionally, your ranged weapon attacks ignore half cover.",
+          "page": 205
+        },
+        {
+          "level": 7,
+          "name": "Serpent’s Reflexes",
+          "text": "At 7th level, your combat instincts become as sharp and fluid as a hunting serpent. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail.",
+          "page": 205
+        },
+        {
+          "level": 10,
+          "name": "Empowered Strikes",
+          "text": "At 10th level, your attacks are empowered to strike through the toughest defenses. Your Snake Weapon’s weapon form weapon attacks now ignore resistance to non-magical attacks and bow attacks can bypass three- quarters cover.\nAdditionally, when you score a critical hit with a weapon form’s weapon attack, you can add your warrior level / 2 to the damage dealt.",
+          "page": 205
+        },
+        {
+          "level": 15,
+          "name": "Snake’s Dance",
+          "text": "Starting at 15th level, your movements mirror the fluid grace of a serpent weaving through the jungle. As a reaction when you are targeted by an attack, you can move up to 10 feet without provoking opportunity attacks. If this movement takes you out of the attack’s range, the attack misses automatically.\nYou can use this feature a number of times equal to your proficiency bonus per long rest.\nAdditionally, your Snake Weapon companion grows into an Empress Snake Weapon.\nActions",
+          "page": 205,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Bite. Melee Weapon Attack +6 to hit, reach 5 ft., one target. Hit"
+                ],
+                [
+                  "12 (2d8 + 4) piercing damage plus 8 (2d8) poison damage. The"
+                ],
+                [
+                  "target must make a DC 11 Constitution saving throw, taking"
+                ],
+                [
+                  "the poison damage on a failed save, or half as much damage"
+                ],
+                [
+                  "on a successful one."
+                ]
+              ],
+              "page": 205
+            }
+          ],
+          "sections": [
+            {
+              "name": "Empress Snake Weapon",
+              "text": "",
+              "page": 205,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Small beast, unaligned"
+                    ],
+                    [
+                      "Armor Class 16"
+                    ],
+                    [
+                      "Hit Points 75(15d6 + 30)"
+                    ],
+                    [
+                      "Speed 40 ft., swim 30 ft."
+                    ],
+                    [
+                      "STR",
+                      "DEX",
+                      "CON",
+                      "INT",
+                      "WIS",
+                      "CHA"
+                    ],
+                    [
+                      "19 (+4)",
+                      "18 (+4)",
+                      "12 (+1)",
+                      "1 (-5)",
+                      "10 (+0)",
+                      "3 (-4)"
+                    ],
+                    [
+                      "Senses blindsight 10 ft., passive Perception 10"
+                    ],
+                    [
+                      "Challenge 4 (25 XP)",
+                      "Proficiency Bonus +2"
+                    ],
+                    [
+                      "Empress Weapon Form. Being trained to be used as a bow, a"
+                    ],
+                    [
+                      "snake weapon can use its action to transform into a functional"
+                    ],
+                    [
+                      "+3 bow or +3 quarterstaff that can be used by any creature that"
+                    ],
+                    [
+                      "has proficiency with using the chosen weapon. It reverts back"
+                    ],
+                    [
+                      "to its regular snake form when it falls to 0 hit points or spends"
+                    ],
+                    [
+                      "a bonus action to do so."
+                    ]
+                  ],
+                  "page": 205
+                }
+              ]
+            }
+          ],
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 18,
+          "name": "Unstoppable Precision",
+          "text": "At 18th level, your strikes are the epitome of Kuja mastery, honed to perfection through years of relentless training. Your Snake Weapon’s weapon attacks critically hit on a roll of 18-20.\nAdditionally, when you critically hit, the target must make a Constitution saving throw equal to 8 + your proficiency bonus + your Dexterity or Strength modifier or be dazed until the beginning of your next turn.\nDazed creature may only make a single action, bonus action, or movement action on their turn.",
+          "page": 205
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog } from '../components/Dialog';
 import { RollsProvider } from '../lib/rolls';
+import { VERSION_NAMES } from '../lib/rules';
 import type { CharacterStore } from '../lib/store';
 import { useCharacter } from '../lib/useCharacter';
 import { AppearanceDialog } from './AppearanceDialog';
@@ -58,7 +59,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
         <div>
           <h1>{sheet.name}</h1>
           <p className="soft">
-            {sheet.summary} <span className="chip">{doc.rulesVersion === 'dndf-10' ? 'Rules v10' : 'Rules v8.8'}</span>
+            {sheet.summary} <span className="chip">{VERSION_NAMES[doc.rulesVersion]}</span>
           </p>
         </div>
         <div className="row wrap">

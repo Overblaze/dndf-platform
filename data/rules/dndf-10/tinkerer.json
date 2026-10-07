@@ -627,6 +627,7 @@
       "name": "Holo Science",
       "group": "Tinkerer Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -693,7 +694,13 @@
             "uses"
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 194
+        }
+      }
     },
     {
       "id": "subclass.tinkerer.meteorology",
@@ -702,6 +709,7 @@
       "name": "Meteorology",
       "group": "Tinkerer Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -741,7 +749,13 @@
           "text": "Starting at 14th level, when you are hit by a melee Attack, you can use your Reaction to deal thunder damage to the attacker. The damage equals your Tinkerer level. The attacker must also make a Strength saving throw against your Tinkerer creation (spell) save DC. On a failed save, the attacker is pushed in a straight line up to 20 feet away from you.",
           "page": 186
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 195
+        }
+      }
     },
     {
       "id": "subclass.tinkerer.military_science",
@@ -750,6 +764,7 @@
       "name": "Military Science",
       "group": "Tinkerer Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -788,7 +803,13 @@
           "text": "At 14th level, your Deflector Shield becomes infused with deadly energy. When you use your Deflector Shield feature, you can cause power to arc from you. Up to three creatures of your choice that you can see within 60 feet of you each take force damage equal to half your Tinkerer level.",
           "page": 186
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 195
+        }
+      }
     },
     {
       "id": "subclass.tinkerer.plague_engineer",
@@ -797,6 +818,7 @@
       "name": "Plague Engineer",
       "group": "Tinkerer Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -880,7 +902,13 @@
           "text": "At 14th level, you become a true master of plaguecraft. As an action, choose a diseased creature within 60 feet. All creatures within 10 feet of that target must make a Constitution saving throw or suffer the same disease for 1 minute. They can repeat the saving throw at the end of each of their turns, ending the effect on a success.",
           "page": 187
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 196
+        }
+      }
     },
     {
       "id": "subclass.tinkerer.robotics",
@@ -889,6 +917,7 @@
       "name": "Robotics",
       "group": "Tinkerer Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -989,7 +1018,13 @@
           "text": "Starting at 14th level, any creature that you summon or create with a Conjuration creation power (spell) has 30 Temporary Hit Points.",
           "page": 188
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 197
+        }
+      }
     },
     {
       "id": "subclass.tinkerer.steamtech",
@@ -998,6 +1033,7 @@
       "name": "Steamtech",
       "group": "Tinkerer Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1155,7 +1191,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 197
+        }
+      }
     },
     {
       "id": "subclass.tinkerer.gardener",
@@ -1333,5 +1375,5 @@
       ]
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

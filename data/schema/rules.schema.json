@@ -391,6 +391,10 @@
             ]
           },
           "uniqueItems": true
+        },
+        "prerequisite": {
+          "type": "string",
+          "minLength": 1
         }
       }
     },
@@ -697,6 +701,16 @@
         },
         "action": {
           "$ref": "#/$defs/action"
+        },
+        "sources": {
+          "description": "Where the entry is in other rules versions' books, when it is shared between versions. `source` is the citation for the version whose folder the file is in.",
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/version"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/source"
+          }
         }
       },
       "allOf": [

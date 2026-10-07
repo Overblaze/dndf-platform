@@ -1,12 +1,10 @@
 // Chapters 1 and 2 of the v10 handbook: general rules, crew roles, backgrounds, feats and races,
 // and what the sheet does with them.
-import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { deriveSheet, indexRules, newCharacter, spendResource, type RuleEntry, type RulesFile, type SectionDef, type TraitDef } from '../src';
+import { deriveSheet, newCharacter, spendResource, type RuleEntry, type SectionDef, type TraitDef } from '../src';
+import { loadRules } from './load';
 
-const dir = join(import.meta.dirname, '..', '..', '..', 'data', 'rules', 'dndf-10');
-const rules = indexRules(readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as RulesFile));
+const rules = loadRules('dndf-10');
 const all = [...rules.values()];
 const ofKind = (kind: string) => all.filter((e) => e.kind === kind);
 const scores = { str: 18, dex: 14, con: 16, int: 8, wis: 12, cha: 10 };

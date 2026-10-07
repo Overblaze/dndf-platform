@@ -511,6 +511,7 @@
       "name": "Aerostatics",
       "group": "Chemist Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -556,7 +557,13 @@
           "text": "At 14th level, you have perfected the art of controlling airborne concoctions. The radius of your clouds increases to 20 feet, and they now last for 10 minutes instead of 1 minute. You can also choose to make one cloud invisible.",
           "page": 96
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 96
+        }
+      }
     },
     {
       "id": "subclass.chemist.botany",
@@ -565,6 +572,7 @@
       "name": "Botany",
       "group": "Chemist Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -880,7 +888,13 @@
           "text": "When you reach 14th level, you develop plant-based fragrances that make wild creatures hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your chemist invention save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.\nThe creature is aware of this effect before it makes its attack against you.",
           "page": 98
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 97
+        }
+      }
     },
     {
       "id": "subclass.chemist.cryochemist",
@@ -889,6 +903,7 @@
       "name": "Cryochemist",
       "group": "Chemist Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -941,7 +956,13 @@
             "uses"
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 98
+        }
+      }
     },
     {
       "id": "subclass.chemist.genetics",
@@ -950,6 +971,7 @@
       "name": "Genetics",
       "group": "Chemist Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -988,7 +1010,13 @@
           "text": "By 14th level, you have learned to enhance your abomination form further. You gain 1 additional morph splice feature when you transform.\nAdditionally, you can pick from any other subclasses splices when choosing your morph splices.",
           "page": 99
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 99
+        }
+      }
     },
     {
       "id": "subclass.chemist.medicine",
@@ -1117,6 +1145,7 @@
       "name": "Pyrochemist",
       "group": "Chemist Studies",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1162,13 +1191,20 @@
             "uses"
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 100
+        }
+      }
     },
     {
       "id": "optionGroup.chemist_abomination_splices",
       "kind": "optionGroup",
       "name": "Abomination Splices",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1460,8 +1496,14 @@
           "text": "The abomination slams the ground beneath it, turning stone and soil into a molten explosion. As an action, each creature within 5 ft. of the abomination other than itself must make a Dexterity saving throw equal to your Invention save DC, taking (2d6) fire damage on a failed save, or half as much damage on a successful one.",
           "page": 104
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 101
+        }
+      }
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

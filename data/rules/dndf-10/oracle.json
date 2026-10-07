@@ -6,6 +6,7 @@
       "kind": "class",
       "name": "Oracle",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -497,7 +498,13 @@
             "uses"
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 162
+        }
+      }
     },
     {
       "id": "subclass.oracle.bones_of_sight",
@@ -601,6 +608,7 @@
       "name": "Eyes of the Future",
       "group": "Divination Techniques",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -651,7 +659,13 @@
           "text": "At 17th level, when you use any class or subclass feature that require a reaction to use, you may instead target three allies or enemies instead of one, depending on the feature. Using the features that way causes the feature to last until the end of the targets turn.",
           "page": 161
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 165
+        }
+      }
     },
     {
       "id": "subclass.oracle.gambler_of_fate",
@@ -660,6 +674,7 @@
       "name": "Gambler of Fate",
       "group": "Divination Techniques",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -819,7 +834,13 @@
           "text": "At 17th level, your control over fate deepens. Whenever you roll a die for one of your Gambler of Fate features, roll three dice instead of one and choose which result to use.",
           "page": 161
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 166
+        }
+      }
     },
     {
       "id": "subclass.oracle.occult_sigilist",
@@ -828,6 +849,7 @@
       "name": "Occult Sigilist",
       "group": "Divination Techniques",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -877,7 +899,13 @@
           "text": "At 17th level, you have learned to break the boundary between this world and the unknown, allowing you to traverse between your sigils. As an action, you expend half of your maximum sigil dice to draw a colossal, permanent pentagram-shaped sigil into the ground underneath you. You may only have 3 sigils of horizons at a time. If you draw another sigil of horizons past your 3 sigil limit, the oldest sigil vanishes.\nWhen you are standing on your sigil of horizons, as an action, you may teleport yourself and an amount of willing creatures equal to your proficiency bonus to another sigil of horizon you have created.\nOnce you use this feature to teleport, you must take a long rest to use it again.",
           "page": 162
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 166
+        }
+      }
     },
     {
       "id": "subclass.oracle.soul_of_the_present",
@@ -886,6 +914,7 @@
       "name": "Soul of the Present",
       "group": "Divination Techniques",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -931,7 +960,13 @@
           "text": "At 17th level, your protective powers reach their peak. When you grant temporary hit points to an ally, if the amount of temporary hit points are equal to or above the allies current hit points, the amount of tempory hit points you provide is doubled.",
           "page": 163
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 167
+        }
+      }
     },
     {
       "id": "subclass.oracle.voices_of_the_past",
@@ -940,6 +975,7 @@
       "name": "Voices of the Past",
       "group": "Divination Techniques",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -992,8 +1028,14 @@
           "text": "At 17th level, your mastery of the ancient spirits allows you to unleash their full power. When you use your Ancestral Echoes feature, you can choose to grant the Ancestral Echo to up to three allies within 30 feet of you. Additionally, the bonus provided by Ancestral Echoes increases to +2 for attack rolls, damage rolls, and saving throws, and the effect duration extends to 2 minutes.\nFurthermore, allies effected with an Ancestral Echo can add your Wisdom modifier to the damage of their first successful attack each turn.",
           "page": 163
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 168
+        }
+      }
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

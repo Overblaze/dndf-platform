@@ -1,0 +1,130 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "rule.crew_roles",
+      "kind": "rule",
+      "name": "Crew Roles",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 13
+      },
+      "text": "Your crew role is an additional feature that can be used alongside your character’s background and class. It essentially gives you the ability to specialize in a field or duty and succeed where others may fail. While it may not provide a wide variety of bonuses and stats, it will be crucial to developing a stable crew and allocating jobs on a functioning ship. Your role should be something you enjoy doing when playing as your character. For example, if you are a cyborg tinkerer, you may take pride in being the crew’s shipwright. This may also tie into your character’s ideals and background.\nDeciding your role can depend on your class and background, but can ultimately be anything that would fit your character’s interests. Work with other players to decide what would make for a balanced team, and try to give everyone a unique position and function. Without proper coordination and cohesion, as well as leadership, a ship and its crew could easily fall apart. While your role may not provide any proficiencies, equipment, or languages, it will provide features that will make you a very useful and unique addition to your crew.\nCrew role can be decided at any point early in the campaign or during character introductions. But it should make sense and align with everyone character’s strengths and abilities.",
+      "sections": [
+        {
+          "name": "Allocating or Swapping Roles",
+          "text": "While a crew role can be decided at any point when designing or playing your character early on, it may prove difficult to suddenly change roles on a whim. While you can officially swap to a different role and perform its basic functions, you cannot have the pirate prestige abilities of a new role until you actively work and study that role for at least [3d6 x 10] days to adjust to it. Until then, can only perform basic tasks for that role and use the regular features.",
+          "page": 13
+        }
+      ]
+    },
+    {
+      "id": "crewRole.navigator",
+      "kind": "crewRole",
+      "name": "Navigator",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 14
+      },
+      "text": "The role of a navigator involves charting, mapping, and understanding the weather and conditions that they may encounter on their crew’s journey. The navigator is crucial to the ship effectively progressing to the next island or continent throughout the adventure. Without a decent navigator on board, the crew may end up lost for several days or weeks in dangerous waters.\nBeing a navigator means you must take responsibility for charting the crew’s course, making rolls to stay on course, and avoiding getting lost or stuck in storms and bad weather.",
+      "sections": [
+        {
+          "name": "Role Skill Proficiency",
+          "text": "As the navigator you have proficiency with Nature and Survival skills, Cartographer’s tools, and Navigator’s tools.",
+          "page": 14
+        },
+        {
+          "name": "Feature: Charting and Mapping",
+          "text": "A player that chooses the navigator role will actively aid in helping the crew along both in and out of character. With the DM’s assistance, you have the ability to physically map out and chart the course of the ship and nearby islands. Sometimes, you will be required to make various Wisdom or Intelligence skill checks to properly map out territories in more treacherous waters. Otherwise, this process should be effortless for your character under ordinary circumstances.\nAdditionally, you can assist in directing the ship on the right path. If the helmsman or captain is attempting to stay on course in the proper direction, you may assist them in rolling skill checks if you have properly analyzed the weather and map of the surrounding region.",
+          "page": 14
+        },
+        {
+          "name": "Pirate Prestige Ability: Storm Tracking",
+          "text": "In places like the grand line, fully understanding the weather and climate conditions is often incredibly difficult. However, that doesn’t mean it’s impossible for a talented navigator. In most situations, if you are about to run into dangerous weather or climates, the DM may warn the navigator in advance if they succeed on their skill checks. This may be done through subtle hints or simply describing what kind of weather is seen up ahead.\nIn some instances, the weather may appear so dangerous that it would cause a great deal of damage to the ship and crew if sailed through. If the navigator is unable to find a way around this, they may choose to expend 1 pirate prestige point to completely steer clear and avoid the storm or danger. It is possible that the storm may be exceptionally dangerous, so much so that 1 pirate prestige point won’t be enough to satisfy the condition and completely avoiding it. In this case, the DM may demand that you spend additional points to navigate around such a situation in the more extreme regions of the world.",
+          "page": 14
+        }
+      ],
+      "skills": [
+        "nature",
+        "survival"
+      ],
+      "auto": [
+        "skills"
+      ]
+    },
+    {
+      "id": "crewRole.musician",
+      "kind": "crewRole",
+      "name": "Musician",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 15
+      },
+      "text": "A musician is the moral support and entertainment for a crew that is faced with lowered morale or increased stress. They may often serve as a crew mascot, a charismatic uniting force for their allies, or a means of gathering support from the populace. Although this role may be used primarily by the skald class, any class can take on this role.",
+      "sections": [
+        {
+          "name": "Role Skill Proficiency",
+          "text": "As the musician you have proficiency with Performance and Persuasion skills.",
+          "page": 15
+        },
+        {
+          "name": "Feature: Musical Talent",
+          "text": "A musician can play any musical instrument they are proficient with to its full potential. If you aren’t already proficient with an instrument, you are simply able to sing or use various inanimate objects of your choice to create wonderful music. Using song and dance to inspire your crew comes naturally and should motivate the crew to reach new heights. Upon hearing your music, others will feel energized, uplifted, and united.",
+          "page": 15
+        },
+        {
+          "name": "Pirate Prestige Ability: Song of Legends",
+          "text": "Performing a captivating song or play that tells of their crew’s strength and legendary deeds, the musician inspires awe and admiration in locals. Using the same rules as the “Gain Reputations” Pirate Prestige ability, the musician may instead spend 1 pirate prestige point to instead raise the crew’s reputation by 1d4 points in a location. This ability can only be used once per location. Additionally, this gives the party a +2 bonus to charisma checks when speaking to locals for up to 1 day after the performance takes place.",
+          "page": 16
+        }
+      ],
+      "skills": [
+        "performance",
+        "persuasion"
+      ],
+      "auto": [
+        "skills"
+      ]
+    },
+    {
+      "id": "crewRole.record_keeper",
+      "kind": "crewRole",
+      "name": "Record-Keeper",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 16
+      },
+      "text": "The record-keeper is responsible for keeping record of the history, journals, and events while on board the ship. The record-keeper should be fairly knowledgeable and competent when it comes to any information such as when analyzing information, pieces of island history, and artifacts.",
+      "sections": [
+        {
+          "name": "Role Skill Proficiency",
+          "text": "As the record-keeper you have expertise with History and Religion skills.",
+          "page": 16
+        },
+        {
+          "name": "Feature: Librarian of the Sea",
+          "text": "Although being a record-keeper can involve working on a variety of different tasks and having many different goals and purposes on-board, most record-keepers is proficient in any form of note-keeping and information analysis. At the beginning of each session, the record- keeper may recap the previous session for all players to refresh their memories.\nAdditionally, the record-keeper can keep note of major quests, story points, and useful information regarding the lore the DM establishes throughout the campaign. The record-keeper may also add their proficiency bonus, on top of any other proficiency bonuses, to intelligence checks when it comes to analyzing any form of writing, artifact, puzzle, or piece of history.",
+          "page": 16
+        },
+        {
+          "name": "Pirate Prestige Ability: Flash of Insight",
+          "text": "When you take the record-keeper role, you can often tap into your nearly infinite pool of knowledge and mentally archived data. By spending 1 pirate prestige point, you can discover one major clue, detail, or other piece of information about a puzzle, artifact, or form of writing. Your DM might give you a major hint or advantage on a roll to discover something vital.",
+          "page": 16
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

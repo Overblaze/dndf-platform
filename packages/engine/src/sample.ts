@@ -1,10 +1,12 @@
 // Starting points: a blank character of any class, and Kaito, the sample character of docs/FORMULAS.md.
 import { freshState, type CharacterDoc } from './character';
 import { deriveSheet } from './sheet';
-import type { AbilityScores, ClassEntry, RuleEntry } from './types';
+import type { AbilityScores, ClassEntry, RuleEntry, RulesVersion } from './types';
 
 export interface NewCharacterInput {
   name: string;
+  /** Which handbook the character is built from; the rules passed in must be that version's. */
+  rulesVersion?: RulesVersion;
   /** Class entry id; defaults to the Bruiser. */
   classId?: string;
   level: number;
@@ -25,7 +27,7 @@ export interface NewCharacterInput {
   furyFeatures?: string[];
 }
 
-/** A v10 character of any class and level, at full hit points with nothing spent. */
+/** A character of any class and level, at full hit points with nothing spent. */
 export function newCharacter(input: NewCharacterInput, rules: Map<string, RuleEntry>): CharacterDoc {
   const classId = input.classId ?? 'class.bruiser';
   const cls = rules.get(classId) as ClassEntry | undefined;
@@ -35,7 +37,7 @@ export function newCharacter(input: NewCharacterInput, rules: Map<string, RuleEn
   const doc: CharacterDoc = {
     schema: 1,
     name: input.name,
-    rulesVersion: 'dndf-10',
+    rulesVersion: input.rulesVersion ?? 'dndf-10',
     race: { id: input.raceId, subraceId: input.subraceId, name: input.raceName ?? 'Human (Standard)', speed: input.speed ?? 30 },
     background: input.backgroundId ? { id: input.backgroundId } : undefined,
     crewRole: input.crewRoleId ? { id: input.crewRoleId } : undefined,

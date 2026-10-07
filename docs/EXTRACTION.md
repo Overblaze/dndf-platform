@@ -32,10 +32,20 @@ Run `python3 tools/extract/pdfdoc.py V10_D_DF_EH.pdf 85 87` to see any pages as 
 - **Feats**: a first line starting "Prerequisite:" is kept apart from the text. A prerequisite line that fills the column runs into the text and is parted at the first sentence.
 - **Races**: paragraphs led by a bold name ("Darkvision.") are traits; bullets and plain paragraphs after one belong to it. Walking speed, size and fixed ability increases are read from the wording and listed under `auto`. "X Subraces" sections become `subrace` entries.
 
+## Two handbooks (`tools/extract/extract_all.py`)
+
+`extract_all.py` is the one command that rebuilds `data/rules/`. It extracts v10, then v8.8, and compares them entry by entry:
+
+- **Identical in both** (same text, levels and tables, on the same pages or all shifted by the same number of pages): stored once, in the v10 file, with `versions: ["dndf-8.8", "dndf-10"]` and the v8.8 book and first page under `sources`. The engine cites the right book for the character's version and moves the inner pages by the same shift.
+- **Different in any way, or only in v8.8**: written to `data/rules/dndf-8.8/`. A v8.8 file holds only those entries, so some are short or absent.
+- A file's folder is always one of its entries' versions, and no id may appear twice for one version (`npm run validate` checks both).
+- **The hand-verified v10 Bruiser is never rewritten.** Its hand-entered structure (AC formula, Scrapper die, Fury, toggles, dice) is copied onto a v8.8 Bruiser feature only when both books print the same text for it. The one exception is listed in `SAME_MECHANICS` with the reason. Features that changed between versions (Black Fist, Hasshoken's Internal Vibrations) are text only in v8.8 until they are structured by hand.
+- v8.8 differences in layout: the class list has Rogue and Skald (v10: Renegade and Virtuoso), the Devilforged is a caster with a list of 87 Sea Devil's Emanations, and there is no Void Century Automaton.
+
 ## Things to know
 
 - Page numbers: Handbooks, Encyclopedias and the original PHB print the PDF page number. The DM Guide does not: cite its PDF pages and say so. Volo's: PDF page = printed + 1; its scan has OCR errors ("Armor dass", "2dl O", "ld6") — correct by hand.
 - The book disagrees with itself in places and the text is kept as printed. Example: the Tinkerer table lists Profession features at 7th and 11th level; the professions themselves say 8th and 12th.
 - Fruit entries (Encyclopedia) all have: name, "Devil Fruit, <Rarity>", Type, Fruit appearance, Description, Sea Weakness, named features, Spells (with charge costs), Awakening. Output fruits ONLY to `~/dndf/secret/`. The same goes for the handbook's Devil Fruit generation tables, fruit Spirit Surges and Chapter 9 (DM only).
-- After extracting, `npm run validate` and `npm test` must pass: the tests build a sheet for every class at every level with every subclass.
+- After extracting, `npm run validate` and `npm test` must pass: the tests build a sheet for every class at every level with every subclass, in both versions.
 - Numbers a class adds to the sheet (an unarmored AC formula, a damage die) are structured fields added by hand, as was done for the Bruiser. Add the matching rows to `docs/FORMULAS.md` with tests.

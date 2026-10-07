@@ -26,6 +26,7 @@
       "kind": "background",
       "name": "Anthropologist",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -240,7 +241,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 21
+        }
+      }
     },
     {
       "id": "background.archaeologist",
@@ -674,6 +681,7 @@
       "kind": "background",
       "name": "Bounty Hunter",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -835,13 +843,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 24
+        }
+      }
     },
     {
       "id": "background.cake_baker",
       "kind": "background",
       "name": "Cake Baker",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1003,7 +1018,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 25
+        }
+      }
     },
     {
       "id": "background.celebrity",
@@ -1178,6 +1199,7 @@
       "kind": "background",
       "name": "Entertainer",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1400,7 +1422,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 27
+        }
+      }
     },
     {
       "id": "background.fighting_chef",
@@ -1939,6 +1967,7 @@
       "kind": "background",
       "name": "Gambler",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -2106,7 +2135,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 31
+        }
+      }
     },
     {
       "id": "background.gifter",
@@ -2281,6 +2316,7 @@
       "kind": "background",
       "name": "Gladiator",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -2494,7 +2530,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 33
+        }
+      }
     },
     {
       "id": "background.hermit",
@@ -2713,6 +2755,7 @@
       "kind": "background",
       "name": "Knight",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -2943,7 +2986,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 35
+        }
+      }
     },
     {
       "id": "background.kuja",
@@ -3118,6 +3167,7 @@
       "kind": "background",
       "name": "Marine (or Ex-Marine)",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -3317,13 +3367,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 37
+        }
+      }
     },
     {
       "id": "background.mary_system",
       "kind": "background",
       "name": "Mary System",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -3490,13 +3547,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 38
+        }
+      }
     },
     {
       "id": "background.mercenary",
       "kind": "background",
       "name": "Mercenary",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -3702,13 +3766,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 39
+        }
+      }
     },
     {
       "id": "background.merchant",
       "kind": "background",
       "name": "Merchant",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -3870,13 +3941,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 40
+        }
+      }
     },
     {
       "id": "background.noble",
       "kind": "background",
       "name": "Noble",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -4043,13 +4121,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 41
+        }
+      }
     },
     {
       "id": "background.pirate",
       "kind": "background",
       "name": "Pirate",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -4211,13 +4296,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 42
+        }
+      }
     },
     {
       "id": "background.revolutionary",
       "kind": "background",
       "name": "Revolutionary",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -4384,13 +4476,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 43
+        }
+      }
     },
     {
       "id": "background.runaway_slave",
       "kind": "background",
       "name": "Runaway Slave",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -4557,13 +4656,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 44
+        }
+      }
     },
     {
       "id": "background.sage",
       "kind": "background",
       "name": "Sage",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -4777,13 +4883,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 45
+        }
+      }
     },
     {
       "id": "background.salvager",
       "kind": "background",
       "name": "Salvager",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -4945,13 +5058,20 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 46
+        }
+      }
     },
     {
       "id": "background.samurai",
       "kind": "background",
       "name": "Samurai",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -5118,7 +5238,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 47
+        }
+      }
     },
     {
       "id": "background.savage",
@@ -5293,6 +5419,7 @@
       "kind": "background",
       "name": "Sumo Wrestler",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -5454,7 +5581,13 @@
             }
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 49
+        }
+      }
     },
     {
       "id": "background.thief",

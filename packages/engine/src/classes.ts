@@ -1,11 +1,38 @@
 // Reads class entries from data/rules: table columns, resources and formulas.
 import { abilityMod, proficiencyBonus } from './core';
 import { evaluateNumber, explain, type ExprScope } from './expr';
-import { ABILITIES, type AbilityScores, type ClassEntry, type Derived, type FeatureDef, type RuleEntry, type RulesFile } from './types';
+import { ABILITIES, type AbilityScores, type ClassEntry, type Derived, type FeatureDef, type RuleEntry, type RulesFile, type RulesVersion, type Source } from './types';
 
-export function indexRules(files: RulesFile[]): Map<string, RuleEntry> {
+/** Adds `by` to every "page" inside a value (features, sections, tables), leaving the rest as it is. */
+function shiftPages<T>(value: T, by: number): T {
+  if (Array.isArray(value)) return value.map((v) => shiftPages(v, by)) as T;
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, v]) => [key, key === 'page' && typeof v === 'number' ? v + by : shiftPages(v, by)]),
+    ) as T;
+  }
+  return value;
+}
+
+/**
+ * Every rules entry by id. Give a rules version to get only that version's entries: an entry
+ * shared between versions is cited from that version's own book (`sources`), with the pages
+ * inside it moved by the same amount as its first page.
+ */
+export function indexRules(files: RulesFile[], version?: RulesVersion): Map<string, RuleEntry> {
   const byId = new Map<string, RuleEntry>();
-  for (const file of files) for (const entry of file.entries) byId.set(entry.id, entry);
+  for (const file of files) {
+    for (const entry of file.entries) {
+      if (version && !entry.versions.includes(version)) continue;
+      const other = version ? (entry.sources as Partial<Record<RulesVersion, Source>> | undefined)?.[version] : undefined;
+      if (!other) {
+        byId.set(entry.id, entry);
+        continue;
+      }
+      const { source: _source, sources: _sources, ...rest } = entry;
+      byId.set(entry.id, { ...shiftPages(rest, other.page - entry.source.page), source: other } as RuleEntry);
+    }
+  }
   return byId;
 }
 

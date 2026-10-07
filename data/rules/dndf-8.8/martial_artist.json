@@ -1,0 +1,151 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "subclass.martial_artist.black_leg_style",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "Black Leg Style",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 157
+      },
+      "flavor": "Mastering the art of combat through sheer agility and devastating kicks, practitioners of the Black Leg Style turn their legs into weapons of unrivaled power.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Black Leg Combatant",
+          "text": "Starting at 3rd level, you adopt the legendary Black Leg Style, enhancing your kicking techniques and mobility in combat. You gain the following to your unarmed strikes made with your legs:\nThe damage of your unarmed kicks increases by an additional 1d4.\nWhile not wielding a weapon or shield, you gain a bonus to your AC equal to your proficiency bonus / 2 (rounded up).\nAdditionally, When you make an unarmed kick attack on your turn, you can use a bonus action to move up to 15 feet without provoking opportunity attacks. You can use this feature a number of times equal to your proficiency bonus per short or long rest.",
+          "page": 157,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Stylish Boost",
+          "text": "Also at 3rd level, your confidence and swagger in battle invigorate you. As an action, you can perform a thematic action such as lighting a cigarette, putting your hands in your pockets, adjusting your tie, striking a confident pose, or talking about what you stand for. Immediately afterwards you gain the following:\nYour next unarmed kick if used within a minute of activating this feature automatically critically hits. Gain temporary hit points equal to your martial artist level.\nYou may not use this feature again until you complete a short or long rest.",
+          "page": 157
+        },
+        {
+          "level": 6,
+          "name": "Sky Step",
+          "text": "Starting at 6th level, as a bonus action you launch yourself into the air. Until the beginning of your next turn, you gain a flying (hovering) speed equal to your walking speed. To stay in the air, you must spend another bonus action at the beginning of your turns too keep yourself hovering, otherwise you fall as normal. You can use this ability to take off from the ground a number of times equal to your proficiency bonus per long rest.\nAdditionally, your walking speed increases by an additional 10 feet.",
+          "page": 157,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "action": "bonus",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Flaming Leg Technique",
+          "text": "Starting at 11th level, through rigorous training, your kicks generate explosive power. As a reaction, you can ignite your leg with intense heat, enhancing your strikes for 1 minute. While active you gain the following effects:\nYour unarmed kicks deal an additional 1d8 fire damage.\nYou can re-roll 1s and 2s on damage rolls for your unarmed kicks.\nEnemies hit by your unarmed kicks must succeed on a Constitution saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or lose their reaction until the start of your next turn.\nYou can use this feature once per short or long rest.",
+          "page": 157,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Windmill Kick",
+          "text": "Also at 11th level, when you use your Whirlwind Step feature, you can make 2 additional attacks.",
+          "page": 157
+        },
+        {
+          "level": 17,
+          "name": "Hell’s Fury",
+          "text": "At 17th level, as an action, you can deliver a rapid barrage of kicks to a single creature within range. you attack the creature 8 times with unarmed kick attacks. After you deliver your attacks, the creature is knocked back 20 feet and falls prone. You can use this feature once per long rest.",
+          "page": 157,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "action": "action",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.martial_artist.six_powers",
+      "kind": "subclass",
+      "parent": "class.martial_artist",
+      "name": "Six Powers",
+      "group": "Martial Arts Schools",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 160
+      },
+      "flavor": "Six Powers is a special, superhuman martial arts style utilized by many trained government assassins and agents. Those that master this style can have the strength of up to a hundred men. Though this style often requires intense training from a young age, some can learn certain parts of the six powers with enough intense training at a later age. Most users of the six powers belong to the World Government and Navy, though rarely some pirates and other factions have been shown to know it.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Finger Pistol",
+          "text": "Starting at 3rd level, your fingers become as sharp as daggers. When you make an unarmed strike, you can choose to use piercing damage for the damage type.",
+          "page": 160
+        },
+        {
+          "level": 3,
+          "name": "Tempest Kick",
+          "text": "Also at 3rd level, you can make ranged air slices with your legs or other available limbs. This special attack is a sharp compressed air slice used as a ranged spell Attack with a range of 30 feet, in place of your unarmed strike or martial artist weapon attack. You are proficient with it, and you add your Dexterity modifier to its Attack and Damage Rolls. Its damage is slashing, and its damage die is a d6. This die changes as you gain martial artist levels, as shown in the Martial Arts column of the Martial Artist table.\nYou can only replace one melee attack with this special attack per turn. When you gain the Extra Attack feature, you can replace two attacks with this special attack per turn instead. When you take the attack action, you can expend 1 ki point to be able to replace all of your melee attacks with this special attack during your turn.\nAt 6th level, you can deal force damage with Tempest Kick instead of slashing.",
+          "page": 160
+        },
+        {
+          "level": 6,
+          "name": "Iron Body and Paper Art",
+          "text": "Starting at 6th level, your muscles become stronger than steel. Your Deflect Bullets feature can now work against melee attacks that deal bludgeoning, piercing, or slashing damage.\nYou can use this feature this way a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest. While you have no uses available, you can spend 1 additional ki point to use this feature again.\nAdditionally, if you reduce the damage of a melee attack to 0 with this feature, you can completely shift your body to redirect the attack toward another enemy by spending 1 ki point as part of the same reaction. By redirecting the attack, you can force it to hit a creature of your choice, other than the attacker, within 5 feet of you.",
+          "page": 160,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Shave",
+          "text": "Starting at 11th level, you gain the ability to move or fly at extremely high speeds, appearing to teleport. You can use a bonus action to teleport up to 60 feet to an unoccupied space you can see . You then have advantage on the first melee Attack you make before the end of the turn.\nYou can use this feature a number of times equal to your proficiency bonus. After you’ve expended all these uses, you can only use Shave again by spending 1 ki point to activate it. You regain all uses of this feature after you complete a long rest.",
+          "page": 160
+        },
+        {
+          "level": 11,
+          "name": "Moon Walk",
+          "text": "Also at 11th level, when you use your Whirlwind Step, you can now kick the air with such force that you begin to propel yourself. While you do this, you have a flying speed equal to your walking speed until the end of your next turn.\nAdditionally, using the Slow Fall feature now reduces any Falling damage you take to 0.",
+          "page": 160
+        },
+        {
+          "level": 17,
+          "name": "Six King Gun",
+          "text": "At 17th level, you learn the secret seventh technique of the Six Powers. When you hit a creature with an Unarmed strike within 5 feet of you, you can spend 3 ki points to force it to make a Constitution saving throw. If it fails, it is reduced to 0 Hit Points. If it succeeds, it takes 10d10 force damage. Until the end of your next turn, you can’t take an Action on your turn, as a wave of lethargy sweeps over you.",
+          "page": 160
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

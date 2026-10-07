@@ -2,17 +2,17 @@
   "$schemaVersion": 1,
   "entries": [
     {
-      "id": "class.virtuoso",
+      "id": "class.skald",
       "kind": "class",
-      "name": "Virtuoso",
+      "name": "Skald",
       "versions": [
-        "dndf-10"
+        "dndf-8.8"
       ],
       "source": {
-        "book": "DnDF Expanded Handbook v10",
-        "page": 193
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 183
       },
-      "flavor": "The Virtuoso is a master of powerful emotions, using their music to inspire and influence the hearts of those around them. Drawing on human emotions, Virtuosos weaving together stories and melodies that aid allies or devastate foes.",
+      "flavor": "The Skald is a master of powerful emotions and ancient tales, using their voice or music to inspire and influence the hearts of those around them. Drawing on the deep well of human experience, Skalds channel their spiritual energy into magic-like effects, weaving together stories and melodies that bolster allies or devastate foes. Skalds are more than mere performers—they are spiritual warriors, guiding their companions through both battle and hardship with the strength of their voice and the resonance of their soul.",
       "quote": "WHAT KEEPS ME ALIVE IN THIS WORLD IS NEITHER BODILY ORGANS, NOR MUSCLES - ’S MY SOUL! IT --- Brook",
       "hitDie": 8,
       "savingThrows": [
@@ -41,32 +41,12 @@
       },
       "startingEquipment": [
         "(a) a pirate’s pack or (b) an entertainer’s pack",
-        "Any musical instrument, any weapon, thick shirt and a dagger"
+        "Any musical instrument (not piano)",
+        "Thick Shirt and a Dagger",
+        "Any weapon (see Harmonic Weaponry)"
       ],
       "progression": {
         "columns": {
-          "manifestChordsDie": [
-            "1d4",
-            "1d4",
-            "1d4",
-            "1d4",
-            "1d6",
-            "1d6",
-            "1d6",
-            "1d6",
-            "1d6",
-            "1d8",
-            "1d8",
-            "1d8",
-            "1d8",
-            "1d8",
-            "1d10",
-            "1d10",
-            "1d10",
-            "1d10",
-            "1d10",
-            "1d10"
-          ],
           "cantripsKnown": [
             2,
             2,
@@ -375,7 +355,7 @@
         19
       ],
       "subclass": {
-        "label": "Virtuoso School",
+        "label": "Skald School",
         "level": 3,
         "featureLevels": [
           3,
@@ -384,35 +364,35 @@
         ]
       },
       "subclassIntro": {
-        "text": "Virtuosos have many different methods of utilizing their mystical powers, primarily through the school in which teaches them. Since tales and abilities stem from their music, stories, or other performances, the type of performance can often impact what effect it has on the people around them. More strict schools might involve a heavily disciplined and militaristic way of telling tales and playing music, while more liberal and expressive schools will allow for more beautiful and inspiring music.",
-        "page": 196
+        "text": "Skalds have many different methods of utilizing their mystical powers, primarily through the school in which teaches them. Since skaldic tales and abilities stem from their music, stories, or other performances, the type of performance can often impact what effect it has on the people around them. More strict schools might involve a heavily disciplined and militaristic way of telling tales and playing music, while more liberal and expressive schools will allow for more beautiful and inspiring music.",
+        "page": 186
       },
       "features": [
         {
           "level": 1,
           "name": "Spirit Power (Spellcasting)",
-          "text": "You have learned to spiritually attune to the emotions of others around you and also project your feelings into the world to create different magic-like effects. This class will use the Virtuoso spell list in Chapter 4.",
-          "page": 194,
+          "text": "You have learned to spiritually attune to the emotions of others around you and also project your feelings into the world to create different magic-like effects. This class will use the Skald spell list in Chapter 4.",
+          "page": 184,
           "sections": [
             {
               "name": "Natural Abilities (Cantrips)",
-              "text": "You know two Cantrips of your choice from the virtuoso spell list. You learn additional virtuoso Cantrips of your choice at higher levels, as shown in the Natural Abilities (Cantrips) Known column of the Virtuoso table.",
-              "page": 194
+              "text": "You know two Cantrips of your choice from the skald spell list. You learn additional skald Cantrips of your choice at higher levels, as shown in the Natural Abilities (Cantrips) Known column of the Skald table.",
+              "page": 184
             },
             {
               "name": "Spirit Power (Spell) Slots",
-              "text": "The Virtuoso table shows how many Spirit Power (Spell) Slots you have to cast your Spirit Powers (Spells) of 1st Level and higher. To cast one of these Spirit Powers , you must expend a slot of the Spirit Power’s level or higher. You regain all expended Spirit Power Slots when you finish a long rest.\nFor example, if you know the 1st-level spirit power (spell) Cure Wounds and have a 1st-level and a 2nd-level spirit power slot available, you can cast Cure Wounds using either slot.",
-              "page": 194
+              "text": "The Skald table shows how many Spirit Power (Spell) Slots you have to cast your Spirit Powers (Spells) of 1st Level and higher. To cast one of these Spirit Powers , you must expend a slot of the Spirit Power’s level or higher. You regain all expended Spirit Power Slots when you finish a long rest.\nFor example, if you know the 1st-level spirit power (spell) Cure Wounds and have a 1st-level and a 2nd-level spirit power slot available, you can cast Cure Wounds using either slot.",
+              "page": 184
             },
             {
               "name": "Spirit Powers (Spells) Known of 1st Level and Higher",
-              "text": "You know four 1st-level Spirit Powers (Spells) of your choice from the virtuoso spell list.\nThe Spirit Powers Known column of the Virtuoso table shows when you learn more virtuoso spells of your choice. Each of these spells must be of a level for which you have Spirit Power Slots, as shown on the table. For instance, when you reach 3rd level in this class, you can learn one new spirit power of 1st or 2nd level.\nAdditionally, when you gain a level in this class, you can choose one of the virtuoso spirit powers you know and replace it with another spirit power from the virtuoso spirit power list, which also must be of a level for which you have Spirit Power Slots.",
-              "page": 194
+              "text": "You know four 1st-level Spirit Powers (Spells) of your choice from the skald spell list.\nThe Spirit Powers Known column of the Skald table shows when you learn more skald spells of your choice. Each of these spells must be of a level for which you have Spirit Power Slots, as shown on the table. For instance, when you reach 3rd level in this class, you can learn one new spirit power of 1st or 2nd level.\nAdditionally, when you gain a level in this class, you can choose one of the skald spirit powers you know and replace it with another spirit power from the skald spirit power list, which also must be of a level for which you have Spirit Power Slots.",
+              "page": 184
             },
             {
               "name": "Spirit (Spellcasting) Ability",
-              "text": "Charisma is your Spirit (Spellcasting) ability for your virtuoso Spirit Powers. Your power comes from the heart and soul you pour into the Performance of your music or oration. You use your Charisma whenever a spirit power (spell) refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for virtuoso spirit power you cast and when making an Attack roll with one.\nSpirit save DC = 8 + your Proficiency Bonus + your Charisma modifier\nSpirit Attack modifier = your Proficiency Bonus + your Charisma modifier",
-              "page": 194,
+              "text": "Charisma is your Spirit (Spellcasting) ability for your skald Spirit Powers. Your power comes from the heart and soul you pour into the Performance of your music or oration. You use your Charisma whenever a spirit power (spell) refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for skald spirit power you cast and when making an Attack roll with one.\nSpirit save DC = 8 + your Proficiency Bonus + your Charisma modifier\nSpirit Attack modifier = your Proficiency Bonus + your Charisma modifier",
+              "page": 184,
               "tables": [
                 {
                   "rows": [
@@ -448,19 +428,19 @@
                       "points."
                     ]
                   ],
-                  "page": 194
+                  "page": 184
                 }
               ]
             },
             {
               "name": "Ritual Casting",
-              "text": "You can cast any virtuoso spirit power (spell) you know as a ritual if that spell has the ritual tag.",
-              "page": 194
+              "text": "You can cast any skald spirit power (spell) you know as a ritual if that spell has the ritual tag.",
+              "page": 184
             },
             {
               "name": "Spirit (Spellcasting) Focus",
-              "text": "You can use a musical instrument (see chapter 5, “Equipment”) as a spirit power (Spellcasting) focus for your virtuoso spirit powers.",
-              "page": 194
+              "text": "You can use a musical instrument (see chapter 5, “Equipment”) as a spirit power (Spellcasting) focus for your skald spirit powers.",
+              "page": 184
             }
           ]
         },
@@ -468,12 +448,12 @@
           "level": 1,
           "name": "Manifest Chords",
           "text": "Starting at 1st level, your music resonates with the rhythm of battle, allowing you to collect and expend floating magical chords that empower your allies. These chords (Melody, Rhythm, and Harmony) manifest from your actions and carry different effects based on how they were created.\nYou can hold up to three floating chords at a time. You manifest one chord whenever you perform an non- chord related action that qualifies under the table below in the chord manifestation column. If an action qualifies for multiple chords, you choose which one to manifest. If you already have three chords when you gain a new one, the oldest chord is replaced by the new one.",
-          "page": 194,
+          "page": 184,
           "sections": [
             {
               "name": "Performing Chords",
               "text": "As a bonus action, you can expend 1 to 3 of your held chords and choose one creature other than yourself within 60 feet who can hear you. That creature immediately gains the effect of each expended chord as seen in the table below, plus a bonus effect for how many additional chords above 1 you expend:\nExpending Two Chords. The target also gains a +15 bonus to movement speed until the end of their next turn.\nExpending Three Chords. The target also gains advantage on their next attack roll, ability check, or saving throw made within 1 minute.\nThe effect of 2 expended chords does not apply when expending 3 chords.\nYour Manifest Chords die changes when you reach certain levels in this class. The die becomes a d6 at 5th Level, a d8 at 10th level, and a d10 at 15th level.",
-              "page": 194,
+              "page": 184,
               "tables": [
                 {
                   "rows": [
@@ -493,13 +473,13 @@
                       "weapon or spell attack made within 1 minute."
                     ],
                     [
-                      "The creature gains temporary hit points equal to 1d4 + your"
+                      "The creature gains temporary hit points equal to 1d6 + your"
                     ],
                     [
                       "Charisma modifier for 1 hour."
                     ]
                   ],
-                  "page": 194
+                  "page": 184
                 }
               ]
             }
@@ -509,57 +489,57 @@
           "level": 1,
           "name": "Harmonic Weaponry",
           "text": "Your weapon is more than a tool of battle—it is an extension of your spirit, a vessel for your music, and a conduit for your power. Choose any weapon. You become proficient with that weapon if you aren’t already, and it becomes your Instrument of War. Work with your DM to describe how the weapon functions as both an instrument and a weapon (such as a lute-blade, drum-gun, or violin-staff).\nWhile wielding your Harmonic Weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for attack and damage rolls made with your weapon.\nYou can replace your current harmonic weapon with a new one using a weapon you currently have on your person during a long rest. The old harmonic weapon is disassembled back to its original weapon. You may only have one harmonic weapon at any given time.",
-          "page": 195
+          "page": 185
         },
         {
           "level": 2,
           "name": "Jack of All Trades",
           "text": "Starting at 2nd Level, you can add half your Proficiency Bonus, rounded down, to any ability check you make that doesn’t already include your Proficiency Bonus.",
-          "page": 195
+          "page": 185
         },
         {
           "level": 2,
           "name": "Song of the Sea",
           "text": "Beginning at 2nd Level, you can use soothing music or oration to help Revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your Performance regain Hit Points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 Hit Points.\nThe extra Hit Points increase when you reach certain levels in this class: to 1d8 at 9th level, to 1d10 at 13th level, and to 1d12 at 17th level.",
-          "page": 195
+          "page": 185
         },
         {
           "level": 3,
-          "name": "Virtuoso School",
-          "text": "At 3rd level, you delve into the advanced Techniques of a Virtuoso School of your choice: Choose between School of Battlehymn, School of Hypnotism, School of Mockery, School of Style, School of the Underworld, or School of Wordsmithing, all detailed at the end of the class description. Your choice grants you features at 3rd level and again at 6th and 14th level.",
-          "page": 195,
+          "name": "Skald School",
+          "text": "At 3rd level, you delve into the advanced Techniques of a Skald School of your choice: Choose between School of Battlehymn, School of Hypnotism, School of Mockery, School of Style, School of the Underworld, or School of Wordsmithing, all detailed at the end of the class description. Your choice grants you features at 3rd level and again at 6th and 14th level.",
+          "page": 185,
           "grantsSubclass": true
         },
         {
           "level": 3,
           "name": "Expertise",
           "text": "At 3rd level, choose two of your skill Proficiencies. Your Proficiency Bonus is doubled for any ability check you make that uses either of the chosen Proficiencies.\nAt 10th level, you can choose another two skill Proficiencies to gain this benefit.",
-          "page": 195
+          "page": 185
         },
         {
           "level": 4,
           "name": "Ability Score Improvement",
-          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.\nAdditionally, whenever you gain a level in this class that grants the Ability Score Improvement feature, you can replace one of the skills you chose for the Expertise feature with one of your other skill proficiencies that isn’t benefiting from Expertise or replace one cantrip you learned from this class’s Spirit Power (Spellcasting) feature with another natural ability (cantrip) from the virtuoso spell list.",
-          "page": 195,
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.\nAdditionally, whenever you gain a level in this class that grants the Ability Score Improvement feature, you can replace one of the skills you chose for the Expertise feature with one of your other skill proficiencies that isn’t benefiting from Expertise or replace one cantrip you learned from this class’s Spirit Power (Spellcasting) feature with another natural ability (cantrip) from the skald spell list.",
+          "page": 185,
           "asi": true
         },
         {
           "level": 5,
           "name": "Empowering Melody",
-          "text": "Starting at 5th level, gain a +1 bonus to your harmonic weapons attack and damage rolls while you wield it. This bonus increases to +2 at 8th level and +3 at 14th level.\nWhen you cast a virtuoso spell while wielding your harmonic weapon, you add your weapon’s empowering melody bonus to your spell’s damage or healing rolls.",
-          "page": 195
+          "text": "Starting at 5th level, gain a +1 bonus to your harmonic weapons attack and damage rolls while you wield it. This bonus increases to +2 at 8th level and +3 at 14th level.\nWhen you cast a skald spell while wielding your harmonic weapon, you add your weapon’s empowering melody bonus to your spell’s damage or healing rolls.",
+          "page": 185
         },
         {
           "level": 6,
           "name": "Counterverse",
           "text": "At 6th level, you gain the ability to use musical notes or words of power to counter any mind-influencing Effects used against you and your allies. As an action, you can start a Performance that lasts until the end of your next turn. During that time, you and any friendly creatures within 30 feet of you have advantage on Saving Throws against being Frightened or Charmed. A creature must be able to hear you to gain this benefit. The Performance ends early if you are Incapacitated or silenced or if you voluntarily end it (no action required).",
-          "page": 195
+          "page": 185
         },
         {
           "level": 6,
           "name": "Perfectly Tuned",
           "text": "Also at 6th level, you learn new techniques when using your Harmonic Weapon. When you take the attack action with your harmonic weapon, you can use one special technique below:\nReverberation. When you hit a creature, all allies within 30 ft. of the creature who can hear you gains a +1 bonus to their next attack roll or saving throw made before the start of your next turn.\nHumming Strike. When you hit a creature, it takes thunder damage equal to your Charisma modifier (minimum of 1). If the creature willingly moves 5 feet or more before the start of your next turn, all creatures including itself within 5 ft. of it takes thunder damage equal to your Charisma modifier (minimum of 1).\nHarmonic Echo. When you hit a creature, choose one ally within 10 ft. of the target. That ally gains temporary hit points equal to your Charisma modifier.\nYou can use these techniques an amount of times equal to double your proficiency bonus, regaining all uses when you finish a short or long rest.",
-          "page": 195,
+          "page": 185,
           "uses": {
             "max": "prof*2",
             "recharge": "short"
@@ -571,70 +551,70 @@
         {
           "level": 10,
           "name": "Tales of Legends",
-          "text": "By 10th level, you have learned how to use some of the magical powers and techniques of strong creatures you have encountered over the course of your journey. Choose two Special Powers (Spells) from any Class (see Chapter 4: Updated Spell Lists), including virtuoso spells. A spell you choose must be of a level you can cast, as shown on the Virtuoso table, or a cantrip.\nThe chosen Spells count as Virtuoso spirit powers for you and are included in the number in the Spirit Powers Known column of the Virtuoso table.\nYou learn two additional Spells from any Class at 14th level and again at 18th level.",
-          "page": 196
+          "text": "By 10th level, you have learned how to use some of the magical powers and techniques of strong creatures you have encountered over the course of your journey. Choose two Special Powers (Spells) from any Class (see Chapter 4: Updated Spell Lists), including skald spells. A spell you choose must be of a level you can cast, as shown on the Skald table, or a cantrip.\nThe chosen Spells count as Skald spirit powers for you and are included in the number in the Spirit Powers Known column of the Skald table.\nYou learn two additional Spells from any Class at 14th level and again at 18th level.",
+          "page": 186
         },
         {
           "level": 20,
           "name": "Battle Chords",
           "text": "At 20th level, when you roll Initiative manifest 3 chords of your choice.",
-          "page": 196
+          "page": 186
         }
       ]
     },
     {
-      "id": "subclass.virtuoso.battlehymn",
+      "id": "subclass.skald.battlehymn",
       "kind": "subclass",
-      "parent": "class.virtuoso",
+      "parent": "class.skald",
       "name": "School of Battlehymn",
-      "group": "Virtuoso Schools",
+      "group": "Skald Schools",
       "versions": [
-        "dndf-10"
+        "dndf-8.8"
       ],
       "source": {
-        "book": "DnDF Expanded Handbook v10",
-        "page": 196
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 186
       },
-      "flavor": "Any Virtuoso who enters or learns from the school of battlehymn becomes a powerful warrior that uses phrases, words, and song to amplify their power in battle along with their allies. Music and verses produced from these virtuosos are often serious and triumphant in nature, giving those who hear it the will to continue fighting fiercely.",
+      "flavor": "Any Skald who enters or learns from the school of battlehymn becomes a powerful warrior that uses phrases, words, and song to amplify their power in battle along with their allies. Music and verses produced from these skalds are often serious and triumphant in nature, giving those who hear it the will to continue fighting fiercely.",
       "features": [
         {
           "level": 3,
-          "name": "Battle Proficiencies",
-          "text": "When you join the School of Battlehymn at 3rd level, you gain proficiency with Heavy Armor, Shields, and Martial Weapons. Additionally, your hit point maximum increases by an amount equal to twice your virtuoso level when you gain this feature. Whenever you gain a level in virtuoso thereafter, your hit point maximum increases by an additional 2 hit points.",
-          "page": 196
+          "name": "Bonus Proficiencies",
+          "text": "When you join the School of Battlehymn at 3rd level, you gain proficiency with Medium Armor, Shields, and Martial Weapons.",
+          "page": 186
         },
         {
           "level": 3,
-          "name": "Resonance of War",
-          "text": "Also at 3rd level, you can use your Harmonic Weapon to empower your allies in the thick of combat. When you hit a creature with a weapon attack using your Harmonic Weaponry, choose an ally within 30 ft. of you, they gain the following benefits until the beginning of your next turn. These bonuses can stack:\nWhen they hit with a weapon attack, they can add their proficiency bonus to their damage rolls.\nThey gains a +2 bonus to AC until the start of your next turn.",
-          "page": 196
+          "name": "Warrior Chords",
+          "text": "Also at 3rd level, you can use your Manifest Chords to empower your allies in the thick of combat. When you expend one or more chords to benefit an ally, no matter the chord expended they gain the following additional benefits:\nOnce before the end of their next turn, when they hit with a weapon attack, they can add an extra 1d4 damage per chord expended.\nThe affected ally gains a +1 bonus to AC per chord expended until the start of your next turn.",
+          "page": 186
         },
         {
           "level": 6,
-          "name": "Fury of the Battlehym",
-          "text": "Starting at 6th level, you can Attack twice, instead of once, whenever you take the Attack action on your turn and you may cast a cantrip you know from your virtuoso spell list.",
-          "page": 196
+          "name": "Extra Attack",
+          "text": "Starting at 6th level, you can Attack twice, instead of once, whenever you take the Attack action on Your Turn.",
+          "page": 186
         },
         {
           "level": 14,
           "name": "War Rhythm",
-          "text": "At 14th level, you have mastered the art of Spirit Power and weapon use into a single harmonious act. When you use your action to cast a virtuoso spirit power (spell), you can make one weapon Attack as a Bonus Action.",
-          "page": 196
+          "text": "At 14th level, you have mastered the art of Spirit Power and weapon use into a single harmonious act. When you use your action to cast a skald spirit power (spell), you can make one weapon Attack as a Bonus Action.",
+          "page": 186
         }
       ]
     },
     {
-      "id": "subclass.virtuoso.hypnotism",
+      "id": "subclass.skald.hypnotism",
       "kind": "subclass",
-      "parent": "class.virtuoso",
+      "parent": "class.skald",
       "name": "School of Hypnotism",
-      "group": "Virtuoso Schools",
+      "group": "Skald Schools",
       "versions": [
-        "dndf-10"
+        "dndf-8.8"
       ],
       "source": {
-        "book": "DnDF Expanded Handbook v10",
-        "page": 196
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 186
       },
       "flavor": "Hypnotists specialize in using their performances to put all that experience it into a mind-altering trance. This can be used to aid their allies or manipulate their enemies in any situation. These verses and songs are known to be tranquil and soothing, but can prove harmful to enemies nonetheless.",
       "features": [
@@ -642,13 +622,13 @@
           "level": 3,
           "name": "Pain-Numbing Chord",
           "text": "When you join the School of Hypnotism at 3rd level, you hypnotize your allies to allow them to ignore pain.\nWhen an ally is hit with a damaging attack, you can use your reaction to expend one of your floating chords (your choice). The target gains all benefits from the chord normally plus temporary hit points equal to 2d6.\nThe temporary hit points increase when you reach certain levels in this class, increasing to 3d6 at 5th level, 5d6 at 10th level, and 8d6 at 15th level.",
-          "page": 196
+          "page": 186
         },
         {
           "level": 3,
           "name": "Hypnotic Words",
           "text": "At 3rd level, you learn to infuse your words with a hypnotic rhythm that can alter and manipulate the minds of those that hear you. If you speak to a Humanoid alone for at least 1 minute, you can attempt to hypnotize them. At the end of the conversation, the target must succeed on a Wisdom saving throw against your spirit (spell) save DC or be Charmed by you or another creature of your choice. The target is Charmed in this way for 1 hour, until it is attacked or damaged, threatened in any way, or until it witnesses its allies being attacked or damaged.\nIf the target succeeds on its saving throw, the target has no hint that you tried to charm it.\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
-          "page": 196,
+          "page": 186,
           "uses": {
             "max": 1,
             "recharge": "short"
@@ -661,7 +641,7 @@
           "level": 6,
           "name": "Collar of Command",
           "text": "At 6th level, you gain the ability to better control others using hypnosis. As a bonus action, you cast Command, without expending a spirit power slot, and you gain an authoritative aura for 1 minute or until your Concentration ends (as if you were concentrating on a spell). During this time, you can cast Command as a bonus action on each of your turns, without expending a spirit power slot.\nAny creature Charmed by you automatically fails its saving throw against the Command you cast with this feature.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
-          "page": 197,
+          "page": 187,
           "uses": {
             "max": 1,
             "recharge": "long"
@@ -674,7 +654,7 @@
           "level": 14,
           "name": "Complete Hypnosis",
           "text": "At 14th level, you gain the ability to completely hypnotize others with your words and tap into a creature’s psyche.\nAs an action, you hypnotically Whisper a phrase that only one creature of your choice within 30 feet of you can hear. The target must make a Wisdom saving throw against your spell save DC. It automatically succeeds if it doesn’t share a language with you or if it can’t hear you. On a successful saving throw, your Whisper Sounds like unintelligible mumbling and has no Effect.\nOn a failed saving throw, the target is Charmed by you for the next 8 hours or until you or your allies Attack it, damage it, or force it to make a saving throw. It is hypnotized and will listen to anything you say with an open mind.\nThe Charmed creature obeys your commands as if you were a close friend. It won’t risk its life for you or fight for you, unless it was already inclined to do so. It grants you favors and gifts it would offer to a close friend.\nWhen the Effect ends, the creature has no understanding of what happened during its trance and will remember it all as a foggy dream.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
-          "page": 197,
+          "page": 187,
           "uses": {
             "max": 1,
             "recharge": "long"
@@ -686,25 +666,25 @@
       ]
     },
     {
-      "id": "subclass.virtuoso.mockery",
+      "id": "subclass.skald.mockery",
       "kind": "subclass",
-      "parent": "class.virtuoso",
+      "parent": "class.skald",
       "name": "School of Mockery",
-      "group": "Virtuoso Schools",
+      "group": "Skald Schools",
       "versions": [
-        "dndf-10"
+        "dndf-8.8"
       ],
       "source": {
-        "book": "DnDF Expanded Handbook v10",
-        "page": 197
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 187
       },
-      "flavor": "Virtuosos of the School of Mockery wield words like daggers, cutting deep into the pride and focus of their foes. For them, the battlefield is not only one of swords and spells but of biting wit and cruel humor.",
+      "flavor": "Skalds of the School of Mockery wield words like daggers, cutting deep into the pride and focus of their foes. For them, the battlefield is not only one of swords and spells but of biting wit and cruel humor.",
       "features": [
         {
           "level": 3,
           "name": "Word of Provocation",
           "text": "When you join this School at 3rd level, you gain the ability to use your sharp tongue to provoke enemies into reckless action. As a bonus action, choose one creature within 30 feet that can hear you. The target must succeed on a Wisdom saving throw against your Spirit save DC or suffer disadvantage on its next attack roll or ability check before the start of your next turn.\nYou can use this feature a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a long rest.",
-          "page": 197,
+          "page": 187,
           "uses": {
             "max": "max(1, mod.cha)",
             "recharge": "long"
@@ -717,13 +697,13 @@
           "level": 3,
           "name": "Verbal Sabotage",
           "text": "At 3rd level, your biting remarks can disrupt your enemies’ focus at critical moments. When a creature within 60 feet of you that can hear you makes an attack roll, ability check, or damage roll, you can use your reaction to expend a floating chord (your choice) and force the creature to roll a Charisma saving throw against your Spirit save DC. On a failed save, subtract 1d4 from the triggering roll.",
-          "page": 197
+          "page": 187
         },
         {
           "level": 6,
           "name": "Razor Tongue",
           "text": "At 6th level, your words cut deeper, gnawing at the confidence of your enemies. When you hit a creature with a weapon attack, you can unleash a psychic verbal assault on their ego. The target must succeed on a Wisdom saving throw against your Spirit save DC or take psychic damage equal to your Charisma modifier + your Manifest Chords die and suffer disadvantage on attack rolls and ability checks until the start of your next turn. On a successful save, the target takes half damage and suffers no additional effects.\nYou can use this feature a number of times equal to your proficiency bonus per long rest.",
-          "page": 197,
+          "page": 187,
           "uses": {
             "max": "prof",
             "recharge": "long"
@@ -735,8 +715,8 @@
         {
           "level": 14,
           "name": "Taunting Encore",
-          "text": "At 14th level, your words become unbearable, turning every insult into a debilitating distraction. When you use your Word of Provocation feature, you can amplify its effects for 1 minute. While under the effect, the target suffers the following penalties:\nDisadvantage on all saving throws against your virtuoso and subclass features.\nDisadvantage on attack rolls against creatures other than you.\nInability to take reactions.\nDisadvantage on Wisdom and Charisma ability checks and saving throws.\nThe creature can attempt a Wisdom saving throw at the end of each of its turns, ending the effect on a success. Once you use this feature, you cannot do so again until you finish a short or long rest.",
-          "page": 197,
+          "text": "At 14th level, your words become unbearable, turning every insult into a debilitating distraction. When you use your Word of Provocation feature, you can amplify its effects for 1 minute. While under the effect, the target suffers the following penalties:\nDisadvantage on all saving throws against your Skald and subclass features.\nDisadvantage on attack rolls against creatures other than you.\nInability to take reactions.\nDisadvantage on Wisdom and Charisma ability checks and saving throws.\nThe creature can attempt a Wisdom saving throw at the end of each of its turns, ending the effect on a success. Once you use this feature, you cannot do so again until you finish a short or long rest.",
+          "page": 187,
           "uses": {
             "max": 1,
             "recharge": "short"
@@ -748,43 +728,43 @@
       ]
     },
     {
-      "id": "subclass.virtuoso.style",
+      "id": "subclass.skald.style",
       "kind": "subclass",
-      "parent": "class.virtuoso",
+      "parent": "class.skald",
       "name": "School of Style",
-      "group": "Virtuoso Schools",
+      "group": "Skald Schools",
       "versions": [
-        "dndf-10"
+        "dndf-8.8"
       ],
       "source": {
-        "book": "DnDF Expanded Handbook v10",
-        "page": 198
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 188
       },
-      "flavor": "For Virtuosos of the School of Style, appearance is power, and the battlefield is a runway. Whether clad in dazzling attire or wielding sharp wit like a designer’s needle, these virtuosos prove that style isn’t just about looks—it’s a weapon in itself.",
+      "flavor": "For Skalds of the School of Style, appearance is power, and the battlefield is a runway. Whether clad in dazzling attire or wielding sharp wit like a designer’s needle, these skalds prove that style isn’t just about looks—it’s a weapon in itself.",
       "features": [
         {
           "level": 3,
           "name": "Signature Look",
           "text": "When you join this School at 3rd level, your personal style becomes as iconic as your magic, captivating everyone who sees you. Choose a signature Look that reflects your unique fashion sense: Regal, Daring, or Eccentric. The chosen look influences how your Manifest Chords feature affect allies and enemies.\nRegal. When you expend any chords on a creature, they also gain temporary hit points equal to your Charisma modifier (minimum of 1) until the end of their next turn.\nDaring. When you expend two or more chords on a creature, they roll the chord effect die twice and choose which result to use.\nEccentric. When a creature within 30 feet of you that you can see makes an attack roll, you can use your reaction to expend a chord. Subtract your Manifest Chords die from their roll.\nYou can change your Signature Look whenever you finish a long rest.",
-          "page": 198
+          "page": 188
         },
         {
           "level": 3,
           "name": "Fashion Forward",
           "text": "At 3rd level, your impeccable taste sharpens your mind and movements. You gain proficiency in Performance, Persuasion, or Sleight of Hand (your choice). If you’re already proficient in the chosen skill, you gain expertise.\nAdditionally, when you cast a spell or use a class feature that heals a creature, you can add your Charisma modifier (minimum of 1) to the hit points they gain.",
-          "page": 198
+          "page": 188
         },
         {
           "level": 6,
           "name": "Runway Stride",
           "text": "At 6th level, you move with confidence, gliding through danger without a second thought. When you take the Dash, Disengage, or Dodge action, you can choose one of the following effects to activate until the start of your next turn:\nCreatures within 5 feet of you must succeed on a Wisdom saving throw against your Spirit save DC or have disadvantage on opportunity attacks against you and your allies.\nYou can move through the space of hostile creatures, treating their space as difficult terrain.\nOne ally within 15 feet can immediately use their reaction to move up to their speed without provoking opportunity attacks.",
-          "page": 198
+          "page": 188
         },
         {
           "level": 14,
           "name": "Couture Combat",
           "text": "At 14th level, your style becomes an impenetrable defense and a striking offense. As an action, you can activate your current Signature Look, enhancing it for 1 minute:\nRegal. When you expend any chords on a creature, they gain temporary hit points equal to twice your Charisma modifier (minimum of 2) until the end of their next turn and resistance to the next instance of non-force damage they take.\nDaring. When you expend two or more chords on a creature, they gain the highest possible roll for each die.\nEccentric. When a creature within 30 feet of you that you can see makes an attack roll, you can use your reaction to expend a chord. Subtract your Manifest Chords die from their roll and they take psychic damage equal to your Charisma modifier.\nOnce you use this feature, you can’t do so again until you finish a long rest.",
-          "page": 198,
+          "page": 188,
           "uses": {
             "max": 1,
             "recharge": "long"
@@ -796,58 +776,58 @@
       ]
     },
     {
-      "id": "subclass.virtuoso.underworld",
+      "id": "subclass.skald.underworld",
       "kind": "subclass",
-      "parent": "class.virtuoso",
+      "parent": "class.skald",
       "name": "School of the Underworld",
-      "group": "Virtuoso Schools",
+      "group": "Skald Schools",
       "versions": [
-        "dndf-10"
+        "dndf-8.8"
       ],
       "source": {
-        "book": "DnDF Expanded Handbook v10",
-        "page": 198
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 188
       },
-      "flavor": "Despite its scary title, this school often teaches techniques that empowers an individual’s soul through majestic or otherworldly verses and melodies connected to the Underworld. Witnessing a performance from this type of virtuoso can be equally beautiful and haunting. It is said that reciting these verses will leave all who hear it doomed to an eternity in the underworld after death.",
+      "flavor": "Despite its scary title, this school often teaches techniques that empowers an individual’s soul through majestic or otherworldly verses and melodies connected to the Underworld. Witnessing a performance from this type of skald can be equally beautiful and haunting. It is said that reciting these verses will leave all who hear it doomed to an eternity in the underworld after death.",
       "features": [
         {
           "level": 3,
           "name": "Bonus Proficiencies",
           "text": "When you join the School of the Underworld at 3rd level, you gain proficiency with three Skills of your choice.",
-          "page": 198
+          "page": 188
         },
         {
           "level": 3,
           "name": "Haunting Chord",
           "text": "Also at 3rd level, you learn how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others. When a creature you can see within 60 feet makes an attack roll, ability check, or damage roll, you can use your reaction to expend any amount of chords and roll your Manifest Chords die. Subtract the result from the creature’s roll.\nYou can use this feature after the roll is made but before the outcome is determined. A creature is immune to this effect if it can’t hear you or is immune to being charmed.",
-          "page": 198
+          "page": 188
         },
         {
           "level": 6,
           "name": "Additional Tale of Legends",
-          "text": "At 6th level, you have heard the whispers of the underworld which tell of forbidden abilities and secrets used by ancient legends. You learn two Spells of your choice from any Class (see Chapter 4: Updated Spell Lists). A spell you choose must be of a level you can cast, as shown on the Virtuoso table, or a cantrip. The chosen spells count as virtuoso spirit powers for you but don’t count against the number of virtuoso spirit powers you know.",
-          "page": 199
+          "text": "At 6th level, you have heard the whispers of the underworld which tell of forbidden abilities and secrets used by ancient legends. You learn two Spells of your choice from any Class (see Chapter 4: Updated Spell Lists). A spell you choose must be of a level you can cast, as shown on the Skald table, or a cantrip. The chosen spells count as skald spirit powers for you but don’t count against the number of skald spirit powers you know.",
+          "page": 189
         },
         {
           "level": 14,
           "name": "Power of the Deep",
           "text": "Starting at 14th level, when you make an ability check, you can roll your Manifest Chords die and add the result to the check without expending any chords.",
-          "page": 199
+          "page": 189
         }
       ]
     },
     {
-      "id": "subclass.virtuoso.wordsmithing",
+      "id": "subclass.skald.wordsmithing",
       "kind": "subclass",
-      "parent": "class.virtuoso",
+      "parent": "class.skald",
       "name": "School of Wordsmithing",
-      "group": "Virtuoso Schools",
+      "group": "Skald Schools",
       "versions": [
-        "dndf-10"
+        "dndf-8.8"
       ],
       "source": {
-        "book": "DnDF Expanded Handbook v10",
-        "page": 199
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 189
       },
       "flavor": "You have mastered the art of speech, knowing exactly what to say and when to say it. Whether offering words of encouragement, delivering a precise command, or weaving inspiring tales.",
       "features": [
@@ -855,19 +835,19 @@
           "level": 3,
           "name": "Motivating Speech",
           "text": "When you join this School at 3rd level, when you Perform Chords on an ally, that ally can immediately move up to half their speed without provoking opportunity attacks.\nAdditionally, once per combat encounter be spending a reaction, you may change any or all of your chords into new chord types of your choice.",
-          "page": 199
+          "page": 189
         },
         {
           "level": 3,
           "name": "Perfectly Placed Words",
           "text": "At 3rd level, you know exactly what to say to tip any conversation in your favor. You gain expertise in Persuasion.\nAdditionally, when you make a Charisma (Persuasion) or Charisma (Deception) check, you can treat a d20 roll of 9 or lower as a 10.",
-          "page": 199
+          "page": 189
         },
         {
           "level": 6,
           "name": "Echoing Encouragement",
           "text": "At 6th level, your voice resonates through the fray, offering timely encouragement that turns failure into triumph. When an ally within 30 feet of you makes an attack roll, ability check, or saving throw, you can use your reaction to grant them advantage on the roll. You can use this feature a number of times equal to your Charisma modifier (minimum of 1). You regain all expended uses when you finish a long rest.\nAdditionally, when you make a Charisma skill check, you can expend one chord to gain advantage on the roll.",
-          "page": 199,
+          "page": 189,
           "uses": {
             "max": "max(1, mod.cha)",
             "recharge": "long"
@@ -880,7 +860,7 @@
           "level": 14,
           "name": "Unshakable Mandate",
           "text": "At 14th level, your words carry undeniable authority. When an ally within 60 feet would fail a saving throw, you can use your reaction to grant them an immediate reroll, forcing them to use the new result. Once you use this feature, you can’t do so again until you finish a short or long rest.\nAdditionally, when you Perform Chords, you can choose to affect two creatures instead of one. Doing so requires you to first expend one chord, then both targets receive the effects of the remaining chords as if they were targeted individually. You cannot use this feature if you only have a single chord.",
-          "page": 199,
+          "page": 189,
           "uses": {
             "max": 1,
             "recharge": "short"
@@ -892,5 +872,5 @@
       ]
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

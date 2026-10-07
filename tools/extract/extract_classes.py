@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 BOOKS = {
     "dndf-10": {"pdf": "V10_D_DF_EH.pdf", "book": "DnDF Expanded Handbook v10"},
+    "dndf-8.8": {"pdf": "V8_8_D_DF_EH.pdf", "book": "DnDF Expanded Handbook v8.8"},
 }
 
 # name: pages, the feature that grants the subclass, and what each later top-level section holds.
@@ -52,6 +53,29 @@ CLASSES = {
         "virtuoso": dict(pages=(193, 199), groups={"Virtuoso Schools": "subclass"}, strip=["School of", "School of the"],
                          columns=["manifestChordsDie", "cantripsKnown", "powersKnown", *SLOTS]),
         "warrior": dict(pages=(200, 208), groups={"Warrior Types": "subclass"}, columns=["executeDice"]),
+    },
+    "dndf-8.8": {
+        "bruiser": dict(pages=(85, 92), groups={"Brawling Styles": "subclass"}, strip=["Style"], columns=["scrapper", "fury"]),
+        "chemist": dict(pages=(93, 104), groups={"Chemist Studies": "subclass", "Abomination Splices": "options"}, columns=["cantripsKnown", *SLOTS]),
+        "conqueror": dict(pages=(105, 111), groups={"Conqueror Tactics": "subclass"}, columns=["leadershipDice", "leadershipDie"],
+                          resources=[{"id": "leadership", "name": "Leadership Dice", "max": "col.leadershipDice", "recharge": "short"}]),
+        "devilforged": dict(pages=(112, 134), groups={"Devilsmith Style": "subclass", "Sea Devil’s Emanations": "options"}, grant="Devilsmith",
+                            columns=["cantripsKnown", "powersKnown", "powerSlots", "slotLevel", "emanationsKnown"],
+                            resources=[{"id": "powerSlots", "name": "Devil Power slots", "max": "col.powerSlots", "recharge": "short"}],
+                            choices={"Sea Devil’s Emanations": {"id": "emanations", "count": "col.emanationsKnown",
+                                                                 "from": "optionGroup.devilforged_sea_devils_emanations", "relearn": "levelUp"}}),
+        "hybrid": dict(pages=(135, 146), groups={"Hybrid Lineage": "subclass"}, strip=["Lineage"],
+                       columns=["hybridPoints", "cantripsKnown", "powersKnown", "highestSpellLevel", "powerThresholdMaximum"]),
+        "marksman": dict(pages=(147, 153), groups={"Marksman Archetypes": "subclass"}, columns=["tacticsKnown", *SLOTS[:5]]),
+        "martial_artist": dict(pages=(154, 161), groups={"Martial Arts Schools": "subclass"}, columns=["martialArtsDie", "ki", "unarmoredMovement"],
+                               resources=[{"id": "ki", "name": "Ki Points", "max": "col.ki", "recharge": "short", "minLevel": 2,
+                                           "confirm": "Spent at least 30 minutes of the rest meditating"}]),
+        "oracle": dict(pages=(162, 168), groups={"Divination Techniques": "subclass"}, columns=["cantripsKnown", "powersKnown", *SLOTS]),
+        "priest": dict(pages=(169, 175), groups={"Divine Domains": "subclass"}, strip=["Domain"], columns=["cantripsKnown", *SLOTS]),
+        "rogue": dict(pages=(176, 182), groups={"Roguish Archetypes": "subclass"}, grant="Roguish Archetype", columns=["sneakAttack"]),
+        "skald": dict(pages=(183, 189), groups={"Skald Schools": "subclass"}, strip=["School of", "School of the"], columns=["cantripsKnown", "powersKnown", *SLOTS]),
+        "tinkerer": dict(pages=(190, 198), groups={"Tinkerer Studies": "subclass"}, columns=["cantripsKnown", *SLOTS]),
+        "warrior": dict(pages=(199, 207), groups={"Warrior Types": "subclass"}, columns=[]),
     },
 }
 
@@ -102,7 +126,11 @@ def parse_class_table(table: Table, who: str, names: list[str]) -> tuple[dict[st
         cells = row[1:]
         if cells and re.fullmatch(r"\+\d", cells[0].text):
             cells = cells[1:]
-        feature_cells = [c for c in cells if is_feature(c) or (c.text in ("-", "—") and abs(c.left - feature_left) <= 25)]
+        feature_cells = [c for c in cells if is_feature(c)]
+        if not feature_cells:
+            # A level with no features prints a dash in the Features column; the other dashes are values.
+            dashes = [c for c in cells if c.text in ("-", "—") and abs(c.left - feature_left) <= 12]
+            feature_cells = dashes[:1]
         features[level] = " ".join(c.text for c in feature_cells if c.text not in ("-", "—"))
         tokens: list[str] = []
         for cell in cells:
@@ -183,7 +211,21 @@ def make_feature(heading: Heading, blocks: list[Block], deeper: int) -> dict:
             target.append(block)
         else:
             own.append(block)
+    # "Prerequisite: …" on the first line is kept apart from the text (emanations, feats).
+    prerequisite = None
+    first_para = next((b for b in own if isinstance(b, Para)), None)
+    if first_para and re.match(r"prerequisites?:", first_para.text, re.I):
+        prerequisite = re.sub(r"^prerequisites?:\s*", "", first_para.text, flags=re.I)
+        rest = [b for b in own if b is not first_para]
+        run_on = re.match(r"(.*?)\s+((?:You|Your|When|While|Once|As|Through|Whenever|If|Always|Gain|Gains|Add|Increase|Choose|Cast|Use|After|Each|Any|All|This|These|At|On|In|Creatures|Enemies)\b.*)", prerequisite)
+        if run_on and not any(isinstance(b, Para) for b in rest):
+            # A prerequisite line that fills the column runs into the text: part them at the first sentence.
+            prerequisite = run_on.group(1)
+            rest = [Para(run_on.group(2), first_para.page)] + rest
+        own = rest
     feature: dict = {"name": heading.text, "text": body_text(own), "page": heading.page}
+    if prerequisite:
+        feature["prerequisite"] = prerequisite
     tables = [{"rows": table_rows(b), "page": b.page} for b in own if isinstance(b, Table)]
     sections = []
     for sub, sub_blocks in subs:
@@ -405,6 +447,8 @@ def extract_class(version: str, key: str) -> dict:
     for feature in features:
         if norm(feature["name"]) == "abilityscoreimprovement":
             feature["asi"] = True
+        if feature["name"] in config.get("choices", {}):
+            feature["choices"] = dict(config["choices"][feature["name"]])
 
     entry: dict = {
         "id": class_id,
@@ -597,12 +641,12 @@ def main() -> int:
     args = sys.argv[1:]
     if "--check" in args:
         return 1 if check_bruiser() else 0
-    version = "dndf-10"
-    wanted = [a for a in args if not a.startswith("-")] or [k for k in CLASSES[version] if k != "bruiser"]
+    version = "dndf-8.8" if "--v88" in args else "dndf-10"
+    wanted = [a for a in args if not a.startswith("-")] or [k for k in CLASSES[version] if k != "bruiser" or version != "dndf-10"]
     for key in wanted:
         data = extract_class(version, key)
         out = ROOT / "data" / "rules" / version / f"{key}.json"
-        if key == "bruiser" and "--force" not in args:
+        if key == "bruiser" and version == "dndf-10" and "--force" not in args:
             print("bruiser: hand-verified file kept (use --check to compare, --force to overwrite)")
             continue
         out.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n")
