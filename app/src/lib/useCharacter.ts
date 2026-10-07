@@ -1,6 +1,6 @@
 import { deriveSheet, type CharacterDoc, type CharacterState, type Sheet } from '@dndf/engine';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { rules } from './rules';
+import { ruleSet } from './rules';
 import type { CharacterStore } from './store';
 
 export type SaveStatus = 'saved' | 'saving' | 'error';
@@ -81,7 +81,8 @@ export function useCharacter(store: CharacterStore, id: string) {
     [store, id, flush],
   );
 
-  const sheet = useMemo(() => (doc ? deriveSheet(doc, rules) : null), [doc]);
+  // Each character is pinned to one rules version and only ever sees that handbook.
+  const sheet = useMemo(() => (doc ? deriveSheet(doc, ruleSet(doc.rulesVersion).rules) : null), [doc]);
 
   const live: LiveCharacter | null =
     doc && sheet

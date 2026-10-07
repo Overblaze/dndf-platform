@@ -1,6 +1,6 @@
-import { ABILITIES, ABILITY_NAMES, SKILLS, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, type AbilityScores, type CharacterDoc, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, SKILLS, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, type AbilityScores, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { useState } from 'react';
-import { backgrounds, choiceFeatures, classes, crewRoles, feats as allFeats, mainSubclasses, races, rules, subracesOf } from '../lib/rules';
+import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
 const BLANK_SCORES: AbilityScores = { str: 15, dex: 13, con: 14, int: 8, wis: 12, cha: 10 };
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, Math.floor(Number.isFinite(n) ? n : min)));
@@ -8,6 +8,21 @@ const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(mi
 /** Create a character of any class, or edit one. The full builder (the book's 12 steps) comes in phase 4. */
 export function CharacterForm({ initial, onSave, onCancel }: { initial: CharacterDoc | null; onSave: (doc: CharacterDoc, log: string) => void; onCancel: () => void }) {
   const first = initial?.classes[0];
+  // A character is pinned to one handbook; it is chosen when the character is made.
+  const [version, setVersion] = useState<RulesVersion>(initial?.rulesVersion ?? 'dndf-10');
+  const { rules, classes, races, backgrounds, crewRoles, feats: allFeats, mainSubclasses, subracesOf, choiceFeatures } = ruleSet(version);
+  const changeVersion = (next: RulesVersion) => {
+    // The other handbook has its own classes, subclasses and feats: start those picks again.
+    const other = ruleSet(next);
+    setVersion(next);
+    if (!other.rules.has(classId)) setClassId('class.bruiser');
+    setSubclass('');
+    setChoices({});
+    setFeats(feats.filter((id) => other.rules.has(id)));
+    if (!other.rules.has(raceId)) pickRace('', '');
+    else if (!other.rules.has(subraceId)) setSubraceId('');
+    if (!other.rules.has(backgroundId)) setBackgroundId('');
+  };
   const [name, setName] = useState(initial?.name ?? '');
   const [raceId, setRaceId] = useState(initial?.race.id ?? '');
   const [subraceId, setSubraceId] = useState(initial?.race.subraceId ?? '');
@@ -55,7 +70,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
 
   const save = () => {
     const shared = {
-      name: name.trim() || 'Unnamed', classId: cls.id, level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, choices: keptChoices,
+      name: name.trim() || 'Unnamed', rulesVersion: version, classId: cls.id, level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, choices: keptChoices,
       raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleId: crewRoleId || undefined, feats,
     };
     if (!initial) {
@@ -94,6 +109,20 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         <span className="label">Name</span>
         <input value={name} onChange={(e) => setName(e.target.value)} required maxLength={80} />
       </label>
+      {initial ? (
+        <p className="page-ref">Built with {VERSION_NAMES[version]}. A character stays on the handbook it was made with.</p>
+      ) : (
+        <div className="field">
+          <span className="label">Handbook</span>
+          <div className="segmented" role="radiogroup" aria-label="Handbook">
+            {(Object.keys(VERSION_NAMES) as RulesVersion[]).map((v) => (
+              <button type="button" key={v} role="radio" aria-checked={version === v} className={version === v ? 'active' : ''} onClick={() => changeVersion(v)}>
+                {VERSION_NAMES[v]}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="grid-2">
         <label className="field">
           <span className="label">Race from the book</span>
@@ -124,7 +153,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       </div>
       <div className="grid-2">
         <label className="field">
-          <span className="label">Class (rules v10) · p.{cls.source.page}</span>
+          <span className="label">Class · p.{cls.source.page}</span>
           <select value={cls.id} onChange={(e) => { setClassId(e.target.value); setSubclass(''); }}>
             {classes.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>

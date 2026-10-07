@@ -1,0 +1,101 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "subclass.oracle.bones_of_sight",
+      "kind": "subclass",
+      "parent": "class.oracle",
+      "name": "Bones of Sight",
+      "group": "Divination Techniques",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 164
+      },
+      "flavor": "Through the whispers of the bones, you glimpse into fate’s hidden threads, foreseeing dangers and bending destiny to your will.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Whispering Bones",
+          "text": "When you choose this subclass at 2nd level, you can roll a set of marked bones to curse a target with bad luck. As an action, target a creature within 30 ft. of you to make a Wisdom saving throw against your Spell save DC. On a failed save the creature has disadvantage on its next attack roll or saving throw.\nYou can use this feature a number of times equal to your proficiency bonus, regaining expended uses after a long rest.",
+          "page": 164
+        },
+        {
+          "level": 6,
+          "name": "Death’s Rattle",
+          "text": "Starting at 6th level, the bones now reveal more than just the future, they expose the threads of mortality. When a creature within 30 feet of you drops to 0 hit points, you can use your reaction to roll your bones and choose one of the following outcomes.\nGain temporary hit points equal to twice your Oracle level.\nCause another creature within 30 feet to take psychic damage equal to your Oracle level.\nAdditionally, you gain advantage on death saving throws.",
+          "page": 165
+        },
+        {
+          "level": 8,
+          "name": "Sight Beyond the Grave",
+          "text": "At 8th level, your connection to the spirits deepens, allowing you to glimpse through the veil. You gain the ability to cast Speak with Dead once per long rest without expending a spell slot and resistance to necrotic damage.\nAdditionally, as an action, you can ask the spirits of the bones for guidance. Roll a d6:",
+          "page": 165,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d6",
+                  "Effect"
+                ],
+                [
+                  "1-",
+                  "The bones are silent."
+                ],
+                [
+                  "2"
+                ],
+                [
+                  "3-",
+                  "The bones whisper, granting you advantage on your next"
+                ],
+                [
+                  "4",
+                  "Wisdom (Insight) or Intelligence (Investigation) check."
+                ],
+                [
+                  "5-",
+                  "The bones scream a warning, allowing you to immediately"
+                ],
+                [
+                  "6",
+                  "sense the direction of the nearest creature with hostile intent within 1 mile."
+                ]
+              ],
+              "page": 165
+            }
+          ],
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 11,
+          "name": "Speaker of the Dead",
+          "text": "Starting at 11th level, you stand at the precipice of fate, communing with spirits as though they were your own thoughts. You can now cast Commune and True Seeing once per long rest without expending a spell slot.\nAdditionally, when you roll death saving throws, if you roll a natural 20 on a death saving throw, you immediately regain hit points equal to half your Oracle level instead of just 1 (rounded down).",
+          "page": 165,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 17,
+          "name": "The Chosen Bone",
+          "text": "At 17th level, when you make predictions at the start of the day, you can mark one of them as inevitable. If that prediction would fail, fate twists in your favor, forcing it to come true in an unexpected way (subject to DM approval).",
+          "page": 165
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

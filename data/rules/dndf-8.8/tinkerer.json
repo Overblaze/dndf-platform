@@ -1,0 +1,618 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.tinkerer",
+      "kind": "class",
+      "name": "Tinkerer",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 190
+      },
+      "flavor": "The Tinkerer is an ingenious inventor who blends advanced technology and magic to create powerful gadgets and mechanical wonders. By studying blueprints and mastering complex tools, they craft devices capable of extraordinary feats, from launching devastating attacks to providing essential support in battle. Tinkerers are the brilliant minds behind the fusion of science and arcane energy, always tinkering with their creations to push the boundaries of what is possible.",
+      "quote": "MY NAME IS “CYBORG” FRANKY! YOUR ATTACKS ARE NOTHING TO MY STEEL BODY! --- Franky",
+      "hitDie": 6,
+      "savingThrows": [
+        "int",
+        "wis"
+      ],
+      "proficiencies": {
+        "armor": [],
+        "weapons": [
+          "dagger",
+          "dart",
+          "sling",
+          "quarterstaff",
+          "musket"
+        ],
+        "tools": [
+          "Thieves’ tools",
+          "tinker’s tools",
+          "two types of artisan’s tools of your choice"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "arcana",
+            "history",
+            "insight",
+            "investigation",
+            "medicine",
+            "religion"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a Quarterstaff or (b) a Dagger",
+        "a gadget of choice and blueprints",
+        "thieves’ tools and a dungeoneer’s pack"
+      ],
+      "progression": {
+        "columns": {
+          "cantripsKnown": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "slots1": [
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots2": [
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots3": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots4": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots5": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3
+          ],
+          "slots6": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2
+          ],
+          "slots8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slots9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "slots1",
+          "name": "1st-level slots",
+          "max": "col.slots1",
+          "recharge": "long"
+        },
+        {
+          "id": "slots2",
+          "name": "2nd-level slots",
+          "max": "col.slots2",
+          "recharge": "long"
+        },
+        {
+          "id": "slots3",
+          "name": "3rd-level slots",
+          "max": "col.slots3",
+          "recharge": "long"
+        },
+        {
+          "id": "slots4",
+          "name": "4th-level slots",
+          "max": "col.slots4",
+          "recharge": "long"
+        },
+        {
+          "id": "slots5",
+          "name": "5th-level slots",
+          "max": "col.slots5",
+          "recharge": "long"
+        },
+        {
+          "id": "slots6",
+          "name": "6th-level slots",
+          "max": "col.slots6",
+          "recharge": "long"
+        },
+        {
+          "id": "slots7",
+          "name": "7th-level slots",
+          "max": "col.slots7",
+          "recharge": "long"
+        },
+        {
+          "id": "slots8",
+          "name": "8th-level slots",
+          "max": "col.slots8",
+          "recharge": "long"
+        },
+        {
+          "id": "slots9",
+          "name": "9th-level slots",
+          "max": "col.slots9",
+          "recharge": "long"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Tinkerer Study",
+        "level": 2,
+        "featureLevels": [
+          2,
+          6,
+          10,
+          14
+        ]
+      },
+      "subclassIntro": {
+        "text": "Tinkerers all love to pursue scientific innovation and developing new inventions, but many specialize in different fields depending on their profession. Different types of studies will produce different results for the technology created. The personality, profession, and goals of your tinkerer may affect what studies they utilize.",
+        "page": 194
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Creation Power (Spellcasting)",
+          "text": "As a Student of robotics and advanced technology , you have Gadget of choice along with blueprints containing Creations (spells) that show the first glimmerings of your true abilities. This class uses the Tinkerer Spell List in Chapter 4.",
+          "page": 190,
+          "sections": [
+            {
+              "name": "Gadget & Blueprints (Spellbook)",
+              "text": "At 1st Level, you have a Gadget and blueprints (similar to a spellbook in standard 5e) containing six 1st-level Tinkerer Spells of your choice. Your Blueprints are instructions which tell you how to build your gadget, as well as a Repository of the spells and abilities you discover, except your natural abilities (Cantrips), which can be used with or without your blueprints and gadget using materials or separate devices and methods. Your gadget is a form of Power Source (in Chapter 5 under “Adventuring Gear”), and is used as a spellcasting focus.",
+              "page": 191
+            },
+            {
+              "name": "Tools Required",
+              "text": "To build, add to, and use your gadget, which allows you to cast your tinkerer Creation Power (spell) Effects, you must use special tools—specifically thieves’ tools or some kind of artisan’s tool. You must be proficient with the tool to use it in this way.",
+              "page": 191
+            },
+            {
+              "name": "Natural Abilities (Cantrips)",
+              "text": "At 1st Level, you know three Natural Abilities (Cantrips) of your choice from the Tinkerer spell list. You learn additional Tinkerer Cantrips of your choice at higher levels, as shown in the Natural Abilities (Cantrips) Known column of the Tinkerer table.",
+              "page": 191
+            },
+            {
+              "name": "Preparing and Using Creations (Casting Spells)",
+              "text": "The Tinkerer table shows how many Creation Power (Spell) Slots you have to cast your Spells of 1st Level and higher. To cast one of these spells , you must expend a slot of the spell’s level or higher. You regain all expended Spell Slots when you finish a Long Rest.\nYou prepare and install the list of Tinkerer Creation Powers (Spells) onto your gadget that are available for you to cast. To do so, choose a number of spells from your Blueprints equal to your Intelligence modifier + your Tinkerer level (minimum of one spell). The spells must be of a level for which you have Spell Slots.\nFor example, if you’re a 3rd-level Tinkerer, you have four 1st-level and two 2nd-level Creation Power (Spell) Slots. With an Intelligence of 16, your list of prepared Spells can include six spells of 1st or 2nd Level, in any combination, chosen from your Blueprints. If you prepare the 1st-level spell Magic Missile, you can cast it using a 1st-level or a 2nd-level slot. Casting the spell doesn’t remove it from your list of prepared spells .\nYou can change your list of prepared Creation Powers (Spells) installed on your gadget when you finish a Long Rest. Preparing a new list of Creation Powers requires time spent studying your Blueprints and adding them to parts of your gadget using your tools: at least 1 minute per Creation Power (Spell) Level for each creation power (spell) on your list.",
+              "page": 191
+            },
+            {
+              "name": "Creation Power Ability (Spellcasting Ability)",
+              "text": "Intelligence is your Creation (Spellcasting) ability for your Tinkerer Creation Powers (Spells), since you learn your spells through dedicated study and memorization. You use your Intelligence whenever a spell refers to your spellcasting ability. In addition, you use your Intelligence modifier when setting the saving throw DC for a Tinkerer Creation Power (spell) you cast and when making an Attack roll with one.\nCreation save DC = 8 + your Proficiency Bonus + your Intelligence modifier\nCreation Attack modifier = your Proficiency Bonus + your Intelligence modifier",
+              "page": 191
+            },
+            {
+              "name": "Your Blueprints",
+              "text": "The Creation Powers (Spells) and abilities that you add to your Gadget from Blueprints as you gain levels reflect the advanced Research you conduct on your own, as well as scientific breakthroughs you have had about the nature of the world and technological innovation. You might find other spells during your Adventures. You could discover a spell recorded on blueprints in an abandoned factory, for example, or in dusty records in an ancient library .\nCopying a Creation Power (Spell) into your\nBlueprints . When you find a Tinkerer Creation Power (Tinkerer spell) of 1st Level or higher, you can add it to your Blueprints if it is of a Creation Power (Spell) Level you can prepare and if you can spare the time to decipher and copy it.\nCopying that creation into your Blueprints involves reproducing the basic form of the creation, then deciphering the unique system of notation used by the Inventor who designed it. You must practice the creation power until you understand the technology, methods, and parts required, then transcribe it into your Blueprints using your own notation.\nFor each level of the creation power (spell), the process takes 2 hours and costs ฿500,000. The cost represents material Components you expend with the writing utensils you need to record it, as well as the tools and supplies used as you experiment with the creation power (spell) and add new parts to your gadget to power the ability.\nReplacing your Blueprints or Gadget\n. You can copy a\ncreation power (spell) from your own blueprints to another blueprint—for example, if you want to make a backup copy of your blueprints to craft another device . This is just like copying a creation (spell) into your blueprints , but faster and easier, since you understand your own notation and already know how to cast the spell. You need spend only 1 hour and ฿100,000 for each level of the copied creation (spell) to copy the blueprints.\nIf you lose your blueprints, you can use the same procedure to transcribe the Creation Powers (Spells) that you have prepared into new blueprints . Drawing out the remainder of your blueprints requires you to find new creations (spells) to do so, as normal. For this reason, many tinkerers keep backup blueprints in a safe place.\nRebuilding your gadget requires having your tools. You must spend at least 1 hour rebuilding your gadget using your tools during a Short or Long Rest in order to use it again. If you are missing your tools, you can choose to pay for a new Power Source instead, which will serve as your new gadget.\nThe Gadget’s Appearance. Your specialized Gadget is a unique device that you build and add to over time, with its own decorative features and designs. It might be a plain metallic staff that can be disassembled, an attached segment of a weapon you are proficient with, or a complex contraption with interconnecting parts and robotic protrusions.",
+              "page": 191
+            },
+            {
+              "name": "Ritual Casting",
+              "text": "You can cast a Tinkerer creation power (spell) as a ritual if that creation power has the ritual tag and you have the creation power in your Blueprints. You don’t need to have the creation power prepared.",
+              "page": 192
+            },
+            {
+              "name": "Learning Creation Powers (Spells) of 1st Level and Higher",
+              "text": "Each time you gain a Tinkerer level, you can add two Tinkerer Spells of your choice to your Blueprint (Spellbook) for free. Each of these spells must be of a level for which you have Creation Power (Spell) Slots, as shown on the Tinkerer table. On your Adventures, you might find other Creation Powers (Spells) that you can add to your Blueprints and Gadget.",
+              "page": 192
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Recharging",
+          "text": "You have learned how to restore bits of power to your Gadget by recharging it during a rest. Once per day when you finish a Short Rest, you can choose expended Creation Power (Spell) Slots to recover. The Creation Power Slots can have a combined level that is equal to or less than half your Tinkerer level (rounded up), and none of the slots can be 6th level or higher.\nFor example, if you’re a 4th-level Tinkerer, you can recover up to two levels worth of Spell Slots. You can recover either a 2nd-level spell slot or two 1st-level Spell Slots.",
+          "page": 192
+        },
+        {
+          "level": 1,
+          "name": "Basic Crafter",
+          "text": "Additionally at 1st level, You gain the knowledge to craft any non-magical adventuring gear from Chapter 7: Expanded Armory.\nAfter tinkering for 1 hour uninterrupted, you can craft one item with a total market value not exceeding ฿10,000, and you must expend raw materials worth half the total market value. If something you want to craft has a market value greater than ฿10,000, you must spend 1 additional hour in ฿10,000 increments until you reach the market value of the item. Crafting in this way can coincide with a short or long rest you you may pause your progress at any time, starting back up where you left off.\nAdditionally, if you wish to create a custom item not in the adventuring gear section or create something in the the special equipment section, work with your Dungeon Master to balance and create it for your game.",
+          "page": 192
+        },
+        {
+          "level": 2,
+          "name": "Tinkerer Study",
+          "text": "When you reach 2nd Level, you choose your study, shaping your knowledge and practice of inventing through various schools: Holo Science, Meteorology, Military Science, Plague Engineer, Robotics, and Steamtech, all detailed at the end of the class description. Your choice grants you features at 2nd Level and again at 6th, 10th, and 14th level.",
+          "page": 192,
+          "grantsSubclass": true
+        },
+        {
+          "level": 2,
+          "name": "Tool Upgrades",
+          "text": "Starting at 2nd level, your proficiency bonus is now doubled for any ability check you make that uses your proficiency with a tool.\nAdditionally, you may create one set of artisan’s tools. This creation requires 1 hour of uninterrupted work, which can coincide with a short or long rest.",
+          "page": 192
+        },
+        {
+          "level": 3,
+          "name": "Adaptive Cantrip Technology",
+          "text": "At 3rd level, whenever you finish a long rest, you can replace one tinkerer cantrip you know with another cantrip from the tinkerer spell list.",
+          "page": 192
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th Level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 192,
+          "asi": true
+        },
+        {
+          "level": 6,
+          "name": "Adept Crafter",
+          "text": "At 6th level, using your Basic Crafter feature, you may now craft non-magical armors, weapons, or shields from Chapter 7: Expanded Armory.\nAdditionally, if you wish to create a custom weapon or armor not in the setting, work with your Dungeon Master to balance and create it for your game.",
+          "page": 192
+        },
+        {
+          "level": 10,
+          "name": "Savant Crafter",
+          "text": "At 10th level, using the table below and the rules from Basic Crafter, when you create weapons or equipment or wish to upgrade an existing peice of gear, you may add additional stats to the equipment.\n฿\n฿\n฿\n฿\n฿",
+          "page": 193,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Unlocks at Level Upgrade",
+                  "Additional Cost"
+                ]
+              ],
+              "page": 193
+            },
+            {
+              "rows": [
+                [
+                  "10th",
+                  "+1",
+                  "100,000 worth of raw materials"
+                ]
+              ],
+              "page": 193
+            },
+            {
+              "rows": [
+                [
+                  "10th",
+                  "+2",
+                  "200,000 worth of raw materials"
+                ]
+              ],
+              "page": 193
+            },
+            {
+              "rows": [
+                [
+                  "12th",
+                  "+3",
+                  "400,000 worth of raw materials"
+                ]
+              ],
+              "page": 193
+            },
+            {
+              "rows": [
+                [
+                  "15th",
+                  "+4",
+                  "800,000 worth of raw materials"
+                ]
+              ],
+              "page": 193
+            },
+            {
+              "rows": [
+                [
+                  "18th",
+                  "+5",
+                  "1,000,000 worth of raw materials"
+                ]
+              ],
+              "page": 193
+            }
+          ]
+        },
+        {
+          "level": 16,
+          "name": "Master Crafter",
+          "text": "At 16th level, when crafting a weapon using the Basic Crafter rules, you can spend an additional ฿200,000 worth of raw materials per effect selected below to add onto your gear. You may not have more than one of the same named effect per item.",
+          "page": 193,
+          "sections": [
+            {
+              "name": "Radiant Sheen",
+              "text": "Weapon Effect\nYour weapon changes its damage type to radiant and emits 20 feet of bright sunlight.",
+              "page": 193
+            },
+            {
+              "name": "Dark Steel",
+              "text": "Weapon Effect\nYour weapon changes its damage type to necrotic and creates a 20-foot radius of darkness that lightly obscures the area.",
+              "page": 193
+            },
+            {
+              "name": "Bleeding Edge",
+              "text": "Weapon Effect\nCreatures cannot heal for 1 round when damaged by this weapon.",
+              "page": 193
+            },
+            {
+              "name": "Stronger Core",
+              "text": "Weapon Effect\nYour weapon deals an additional 2d6 damage.",
+              "page": 193
+            },
+            {
+              "name": "Leeching Metal",
+              "text": "Weapon Effect\nHeals you for damage dealt when you roll a critical hit on your attack roll.",
+              "page": 193
+            },
+            {
+              "name": "Extending Mechanism",
+              "text": "Weapon Effect\nYour weapons reach is doubled.",
+              "page": 193
+            },
+            {
+              "name": "Giant Slayer",
+              "text": "Weapon Effect\nYour weapon deals additional 1d6 damage for every size larger than you a target is.",
+              "page": 193
+            },
+            {
+              "name": "Demolisher",
+              "text": "Weapon Effect\nYour weapon deals double damage against structures.",
+              "page": 193
+            },
+            {
+              "name": "Greased Joints",
+              "text": "Armor Effect\nWhile wearing this armor, gain +1 to your Dexterity ability score.",
+              "page": 193
+            },
+            {
+              "name": "Thicker Material",
+              "text": "Armor Effect\nWhile wearing this armor, gain +1 to your Constitution ability score.",
+              "page": 193
+            },
+            {
+              "name": "Night Vision Module",
+              "text": "Armor Effect\nWhile wearing this armor, you gain Darkvision to 30 feet, unless you already have it, in which case, your range extends to 60 feet.",
+              "page": 193
+            },
+            {
+              "name": "Inflatable Air Padding",
+              "text": "Armor Effect\nWhile wearing this armor, you can spend an action to give yourself 40 temporary hit points. These hit points last until the end of your next turn. This ability recharges after a long rest.",
+              "page": 193
+            },
+            {
+              "name": "Corrosive Proof Lining",
+              "text": "Armor Effect\nWhile wearing this armor, you gain resistance to Acid damage.",
+              "page": 193
+            },
+            {
+              "name": "See-Through Metal",
+              "text": "Armor Effect\nWhile wearing this armor, you can spend an action to turn invisible for 1 round. This ability recharges after a short or long rest.",
+              "page": 193
+            },
+            {
+              "name": "Momentum Springs",
+              "text": "Armor Effect\nWhile wearing this armor, for every 15 feet of movement you haven’t used at the end of your turn, your AC increases by +1 until the beginning of your next turn.",
+              "page": 193
+            },
+            {
+              "name": "Stick Proof Soles",
+              "text": "Armor Effect\nWhile wearing this armor, your movement speed is always 30 feet, even if something else would reduce or increase it.",
+              "page": 193
+            }
+          ]
+        },
+        {
+          "level": 18,
+          "name": "Master of Innovation",
+          "text": "At 18th level, you have achieved such mastery over certain Creation Powers (Spells) that you can cast them at will. Choose a 1st-level Tinkerer Creation Power (spell) and a 2nd-level Tinkerer spell that are in your Spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal.\nBy spending 8 hours in study, you can exchange one or both of the Spells you chose for different spells of the same levels.",
+          "page": 193
+        },
+        {
+          "level": 20,
+          "name": "Ultimate Technology",
+          "text": "When you reach 20th level, you gain mastery over two powerful Creation Powers (Spells) and can cast them with little effort. Choose two 3rd-level Tinkerer creation powers in your spellbook as your signature creation powers . You always have these creation powers prepared, they don’t count against the number of creation powers you have prepared, and you can cast each of them once at 3rd Level without expending a creation power (spell) slot. When you do so, you can’t do so again until you finish a short or Long Rest.\nIf you want to cast either creation power at a higher level, you must expend a creation power slot as normal.",
+          "page": 194
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

@@ -2,7 +2,7 @@ import { deriveSheet, kaito, type CharacterDoc } from '@dndf/engine';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dialog } from '../components/Dialog';
-import { rules } from '../lib/rules';
+import { ruleSet, VERSION_NAMES } from '../lib/rules';
 import type { CharacterStore, StoredCharacter } from '../lib/store';
 import { CharacterForm } from './CharacterForm';
 
@@ -49,12 +49,12 @@ export function CharacterList({ store }: { store: CharacterStore }) {
         {!characters && !error && <p>Checking the crew list…</p>}
         {characters?.length === 0 && <p>No characters yet. Create one, or add the sample character to look around.</p>}
         {characters?.map((character) => {
-          const sheet = deriveSheet(character.doc, rules);
+          const sheet = deriveSheet(character.doc, ruleSet(character.doc.rulesVersion).rules);
           return (
             <div key={character.id} className="resource">
               <Link className="character-link" to={`/sheet/${character.id}`}>
                 <span className="resource-name">{sheet.name}</span>
-                <span className="page-ref">{sheet.summary} · HP {character.doc.state.hp} / {sheet.maxHp.value}</span>
+                <span className="page-ref">{sheet.summary} · {VERSION_NAMES[character.doc.rulesVersion]} · HP {character.doc.state.hp} / {sheet.maxHp.value}</span>
               </Link>
               <button className="btn" onClick={() => setDeleting(character)}>Delete</button>
             </div>
@@ -62,9 +62,9 @@ export function CharacterList({ store }: { store: CharacterStore }) {
         })}
         <div className="row wrap">
           <button className="btn btn-primary" onClick={() => setCreating(true)}>New character</button>
-          <button className="btn" onClick={() => create(kaito(rules))}>Add the sample: Kaito, Bruiser 7</button>
+          <button className="btn" onClick={() => create(kaito(ruleSet('dndf-10').rules))}>Add the sample: Kaito, Bruiser 7</button>
         </div>
-        <p className="page-ref">All thirteen classes of the v10 handbook are available. Races, backgrounds and the step-by-step builder are still to come, so those are typed in by hand for now.</p>
+        <p className="page-ref">Classes, races, backgrounds, crew roles and feats from both handbooks (v10 and v8.8) are available. The step-by-step builder comes later, so ability scores are typed in as final values.</p>
       </section>
 
       {creating && (

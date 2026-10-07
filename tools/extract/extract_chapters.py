@@ -28,6 +28,13 @@ PAGES = {
         "feats": (52, 65),
         "races": (67, 82),
     },
+    "dndf-8.8": {
+        "rules": [(9, 12), (18, 19), (66, 66)],
+        "crew_roles": (13, 17),
+        "backgrounds": (20, 51),
+        "feats": (52, 65),
+        "races": (67, 82),
+    },
 }
 
 SKILL_IDS = [
@@ -161,22 +168,10 @@ def extract_feats(version: str) -> list[dict]:
     general["text"] = body_text(intro)
     out = [general]
     for heading, feat_blocks in feats:
-        paras = [b for b in feat_blocks if isinstance(b, Para)]
-        prerequisite = None
-        if paras and re.match(r"prerequisites?:", paras[0].text, re.I):
-            prerequisite = re.sub(r"^prerequisites?:\s*", "", paras[0].text, flags=re.I)
-            feat_blocks = [b for b in feat_blocks if b is not paras[0]]
-            # A prerequisite line that fills the column runs into the feat's text: part them at the first sentence.
-            run_on = re.match(r"(.*?)\s+((?:You|Your|When|While|Once|As|Through|Whenever|If|Always)\b.*)", prerequisite)
-            if run_on and not any(isinstance(b, Para) for b in feat_blocks):
-                prerequisite = run_on.group(1)
-                feat_blocks = [Para(run_on.group(2), paras[0].page)] + feat_blocks
         made = sections_from(feat_blocks, 3, heading)
         feat = entry(version, "feat", slug(heading.text), heading.text, heading.page)
-        if prerequisite:
-            feat["prerequisite"] = prerequisite
         feat["text"] = made["text"]
-        for key in ("sections", "tables", "uses", "action", "auto"):
+        for key in ("prerequisite", "sections", "tables", "uses", "action", "auto"):
             if key in made:
                 feat[key] = made[key]
         if len(feat["text"]) < 30:
@@ -310,13 +305,19 @@ def write(version: str, name: str, entries: list[dict]) -> None:
     print(f"{name}: {kinds}")
 
 
+CHAPTER_FILES = {
+    "general_rules": extract_rules,
+    "crew_roles": extract_crew_roles,
+    "backgrounds": extract_backgrounds,
+    "feats": extract_feats,
+    "races": extract_races,
+}
+
+
 def main() -> int:
-    version = "dndf-10"
-    write(version, "general_rules", extract_rules(version))
-    write(version, "crew_roles", extract_crew_roles(version))
-    write(version, "backgrounds", extract_backgrounds(version))
-    write(version, "feats", extract_feats(version))
-    write(version, "races", extract_races(version))
+    version = "dndf-8.8" if "--v88" in sys.argv else "dndf-10"
+    for name, extract in CHAPTER_FILES.items():
+        write(version, name, extract(version))
     if problems:
         print(f"\n{len(problems)} thing(s) to check:")
         for p in problems:

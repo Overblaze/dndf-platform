@@ -6,6 +6,7 @@
       "kind": "class",
       "name": "Martial Artist",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -326,7 +327,13 @@
           "text": "At 20th level, if you drop to 0 hit points, you can spend 4 ki points, roll four Martial Arts dice, and add the dice together. Your number of Hit Points instead changes to the total rolled.\nEach time you use this feature after the first, the ki point cost increases by 2. When you finish a short or long rest, the Ki Point cost resets to 4.",
           "page": 152
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 154
+        }
+      }
     },
     {
       "id": "subclass.martial_artist.black_leg_style",
@@ -420,6 +427,7 @@
       "name": "Combustion Boxer",
       "group": "Martial Arts Schools",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -464,7 +472,13 @@
           "text": "At 17th level, when you take the Ready action, you can store energy in your punch. The next unarmed strike you make is an automatic critical hit, and the target must succeed on a Strength saving throw or be thrown 30 feet and knocked prone. You must spend 2 ki points to use this feature.",
           "page": 153
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 158
+        }
+      }
     },
     {
       "id": "subclass.martial_artist.fish_man_karate",
@@ -473,6 +487,7 @@
       "name": "Fish-Man Karate",
       "group": "Martial Arts Schools",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -524,7 +539,13 @@
           "text": "At 17th level, you can release a pack of watery sharks that tear apart any creatures they catch. As an action, you can spend up to any number of ki points and conjure a number of shark projectiles equal to ki points spent to hurl at targets within 120 feet of you. You can hurl them at one target or several. Make a ranged spell attack for each shark using your proficiency bonus + Wisdom modifier for the attack modifier. On a hit, the target takes 2 Martial Arts die in cold damage and is restrained until the start of your next turn, when the sharks evaporate.",
           "page": 154
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 158
+        }
+      }
     },
     {
       "id": "subclass.martial_artist.new_kama_kenpo",
@@ -533,6 +554,7 @@
       "name": "New Kama Kenpo",
       "group": "Martial Arts Schools",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -571,7 +593,13 @@
           "text": "Starting at 17th level, whenever you use your Swift Barrage, you create a number of spinning afterimages that make you more difficult to hit and allow you make an extra attack. When you use your Swift Barrage, you can make an additional attack with it (up to a total of three Swift Barrage attacks). Also, whenever you hit an enemy with your Swift Barrage, they have disadvantage on attacks against you until the end of their next turn.",
           "page": 155
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 159
+        }
+      }
     },
     {
       "id": "subclass.martial_artist.six_powers",
@@ -640,6 +668,7 @@
       "name": "Wano Ninpo",
       "group": "Martial Arts Schools",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -684,8 +713,14 @@
           "text": "At 17th level, you learn a legendary and devastating strike feared by all, this ultimate technique targets an opponent’s most vulnerable point. When you hit a creature with a ranged or melee attack, you can expend 5 ki points to attempt a precise, crippling strike. The target must make a Constitution saving throw against your Ki Save DC. On a failure, they take 8d12 bludgeoning damage and are knocked prone from sheer agony. On a success, they take half damage and remain standing.",
           "page": 156
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 161
+        }
+      }
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

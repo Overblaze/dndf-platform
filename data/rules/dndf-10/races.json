@@ -6,19 +6,27 @@
       "kind": "rule",
       "name": "New Races and Updates",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
         "book": "DnDF Expanded Handbook v10",
         "page": 67
       },
-      "text": "While not big changes, I have changed the fact that some of the original Dungeons and Devil Fruits races lock you into specific stats. Now most races that aren’t Optional Races use a pool of stat points to spend instead of preassigned stat points. Here are all of the original races but with the changes added to them.\nIn addition, cyborg has been moved to Optional Races."
+      "text": "While not big changes, I have changed the fact that some of the original Dungeons and Devil Fruits races lock you into specific stats. Now most races that aren’t Optional Races use a pool of stat points to spend instead of preassigned stat points. Here are all of the original races but with the changes added to them.\nIn addition, cyborg has been moved to Optional Races.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 67
+        }
+      }
     },
     {
       "id": "race.human",
       "kind": "race",
       "name": "Human",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -61,13 +69,20 @@
           "text": "Subrace. Humans from all across the One Piece World have lived in relative isolation from each other, creating unique and different cultures and body types.",
           "page": 67
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 67
+        }
+      }
     },
     {
       "id": "subrace.human.standard",
       "kind": "subrace",
       "name": "Standard",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -95,13 +110,20 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 67
+        }
+      }
     },
     {
       "id": "subrace.human.variant",
       "kind": "subrace",
       "name": "Variant",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -126,13 +148,20 @@
           "text": "You gain one Character Feat of your choice that you meet the prerequisite for in Chapter 6 of the Dungeons and Devil Fruits Player’s Handbook. You may only choose a Haki-related feat if you receive DM permission.",
           "page": 67
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 67
+        }
+      }
     },
     {
       "id": "subrace.human.giant",
       "kind": "subrace",
       "name": "Giant",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -180,13 +209,20 @@
       "auto": [
         "abilityIncrease",
         "size"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 67
+        }
+      }
     },
     {
       "id": "subrace.human.kuja",
       "kind": "subrace",
       "name": "Kuja",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -217,13 +253,20 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 68
+        }
+      }
     },
     {
       "id": "subrace.human.torino",
       "kind": "subrace",
       "name": "Torino",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -278,13 +321,20 @@
         "abilityIncrease",
         "size",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 68
+        }
+      }
     },
     {
       "id": "race.fishman",
       "kind": "race",
       "name": "Fishman",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -347,13 +397,20 @@
           "text": "Subrace. Breeding among fish-people resulted in six main subraces: Cookiecutter, Fighting Fish, Manta Ray, Octopus, Shark, or Smelt-Whiting variants. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
           "page": 69
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 69
+        }
+      }
     },
     {
       "id": "subrace.fishman.cookiecutter",
       "kind": "subrace",
       "name": "Cookiecutter",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -391,13 +448,20 @@
       "auto": [
         "abilityIncrease",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 69
+        }
+      }
     },
     {
       "id": "subrace.fishman.fighting_fish",
       "kind": "subrace",
       "name": "Fighting Fish",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -428,13 +492,20 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 69
+        }
+      }
     },
     {
       "id": "subrace.fishman.manta_ray",
       "kind": "subrace",
       "name": "Manta Ray",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -465,13 +536,20 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 69
+        }
+      }
     },
     {
       "id": "subrace.fishman.octopus",
       "kind": "subrace",
       "name": "Octopus",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -502,13 +580,20 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 69
+        }
+      }
     },
     {
       "id": "subrace.fishman.shark",
       "kind": "subrace",
       "name": "Shark",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -539,13 +624,20 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 70
+        }
+      }
     },
     {
       "id": "subrace.fishman.smelt_whiting",
       "kind": "subrace",
       "name": "Smelt-Whiting",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -576,7 +668,13 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 70
+        }
+      }
     },
     {
       "id": "race.merfolk",
@@ -666,6 +764,7 @@
       "kind": "subrace",
       "name": "Scale Fish",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -690,13 +789,20 @@
           "text": "Due to your impeccable genetics, you can cast Charm Person with this trait. You can’t cast this spell with this feature again until you finish a Short or Long Rest. Charisma is your Spellcasting DC for this spell.",
           "page": 71
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 71
+        }
+      }
     },
     {
       "id": "subrace.merfolk.shark",
       "kind": "subrace",
       "name": "Shark",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -716,13 +822,20 @@
           "text": "Your keen insights, drawn from both the mystical and the natural world, allow you to guide and protect your allies. As a reaction, when you or a creature you can see within 30 feet of you makes an ability check, an attack roll, or a saving throw, you can grant them a bonus to the roll equal to your Wisdom modifier (minimum of +1). You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a long rest.",
           "page": 71
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 71
+        }
+      }
     },
     {
       "id": "subrace.merfolk.eel",
       "kind": "subrace",
       "name": "Eel",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -747,7 +860,13 @@
           "text": "When you move at least 20 ft. in a straight line forwards a target, your next melee attack against them has advantage.\nYou can use this trait a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a long rest.",
           "page": 71
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 71
+        }
+      }
     },
     {
       "id": "race.sky_islander",
@@ -827,6 +946,7 @@
       "kind": "subrace",
       "name": "Shandians",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -841,13 +961,20 @@
           "text": "You have proficiency with the quarterstaff, halberd, pike, glaive, spear, and heavy firearms.",
           "page": 72
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 72
+        }
+      }
     },
     {
       "id": "subrace.sky_islander.birkans",
       "kind": "subrace",
       "name": "Birkans",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -862,13 +989,20 @@
           "text": "You gain 1 uncommon Spirit Surge from Chapter 5: Spirit Surges. You may only spend this surge on Color of Observation Haki features.",
           "page": 72
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 72
+        }
+      }
     },
     {
       "id": "subrace.sky_islander.skypieans",
       "kind": "subrace",
       "name": "Skypieans",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -883,7 +1017,13 @@
           "text": "You start with an additional Dial, allowing you to roll once more on the Simple Dial Table to determine what other Dial you start with. Additionally, you gain advantage on all checks made to find a dial.",
           "page": 72
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 72
+        }
+      }
     },
     {
       "id": "subrace.sky_islander.merveillians",
@@ -992,6 +1132,7 @@
       "kind": "race",
       "name": "Yokai Tribesman",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1039,13 +1180,20 @@
           "text": "Subrace. There are several variants of yokai tribesmen: the longleg tribesmen, the longarm tribesmen, and the three-eye tribesmen. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
           "page": 74
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 74
+        }
+      }
     },
     {
       "id": "subrace.yokai_tribesman.longleg_tribesman",
       "kind": "subrace",
       "name": "Longleg Tribesman",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1076,13 +1224,20 @@
       "auto": [
         "size",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 74
+        }
+      }
     },
     {
       "id": "subrace.yokai_tribesman.longarm_tribesman",
       "kind": "subrace",
       "name": "Longarm Tribesman",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1118,13 +1273,20 @@
       "auto": [
         "size",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 74
+        }
+      }
     },
     {
       "id": "subrace.yokai_tribesman.snakeneck_tribesman",
       "kind": "subrace",
       "name": "Snakeneck Tribesman",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1160,13 +1322,20 @@
       "auto": [
         "size",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 74
+        }
+      }
     },
     {
       "id": "subrace.yokai_tribesman.three_eyed_tribesman",
       "kind": "subrace",
       "name": "Three-eyed Tribesman",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1207,20 +1376,33 @@
       "auto": [
         "size",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 74
+        }
+      }
     },
     {
       "id": "rule.optional_races",
       "kind": "rule",
       "name": "Optional Races",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
         "book": "DnDF Expanded Handbook v10",
         "page": 75
       },
-      "text": "As said in the Dungeons and Devil Fruits Player’s Handbook. These optional races are intended to be used for games where the Dungeon Master approves of the use of races that might interfere with the game balance in a way that might feel unfair to some.\nIf these races don’t fit into the way you want to run your game, feel free to leave them out or repurpose them for use as NPCs."
+      "text": "As said in the Dungeons and Devil Fruits Player’s Handbook. These optional races are intended to be used for games where the Dungeon Master approves of the use of races that might interfere with the game balance in a way that might feel unfair to some.\nIf these races don’t fit into the way you want to run your game, feel free to leave them out or repurpose them for use as NPCs.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 75
+        }
+      }
     },
     {
       "id": "race.cyborg",
@@ -1305,6 +1487,7 @@
       "kind": "race",
       "name": "Dwarf",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1351,13 +1534,20 @@
           "text": "Subrace. There are three variants of dwarves: the Tontatta Tribesman, the Automata, and the Kinokobito. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
           "page": 77
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 77
+        }
+      }
     },
     {
       "id": "subrace.dwarf.tontatta_tribe",
       "kind": "subrace",
       "name": "Tontatta Tribe",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1407,13 +1597,20 @@
       "auto": [
         "abilityIncrease",
         "size"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 77
+        }
+      }
     },
     {
       "id": "subrace.dwarf.automata",
       "kind": "subrace",
       "name": "Automata",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1468,13 +1665,20 @@
       "auto": [
         "abilityIncrease",
         "size"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 77
+        }
+      }
     },
     {
       "id": "subrace.dwarf.kinokobito",
       "kind": "subrace",
       "name": "Kinokobito",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1524,7 +1728,13 @@
       "auto": [
         "abilityIncrease",
         "size"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 77
+        }
+      }
     },
     {
       "id": "race.lunarian",
@@ -1605,6 +1815,7 @@
       "kind": "race",
       "name": "Fish-Man, Wotan",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1675,7 +1886,13 @@
       "auto": [
         "size",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 78
+        }
+      }
     },
     {
       "id": "race.buccaneer",
@@ -1761,6 +1978,7 @@
       "kind": "race",
       "name": "Oni",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1828,13 +2046,20 @@
         "abilityIncrease",
         "size",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 79
+        }
+      }
     },
     {
       "id": "race.elbaf_giant",
       "kind": "race",
       "name": "Elbaf Giant",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1898,13 +2123,20 @@
       "speed": 40,
       "auto": [
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 80
+        }
+      }
     },
     {
       "id": "race.punk_experiment",
       "kind": "race",
       "name": "Punk Experiment",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1956,13 +2188,20 @@
           "text": "There are four main types of Experiments: Satyr, Centaur, Harpy, and Number. Choose one of these subraces and add its traits to your racial features.",
           "page": 81
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 81
+        }
+      }
     },
     {
       "id": "subrace.punk_experiment.satyr",
       "kind": "subrace",
       "name": "Satyr",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -2010,7 +2249,13 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 81
+        }
+      }
     },
     {
       "id": "subrace.punk_experiment.centaur",
@@ -2071,6 +2316,7 @@
       "kind": "subrace",
       "name": "Harpy",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -2113,13 +2359,20 @@
       },
       "auto": [
         "abilityIncrease"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 81
+        }
+      }
     },
     {
       "id": "subrace.punk_experiment.number",
       "kind": "subrace",
       "name": "Number",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -2164,7 +2417,13 @@
       "auto": [
         "abilityIncrease",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 81
+        }
+      }
     },
     {
       "id": "race.void_century_automaton",
@@ -2247,6 +2506,7 @@
       "kind": "race",
       "name": "Yeti",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -2312,7 +2572,13 @@
       "auto": [
         "abilityIncrease",
         "speed"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 82
+        }
+      }
     }
   ],
   "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."

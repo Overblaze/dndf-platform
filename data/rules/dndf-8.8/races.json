@@ -1,0 +1,549 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "race.merfolk",
+      "kind": "race",
+      "name": "Merfolk",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 71
+      },
+      "optional": false,
+      "text": "The changes to fish-men are as follows. Additionally, Merfolk has been changes to Smelt-Whiting and the Shark Merfolk has been added as a new playable race option.\nYour merfolk character will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 1 point in each score.",
+          "page": 71
+        },
+        {
+          "name": "Age",
+          "text": "Merfolk reach adulthood in their teens, mature considerably in their 30s, and live for around a century.",
+          "page": 71
+        },
+        {
+          "name": "Alignment",
+          "text": "Most merfolk are neutral or lawful good. However, few may turn violent against humans and become evil. They are rarely chaotic in nature.",
+          "page": 71
+        },
+        {
+          "name": "Size",
+          "text": "Merfolk are between 6 and 7 feet long and weigh between 160 and 240 pounds on average. Your size is medium.",
+          "page": 71
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 10 feet, and you have a Swimming speed of 50 feet. Once you reach level 5, your walking speed becomes 30 feet.",
+          "page": 71
+        },
+        {
+          "name": "Amphibious",
+          "text": "You can breathe air and water.",
+          "page": 71
+        },
+        {
+          "name": "Adapted to the Sea",
+          "text": "With the ability to adapt to extreme underwater depths, you have Resistance to cold damage.",
+          "page": 71
+        },
+        {
+          "name": "Darkvision",
+          "text": "You can see in dim light within 60 feet of you as if it were bright light and in darkness as if it were dim light. You discern colors in that darkness only as shades of gray.",
+          "page": 71
+        },
+        {
+          "name": "Flotation Bubble",
+          "text": "As an action, create a floating bubble around your hips. While wearing this bubble, you are under the effect of the Feather Fall spell, your walking speed increased by 15 ft., and you ignore difficult terrain. If you take an amount of damage equal to your proficiency bonus x 5 from a single attack or you fall unconscious, the bubble pops.",
+          "page": 71
+        },
+        {
+          "name": "Languages",
+          "text": "Merfolk can all speak and understand the universal spoken language of this world. Additionally, using gestures and sounds, you can communicate simple ideas with any beast that has an innate Swimming speed.",
+          "page": 71
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "size": "Medium",
+      "speed": 10,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Merfolk Subraces",
+          "text": "Subrace. Just like the fish-men, mermaids are born into a variety of different subraces.",
+          "page": 71
+        }
+      ]
+    },
+    {
+      "id": "race.sky_islander",
+      "kind": "race",
+      "name": "Sky Islander",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 72
+      },
+      "optional": false,
+      "text": "The changes to sky islanders are as follows.\nYour sky islander will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
+          "page": 72
+        },
+        {
+          "name": "Age",
+          "text": "Sky islanders reach adulthood in their teens and live for around a century.",
+          "page": 72
+        },
+        {
+          "name": "Alignment",
+          "text": "Sky islanders vary in alignment, ranging from good to evil, lawful to chaotic, but are typically neutral in some way.",
+          "page": 72
+        },
+        {
+          "name": "Size",
+          "text": "Sky islanders in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 72
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 72
+        },
+        {
+          "name": "Protection of the Clouds",
+          "text": "You are able to form fluffy floating clouds around you to reduce the speed of your fall. You gain the ability to cast Feather Fall. Once you use this ability, you cannot use it again until you complete a Short or Long rest.",
+          "page": 72
+        },
+        {
+          "name": "Dial Proficiency",
+          "text": "You innately understand dials that have came from sky islands and can carry one with you. Roll once on the Simple Dial Table in Chapter 5 to determine which one you start with.",
+          "page": 72
+        },
+        {
+          "name": "Languages",
+          "text": "Sky islanders can all speak and understand the universal spoken language of this world.",
+          "page": 72
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ],
+      "sections": [
+        {
+          "name": "Sky Islander Subraces",
+          "text": "Subrace. The separation of groups living on the “Fairy Vearth” resulted in four main subraces splitting off: Shandian, Birkan, Skypiean, or Merveillian variants. Choose one of these Subraces and add its traits to your racial features alongside the ones listed above.",
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "subrace.sky_islander.merveillians",
+      "kind": "subrace",
+      "name": "Merveillians",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 72
+      },
+      "parent": "race.sky_islander",
+      "text": "Your heritage has gifted you with the ability to fly.",
+      "traits": [
+        {
+          "name": "Inherited Flight",
+          "text": "Due of your forearm wings, you have a flying speed equal to your walking speed. You can’t use this flying speed if you’re wearing medium or heavy armor.",
+          "page": 72
+        }
+      ]
+    },
+    {
+      "id": "race.mink",
+      "kind": "race",
+      "name": "Mink",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 73
+      },
+      "optional": false,
+      "text": "Your mink will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "You have 3 points to spend on ability scores. You may only put up to 1 point in each score.",
+          "page": 73
+        },
+        {
+          "name": "Age",
+          "text": "Minks reach adulthood in their teens and live for around a century.",
+          "page": 73
+        },
+        {
+          "name": "Alignment",
+          "text": "Most minks are neutral or lawful good. However, few may turn chaotic and give into their primal urges if exposed to the full moon for long enough.",
+          "page": 73
+        },
+        {
+          "name": "Size",
+          "text": "Minks in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 73
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 73
+        },
+        {
+          "name": "Darkvision",
+          "text": "You have an animal’s keen Senses, especially in the dark. You can see in dim light within 60 feet of you as if it were bright light, and in Darkness as if it were dim light. You can’t discern color in Darkness, only Shades of Gray.",
+          "page": 73
+        },
+        {
+          "name": "Beast’s Slash",
+          "text": "Because of your beast-like features, you have a climbing speed of 20 feet. In addition, your body is a natural Weapon, which you can use to make unarmed strikes. You can choose to deal slashing for your unarmed strikes, and your unarmed strike damage dice becomes a minimum of 1d6.",
+          "page": 73
+        },
+        {
+          "name": "Animal Instinct",
+          "text": "You have proficiency in the Perception and Stealth Skills.",
+          "page": 73
+        },
+        {
+          "name": "Electro",
+          "text": "You know the Shocking Grasp cantrip. Wisdom is your Spellcasting Ability for this Spell. Additionally, you are Resistant to lightning damage.",
+          "page": 73
+        },
+        {
+          "name": "Animal Characteristic",
+          "text": "Your body possesses a unique mammalian trait, granting you abilities associated with that animal. You can pick two of the following:\nRetractable Claws. You have retractable claws, which you can use for combat. Your unarmed strikes deal an additional 1d4 slashing damage while you have no weapons equipped.\nNimble Climber. You have a climbing speed equal to your walking speed.\nSensitive Ears. You have exceptional hearing, giving you advantage on Perception checks that rely on sound.\nEnhanced Agility. You are exceptionally nimble. When you make a long jump, you can cover twice the normal distance. Additionally, you have advantage on Dexterity (Acrobatics) checks to avoid being knocked prone.\nExcellent Smell. You have an exceptional sense of smell, giving you advantage on Perception checks that rely on scent. You can detect invisible or hidden creatures within 10 feet if they have a distinctive scent.\nBrute Strength. Your upper body strength allows you to grapple with ease. You gain proficiency in Athletics, and when you hit with an unarmed strike, you can attempt to grapple the target as a bonus action.\nFleet Footed. Your powerful legs grant you speed. Your base walking speed increases by 10 feet.\nGood Swimmer. You have a swimming speed equal to your walking speed and can hold your breath for up to 15 minutes.\nHunter Prowess. You are adept at moving quietly. You gain advantage when rolling Stealth checks, and difficult terrain doesn’t cost you extra movement while you are moving in stealth.\nTough Hide. Your thick hide grants you additional protection. Your Armor Class increases by 1 while you are not wearing heavy armor.\nScavenger Resilience. When you drop to 0 hit points but aren’t killed outright, you can drop to 1 hit point instead. You can’t use this feature again until you finish a long rest.\nOpposable Thumbs. You have agile hands and can use your feet for delicate tasks. You gain proficiency in Sleight of Hand, and you can manipulate simple objects with your feet as though they were hands.\nLeap. You can make powerful pouncing attacks. When you jump at least 10 feet toward a creature and hit it with a melee attack, you can deal an extra 1d6 damage. Additionally, the target must succeed on a Strength save DC equal to 8 + your Strength modifier + your proficiency bonus, or be knocked prone.\nFerocity. You can use your action to make a reckless attack, gaining advantage on melee attack rolls until the end of your turn. However, attack rolls against you also have advantage until the start of your next turn. You can use this feature once per short or long rest.\nThick Coat. You have adapted to colder environments. You have resistance to cold damage and advantage on Constitution saving throws against the effects of extreme cold.",
+          "page": 73
+        },
+        {
+          "name": "Sulong Transformation",
+          "text": "Starting at 3rd Level, if you can see the full moon, you can use your action to channel moonlight energy into your body and transform into a powerful bright white primal form with longer hair and enhanced size, bolstering your strength, speed, and electro.\nYour transformation lasts for 10 minutes or until you end it as a Bonus Action. During it, your speed increases by 60 feet, you have advantage on strength and dexterity checks, advantage on attack rolls, and you can deal extra lightning damage when you deal damage with an Attack or a spell. The extra lightning damage equals your level. When this feature end, gain 1 exhaustion. Once you use this trait, you can’t use it again until you finish a Long Rest.",
+          "page": 73
+        }
+      ],
+      "abilityIncrease": {
+        "points": 3
+      },
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.cyborg",
+      "kind": "race",
+      "name": "Cyborg",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 75
+      },
+      "optional": true,
+      "text": "The changes to cyborgs are as follows.\nYour cyborg will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Constitution score increases by 2, and one other ability score of your choice increases by 1.",
+          "page": 75
+        },
+        {
+          "name": "Age",
+          "text": "Depending on how much of their body has been modified, cyborgs may have longer lifespans compared to other races. In theory, they should still remain mortal so long as parts of them still remain organic.",
+          "page": 75
+        },
+        {
+          "name": "Alignment",
+          "text": "It can be assumed that many cyborgs act Lawfully, but they can technically fall under any alignment.",
+          "page": 75
+        },
+        {
+          "name": "Size",
+          "text": "Cyborgs in the One Piece World are typically 5-6 feet tall. Some can rest far outside this range, but your size will count as medium.",
+          "page": 75
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 75
+        },
+        {
+          "name": "Steel Skin",
+          "text": "Your body has a layer of defensive metal beneath or replacing your skin, which can be enhanced with armor:\nYou gain a +1 bonus to Armor Class.\nTo reinforce your metal skin, first you must disassemble a piece of mundane or magical armor. After doing so, you must spend an hour consistently incorporating these parts into your skin. Once you are finished, you gain the AC and bonuses of your chosen armor as if you were wearing it, as well as all of the side-effects of that armor. To remove this armor, you must spend an hour replacing it with artificial skin.\nThis metal skin cannot be removed from your body against your will.",
+          "page": 75
+        },
+        {
+          "name": "Robotic Resistance",
+          "text": "You have advantage on Saving Throws against being Poisoned, and you have Resistance to poison damage.",
+          "page": 75
+        },
+        {
+          "name": "Refueling",
+          "text": "In place of eating food and drinking water each day, you must instead consume an equivalent amount of fuel to what a normal creature of your size would eat. The type of fuel you use can range from cola to gasoline (your choice), which costs roughly ฿5,000. Starvation rules apply to consuming fuel as they would with food for another race.",
+          "page": 75
+        },
+        {
+          "name": "Maintenance",
+          "text": "Instead of sleeping each day, you instead conduct maintenance on your body during a Long Rest. This includes oiling your joints, repairing any dents or broken parts, or fixing anything else you’d need to maintain. This takes at least six hours to complete. You are able to see and hear normally while you complete these tasks.",
+          "page": 75
+        },
+        {
+          "name": "Cyborg Upgrades",
+          "text": "You install a weapon or tool feature of your choice listed below into your body. Each time you level up, you can choose to completely replace one of these features with another one. At 5th level, you can install and use a second upgrade feature of your choice. At 10th level, you can install and use a third upgrade feature of your choice. At 15th level, you can install and use a fourth upgrade feature of your choice. At 20th level, you can install and use a fifth upgrade feature of your choice:\nFlail Arm. When you make an unarmed strike or melee weapon attack on your turn that requires your arms to use, you can choose to extend its reach for that attack by 5 feet. You can only use this once on a single melee attack per turn.\nFlame Breath. You learn the Create Bonfire cantrip, which you produce from your mouth. Constitution is your Spellcasting Ability for this Spell.\nRefrigerated Stomach. You may store up to 30 pounds of gear in your body, concealed and protected by your metallic flesh. This also acts to chill and preserve any food or fuel you may want to store.\nAir Blast. You learn the Thunderclap cantrip, which you produce from air emitted from your body. Constitution is your Spellcasting Ability for this Spell.\nPropeller Body. Your limbs can rotate at extreme speeds in water, acting as a boat propeller. You gain a swimming speed of 25 feet.\nCentaur Form. Using an action to morph your lower body into the form of a horse, your speed increases by 10 feet for one minute. Additionally, you have advantage on all Strength checks and you can allow a medium or smaller creature to use you as a mount for the duration. Once you use this feature, you cannot use it again until you complete a short or long rest.\nShape-Memory Alloy Body. You gain one skill proficiency and one tool proficiency of your choice, which you can choose to swap out each time you level up.\nArsenal Infusion. You can spend an hour incorporating a single weapon you are proficient with into your body. Upon doing so, you can use this weapon as you normally would. Additionally, this weapon cannot be taken or removed from your body against your will. You may spend an hour removing this weapon from your body.\nNight Lens. You can see in dim light within 60 feet of you as if it were bright light, and in Darkness as if it were dim light. You can’t discern color in Darkness, only Shades of Gray.\nHeadlights. Lights on your body emit bright light in a 20-foot radius and dim light for an additional 20 feet.\nExtended Flail. This is an upgrade of the Flail Arm Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. Your Flail Arm reach extends to 10 feet.\nFlamethrower. This is an upgrade of the Flame Breath Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Burning Hands spell cast at the 2nd-Level, which acts as a powerful spray of fire emitted from your body. Constitution is your Spellcasting Ability for this Spell. Once you use this feature, you cannot use it again until you complete a long rest.\nRadical Beam. This is an upgrade of the Air Blast Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Aganazzar’s Scorcher spell, which acts as a powerful explosive laser beam emitted from your body. Constitution is your Spellcasting Ability for this Spell and the damage is radiant instead of fire. Once you use this feature, you cannot use it again until you complete a long rest.\nGeneral Cannon. This is an upgrade of the Air Blast Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Shatter spell, which you produce from air emitted from your body. Constitution is your Spellcasting Ability for this Spell. Once you use this feature, you cannot use it again until you complete a long rest.\nLarger Propellers. This is an upgrade of the Propeller Body Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You can now spin parts of your body like a propeller to lift you into the air. You now have a flying speed of 10 feet.\nGeneral Form. This is an upgrade of the Centaur Form Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You can now transform your body into a larger robotic form until you run out of energy. You can cast the Enlarge/Reduce spell on yourself once with this trait, using only the spell’s enlarge option, appearing to transform into a larger metal version of yourself. You regain the ability to cast this spell with this trait when you finish a long rest.\nAdvanced Shape-Memory Alloy. This is an upgrade of the Shape-Memory Alloy Body Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn an additional Skill of your choice. Additionally, you learn the Shield spell. Once you use this feature, you cannot use it again until you complete a long rest.\nGrand Arsenal. This is an upgrade of the Arsenal Infusion Feature, meaning you must also have that Upgrade learned in order to learn and use this one as well. You are able to implement one more weapon into your body using Arsenal Infusion.",
+          "page": 75
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "con": 2
+        }
+      },
+      "size": "Medium",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.lunarian",
+      "kind": "race",
+      "name": "Lunarian",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 78
+      },
+      "optional": true,
+      "text": "The changes to lunarians are as follows.\nYour lunarian will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Dexterity score increases by 3, and your Constitution score increases by 3.",
+          "page": 78
+        },
+        {
+          "name": "Age",
+          "text": "Lunarians live for an unknown period of time, but it can be assumed that they reach adulthood in their teens and live for around a century.",
+          "page": 78
+        },
+        {
+          "name": "Alignment",
+          "text": "There is no clear alignment that is consistent among all lunarians. Just about any alignment can be justified.",
+          "page": 78
+        },
+        {
+          "name": "Size",
+          "text": "Lunarians in the One Piece World are typically very tall, perhaps between 7 and 8 feet tall and weigh between 280 and 340 pounds. Your size is Medium.",
+          "page": 78
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 25 feet.",
+          "page": 78
+        },
+        {
+          "name": "Flight",
+          "text": "You have a flying speed of 50 feet. To use this speed, you can’t be wearing medium or heavy armor.",
+          "page": 78
+        },
+        {
+          "name": "Fire Resistance",
+          "text": "You have resistance to fire damage.",
+          "page": 78
+        },
+        {
+          "name": "Ignite",
+          "text": "You know the Produce Flame cantrip. When you reach 3rd level, you can cast the Burning Hands spell as a 2nd-level spell once with this trait and regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the Flame Blade spell once with this trait and regain the ability to do so when you finish a long rest. Constitution is your spellcasting ability for these spells.",
+          "page": 78
+        },
+        {
+          "name": "Eternal Flame",
+          "text": "A flame appears from your spine. As an action, while in this form, you have resistance to all damage types, but all of your attack rolls have disadvantage and your flight speed decreases by 20 ft. until you use a bonus action to remove this effect.",
+          "page": 78
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "dex": 3,
+          "con": 3
+        }
+      },
+      "size": "Medium",
+      "speed": 25,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "race.buccaneer",
+      "kind": "race",
+      "name": "Buccaneer",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 79
+      },
+      "optional": true,
+      "text": "Buccaneers are a nearly-extinct special race of humanoids. Unlike the other hybrid races, buccaneers are all descended from common ancestors. They carry at least some giant blood.\nYour buccaneer will have these traits.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength score increases by 2 and your Constitution score increases by 3.",
+          "page": 79
+        },
+        {
+          "name": "Age",
+          "text": "Buccaneers reach adulthood in their teens and live for around a century.",
+          "page": 79
+        },
+        {
+          "name": "Alignment",
+          "text": "It can be assumed that many Buccaneers are good, but they can technically fall under any alignment.",
+          "page": 79
+        },
+        {
+          "name": "Size",
+          "text": "Buccaneers are between 8 and 10 feet tall and weigh between 280 and 340 pounds. Your size is Large.",
+          "page": 79
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed is 30 feet.",
+          "page": 79
+        },
+        {
+          "name": "Giant’s Blood",
+          "text": "Due to their giant ancestry, Buccaneers have advantage on Strength-based checks and saving throws against being frightened.",
+          "page": 79
+        },
+        {
+          "name": "Maritime Adaptation",
+          "text": "Buccaneers have a history connected to the sea. They have proficiency in the Athletics or Survival skill.",
+          "page": 79
+        },
+        {
+          "name": "Sturdy Build",
+          "text": "Your large size and resilient nature provide you with a natural armor bonus. When not wearing armor, your AC is 13 + your Constitution modifier.",
+          "page": 79
+        },
+        {
+          "name": "Powerful Build",
+          "text": "You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.",
+          "page": 79
+        },
+        {
+          "name": "Anchor Throw",
+          "text": "Once per short or long rest, as an action, you can leverage your giant strength to pick up a loose object up to 3000 lbs. with great force. During the same action or a future separate action, you can make a ranged attack with the object, treating it as an improvised ranged weapon with a normal range of 20 feet and a long range of 60 feet. On a hit, it deals 1d12 in bludgeoning damage, gaining a extra dice at level 5, 11 and 17.",
+          "page": 79
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 2,
+          "con": 3
+        }
+      },
+      "size": "Large",
+      "speed": 30,
+      "auto": [
+        "abilityIncrease",
+        "size",
+        "speed"
+      ]
+    },
+    {
+      "id": "subrace.punk_experiment.centaur",
+      "kind": "subrace",
+      "name": "Centaur",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 81
+      },
+      "parent": "race.punk_experiment",
+      "text": "Centaurs have the lower body of a four legged animal and the upper body of a human coming from the animals neck, granting them speed and endurance.",
+      "traits": [
+        {
+          "name": "Ability Score Increase",
+          "text": "Your Strength score increases by 1.",
+          "page": 81
+        },
+        {
+          "name": "Size",
+          "text": "Centaurs size depends on the users original height, choose your size from either Medium, Large, or Huge.",
+          "page": 81
+        },
+        {
+          "name": "Speed",
+          "text": "Your base walking speed increases to 40 feet.",
+          "page": 81
+        },
+        {
+          "name": "Animalistic Build",
+          "text": "You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift.",
+          "page": 81
+        },
+        {
+          "name": "Kick",
+          "text": "Your Hind legs are natural weapons, which you can use to make unarmed strikes. They deal 1d4 bludgeoning or slashing (depending on the animal legs you choose) damage on a hit.",
+          "page": 81
+        },
+        {
+          "name": "Charge",
+          "text": "If you move at least 30 feet straight toward a target and then hit it with a melee attack on the same turn, the target must succeed on a Strength save DC equal to 8 + your Strength modifier + your proficiency bonus, or be knocked prone.",
+          "page": 81
+        }
+      ],
+      "abilityIncrease": {
+        "fixed": {
+          "str": 1
+        }
+      },
+      "auto": [
+        "abilityIncrease"
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

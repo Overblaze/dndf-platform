@@ -315,6 +315,7 @@
       "name": "Cursed Soul",
       "group": "Warrior Types",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -382,7 +383,13 @@
           "text": "Beginning at 18th level, your Silver Mist feature is now enhanced even further. While using Silver Mist, you grow even more extra appendages and heads that give you these additional bonuses:\nWhen you hit a creature with an Attack, you can use your Reaction to force that creature to make a Strength saving throw. On a failed save, the creature is knocked prone, as if struck by several attacks at once.\nAdditionally, your extra heads give you advantage on saving throws against being blinded, deafened, stunned or knocked unconcious.\nYou can use your Demon Strike feature on any attack you make against a creature within 30 feet, instead of once per turn, by expending a Cursed Spirit die.",
           "page": 204
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 202
+        }
+      }
     },
     {
       "id": "subclass.warrior.kuja_huntress",
@@ -621,6 +628,7 @@
       "name": "Ramen Kenpo",
       "group": "Warrior Types",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -696,7 +704,13 @@
           "text": "At 18th level, you have achieved absolute perfection in Ramen Kenpo. Ra-Men’s Formal Suit’s temporary hit points increases to 4 times your Warrior level and while Ra-Men’s Formal Suit is active, you gain an additional attack option:\nThousand Noodle Whip. Lash out in a 40-foot-long, 5- foot-wide line. Creatures in the area must make a Dexterity saving throw against your Ramen save DC, taking 5 Ramen Dice in bludgeoning damage on a failed save, or half as much on a success. On a failed save, they are restrained, repeating the save at the end of each turn.\nAdditionally, add an extra Ramen Dice to the temp hit point roll of your Home Cooking feature.",
           "page": 206
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 206
+        }
+      }
     },
     {
       "id": "subclass.warrior.ryuo_samurai",
@@ -705,6 +719,7 @@
       "name": "Ryuo Samurai",
       "group": "Warrior Types",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -776,7 +791,13 @@
           "text": "At 18th level, your dual weapons permanently awaken as Black Blades, infused with the highest form of Ryuo. Both weapons count as magical for overcoming resistance and immunity, gain a +2 bonus to attack and damage rolls, and critical hits with these weapons deal full damage.",
           "page": 207
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 207
+        }
+      }
     },
     {
       "id": "subclass.warrior.slow_cutting",
@@ -832,5 +853,5 @@
       ]
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

@@ -566,6 +566,7 @@
       "name": "Satellite Lineage",
       "group": "Hybrid Lineage",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -620,7 +621,13 @@
           "text": "Starting at 18th level, while in combat whenever you switch your Primary Satellite to a different satellite, the newly designated Primary Satellite regains hit points equal to 4 × the number of your non-destroyed satellites.",
           "page": 139
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 144
+        }
+      }
     },
     {
       "id": "subclass.hybrid.seraphim",
@@ -629,6 +636,7 @@
       "name": "Seraphim Lineage",
       "group": "Hybrid Lineage",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -674,7 +682,13 @@
           "text": "Starting at 18th level, you have reached the pinnacle of your Seraphim upgrades, unlocking your full power. You gain the following traits:\nPerfected Flame Core. Your Artificial Flame Core is no longer limited in duration or uses.\nV4 L-Wings. Your flying speed increases by 20 feet.",
           "page": 140
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 145
+        }
+      }
     },
     {
       "id": "subclass.hybrid.twin_devil",
@@ -738,5 +752,5 @@
       ]
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

@@ -1,0 +1,499 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.priest",
+      "kind": "class",
+      "name": "Priest",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 169
+      },
+      "flavor": "The Priest is a conduit of divine power, drawing strength from their unwavering faith and connection to higher beings. Through prayer, devotion, and spiritual willpower, they channel holy energy to protect allies, banish evil, and invoke miracles that shape the battlefield. Priests are not just healers but defenders of will, wielding sacred powers to inspire hope in a world fraught with darkness.",
+      "quote": "PROTECTING IS NOT THE SAME AS FIGHTING. --- Pell",
+      "hitDie": 8,
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor",
+          "medium_armor",
+          "shields"
+        ],
+        "weapons": [
+          "simple"
+        ],
+        "tools": [],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "history",
+            "insight",
+            "medicine",
+            "persuasion",
+            "religion"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a mace or (b) a Warhammer (if proficient)",
+        "(a) Scale Mail, (b) Thick Shirt, or (c) Chain Mail (if proficient)",
+        "(a) a Musket and 20 gun bullets or (b) any simple weapon",
+        "(a) a priest’s pack or (b) an explorer’s pack",
+        "A Shield and a holy symbol"
+      ],
+      "progression": {
+        "columns": {
+          "cantripsKnown": [
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "slots1": [
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots2": [
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots3": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots4": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3
+          ],
+          "slots5": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots6": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2
+          ],
+          "slots8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slots9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "slots1",
+          "name": "1st-level slots",
+          "max": "col.slots1",
+          "recharge": "long"
+        },
+        {
+          "id": "slots2",
+          "name": "2nd-level slots",
+          "max": "col.slots2",
+          "recharge": "long"
+        },
+        {
+          "id": "slots3",
+          "name": "3rd-level slots",
+          "max": "col.slots3",
+          "recharge": "long"
+        },
+        {
+          "id": "slots4",
+          "name": "4th-level slots",
+          "max": "col.slots4",
+          "recharge": "long"
+        },
+        {
+          "id": "slots5",
+          "name": "5th-level slots",
+          "max": "col.slots5",
+          "recharge": "long"
+        },
+        {
+          "id": "slots6",
+          "name": "6th-level slots",
+          "max": "col.slots6",
+          "recharge": "long"
+        },
+        {
+          "id": "slots7",
+          "name": "7th-level slots",
+          "max": "col.slots7",
+          "recharge": "long"
+        },
+        {
+          "id": "slots8",
+          "name": "8th-level slots",
+          "max": "col.slots8",
+          "recharge": "long"
+        },
+        {
+          "id": "slots9",
+          "name": "9th-level slots",
+          "max": "col.slots9",
+          "recharge": "long"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Divine Domain",
+        "level": 1,
+        "featureLevels": [
+          1,
+          2,
+          6,
+          8,
+          17
+        ]
+      },
+      "subclassIntro": {
+        "text": "Divine domains are used to define your god, religion, and spiritual beliefs. These are important to how your spirit shapes your powers and abilities by channeling divine energy from the beyond.",
+        "page": 171
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Holy Power (Spellcasting)",
+          "text": "As a conduit for divine energy, you can cast Priest Holy Powers (Spells). Priest holy powers count as Priest Spells in Chapter 4.",
+          "page": 170,
+          "sections": [
+            {
+              "name": "Natural Abilities (Cant rips)",
+              "text": "At 1st Level, you know three Cantrips of your choice from the Priest spell list. You learn additional Priest cant rips of your choice at higher levels, as shown in the Natural Abilities Known (Can trips Known) column of the Priest table.\nAdditionally, whenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace one natural ability (cantrip) you learned from this class’s Special Ability feature with another cantrip from the priest spell list.",
+              "page": 170
+            },
+            {
+              "name": "Preparing and Casting Holy Powers (Spells)",
+              "text": "The Priest table shows how many Holy Power Slots (Spell Slots) you have to cast your Priest Holy Powers of 1st Level and higher. To cast one of these holy powers , you must expend a slot of the holy power’s level or higher. You regain all expended Spell Slots when you finish a long rest.\nYou prepare the list of Holy Powers (Spells) that are available for you to cast, choosing from the Priest spell list. When you do so, choose a number of Priest holy powers equal to your Wisdom modifier + your Priest level (minimum of one holy power). The holy power must be of a level for which you have Holy Power Slots.\nFor example, if you are a 3rd-level Priest, you have four 1st-level and two 2nd-level Holy Power Slots. With a Wisdom of 16, your list of prepared Holy Powers can include six holy powers of 1st or 2nd Level, in any combination. If you prepare the 1st-level holy power (spell) Cure Wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the holy power doesn’t remove it from your list of prepared holy powers.\nYou can change your list of prepared holy powers when you finish a long rest. Preparing a new list of Priest holy powers requires time spent in prayer and meditation: at least 1 minute per Holy Power Level for each holy power on your list.",
+              "page": 170
+            },
+            {
+              "name": "Special Power Ability (Spellcasting)",
+              "text": "Wisdom is your Special Power (Spellcasting) ability for your Priest Holy Powers (Spells). The strength of your holy powers comes from your devotion to your God. You use your Wisdom whenever a Priest holy power (spell) refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a Priest holy power you cast and when making an Attack roll with one.\nSpell save DC = 8 + your proficiency bonus + your Wisdom modifier\nSpell attack modifier = your proficiency bonus + your Wisdom modifier",
+              "page": 170
+            },
+            {
+              "name": "Ritual Casting",
+              "text": "You can cast a Priest holy power as a ritual if that holy power has the ritual tag and you have the holy power prepared.",
+              "page": 170
+            },
+            {
+              "name": "Special Power Focus (Spellcasting Focus)",
+              "text": "You can use a holy symbol as a special power focus for your Priest Holy Powers.",
+              "page": 170
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Divine Domain",
+          "text": "Choose one domain related to your teachings: Cherry Blossom, Color, Death, Desert, Infernal, or Sky Domain, all detailed at the end of the class description. Your choice grants you domain Spells and other features when you choose it at 1st Level. It also grants you additional ways to use Channel Divinity when you gain that feature at 2nd Level, and additional benefits at 6th, 8th, and 17th levels.",
+          "page": 170,
+          "sections": [
+            {
+              "name": "Domain Holy Powers (Spells)",
+              "text": "Each domain has a list of holy powers (spells)—its domain holy powers—that you gain at the Priest levels noted in the domain description. Once you gain a domain holy power, you always have it prepared, and it doesn’t count against the number of Holy Powers you can prepare each day.\nIf you have a domain holy power (spell) that doesn’t appear on the Priest spell list, the holy power is nonetheless a Priest holy power for you.",
+              "page": 170
+            }
+          ],
+          "grantsSubclass": true
+        },
+        {
+          "level": 2,
+          "name": "Channel Divinity",
+          "text": "At 2nd level, you gain the ability to channel divine energy directly from your spiritual willpower, using that energy to fuel special powers. You start with two such effects: Will of Divine and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description.\nWhen you use your Channel Divinity, you choose which effect to create. You can use this feature twice, regaining all used when you finish a short or long rest to use your Channel Divinity again.\nSome Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your priest holy power save DC.\nBeginning at 6th level, you can use your Channel Divinity three times between rests, and beginning at 18th level, you can use it four times between rests.",
+          "page": 170,
+          "sections": [
+            {
+              "name": "Channel Divinity: Will of Divine",
+              "text": "As an action, you present your holy symbol and speak a prayer. Each enemy humanoid that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
+              "page": 171
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Kami’s Will",
+          "text": "Starting at 3rd level, the divine willpower flowing through your soul makes you immune to the disease and poisoned conditions and resistant to poison damage.\nAdditionally, you have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your priest level x 5.\nAs an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool.\nAlternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Kami’s Will, expending hit points separately for each one.",
+          "page": 171
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.\nAdditionally, whenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace one natural ability (cantrip) you learned from this class’s Special Ability feature with another cantrip from the priest spell list.",
+          "page": 171,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Overwhelming Willpower",
+          "text": "Starting at 5th level, when a humanoid fails its saving throw against your Will of Divine feature, the creature is instantly knocked unconscious if its challenge rating is at or below a certain threshold, as shown in the Overwhelming Willpower table.",
+          "page": 171,
+          "sections": [
+            {
+              "name": "Overwhelming Willpower",
+              "text": "",
+              "page": 171,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Priest Level",
+                      "Effects Creatures of CR…"
+                    ],
+                    [
+                      "5th",
+                      "1/2 or lower"
+                    ],
+                    [
+                      "8th",
+                      "1 or lower"
+                    ],
+                    [
+                      "11th",
+                      "2 or lower"
+                    ],
+                    [
+                      "14th",
+                      "3 or lower"
+                    ],
+                    [
+                      "17th",
+                      "4 or lower"
+                    ]
+                  ],
+                  "page": 171
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 8,
+          "name": "Blessed Strikes",
+          "text": "When you reach 8th level, you are blessed with divine might in battle. When a creature takes damage from one of your cantrips or weapon attacks, you can also deal 1d8 radiant damage to that creature. Once you deal this damage, you can’t use this feature again until the start of your next turn.",
+          "page": 171
+        },
+        {
+          "level": 10,
+          "name": "Spiritual Willpower",
+          "text": "Beginning at 10th level, you can channel your spiritual willpower directly through yourself to manifest it and wish for greater power.\nChanneling this divine energy to make a wish requires an action. Describe the effect you want, and roll percentile dice. If you roll a number equal to or lower than your Priest level, your wish comes true. The DM chooses the Nature of the wish; the Effect of any Priest spell or Priest domain spell would be appropriate.\nIf this effect succeeds, you can’t use this feature again for 7 days. Otherwise, you can use it again after you finish a long rest.\nAt 20th level, your Spiritual Willpower succeeds automatically, no roll required.",
+          "page": 171
+        },
+        {
+          "level": 14,
+          "name": "Dispelling Hand",
+          "text": "Starting at 14th level, you can use your action to end one condition on yourself or on one willing creature that you touch.\nYou can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain expended uses when you finish a long rest.",
+          "page": 171,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

@@ -1,10 +1,19 @@
 import { ABILITY_NAMES, columnLabel, proficiencyBonus, signed, type Ability, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry, type SectionDef, type TableDef, type TraitDef } from '@dndf/engine';
-import { Fragment, useMemo, useState, type ReactNode } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { createContext, Fragment, useContext, useMemo, useState, type ReactNode } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { RuleText } from '../components/RuleText';
-import { backgrounds, classes, crewRoles, feats, generalRules, optionGroupsOf, races, rules, subclassesOf, subracesOf } from '../lib/rules';
+import { ruleSet, VERSION_NAMES, type RuleSet } from '../lib/rules';
 
-const link = (id: string) => `/library/${encodeURIComponent(id)}`;
+// The handbook being read. It travels in the address ("?v=8.8") so links and reloads keep it.
+const SetContext = createContext<RuleSet>(ruleSet('dndf-10'));
+const useSet = () => useContext(SetContext);
+function useLink() {
+  const { version } = useSet();
+  return (id: string) => `/library/${encodeURIComponent(id)}${version === 'dndf-8.8' ? '?v=8.8' : ''}`;
+}
+function useHome() {
+  return useSet().version === 'dndf-8.8' ? '/library?v=8.8' : '/library';
+}
 const ordinal = (n: number) => `${n}${n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'}`;
 
 function Feature({ feature, book }: { feature: FeatureDef | OptionDef; book: string }) {
@@ -59,6 +68,9 @@ function ClassTable({ cls }: { cls: ClassEntry }) {
 }
 
 function ClassView({ cls }: { cls: ClassEntry }) {
+  const { subclassesOf, optionGroupsOf } = useSet();
+  const link = useLink();
+  const home = useHome();
   const book = cls.source.book;
   const prof = cls.proficiencies as { armor?: string[]; weapons?: string[]; tools?: string[]; skills?: { choose?: number; from?: string[] | string; text?: string } } | undefined;
   const show = (list?: string[]) => (list?.length ? list.map((x) => x.replace(/_/g, ' ')).join(', ') : 'None');
@@ -70,7 +82,7 @@ function ClassView({ cls }: { cls: ClassEntry }) {
   return (
     <>
       <section className="card">
-        <p className="page-ref"><Link to="/library">Library</Link> · Class · {book}, p.{cls.source.page}</p>
+        <p className="page-ref"><Link to={home}>Library</Link> · Class · {book}, p.{cls.source.page}</p>
         <h1>{cls.name}</h1>
         {typeof cls.quote === 'string' && <p className="quote">{cls.quote}</p>}
         {typeof cls.flavor === 'string' && <p className="feature-text">{cls.flavor}</p>}
@@ -126,6 +138,9 @@ const FACTS: [string, string][] = [
 ];
 
 function EntryView({ entry }: { entry: RuleEntry }) {
+  const { rules, subracesOf } = useSet();
+  const link = useLink();
+  const home = useHome();
   if (entry.kind === 'class') return <ClassView cls={entry as ClassEntry} />;
   const parent = typeof entry.parent === 'string' ? rules.get(entry.parent) : undefined;
   const options = (entry.options ?? []) as OptionDef[];
@@ -140,7 +155,7 @@ function EntryView({ entry }: { entry: RuleEntry }) {
     <>
       <section className="card">
         <p className="page-ref">
-          <Link to="/library">Library</Link>
+          <Link to={home}>Library</Link>
           {parent && <> · <Link to={link(parent.id)}>{parent.name}</Link></>} · {KIND_LABEL[entry.kind] ?? entry.kind}
           {entry.optional === true && ' (optional)'} · {entry.source.book}, p.{entry.source.page}
         </p>
@@ -193,6 +208,7 @@ function EntryView({ entry }: { entry: RuleEntry }) {
 }
 
 function EntryLinks({ entries, detail }: { entries: RuleEntry[]; detail?: (entry: RuleEntry) => string }) {
+  const link = useLink();
   return (
     <>
       {entries.map((entry) => (
@@ -226,7 +242,7 @@ interface Hit {
   page: number;
 }
 
-function search(query: string): Hit[] {
+function search(query: string, rules: RuleSet['rules']): Hit[] {
   const q = query.trim().toLowerCase();
   if (q.length < 2) return [];
   const hits: Hit[] = [];
@@ -242,31 +258,29 @@ function search(query: string): Hit[] {
   return hits.slice(0, 80);
 }
 
-export function LibraryPage() {
-  const { id } = useParams();
+function LibraryHome() {
+  const { version, rules, classes, races, backgrounds, crewRoles, feats, generalRules, subclassesOf, subracesOf } = useSet();
+  const link = useLink();
+  const [, setParams] = useSearchParams();
   const [query, setQuery] = useState('');
-  const hits = useMemo(() => search(query), [query]);
-  const entry = id ? rules.get(decodeURIComponent(id)) : undefined;
-
-  if (id) {
-    return entry ? <EntryView entry={entry} /> : (
-      <section className="card">
-        <h1>Not in the library</h1>
-        <p>Nothing here is called that.</p>
-        <Link className="btn" to="/library">Back to the library</Link>
-      </section>
-    );
-  }
+  const hits = useMemo(() => search(query, rules), [query, rules]);
   return (
     <>
       <section className="card">
         <h1>Library</h1>
-        <p className="soft">Chapters 1 to 3 of the DnDF Expanded Handbook v10, word for word, with the page for everything.</p>
+        <p className="soft">Chapters 1 to 3 of the DnDF Expanded Handbook, word for word, with the page for everything.</p>
+        <div className="segmented" role="radiogroup" aria-label="Handbook">
+          {(Object.keys(VERSION_NAMES) as (keyof typeof VERSION_NAMES)[]).map((v) => (
+            <button key={v} role="radio" aria-checked={version === v} className={version === v ? 'active' : ''} onClick={() => setParams(v === 'dndf-8.8' ? { v: '8.8' } : {})}>
+              {VERSION_NAMES[v]}
+            </button>
+          ))}
+        </div>
         <label className="field">
           <span className="label">Search everything by name</span>
           <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Ki, Mink, Shipwright, Alert, Parry Blow…" />
         </label>
-        {query.trim().length >= 2 && hits.length === 0 && <p>Nothing called that yet.</p>}
+        {query.trim().length >= 2 && hits.length === 0 && <p>Nothing called that in this handbook.</p>}
         {hits.map((hit, i) => (
           <Link key={i} className="resource character-link" to={link(hit.id)}>
             <span className="resource-name">{hit.title}</span>
@@ -301,8 +315,26 @@ export function LibraryPage() {
         <EntryLinks entries={generalRules} />
       </Shelf>
       <section className="card">
-        <p className="page-ref">Still to be added: spell lists, Haki and Spirit Surges, the armory, and the v8.8 handbook.</p>
+        <p className="page-ref">Still to be added: spell lists, Haki and Spirit Surges, and the armory.</p>
       </section>
     </>
+  );
+}
+
+export function LibraryPage() {
+  const { id } = useParams();
+  const [params] = useSearchParams();
+  const set = ruleSet(params.get('v') === '8.8' ? 'dndf-8.8' : 'dndf-10');
+  const entry = id ? set.rules.get(decodeURIComponent(id)) : undefined;
+  return (
+    <SetContext.Provider value={set}>
+      {!id ? <LibraryHome /> : entry ? <EntryView entry={entry} /> : (
+        <section className="card">
+          <h1>Not in this handbook</h1>
+          <p>Nothing in {VERSION_NAMES[set.version]} is called that. It may be in the other handbook.</p>
+          <Link className="btn" to={set.version === 'dndf-8.8' ? '/library?v=8.8' : '/library'}>Back to the library</Link>
+        </section>
+      )}
+    </SetContext.Provider>
   );
 }

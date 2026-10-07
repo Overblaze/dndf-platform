@@ -1,0 +1,2508 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.devilforged",
+      "kind": "class",
+      "name": "Devilforged",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 112
+      },
+      "flavor": "The Devilforged are weapon masters who harness the mysterious powers of Devil Fruits through infused items, wielding incredible abilities that bend the forces of nature and magic to their will. By synthesizing the lineage factors of these fruits into their gear, Devilforged enhance their weapons with explosive elemental power, shaping their combat style through relentless experimentation. Their bound equipment becomes an extension of their very being, capable of great destruction, but always tied to the unique essence of the Sea Devil’s curse.",
+      "quote": "… SCIENCE WOULD NEVER PROGRESS IF YOU SPEND ALL DAYS WORRYING ABOUT STUFF LIKE THAT! --- Vegapunk Stella",
+      "hitDie": 8,
+      "savingThrows": [
+        "wis",
+        "cha"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor"
+        ],
+        "weapons": [
+          "simple"
+        ],
+        "tools": [
+          "One type of tool of your choice"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "arcana",
+            "deception",
+            "history",
+            "intimidation",
+            "investigation",
+            "nature",
+            "religion"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a musket and 20 ammunition or (b) any simple weapon",
+        "a tool of your choice",
+        "(a) a dungeoneer’s pack or (b) an explorer’s pack Thick shirt, any simple weapon, and two daggers"
+      ],
+      "progression": {
+        "columns": {
+          "cantripsKnown": [
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "powersKnown": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            10,
+            11,
+            11,
+            12,
+            12,
+            13,
+            13,
+            14,
+            14,
+            15,
+            15
+          ],
+          "powerSlots": [
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            5
+          ],
+          "slotLevel": [
+            "1st",
+            "1st",
+            "2nd",
+            "2nd",
+            "3rd",
+            "3rd",
+            "4th",
+            "4th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th",
+            "5th"
+          ],
+          "emanationsKnown": [
+            0,
+            2,
+            3,
+            3,
+            4,
+            4,
+            5,
+            5,
+            6,
+            6,
+            6,
+            7,
+            7,
+            7,
+            8,
+            8,
+            8,
+            9,
+            9,
+            9
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "powerSlots",
+          "name": "Devil Power slots",
+          "max": "col.powerSlots",
+          "recharge": "short"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Devilsmith",
+        "level": 1,
+        "featureLevels": [
+          1,
+          6,
+          10,
+          14
+        ]
+      },
+      "subclassIntro": {
+        "text": "Devilforged have a variety of methods of infusing Devil Fruit powers into their equipment and items. However, whichever type of items you tend to infuse the most will determine your Devilsmith style.",
+        "page": 116
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Devil Fruit Infusion (Spellcasting)",
+          "text": "You have mastered the art of infusing items with Devil Fruit powers through the use of “Green Blood”, which you have acquired by some means. Green Blood is made up of the synthesized lineage factors of Devil Fruits, which allows you to replicate the magical powers of Devil Fruits through your equipment. Through the use of these artificially infused items, which serve as your spellcasting focus, you can use a variety of powers (spells) to aid you in battle or adventure. Devil powers are the equivalent of “Spells” in 5th edition, and devil power slots are the same as “Spell Slots”. Make sure to view the “Casting a Spell” section in the Player’s Handbook for understanding Spellcasting in 5th Edition D&D. Devilforged powers count as Devilforged Spells in Chapter 4.",
+          "page": 113,
+          "sections": [
+            {
+              "name": "Natural Abilities (Cantrips)",
+              "text": "At 1st level, you know two cantrips of your choice from the devilforged spell list in Chapter 4, and can use them as natural abilities. You learn additional devilforged cantrips of your choice at higher levels, as shown in the Natural Abilities (Cantrips) Known column of the Devilforged table.",
+              "page": 113
+            },
+            {
+              "name": "Devil Power (Spell) Slots",
+              "text": "The Devilforged table shows how many Devil Power (Spell) slots you have to cast your devil powers of 1st through 5th level. The table also shows what the level of those slots is; all of your slots are the same level. To cast one of your Devil Powers of 1st level or higher, you must expend a Power (spell) slot. You regain all expended power (spell) slots when you finish a short or long rest.\nFor example, when you are 5th level, you have two 3rd-level power (spell) slots. To cast the 1st-level power (spell) witch bolt, you must spend one of those slots, and you cast it as a 3rd-level spell.",
+              "page": 113
+            },
+            {
+              "name": "Devil Powers (Spells) Known of 1st Level and Higher",
+              "text": "At 1st level, you know two 1st-level spells of your choice from the devilforged spell list.\nThe Spells Known column of the Devilforged table shows when you learn more devilforged spells of your choice of 1st level or higher. A spell you choose must be of a level no higher than what’s shown in the table’s Slot Level column for your level. When you reach 6th level, for example, you learn a new devilforged spell, which can be 1st, 2nd, or 3rd level.\nAdditionally, when you gain a level in this class, you can choose one of the devilforged spells you know and replace it with another spell from the devilforged spell list, which also must be of a level for which you have spell slots.",
+              "page": 113
+            },
+            {
+              "name": "Devil Power (Spellcasting) Ability",
+              "text": "Charisma is your spellcasting ability for your devilforged spells, so you use your Charisma whenever a spell refers to your spellcasting ability. In addition, you use your Charisma modifier when setting the saving throw DC for a devilforged spell you cast and when making an attack roll with one.\nSpell save DC = 8 + your proficiency bonus + your Charisma modifier\nSpell attack modifier = your proficiency bonus + your Charisma modifier",
+              "page": 113
+            },
+            {
+              "name": "Infused Item (Spellcasting Focus)",
+              "text": "You produce your devilforged powers (spells) and effects through a special devil fruit-infused item you possess. You must have a power (spellcasting) focus - specifically some kind of weapon, armor, tool, or other item that is infused with devil fruit powers - in hand when you cast any power (spell) with this (spellcasting) feature. You must be proficient with the item to use it this way.\nOnce you have chosen one item or piece of equipment you wish to have infused, it becomes your power (spellcasting) focus. You cannot have more than one item infused with devil fruit powers in this way. If you wish to move the essence stored within your current infused item of choice into a new item or create a new infused item after losing your old one, you must spend 1 hour during a long rest to move the Green Blood from your old weapon into the new item and removing them from the old item. You must be proficient with this new item. In addition, you may choose to infuse items that are connected to your body, but not made of flesh. For example, a cyborg’s iron fists may have devil fruit powers infused into them through green blood, without the cyborg itself having consumed a devil fruit, because they are technically not a part of the cyborg’s natural body.\nDue to the infusion of multiple devil fruits’ essence into your item through the use of Green Blood, the exact devil fruit power it possesses may not be clear. Instead, your item has an infusion of many different powers you have collected through researching, hunting, and foraging for devil fruits. It should not be treated as a creature that has consumed a devil fruit power, but instead as a tool that grows in power with it’s user over time. In addition, the item has the weaknesses of a devil fruit user in that it cannot be used as a power (spellcasting) focus while it is more than half- submerged in water or touching seastone.",
+              "page": 113
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Devilsmith",
+          "text": "At 1st level, you have developed a particular style of devilsmithing which determines the types of equipment or items you specialize at infusing with. You can choose between Blade Smithing, Devil Bombardier, Firearm Smithing, Gear Smithing, Mechadevil, or No Mi Trainer, all detailed at the end of the class description. Your choice grants you features at 1st level and again at 6th, 10th, and 14th level.",
+          "page": 114,
+          "grantsSubclass": true
+        },
+        {
+          "level": 2,
+          "name": "Sea Devil’s Emanations",
+          "text": "In your exploration of the origins of Devil Fruit powers through synthesizing their lineage factors, you have uncovered the true nature of the Sea Devil’s energies that imbue these powers, now capable of being released from your infused item.\nAt 2nd level, you gain two sea devil emanations of your choice. When you gain certain devilforged levels, you gain additional emanations of your choice, as shown in the Emanations Known column of the Devilfoged table. A level prerequisite refers to your level in this class.\nAdditionally, when you gain a level in this class, you can choose one of the emanations you know and replace it with another emanation that you could learn at that level.",
+          "page": 114,
+          "choices": {
+            "id": "emanations",
+            "count": "col.emanationsKnown",
+            "from": "optionGroup.devilforged_sea_devils_emanations",
+            "relearn": "levelUp"
+          }
+        },
+        {
+          "level": 3,
+          "name": "Infuse Devil Fruit",
+          "text": "At 3rd level, you learn to infuse Devil Fruit powers into non-magical weapons, merging the fruit’s abilities with the item. You can infuse one weapon at a time. Infusing a new weapon dispels the previous infusion. The infusion lasts indefinitely but can be removed prematurely with a full week of focused effort.\nInfusing a fruit into an item requires 8 hours of uninterrupted work and access to both the fruit and the item. The infused item retains its original properties and gains additional abilities based on the type of fruit.\nIf the item is broken or the infusion is removed, the devil fruit is cast back out onto the open seas and can be found using the “Finding a Devil Fruit” rules in Chapter 7 of the Dungeons and Devil Fruits Player’s Handbook.\nAt 8th level, you may infuse any number of non- magical weapons.",
+          "page": 114,
+          "sections": [
+            {
+              "name": "Devil Fruit Infusion Charges",
+              "text": "Charges refresh during a short rest.",
+              "page": 114,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Character",
+                      "Maximum Spell Charges",
+                      "Maximum Spell"
+                    ],
+                    [
+                      "Level",
+                      "(Paramecia)",
+                      "Charges (Logia)"
+                    ],
+                    [
+                      "3",
+                      "3",
+                      "2"
+                    ],
+                    [
+                      "5",
+                      "5",
+                      "3"
+                    ],
+                    [
+                      "8",
+                      "7",
+                      "5"
+                    ],
+                    [
+                      "12",
+                      "9",
+                      "7"
+                    ],
+                    [
+                      "16",
+                      "11",
+                      "9"
+                    ]
+                  ],
+                  "page": 114
+                }
+              ]
+            },
+            {
+              "name": "Body Enhancer Paramecia Infusion",
+              "text": "Body Enhancer fruits grant physical augmentation powers that extend to the infused weapon.\nDamage Boost. Increase the weapon’s damage die by one size up to d12 (e.g., d6 to d8, d8 to d10).\nEnhanced Strikes. Add a +1 bonus to attack and damage rolls equal to the fruit’s rarity modifier starting with uncommon. This effect does not allow the weapon to bypass resistances or immunities.\nFruit Effect. With your DM’s help, the weapon gains one feature from the fruit’s stat sheet. The feature cannot be the fruit’s awakening or any that would grant the user a resistance or immunity.",
+              "page": 114
+            },
+            {
+              "name": "Environment Altering Paramecia Infusion",
+              "text": "Environment Altering fruits affect the surroundings, enabling infused weapons to manipulate the battlefield.\nFruit Effect. With your DM’s help, the weapon gains one feature from the fruit’s stat sheet. The feature cannot be the fruit’s awakening or any that would grant the user a resistance or immunity.\nFruit Spells. Using your weapon as the source of the spells, you may cast a spell from the devil fruits spell list using the Devil Fruit Infusion Charges table.",
+              "page": 114
+            },
+            {
+              "name": "Substance Generator Paramecia Infusion",
+              "text": "Substance Generator fruits create materials, which the infused weapon uses for offense or utility.\nSubstance Generation. With your DM’s help, the weapon gains one of it’s non-awakening substance generation features from the fruit’s stat sheet. The substance comes out of the weapon.\nFruit Spells. Using your weapon as the source of the spells, you may cast a spell from the devil fruits spell list using the Devil Fruit Infusion Charges table.",
+              "page": 114
+            },
+            {
+              "name": "Special Paramecia Infusion",
+              "text": "Special Paramecia fruits grant unusual and versatile abilities to the infused weapon.\nElemental Damage. The weapon deals an additional 1d6 elemental damage (closest to the fruits element as you can) on a hit and the weapons attacks ignores resistances to non-magical damage.\nFruit Effect. With your DM’s help, the weapon gains one feature from the fruit’s stat sheet. The feature cannot be the fruit’s awakening or any that would grant the user a resistance or immunity.\nFruit Spells. Using your weapon as the source of the spells, you may cast a spell from the devil fruits spell list using the Devil Fruit Infusion Charges table.",
+              "page": 114
+            },
+            {
+              "name": "Zoan Infusion",
+              "text": "Zoan fruits channel animalistic traits into the infused weapon.\nEnhanced Strikes. Add a +1 bonus to attack and damage rolls equal to the fruit’s rarity modifier starting with uncommon. This effect does not allow the weapon to bypass resistances or immunities.\nBeastial Morph. The weapon’s range can increase by up to 5 ft. as the zoan beast sprouts from the handle. When you attack you may choose use one of the beasts attacks instead of your normal weapons attack.\nInfused Animal Form. As a bonus action, your weapon morphs into its devil fruit beast form, retaining parts of the infused weapons appearance. The animal has its own intelligence and acts on its own turn directly after your own. All non-elemental damage the beast inflicts is based on the infused weapons damage type.\nAdditionally, the beast gains the weapon attack from the infused weapon as part of its own action list.\nThe beast listens to the person it perceives as it’s wielder.",
+              "page": 115
+            },
+            {
+              "name": "Gaseous Logia Infusion",
+              "text": "Gaseous Logia fruits allow the weapon to harness intangible elemental properties.\nElemental Damage. The weapon deals an additional 1d6 elemental damage (closest to the fruits element as you can) on a hit and the weapons attacks ignores resistances to non-magical damage.\nExtend Reach. The weapon’s range can increase by up to 10 ft. when you attack.\nFruit Spells. Using your weapon as the source of the spells, you may cast a spell from the devil fruits spell list using the Devil Fruit Infusion Charges table.",
+              "page": 115
+            },
+            {
+              "name": "Liquid Logia Infusion",
+              "text": "Elemental Damage. The weapon deals an additional 1d6 elemental damage (closest to the fruits element as you can) on a hit and the weapons attacks ignores resistances to non-magical damage.\nFruit Effect. With your DM’s help, the weapon gains one feature from the fruit’s stat sheet. The feature cannot be the fruit’s awakening or any that would grant the user a resistance or immunity.\nFruit Spells. Using your weapon as the source of the spells, you may cast a spell from the devil fruits spell list using the Devil Fruit Infusion Charges table.",
+              "page": 115
+            },
+            {
+              "name": "Solid Logia Infusion",
+              "text": "Elemental Damage. The weapon deals an additional 1d6 elemental damage (closest to the fruits element as you can) on a hit and the weapons attacks ignores resistances to non-magical damage.\nShattering Impact. On a hit, the weapon creates fragments or spikes of solid material around the target, dealing 1d6 damage to creatures within 5 feet.\nFruit Spells. Using your weapon as the source of the spells, you may cast a spell from the devil fruits spell list using the Devil Fruit Infusion Charges table.",
+              "page": 115
+            },
+            {
+              "name": "Devil Fruit Prototype",
+              "text": "With your dungeon master’s permission when you gain this feature, infuse a prototype devil fruit into your weapon. If you do so, roll on the devil fruit generation tables in Chapter 6: Devil Fruits.",
+              "page": 115
+            }
+          ]
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.\nAdditionally, when you reach a level in this class that grants the Ability Score Improvement feature, you can do one of the following, representing the increased power of your infused item:\nReplace one cantrip you learned from this class’s Devil Fruit Infusion feature with another cantrip from the devilforged spell list.\nReplace the feature on your weapon from the Infused Devil Fruit feature with one feature from another infusion.\nIf this change makes you ineligible for any of your Sea Devil’s Emanations, you must also replace them now, choosing emanations for which you qualify.",
+          "page": 115,
+          "asi": true
+        },
+        {
+          "level": 11,
+          "name": "Fiendish Assimilation",
+          "text": "At 11th level, your devil fruit item develops immense newfound powers. Choose one 6th-level power (spell) from the devilforged spell list as this new power.\nYou can cast your Fiendish Assimilation power (spell) once without expending a spell slot. You must finish a long rest before you can do so again.\nAt higher levels, you gain more devilforged spells of your choice that can be cast in this way: one 7th-level spell at 13th level, one 8th-level spell at 15th level, and one 9th-level spell at 17th level. You regain all uses of your Fiendish Assimilation when you finish a long rest.\nAlternatively, you can choose to incorporate or “steal” the essence of other great Devil Fruit powers into your infused item. When you see a Devil Fruit spell or spell effect within 30 feet of you, you may use your reaction to “store” a portion of the energy of that spell into your infused item, making it your new Fiendish Assimilation spell. The maximum level of the spell stolen must be equal to your current Fiendish Assimilation spell level. For example, if you are 13th level, you can only steal up to 7th-level spells created by a Devil Fruit power and store them into your infused item.\nIf you wish to remove the stolen Devil Fruit spell and return to using your original Fiendish Assimilation spell, you must spend 1 hour during a short or long rest removing the essence of the stolen spell and return the power of your original chosen Fiendish Assimilation spell. You cannot use the stolen spell again once it is removed from your infused item, unless you steal it again using this feature.",
+          "page": 116
+        },
+        {
+          "level": 20,
+          "name": "Devil’s Bounty",
+          "text": "At 20th level, you can release a surge of energy from within your Devil Fruit-infused item, allowing you to regain expended power (spell) slots. To do so, you must spend 1 minute focusing on your infused item in order to regain all your expended spell slots from your Devil Fruit Infusion (Spellcasting) feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.",
+          "page": 116
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.blade_smithing",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Blade Smithing",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 116
+      },
+      "flavor": "Devilforged who prioritize infusing their weapons for dueling and close-combat. This grants you enhanced damage, weapon proficiency, and fighting potential.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Expanded Power (Spell) List",
+          "text": "The Blade Smithing subclass lets you choose from an expanded list of spells when you learn a devilforged spell. The following spells are added to the devilforged spell list for you.",
+          "page": 116,
+          "sections": [
+            {
+              "name": "Blade Smithing Expanded Powers (Spells)",
+              "text": "",
+              "page": 116,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devil Power (Spell) Level",
+                      "Devil Power (Spell)"
+                    ],
+                    [
+                      "1st",
+                      "Shield, Thunderous Smite"
+                    ],
+                    [
+                      "2nd",
+                      "Blur, Branding Smite"
+                    ],
+                    [
+                      "3rd",
+                      "Blink, Elemental Weapon"
+                    ],
+                    [
+                      "4th",
+                      "Fire Shield, Staggering Smite"
+                    ],
+                    [
+                      "5th",
+                      "Banishing Smite, Cone of Cold"
+                    ]
+                  ],
+                  "page": 116
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Devil’s Branding",
+          "text": "Starting at 1st level, you gain the ability to burn a special brand or mark onto someone. As a bonus action, choose one creature you can see within 30 feet of you. The target is cursed by the devil’s brand for 1 minute. The curse ends and the brand disappears early if the target dies, you die, or you are incapacitated. Until the curse ends, you gain the following benefits:\nYou gain a bonus to damage rolls against the branded target. The bonus equals your proficiency bonus.\nAny attack roll you make against the branded target is a critical hit on a roll of 19 or 20 on the d20.\nIf the branded target dies, you regain hit points equal to your devilforged level + your Charisma modifier (minimum of 1 hit point).\nYou can’t use this feature again until you finish a short or long rest.",
+          "page": 116,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Hell’s Duelist",
+          "text": "At 1st level, you acquire the training necessary to effectively arm yourself for battle. You gain proficiency with medium armor, shields, and martial melee weapons.\nThe experience you have gained in working with infusing various devil fruit powers into weapons has allowed you to become proficient with various weapons. When you finish a long rest, you can touch one weapon that you are proficient with and that lacks the two- handed property. When you attack with that weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for the attack and damage rolls. This benefit lasts until you finish a long rest.",
+          "page": 116
+        },
+        {
+          "level": 6,
+          "name": "Echoing Strike",
+          "text": "At 6th level, you gain the ability to unleash a destructive wave of energy from your infused weapon. When you make a weapon attack on your turn against a creature, you may use a bonus action to extend its normal range by 10 ft. If the attack hits the target, any other creature of your choice within 5 feet of the target takes force damage equal to your Charisma modifier (minimum of 1).\nYou can use this feature a number of times equal to your Proficiency bonus, and you regain all expended uses when you finish a short or long rest.",
+          "page": 117,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Demonic Deflection",
+          "text": "At 10th level, you are able to parry attacks made by your branded target in combat. If the target cursed by your Devil’s Branding hits you with an attack roll, you can use your reaction to roll a d6. On a 4 or higher, the attack misses you, regardless of its roll.",
+          "page": 117
+        },
+        {
+          "level": 14,
+          "name": "Archdevil’s Branding",
+          "text": "Starting at 14th level, you can spread your Devil’s Branding curse from a slain creature to another creature. When the creature cursed by your Devil’s Branding dies, you can apply the branding to a different creature you can see within 30 feet of you, provided you aren’t incapacitated, cursing it instead. When you apply the branding in this way, you don’t regain hit points from the death of the previously branded creature.",
+          "page": 117
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.devil_bombardier",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Devil Bombardier",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 117
+      },
+      "flavor": "As a Devil Bombardier, you specialize in infusing explosive devices with the powers of Paramecia and Logia devil fruits, creating devastating bombs that unleash chaos on the battlefield. Each bomb you create has a unique and unpredictable effect, combining raw elemental power with explosive force.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Expanded Power (Spell) List",
+          "text": "The Devil Bombarier subclass lets you choose from an expanded list of spells when you learn a devilforged spell. The following spells are added to the devilforged spell list for you.",
+          "page": 117,
+          "sections": [
+            {
+              "name": "Devil Bombarier Expanded Powers (Spells)",
+              "text": "",
+              "page": 117,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devil Power (Spell) Level",
+                      "Devil Power (Spell)"
+                    ],
+                    [
+                      "1st",
+                      "Thunderwave, Chaos Bolt"
+                    ],
+                    [
+                      "2nd",
+                      "Scorching Ray, Shatter"
+                    ],
+                    [
+                      "3rd",
+                      "Fireball, Elemental Weapon"
+                    ],
+                    [
+                      "4th",
+                      "Ice Storm, Wall of Fire"
+                    ],
+                    [
+                      "5th",
+                      "Cloudkill, Immolation"
+                    ]
+                  ],
+                  "page": 117
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Tool Proficiency",
+          "text": "When you choose this subclass at 1st level, you gain proficiency with Alchemist’s Supplies and Tinker’s Tools, essential for crafting and modifying your bombs.",
+          "page": 117
+        },
+        {
+          "level": 1,
+          "name": "Devilbomb Creation",
+          "text": "Starting at 1st level, you gain the ability to create devilbombs. You can create one devilbomb per 10 minutes you spend undisturbed with your tinker tools. you can create a number of bombs equal to your proficiency bonus, regaining all expended uses after a long rest.\nEach time you create a devilbomb, roll on the “Explosive Infusions” table to determine the additional effect of the infusion. If a bomb you create calls for a creature to roll a saving throw use your spell save DC.\nAs an action, you can throw a devilbomb up to 30 feet. The bomb detonates on impact, dealing 2d6 thunder damage in a 10-foot radius. Creatures caught in the explosion must make a Dexterity saving throw against your spell save DC, taking half damage on a successful save, and emits a thunderous boom audible out to 300 feet.",
+          "page": 117
+        },
+        {
+          "level": 6,
+          "name": "Enhanced Explosive",
+          "text": "At 6th level, your devilbombs become deadlier and more refined. The maximum range for throwing your bomb increases to 60 feet, the damage of your devilbomb increases to 3d6, and the explosion radius extends to 15 feet.",
+          "page": 117
+        },
+        {
+          "level": 10,
+          "name": "Devastating Detonation",
+          "text": "At 10th level, you further refine the destructive potential of your devilbomb. The damage increases to 4d6, and creatures that fail their saving throws are also stunned until the start of their next turn, as the concussive force disorients them.",
+          "page": 117
+        },
+        {
+          "level": 14,
+          "name": "Cataclysmic Blast",
+          "text": "At 14th level, you perfect the art of bomb-making, creating explosions that can devastate entire battlefields. Your devilbombs now deal 6d6 damage in a 20-foot radius and you can now throw two bombs as a single action, targeting separate areas within range. Each bomb still consumes one use, and each explosion is resolved separately.\nAdditionally, when rolling on the “Explosive Infusions” table, you may roll twice and choose which effect to apply, giving you greater control over the chaos of your creations.",
+          "page": 117,
+          "sections": [
+            {
+              "name": "Devil Bombardier - Explosive Infusions (Part 1)",
+              "text": "",
+              "page": 118,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "d100 Effect",
+                      "d100 Effect"
+                    ],
+                    [
+                      "01-",
+                      "Shrinking: The explosion releases a shrinking gas, causing",
+                      "27-"
+                    ],
+                    [
+                      "02",
+                      "all creatures in the blast radius to make a Constitution",
+                      "28 saving throw or be reduced one size category smaller for 1 minute, halving their movement speed."
+                    ],
+                    [
+                      "03-",
+                      "Dividing: The explosion creates a splitting effect, causing the 29-"
+                    ],
+                    [
+                      "04",
+                      "bomb to break into two smaller explosions in adjacent 5-",
+                      "30 foot areas, each dealing half the original damage."
+                    ],
+                    [
+                      "05-",
+                      "Springs: The bomb gains a bouncy, unpredictable nature;",
+                      "31-"
+                    ],
+                    [
+                      "06",
+                      "after being thrown, it bounces up to double the thrown",
+                      "32 distance following the trajectory of the throw, and even bouncing off other surfaces, before detonating."
+                    ],
+                    [
+                      "07-",
+                      "Spikes: The explosion scatters sharp, ethereal spikes;",
+                      "33-"
+                    ],
+                    [
+                      "08",
+                      "creatures in the blast radius must make a Dexterity saving",
+                      "34 throw or take additional 1d6 piercing damage and have their movement speed reduced by 10 feet until the end of their next turn."
+                    ],
+                    [
+                      "09-",
+                      "Smooth: The explosion coats the area in a slick, oily",
+                      "35-"
+                    ],
+                    [
+                      "10",
+                      "substance; creatures in the blast radius must make a",
+                      "36 Dexterity saving throw or fall prone."
+                    ],
+                    [
+                      "11-",
+                      "Door: The explosion briefly creates a magical door that can",
+                      "37-"
+                    ],
+                    [
+                      "12",
+                      "be opened or closed; allies can use this door to teleport up",
+                      "38 to 30 feet to an unoccupied space they can see until the end of your next turn, when the door disappears."
+                    ],
+                    [
+                      "13-",
+                      "Bubble: The bomb gains buoyant properties, allowing it to",
+                      "39-"
+                    ],
+                    [
+                      "14",
+                      "float and hover in the air; after being thrown, it drifts up to",
+                      "40 20 feet in a predetermined direction before detonating."
+                    ],
+                    [
+                      "15-",
+                      "Mark: The explosion coats enemies in a glowing substance",
+                      "41-"
+                    ],
+                    [
+                      "16",
+                      "that makes them easier to target until the end of your next",
+                      "42 turn; the next attack made against a marked creature is an automatic hit, bypassing the need for an attack roll, and deals additional damage equal to your proficiency bonus."
+                    ],
+                    [
+                      "17-",
+                      "Brightness: The explosion creates a lingering field of bright",
+                      "43-"
+                    ],
+                    [
+                      "18",
+                      "light in a 20-foot radius that lasts for 1 minute; allies can see 44 through magical darkness and gain advantage on perception checks made in the light. This effect removes the bomb’s damage."
+                    ],
+                    [
+                      "19-",
+                      "Tendrils: The explosion releases dark, writhing tendrils that",
+                      "45-"
+                    ],
+                    [
+                      "20",
+                      "latch onto nearby creatures; creatures within the blast radius 46 must make a Strength saving throw or be restrained until the end of their next turn."
+                    ],
+                    [
+                      "21-",
+                      "Silence: The bomb does not make sound when exploding.",
+                      "47-"
+                    ],
+                    [
+                      "22",
+                      "48"
+                    ],
+                    [
+                      "23-",
+                      "Flash: The explosion releases a blinding burst of light that",
+                      "49-"
+                    ],
+                    [
+                      "24",
+                      "lingers momentarily; creatures in the blast radius must",
+                      "50 make a Constitution saving throw or be blinded until the start of your next turn."
+                    ],
+                    [
+                      "25-",
+                      "Rope: The explosion unleashes coils of enchanted rope that",
+                      "51-"
+                    ],
+                    [
+                      "26",
+                      "lash out; Choose up to two points within a 60 ft. radius of",
+                      "52 the bomb’s center, the expanding rope will attach to the points chosen. This effect removes the bomb’s damage."
+                    ]
+                  ],
+                  "page": 118
+                },
+                {
+                  "rows": [
+                    [
+                      "Ghost: The explosion releases spectral energy, causing ghostly"
+                    ],
+                    [
+                      "apparitions to appear; creatures within the blast must make a"
+                    ],
+                    [
+                      "Wisdom saving throw or be frightened until the end of their"
+                    ],
+                    [
+                      "next turn."
+                    ],
+                    [
+                      "Hormones: The explosion releases a stimulating mist that"
+                    ],
+                    [
+                      "boosts combat abilities; creatures within the blast radius gain"
+                    ],
+                    [
+                      "a +1 bonus to attack rolls and saving throws until the end of"
+                    ],
+                    [
+                      "their next turn. This effect removes the bomb’s damage."
+                    ],
+                    [
+                      "Genie Lamp: The explosion releases a magical smoke that"
+                    ],
+                    [
+                      "briefly conjures a spectral genie; allies in the radius gain one"
+                    ],
+                    [
+                      "wish-like effect that grants a +3 bonus to their next attack roll,"
+                    ],
+                    [
+                      "saving throw, or ability check within 1 minute. This effect"
+                    ],
+                    [
+                      "removes the bomb’s damage."
+                    ],
+                    [
+                      "Stone Control: The explosion releases a burst of seismic"
+                    ],
+                    [
+                      "energy, allowing you to momentarily control the ground; you"
+                    ],
+                    [
+                      "can raise or lower the terrain in a 10-foot radius by up to 5"
+                    ],
+                    [
+                      "feet, creating barriers, pits, or difficult terrain until the start of"
+                    ],
+                    [
+                      "your next turn."
+                    ],
+                    [
+                      "Mushroom Spores: The explosion releases a cloud of toxic"
+                    ],
+                    [
+                      "spores; creatures in the radius must make a Constitution"
+                    ],
+                    [
+                      "saving throw or be poisoned until the end of their next turn."
+                    ],
+                    [
+                      "Encourage: The explosion triggers the effects of the Heroism"
+                    ],
+                    [
+                      "spell within the bomb’s radius, effecting all creatures in the"
+                    ],
+                    [
+                      "radius. This effect removes the bomb’s damage."
+                    ],
+                    [
+                      "Beast Control: The explosion triggers the effects of the"
+                    ],
+                    [
+                      "Dominate Beast spell within the bomb’s radius, effecting all"
+                    ],
+                    [
+                      "beast’s in the radius."
+                    ],
+                    [
+                      "Shadows: The explosion envelops the area in swirling"
+                    ],
+                    [
+                      "shadows; allies within the blast radius gain partial"
+                    ],
+                    [
+                      "concealment, granting them advantage on Dexterity (Stealth)"
+                    ],
+                    [
+                      "checks and imposing disadvantage on attack rolls against"
+                    ],
+                    [
+                      "them until the start of their next turn. This effect removes the"
+                    ],
+                    [
+                      "bomb’s damage."
+                    ],
+                    [
+                      "Invisibility: The explosion releases a shroud of shimmering"
+                    ],
+                    [
+                      "mist that cloaks allies; creatures within the blast radius"
+                    ],
+                    [
+                      "become invisible until for 1 minute or until they make an"
+                    ],
+                    [
+                      "attack, granting them advantage on their next attack roll or"
+                    ],
+                    [
+                      "stealth check. This effect removes the bomb’s damage and"
+                    ],
+                    [
+                      "explosion sound."
+                    ],
+                    [
+                      "Castle: The explosion momentarily conjures the effects of the"
+                    ],
+                    [
+                      "Mighty Fortress spell. This structure lasts for 1 hour. This effect"
+                    ],
+                    [
+                      "removes the bomb’s damage."
+                    ],
+                    [
+                      "Sleep: The explosion triggers the effects of the Sleep spell"
+                    ],
+                    [
+                      "within the bomb’s radius."
+                    ],
+                    [
+                      "String: The explosion releases strands of thread; creatures hit"
+                    ],
+                    [
+                      "by the bomb are entangled in the threads, reducing their"
+                    ],
+                    [
+                      "movement speed by half and imposing disadvantage on"
+                    ],
+                    [
+                      "Dexterity saving throws until the end of their next turn."
+                    ],
+                    [
+                      "Super Speed: The explosion emits an energizing burst that"
+                    ],
+                    [
+                      "temporarily accelerates movement; creatures within the blast"
+                    ],
+                    [
+                      "radius gain +20 feet to their movement speed and can take"
+                    ],
+                    [
+                      "the Dash action as a bonus action until the end of their next"
+                    ],
+                    [
+                      "turn. This effect removes the bomb’s damage."
+                    ]
+                  ],
+                  "page": 118
+                }
+              ]
+            },
+            {
+              "name": "Devil Bombardier - Explosive Infusions (Part 2)",
+              "text": "",
+              "page": 119,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "d100 Effect",
+                      "d100 Effect"
+                    ],
+                    [
+                      "53-",
+                      "Healing: The explosion releases a restorative mist infused with",
+                      "77-",
+                      "Barrier: The explosion creates a temporary wall using the"
+                    ],
+                    [
+                      "54",
+                      "healing energy; creatures within the blast radius regain hit",
+                      "78",
+                      "Wall of Force spell until the start of your next turn. This"
+                    ],
+                    [
+                      "points equal to 1d6 + your spellcasting modifier.",
+                      "effect removes the bomb’s damage."
+                    ],
+                    [
+                      "55-",
+                      "Dimming: The explosion releases a wave of shadowy energy",
+                      "79-",
+                      "Growing in Size: The explosion releases a burst of magical"
+                    ],
+                    [
+                      "56",
+                      "that extinguishes all non-magical light sources within it’s",
+                      "80",
+                      "energy that mimics the Enlarge effect of the Enlarge/Reduce"
+                    ],
+                    [
+                      "radius. This effect removes the bomb’s damage and sound.",
+                      "spell. This effect removes the bomb’s damage."
+                    ],
+                    [
+                      "57-",
+                      "Magnetism: The explosion generates a magnetic field that pulls 81-",
+                      "Earthquake: The explosion triggers a localized tremor,"
+                    ],
+                    [
+                      "58",
+                      "all metal objects and creatures wearing metal armor within a",
+                      "82",
+                      "causing the ground within it’s radius to violently shake;"
+                    ],
+                    [
+                      "it’s radius toward the center; creatures must make a Strength",
+                      "creatures in the area must make a Dexterity saving throw or"
+                    ],
+                    [
+                      "saving throw or be pulled to the center to the blast.",
+                      "be knocked prone, and the area becomes difficult terrain until the end of your next turn."
+                    ],
+                    [
+                      "59-",
+                      "Dancing: The explosion releases an enchanting energy that",
+                      "83-",
+                      "Gravity: The explosion creates a powerful gravitational pull"
+                    ],
+                    [
+                      "60",
+                      "compels all creatures in the radius to dance uncontrollably;",
+                      "84",
+                      "within it’s radius; creatures in the area must make a"
+                    ],
+                    [
+                      "affected creatures must make a Wisdom saving throw or",
+                      "Strength saving throw or be pulled to the ground, reducing"
+                    ],
+                    [
+                      "spend their next turn dancing, unable to take actions or",
+                      "their movement speed by half and imposing disadvantage"
+                    ],
+                    [
+                      "reactions.",
+                      "on attack rolls until the end of their next turn."
+                    ],
+                    [
+                      "61-",
+                      "Sticky Substance: The explosion releases a viscous, adhesive",
+                      "85-",
+                      "Snow: The explosion creates a swirling blizzard within it’s"
+                    ],
+                    [
+                      "62",
+                      "goo that coats the ground in the radius; creatures in the area",
+                      "86",
+                      "radius, covering the area in icy snow turning the ground"
+                    ],
+                    [
+                      "must make a Dexterity saving throw or become restrained.",
+                      "into difficult terrain."
+                    ],
+                    [
+                      "63-",
+                      "Stink: The explosion releases a foul-smelling gas that fills the",
+                      "87-",
+                      "Key: The explosion releases a burst of magical energy that"
+                    ],
+                    [
+                      "64",
+                      "explosion’s radius; creatures in the area must make a",
+                      "88",
+                      "automatically locks or unlocks all doors, chests, and similar"
+                    ],
+                    [
+                      "Constitution saving throw or be poisoned for 1 minute.",
+                      "objects within it’s radius."
+                    ],
+                    [
+                      "65-",
+                      "Perfume: The explosion releases a cloud of alluring fragrance",
+                      "89-",
+                      "Sand: The explosion whips up a swirling sand tornado in a"
+                    ],
+                    [
+                      "66",
+                      "that affects all creatures within it’s radius; allies within the area 90",
+                      "15-foot radius, creating a blinding storm; creatures within"
+                    ],
+                    [
+                      "are invigorated, gaining a +1 bonus to Charisma-based checks",
+                      "the area must make a Dexterity saving throw or be blinded"
+                    ],
+                    [
+                      "and saving throws, while enemies must make a Wisdom",
+                      "until the start of their next turn, while the rough winds"
+                    ],
+                    [
+                      "saving throw or be charmed by you for 1 minute. This effect",
+                      "impose disadvantage on ranged weapon attacks made into"
+                    ],
+                    [
+                      "removes the bomb’s damage.",
+                      "or out of the storm."
+                    ],
+                    [
+                      "67-",
+                      "Floating: The explosion releases an anti-gravity pulse, causing",
+                      "91-",
+                      "Phasing: The explosion imbues nearby creatures with"
+                    ],
+                    [
+                      "68",
+                      "all creatures within it’s radius to float harmlessly a few feet off",
+                      "92",
+                      "ghostly properties; creatures in the blast radius gain the"
+                    ],
+                    [
+                      "the ground; affected creatures must make a Dexterity saving",
+                      "ability to phase through solid objects until the end of their"
+                    ],
+                    [
+                      "throw or have their movement speed reduced to 0 and",
+                      "next turn. While this effect persists the creature cannot"
+                    ],
+                    [
+                      "disadvantage on attack rolls until the end of it’s next turn.",
+                      "attack targets and they also cannot be attacked or take damage."
+                    ],
+                    [
+                      "69-",
+                      "Magma: The explosion transforms the ground in it’s radius",
+                      "93-",
+                      "Lightning: The explosion converts the bomb’s damage to"
+                    ],
+                    [
+                      "70",
+                      "into molten magma; creatures in the area that move within the 94",
+                      "lightning damage and deals an additional damage die of"
+                    ],
+                    [
+                      "area take 1d6 fire damage for every 5 ft. they move.",
+                      "damage."
+                    ],
+                    [
+                      "71-",
+                      "Cage: The bomb transforms into a focused, single-target",
+                      "95-",
+                      "Pushing: The explosion creates a powerful shockwave in it’s"
+                    ],
+                    [
+                      "72",
+                      "projectile that, upon impact, creates a cage of force around the 96",
+                      "radius, forcing all creatures within the area to make a"
+                    ],
+                    [
+                      "struck creature; the target must make a Dexterity saving throw",
+                      "Strength saving throw or be pushed back 10 feet from the"
+                    ],
+                    [
+                      "or be restrained within the cage, unable to move or escape for",
+                      "blast center, knocking them prone if they collide with an"
+                    ],
+                    [
+                      "1 minute.",
+                      "obstacle or another creature."
+                    ],
+                    [
+                      "73-",
+                      "Laughter: The explosion triggers the effects of the Tasha’s",
+                      "97-",
+                      "Ice: The explosion converts the bomb’s damage to cold"
+                    ],
+                    [
+                      "74",
+                      "Hideous Laughter spell within the bomb’s radius.",
+                      "98",
+                      "damage and deals an additional damage die of damage."
+                    ],
+                    [
+                      "75-",
+                      "Light: The explosion converts the bomb’s damage to radiant",
+                      "99-",
+                      "Fire: The explosion converts the bomb’s damage to fire"
+                    ],
+                    [
+                      "76",
+                      "damage and deals an additional damage die of damage.",
+                      "100",
+                      "damage and deals an additional damage die of damage."
+                    ]
+                  ],
+                  "page": 119
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.firearm_smithing",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Firearm Smithing",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 120
+      },
+      "flavor": "Devilforged who prioritize infusing their weapons for ranged attacking and casting. This grants you enhanced ranged attacks, ranged weapon proficiency, and spell power.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Expanded Power (Spell) List",
+          "text": "The Firearm Smithing subclass lets you choose from an expanded list of spells when you learn a devilforged spell. The following spells are added to the devilforged spell list for you.",
+          "page": 120,
+          "sections": [
+            {
+              "name": "Firearm Smithing Expanded Powers (Spells)",
+              "text": "",
+              "page": 120,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devil Power (Spell) Level",
+                      "Devil Power (Spell)"
+                    ],
+                    [
+                      "1st",
+                      "Magic Missile, Fog Cloud"
+                    ],
+                    [
+                      "2nd",
+                      "Scorching Ray, Shatter"
+                    ],
+                    [
+                      "3rd",
+                      "Fireball, Wind Wall"
+                    ],
+                    [
+                      "4th",
+                      "Ice Storm, Wall of Fire"
+                    ],
+                    [
+                      "5th",
+                      "Flame Strike, Wall of Force"
+                    ]
+                  ],
+                  "page": 120
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Hellfire Artillery",
+          "text": "At 1st level, you gain proficiency in martial ranged weapons.\nAdditionally, you learn how to transform your infused item to fight for you. As a bonus action, you can use your infused item to create an artillery cannon that emerges from it. This cannon lasts for 1 minute or until you dismiss it as a bonus action.\nWhile your cannon is active, you can make a ranged spell attack against one creature within 60 feet of you as a bonus action. On a hit, the target takes 1d8 + your Charisma modifier in fire, cold, or lightning damage (your choice). When you reach the 10th level in this class, the damage increases to 2d8 + your Charisma modifier.\nYou can summon this cannon using this feature a number of times equal to your porficiency bonus, and you regain all expended uses when you finish a long rest.",
+          "page": 120
+        },
+        {
+          "level": 6,
+          "name": "Nether Scope",
+          "text": "At 6th level, your devil fruit item or weapon grants you enhanced sight and durability against flames. You gain the following benefits:\nYou gain darkvision up to 60 feet.\nYou gain proficiency in the Perception or Insight skill (your choice).\nYou gain resistance to fire damage.",
+          "page": 120
+        },
+        {
+          "level": 6,
+          "name": "Blinding Flare",
+          "text": "At 6th level, the cannon you create with Hellfire Artillery can defend you and your allies. When you or a creature you can see within 60 feet of you is targeted by an attack, you can use your reaction to impose disadvantage against that attack. After doing so, your cannon crumbles and disappears.",
+          "page": 120
+        },
+        {
+          "level": 10,
+          "name": "Exploding Shrapnel Shot",
+          "text": "Beginning at 10th level, your Hellfire Artillery cannon can produce burning sharpnel and embers when fired. While your Hellfire Artillery cannon is active, you may use this feature to cause one of the attacks you make with your cannon to explode by spending an action on the same turn as a part of firing the cannon. Whether the cannon hits the target or not, the shot detonates as a 5th-level fireball spell (using your spell save DC) centered on the target of your attack. Any creature that fails their save against this fireball also has their movement reduced by 10 feet until the end of their turns. Additionally, you may choose to make half of the damage any creature takes from this fireball piercing or slashing instead of fire.\nWhenever you use this feature, you can’t use it again until you finish a long rest.",
+          "page": 120,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Hellstorm Artillery",
+          "text": "When you reach 14th level, your Hellfire Artillery cannon grows even stronger. You gain the following benefits:\nYou can now create two cannons on your infused item with Hellfire Artillery as a bonus action, instead of just one, by expending an additional use of Hellfire Artillery. While you have two active cannons, when you spend a bonus action to attack with your cannon, both cannons can attack on your turn.\nYour range with Hellfire Artillery increases to 120 feet.",
+          "page": 120
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.gear_smithing",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Gear Smithing",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 120
+      },
+      "flavor": "Devilforged who prioritize infusing their equipment, armor, tools, or worn items are known as “Gear Smiths”. This grants you enhanced protection, proficiency, and physical ability.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Expanded Power (Spell) List",
+          "text": "The Gear Smithing subclass lets you choose from an expanded list of spells when you learn a devilforged spell. The following spells are added to the devilforged spell list for you.",
+          "page": 120,
+          "sections": [
+            {
+              "name": "Gear Smithing Expanded Powers (Spells)",
+              "text": "",
+              "page": 120,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devil Power (Spell) Level",
+                      "Devil Power (Spell)"
+                    ],
+                    [
+                      "1st",
+                      "Shield of Faith, False Life"
+                    ],
+                    [
+                      "2nd",
+                      "Arcane Lock, Pass Without Trace"
+                    ],
+                    [
+                      "3rd",
+                      "Haste, Glyph of Warding"
+                    ],
+                    [
+                      "4th",
+                      "Greater Invisibility, Death Ward"
+                    ],
+                    [
+                      "5th",
+                      "Antilife Shell, Creation"
+                    ]
+                  ],
+                  "page": 120
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Tool Proficiency",
+          "text": "Starting at 1st level, you gain proficiency with Smith’s Tools. If you already have this tool proficiency, you gain proficiency with one other type of tool of your choice.",
+          "page": 120
+        },
+        {
+          "level": 1,
+          "name": "Armored Up",
+          "text": "At 1st level, you are able to use your infused equipment to grant you additional protection from harm. You gain proficiency with medium armor and shields.\nIn addition, you gain a +1 bonus to Armor Class while you have your infused devil fruit item equipped or held.",
+          "page": 121
+        },
+        {
+          "level": 6,
+          "name": "Abyssal Enhancement",
+          "text": "Starting at 6th level, you gain the ability to further enhance your physical abilities and defense using your infused equipment. When you make an ability check or a saving throw, you can use this feature to add a d10 to your roll. You can do so after seeing the initial roll but before any of the roll’s effects occur.\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
+          "page": 121,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 10,
+          "name": "Resilient Equipment",
+          "text": "Starting at 10th level, you can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feautre. Damage from magical weapons, haki- coated weapons, or silver weapons ignores this resistance.",
+          "page": 121
+        },
+        {
+          "level": 14,
+          "name": "Devilish Reconstruction",
+          "text": "When you reach 14th level, you are able to use your equipment to quickly and efficiently mend your injuries. On your turn, you can use a bonus action to regain hit points equal to 1d8 + your devilforged level. Additionally, if you put a severed body part of yours back in place when you use this feature, the part reattaches.\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
+          "page": 121,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.mechadevil",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "Mechadevil",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 121
+      },
+      "flavor": "As a Mechadevil, you have mastered the fusion of technology and devil fruit powers, constructing a powerful mech suit to aid you in battle. This suit enhance your abilities and turn you into a formidable force on the battlefield, capable of taking on foes far beyond your natural capabilities.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Expanded Power (Spell) List",
+          "text": "The Mechadevil subclass lets you choose from an expanded list of spells when you learn a devilforged spell. The following spells are added to the devilforged spell list for you.",
+          "page": 121,
+          "sections": [
+            {
+              "name": "Mechadevil Expanded Powers (Spells)",
+              "text": "",
+              "page": 121,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devil Power (Spell) Level",
+                      "Devil Power (Spell)"
+                    ],
+                    [
+                      "1st",
+                      "Tenser’s Floating Disk, Shield"
+                    ],
+                    [
+                      "2nd",
+                      "Enhance Ability, Heat Metal"
+                    ],
+                    [
+                      "3rd",
+                      "Counterspell, Glyph of Warding"
+                    ],
+                    [
+                      "4th",
+                      "Fabricate, Fire Shield"
+                    ],
+                    [
+                      "5th",
+                      "Animate Objects, Bigby’s Hand"
+                    ]
+                  ],
+                  "page": 121
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Tool Proficiency",
+          "text": "At 1st level, you gain proficiency with smith’s tools. If already proficient, choose another artisan tool.",
+          "page": 121
+        },
+        {
+          "level": 1,
+          "name": "Mech Mending",
+          "text": "Gain the Mending cantrip when you choose this subclass.\nIn addition, you can channel your own vitality to repair your mech. As an action while within 5 feet of your mech, you can expend one or more of your Hit Dice. For each Hit Die expended, roll the die and multiply the result by your mech’s size factor, restoring that total as hit points to your mech. You regain no hit points yourself from Hit Dice spent in this way.",
+          "page": 121,
+          "sections": [
+            {
+              "name": "Size Factors",
+              "text": "",
+              "page": 121,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Size",
+                      "Multiplier"
+                    ],
+                    [
+                      "Large",
+                      "x2"
+                    ],
+                    [
+                      "Huge",
+                      "x3"
+                    ],
+                    [
+                      "Gargantuan",
+                      "x4"
+                    ]
+                  ],
+                  "page": 121
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Mechadevil Mark 1",
+          "text": "Starting at 1st level, you construct a Mechadevil Suit: a suit of piloted armour you can control from within. While within 5 feet of your mech, you can use your action to enter it. If your mech isn’t within 5 feet of you but is on the same plane of existence, you can use your action to teleport it to an unoccupied space within 5 feet of you and enter it as part of the same action.\nYour Mechadevil Suit’s Strength score equal to your Charisma score and its Proficiency Score equals your Level. You can cast spells through your Mechadevil.\nYou can eject from your mech as a bonus action, landing in an unoccupied space you can see within 10 feet of it. If your mech is reduced to 0 hit points, you eject, and the mech is destroyed. A destroyed mech can’t be piloted or teleported to you, and the mending spell has no effect on it.\nWhen you are not piloting the mech and it has at least 1 hit point, you can mentally command it (no action required) to follow you. The mech moves on your initiative count (immediately after your turn) and uses its movement to approach within 10 ft. of you, avoiding hazards and obstacles to the best of its ability. If the mech cannot reach you due to an obstacle or terrain, it stops at the nearest safe space.\n–\nActions\nYour Mech’s size and stats scale with your Devilforged level, as shown below:",
+          "page": 121,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Armor Class - (see table below)"
+                ],
+                [
+                  "Hit Points - (see table below)"
+                ],
+                [
+                  "Speed - (see table below)"
+                ],
+                [
+                  "STR",
+                  "DEX",
+                  "CON",
+                  "INT",
+                  "WIS",
+                  "CHA"
+                ],
+                [
+                  "-",
+                  "10 (+0)",
+                  "16 (+3)",
+                  "-",
+                  "-",
+                  "-"
+                ],
+                [
+                  "Damage Immunities Poison, Psychic"
+                ],
+                [
+                  "Damage Resistances Bludgeoning, Piercing, and Slashing from nonmagical attacks"
+                ],
+                [
+                  "Condition Immunities Charmed, Frightened, Paralyzed, Poisoned"
+                ],
+                [
+                  "Senses Darkvision 60 ft., blindsight 10 ft."
+                ],
+                [
+                  "Spellcasting Focus. The mech can be used as your spellcasting"
+                ],
+                [
+                  "focus."
+                ],
+                [
+                  "Pilot Link. You control the mech directly; it takes no"
+                ],
+                [
+                  "independent actions."
+                ]
+              ],
+              "page": 122
+            },
+            {
+              "rows": [
+                [
+                  "Mech Strike. Melee Weapon Attack: +0 to hit, reach 5 ft., one"
+                ],
+                [
+                  "target. Hit: 7 (2d8 + 0) bludgeoning damage."
+                ]
+              ],
+              "page": 122
+            }
+          ],
+          "sections": [
+            {
+              "name": "Mechadevil Suit",
+              "text": "",
+              "page": 122,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Large Gargantuan Construct, unaligned"
+                    ]
+                  ],
+                  "page": 122
+                }
+              ]
+            },
+            {
+              "name": "Mech Scaling",
+              "text": "At the end of a long rest, you can create a new Mechadevil Suit if you have your smith’s tools with you. You may only have one Mechadevil at a time.",
+              "page": 122,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devilforged",
+                      "Base",
+                      "Base HP"
+                    ],
+                    [
+                      "Level",
+                      "Mech Size",
+                      "AC",
+                      "Formula Movement"
+                    ],
+                    [
+                      "1st - 4th",
+                      "Large",
+                      "16",
+                      "6 × your",
+                      "30 ft. level"
+                    ],
+                    [
+                      "5th - 10th",
+                      "Large - Huge",
+                      "17",
+                      "8 × your",
+                      "35 ft. level"
+                    ],
+                    [
+                      "11th - 16th",
+                      "Large - Huge",
+                      "18",
+                      "10 × your",
+                      "40 ft. level"
+                    ],
+                    [
+                      "17th - 20th",
+                      "Large -",
+                      "19",
+                      "12 × your",
+                      "50 ft."
+                    ],
+                    [
+                      "Gargantuan",
+                      "level"
+                    ]
+                  ],
+                  "page": 122
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Mechadevil Mark 2",
+          "text": "At 6th level, your training for combat with your mech is rewarded. You gain proficiency with martial weapons.\nAdditionally, you may mount 2 specialised weapons onto your Mechadevil Suit. While piloting your mech, you can use a action to activate one of the weapons you chose. You may switch out any amount of weapons for new ones during a long rest.\nSwarm Cannons. When you activate this weapon, both cannons fire a swarm of 16 missiles at a creature or object within 90 feet of you. Each dart hits a creature of your choice that you can see within range. A single missile deals 1d4 fire damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several. Each creature targeted must make a Dexterity saving throw against your Spell save DC or take the damage of all missile directed at them.\nIncinerator Beam. When you activate this weapon, the mech releases a blast of searing energy in a 15- foot cone. Each creature in the area must make a Constitution saving throw against your Spell save DC. On a failed save, a creature takes 6d6 fire damage. On a successful save, a creature takes half damage.\nLightning Lance. When you activate this weapon, you unleash a lance of lightning in a line 30 ft. long and 5 ft. wide. Creatures in the line must succeed on a Dexterity saving throw against your Spell save DC, or take 4d8 lightning damage.\nRailcannon. When you activate this weapon, you fire a hypervelocity slug at a target you can see within 300 ft. Make a ranged spell attack. On a hit, the target takes 5d10 piercing damage.\nCyclone Assault. When you activate this weapon, your Mechadevil begins a high-speed rotational assault. Each creature within 10 ft. of you must make a Dexterity saving throw. On a failed save, a creature takes 4d8 thunder damage. On a success, a creature takes half damage.\nPower Fist. When you activate this weapon, you slam a fist charged with explosive power towards a creature or object within 5 feet of you. Make a melee spell attack against the target. On a hit, the target takes thunder damage equal to 5d8 + your mech’s Strength modifier and is pushed up to 10 feet away from you.\nAdditionally, your Mechadevil Suit can attack with a weapon attack above and a mech strike on the same turn.",
+          "page": 122
+        },
+        {
+          "level": 10,
+          "name": "Devil Reactor",
+          "text": "At 10th level, you upgrade your Mechadevil’s reactor. The damage rolls of your Mechadevil’s Mech Strike attack increase by 2d8 and your Mechadevil gains a flying speed of 40 feet.",
+          "page": 122
+        },
+        {
+          "level": 14,
+          "name": "Overclock Devil Reactor",
+          "text": "At 14th level, you can overcharge your Mechadevil’s reactor as a last-ditch effort. When your Mecha is reduced to 0 hit points while you’re piloting it, you can cause it to self-destruct if you aren’t incapacitated (no action required). Alternatively, you can use your action while within 60 feet of your Mechadevil to doom it early, causing it to self-destruct.\nWhen your Mechadevil self-destructs, you eject if you were piloting it, landing in an unoccupied space you can see within 60 ft. of it, and your mech explodes. Your mech is destroyed, and each creature within 30 ft. of it must make a Dexterity saving throw against your Spell save DC. On a failed save, a creature takes 12d8 fire damage and 2d8 force damage. On a success, a creature takes half damage.",
+          "page": 123
+        }
+      ]
+    },
+    {
+      "id": "subclass.devilforged.no_mi_trainer",
+      "kind": "subclass",
+      "parent": "class.devilforged",
+      "name": "No Mi Trainer",
+      "group": "Devilsmith Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 123
+      },
+      "flavor": "As a No Mi Trainer, you specialize in blending Zoan and Logia devil fruits to create powerful elemental beasts. Through the combination of beastly ferocity and raw elemental power, your creations become formidable allies on the battlefield, growing stronger and gaining new abilities with each advancement.",
+      "features": [
+        {
+          "level": 1,
+          "name": "Expanded Power (Spell) List",
+          "text": "The No Mi Trainer subclass lets you choose from an expanded list of spells when you learn a devilforged spell. The following spells are added to the devilforged spell list for you.",
+          "page": 123,
+          "sections": [
+            {
+              "name": "No Mi Trainer Expanded Powers (Spells)",
+              "text": "",
+              "page": 123,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Devil Power (Spell) Level",
+                      "Devil Power (Spell)"
+                    ],
+                    [
+                      "1st",
+                      "Shield, Burning Hands"
+                    ],
+                    [
+                      "2nd",
+                      "Mirror Image, Heat Metal"
+                    ],
+                    [
+                      "3rd",
+                      "Haste, Fireball"
+                    ],
+                    [
+                      "4th",
+                      "Stoneskin, Wall of Fire"
+                    ],
+                    [
+                      "5th",
+                      "Cone of Cold, Greater Invisibility"
+                    ]
+                  ],
+                  "page": 123
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 1,
+          "name": "Tool Proficiency",
+          "text": "When you choose this subclass at 1st level, you gain proficiency with Alchemist’s Supplies and Tinker’s Tools, essential for synthesizing compounds to control and enhance your beasts.",
+          "page": 123
+        },
+        {
+          "level": 1,
+          "name": "Bloodline Beast Synthesis",
+          "text": "Starting at 1st level, you can create 3 different bloodline beasts by combining Zoan and Logia devil fruit traits. You infuse a Zoan form with a chosen Logia element to create a monster that embodies both physical and elemental abilities.\nYou may only have one beast out at a time, otherwise their spirit and bodies are infused in tiny white stars. As an action, you may summon a beast from a star, reforming itself within 30 ft. of you. If a beast is already in play the active beast is recalled back into it’s star. You may recall all beasts using a Bonus Action.\nIn combat, the bloodline shares your initiative count, but it takes its turn immediately after yours. It can move and use its reaction on its own, but the only action it takes on its turn is the Dodge action, unless you take a bonus action on your turn to command it to take another action. That action can be one in its stat block or some other action. If you are incapacitated, the bloodline beast can take any action of its choice, not just Dodge.\nIf your bloodline beast’s feature calls for a creature to roll a saving throw, use your spell save DC. Your created bloodline beast cannot be killed. However, until they are healed or recover naturally after 1d8 hours, their form transforms into a red star.\nYou may create 1 additional bloodline beast at 6th level, 12th level, and 18th level.",
+          "page": 123,
+          "sections": [
+            {
+              "name": "Beast’s Form",
+              "text": "With the DM’s help, choose one beast with a challenge rating up to CR 1 from the devil fruit generation table in Chapter 6: Devil Fruits. It is recommended to choose from uncommon and rare zoan fruits.\nThe following is the default bloodline beast statblock. Use this when creating a beast.\nActions",
+              "page": 123,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Actions: All actions your beast owns are taken from the chosen"
+                    ],
+                    [
+                      "zoan animal."
+                    ]
+                  ],
+                  "page": 124
+                }
+              ]
+            },
+            {
+              "name": "Bloodline Beast",
+              "text": "",
+              "page": 124,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "- monstrosity"
+                    ],
+                    [
+                      "Armor Class equal to chosen zoan creatures"
+                    ],
+                    [
+                      "Hit Points 2 x your Charisma modifier + 5 x your devilforged level (the beast has a number of Hit Dice [d8s] equal to your devilforged level)"
+                    ],
+                    [
+                      "Speed equal to chosen zoan creatures"
+                    ],
+                    [
+                      "STR",
+                      "DEX",
+                      "CON",
+                      "INT",
+                      "WIS",
+                      "CHA"
+                    ],
+                    [
+                      "- (-)",
+                      "- (-)",
+                      "- (-)",
+                      "- (-)",
+                      "- (-)",
+                      "- (-)"
+                    ],
+                    [
+                      "Senses Vision -, passive Perception equals beasts wisdom modifier + proficiency bonus"
+                    ],
+                    [
+                      "Languages understands common but can only say it’s given name."
+                    ],
+                    [
+                      "Challenge -",
+                      "Proficiency Bonus equals your bonus"
+                    ],
+                    [
+                      "Features: All features your beast owns are taken from the"
+                    ],
+                    [
+                      "chosen zoan animal."
+                    ],
+                    [
+                      "Stats and Skills: All size, armor class, speed, ability scores,"
+                    ],
+                    [
+                      "saving throws, skills, damage resistances, damage immunities,"
+                    ],
+                    [
+                      "damage vulnerablities, condition immunities, and senses are"
+                    ],
+                    [
+                      "taken from the chosen zoan animal."
+                    ]
+                  ],
+                  "page": 124
+                }
+              ]
+            },
+            {
+              "name": "Beast’s Element",
+              "text": "Choose one of the elements to infuse into your chosen beast.\nClay Element Type\nStat Boost: +1 to Constitution; +10 HP.\nDamage Resistance: Nonmagical slashing\nFeature - Molded Form: The beast can reshape its body to absorb damage, reducing all incoming damage by 1d6 points.\nDarkness Element Type\nStat Boost: +2 to Constitution; +2 to damage rolls.\nDamage Vulnerability: Bludgeoning, piercing, and slashing\nFeature - Shadow Grasp: As an action, the beast can extend darkness to bind an enemy within 15 feet, the creature must make a Strength saving throw or be restrained until the end of their next turn. This feature recharges after a long rest.\nFire Element Type\nStat Boost: +1 to Strength; +1 to damage rolls.\nDamage Resistance: Fire\nFeature - Flame Burst: The beast’s attacks ignite targets, dealing an extra 1d6 fire damage at the start of the enemy’s turn. The flames can be extinguished with an action or submerging it water.\nGas Element Type\nStat Boost: +2 bonus to AC against ranged attacks.\nDamage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Toxic Cloud: As an action, the beast can release a poisonous gas in a 15-foot radius, causing enemies to make a Constitution saving throw or be poisoned for 1d4 minute. This feature recharges after a short or long rest.\nGlass Element Type\nStat Boost: +3 to AC\nDamage Vulnerability: Nonmagical bludgeoning\nFeature - Reflective Shards: When the beast is hit by a melee attack, it can cause shards to explode outward, dealing 1d4 piercing damage to the attacker and imposing disadvantage on their next attack.\nIce Element Type\nStat Boost: +1 to Strength; +2 to AC against melee attacks.\nDamage Resistance: Cold\nFeature - Frostbite Touch: The beast’s attacks slow enemies, reducing their movement speed by 10 feet until the end of the target’s next turn.\nLight Element Type\nStat Boost: +1 to Dexterity; +1 to attack rolls.\nDamage Resistance: Radiant\nFeature - Blinding Flash: As an action, the beast emits a burst of light, causing enemies within 20 feet to make a Dexterity saving throw or be blinded until the end of their next turn. This feature recharges after a short or long rest.\nLightning Element Type\nStat Boost: +1 to Dexterity; +10 feet to movement speed.\nDamage Resistance: Lightning\nFeature - Static Charge: The beast’s melee attacks gain an additional 1d6 lightning damage.\nMagma Element Type\nStat Boost: +1 to Strength; +1 to attack and damage rolls.\nDamage Resistance: Fire\nFeature - Molten Armor: The beast is covered in molten rock, dealing 1d6 fire damage to any enemy that hits it with a melee attack.\nSand Element Type\nStat Boost: +1 to Dexterity; gains advantage on Dexterity saving throws.\nDamage Resistance: Fire\nDamage Vulnerability: Cold\nFeature - Sandstorm Cloak: As a bonus action, the beast can shroud itself in swirling sand, gaining half cover and imposing disadvantage on ranged attacks against it for 1 minute.\nSmoke Element Type\nStat Boost: advantage on Stealth checks.\nDamage Resistance: Nonmagical bludgeoning, piercing, and slashing\nFeature - Smoke Screen: As an action, the beast can create a 10 ft. radius cloud of smoke centered around itself, causing the area to become heavily obscured for 1 minute and follows the beast. This feature recharges after a short or long rest.\nSnow Element Type\nStat Boost: +1 to Constitution; advantage on Constitution saving throws.\nDamage Resistance: Cold\nFeature - Freezing Aura: The beast radiates a cold aura, causing enemies within 5 feet to take 1d4 cold damage at the start of their turns.\nSoot Element Type\nStat Boost: +1 to Constitution; gain flight speed equal to walking speed.\nDamage Resistance: Fire\nFeature - Cinder Blast: The beast can unleash blasts of hot soot, the beast’s attack range for melee attacks increase by 10 ft. and the damage type is changed to fire damage.\nSwamp Element Type\nStat Boost: +1 to Strength; +15 temporary hit points at the start of combat.\nDamage Resistance: Necrotic\nFeature - Mire Grip: As an action, the beast can turn the ground into difficult terrain in a 30 ft. radius area center on itself for 1d4 minutes. This feature recharges after a short or long rest.\nTree Element Type\nStat Boost: +2 to Constitution; regenerates 2 hit points at the start of its turn if it is conscious and the currently active bloodline beast.\nDamage Vulnerability: Fire\nFeature - Root Snare: As an action, the beast can release vines to grapple an enemy within 10 feet, the creature must make a Strength saving throw or become grappled by them. The vines can be broken with a Strength save against your spell save DC.",
+              "page": 124
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Enhanced Combat Efficiency",
+          "text": "At 6th level, your beast’s combat abilities are significantly enhanced, making it a more effective combatant. Choose one of the following enhancements for each of your beasts:\nMelee Empowerment: Your beast’s melee attacks deal an additional die of damage.\nHeightened Reflexes: Your beast gains a +2 bonus to AC and Dexterity saving throws.\nUnyielding Might: Your beast’s attacks now have a chance to hinder enemies. The target must succeed on a strength saving throw against your beasts strength or they are knocked prone or pushed them back 10 feet (your choice).\nResistance Shatter: Choose a damage type other than force you deal with your beast’s abilities. They now ignore resistances to that damage type when using their abilities, unless the resistance is granted by Haki.\nFast Action: Your beast now activates their beast’s element feature faster. Feature that cost an action now cost a bonus action.\nSecond Chance: When your beast drops to 0 hitpoints, instead of transforming into a red star as stated in the Bloodline Beast Synthesis feature, they instead drop to 1 hitpoint. This feature recharges on a short or long rest.",
+          "page": 125
+        },
+        {
+          "level": 10,
+          "name": "Tactical Evolution",
+          "text": "At 10th level, your beast undergoes Tactical Evolution, further boosting its combat capabilities. Choose one of the following upgrades for each of your beasts:\nRelentless Assault: Your beast gains an extra attack on its turn.\nBurst Attack: Your beast’s melee attacks now create an area-of-effect burst, hitting multiple enemies within 5 feet of the target for an amount of damage equal to it’s proficiency bonus.\nAdaptive Defense: Your beast gains resistance to two types of damage other than force.\nSteadfast Senses: With the help and approval of your DM, choose three of the following conditions: Blinded, Charmed, Deafened, Frightened, Grappled, Paralyzed, Petrified, Poisoned, Prone, Stunned. Your beast is now immune to that condition.",
+          "page": 125
+        },
+        {
+          "level": 14,
+          "name": "Supreme Combat Mastery",
+          "text": "At 14th level, your beast reaches the pinnacle of its combat effectiveness, gaining Supreme Combat Mastery. This feature allows your beast to operate at peak performance, pushing its abilities beyond normal limits. Choose one of the following mastery upgrades for each beast:\nFrenzied Rampage: As a reaction, your beast can enter a frenzied state once per combat encounter, gaining advantage on all attack rolls and dealing critical hits on rolls of 19-20 for 1 minute. After the frenzy ends, the beast becoming stunned, regaining control of itself at the end of it’s next turn.\nElemental Overdrive: Grant the bloodline beast immunity to its own beast’s element’s resistance type or removes the vulnerability of its element.\nPerfected Guardian: Your beast’s presence on the battlefield inspires allies, granting all allies within 30 feet a +1 bonus to AC and saving throws while the beast is active. Additionally, the beast gains an extra 20 hit points.\nUnholy Infusion: Choose one additional beast’s element to infuse into your bloodline beast.",
+          "page": 126
+        }
+      ]
+    },
+    {
+      "id": "optionGroup.devilforged_sea_devils_emanations",
+      "kind": "optionGroup",
+      "name": "Sea Devil’s Emanations",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 127
+      },
+      "text": "These features grant you additional abilities as a Devilforged, assuming you meet their prerequisite. You may take a number of these emanations equal to the value shown on the Emanations Known column of the Devilfoged table, starting at level 2.",
+      "options": [
+        {
+          "id": "agonizing_blast",
+          "name": "Agonizing Blast",
+          "group": "General Emanations",
+          "text": "When you cast eldritch blast, add your charisma modifier to the damage it deals on a hit.",
+          "page": 127,
+          "prerequisite": "Eldritch Blast cantrip"
+        },
+        {
+          "id": "chilling_blast",
+          "name": "Chilling Blast",
+          "group": "General Emanations",
+          "text": "Once on each of your turns when you hit a creature with your eldritch blast, you can reduce that creature’s speed by 10 feet until the end of your next turn.",
+          "page": 127,
+          "prerequisite": "Eldritch Blast cantrip"
+        },
+        {
+          "id": "demonic_protection",
+          "name": "Demonic Protection",
+          "group": "General Emanations",
+          "text": "You can cast mage armor on yourself at will, without expending a spell slot or material components.",
+          "page": 127
+        },
+        {
+          "id": "devils_sight",
+          "name": "Devil’s Sight",
+          "group": "General Emanations",
+          "text": "You can see normally in darkness, both magical and nonmagical, to a distance of 120 feet.",
+          "page": 127
+        },
+        {
+          "id": "fiendish_vigor",
+          "name": "Fiendish Vigor",
+          "group": "General Emanations",
+          "text": "You can cast false life on yourself at will as a 1st-level spell, without expending a spell slot or material components.",
+          "page": 127
+        },
+        {
+          "id": "mask_of_many_faces",
+          "name": "Mask of Many Faces",
+          "group": "General Emanations",
+          "text": "You can cast disguise self at will, without expending a spell slot.",
+          "page": 127
+        },
+        {
+          "id": "misty_visions",
+          "name": "Misty Visions",
+          "group": "General Emanations",
+          "text": "You can cast silent image at will, without expending a spell slot or material components.",
+          "page": 127
+        },
+        {
+          "id": "repelling_blast",
+          "name": "Repelling Blast",
+          "group": "General Emanations",
+          "text": "When you hit a creature with eldritch blast, you can push the creature up to 10 feet away from you in a straight line.",
+          "page": 127,
+          "prerequisite": "Eldritch Blast cantrip"
+        },
+        {
+          "id": "silver_tongue",
+          "name": "Silver Tongue",
+          "group": "General Emanations",
+          "text": "You gain proficiency in the Deception and Persuasion skills.",
+          "page": 127
+        },
+        {
+          "id": "sniping_blast",
+          "name": "Sniping Blast",
+          "group": "General Emanations",
+          "text": "When you cast eldritch blast, its range is 300 feet.",
+          "page": 127,
+          "prerequisite": "Eldritch Blast cantrip"
+        },
+        {
+          "id": "stable_infusion",
+          "name": "Stable Infusion",
+          "group": "General Emanations",
+          "text": "You have advantage on Constitution saving throws that you make to maintain your concentration on a spell.",
+          "page": 127
+        },
+        {
+          "id": "thief_of_five_fates",
+          "name": "Thief of Five Fates",
+          "group": "General Emanations",
+          "text": "You can cast bane once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
+          "page": 127
+        },
+        {
+          "id": "vacuum_blast",
+          "name": "Vacuum Blast",
+          "group": "General Emanations",
+          "text": "Once on each of your turns when you hit a creature with your eldritch blast, you can move that creature in a straight line 10 feet closer to yourself.",
+          "page": 127,
+          "prerequisite": "Eldritch Blast cantrip"
+        },
+        {
+          "id": "beast_speech",
+          "name": "Beast Speech",
+          "group": "Third Level Emanations",
+          "text": "weapon You can cast speak with animals at will, without expending a spell slot.",
+          "page": 127,
+          "prerequisite": "3rd Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "burning_blood",
+          "name": "Burning Blood",
+          "group": "Third Level Emanations",
+          "text": "weapon As your logia-infused item begins to enhance the elements within your body, you gain nearly endless energy. You no longer need to sleep and can’t be forced to sleep by any means. To gain the benefits of a long rest, you can spend all 8 hours doing light activity, such as training with your item or keeping watch.",
+          "page": 127,
+          "prerequisite": "3rd Level Devilforged, Logia Infused"
+        },
+        {
+          "id": "enhanced_zoan_bond",
+          "name": "Enhanced Zoan Bond",
+          "group": "Third Level Emanations",
+          "text": "weapon You can communicate telepathically with your summoned zoan creature and perceive through its senses as long as you are on the same plane of existence. Additionally, while perceiving through your summoned zoan creature’s senses, you can also speak through it in your own voice, even if your zoan infusion beast form is normally incapable of speech.",
+          "page": 127,
+          "prerequisite": "3rd Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "greater_logia_powers",
+          "name": "Greater Logia Powers",
+          "group": "Third Level Emanations",
+          "text": "weapon You gain additional powers from your logia-infused item. Choose two 1st-level spells from the Hybrid, Chemist, or Tinkerer spell lists that deal cold, fire, lightning, acid, or thunder damage. These become Devilforged spells for you and don’t count against your number of known spells.",
+          "page": 127,
+          "prerequisite": "3rd Level Devilforged, Logia Infused"
+        },
+        {
+          "id": "greater_zoan_form",
+          "name": "Greater Zoan Form",
+          "group": "Third Level Emanations",
+          "text": "weapon When you summon your zoan infusion beast form, you infuse the summoned zoan creature with greater power in its form, granting the creature the following benefits:\nAs a bonus action, you can command your summoned zoan creature to make an attack against an enemy within its range, using its reaction.\nThe summoned zoan creature’s weapon attacks are considered magical for the purpose of overcoming immunity and resistance to nonmagical attacks. When your summoned zoan creature takes damage, you can use your reaction to grant it resistance against that damage.",
+          "page": 128,
+          "prerequisite": "3rd Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "improved_paramecia_weapon",
+          "name": "Improved Paramecia Weapon",
+          "group": "Third Level Emanations",
+          "text": "weapon Your paramecia-infused weapon gains a +1 bonus to its attack and damage rolls, unless it is a magic weapon that already has a bonus to those rolls.",
+          "page": 128,
+          "prerequisite": "3rd Level Devilforged, Paramecia Infused"
+        },
+        {
+          "id": "zoan_regeneration",
+          "name": "Zoan Regeneration",
+          "group": "Third Level Emanations",
+          "text": "weapon Whenever you regain hit points while your summoned zoan creature is within 100 feet of you, treat any dice rolled to determine the hit points you regain as having rolled their maximum value for you.",
+          "page": 128,
+          "prerequisite": "3rd Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "bestial_summon",
+          "name": "Bestial Summon",
+          "group": "Fifth Level Emanations",
+          "text": "weapon Your summoned zoan creature gains a +1 to its attack and damage rolls, and a +1 to its Armor Class.",
+          "page": 128,
+          "prerequisite": "5th Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "cloak_of_shadows",
+          "name": "Cloak of Shadows",
+          "group": "Fifth Level Emanations",
+          "text": "When you are in an area of dim light or darkness, you can use your action to become invisible until you move or take an action or a reaction.",
+          "page": 128,
+          "prerequisite": "5th Level Devilforged"
+        },
+        {
+          "id": "exhausting_presence",
+          "name": "Exhausting Presence",
+          "group": "Fifth Level Emanations",
+          "text": "You can cast slow once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
+          "page": 128,
+          "prerequisite": "5th Level Devilforged"
+        },
+        {
+          "id": "ice_tomb",
+          "name": "Ice Tomb",
+          "group": "Fifth Level Emanations",
+          "text": "weapon As a reaction when you take damage, you can entomb yourself in ice, which melts away at the end of your next turn. You gain 10 temporary hit points per devilforged level, which take as much of the triggering damage as possible. Immediately after you take the damage, you gain vulnerability to fire damage, your speed is reduced to 0, and you are incapacitated. These effects, including any remaining temporary hit points, all end when the ice melts.\nOnce you use this emanation, you can’t use it again until you finish a short or long rest.",
+          "page": 128,
+          "prerequisite": "5th Level Devilforged, Logia Infused",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "action": "reaction",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        },
+        {
+          "id": "maddening_frequency",
+          "name": "Maddening Frequency",
+          "group": "Fifth Level Emanations",
+          "text": "The radius of sound gives you advantage on Charisma (Intimidation) checks but disadvantage on all other Charisma checks. Any other creature that starts its turn in the radius around you takes thunder damage equal to your Charisma modifier (minimum 0 damage).\nOnce you use this emanation, you can’t use it again until you finish a short or long rest.",
+          "page": 128,
+          "prerequisite": "5th Level Devilforged As a bonus action, you can emit a sound frequency from your infused item which negatively influences the minds of other creatures around you. The sound can be heard by any creation 5 feet away from your in every direction, but not in total cover. It lasts until you’re incapacitated or you dismiss it as a bonus action.",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "id": "mark_of_mindmelting",
+          "name": "Mark of Mindmelting",
+          "group": "Fifth Level Emanations",
+          "text": "As a bonus action, you cause a psychic disturbance around the target cursed by your hex spell or by a devilforged feature of yours, such as Devil’s Branding or Sign of Ill Omen. When you do so, you deal psychic damage to the cursed target and each creature of your choice within 5 feet of it. The psychic damage equals your Charisma modifier (minimum of 1 damage). To use this emanation, you must be able to see the cursed target, and it must be within 30 feet of you.",
+          "page": 128,
+          "prerequisite": "5th Level Devilforged",
+          "action": "bonus",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "id": "paramecia_smite",
+          "name": "Paramecia Smite",
+          "group": "Fifth Level Emanations",
+          "text": "weapon Once per turn when you hit a creature with your paramecia weapon, you can expend a devilforged spell slot to deal an extra 1d8 force damage to the target, plus another 1d8 per level of the spell slot, and you can knock the target prone if it is Huge or smaller.",
+          "page": 128,
+          "prerequisite": "5th Level Devilforged, Paramecia Infused"
+        },
+        {
+          "id": "ricocheting_strike",
+          "name": "Ricocheting Strike",
+          "group": "Fifth Level Emanations",
+          "text": "weapon You can attack with your paramecia weapon twice, instead of once, whenever you take the Attack action on your turn.",
+          "page": 129,
+          "prerequisite": "5th Level Devilforged, Paramecia Infused"
+        },
+        {
+          "id": "shadow_puppets",
+          "name": "Shadow Puppets",
+          "group": "Fifth Level Emanations",
+          "text": "You can cast animate dead without using a spell slot. Once you do so, you can’t cast it in this way again until you finish a long rest.",
+          "page": 129,
+          "prerequisite": "5th Level Devilforged"
+        },
+        {
+          "id": "sign_of_ill_omen",
+          "name": "Sign of Ill Omen",
+          "group": "Fifth Level Emanations",
+          "text": "You can cast bestow curse once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
+          "page": 129,
+          "prerequisite": "5th Level Devilforged"
+        },
+        {
+          "id": "zoan_mount",
+          "name": "Zoan Mount",
+          "group": "Fifth Level Emanations",
+          "text": "weapon Your summoned zoan creature has a base walking speed of 60 feet if you’re mounting it. It can also take the Dash action as a bonus action if you’re mounting it.",
+          "page": 129,
+          "prerequisite": "5th Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "alluring_mist",
+          "name": "Alluring Mist",
+          "group": "Seventh Level Emanations",
+          "text": "You can cast compulsion once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
+          "page": 129,
+          "prerequisite": "7th Level Devilforged"
+        },
+        {
+          "id": "blooming_logia_powers",
+          "name": "Blooming Logia Powers",
+          "group": "Seventh Level Emanations",
+          "text": "weapon, Greater Logia Powers You gain additional powers from your logia-infused item. Choose two 2nd-level spells and one 3rd-level spell from the Hybrid, Chemist, or Tinkerer spell lists that deal cold, fire, lightning, acid, or thunder damage. These become Devilforged spells for you and don’t count against your number of known spells.",
+          "page": 129,
+          "prerequisite": "7th Level Devilforged, Logia Infused"
+        },
+        {
+          "id": "relentless_mark",
+          "name": "Relentless Mark",
+          "group": "Seventh Level Emanations",
+          "text": "Your curse created by the hex spell or by a devilforged feature of yours creates a temporary bond between you and your target. As a bonus action, you can magically teleport up to 30 feet to an unoccupied space you can see within 5 feet of the target cursed by your hex spell or by a devilforged feature of yours, such as Devil’s Branding or Sign of Ill Omen. To teleport in this way, you must be able to see the cursed target.",
+          "page": 129,
+          "prerequisite": "7th Level Devilforged"
+        },
+        {
+          "id": "shared_zoan_transformation",
+          "name": "Shared Zoan Transformation",
+          "group": "Seventh Level Emanations",
+          "text": "weapon Your zoan infusion and yourself begin to become one. When you summon your zoan infusion beast form, you may enter a Hybrid Form of the summoned zoan creature as an action. This Hybrid Form follows the Zoan Hybrid Form rules, however you only have 2 Hybrid Form options and do not gain stat bonuses from your Hybrid Form and Human Form (Aside from the “No Remaining Hybrid Form Options?” rule.) Your Hybrid Form lasts for 1 minute, and you cannot activate it again until you finish a long rest.",
+          "page": 129,
+          "prerequisite": "7th Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "supreme_zoan_mount",
+          "name": "Supreme Zoan Mount",
+          "group": "Seventh Level Emanations",
+          "text": "weapon Your summoned zoan creature’s movement capabilities reach their ultimate potential, granting your creature the following benefits.\nChoose either an 80 ft. walk speed, or a 50 ft. fly, climb, or burrow speed. Your summoned zoan creature now has the specified movement speed equal to your choice when you’re mounting it. Your summoned zoan creature has at least 60 ft. of base walking speed, even if you aren’t mounting it. Your summoned zoan creature can take the Disengage action on a bonus action if you’re mounting it.",
+          "page": 129,
+          "prerequisite": "7th Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "tricksters_escape",
+          "name": "Trickster’s Escape",
+          "group": "Seventh Level Emanations",
+          "text": "You can cast freedom of movement once on yourself without expending a spell slot. You regain the ability to do so when you finish a long rest.",
+          "page": 129,
+          "prerequisite": "7th Level Devilforged"
+        },
+        {
+          "id": "visions_of_chaos",
+          "name": "Visions of Chaos",
+          "group": "Seventh Level Emanations",
+          "text": "You can cast confusion once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
+          "page": 129,
+          "prerequisite": "7th Level Devilforged"
+        },
+        {
+          "id": "elemental_summon",
+          "name": "Elemental Summon",
+          "group": "Ninth Level Emanations",
+          "text": "weapon You can cast conjure elemental once using a devilforged spell slot, the elemental dealing and resisting the appropriate damage types related to your logia infusion. (Work with your DM to choose which elemental fits your element the best.) You can’t do so again until you finish a long rest.",
+          "page": 130,
+          "prerequisite": "9th Level Devilforged, Logia Infused"
+        },
+        {
+          "id": "gift_of_logia_immunity",
+          "name": "Gift of Logia Immunity",
+          "group": "Ninth Level Emanations",
+          "text": "weapon Choose a number of allied creatures equal to your proficiency bonus. The selected creatures are now protected by your logia-infused weapon.\nWhen any of those creatures is within 120 feet of you is reduced to 0 hit points but not killed outright, the creature drops to 1 hit point instead as their body momentarily becomes like that of a logia. This effect may only occur once per creature, refreshing on that creature if they take a long rest.\nAs an action, you can move this feature’s protection from one creature to another.",
+          "page": 130,
+          "prerequisite": "9th Level Devilforged, Logia Infused"
+        },
+        {
+          "id": "shadow_speech",
+          "name": "Shadow Speech",
+          "group": "Ninth Level Emanations",
+          "text": "You can cast speak with dead at will, without expending a spell slot.",
+          "page": 130,
+          "prerequisite": "9th Level Devilforged"
+        },
+        {
+          "id": "spring_step",
+          "name": "Spring Step",
+          "group": "Ninth Level Emanations",
+          "text": "You can cast jump at will, without expending a spell slot.",
+          "page": 130,
+          "prerequisite": "9th Level Devilforged"
+        },
+        {
+          "id": "superior_paramecia_weapon",
+          "name": "Superior Paramecia Weapon",
+          "group": "Ninth Level Emanations",
+          "text": "weapon Your paramecia infused weapon gains a +2 bonus to its attack and damage rolls, unless it is a magic weapon that already has a bonus to those rolls. Additionally, after you take the Attack action on your turn you may make an additional attack as a bonus action with your paramecia infused weapon.",
+          "page": 130,
+          "prerequisite": "9th Level Devilforged, Paramecia Infused"
+        },
+        {
+          "id": "zero_gravity_step",
+          "name": "Zero-Gravity Step",
+          "group": "Ninth Level Emanations",
+          "text": "You can cast levitate on yourself at will, without expending a spell slot or material components.",
+          "page": 130,
+          "prerequisite": "9th Level Devilforged"
+        },
+        {
+          "id": "elemental_strike",
+          "name": "Elemental Strike",
+          "group": "Twelfth Level Emanations",
+          "text": "weapon When you hit a creature with your infused logia weapon, the creature takes extra elemental damage of a type associated with your infused fruit, equal to your Charisma modifier (minimum 1).",
+          "page": 130,
+          "prerequisite": "12th Level Devilforged, Logia Infused"
+        },
+        {
+          "id": "powerful_summon",
+          "name": "Powerful Summon",
+          "group": "Twelfth Level Emanations",
+          "text": "weapon, Bestial Summon Your summoned zoan creature gains a +2 to its attack and damage rolls, and it gains an amount of temp HP each time you summon it equal to your Charisma modifier (minimum 1).",
+          "page": 130,
+          "prerequisite": "12th Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "ricocheting_maelstrome",
+          "name": "Ricocheting Maelstrome",
+          "group": "Twelfth Level Emanations",
+          "text": "Infused weapon, Ricocheting Strike The Extra Attack of your Ricocheting Strike emanation now grants two extra attacks rather than one.",
+          "page": 130,
+          "prerequisite": "12th Level Devilforged, Paramecia"
+        },
+        {
+          "id": "awakened_logia_powers",
+          "name": "Awakened Logia Powers",
+          "group": "Fifteenth Level Emanations",
+          "text": "weapon, Blooming Logia Powers You gain additional powers from your logia-infused item. Choose two 4th-level spells and one 5th-level spell from the Hybrid, Chemist, or Tinkerer spell lists that deal cold, fire, lightning, acid, or thunder damage. These become Devilforged spells for you and don’t count against your number of known spells.",
+          "page": 131,
+          "prerequisite": "15th Level Devilforged, Logia Infused"
+        },
+        {
+          "id": "beast_adaptation",
+          "name": "Beast Adaptation",
+          "group": "Fifteenth Level Emanations",
+          "text": "weapon, Shared Zoan Transformation Your symbiosis with the beasts living in your armory grows even stronger, allowing you 1 more Hybrid Option and an additional use of your Hybrid Form per long rest.",
+          "page": 131,
+          "prerequisite": "15th Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "blast_and_strike",
+          "name": "Blast and Strike",
+          "group": "Fifteenth Level Emanations",
+          "text": "Infused weapon When you use your action to cast a spell, you may make one attack with your infused weapon as a bonus action.",
+          "page": 131,
+          "prerequisite": "15th Level Devilforged, Paramecia"
+        },
+        {
+          "id": "logia_recharge",
+          "name": "Logia Recharge",
+          "group": "Fifteenth Level Emanations",
+          "text": "weapon For any emanations that grant the use of a spell once per long rest, you may cast them once per short rest instead.",
+          "page": 131,
+          "prerequisite": "15th Level Devilforged, Logia Infused",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "id": "monstrous_submission",
+          "name": "Monstrous Submission",
+          "group": "Fifteenth Level Emanations",
+          "text": "weapon\nAs an action, your summoned zoan creature can grow to the same size as your target and attempt a contested athletics check against them. Your zoan creature has the same modifier as your target during the check, and it knocks the target prone as well as stunning them until the end of your next turn if they lose. The target is paralyzed instead of stunned if their contested check was 7 or more lower than yours. Your creature returns to normal size after the attack resolves. Once you use this emanation, you can’t use it again until you finish a short or long rest.",
+          "page": 131,
+          "prerequisite": "15th Level Devilforged, Zoan Infused",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "action": "action",
+          "auto": [
+            "uses",
+            "action"
+          ]
+        },
+        {
+          "id": "shroud_of_shadow",
+          "name": "Shroud of Shadow",
+          "group": "Fifteenth Level Emanations",
+          "text": "You can cast invisibility at will, without expending a spell slot.",
+          "page": 131,
+          "prerequisite": "15th Level Devilforged"
+        },
+        {
+          "id": "ultimate_paramecia_weapon",
+          "name": "Ultimate Paramecia Weapon",
+          "group": "Fifteenth Level Emanations",
+          "text": "Infused weapon, Superior Paramecia Weapon Your paramecia infused weapon gains a +3 bonus to its attack and damage rolls, unless it is a magic weapon that already has a bonus to those rolls. Once per turn, you may deal force damage with your paramecia infused weapon instead of its regular damage type.",
+          "page": 131,
+          "prerequisite": "15th Level Devilforged, Paramecia"
+        },
+        {
+          "id": "monstrous_summon",
+          "name": "Monstrous Summon",
+          "group": "Eighteenth Level Emanations",
+          "text": "weapon, Powerful Summon Your summoned zoan creature gains a +3 to its attack and damage rolls, an immunity to a damage type of your choice (Aside from force), and an additional attack in its multiattack. If your summoned zoan creature has no multiattack, it can now multiattack to attack twice with one of its natural melee weapon attacks.",
+          "page": 131,
+          "prerequisite": "18th Level Devilforged, Zoan Infused"
+        },
+        {
+          "id": "superior_fiendish_assimilation",
+          "name": "Superior Fiendish Assimilation",
+          "group": "Eighteenth Level Emanations",
+          "text": "weapon You may have two 6th-level Fiendish Assimilation spells chosen or stored instead of just one. You may cast each of your 6th-level Fiendish Assimilation spells once per long rest.",
+          "page": 131,
+          "prerequisite": "18th Level Devilforged, Logia Infused",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "id": "supreme_grade_paramecia_weapon",
+          "name": "Supreme-Grade Paramecia Weapon",
+          "group": "Eighteenth Level Emanations",
+          "text": "Infused weapon, Ultimate Paramecia Weapon Your paramecia infused weapon gains a +5 bonus to its attack and damage rolls, unless it is a weapon that already has a higher bonus to those rolls. Additionally, you deal an additional 2d8 force damage with your paramecia infused weapon.",
+          "page": 131,
+          "prerequisite": "18th Level Devilforged, Paramecia"
+        },
+        {
+          "id": "sea_devils_duelist",
+          "name": "Sea Devil’s Duelist",
+          "group": "Blade Smithing Emanations",
+          "text": "You gain the Dueling fighting style.",
+          "page": 132,
+          "prerequisite": "Blade Smithing"
+        },
+        {
+          "id": "wrathful_weapon",
+          "name": "Wrathful Weapon",
+          "group": "Blade Smithing Emanations",
+          "text": "You can cast one of the following spells using a devilforged slot: Searing Smite, Wrathful Smite, or Blinding Smite. Once you do so, you can’t do so this way again until you finish a long rest.",
+          "page": 132,
+          "prerequisite": "5th Level Devilforged, Blade Smithing"
+        },
+        {
+          "id": "extended_strike",
+          "name": "Extended Strike",
+          "group": "Blade Smithing Emanations",
+          "text": "When using your echoing strike, your range extension bonus increases from 10 feet to 15 feet.",
+          "page": 132,
+          "prerequisite": "7th Level Devilforged, Blade Smithing"
+        },
+        {
+          "id": "sharpened_blade",
+          "name": "Sharpened Blade",
+          "group": "Blade Smithing Emanations",
+          "text": "You can choose to make your infused weapon’s damage die a d10 (the damage die for weapons with the versatile property becomes a d12 when wielded with two hands), regardless of its form.",
+          "page": 132,
+          "prerequisite": "7th Level Devilforged, Blade Smithing"
+        },
+        {
+          "id": "a_thousand_slices",
+          "name": "A Thousand Slices",
+          "group": "Blade Smithing Emanations",
+          "text": "You can cast steel wind strike once using a devilforged spell slot, using your infused weapon as a component. You can’t do so again until you finish a long rest.",
+          "page": 132,
+          "prerequisite": "9th Level Devilforged, Blade Smithing"
+        },
+        {
+          "id": "blast_hopping",
+          "name": "Blast Hopping",
+          "group": "Devil Bombardier Emanations",
+          "text": "If you are hit by your own bomb’s blast zone, you may choose to be flung in a direction opposite of the bomb’s explosion radius. When you are flung, you travel 15 ft. away from your current spot, landing on your feet. You ignore opprotunity attacks when being flung.",
+          "page": 132,
+          "prerequisite": "Devil Bombardier"
+        },
+        {
+          "id": "twin_explosion",
+          "name": "Twin Explosion",
+          "group": "Devil Bombardier Emanations",
+          "text": "When you throw a bomb, you may also throw an additional bomb. The second bomb can land anywhere of your choice within 15 ft. of the original.",
+          "page": 132,
+          "prerequisite": "3rd Level Devilforged, Devil Bombardier"
+        },
+        {
+          "id": "used_to_the_burn",
+          "name": "Used to the Burn",
+          "group": "Devil Bombardier Emanations",
+          "text": "Gain resistance to any self inflicted damage from features or spells you cast.",
+          "page": 132,
+          "prerequisite": "7th Level Devilforged, Devil Bombardier"
+        },
+        {
+          "id": "bigger_boom",
+          "name": "Bigger Boom",
+          "group": "Devil Bombardier Emanations",
+          "text": "You can cast Flame Strike once for free. You can’t do so again until you finish a long rest.",
+          "page": 132,
+          "prerequisite": "9th Level Devilforged, Devil Bombardier"
+        },
+        {
+          "id": "short_fuse",
+          "name": "Short Fuse",
+          "group": "Devil Bombardier Emanations",
+          "text": "You may choose to detonate your bombs in your grip. If you do so, the damage of the bomb is doubled.",
+          "page": 132,
+          "prerequisite": "9th Level Devilforged, Devil Bombardier"
+        },
+        {
+          "id": "blessed_bow",
+          "name": "Blessed Bow",
+          "group": "Firearm Smithing Emanations",
+          "text": "If your infused weapon is a longbow, you can create an arrow out of pure energy when attacking with it. When you hit a creature, you can expend a devilforged spell slot to deal an additional 2d8 radiant damage to the target per spell level. Additionally, you make this enhanced attack at advantage if the target creature is a devil fruit user.",
+          "page": 133,
+          "prerequisite": "3rd Level Devilforged, Firearm Smithing"
+        },
+        {
+          "id": "quickened_shot",
+          "name": "Quickened Shot",
+          "group": "Firearm Smithing Emanations",
+          "text": "You can cast Magic Missile once for free. You can’t do so again until you finish a long rest. Additionally, you may cast Magic Missile using a devilforged spell slot.",
+          "page": 133,
+          "prerequisite": "3rd Level Devilforged, Firearm Smithing"
+        },
+        {
+          "id": "blast_shot",
+          "name": "Blast Shot",
+          "group": "Firearm Smithing Emanations",
+          "text": "You can cast Fireball once for free. You can’t do so again until you finish a long rest.",
+          "page": 133,
+          "prerequisite": "5th Level Devilforged, Firearm Smithing"
+        },
+        {
+          "id": "force_cannon",
+          "name": "Force Cannon",
+          "group": "Firearm Smithing Emanations",
+          "text": "If your infused weapon is a firearm or gun of some kind, you can choose to deal force damage for its damage type when you hit with it.",
+          "page": 133,
+          "prerequisite": "5th Level Devilforged, Firearm Smithing"
+        },
+        {
+          "id": "lightning_cannon",
+          "name": "Lightning Cannon",
+          "group": "Firearm Smithing Emanations",
+          "text": "If your infused weapon is a firearm or ranged weapon, you can cast lightning arrow using a devilforged spell slot. You can’t do so again until you finish a short or long rest.",
+          "page": 133,
+          "prerequisite": "5th Level Devilforged, Firearm Smithing"
+        },
+        {
+          "id": "expanded_tool_infusion",
+          "name": "Expanded Tool Infusion",
+          "group": "Gear Smithing Emanations",
+          "text": "You are able to infuse any tool with your Devil Fruit Infusion to make it your Infused Item. When you do so, the tool becomes multipurpose, transforming into any tool you need. You also gain proficiency with all tools.",
+          "page": 133,
+          "prerequisite": "Gear Smithing"
+        },
+        {
+          "id": "greater_armor_infusion",
+          "name": "Greater Armor Infusion",
+          "group": "Gear Smithing Emanations",
+          "text": "You are able to infuse any suit of armor with your Devil Fruit Infusion to make it your Infused Item. When you do so, you are now proficient with that suit of armor. You remain proficient with it until the infusion is removed or you no longer have this emanation.",
+          "page": 133,
+          "prerequisite": "Gear Smithing"
+        },
+        {
+          "id": "jack_of_all_tools",
+          "name": "Jack of all Tools",
+          "group": "Gear Smithing Emanations",
+          "text": "You gain advantage on all checks using tools.",
+          "page": 133,
+          "prerequisite": "Gear Smithing"
+        },
+        {
+          "id": "countermeasures",
+          "name": "Countermeasures",
+          "group": "Gear Smithing Emanations",
+          "text": "You can cast Absorb Elements and Shield each once for free. You can’t do so again until you finish a long rest.",
+          "page": 133,
+          "prerequisite": "3rd Level Devilforged, Gear Smithing"
+        },
+        {
+          "id": "reinforced_armor",
+          "name": "Reinforced Armor",
+          "group": "Gear Smithing Emanations",
+          "text": "You can cast Armor of Agathys at your highest spell level once for free per long rest.",
+          "page": 133,
+          "prerequisite": "5th Level Devilforged, Gear Smithing"
+        },
+        {
+          "id": "digitigrade_joint_upgrade",
+          "name": "Digitigrade Joint Upgrade",
+          "group": "Mechadevil Emanations",
+          "text": "You mechadevil’s walking speed increased by 10 feet.",
+          "page": 134,
+          "prerequisite": "3rd Level Devilforged, Mechadevil"
+        },
+        {
+          "id": "reactive_armor",
+          "name": "Reactive Armor",
+          "group": "Mechadevil Emanations",
+          "text": "You can cast Hellish Rebuke at your highest spell level once for free per long rest.",
+          "page": 134,
+          "prerequisite": "5th Level Devilforged, Mechadevil"
+        },
+        {
+          "id": "intigrate_weapons",
+          "name": "Intigrate Weapons",
+          "group": "Mechadevil Emanations",
+          "text": "You’re able up imbed up to three weapons on your mechadevil instead of two.",
+          "page": 134,
+          "prerequisite": "9th Level Devilforged, Mechadevil"
+        },
+        {
+          "id": "reinforced_hull",
+          "name": "Reinforced Hull",
+          "group": "Mechadevil Emanations",
+          "text": "Your mechadevil gains resistance to fire and cold damage, and heals from lightning damage while in combat.",
+          "page": 134,
+          "prerequisite": "9th Level Devilforged, Mechadevil"
+        },
+        {
+          "id": "mecha_jets",
+          "name": "Mecha Jets",
+          "group": "Mechadevil Emanations",
+          "text": "You mechadevil’s flying speed increased by 20 feet.",
+          "page": 134,
+          "prerequisite": "12th Level Devilforged, Mechadevil"
+        },
+        {
+          "id": "defensive_stance",
+          "name": "Defensive Stance",
+          "group": "No Mi Trainer Emanations",
+          "text": "When you summon a Bloodline Beast from a star, it gains 15 temporary hit points.",
+          "page": 134,
+          "prerequisite": "No Mi Trainer"
+        },
+        {
+          "id": "bloodline_devil",
+          "name": "Bloodline Devil",
+          "group": "No Mi Trainer Emanations",
+          "text": "You may infuse a Devil Fruit into your Bloodline Beast like it is a weapon using the Infuse Devil Fruit feature.",
+          "page": 134,
+          "prerequisite": "5th Level Devilforged, No Mi Trainer"
+        },
+        {
+          "id": "power_surge",
+          "name": "Power Surge",
+          "group": "No Mi Trainer Emanations",
+          "text": "When you summon a Bloodline Beast from a star, it is effected by the haste spell until the start of your next turn.",
+          "page": 134,
+          "prerequisite": "5th Level Devilforged, No Mi Trainer"
+        },
+        {
+          "id": "dueling_partner",
+          "name": "Dueling Partner",
+          "group": "No Mi Trainer Emanations",
+          "text": "You may have up to two Bloodline Beasts summoned at once.",
+          "page": 134,
+          "prerequisite": "9th Level Devilforged, No Mi Trainer"
+        },
+        {
+          "id": "quick_play",
+          "name": "Quick Play",
+          "group": "No Mi Trainer Emanations",
+          "text": "You may summon a Bloodline Beast from a star using a bonus action instead of an action.",
+          "page": 134,
+          "prerequisite": "9th Level Devilforged, No Mi Trainer"
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

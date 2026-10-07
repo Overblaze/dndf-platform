@@ -1,0 +1,824 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.rogue",
+      "kind": "class",
+      "name": "Rogue",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 176
+      },
+      "flavor": "The Rogue is a master of stealth and precision, thriving in the shadows and striking when least expected. With quick reflexes and a sharp mind, they exploit every opportunity, turning their foes’ weaknesses into their own advantage. Rogues are cunning survivalists, slipping through danger with ease and outmaneuvering enemies with unmatched agility.",
+      "quote": "EVERYONE’S WEAK WHEN THEY HESITATE. --- Nami",
+      "hitDie": 8,
+      "savingThrows": [
+        "dex",
+        "int"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor"
+        ],
+        "weapons": [
+          "simple",
+          "pistol",
+          "longsword",
+          "rapier",
+          "shortsword",
+          "cane_sword",
+          "kunai",
+          "katana",
+          "chakram",
+          "saber"
+        ],
+        "tools": [
+          "Thieves’ tools"
+        ],
+        "skills": {
+          "choose": 4,
+          "from": [
+            "acrobatics",
+            "athletics",
+            "deception",
+            "insight",
+            "intimidation",
+            "investigation",
+            "perception",
+            "performance",
+            "persuasion",
+            "sleight_of_hand",
+            "stealth"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a Rapier or (b) a Shortsword",
+        "(a) a Musket and 20 gun bullets or (b) a Shortbow and Quiver of 20 Arrows",
+        "(a) a burglar’s pack, (b) a dungeoneer’s pack, or (c) an explorer’s pack",
+        "Thick Shirt, two daggers, and thieves’ tools"
+      ],
+      "progression": {
+        "columns": {
+          "sneakAttack": [
+            "2d6",
+            "2d6",
+            "3d6",
+            "3d6",
+            "4d6",
+            "4d6",
+            "5d6",
+            "5d6",
+            "6d6",
+            "6d6",
+            "7d6",
+            "7d6",
+            "8d6",
+            "8d6",
+            "9d6",
+            "9d6",
+            "10d6",
+            "10d6",
+            "12d6",
+            "12d6"
+          ]
+        }
+      },
+      "asiLevels": [
+        4,
+        8,
+        10,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Roguish Archetype",
+        "level": 3,
+        "featureLevels": [
+          3,
+          9,
+          13,
+          17
+        ]
+      },
+      "subclassIntro": {
+        "text": "There are various types of rogues that utilize a number of different tools to steal from their targets in the shadows, attack with elemental tricks, or duel in close range using fancy maneuvers. Through developing these methods of combat, several archetypes have emerged.",
+        "page": 178
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Expertise",
+          "text": "At 1st level, choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with thieves’ tools. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies.\nAt 6th level, you can choose two more of your proficiencies (in skills or with thieves’ tools) to gain this benefit.",
+          "page": 176
+        },
+        {
+          "level": 1,
+          "name": "Sneak Attack",
+          "text": "Beginning at 1st level, you know how to strike subtly and exploit a foe’s distraction. Once per turn, you can deal an extra 2d6 damage to one creature you hit with an attack if you have advantage on the attack roll. The attack must use a finesse or a ranged weapon.\nYou don’t need advantage on the attack roll if another enemy of the target is within 5 feet of it, that enemy isn’t incapacitated, and you don’t have disadvantage on the attack roll.\nThe amount of the extra damage increases as you gain levels in this class, as shown in the Sneak Attack column of the Rogue table.",
+          "page": 177
+        },
+        {
+          "level": 1,
+          "name": "Thieves’ Cant",
+          "text": "During your rogue training you learned thieves’ cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation. Only another creature that knows thieves’ cant understands such messages. It takes four times longer to convey such a message than it does to speak the same idea plainly.\nIn addition, you understand a set of secret signs and symbols used to convey short, simple messages, such as whether an area is dangerous or the territory of a thieves’ guild, whether loot is nearby, or whether the people in an area are easy marks or will provide a safe house for thieves on the run.",
+          "page": 177
+        },
+        {
+          "level": 1,
+          "name": "Observation Training",
+          "text": "Also at 1st level, you learn two Uncommon Observation Haki features of your choice.\nIn addition, you are immune to the effects of Observation Haki that rely on Perception checks or similar sensory awareness to locate your current position.\nAt 5th level, you learn one Rare Observation Haki of your choice.\nVariant Rule: If you are using the Amateur Haki ruling in Chapter 5, take 2 amateur Color of Observation haki of your choice at 1st level.",
+          "page": 177
+        },
+        {
+          "level": 2,
+          "name": "Cunning Action",
+          "text": "Starting at 2nd level, your quick thinking and agility allow you to move and act quickly. You can take a bonus action on each of your turns in combat. This action can be used only to take the Dash, Disengage, or Hide action.",
+          "page": 177
+        },
+        {
+          "level": 3,
+          "name": "Roguish Archetype",
+          "text": "At 3rd level, you choose an archetype that you emulate in the exercise of your rogue abilities: Agent, Assassin, Dancing Duelist, Elemental Trickster, Swashbuckler, or Thief, all detailed at the end of the class description. Your archetype choice grants you features at 3rd Level and then again at 9th, 13th, and 17th level.",
+          "page": 177,
+          "grantsSubclass": true
+        },
+        {
+          "level": 3,
+          "name": "Fast Talker",
+          "text": "At 3rd level, you learn to master saying the right thing at the right time to get people to do what you want. When you make a Charisma (Persuasion) or Charisma (Deception) check, you can treat a d20 roll of 9 or lower as a 10.",
+          "page": 177
+        },
+        {
+          "level": 3,
+          "name": "Steady Aim",
+          "text": "At 3rd level, as a bonus action, you give yourself advantage on your next attack roll on the current turn. You can use this bonus action only if you haven’t moved during this turn, and after you use the bonus action, your speed is 0 until the end of the current turn.",
+          "page": 177,
+          "action": "bonus",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.",
+          "page": 177,
+          "asi": true
+        },
+        {
+          "level": 5,
+          "name": "Uncanny Dodge",
+          "text": "Starting at 5th level, when an attacker that you can see hits you with an attack, you can use your reaction to halve the attack’s damage against you.",
+          "page": 177
+        },
+        {
+          "level": 7,
+          "name": "Evasion",
+          "text": "Beginning at 7th level, you can nimbly dodge out of the way of certain area Effects, such as a devil fruit user’s fireball ability or an Ice Storm attack. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+          "page": 177
+        },
+        {
+          "level": 11,
+          "name": "Reliable Talent",
+          "text": "By 11th level, you have refined your chosen skills until they approach perfection. Whenever you make an ability check that lets you add your proficiency bonus, you can treat a d20 roll of 9 or lower as a 10.",
+          "page": 177
+        },
+        {
+          "level": 14,
+          "name": "Power of Observation",
+          "text": "Starting at 14th level, you may unlock any one “Rare” or lower Color of Observation Haki Advancement feat from Chapter 5. If you have already taken all the rare and lower observation haki feats, you may take a rare or lower haki advancement feat under a different color of haki, assuming you meet the prerequisites.",
+          "page": 177
+        },
+        {
+          "level": 15,
+          "name": "Slippery Mind",
+          "text": "By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws.",
+          "page": 177
+        },
+        {
+          "level": 18,
+          "name": "Elusive",
+          "text": "Beginning at 18th level, you are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren’t incapacitated.",
+          "page": 178
+        },
+        {
+          "level": 20,
+          "name": "Stroke of Luck",
+          "text": "At 20th level, you have an uncanny knack for succeeding when you need to. If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the d20 roll as a 20.\nOnce you use this feature, you can’t use it again until you finish a short or long rest.",
+          "page": 178,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.rogue.agent",
+      "kind": "subclass",
+      "parent": "class.rogue",
+      "name": "Agent",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 178
+      },
+      "flavor": "Masters of infiltration, agents specialize in disguises, mimicry, and uncovering secrets. Whether slipping into an enemy stronghold under a false identity or extracting compromising information through casual conversation, these rogues excel in the art of espionage.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Compromising Secrets",
+          "text": "When you choose this archetype at 3rd level, you excel at exploiting the vulnerabilities of others. Once per long rest, you can spend 10 minutes observing or conversing with a creature. At the end of the interaction, make a Wisdom (Insight) check contested by the target’s Charisma (Deception) check. On a success, you uncover one of the following secrets:\nA personal fear or emotional trigger.\nA close relationship or loyalty.\nA physical or tactical weakness.\nFor the next hour, you have advantage on Charisma checks made against that creature and can apply your Sneak Attack damage even if you don’t have advantage, provided you aren’t disadvantaged.",
+          "page": 178,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Covert Operative",
+          "text": "Also at 3rd level, your training in infiltration and disguise gives you the tools to operate unnoticed. You gain proficiency with the Disguise Kit, Forgery Kit, and one additional tool of your choice.\nAdditionally, when you make a Dexterity (Stealth) or Charisma (Deception) check, you can treat a roll of 9 or lower on the d20 as a 10.",
+          "page": 178
+        },
+        {
+          "level": 9,
+          "name": "Shifting Identity",
+          "text": "At 9th level, you master the art of creating and maintaining alternate personas. During a short or long rest, choose one tool you are proficient with and create a detailed false identity associated with it, including a name, appearance, and background. While using this identity:\nYou can adopt this identity as an action, changing your appearance, voice, and mannerisms.\nYou have expertise (double proficiency bonus) with the associated tool.\nCreatures interacting with you must succeed on an Intelligence (Investigation) check against your Charisma (Deception) roll to discern the disguise if they are suspicious.\nYou can maintain one primary persona at a time. Creating a new persona replaces the previous one.",
+          "page": 178
+        },
+        {
+          "level": 13,
+          "name": "Branching Network",
+          "text": "Starting at 13th level, your network of contacts and informants keeps you one step ahead. While in a settlement for at least 1 hour, you can gather intelligence by tapping into rumors, local gossip, and faction movements. The DM provides one piece of useful information of their choice, such as:\nThe goals of a prominent faction.\nHidden entrances to a stronghold.\nA target’s last known location.\nA weakness in a defensive point.\nAn enemy who doesn’t have full allegiance to the current regime.\nThe location of an item.\nLocations of rebellious groups.\nAdditionally, you gain advantage on Charisma (Persuasion) and Intelligence (Investigation) checks made to gather information.",
+          "page": 178
+        },
+        {
+          "level": 17,
+          "name": "Ultimate Subterfuge",
+          "text": "Beginning at 17th level, your skill in deception and infiltration reaches unparalleled heights. You gain the following benefits:\nWhen you make a Dexterity (Stealth), Charisma (Deception), or Wisdom (Insight) check, treat a roll of 11 or lower as a 12.\nAs an action, you can perfectly mimic a creature you’ve observed for at least 1 minute, replicating their voice, mannerisms, clothing style, and behavior. Creatures must succeed on an Intelligence (Investigation) check against your Charisma (Deception) roll to discern the impersonation. Once per turn, when you attack a creature unaware of your true identity (such as while disguised or hidden), you can deal an additional 4d6 damage.",
+          "page": 178
+        }
+      ]
+    },
+    {
+      "id": "subclass.rogue.assassin",
+      "kind": "subclass",
+      "parent": "class.rogue",
+      "name": "Assassin",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 179
+      },
+      "flavor": "Master of poisons, the assassin concocts deadly brews to eliminates targets slowly and with subtlety. Their victims never see the danger until it’s far too late.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Poison Crafter",
+          "text": "When you choose this archetype at 3rd level, you gain proficiency with the Poisoner’s Kit if you don’t already have it.\nAdditionally you can craft poisons during a long rest using your Poisoner’s Kit. You can craft a number of vials of poison up to your Dexterity modifier (minimum of one) and no more of the specific Vials per long rest limit as shown in the table. Each poison requires a specific crafting cost and has a limited potency duration, after which it neutralizes itself within its container and becomes ineffective.",
+          "page": 179,
+          "sections": [
+            {
+              "name": "Poison Crafting Table",
+              "text": "฿\n฿\n฿\n฿\nAll poisons can be found in Chapter 9: Medical Log",
+              "page": 179,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Vials per"
+                    ],
+                    [
+                      "Rogue",
+                      "Crafting",
+                      "Potency",
+                      "long"
+                    ],
+                    [
+                      "Level",
+                      "Poisons",
+                      "Cost",
+                      "Duration",
+                      "rest"
+                    ],
+                    [
+                      "3rd",
+                      "Sailor’s Bane",
+                      "-",
+                      "-",
+                      "-"
+                    ]
+                  ],
+                  "page": 179
+                },
+                {
+                  "rows": [
+                    [
+                      "3rd",
+                      "Red Blade Brew,",
+                      "10,000",
+                      "-",
+                      "- Mermaid’s Guilt, Black Spot Poison, or Parrot’s Plague"
+                    ]
+                  ],
+                  "page": 179
+                },
+                {
+                  "rows": [
+                    [
+                      "9th",
+                      "Drunken Siren, Lullaby of",
+                      "30,000",
+                      "3 days",
+                      "- the Deep, Seafire Vapor, Kraken’s Whisper, Desert Strawberry, or Blinding Fog"
+                    ]
+                  ],
+                  "page": 179
+                },
+                {
+                  "rows": [
+                    [
+                      "13th",
+                      "Sea Serpent Venom,",
+                      "100,000 24 hours max 2 Amiudake Extract, or The Captain’s Curse"
+                    ]
+                  ],
+                  "page": 179
+                },
+                {
+                  "rows": [
+                    [
+                      "17th Puzzle Scorpion Venom or",
+                      "200,000 24 hours max 1 Sea King Venom"
+                    ]
+                  ],
+                  "page": 179
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Toxic Precision",
+          "text": "Also at 3rd level, as a bonus action, you can coat a weapon, piece of ammunition, or a 5-foot square surface with a poison from your inventory. The poison remains potent for 1 hour or until triggered. When you hit a creature with a poisoned weapon or piece of ammunition, you gain the following benefits:\nThe creature has disadvantage on its first saving throw made against the poison.\nWhen applied to a surface, the poison is triggered when a creature touches or interacts with it, as determined by the DM.\nOnce you inflict a target with the poison covered weapon, ammunition, or surface, the poison dissipates. Poisons do not stack, and only 1 poison can be on a target at once. If you inflict a creature with a higher severity poison than they currently have, the higher severity poison takes effect.\nAdditionally, if the creature is already poisoned, your Sneak Attack damage increases by an additional 1d6.",
+          "page": 179,
+          "action": "bonus",
+          "auto": [
+            "action"
+          ]
+        },
+        {
+          "level": 9,
+          "name": "Venomous Reflexes",
+          "text": "At 9th level, your swift hands allow you to deliver poisons with uncanny speed. You gain the following benefits:\nWhen you take the Attack action, you can apply poison to a weapon or piece of ammunition as part of the attack, rather than as a bonus action.\nIf you are holding a vial of poison, you can use your reaction to splash it onto a creature within 5 feet when they miss you with a melee attack. The creature must succeed on a Dexterity saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or suffer the poison’s effects immediately.",
+          "page": 179
+        },
+        {
+          "level": 13,
+          "name": "Potent Poisoner",
+          "text": "Starting at 13th level, your expertise allows you to brew deadlier poisons and bypass resistances. Creatures with resistance to poison damage no longer apply that resistance against poisons you administer.",
+          "page": 179
+        },
+        {
+          "level": 17,
+          "name": "Black Out Strike",
+          "text": "Beginning at 17th level, when you deal Sneak Attack damage to a poisoned creature, you can force them to make a Constitution saving throw equal to 8 + your proficiency bonus + your Dexterity modifier. On a failed save, the creature falls unconscious for 1 minute or until it takes damage.",
+          "page": 179
+        }
+      ]
+    },
+    {
+      "id": "subclass.rogue.dancing_duelist",
+      "kind": "subclass",
+      "parent": "class.rogue",
+      "name": "Dancing Duelist",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 179
+      },
+      "flavor": "To the Dancing Duelist, battle is a performance and every strike a step in an intricate choreography. Inspired by wandering performers, court jesters, and dueling masters, these rogues flow through combat with grace.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Stage of Battle",
+          "text": "When you choose this archetype at 3rd level, combat is your stage, and each movement enhances your deadly performance. When you make a melee attack with a finesse weapon, you can use your bonus action to perform a flourish, choosing one of the following effects:\nYou gain a +2 bonus to AC until the start of your next turn.\nYou add an extra 1d6 damage to the attack. This damage increases to 1d8 at 9th level and 1d10 at 17th level.\nYou also gain proficiency in the Performance skill if you don’t already have it.",
+          "page": 179
+        },
+        {
+          "level": 3,
+          "name": "Vortex Strike",
+          "text": "Also at 3rd level, you move like a whirlwind, striking multiple foes with practiced elegance. When you take the Attack action on your turn, you can choose to make a single attack against up to five creatures within 5 feet of you instead of making a normal attack. All attacks are made with disadvantage, but each attack deals an additional 1d6 damage. This extra damage increases to 1d8 at 9th level and 1d10 at 17th level.",
+          "page": 180
+        },
+        {
+          "level": 9,
+          "name": "Evasion in Motion",
+          "text": "At 9th level, your footwork allows you to glide effortlessly through danger. When a creature misses you with a melee attack, you can use your reaction to make a melee attack against that creature. Whether the attack hits or misses, you can then move up to 10 feet without provoking opportunity attacks.",
+          "page": 180
+        },
+        {
+          "level": 13,
+          "name": "Unstoppable Rhythm",
+          "text": "Starting at 13th level, your movements flow seamlessly from one strike to the next. When you take the Attack action, you can make an additional melee attack as part of that action.\nAdditionally, when you hit a creature with an opportunity attack, you can immediately move up to 10 feet without provoking opportunity attacks.",
+          "page": 180
+        },
+        {
+          "level": 17,
+          "name": "Elegance of the Blade",
+          "text": "Beginning at 17th level, your dance reaches its crescendo, an unstoppable flurry of motion and steel. Once per short or long rest, when you hit a creature with a melee attack, you can choose to deal maximum damage with the attack and you can immediately move an additional 10 feet of movement without provoking opportunity attacks.\nAdditionally, when you reduce a creature to 0 hit points with a melee attack, you can move (if you have movement available) and make another maximum damage melee attack against a creature with this feature.",
+          "page": 180,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.rogue.elemental_trickster",
+      "kind": "subclass",
+      "parent": "class.rogue",
+      "name": "Elemental Trickster",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 180
+      },
+      "flavor": "Elemental Tricksters have mastered the science of many complex traps, tools, and plants. They may use these tools to aid in combat or simply create a number of illusory effects to distract your opponent.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Bonus Proficiencies",
+          "text": "When you choose this archetype at 3rd level, you gain proficiency with darts, blowguns, and giant slings.",
+          "page": 180
+        },
+        {
+          "level": 3,
+          "name": "Nature Powers (Spellcasting)",
+          "text": "When you reach 3rd level, you gain the ability to cast Nature Powers (Spells). See the general rules of Spellcasting and the Tinkerer spell list in Chapter 4.\nNatural Abilities (Cantrips). You learn three natural abilities (cantrips): Druidcraft and two other Cantrips of your choice from the Tinkerer spell list. You learn another tinkerer cantrip of your choice at 10th level.\nNature Power Slots (Spell Slots). The Elemental Trickster Nature Powers table shows how many Nature Power Slots you have to cast Tinkerer Spells of 1st Level and higher as Nature Powers. To cast one of these Nature Powers (spells) , you must expend a slot of the nature power’s level or higher. You regain all expended Nature Power Slots when you finish a long rest.\nFor example, if you know the 1st-level nature power Charm Person and have a 1st-level and a 2nd-level slot available, you can use charm person using either slot.\nNature Powers (Spells) Known of 1st-Level and\nHigher. You know three 1st-level Tinkerer Spells of your choice, two of which you must choose from the Enchantment and Illusion spells on the tinkerer spell list.\nThe Natural Powers Known (Spells Known) column of the Elemental Trickster Natural Powers table shows when you learn more Tinkerer spells of 1st Level or higher. Each of these spells must be an Enchantment or Illusion spell of your choice, and must be of a level for which you have Spell Slots. For instance, when you reach 7th level in this class, you can learn one new spell of 1st or 2nd Level.\nThe Nature Powers (Spells) you learn at 8th, 14th, and 20th level can come from any school of magic.\nWhenever you gain a level in this class, you can replace one of the Tinkerer Spells you know with another nature power (spell) of your choice from the tinkerer spell list. The new nature power must be of a level for which you have Nature Power Slots, and it must be an Enchantment or Illusion nature power (spell), unless you’re replacing the nature power you gained at 3rd, 8th, 14th, or 20th level from any school of magic.\nSpecial Power Ability. Intelligence is your Special Power ability for your Tinkerer spells , since you learn your Nature Powers (Spells) through dedicated study and memorization. You use your Intelligence whenever a nature power (spell) refers to your Special Power (spellcasting ) ability. In addition, you use your Intelligence modifier when setting the saving throw DC for a tinkerer spell you cast and when making an Attack roll with one.\nSpecial Power save DC = 8 + your Proficiency Bonus + your Intelligence modifier\nSpecial Power Attack modifier = your Proficiency Bonus + your Intelligence modifier",
+          "page": 180,
+          "sections": [
+            {
+              "name": "Elemental Trickster Nature Powers (Spellcasting)",
+              "text": "",
+              "page": 181,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Natural Abilities",
+                      "Nature Powers",
+                      "Spell Slots per Spell Spell Slots per Spell",
+                      "Spell Slots per Spell Spell Slots per Spell"
+                    ],
+                    [
+                      "Level",
+                      "(cantrips) Known",
+                      "(Spells) Known",
+                      "Level : 1st",
+                      "Level : 2nd",
+                      "Level : 3rd",
+                      "Level : 4th"
+                    ],
+                    [
+                      "3rd",
+                      "3",
+                      "3",
+                      "2",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "4th",
+                      "3",
+                      "4",
+                      "3",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "5th",
+                      "3",
+                      "4",
+                      "3",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "6th",
+                      "3",
+                      "4",
+                      "3",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "7th",
+                      "3",
+                      "5",
+                      "4",
+                      "2",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "8th",
+                      "3",
+                      "6",
+                      "4",
+                      "2",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "9th",
+                      "3",
+                      "6",
+                      "4",
+                      "2",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "10th",
+                      "4",
+                      "7",
+                      "4",
+                      "3",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "11th",
+                      "4",
+                      "8",
+                      "4",
+                      "3",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "12th",
+                      "4",
+                      "8",
+                      "4",
+                      "3",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "13th",
+                      "4",
+                      "9",
+                      "4",
+                      "3",
+                      "2",
+                      "-"
+                    ],
+                    [
+                      "14th",
+                      "4",
+                      "10",
+                      "4",
+                      "3",
+                      "2",
+                      "-"
+                    ],
+                    [
+                      "15th",
+                      "4",
+                      "10",
+                      "4",
+                      "3",
+                      "2",
+                      "-"
+                    ],
+                    [
+                      "16th",
+                      "4",
+                      "11",
+                      "4",
+                      "3",
+                      "3",
+                      "-"
+                    ],
+                    [
+                      "17th",
+                      "4",
+                      "11",
+                      "4",
+                      "3",
+                      "3",
+                      "-"
+                    ],
+                    [
+                      "18th",
+                      "4",
+                      "11",
+                      "4",
+                      "3",
+                      "3",
+                      "-"
+                    ],
+                    [
+                      "19th",
+                      "4",
+                      "12",
+                      "4",
+                      "3",
+                      "3",
+                      "1"
+                    ],
+                    [
+                      "20th",
+                      "4",
+                      "13",
+                      "4",
+                      "3",
+                      "3",
+                      "1"
+                    ]
+                  ],
+                  "page": 181
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "name": "Nature’s Invention",
+          "text": "Starting at 3rd level, when you cast Druidcraft, you can perform the following additional tasks with it:\nYou can make your next Ranged Weapon attack deal fire, cold, or lightning damage instead. You can use this feature a number of times equal to twice your Intelligence modifier. You regain all uses of this feature again once you complete a short or long rest. You can enhance any natural shell and turn it into a Simple Dial of your choice. You can’t use this feature again until you complete a long rest. You can have a number of Dials created this way equal to your Intelligence Modifier. You can cast this spell again to remove the properties from a Simple Dial you created and revert it back to a normal shell.\nYou create a natural trap of your choice. This works the same as a Hunting Trap or Caltrops (pick one). You can use this feature a number of times equal to twice your Intelligence modifier. You regain all uses of this feature again once you complete a short or long rest.",
+          "page": 181,
+          "uses": {
+            "max": "max(1, mod.int)*2",
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 9,
+          "name": "Gift of the Wild",
+          "text": "At 9th level, you may also learn Chemist spells using your Nature Power (Spellcasting) feature, using the same limitations.\nAdditionally, you may use Druidcraft as a bonus action.",
+          "page": 181
+        },
+        {
+          "level": 13,
+          "name": "Ingenious Ambush",
+          "text": "Starting at 13th level, if you are hidden from a creature when you Cast a Nature Power (Spell) on it, the creature has disadvantage on any saving throw it makes against the nature power (spell) this turn.",
+          "page": 181
+        },
+        {
+          "level": 17,
+          "name": "Lord of Nature",
+          "text": "At 17th level, you gain the ability to sap the power from a special power (spell) and use it by channeling it through your plants.\nImmediately after a creature casts a special power (spell) that Targets you or includes you in its area of Effect, you can use your Reaction to attempt to absorb the effect into a seed and force the creature to make a saving throw with its Special Power (Spellcasting) ability modifier. The DC equals your spell save DC. On a failed save, you negate the special power’s Effect against you, and you steal the knowledge of the special power (spell) if it is at least 1st Level and of a level you can cast (it doesn’t need to be a Tinkerer spell). For the next 8 hours, you know the special power (spell) through your attunement with nature and can cast it using your Nature Power Slots.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+          "page": 181,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.rogue.swashbuckler",
+      "kind": "subclass",
+      "parent": "class.rogue",
+      "name": "Swashbuckler",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 182
+      },
+      "flavor": "You focus your training on the art of the blade, relying on speed, elegance, and charm in equal parts. While some warriors are brutes clad in heavy armor, your method of fighting looks almost like a performance. Duelists and pirates typically belong to this archetype.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Fancy Footwork",
+          "text": "When you choose this archetype at 3rd level, you learn how to land a strike and then slip away without reprisal. During your turn, if you make a melee attack against a creature, that creature can’t make opportunity attacks against you for the rest of your turn.",
+          "page": 182
+        },
+        {
+          "level": 3,
+          "name": "Rakish Audacity",
+          "text": "Starting at 3rd level, your confidence propels you into battle. You can give yourself a bonus to your initiative rolls equal to your Charisma modifier.\nYou also gain an additional way to use your Sneak Attack; you don’t need advantage on the attack roll to use your Sneak Attack against a creature if you are within 5 feet of it, no other creatures are within 5 feet of you, and you don’t have disadvantage on the attack roll. All the other rules for Sneak Attack still apply to you.",
+          "page": 182
+        },
+        {
+          "level": 9,
+          "name": "Panache",
+          "text": "At 9th level, your charm becomes extraordinarily beguiling. As an action, you can make a Charisma (Persuasion) check contested by a creature’s Wisdom (Insight) check. The creature must be able to hear you, and the two of you must share a language.\nIf you succeed on the check and the creature is hostile to you, it has disadvantage on attack rolls against targets other than you and can’t make opportunity attacks against targets other than you. This effect lasts for 1 minute, until one of your companions attacks the target or affects it with a spell, or until you and the target are more than 60 feet apart.\nIf you succeed on the check and the creature isn’t hostile to you, it is charmed by you for 1 minute. While charmed, it regards you as a friendly acquaintance. This effect ends immediately if you or your companions do anything harmful to it.",
+          "page": 182
+        },
+        {
+          "level": 13,
+          "name": "Elegant Maneuver",
+          "text": "Starting at 13th level, you can use a bonus action on your turn to gain advantage on the next Dexterity (Acrobatics) or Strength (Athletics) check you make during the same turn.",
+          "page": 182
+        },
+        {
+          "level": 17,
+          "name": "Master Duelist",
+          "text": "Beginning at 17th level, your mastery of the blade lets you turn failure into success in combat. If you miss with an attack roll, you can roll it again with advantage. Once you do so, you can’t use this feature again until you finish a short or long rest.",
+          "page": 182,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subclass.rogue.thief",
+      "kind": "subclass",
+      "parent": "class.rogue",
+      "name": "Thief",
+      "group": "Roguish Archetypes",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 182
+      },
+      "flavor": "You hone your skills in the larcenous arts. Burglars, bandits, cutpurses, and other criminals typically follow this archetype, but so do rogues who prefer to think of themselves as professional treasure seekers, explorers, delvers, and investigators. In addition to improving your agility and stealth, you learn skills useful for delving into ancient ruins, reading unfamiliar languages, and using magic items you normally couldn’t employ.",
+      "features": [
+        {
+          "level": 3,
+          "name": "Fast Hands",
+          "text": "Starting at 3rd level, you can use the bonus action granted by your Cunning Action to make a Dexterity (Sleight of Hand) check, use your thieves’ tools to disarm a trap or open a lock, or take the Use an Object action.",
+          "page": 182
+        },
+        {
+          "level": 3,
+          "name": "Second-Story Work",
+          "text": "When you choose this archetype at 3rd level, you gain the ability to climb faster than normal; climbing no longer costs you extra movement.\nIn addition, when you make a running jump, the distance you cover increases by a number of feet equal to your Dexterity modifier.",
+          "page": 182
+        },
+        {
+          "level": 9,
+          "name": "Supreme Sneak",
+          "text": "Starting at 9th level, you have advantage on a Dexterity (Stealth) check if you move no more than half your speed on the same turn.",
+          "page": 182
+        },
+        {
+          "level": 13,
+          "name": "Use Special Gadgets",
+          "text": "By 13th level, you have learned enough about the workings of technology that you can improvise the use of items even when they are not intended for you. You ignore all class, race, and level requirements on the use of special gadgets (magic items).",
+          "page": 182
+        },
+        {
+          "level": 17,
+          "name": "Thief’s Reflexes",
+          "text": "When you reach 17th level, you have become adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal initiative and your second turn at your initiative minus 10. You can’t use this feature when you are surprised.",
+          "page": 182
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

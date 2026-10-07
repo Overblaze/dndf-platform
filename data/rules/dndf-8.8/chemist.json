@@ -1,0 +1,627 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "class.chemist",
+      "kind": "class",
+      "name": "Chemist",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 93
+      },
+      "flavor": "The Chemist is a daring scientist, blending alchemy and medical inventions to push the boundaries of nature itself. Whether concocting potent mixtures or mutating their own form, Chemists are known for their ability to reshape reality through chemical mastery. They are visionaries who weild the power of chemistry to both heal and destroy.",
+      "quote": "NOTHING IS IMPOSSIBLE FOR A MAN WITH A SKULL FLAG! ISN’T THAT RIGHT? DOCTOR! --- Tony Tony Chopper",
+      "hitDie": 8,
+      "savingThrows": [
+        "int",
+        "wis"
+      ],
+      "proficiencies": {
+        "armor": [
+          "light_armor",
+          "medium_armor",
+          "shields"
+        ],
+        "weapons": [
+          "club",
+          "dagger",
+          "dart",
+          "javelin",
+          "mace",
+          "quarterstaff",
+          "scimitar",
+          "sickle",
+          "sling",
+          "spear"
+        ],
+        "tools": [
+          "Herbalism kit",
+          "Alchemist’s Supplies"
+        ],
+        "skills": {
+          "choose": 2,
+          "from": [
+            "arcana",
+            "animal_handling",
+            "insight",
+            "medicine",
+            "nature",
+            "perception",
+            "religion",
+            "survival"
+          ]
+        }
+      },
+      "startingEquipment": [
+        "(a) a shield or (b) any simple weapon",
+        "(a) a scimitar or (b) any simple melee weapon Thick shirt, an explorer’s pack, and alchemist’s supplies"
+      ],
+      "progression": {
+        "columns": {
+          "cantripsKnown": [
+            2,
+            2,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots1": [
+            2,
+            3,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4
+          ],
+          "slots2": [
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots3": [
+            0,
+            0,
+            0,
+            0,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots4": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "slots5": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            3,
+            3,
+            3
+          ],
+          "slots6": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "slots7": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            2
+          ],
+          "slots8": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slots9": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      },
+      "resources": [
+        {
+          "id": "slots1",
+          "name": "1st-level slots",
+          "max": "col.slots1",
+          "recharge": "long"
+        },
+        {
+          "id": "slots2",
+          "name": "2nd-level slots",
+          "max": "col.slots2",
+          "recharge": "long"
+        },
+        {
+          "id": "slots3",
+          "name": "3rd-level slots",
+          "max": "col.slots3",
+          "recharge": "long"
+        },
+        {
+          "id": "slots4",
+          "name": "4th-level slots",
+          "max": "col.slots4",
+          "recharge": "long"
+        },
+        {
+          "id": "slots5",
+          "name": "5th-level slots",
+          "max": "col.slots5",
+          "recharge": "long"
+        },
+        {
+          "id": "slots6",
+          "name": "6th-level slots",
+          "max": "col.slots6",
+          "recharge": "long"
+        },
+        {
+          "id": "slots7",
+          "name": "7th-level slots",
+          "max": "col.slots7",
+          "recharge": "long"
+        },
+        {
+          "id": "slots8",
+          "name": "8th-level slots",
+          "max": "col.slots8",
+          "recharge": "long"
+        },
+        {
+          "id": "slots9",
+          "name": "9th-level slots",
+          "max": "col.slots9",
+          "recharge": "long"
+        }
+      ],
+      "asiLevels": [
+        4,
+        8,
+        12,
+        16,
+        19
+      ],
+      "subclass": {
+        "label": "Chemist Study",
+        "level": 2,
+        "featureLevels": [
+          2,
+          6,
+          10,
+          14
+        ]
+      },
+      "subclassIntro": {
+        "text": "All chemists spend a majority of their time studying various fields of science to incorporate into their own research. Which other field you decide to specialize in may depend on if you prefer more monstrous transformations, greater invention powers, or the ability to support your allies with chemical conconctions.",
+        "page": 96
+      },
+      "features": [
+        {
+          "level": 1,
+          "name": "Alchemical Symbols",
+          "text": "You understand how to read alchemical symbols written in ancient blueprints or advanced technology. These symbols are a secret code thought up by the brightest alchemists in the past, and you can quickly and intuitively understand their secret meaning. You and others who know this language automatically spot such a message. Others spot the message’s presence with a successful DC 15 Wisdom (Perception) check but can’t decipher it without special powers.",
+          "page": 94
+        },
+        {
+          "level": 1,
+          "name": "Invention Power (Spellcasting)",
+          "text": "Drawing on the divine essence of chemical composition and alchemy, you can use various invention powers (spells) to shape that essence to your will. Invention Powers are the equivalent of “Spells” in 5th edition, and invention power slots are the same as “Spell Slots”. Make sure to view the “Casting a Spell” section in the Player’s Handbook for understanding Spellcasting in 5th Edition D&D. Chemist creation powers count as Chemist Spells in Chapter 4.",
+          "page": 94,
+          "sections": [
+            {
+              "name": "Natural Abilities (Cantrips)",
+              "text": "At 1st level, you know two natural abilities (cantrips) of your choice from the chemist spell list in Chapter 1. You learn additional chemist cantrips of your choice at higher levels, as shown in the natural abilities (Cantrips) Known column of the Chemist table.",
+              "page": 94
+            },
+            {
+              "name": "Preparing and Casting Invention Powers (Spells)",
+              "text": "The Chemist table shows how many spell slots you have to cast your chemist invention powers (spells) of 1st level and higher. To cast one of these chemist spells, you must expend a slot of the spell’s level or higher. You regain all expended spell slots when you finish a long rest.\nYou prepare the list of chemist invention powers (spells) that are available for you to cast, choosing from the chemist spell list. When you do so, choose a number of chemist spells equal to your Wisdom modifier + your Chemist level (minimum of one spell) to add to your chemist invention powers. The spells must be of a level for which you have invention power slots.\nFor example, if you are a 3rd-level chemist, you have four 1st-level and two 2nd-level invention power slots. With a Wisdom of 16, your list of prepared invention powers can include six invention powers of 1st or 2nd level, in any combination. If you prepare the 1st-level invention power (spell) Cure Wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the invention power doesn’t remove it from your list of prepared invention powers. You can also change your list of prepared invention powers (spells) when you finish a long rest. Preparing a new list of chemist invention powers requires time spent in deep study: at least 1 minute per invention power level for each invention power on your list.",
+              "page": 94
+            },
+            {
+              "name": "Invention (Spellcasting) Ability",
+              "text": "Wisdom is your spellcasting ability for your chemist invention powers (spells), since your power draws upon your devotion and attunement to chemistry and science. You use your Wisdom whenever a spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a chemist invention power you cast and when making an attack roll with one.\nInvention save DC = 8 + your proficiency bonus + your Wisdom modifier\nInvention attack modifier = your proficiency bonus + your Wisdom modifier",
+              "page": 94
+            },
+            {
+              "name": "Ritual Casting",
+              "text": "You can cast a chemist invention power (spell) as a ritual if that invention power (spell) has the ritual tag and you have the invention power prepared.",
+              "page": 94
+            },
+            {
+              "name": "Invention (Spellcasting) Focus",
+              "text": "You can use a alchemist’s supplies as a spellcasting focus for your chemist Invention powers.",
+              "page": 94
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Monster Mutation",
+          "text": "Starting at 2nd level, using a chemical concoction to alter your lineage factor, you can use your action to transform yourself into an abomination using the stat block below. You can use this feature twice. You regain expended uses when you finish a short or long rest.\nActions\nYou can stay in your abomination form for a number of hours equal to half your chemist level (rounded down). You then revert to your normal form unless you expend another use of this feature. You can revert to your normal form earlier by using a bonus action on your turn. You automatically revert if you fall unconscious, drop to 0 hit points, or die.\nWhile you are transformed, the following rules apply:\nChoose 1 Statistical Splice and 2 Morph Splices from the abomination splices area at the end of your class/subclass descriptions.\nYour abomination’s Strength, Dexterity, and Constitution scores are 20, 16, and 14. You can assign each number to the ability score of your choice.\nYour proficiency bonus is equal to your characters while in this form.\nYour game statistics are replaced by the statistics of the abomination, but you retain your alignment, personality, and Intelligence, Wisdom, and Charisma scores. You also retain all of your skill and saving throw proficiencies, in addition to gaining those of the creature. If the creature has the same proficiency as you and the bonus in its stat block is higher than yours, use the creature’s bonus instead of yours. If the creature has any legendary or lair actions, you can’t use them.\nWhen you transform, you assume the abomination’s hit points and Hit Dice. When you revert to your normal form, you return to the number of hit points you had before you transformed. However, if you revert as a result of dropping to 0 hit points, any excess damage carries over to your normal form, For example, if you take 10 damage in animal form and have only 1 hit point left, you revert and take 9 damage. As long as the excess damage doesn’t reduce your normal form to 0 hit points, you aren’t knocked unconscious.\nIf a splice has a damage dice roll in the feature or an associated attack, the damage is increase by 1 additional dice at 5th level, 10th level, 15th level, and 20th level.\nYou can’t cast special powers (spells) while in your abomination form. Transforming doesn’t break your concentration on a special power (spell) you’ve already cast, however, or prevent you from taking actions that are part of a special power (spell), such as Call Lightning, that you’ve already cast.\nIf you have Devil Fruit powers, you cannot use them while in this form, as your lineage factor is temporarily disrupted. This includes all devil fruit curse effects as well. If you eat a devil fruit while in your abomination form, you gain the powers. However as soon as you transform back into your normal form, you instantly die as if you had eaten 2 devil fruits.\nYou retain the benefit of any features already cast from your class, race, or other source and can use them if the new form is physically capable of doing so.\nYou choose whether your equipment falls to the ground in your space or merges into your new form. Equipment that merges with the form has no effect until you leave the form.",
+          "page": 94,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Claws. Melee Weapon Attack: +0 to hit, reach 5ft., one target."
+                ],
+                [
+                  "Hit (1d6 + 0) slashing damage."
+                ]
+              ],
+              "page": 94
+            }
+          ],
+          "sections": [
+            {
+              "name": "Abomination",
+              "text": "",
+              "page": 94,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Large monstrosity, any alignment"
+                    ],
+                    [
+                      "Armor Class 10 + your proficiency bonus"
+                    ],
+                    [
+                      "Hit Points 10 + your chemist level x 2"
+                    ],
+                    [
+                      "Speed 40 ft."
+                    ],
+                    [
+                      "STR",
+                      "DEX",
+                      "CON",
+                      "INT",
+                      "WIS",
+                      "CHA"
+                    ],
+                    [
+                      "10 (+0)",
+                      "10 (+0)",
+                      "10 (+0)",
+                      "-",
+                      "-",
+                      "-"
+                    ],
+                    [
+                      "Skills your character skills"
+                    ],
+                    [
+                      "Senses your character senses"
+                    ]
+                  ],
+                  "page": 94
+                }
+              ]
+            }
+          ],
+          "uses": {
+            "max": 2,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 2,
+          "name": "Chemist Study",
+          "text": "At 2nd level, you choose to study an additional field of science alongside chemistry, incorporating the two together. Choose Aerostatic, Botany, Cryochemist, Genetics, Medicine, or Pyrochemist, all detailed at the end of the class description. Your choice grants you features at 2nd level and again at 6th, 10th, and 14th level.",
+          "page": 95,
+          "grantsSubclass": true
+        },
+        {
+          "level": 4,
+          "name": "Ability Score Improvement",
+          "text": "When you reach 4th level, and again at 8th, 12th, 16th, and 19th level, you can increase one ability score of your choice by 2, or you can increase two Ability Scores of your choice by 1. Alternatively, you can take a feat listed in Chapter 1. As normal, you can’t increase an ability score above 20 using this feature.\nAdditionally, whenever you reach a level in this class that grants the Ability Score Improvement feature, you can replace one natural ability (cantrip) you learned from this class’s Invention Power (Spellcasting) feature with another cantrip from the chemist spell list.",
+          "page": 95,
+          "asi": true
+        },
+        {
+          "level": 18,
+          "name": "Immortality Research",
+          "text": "Starting at 18th level, the chemical knowledge that you possess allows you to develop medicine that makes you to age more slowly. For every 10 years that pass, your body ages only 1 year. This medicine only works on you.",
+          "page": 95
+        },
+        {
+          "level": 18,
+          "name": "Abomination Powers",
+          "text": "Beginning at 18th level, you can cast many of your invention powers (spells) in any shape you assume using your Monster Mutation. You can perform the somatic and verbal components of a invention power while in an abomination form, but you aren’t able to provide material components.",
+          "page": 95
+        },
+        {
+          "level": 20,
+          "name": "Perfected Mutation",
+          "text": "At 20th level, you can use your Monster Mutation an unlimited number of times.\nAdditionally, you can ignore the verbal and somatic components of your chemist invention powers (spells), as well as any material components that lack a cost and aren’t consumed by a invention power (spell). You gain this benefit in both your normal shape and your abomination form.",
+          "page": 95
+        }
+      ]
+    },
+    {
+      "id": "subclass.chemist.medicine",
+      "kind": "subclass",
+      "parent": "class.chemist",
+      "name": "Medicine",
+      "group": "Chemist Studies",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 99
+      },
+      "flavor": "The field of medicine allows scientists to develop a wide variety of synthetic and natural remedies alike to treat and heal those in need.",
+      "features": [
+        {
+          "level": 2,
+          "name": "Pharmacist",
+          "text": "At 2nd level, you learn how to develop beneficial medicines to cure aliments and save lives. You can craft medicines during a long rest using Alchemist Supplies. You can craft a number of medications up to your Wisdom modifier (minimum of one), with each medicine requires a specific crafting cost to create.",
+          "page": 99,
+          "sections": [
+            {
+              "name": "Medicine Table",
+              "text": "฿\n฿\n฿\n฿\nAll medicines can be found in Chapter 9: Medical Log",
+              "page": 99,
+              "tables": [
+                {
+                  "rows": [
+                    [
+                      "Chemist Level",
+                      "Medicines",
+                      "Crafting Cost"
+                    ]
+                  ],
+                  "page": 99
+                },
+                {
+                  "rows": [
+                    [
+                      "2nd",
+                      "Common Medicines",
+                      "100,000"
+                    ]
+                  ],
+                  "page": 99
+                },
+                {
+                  "rows": [
+                    [
+                      "6th",
+                      "Uncommon Medicines",
+                      "250,000"
+                    ]
+                  ],
+                  "page": 99
+                },
+                {
+                  "rows": [
+                    [
+                      "10th",
+                      "Rare Medicines",
+                      "500,000"
+                    ]
+                  ],
+                  "page": 99
+                },
+                {
+                  "rows": [
+                    [
+                      "14th",
+                      "Very Rare Medicines",
+                      "1,000,000"
+                    ]
+                  ],
+                  "page": 99
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "name": "Medical Tent",
+          "text": "At 6th level, through your study of field medics, you’ve learned how to set up advanced tents that guard your comrades while they rest inside. During a short or long rest, you can set up a sensor that detects intruders up to a 30-foot-radius around the tent where your allies rest.\nWhile in the sensor’s radius, you and your allies gain a +5 bonus to Dexterity (Stealth) and Wisdom (Perception) checks, and any light from open flames in the radius (a campfire, torches, or the like) isn’t visible outside the radius\nThe sensor vanishes at the end of the rest or when you leave the radius.",
+          "page": 99
+        },
+        {
+          "level": 10,
+          "name": "Instant Rescue",
+          "text": "Starting at 10th level, you develop technology that allows you to blink over to a different point in space. As a bonus action on your turn, you can teleport up to 60 feet to an unoccupied space you can see. Alternatively, you can use your action to teleport one willing creature you touch up to 30 feet to an unoccupied space you can see.\nYou can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses of it when you finish a long rest.",
+          "page": 100,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "level": 14,
+          "name": "Brain Imaging",
+          "text": "At 14th level, you develop a brain imaging device that allows you to be able to enter dreams and use special powers.\nWhen you finish a short rest, you can cast one of the following invention powers (spells), without expending a invention power slot or requiring material components: Dream (with you as the messenger) and Scrying\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+          "page": 100,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

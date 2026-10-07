@@ -1,0 +1,204 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "feat.boarding_cutlass",
+      "kind": "feat",
+      "name": "Boarding Cutlass",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 53
+      },
+      "text": "You fight with the great agility, darting in and out of combat.\nYou gain a +1 bonus to attack rolls with cutlasses. When you hit a creature with a cutlass, you may immediately move up to 10 feet without provoking opportunity attacks."
+    },
+    {
+      "id": "feat.dead_mans_range",
+      "kind": "feat",
+      "name": "Dead Man’s Range",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 54
+      },
+      "text": "You’re shotgun turns close-quarters combat into a death zone. When you fire a shotgun at a creature within 15 feet, you deal an additional 1d8 piercing damage on a hit."
+    },
+    {
+      "id": "feat.disarming_strike",
+      "kind": "feat",
+      "name": "Disarming Strike",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 54
+      },
+      "text": "You’ve mastered the jitte’s hooked guard, using it to strip weapons from your foes. When you hit a creature with a jitte, you may forego your damage roll to attempt to disarm it as part of the same attack. The target must succeed on a Strength saving throw equal to 8 + your Strength modifier + your proficiency bonus or drop one weapon or item of your choice that it is holding. The item lands at its feet."
+    },
+    {
+      "id": "feat.dual_pistols",
+      "kind": "feat",
+      "name": "Dual Pistols",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 54
+      },
+      "text": "You’ve mastered the art of fighting with a pistol in each hand.\nWhen you make an attack with a pistol as part of the Attack action, you can fire your off-hand pistol as part of the same action. You do not need to use your bonus action for this off-hand shot.\nIf you target two different creatures with your pistols in the same turn, you gain a +1 bonus to AC until the start of your next turn.\nReloading pistols while wielding two no longer requires a free hand; you can reload one pistol as part of the same action you use to reload the other."
+    },
+    {
+      "id": "feat.fan_of_steel",
+      "kind": "feat",
+      "name": "Fan of Steel",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 56
+      },
+      "text": "You wield the war fan as both shield and snare.\nWhile wielding a war fan, when you are hit by a ranged weapon attack, you can use your reaction to reduce the damage by 1d8 + your Dexterity modifier + your proficiency bonus. If this reduces the damage to 0, you can make a ranged attack with another light thrown weapon you have equipt as part of the same reaction.\nWhen you hit a creature with a war fan, you may immediately attempt to grapple the target as part of the same attack. You may use Dexterity (Acrobatics) instead of Strength (Athletics) for this grapple."
+    },
+    {
+      "id": "feat.gentlemans_gambit",
+      "kind": "feat",
+      "name": "Gentleman’s Gambit",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 56
+      },
+      "text": "You fight with elegance and subtlety, disguising your weapon until the moment of the strike.\nWhen you roll initiative while holding a cane sword sheathed, your next attack with the cane sword is made with advantage.\nWhen you hit a creature with a cane sword attack immediately after drawing it, you may instead deal the damage at the end of your targets turn. When you deal damage in this way the damage increases by 1d6 additional slashing damage. You may only make this attack once per target per day."
+    },
+    {
+      "id": "feat.hack_and_chop",
+      "kind": "feat",
+      "name": "Hack and Chop",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 57
+      },
+      "text": "You specialize in flurry of attacks when wielding battleaxes. You can use an action, bonus action, and/or reaction to attack with a battleaxe. Bonus actions and reactions do not proc extra attack features."
+    },
+    {
+      "id": "feat.love_radar",
+      "kind": "feat",
+      "name": "Love Radar",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 58
+      },
+      "text": "You’re have a sixth sense for knowing where to find those you hold dear. You may assign up to 3 creatures with the Endeared condition. This condition allows you to find them at any time in a 600 ft sphere centered around you.\nYou may reassign the Endeared condition at will."
+    },
+    {
+      "id": "feat.moderately_armorered",
+      "kind": "feat",
+      "name": "Moderately Armorered",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 59
+      },
+      "text": "You have trained to master the use of medium armor and shields, gaining the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with medium armor and shields.",
+      "prerequisite": "Proficiency with light armor"
+    },
+    {
+      "id": "feat.mutagenic_resilience",
+      "kind": "feat",
+      "name": "Mutagenic Resilience",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 59
+      },
+      "text": "Your body has adapted further to the unnatural changes forced upon it. When you are reduced to 0 hit points but not killed outright, your unstable body erupts with a burst of energy. You remain conscious and do not fall unconscious from dropping to 0 hit points until the end of your next turn. While in this state, you can move and take actions as normal, and your weapon attacks deal an additional 1d12 damage. At the end of your next turn, you fall unconscious as normal if you have not regained any hit points. You still gain exhaustion when healed from 0 hit points.",
+      "prerequisite": "Punk Experiment"
+    },
+    {
+      "id": "feat.samurai_warrior",
+      "kind": "feat",
+      "name": "Samurai Warrior",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 61
+      },
+      "text": "The katana is a difficult blade to use, but you have spent countless hours mastering it. You gain the following benefits:\nYou gain a +1 bonus to attack rolls you make with a katana.\nThe first time you use your attack action to attack a creature with a katana in combat and it is sheathed, you gain advantage on the attack roll. If the attack lands, it is considered a critical strike.\nYou can deliver a sweep attack to fleeing enemies. When you hit with an opportunity attack using a katana, the target must succeed on a Strength saving throw equal to 8 + your proficiency bonus + your Dexterity modifier or be knocked prone."
+    },
+    {
+      "id": "feat.silent_hunter",
+      "kind": "feat",
+      "name": "Silent Hunter",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 62
+      },
+      "text": "You have mastered the art of silent ranged kills, turning the blowgun into a weapon of fit for an assassin. When you make a ranged attack with a blowgun while hidden, you do not reveal your position on a hit. Enemies cannot determine the direction the shot came from.\nA blowgun shot is considered silent; creatures cannot hear the attack."
+    },
+    {
+      "id": "feat.sling_king",
+      "kind": "feat",
+      "name": "Sling King",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 63
+      },
+      "text": "Your sling skills have grown, and you gain these benefits:\nYou gain a +1 bonus to attack rolls you make with a sling.\nWhen you use a sling, its damage die changes from a d4 to a d6, and from a d8 to a d10 when wielded with two hands. (This benefit has no effect if another feature has already improved the weapon’s die.) Your maximum range with slings now also count as your minimum."
+    },
+    {
+      "id": "feat.staggering_swing",
+      "kind": "feat",
+      "name": "Staggering Swing",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 63
+      },
+      "text": "You wield the morningstar as a hybrid weapon, its spikes tearing through armor and shields.\nWhen you hit a creature wearing armor or using a shield, you deal an extra 1d6 piercing damage. Once per turn, when you hit a creature with a morningstar, you can forego the damage roll and you can force the target to make a Constitution saving throw equal to 8 + your Strength modifier + your proficiency bonus. On a failed save, the target is staggered until the start of your next turn, giving it disadvantage on its next weapon attack roll."
+    },
+    {
+      "id": "feat.three_weapon_style",
+      "kind": "feat",
+      "name": "Three-Weapon Style",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 64
+      },
+      "text": "You master fighting with three weapons, gaining the following benefits:\nYour Two-Weapon Style bonus to AC increases to +2.\nYou can hold an additional offhand weapon with another appendage or with your mouth, and it doesn’t have to be light. You can’t make attacks with it.\nChoose one one-handed weapon you are proficienct with held in either hand during your turn, you may combine attacks made with that weapon with your third weapon to increase the chosen weapon’s damage dice by one stage for the remainder of your turn. For example, a d4 damage die made with the weapon would become a d6 to hit, a d6 would become a d8, a d8 would become a d10, and a d10 would become a d12. The maximum the damage dice can increase to is a d12.\nYou can draw or stow three one-handed weapons when you would normally be able to draw or stow only one.",
+      "prerequisite": "Two-Weapon Style Feat"
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

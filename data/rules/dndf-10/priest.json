@@ -501,6 +501,7 @@
       "name": "Cherry Blossom Domain",
       "group": "Divine Domains",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -583,7 +584,13 @@
             "uses"
           ]
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 171
+        }
+      }
     },
     {
       "id": "subclass.priest.color",
@@ -592,6 +599,7 @@
       "name": "Color Domain",
       "group": "Divine Domains",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -773,7 +781,13 @@
           "text": "At 17th level, your mastery of divine artistry allows you to blend multiple colors into your form. You can now pick up to three colors from the Color Table active at the same time on any of your features, gaining the benefits of all three simultaneously. The Hue Strike feature gains an additional 1d8 damage to a total of 3d8, with each 1d8 being a different color if your choose.\nAdditionally, you can now change up to two of your active colors as part of your Artistic Prowess feature.",
           "page": 168
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 172
+        }
+      }
     },
     {
       "id": "subclass.priest.death",
@@ -782,6 +796,7 @@
       "name": "Death Domain",
       "group": "Divine Domains",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -857,7 +872,13 @@
           "text": "Starting at 17th level, when the Priest casts a Necromancy holy power (spell) of 1st through 5th Level that Targets only one creature, the holy power can instead target two creatures within range and within 5 feet of each other. If the holy power consumes its Material Components, the Priest must provide them for each target.",
           "page": 169
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 173
+        }
+      }
     },
     {
       "id": "subclass.priest.desert",
@@ -866,6 +887,7 @@
       "name": "Desert Domain",
       "group": "Divine Domains",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -948,7 +970,13 @@
           "text": "Starting at 17th level, you can use your action to activate an aura of sunlight and burning sands that lasts for 1 minute or until you dismiss it using another action. You emit bright light in a 60-foot radius and dim light 30 feet beyond that. Your enemies in the bright light have disadvantage on Saving Throws against any spell that deals fire or radiant damage.",
           "page": 169
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 174
+        }
+      }
     },
     {
       "id": "subclass.priest.infernal",
@@ -957,6 +985,7 @@
       "name": "Infernal Domain",
       "group": "Divine Domains",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1032,7 +1061,13 @@
           "text": "At 17th level, your mastery of infernal fire reaches its peak, allowing you to burn even the most fire-resistant creatures. All fire damage you deal ignores resistance and downgrades fire immunity to fire resistance.",
           "page": 170
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 174
+        }
+      }
     },
     {
       "id": "subclass.priest.sky",
@@ -1041,6 +1076,7 @@
       "name": "Sky Domain",
       "group": "Divine Domains",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -1123,8 +1159,14 @@
           "text": "At 17th level, using your dials, you gain a flying speed equal to double your current walking speed.",
           "page": 170
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 175
+        }
+      }
     }
   ],
-  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Feature text is word for word; fields listed under \"auto\" were recognised from the wording."
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_classes.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
 }

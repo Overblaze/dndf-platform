@@ -397,6 +397,7 @@
       "kind": "optionGroup",
       "name": "Fury Features",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -469,7 +470,13 @@
           "text": "When you are Charmed or Frightened, you may use a bonus action and spend 1 fury point to end one of these effects on yourself.",
           "page": 87
         }
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 86
+        }
+      }
     },
     {
       "id": "subclass.bruiser.beast",
@@ -750,6 +757,7 @@
       "parent": "class.bruiser",
       "name": "Eastern Dragon Style",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -807,7 +815,13 @@
           "page": 91
         }
       ],
-      "flavor": "This brawling style can be best described as a fierce style that emulates the pride and might of a dragon.\nThis style uses a mixture of Unarmed Strikes and Weapon Attacks. Users of the dragon style are fierce aerial fighters that crush and pulverize their enemies with raw strength, guided by the wrath of a dragon spirit surrounding them. Very few have ever lived to see this style used at its full potential."
+      "flavor": "This brawling style can be best described as a fierce style that emulates the pride and might of a dragon.\nThis style uses a mixture of Unarmed Strikes and Weapon Attacks. Users of the dragon style are fierce aerial fighters that crush and pulverize their enemies with raw strength, guided by the wrath of a dragon spirit surrounding them. Very few have ever lived to see this style used at its full potential.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 90
+        }
+      }
     },
     {
       "id": "subclass.bruiser.hasshoken",

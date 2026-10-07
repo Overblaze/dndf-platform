@@ -26,6 +26,7 @@
       "kind": "crewRole",
       "name": "Captain",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -56,13 +57,20 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 13
+        }
+      }
     },
     {
       "id": "crewRole.first_mate",
       "kind": "crewRole",
       "name": "First Mate",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -93,7 +101,13 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 13
+        }
+      }
     },
     {
       "id": "crewRole.navigator",
@@ -137,6 +151,7 @@
       "kind": "crewRole",
       "name": "Doctor",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -166,13 +181,20 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 14
+        }
+      }
     },
     {
       "id": "crewRole.chef",
       "kind": "crewRole",
       "name": "Chef",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -203,13 +225,20 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 15
+        }
+      }
     },
     {
       "id": "crewRole.shipwright",
       "kind": "crewRole",
       "name": "Shipwright",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -239,7 +268,13 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 15
+        }
+      }
     },
     {
       "id": "crewRole.musician",
@@ -283,6 +318,7 @@
       "kind": "crewRole",
       "name": "Lookout",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -313,13 +349,20 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 16
+        }
+      }
     },
     {
       "id": "crewRole.helmsman",
       "kind": "crewRole",
       "name": "Helmsman",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -350,7 +393,13 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 16
+        }
+      }
     },
     {
       "id": "crewRole.record_keeper",
@@ -387,6 +436,7 @@
       "kind": "crewRole",
       "name": "Artillerist",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -416,13 +466,20 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 17
+        }
+      }
     },
     {
       "id": "crewRole.cabin_boy",
       "kind": "crewRole",
       "name": "Cabin Boy",
       "versions": [
+        "dndf-8.8",
         "dndf-10"
       ],
       "source": {
@@ -455,7 +512,13 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 17
+        }
+      }
     }
   ],
   "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
