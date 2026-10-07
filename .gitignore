@@ -8,3 +8,5 @@ sources/
 secret/
 *.pdf
 .DS_Store
+__pycache__/
+*.pyc

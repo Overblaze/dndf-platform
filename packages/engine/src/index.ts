@@ -11,6 +11,7 @@ export * from './ships';
 export * from './devilforged';
 export * from './character';
 export * from './hp';
+export * from './items';
 export * from './sheet';
 export * from './actions';
 export * from './rests';

@@ -1,0 +1,947 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "rule.devil_fruit_creation",
+      "kind": "rule",
+      "name": "Devil Fruit Creation",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 239
+      },
+      "text": "When a character consumes a Devil Fruit, they gain supernatural abilities almost immediately. However, this newfound power comes at a steep cost: a profound vulnerability to seawater and seastone. Though all Devil Fruit users share these core weaknesses, some fruits may also carry additional unique vulnerabilities.\nThe Expanded Devil Fruit Encyclopedia serves as a foundational guide for Dungeon Masters seeking to design or adapt Devil Fruits for their campaign. While you are free to homebrew, the Encyclopedia provides a reliable structure for creation. Typically, Paramecia users draw spells from any class, Zoan users undergo beast-like transformations similar to druids, and Logia users combine spellcasting with transformative elemental abilities. This design approach ensures Devil Fruits fit naturally within the structure of standard D&D 5e, much like magic items.",
+      "sections": [
+        {
+          "name": "Step 1: Category & Appearance",
+          "text": "Begin by marking the name of the Devil Fruit, its rarity (Uncommon, Rare, Very Rare, or Legendary), its type (Paramecia, Zoan, or Logia), and its subtype. For example, the Hie Hie no Mi (Ice Fruit) would be categorized as a Solid Logia. Then, provide a brief description of its abilities according to its type.\nEach Devil Fruit also features a unique and peculiar physical appearance. Describe its shape, colors, and the patterns decorating it. These whimsical designs add character to each fruit and hint at their latent power.\nExample: Bara Bara no Mi (Dividing)",
+          "page": 239,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Devil Fruit, Uncommon Type. Body Enhancer Paramecia Description. Can split and"
+                ],
+                [
+                  "divide parts of your body into pieces and can control said"
+                ],
+                [
+                  "pieces telekinetically. Fruit appearance Dark red berries"
+                ],
+                [
+                  "decorated with spiral patterns."
+                ]
+              ],
+              "page": 239
+            }
+          ]
+        },
+        {
+          "name": "Step 2: Weaknesses",
+          "text": "With great power comes great vulnerability. All Devil Fruit users inherit three universal weaknesses:",
+          "page": 239
+        },
+        {
+          "name": "Standing Water",
+          "text": "A Devil Fruit user’s swimming speed is reduced to 0. If the user is more than half-submerged in standing water (fresh or salt water) or within 20 feet of a shoreline while submerged in water, they become incapacitated. While incapacitated, they cannot use Devil Fruit features or maintain active Devil Fruit spells.\nIf fully submerged, they begin sinking according to the armor they wear (5 ft./round for light armor, 10 ft./round for medium armor, 15 ft./round for heavy armor). A submerged user may hold their breath for 1 + Constitution modifier in minutes (minimum 30 seconds). Upon drowning, they fall to 0 HP and can survive only a few rounds before dying unless stabilized.",
+          "page": 239
+        },
+        {
+          "name": "Seastone",
+          "text": "Physical contact with seastone requires the user to succeed on a DC 20 Constitution saving throw each round or become incapacitated for that turn. Whether they succeed or fail, the user cannot use Devil Fruit features while in contact with seastone.",
+          "page": 239
+        },
+        {
+          "name": "One Devil Per Body",
+          "text": "A creature can only ever have one Devil Fruit. Consuming a second causes immediate death as the body violently rejects the conflicting powers. Revival by certain spells (such as Wish or True Resurrection) removes all Devil Fruit powers permanently.",
+          "page": 239
+        },
+        {
+          "name": "Optional Weakness: Natural Counter",
+          "text": "Additionally, individual fruits may have optional vulnerabilities fitting their theme. For instance, a fruit that generates oil may be vulnerable to fire.\nExample: Bara Bara no Mi (Dividing)",
+          "page": 239,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Devil Fruit, Uncommon [See steps above for other features] Sea Weakness. You are"
+                ],
+                [
+                  "weak to water and seastone."
+                ]
+              ],
+              "page": 239
+            }
+          ]
+        },
+        {
+          "name": "Step 3: Strengths and Features",
+          "text": "Upon consuming a Devil Fruit, a user quickly becomes aware of its core strengths and abilities. These features vary greatly based on the fruit’s type and are detailed further in their respective sections.\nEven the simplest Devil Fruits should offer unique gameplay options. Consider resistances, immunities, or unusual movement features when designing your fruit’s strengths.\nSome Devil Fruit features require a target to make a saving throw or involve spell attack rolls. Instead of using a traditional ability modifier, Devil Fruits use Willpower (see Chapter 5: Spirit Surges) for determining DCs and attacks. The calculations are as follows:\nDevil Fruit save DC = 10 + half of your Willpower (rounded up)\nDevil Fruit Attack Modifier = 2 + half of your Willpower (rounded up)\nExample: Bara Bara no Mi (Dividing)",
+          "page": 239,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Devil Fruit, Uncommon [See steps above for other features] Cut Immunity. You are immune to slashing and piercing"
+                ],
+                [
+                  "damage, as your body can divide to avoid sharp objects."
+                ],
+                [
+                  "Floating Limbs. You can use the Mage Hand cantrip."
+                ],
+                [
+                  "Additionally, when you make a melee attack on your turn,"
+                ],
+                [
+                  "your reach for it is 30 feet greater than normal."
+                ]
+              ],
+              "page": 240
+            }
+          ]
+        },
+        {
+          "name": "Step 4: Devil Fruit Spells, Skills, and Charges",
+          "text": "Devil Fruits grant users a number of “charges” used to fuel spells or special abilities tied to their fruit’s nature. Expended charges are replenished daily at dawn.\nYou can find examples of scaling for each fruit type in their rules sections.\nExample: Bara Bara no Mi (Dividing)",
+          "page": 240,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Devil Fruit, Uncommon [See steps above for other features] Spells (Chop-Chop"
+                ],
+                [
+                  "Carnival). This devil fruit power has 5 charges. You can"
+                ],
+                [
+                  "expend 1 or more of its charges to cast one of the following"
+                ],
+                [
+                  "spells from it without needing to expend material"
+                ],
+                [
+                  "components: longstrider (self; 1 charge), blur (2 charges),"
+                ],
+                [
+                  "kinetic jaunt (2 charges). The devil fruit regains expended"
+                ],
+                [
+                  "charges daily at dawn."
+                ]
+              ],
+              "page": 240
+            }
+          ]
+        },
+        {
+          "name": "Step 5: Devil Fruit Advancement and Awakening",
+          "text": "As players grow in strength, so too do their Devil Fruits. At higher levels, fruits “Awaken,” unlocking greater power often breaking their earlier limitations. Awakenings typically allow casting a powerful, high- level spell once per day without expending charges. See Chapter 5: Spirit Surges for more information.\nExample: Bara Bara no Mi (Dividing)\nDesign Tips",
+          "page": 240,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Devil Fruit, Uncommon [See steps above for other features] Awakening (Telekinetic"
+                ],
+                [
+                  "Carnival). You can use an action to cast the Telekinesis spell."
+                ],
+                [
+                  "You can’t use this action again for another 24 hours."
+                ]
+              ],
+              "page": 240
+            },
+            {
+              "rows": [
+                [
+                  "Awakening should feel momentous. Consider reserving"
+                ],
+                [
+                  "unique, large-scale powers (such as battlefield control,"
+                ],
+                [
+                  "landscape transformation, or immense physical"
+                ],
+                [
+                  "amplification) for Awakened abilities."
+                ]
+              ],
+              "page": 240
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule.paramecia_rules",
+      "kind": "rule",
+      "name": "Paramecia Rules",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 241
+      },
+      "text": "Paramecia Devil Fruits are one of the three primary classifications of Devil Fruits. They grant users a wide range of superhuman abilities, usually by altering their bodies, producing substances, or modifying the environment around them. This section provides detailed guidance for designing and understanding Paramecia-type Devil Fruits.",
+      "sections": [
+        {
+          "name": "Paramecia Subtypes",
+          "text": "Each Paramecia Devil Fruit belongs to one of three subtypes: Body Enhancer, Substance Generator, or Environment Alterer. You must select one subtype when creating a Paramecia Devil Fruit, as this defines the core nature of the abilities it grants. Only through Awakening can users transcend these initial limitations.\nFor example, the Toge Toge no mi (Spike Paramecia) could classify as either a “body enhancer” or “environment alterer” subtype, allowing you to either make your body spiky or make the area around you spiky. However, you must pick only one of these two subtypes before continuing to develop the rest of your abilities. The only exception to this rule is if you “awaken” your devil fruit powers later on, which will give you the ability to bypass the limitations of your paramecia subclass.",
+          "page": 241
+        },
+        {
+          "name": "Paramecia Type: Body Enhancer",
+          "text": "Body Enhancers alter their own bodies and clothing, often reshaping, stretching, or hardening themselves. They commonly use spells from the schools of Transmutation, Illusion, or Abjuration.\nFor example, the Bara Bara no Mi allows the user to split their body into independent floating parts.",
+          "page": 241
+        },
+        {
+          "name": "Paramecia Type: Substance Generator",
+          "text": "Substance Generators produce a specific material from their bodies, using it for offense, defense, or battlefield control. Their abilities often align with Evocation, Conjuration, or Abjuration magic.\nThe Doku Doku no Mi, for instance, lets its user create and manipulate poisonous substances.",
+          "page": 241
+        },
+        {
+          "name": "Paramecia Type: Environment Alterer",
+          "text": "Environment Alterers modify the properties of objects, creatures, or even entire areas. They frequently draw on spells from Enchantment, Necromancy, Illusion, Transmutation, or Divination.\nAn example is the Noro Noro no Mi, which slows the movement of targets within its area of effect.",
+          "page": 241
+        },
+        {
+          "name": "Paramecia Damage Types, Resistances, and Immunities",
+          "text": "Paramecia users often develop resistances or immunities related to their Devil Fruit’s nature. These should be selected carefully in collaboration with the Dungeon Master to ensure they fit thematically. For instance, a rubber-based user might gain immunity to lightning and nonmagical bludgeoning damage.\nIn some cases, spells must be modified to match the fruit’s abilities. For example, a Devil Fruit that produces acid might alter a spell like Cone of Cold to instead deal acid damage.\nIt is important to note that magical bludgeoning, piercing, and slashing damage (such as that inflicted by Armament Haki) bypasses any resistances or immunities granted by Devil Fruits.",
+          "page": 241
+        },
+        {
+          "name": "Paramecia Basic Skills",
+          "text": "Every Paramecia user gains an innate “basic skill” that can be used freely while they are not incapacitated or exposed to seawater or seastone. Basic skills are often represented by at-will abilities or cantrips.\nFor example, the Bara Bara no Mi user can extend their melee reach by 30 feet, while the Gomu Gomu no Mi enhances flexibility and resilience.\nIf a basic ability proves too powerful for unlimited use, it may instead be limited to a number of uses per day, refreshing at dawn.\nGenerally, Uncommon and Rare Devil Fruits should be more cautious with granting limitless abilities, while Very Rare and Legendary Devil Fruits can justify offering more potent basic powers.\nThe example sheet below shows an early design idea for the Nuke Nuke no Mi using paramecia immunities and resistances as well as basic skills.\nExample: Nuke Nuke no Mi (Phasing)",
+          "page": 241,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Devil Fruit, Rare Type. Body Enhancer Paramecia Fruit appearance. Translucent purple apple with blue"
+                ],
+                [
+                  "stripes Description. Allows its user to phase through physical"
+                ],
+                [
+                  "objects and forces physical projectiles and weapons to pass"
+                ],
+                [
+                  "through the user as well. Sea Weakness. You are weak to"
+                ],
+                [
+                  "water and seastone. Weapon Immunity. You are immune to bludgeoning,"
+                ],
+                [
+                  "piercing, and slashing from nonmagical attacks, as physical"
+                ],
+                [
+                  "objects pass through you. However, attacks made of living"
+                ],
+                [
+                  "tissue do not phase through you, meaning you are not"
+                ],
+                [
+                  "immune to unarmed strikes for example. Phase Movement."
+                ],
+                [
+                  "You can choose to pass through physical objects as if they"
+                ],
+                [
+                  "were difficult terrain, similar to a specter’s incorporeal"
+                ],
+                [
+                  "movement. However, this feature does not allow you to pass"
+                ],
+                [
+                  "through living creatures. You take 5 (1d10) force damage if"
+                ],
+                [
+                  "you end your turn inside an object. Additionally, you can"
+                ],
+                [
+                  "choose to allow any creature or object you are touching or"
+                ],
+                [
+                  "grappling to share this feature with you so long as they are"
+                ],
+                [
+                  "touching you."
+                ]
+              ],
+              "page": 241
+            }
+          ]
+        },
+        {
+          "name": "Paramecia Spells, Skills, and Scaling",
+          "text": "Paramecia users gain access to spells and abilities tied to their fruit’s theme. Spells may be selected from any official 5e class list, but they must fit the subtype and nature of the Devil Fruit. Additionally, the maximum spell level available is determined by the user’s character level and fruit rarity.\nThe table below shows how spellcasting and charges scale with character level:",
+          "page": 242
+        },
+        {
+          "name": "Paramecia Awakening",
+          "text": "As Paramecia users grow stronger, they may eventually unlock the power of Awakening. This allows them to transcend the initial limitations of their fruit’s subtype and gain new, transformative powers.\nTypically, an Awakening grants a single, high-impact ability that allows the user to manipulate their environment in ways previously impossible. Awakening features often bypass normal charge limits or provide access to higher-level spells.\nAn example is the Nuke Nuke no Mi, which upon Awakening allows the user to cast Etherealness once per day without using any charges.\nHere is another example below still using the Nuke\nNuke no Mi as a template to show what kind of\nawakening ability might be appropriate for the devil\nfruit.\nAll spells that come with your devil fruit can be upcasted at the cost of costing additional charges.\nFor example, the Toge Toge no Mi (Spikes) can cast 1st level Armor of Agathys for 1 charge. A level 5 character can upcast the spell to a max of 3rd level for a cost of 3 charges.\nHere is an example still using the Nuke Nuke no Mi as a template to show which type of spells might be appropriate for the devil fruit.",
+          "page": 242,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Player Level",
+                  "Highest Spell Level",
+                  "Max Charges"
+                ]
+              ],
+              "page": 242
+            },
+            {
+              "rows": [
+                [
+                  "1st",
+                  "1st",
+                  "2"
+                ]
+              ],
+              "page": 242
+            },
+            {
+              "rows": [
+                [
+                  "2nd",
+                  "1st",
+                  "2"
+                ]
+              ],
+              "page": 242
+            },
+            {
+              "rows": [
+                [
+                  "3rd",
+                  "2nd",
+                  "3"
+                ]
+              ],
+              "page": 242
+            },
+            {
+              "rows": [
+                [
+                  "4th",
+                  "2nd",
+                  "4"
+                ],
+                [
+                  "5th",
+                  "3rd",
+                  "5"
+                ],
+                [
+                  "6th",
+                  "3rd",
+                  "6",
+                  "Awakening (Reality Phase). Once you’ve awakened your"
+                ],
+                [
+                  "7th",
+                  "4th",
+                  "7 power, you can use an action to cast Etherealness. You can’t"
+                ],
+                [
+                  "8th",
+                  "4th",
+                  "8 use this action again for another 24 hours."
+                ],
+                [
+                  "9th",
+                  "5th",
+                  "9"
+                ],
+                [
+                  "10th",
+                  "5th",
+                  "10"
+                ],
+                [
+                  "11th",
+                  "6th",
+                  "11"
+                ],
+                [
+                  "12th",
+                  "6th",
+                  "12"
+                ],
+                [
+                  "13th",
+                  "7th",
+                  "13"
+                ],
+                [
+                  "14th",
+                  "7th",
+                  "14"
+                ],
+                [
+                  "15th",
+                  "8th",
+                  "15"
+                ],
+                [
+                  "16th",
+                  "8th",
+                  "16"
+                ],
+                [
+                  "17th",
+                  "9th",
+                  "17"
+                ],
+                [
+                  "18th",
+                  "9th",
+                  "18"
+                ],
+                [
+                  "19th",
+                  "9th",
+                  "19"
+                ],
+                [
+                  "20th",
+                  "9th",
+                  "20"
+                ]
+              ],
+              "page": 242
+            },
+            {
+              "rows": [
+                [
+                  "Spells. This devil fruit power has 9 charges. Using your ability"
+                ],
+                [
+                  "to phase through nonliving materials at rapid speeds and"
+                ],
+                [
+                  "reappear somewhere else, you can expend 1 or more of its"
+                ],
+                [
+                  "charges to cast one of the following spells from it without"
+                ],
+                [
+                  "needing to expend material components: Absorb Elements"
+                ],
+                [
+                  "(1 charge), Misty Step (2 charges), Blink (3 charges), Far"
+                ],
+                [
+                  "Step (5 charges). The devil fruit regains expended charges"
+                ],
+                [
+                  "daily at dawn."
+                ]
+              ],
+              "page": 242
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule.zoan_rules",
+      "kind": "rule",
+      "name": "Zoan Rules",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 243
+      },
+      "text": "Zoan Devil Fruits are one of the three primary classifications of Devil Fruits. They grant users the ability to transform into specific animals, ancient creatures, or mythical beasts, depending on the fruit’s rarity. While the transformation grants incredible physical capabilities, Zoan users balance their newfound strength with the same vulnerabilities as all Devil Fruit users.",
+      "sections": [
+        {
+          "name": "Zoan Subtypes",
+          "text": "Each Zoan Devil Fruit falls into one of three subtypes:\nStandard Zoan, Ancient Zoan, and Mythical Zoan are the three subtypes of zoan devil fruits that defines a zoan user’s abilities and what creature they can transform into. Standard zoan subtypes are very common among zoan devil fruit users, whereas ancient and mythical zoans are incredibly rare and nearly impossible to find normally.\nThe subtype determines not only the creature into which the user can transform, but also the general power level and rarity of the fruit. Ancient and Mythical Zoans are much rarer and more powerful than Standard Zoans.",
+          "page": 243
+        },
+        {
+          "name": "Zoan Type: Standard",
+          "text": "Grants transformation into a common animal, such as a wolf, eagle, or elephant.",
+          "page": 243
+        },
+        {
+          "name": "Zoan Type: Ancient",
+          "text": "Grants transformation into prehistoric creatures, such as dinosaurs or mammoths.",
+          "page": 243
+        },
+        {
+          "name": "Zoan Type: Mythical",
+          "text": "Grants transformation into legendary beasts from fantasy, such as dragons or phoenixes, often with additional magical abilities.",
+          "page": 243
+        },
+        {
+          "name": "Human Form",
+          "text": "Upon gaining Zoan powers, the user permanently increases one of their ability scores. Choose the highest ability score from the Beast Shape’s stat block; increase your matching score by half of the modifier of that ability, rounded up (up to a maximum of 20). For example, if your beast form has a +6 Strength modifier, and your current Strength is 10, your Strength becomes 13. This bonus can be further increased through ability score increases as normal when leveling up.\nIf there is more than one highest ability score you may choose the one you want.",
+          "page": 243
+        },
+        {
+          "name": "Transfer Ability Score Improvements",
+          "text": "When you gain any ability score improvements due to your class or by any other means, increase your Beast Forms same ability scores by the amount you gain up to 30.",
+          "page": 243
+        },
+        {
+          "name": "Beast Form",
+          "text": "As an action on your turn, you can transform into the beast designated by your Zoan Devil Fruit. You can use this feature a number of times equal to your proficiency bonus, regaining all uses at dawn.\nYou remain in Beast Form for a number of hours equal to half your character level (rounded up). You can revert to your normal form early by using a bonus action. You automatically revert if you fall unconscious, become incapacitated by seastone or standing water, or drop to 0 hit points.\nYou cannot be in Beast Form and Hybrid Form at the same time.",
+          "page": 243
+        },
+        {
+          "name": "Beast Form Rules",
+          "text": "When you transform, your physical body is entirely replaced by that of your Zoan beast. The following changes occur:\nYour game statistics are replaced by the Beast Form’s statistics, except for your Intelligence, Wisdom, and Charisma scores.\nYou retain your skill and saving throw proficiencies, in addition to gaining those of the Beast Form. You assume the Beast Form’s size, senses, movement speeds, natural weapons, and innate abilities.\nIf your Beast Form’s size is smaller than your Human Form’s size, your Beast Form’s size is equal to your Human Form.\nWhen you transform, your hit points become the Beast Form hit points (see Scaling Beast Form HP below). When you revert to your normal form, you return to the number of hit points you had before you transformed. However, if you revert as a result of dropping to 0 hit points, any excess damage carries over to your normal form. For example, if you take 10 damage in animal form and have only 1 hit point left, you revert and take 9 damage. As long as the excess damage doesn’t reduce your normal form to 0 hit points, you aren’t knocked unconscious.\nYou cannot cast spells or use your human form features while transformed unless a feature explicitly allows you to do so. However, you may use any haki features you have gained.\nYou retain the active or passive benefits of class features, race traits, and feats if your Beast Form is physically capable of using them.\nEquipment either merges into your form or falls to the ground (your choice). Worn equipment functions as normal, but the DM decides whether it is practical for the new form to wear a piece of equipment, based on the creature’s shape and size. Your equipment doesn’t change size or shape to match the new form, and any equipment that the new form can’t wear must either fall to the ground or merge with it. Equipment that merges with the form has no effect until you leave the form.",
+          "page": 243
+        },
+        {
+          "name": "Beast Form HP and Damage Scaling",
+          "text": "Zoan Beast Forms grow stronger as their users level up, following a structured scaling system based on the Devil Fruit’s rarity:\nFor example, a Neko Neko no Mi: Model House Cat is an Uncommon Devil fruit. At Level 6, the character’s Beast Form would have 48HP (8x6) and deal 1d8 Slashing damage with it’s claw attack instead of the original 1 Slashing Damage.",
+          "page": 244,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Max Hit",
+                  "Ability Save DC (8 +",
+                  "Attack"
+                ],
+                [
+                  "Devil Fruit Rarity",
+                  "Points",
+                  "proficiency bonus +)",
+                  "Damage Die"
+                ],
+                [
+                  "Uncommon &",
+                  "8 x your",
+                  "3",
+                  "1d8"
+                ],
+                [
+                  "Rare Zoan",
+                  "level"
+                ],
+                [
+                  "Very Rare Zoan 10 x your",
+                  "4",
+                  "1d10 level"
+                ],
+                [
+                  "Legendary &",
+                  "12 x your",
+                  "4",
+                  "1d12"
+                ],
+                [
+                  "Infernal Zoan",
+                  "level"
+                ]
+              ],
+              "page": 244
+            }
+          ]
+        },
+        {
+          "name": "Beast Form CR and Attack Dice Scaling",
+          "text": "As the player increases in level, the Challenge Rating (CR) also increases. Along with that, the amount of damage die rolled also increases.",
+          "page": 244,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Player Level Beast Shape CR Proficiency Bonus Attack Dice"
+                ],
+                [
+                  "1st",
+                  "1/8",
+                  "+2",
+                  "1"
+                ],
+                [
+                  "2nd",
+                  "1/2",
+                  "+2",
+                  "1"
+                ],
+                [
+                  "3rd",
+                  "1",
+                  "+2",
+                  "1"
+                ],
+                [
+                  "4th",
+                  "3",
+                  "+2",
+                  "1"
+                ],
+                [
+                  "5th",
+                  "5",
+                  "+2",
+                  "1"
+                ],
+                [
+                  "6th",
+                  "6",
+                  "+3",
+                  "2"
+                ],
+                [
+                  "7th",
+                  "7",
+                  "+3",
+                  "2"
+                ],
+                [
+                  "8th",
+                  "8",
+                  "+3",
+                  "2"
+                ],
+                [
+                  "9th",
+                  "9",
+                  "+4",
+                  "2"
+                ],
+                [
+                  "10th",
+                  "10",
+                  "+4",
+                  "2"
+                ],
+                [
+                  "11th",
+                  "11",
+                  "+4",
+                  "2"
+                ],
+                [
+                  "12th",
+                  "12",
+                  "+4",
+                  "3"
+                ],
+                [
+                  "13th",
+                  "13",
+                  "+5",
+                  "3"
+                ],
+                [
+                  "14th",
+                  "14",
+                  "+5",
+                  "3"
+                ],
+                [
+                  "15th",
+                  "15",
+                  "+5",
+                  "3"
+                ],
+                [
+                  "16th",
+                  "16",
+                  "+5",
+                  "4"
+                ],
+                [
+                  "17th",
+                  "17",
+                  "+6",
+                  "4"
+                ],
+                [
+                  "18th",
+                  "18",
+                  "+6",
+                  "4"
+                ],
+                [
+                  "19th",
+                  "20",
+                  "+6",
+                  "4"
+                ],
+                [
+                  "20th",
+                  "25",
+                  "+8",
+                  "5"
+                ]
+              ],
+              "page": 244
+            }
+          ]
+        },
+        {
+          "name": "Hybrid Form",
+          "text": "Using an action, a Zoan user can enter their Hybrid Form, blending their humanoid and beast traits into one formidable form. When entering Hybrid Form:\nYou gain an additional boost to Strength, Dexterity, and Constitution scores equal to the corresponding modifiers in your Beast Form (positive modifiers only).\nYour ability scores can temporarily exceed 20 but not beyond 30.\nWhen you transform into your Hybrid Form you may choose your size. Your size options are anything between your Human Form’s size and Beast Form’s size.\nHybrid Form lasts for a number of minutes equal to your character level or until you end it as a bonus action, are incapacitated, or fall unconscious. You may enter Hybrid Form a number of times equal to your Proficiency Bonus, regaining expended uses at dawn.",
+          "page": 244
+        },
+        {
+          "name": "Hybrid Form Options",
+          "text": "When you enter your Hybrid Form, you gain access to an amount of Hybrid Form Options based on your character’s level.\nChoose an amount of the following categories equal to your option amount above and gain a corresponding benefit based on your Zoan beast stat block:\nSpeed and Senses. You gain all of your beast form’s movement speeds (if they are higher than yours) and senses (ect. darkvision, tremorsense, truesight, ect).\nDefenses and Vulnerabilities. You gain all of your beast form’s Damage Immunities, Resistances, and Vulnerabilities. You can not gain the beast form’s Condition Immunities.\nFeature. You gain one of your beast form’s innate features. Consult your DM to determine whether the feature can function properly in your hybrid state.\nAction. You may select one natural weapon or special action (Multiattack, Breath Weapon, Web, etc.) from your beast form and use it in your hybrid form using your own ability modifiers. If the action requires a recharge or saving throw, it retains that restriction and DC scaling follows your character stats.",
+          "page": 244,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Player Level",
+                  "Amount of Hybrid Form Options"
+                ],
+                [
+                  "1st",
+                  "2"
+                ],
+                [
+                  "5th",
+                  "3"
+                ],
+                [
+                  "10th",
+                  "4"
+                ],
+                [
+                  "15th",
+                  "5"
+                ],
+                [
+                  "20th",
+                  "6"
+                ]
+              ],
+              "page": 244
+            }
+          ]
+        },
+        {
+          "name": "No Remaining Hybrid Form Options?",
+          "text": "If you run out of hybrid form options on your beast stat block to choose from, you instead gain +2 to an ability score of your choice (Strength, Dexterity, or Constitution) per remaining Hybrid Form Option not used for the duration of your hybrid form.",
+          "page": 244
+        },
+        {
+          "name": "Awakened Form",
+          "text": "Upon Awakening, when a Zoan user transforms into their Hybrid Form, they can instead transform into a True OR Cursed Awakened Form of their choice. See the Legendary “Devil Fruit Spiritual Advancements” in Chapter 5: Spirit Surges for more information.",
+          "page": 244
+        }
+      ]
+    },
+    {
+      "id": "rule.logia_rules",
+      "kind": "rule",
+      "name": "Logia Rules",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 245
+      },
+      "text": "Logia Devil Fruits are among the rarest and most powerful of all Devil Fruit types. They allow the user to transform into a natural element, control it freely, and even create it from their body. Unlike Paramecia or Zoan users, Logia users typically become completely intangible to physical harm, making them particularly difficult to damage or restrain without specialized techniques like Haki.",
+      "sections": [
+        {
+          "name": "Logia Subtypes",
+          "text": "Logia Fruits are divided into three primary subtypes based on the physical state of their associated element:\nSolid Logias, Liquid Logias, and Gaseous Logias are the three subtypes of logia devil fruits that defines a logia user’s abilities and what element and state of matter they can transform into or use with their powers. All three of these subtypes are roughly equal in power, though some logia elements can be weaker than others on average.",
+          "page": 245
+        },
+        {
+          "name": "Logia Type: Solid",
+          "text": "Users transform into and manipulate solid substances, such as ice, metal, or stone.",
+          "page": 245
+        },
+        {
+          "name": "Logia Type: Liquid",
+          "text": "Users become and control a liquid substance like magma, oil, or mud. Liquid fresh water or sea water cannot be used as a logia element.",
+          "page": 245
+        },
+        {
+          "name": "Logia Type: Gaseous",
+          "text": "Users embody a gaseous or plasma-like substance, such as smoke, lightning, or fire.",
+          "page": 245
+        },
+        {
+          "name": "Special Logia Type: Darkness",
+          "text": "The Yami Yami no Mi, or darkness logia, is such a unique and powerful devil fruit that it deserves its own subcategory. Unlike other logias, its user cannot disperse into darkness or avoid physical attacks. However, it gives the user complete control over darkness that they can produce, which can consume any material or element.\nWhile each subtype shares common rules, they also gain unique movement capabilities and resistances based on their physical state.",
+          "page": 245
+        },
+        {
+          "name": "Elemental Traits and Immunities",
+          "text": "Upon consuming a Logia Fruit, a user gains complete control over their respective element. They gain immunity to all nonmagical bludgeoning, piercing, and slashing damage, as well as elemental resistance or immunity aligned with their form (e.g., fire for a flame user, cold for an ice user). Users also become immune to any condition or damage source that logically wouldn’t affect their element.\nFor instance, a smoke user might ignore effects like choking gases or suffocation, while a lightning user may move at impossible speeds and bypass traditional movement restrictions.\nMagical or Haki-infused attacks still bypass resistances, making such threats essential for balancing encounters.",
+          "page": 245
+        },
+        {
+          "name": "Basic Ability",
+          "text": "Each Logia Fruit grants an always-available ability, often mimicking a cantrip or a physical trait of the element. This ability should reflect the fruit’s nature and provide tactical utility. Examples include:\nA fire user might produce flames to light areas.\nA sand user might blind targets with a swirl of dust. A lightning user might jolt targets within 5 feet for minor damage.",
+          "page": 245
+        },
+        {
+          "name": "Spellcasting and Charge Progression",
+          "text": "Logia users cast spells using a pool of Devil Fruit charges that scale with level. They can choose spells from any spell list that match their elemental flavor. All spells cast using the Devil Fruit consume charges equal to the spell’s level, and can be upcast by spending additional charges.",
+          "page": 245
+        },
+        {
+          "name": "Logia Charge Scaling",
+          "text": "For example, the Gin Gin no Mi (Silver) can cast 1st level Heat Metal for 1 charge. A level 5 character can upcast the spell to a max of 3rd level for a cost of 3 charges.",
+          "page": 245,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Player Level",
+                  "Highest Spell Level",
+                  "Max Charges"
+                ],
+                [
+                  "1st",
+                  "1st",
+                  "2"
+                ],
+                [
+                  "2nd",
+                  "1st",
+                  "2"
+                ],
+                [
+                  "3rd",
+                  "2nd",
+                  "3"
+                ],
+                [
+                  "4th",
+                  "2nd",
+                  "3"
+                ],
+                [
+                  "5th",
+                  "3rd",
+                  "4"
+                ],
+                [
+                  "6th",
+                  "3rd",
+                  "4"
+                ],
+                [
+                  "7th",
+                  "4th",
+                  "5"
+                ],
+                [
+                  "8th",
+                  "4th",
+                  "6"
+                ],
+                [
+                  "9th",
+                  "5th",
+                  "7"
+                ],
+                [
+                  "10th",
+                  "5th",
+                  "8"
+                ],
+                [
+                  "11th",
+                  "6th",
+                  "9"
+                ],
+                [
+                  "12th",
+                  "6th",
+                  "10"
+                ],
+                [
+                  "13th",
+                  "7th",
+                  "11"
+                ],
+                [
+                  "14th",
+                  "7th",
+                  "12"
+                ],
+                [
+                  "15th",
+                  "8th",
+                  "13"
+                ],
+                [
+                  "16th",
+                  "8th",
+                  "14"
+                ],
+                [
+                  "17th",
+                  "9th",
+                  "15"
+                ],
+                [
+                  "18th",
+                  "9th",
+                  "16"
+                ],
+                [
+                  "19th",
+                  "9th",
+                  "17"
+                ],
+                [
+                  "20th",
+                  "9th",
+                  "18"
+                ]
+              ],
+              "page": 245
+            }
+          ]
+        },
+        {
+          "name": "Attacks and Damage",
+          "text": "All Logia users must to replace the damage type of their Devil Fruit abilities and spells with one matching their element. For example, a magma user might convert spell damage to fire, while a crystal user may choose piercing.\nLogia attacks ignore nonmagical resistances unless the material in question has a specific counter-property (such as rubber resisting electricity).",
+          "page": 246
+        },
+        {
+          "name": "Elemental Form",
+          "text": "Upon mastering their Logia powers, the user learns to fully embody their elemental nature. As an action, you can transform into a being of pure element, entering your Elemental Form. This form is distinct for each subtype: Solid Liquid, or Gaseous, and provides unique\n,\nadvantages based on the physical state of your element.\nSome Logia Devil Fruits span multiple subtypes. For example, a silver user may count as both liquid and solid, or a soot user might count as solid and gaseous. If your Devil Fruit qualifies for more than one elemental subtype, you may choose which form to enter each time you activate your Elemental Form. You may not change the form while it is active.\nYou can remain in your Elemental Form for a number of minutes equal to half your character level (rounded up). You may use this feature a number of times equal to your proficiency bonus, and you regain all uses upon completing a long rest. If you are incapacitated, fall unconscious, or are exposed to seastone or submerged in water, the form ends immediately.\nAdditionally, Worn equipment functions as usual, but benefits from your resistances and immunities and attacks that normally phase through you will also phase through your equipment as if it is a part of your body.",
+          "page": 246
+        },
+        {
+          "name": "Solid Elemental Form",
+          "text": "Your body becomes a cohesive mass of solid matter, such as ice, glass, or stone. You can shatter and reform at will.\nWhile in this form, you gain a +4 bonus to AC. Once per turn, as a bonus action or a reaction to taking damage, you may disperse and reform within 30 feet of your current space, reappearing in a burst of shards or fragments.\nYour melee attacks are treated as magical and deal bonus damage equal to half your level (rounded down).\nYou gain advantage on Strength checks and saving throws.\nYou can move through objects made of the same element as you. If you end your turn inside of an object, you are shunted to the last unoccupied space you occupied, and you take 1d8 force damage.",
+          "page": 246
+        },
+        {
+          "name": "Liquid Elemental Form",
+          "text": "You liquefy entirely, your body shifting into a flowing, adaptable substance.\nYou gain resistance to fire damage, and you can squeeze through spaces as narrow as 1 inch without squeezing.\nYour melee attack range increases by 15 ft.\nOnce per round, You can spend 5 feet of movement to transform into your liquid element and move into the small cracks of a solid surface and reform in a puddle, reappearing on a spot on the same surface up to 30 feet away from you that you dont need to be able to see.\nYou are immune to nonmagical restraints or grapples.\nYou can choose to leave behind a trail of your logia’s liquid, which lasts until the start of your next turn and is considered difficult terrain.\nYou can move through the space of another creature, and it doesn’t count as difficult terrain. If you end your turn in another creature’s space, you are shunted to the last unoccupied space you occupied, and you take 1d8 force damage.",
+          "page": 246
+        },
+        {
+          "name": "Gaseous Elemental Form",
+          "text": "Your form disperses into vapor, mist, plasma, or particulate energy.\nYou gain a flying speed equal to your walking speed and can hover effortlessly.\nYour melee attack range increases by 10 ft.\nYou can pass through small holes, narrow openings, and even mere cracks. You remain hovering in the air even when stunned or otherwise Incapacitated, unless by seastone or water.\nYou are immune to nonmagical restraints or grapples.\nWhile in this form, you have advantage on Dexterity saving throws and Stealth checks, and ranged weapon attacks against you are made with disadvantage.\nYou can move through the space of another creature, and it doesn’t count as difficult terrain. If you end your turn in another creature’s space, you are shunted to the last unoccupied space you occupied, and you take 1d8 force damage.",
+          "page": 246
+        },
+        {
+          "name": "Awakening",
+          "text": "Once awakened, Logia users transcend their normal boundaries and permanently affect the environment around them. This ability is often unique to the fruit, typically allowing them to cast a powerful spell once per day without expending charges. Examples include a snow user creating a permanent blizzard zone or a flame user igniting the terrain they walk on.",
+          "page": 246
+        }
+      ]
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

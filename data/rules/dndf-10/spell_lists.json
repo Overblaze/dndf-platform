@@ -1,0 +1,1177 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "spellList.chemist",
+      "kind": "spellList",
+      "name": "Chemist Spells",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 211
+      },
+      "levels": {
+        "0": [
+          "Create Bonfire",
+          "Frostbite",
+          "Guidance",
+          "Gust",
+          "Infestation",
+          "Magic Stone",
+          "Mending",
+          "Poison Spray",
+          "Primal Savagery",
+          "Produce Flame",
+          "Resistance",
+          "Shillelagh",
+          "Thorn Whip",
+          "Thunderclap"
+        ],
+        "1": [
+          "Absorb Elements",
+          "Animal Friendship",
+          "Beast Bond",
+          "Charm Person",
+          "Cure Wounds",
+          "Detect Poison and Disease",
+          "Earth Tremor",
+          "Entangle",
+          "Faerie Fire",
+          "Fog Cloud",
+          "Goodberry",
+          "Healing Word",
+          "Ice Knife",
+          "Jump",
+          "Longstrider",
+          "Purify Food and Drink",
+          "Snare",
+          "Thunderwave"
+        ],
+        "2": [
+          "Air Bubble",
+          "Animal Messenger",
+          "Barkskin",
+          "Beast Sense",
+          "Continual Flame",
+          "Darkvision",
+          "Dust Devil",
+          "Earthbind",
+          "Enhance Ability",
+          "Enlarge/Reduce",
+          "Find Traps",
+          "Flame Blade",
+          "Healing Spirit",
+          "Heat Metal",
+          "Lesser Restoration",
+          "Locate Animals or Plants",
+          "(ritual)",
+          "Moonbeam",
+          "Pass without Trace",
+          "Protection from Poison",
+          "Spike Growth",
+          "Warding Wind",
+          "Wither and Bloom"
+        ],
+        "3": [
+          "Aura of Vitality",
+          "Daylight",
+          "Elemental Weapon",
+          "Erupting Earth",
+          "Feign Death",
+          "Flame Arrows",
+          "Plant Growth",
+          "Protection from Energy",
+          "Sleet Storm",
+          "Water Breathing",
+          "Wind Wall"
+        ],
+        "4": [
+          "Blight",
+          "Confusion",
+          "Divination",
+          "Elemental Bane",
+          "Freedom of Movement",
+          "Giant Insect",
+          "Grasping Vine",
+          "Hallucinatory Terrain",
+          "Locate Creature",
+          "Polymorph",
+          "Stone Shape"
+        ],
+        "5": [
+          "Antilife Shell",
+          "Cone of Cold",
+          "Geas",
+          "Greater Restoration",
+          "Insect Plague",
+          "Mass Cure Wounds",
+          "Transmute Rock",
+          "Wrath of Nature"
+        ],
+        "6": [
+          "Find the Path",
+          "Heal",
+          "Heroes’ Feast",
+          "Primordial Ward",
+          "Sunbeam",
+          "Wall of Thorns"
+        ],
+        "7": [
+          "Draconic Transformation",
+          "Fire Storm",
+          "Mirage Arcane",
+          "Regenerate",
+          "Whirlwind"
+        ],
+        "8": [
+          "Animal Shapes",
+          "Antipathy/Sympathy",
+          "Earthquake",
+          "Feeblemind",
+          "Incendiary Cloud",
+          "Sunburst"
+        ],
+        "9": [
+          "Foresight",
+          "Shapechange"
+        ]
+      },
+      "text": "104 spells, by level.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 210
+        }
+      }
+    },
+    {
+      "id": "spellList.hybrid",
+      "kind": "spellList",
+      "name": "Hybrid Spells",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 212
+      },
+      "levels": {
+        "0": [
+          "Chill Touch",
+          "Fire Bolt",
+          "Frostbite",
+          "Green-Flame Blade",
+          "Infestation",
+          "Lightning Lure",
+          "Mind Sliver",
+          "Poison Spray",
+          "Ray of Frost",
+          "Shocking Grasp",
+          "Sword Burst",
+          "Thunderclap"
+        ],
+        "1": [
+          "Arms of Hadar",
+          "Catapult",
+          "Ice Knife",
+          "Ray of Sickness",
+          "Tasha’s Caustic Brew",
+          "Thunderwave",
+          "Witch Bolt"
+        ],
+        "2": [
+          "Aganazzar’s Scorcher",
+          "Gust of Wind",
+          "Rime’s Binding Ice",
+          "Scorching Ray",
+          "Shatter",
+          "Snilloc’s Snowball Swarm",
+          "Tasha’s Mind Whip",
+          "Wither and Bloom"
+        ],
+        "3": [
+          "Tidal Wave",
+          "Vampiric Touch"
+        ],
+        "4": [
+          "Blight",
+          "Ice Storm",
+          "Vitriolic Sphere"
+        ],
+        "5": [
+          "Cone of Cold",
+          "Flame Strike",
+          "Synaptic Static"
+        ],
+        "6": [
+          "Chain Lightning"
+        ],
+        "7": [
+          "Finger of Death",
+          "Fire Storm",
+          "Prismatic Spray"
+        ],
+        "8": [
+          "Abi-Dalzim’s Horrid Wilting",
+          "Earthquake",
+          "Sunburst"
+        ],
+        "9": [
+          "Meteor Swarm",
+          "Power Word Kill",
+          "Psychic Scream"
+        ]
+      },
+      "text": "45 spells, by level.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 212
+        }
+      }
+    },
+    {
+      "id": "spellList.marksman",
+      "kind": "spellList",
+      "name": "Marksman Spells",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 213
+      },
+      "levels": {
+        "1": [
+          "Alarm",
+          "Animal Friendship",
+          "Beast Bond",
+          "Cure Wounds",
+          "Detect Poison and Disease",
+          "Ensnaring Strike",
+          "Entangle",
+          "Fog Cloud",
+          "Hail of Thorns",
+          "Hunter’s Mark",
+          "Jump"
+        ],
+        "2": [
+          "Aid",
+          "Air Bubble",
+          "Animal Messenger",
+          "Barkskin",
+          "Beast Sense",
+          "Cordon of Arrows",
+          "Darkvision",
+          "Enhance Ability",
+          "Find Traps",
+          "Gust of Wind",
+          "Lesser Restoration",
+          "Silence",
+          "Spike Growth"
+        ],
+        "3": [
+          "Ashardalon’s Stride",
+          "Conjure Barrage",
+          "Daylight",
+          "Elemental Weapon",
+          "Flame Arrows",
+          "Lightning Arrow",
+          "Nondetection",
+          "Protection from Energy"
+        ],
+        "4": [
+          "Freedom of Movement",
+          "Grasping Vine",
+          "Locate Creature",
+          "Stoneskin"
+        ],
+        "5": [
+          "Commune with Nature",
+          "Conjure Volley",
+          "Greater Restoration",
+          "Steel Wind Strike",
+          "Swift Quiver"
+        ]
+      },
+      "text": "41 spells, by level.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 213
+        }
+      }
+    },
+    {
+      "id": "spellList.oracle",
+      "kind": "spellList",
+      "name": "Oracle Spells",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 214
+      },
+      "levels": {
+        "0": [
+          "Mending",
+          "Message",
+          "Resistance",
+          "Sacred Flame",
+          "Spare the Dying",
+          "Thaumaturgy",
+          "Vicious Mockery"
+        ],
+        "1": [
+          "Bane",
+          "Bless",
+          "Command",
+          "Cure Wounds",
+          "Detect Magic",
+          "Faerie Fire",
+          "Guiding Bolt",
+          "Healing Word",
+          "Heroism"
+        ],
+        "2": [
+          "Aid",
+          "Augury",
+          "Calm Emotions",
+          "Enhance Ability",
+          "Hold Person",
+          "Lesser Restoration",
+          "Locate Object",
+          "Prayer of Healing",
+          "Silence",
+          "Spiritual Weapon",
+          "Zone of Truth"
+        ],
+        "3": [
+          "Beacon of Hope",
+          "Bestow Curse",
+          "Clairvoyance",
+          "Dispel Magic"
+        ],
+        "4": [
+          "Compulsion",
+          "Death Ward",
+          "Divination",
+          "Freedom of Movement",
+          "Guardian of Faith",
+          "Locate Creature",
+          "Greater Invisibility"
+        ],
+        "5": [
+          "Commune",
+          "Contagion",
+          "Greater Restoration",
+          "Hallow",
+          "Mass Cure Wounds",
+          "Scrying",
+          "Wall of Force"
+        ],
+        "7": [
+          "Divine Word",
+          "Etherealness",
+          "Regenerate",
+          "Symbol",
+          "Tether Essence"
+        ],
+        "8": [
+          "Antimagic Field",
+          "Holy Aura",
+          "Earthquake"
+        ],
+        "9": [
+          "Foresight",
+          "Locate Devil Fruit Power",
+          "Mass Heal"
+        ]
+      },
+      "text": "56 spells, by level.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 214
+        }
+      }
+    },
+    {
+      "id": "spellList.priest",
+      "kind": "spellList",
+      "name": "Priest Spells",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 215
+      },
+      "levels": {
+        "0": [
+          "Mending",
+          "Resistance",
+          "Sacred Flame",
+          "Spare the Dying",
+          "Thaumaturgy",
+          "Toll the Dead",
+          "Word of Radiance"
+        ],
+        "1": [
+          "Bane",
+          "Bless",
+          "Ceremony",
+          "Command",
+          "Cure Wounds",
+          "Detect Evil and Good",
+          "Detect Poison and Disease",
+          "Guiding Bolt",
+          "Healing Word",
+          "Inflict Wounds",
+          "Purify Food and Drink",
+          "Sanctuary",
+          "Shield of Faith"
+        ],
+        "2": [
+          "Calm Emotions",
+          "Continual Flame",
+          "Enhance Ability",
+          "Find Traps",
+          "Gentle Repose",
+          "Hold Person",
+          "Lesser Restoration",
+          "Locate Object",
+          "Prayer of Healing",
+          "Protection from Poison",
+          "Warding Bond",
+          "Zone of Truth"
+        ],
+        "3": [
+          "Aura of Vitality",
+          "Beacon of Hope",
+          "Bestow Curse",
+          "Clairvoyance",
+          "Create Food and Water",
+          "Daylight",
+          "Fast Friends",
+          "Feign Death (ritual)",
+          "Protection from Energy",
+          "Remove Curse",
+          "Sending",
+          "Spirit Guardians",
+          "Spirit Shroud"
+        ],
+        "4": [
+          "Aura of Life",
+          "Aura of Purity",
+          "Death Ward",
+          "Divination",
+          "Freedom of Movement",
+          "Guardian of Faith",
+          "Locate Creature"
+        ],
+        "5": [
+          "Commune",
+          "Contagion",
+          "Dawn",
+          "Dispel Evil and Good",
+          "Geas",
+          "Greater Restoration",
+          "Hallow"
+        ],
+        "6": [
+          "Find the Path",
+          "Forbiddance",
+          "Harm",
+          "Heal",
+          "Heroes’ Feast",
+          "Sunbeam",
+          "True Seeing"
+        ],
+        "7": [
+          "Divine Word",
+          "Fire Storm",
+          "Regenerate",
+          "Symbol"
+        ],
+        "8": [
+          "Earthquake",
+          "Holy Aura",
+          "Sunburst"
+        ],
+        "9": [
+          "Mass Heal",
+          "Power Word Heal"
+        ]
+      },
+      "text": "75 spells, by level.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 215
+        }
+      }
+    },
+    {
+      "id": "spellList.tinkerer",
+      "kind": "spellList",
+      "name": "Tinkerer Spells",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 216
+      },
+      "levels": {
+        "0": [
+          "Booming Blade",
+          "Chill Touch",
+          "Control Flames",
+          "Create Bonfire",
+          "Dancing Lights",
+          "Encode Thoughts",
+          "Fire Bolt",
+          "Friends",
+          "Frostbite",
+          "Green-Flame Blade",
+          "Gust",
+          "Infestation",
+          "Light",
+          "Lightning Lure",
+          "Mage Hand",
+          "Mending",
+          "Message",
+          "Mind Sliver",
+          "Minor Illusion",
+          "Mold Earth",
+          "Poison Spray",
+          "Prestidigitation",
+          "Ray of Frost",
+          "Sapping Sting",
+          "Shocking Grasp",
+          "Sword Burst",
+          "Thunderclap",
+          "Toll the Dead",
+          "True Strike"
+        ],
+        "1": [
+          "Absorb Elements",
+          "Alarm",
+          "Burning Hands",
+          "Catapult",
+          "Cause Fear",
+          "Charm Person",
+          "Chromatic Orb",
+          "Color Spray",
+          "Disguise Self",
+          "Distort Value",
+          "Earth Tremor",
+          "Expeditious Retreat",
+          "False Life",
+          "Feather Fall",
+          "Fog Cloud",
+          "Frost Fingers",
+          "Gift of Alacrity",
+          "Magic Missile",
+          "Ray of Sickness",
+          "Shield",
+          "Silent Image",
+          "Silvery Barbs",
+          "Sleep",
+          "Snare",
+          "Tasha’s Caustic Brew",
+          "Thunderwave",
+          "Witch Bolt"
+        ],
+        "2": [
+          "Aganazzar’s Scorcher",
+          "Air Bubble",
+          "Blindness/Deafness",
+          "Blur",
+          "Continual Flame",
+          "Crown of Madness",
+          "Darkness",
+          "Darkvision",
+          "Detect Thoughts",
+          "Dust Devil",
+          "Earthbind",
+          "Enhance Ability",
+          "Flaming Sphere",
+          "Fortune’s Favor",
+          "Gentle Repose",
+          "Gust of Wind",
+          "Immovable Object",
+          "Invisibility",
+          "Kinetic Jaunt",
+          "Locate Object",
+          "Magic Mouth",
+          "Magic Weapon",
+          "Maximilian’s Earthen Grasp",
+          "Melf’s Acid Arrow",
+          "Mirror Image",
+          "Misty Step",
+          "Nathair’s Mischief",
+          "Phantasmal Force",
+          "Pyrotechnics",
+          "Ray of Enfeeblement",
+          "Rime’s Binding Ice",
+          "Scorching Ray",
+          "See Invisibility",
+          "Shatter",
+          "Skywrite",
+          "Snilloc’s Snowball Swarm"
+        ],
+        "3": [
+          "Ashardalon’s Stride",
+          "Bestow Curse",
+          "Catnap",
+          "Clairvoyance",
+          "Enemies Abound",
+          "Erupting Earth",
+          "Fast Friends",
+          "Fear",
+          "Feign Death",
+          "Fireball",
+          "Flame Arrows",
+          "Fly",
+          "Glyph of Warding",
+          "Haste",
+          "Hypnotic Pattern",
+          "Intellect Fortress",
+          "Leomund’s Tiny Hut",
+          "Life Transference",
+          "Lightning Bolt",
+          "Major Image",
+          "Nondetection",
+          "Protection from Energy",
+          "Sleet Storm",
+          "Slow",
+          "Thunder Step",
+          "Vampiric Touch",
+          "Water Breathing"
+        ],
+        "4": [
+          "Arcane Eye",
+          "Confusion",
+          "Elemental Bane",
+          "Fabricate",
+          "Fire Shield",
+          "Greater Invisibility",
+          "Hallucinatory Terrain",
+          "Ice Storm",
+          "Locate Creature",
+          "Phantasmal Killer",
+          "Sickening Radiance",
+          "Stoneskin",
+          "Storm Sphere",
+          "Vitriolic Sphere",
+          "Wall of Fire"
+        ],
+        "5": [
+          "Enervation",
+          "Geas",
+          "Hold Monster",
+          "Mislead",
+          "Seeming",
+          "Skill Empowerment",
+          "Steel Wind Strike"
+        ],
+        "6": [
+          "Chain Lightning",
+          "Contingency",
+          "Disintegrate",
+          "Fizban’s Platinum Shield",
+          "Guards and Wards",
+          "Mass Suggestion",
+          "Mental Prison",
+          "Programmed Illusion",
+          "Scatter",
+          "Sunbeam",
+          "True Seeing"
+        ],
+        "7": [
+          "Delayed Blast Fireball",
+          "Mirage Arcane",
+          "Power Word Pain",
+          "Prismatic Spray",
+          "Project Image",
+          "Sequester",
+          "Symbol",
+          "Tether Essence"
+        ],
+        "8": [
+          "Antimagic Field",
+          "Antipathy/Sympathy",
+          "Dominate Monster",
+          "Feeblemind",
+          "Illusory Dragon",
+          "Mind Blank",
+          "Power Word Stun",
+          "Sunburst"
+        ],
+        "9": [
+          "Foresight",
+          "Power Word Kill",
+          "Prismatic Wall",
+          "Psychic Scream",
+          "Weird"
+        ]
+      },
+      "text": "173 spells, by level.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 217
+        }
+      }
+    },
+    {
+      "id": "spellList.virtuoso",
+      "kind": "spellList",
+      "name": "Virtuoso Spells",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 217
+      },
+      "levels": {
+        "0": [
+          "Friends",
+          "Light",
+          "Mending",
+          "Message",
+          "Minor Illusion",
+          "Prestidigitation",
+          "Thunderclap",
+          "True Strike",
+          "Vicious Mockery"
+        ],
+        "1": [
+          "Animal Friendship",
+          "Bane",
+          "Charm Person",
+          "Color Spray",
+          "Command",
+          "Cure Wounds",
+          "Disguise Self",
+          "Dissonant Whispers",
+          "Distort Value",
+          "Earth Tremor",
+          "Faerie Fire",
+          "Feather Fall",
+          "Healing Word",
+          "Heroism",
+          "Identify",
+          "Longstrider",
+          "Silent Image"
+        ],
+        "2": [
+          "Aid",
+          "Animal Messenger",
+          "Blindness/Deafness",
+          "Borrowed Knowledge",
+          "Calm Emotions",
+          "Crown of Madness",
+          "Detect Thoughts",
+          "Enhance Ability",
+          "Enthrall",
+          "Gift of Gab",
+          "Heat Metal",
+          "Hold Person",
+          "Kinetic Jaunt",
+          "Lesser Restoration",
+          "Locate Animals or Plants",
+          "Locate Object",
+          "Mirror Image",
+          "Nathair’s Mischief",
+          "Phantasmal Force",
+          "Pyrotechnics",
+          "See Invisibility",
+          "Shatter",
+          "Silence",
+          "Suggestion"
+        ],
+        "3": [
+          "Bestow Curse",
+          "Feign Death",
+          "Glyph of Warding",
+          "Hypnotic Pattern",
+          "Intellect Fortress",
+          "Major Image",
+          "Mass Healing Word",
+          "Motivational Speech",
+          "Nondetection",
+          "Slow",
+          "Stinking Cloud"
+        ],
+        "4": [
+          "Compulsion",
+          "Confusion",
+          "Freedom of Movement",
+          "Hallucinatory Terrain",
+          "Locate Creature",
+          "Phantasmal Killer",
+          "Raulothim’s Psychic Lance"
+        ],
+        "5": [
+          "Dominate Person",
+          "Dream",
+          "Geas",
+          "Greater Restoration",
+          "Hold Monster",
+          "Mass Cure Wounds",
+          "Mislead"
+        ],
+        "6": [
+          "Eyebite",
+          "Find the Path",
+          "Heroes’ Feast",
+          "Mass Suggestion",
+          "Otto’s Irresistible Dance",
+          "True Seeing"
+        ],
+        "7": [
+          "Mirage Arcane",
+          "Prismatic Spray",
+          "Project Image",
+          "Regenerate",
+          "Symbol"
+        ],
+        "8": [
+          "Antipathy/Sympathy",
+          "Dominate Monster",
+          "Feeblemind",
+          "Glibness",
+          "Mind Blank",
+          "Power Word Stun"
+        ],
+        "9": [
+          "Foresight",
+          "Power Word Heal",
+          "Power Word Kill",
+          "Psychic Scream"
+        ]
+      },
+      "text": "96 spells, by level."
+    },
+    {
+      "id": "rule.custom_spells",
+      "kind": "rule",
+      "name": "Custom Spells",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 218
+      },
+      "text": "This list of spells is meant to exist within the setting, players can obtain these spells using the Learn Custom Spell Standard Advancement in Chapter 5.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 218
+        }
+      }
+    },
+    {
+      "id": "spell.slime_wave",
+      "kind": "spell",
+      "name": "Slime Wave",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 218
+      },
+      "level": 3,
+      "school": "conjuration",
+      "castingTime": "1 action",
+      "range": "120 feet",
+      "components": "V, S, M (a drop of slime)",
+      "duration": "Instantaneous",
+      "text": "You conjure up a wave of slime that crashes down on an area within range. The area can be up to 30 feet long, up to 10 feet wide, and up to 10 feet tall. Each creature in that area must make a Dexterity saving throw. On a failed save, a creature takes 4d8 bludgeoning damage and is knocked prone. On a successful save, a creature takes half as much damage and isn’t knocked prone. The slime then spreads out across the ground in all directions, extinguishing unprotected flames in its area and within 30 feet of it, and then it vanishes.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 218
+        }
+      }
+    },
+    {
+      "id": "spell.soap_bubble",
+      "kind": "spell",
+      "name": "Soap Bubble",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 218
+      },
+      "level": 3,
+      "school": "conjuration",
+      "castingTime": "1 minute",
+      "range": "30 feet",
+      "components": "V, S, M (a bar of soap)",
+      "duration": "1 Hour",
+      "text": "You envelop up to five chosen creatures within range in bubbles formed from a special soap. Creatures within these soap bubbles gain a swimming speed of 30 feet, the ability to breathe underwater, and an additional 5 temporary hit points for the duration of the spell. The soap bubble is attached to the target creature and moves with it. Despite gaining underwater breathing from the bubble, creatures maintain their usual means of respiration. If a creature encapsulated in a soap bubble is underwater, it is not considered submerged or in direct contact with the water as long as the bubble remains intact. Should a creature within a soap bubble lose all its temporary hit points provided by this spell, the bubble bursts, stripping the creature of its benefits.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 218
+        }
+      }
+    },
+    {
+      "id": "spell.wall_of_goo",
+      "kind": "spell",
+      "name": "Wall of Goo",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 218
+      },
+      "level": 3,
+      "school": "evocation",
+      "castingTime": "1 action",
+      "range": "60 feet",
+      "components": "V, S, M (a drop of goo)",
+      "duration": "Concentration, up to 10 minutes",
+      "text": "You conjure up a wall of transparent goo on the ground at a point you can see within range. You can make the wall up to 30 feet long, 10 feet high, and 1 foot thick, or you can make a ringed wall up to 20 feet in diameter, 20 feet high, and 1 foot thick. The wall vanishes when the spell ends. The wall’s space is difficult terrain.\nAny ranged weapon attack that enters the wall’s space has disadvantage on the attack roll, and fire damage is halved if the fire effect passes through the wall to reach its target. Spells that deal cold damage that pass through the wall cause the area of the wall they pass through to freeze solid (at least a 5-foot square section is frozen). Each 5-foot-square frozen section has AC 5 and 15 hit points. Reducing a frozen section to 0 hit points destroys it. When a section is destroyed, the wall’s goo doesn’t fill it.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 218
+        }
+      }
+    },
+    {
+      "id": "spell.swamp_sphere",
+      "kind": "spell",
+      "name": "Swamp Sphere",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 218
+      },
+      "level": 4,
+      "school": "conjuration",
+      "castingTime": "1 action",
+      "range": "90 feet",
+      "components": "V, S, M (a piece of swamp material)",
+      "duration": "Concentration, up to 1 minutes",
+      "text": "You conjure up a sphere of swamp mud with a 5-foot radius at a point you can see within range. The sphere can hover but no more than 10 feet off the ground. The sphere remains for the spell’s duration.\nAny creature in the sphere’s space must make a Strength saving throw. On a successful save, a creature is ejected from that space to the nearest unoccupied space of the creature’s choice outside the sphere. A Huge or larger creature succeeds on the saving throw automatically, and a Large or smaller creature can choose to fail it. On a failed save, a creature is restrained by the sphere and is engulfed by the mud. At the end of each of its turns, a restrained target can repeat the saving throw, ending the effect on itself on a success.\nThe sphere can restrain as many as four Medium or smaller creatures or one Large creature. If the sphere restrains a creature that causes it to exceed this capacity, a random creature that was already restrained by the sphere falls out of it and lands prone in a space within 5 feet of it.\nAs an action, you can move the sphere up to 30 feet in a straight line. If it moves over a pit, a cliff, or other drop-off, it safely descends until it is hovering 10 feet above the ground. Any creature restrained by the sphere moves with it. You can ram the sphere into creatures, forcing them to make the saving throw.\nWhen the spell ends, the sphere falls to the ground and extinguishes all normal flames within 30 feet of it. Any creature restrained by the sphere is knocked prone in the space where it falls. The wmud then vanishes.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 218
+        }
+      }
+    },
+    {
+      "id": "spell.great_heaven_splitter",
+      "kind": "spell",
+      "name": "Great Heaven Splitter",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 219
+      },
+      "level": 5,
+      "school": "conjuration",
+      "castingTime": "1 action",
+      "range": "150 feet",
+      "components": "S, M (a melee weapon worth at least ฿1,000)",
+      "duration": "Instantaneous",
+      "text": "You flourish the weapon used in the casting and then unleash a devastating slash of energy. The energy slash forms a line 150 feet long and 20 feet high traveling in a direction you choose coming from you. Each creature in the line must make a Dexterity saving throw. A creature takes 5d6 slashing damage and 5d6 thunder damage on a failed save, or half as much damage on a successful one. A nonmagical object that isn’t being worn or carried also takes the damage if it’s in the spell’s area.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 219
+        }
+      }
+    },
+    {
+      "id": "spell.poison_giant_hells_judgement",
+      "kind": "spell",
+      "name": "Poison Giant: Hell’s Judgement",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 219
+      },
+      "level": 8,
+      "school": "conjuration",
+      "castingTime": "1 action",
+      "range": "Self",
+      "components": "S",
+      "duration": "Concentration, up to 1 minute",
+      "text": "You create a gargantuan poison demon around you, forming a 20-foot radius sphere of poison centered on you which moves with you and is considered difficult terrain. If a creature ends its turn within this area around you, it must make a Constitution saving throw. The creature takes 7d6 poison or acid damage (your choice) on a failed save, or half as much on a successful one.\nDuring each of your turns while the spell is active, you may spend an action to allow the poison demon to make two attacks against any creature within 30 feet of you. These attacks count as melee spell attacks, and deal 4d12 poison or acid damage (your choice) on a hit.\nAny creature that takes poison or acid damage from this spell is poisoned until the end of its next turn.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 219
+        }
+      }
+    },
+    {
+      "id": "spell.slime_tsunami",
+      "kind": "spell",
+      "name": "Slime Tsunami",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 219
+      },
+      "level": 8,
+      "school": "conjuration",
+      "castingTime": "1 action",
+      "range": "Sight",
+      "components": "V, S",
+      "duration": "Concentration, up to 1 minute",
+      "text": "A wall of slime springs into existence at a point you choose within range. You can make the wall up to 300 feet long, 300 feet high, and 50 feet thick. The wall lasts for the duration.\nWhen the wall appears, each creature within its area must make a Strength saving throw. On a failed save, a creature takes 6d10 bludgeoning damage, or half as much damage on a successful save.\nAt the start of each of your turns after the wall appears, the wall, along with any creatures in it, moves 50 feet away from you. Any Huge or smaller creature inside the wall or whose space the wall enters when it moves must succeed on a Strength saving throw or take 5d10 bludgeoning damage. A creature can take this damage only once per round. At the end of the turn, the wall’s height is reduced by 50 feet, and the damage creatures take from the spell on subsequent rounds is reduced by 1d10. When the wall reaches 0 feet in height, the spell ends.\nA creature caught in the wall can move by moving through the slime. The wall counts as difficult terrain. Because of the force of the wave, though, the creature must make a successful Strength (Athletics) check against your spell save DC in order to move at all. If it fails the check, it can’t move. A creature that moves out of the area falls to the ground.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 219
+        }
+      }
+    },
+    {
+      "id": "spell.locate_devil_fruit_power",
+      "kind": "spell",
+      "name": "Locate Devil Fruit Power",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 219
+      },
+      "level": 9,
+      "school": "divination",
+      "castingTime": "1 hour",
+      "range": "Self",
+      "components": "V, S, M (A ripe fruit)",
+      "duration": "Up to 8 hours",
+      "text": "Give a basic description of any Devil Fruit you have seen before, or a Devil Fruit name, category, or power that might reasonably exist. For example, describing a Logia Devil Fruit power which allows you to transform into flames might closest resemble a description of the Mera Mera no Mi. Using a Devil Fruit Book to list the exact name of a Devil Fruit will make this process more precise, since it should list the names and powers of every known Devil Fruit power. Once the Devil Fruit power is described or named, you sense the Devil Fruit’s location. If there is no existing Devil Fruit which quite matches your description or if your requirements are too vague, the DM may randomly choose a Devil Fruit closest to your description instead.\nYou know the exact location of the chosen Devil Fruit for the duration of the spell. You can precisely point to it on any map and know the exact routes to take to find it, unless it is located in uncharted territory, in which case you will only have a sense of the general direction it is in. If the Devil Fruit has been consumed by a creature or object, you know the exact location of that creature or object for the duration of the spell instead (as if using Locate Creature or Locate Object, without any of the distance limitations).",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 219
+        }
+      }
+    },
+    {
+      "id": "spell.ice_age",
+      "kind": "spell",
+      "name": "Ice Age",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 220
+      },
+      "level": 9,
+      "school": "evocation",
+      "castingTime": "1 action",
+      "range": "1 mile",
+      "components": "V, S",
+      "duration": "8 hours",
+      "text": "You freeze over every body of water and any freezable liquid within range. Any creature that is within 60 feet of you or touching at least a 5-foot cube of liquid that is being frozen by this spell within range must make a Constitution saving throw. A creature takes 20d8 cold damage and becomes restrained on a failed save, or takes half as much damage and isn’t restrained on a successful one. A creature killed by this spell becomes a frozen statue until it thaws.\nAny water or liquid frozen by this spell becomes solid ice, and each 5-foot square of it has AC 12 and 20 hit points, and is vulnerable to fire damage. Once the ice melts or gets destroyed, or the duration of the spell ends, the water or liquid it was made of returns to its regular state. A creature restrained by this spell must break every 5-foot block of ice it is inside of in order to become unrestrained, or succeed on a Constitution saving throw made at the end of each of its turns to slip out of the segments of ice it is trapped in and move 5 feet to an empty space.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 220
+        }
+      }
+    },
+    {
+      "id": "spell.flame_emperor",
+      "kind": "spell",
+      "name": "Flame Emperor",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 220
+      },
+      "level": 9,
+      "school": "evocation",
+      "castingTime": "1 action",
+      "range": "1,000 ft.",
+      "components": "V, S, M (a perfect ball of coal)",
+      "duration": "Concentration, up to 1 minute",
+      "text": "You create a 20-foot-radius sphere of concentrated flames center on a point you can see within range. The sphere is considered rough terrain. For the spell’s duration, any flammable substance within 100 feet of the sphere is ignited if it isn’t being worn or carried.\nIf a creature ends its turn within the sphere, it must make a Dexterity saving throw. The creature takes 8d6 fire damage on a failed save, or half as much damage on a successful one.\nAs a bonus action, you can move the sphere up to 60 feet in any direction up to 1,000 feet away from you. Once you hit a creature with the sphere, you can only move it up to half its remaining distance. Any creatures hit while you move the sphere this way must make the saving throw against the sphere’s damage.\nYou can detonate this sphere as a bonus action on your turn, hitting every creature within 100 feet of the sphere with the explosion. Any creature in this range must make a Dexteirty saving throw. Creatures take 20d6 fire damage on a failed save, or half as much damage on a successful one. Once you detonate the sphere this way, the spell ends.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 220
+        }
+      }
+    },
+    {
+      "id": "spell.island_shaking",
+      "kind": "spell",
+      "name": "Island Shaking",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 220
+      },
+      "level": 9,
+      "school": "evocation",
+      "castingTime": "1 action",
+      "range": "1 mile",
+      "components": "V, S",
+      "duration": "Concentration, up to 1 minute",
+      "text": "You are able to pull apart fault lines in the earth, twisting and turning the ground beneath you in many different directions. For the duration of this spell, all terrain connected to the ground within range becomes difficult terrain.\nWhen you first cast this spell, you can choose a 100- foot-radius circle you can see within range to violently thrust upward out of the ground. Each creature standing in the radius must make a Strength saving throw. On a failed save a creature takes 20d6 bludgeoning damage and is launched 100 feet into the air, or half as much and is knocked prone while holding on to the ground beneath it instead on a successful one. Additionally, any structure and object that isn’t being carried or worn in contact with the ground within this radius takes 50 bludgeoning damage.\nYou can repeat this action by spending an action once per turn on each subsequent turn to do so while the spell is active.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 220
+        }
+      }
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}

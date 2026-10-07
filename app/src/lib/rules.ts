@@ -1,4 +1,4 @@
-import { indexRules, type ClassEntry, type FeatureDef, type OptionDef, type Rng, type RuleEntry, type RulesFile, type RulesVersion } from '@dndf/engine';
+import { armorFromItem, indexRules, weaponFromItem, type ClassEntry, type FeatureDef, type OptionDef, type Rng, type RuleEntry, type RulesFile, type RulesVersion } from '@dndf/engine';
 
 // Every public rules file under data/rules, bundled with the site.
 const files = Object.values(import.meta.glob<RulesFile>('../../../data/rules/*/*.json', { eager: true, import: 'default' }));
@@ -15,6 +15,13 @@ export interface RuleSet {
   crewRoles: RuleEntry[];
   feats: RuleEntry[];
   generalRules: RuleEntry[];
+  /** Armory entries that can be worn or wielded. */
+  armors: RuleEntry[];
+  weapons: RuleEntry[];
+  surgeAdvancements: RuleEntry[];
+  hakiFeatures: RuleEntry[];
+  spellLists: RuleEntry[];
+  spells: RuleEntry[];
   subclassesOf: (classId: string) => RuleEntry[];
   /** The subclasses a class's main choice picks from (Tinkerer Professions are a second, separate choice). */
   mainSubclasses: (classId: string) => RuleEntry[];
@@ -38,6 +45,12 @@ function build(version: RulesVersion): RuleSet {
     crewRoles: all.filter((e) => e.kind === 'crewRole'),
     feats: all.filter((e) => e.kind === 'feat').sort(byName),
     generalRules: all.filter((e) => e.kind === 'rule'),
+    armors: all.filter((e) => e.kind === 'item' && armorFromItem(e) !== null),
+    weapons: all.filter((e) => e.kind === 'item' && weaponFromItem(e) !== null),
+    surgeAdvancements: all.filter((e) => e.kind === 'surgeAdvancement'),
+    hakiFeatures: all.filter((e) => e.kind === 'hakiFeature'),
+    spellLists: all.filter((e) => e.kind === 'spellList'),
+    spells: all.filter((e) => e.kind === 'spell').sort((a, b) => Number(a.level ?? 0) - Number(b.level ?? 0)),
     subclassesOf,
     mainSubclasses(classId) {
       const subs = subclassesOf(classId);

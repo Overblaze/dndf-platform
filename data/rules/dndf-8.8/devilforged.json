@@ -572,292 +572,242 @@
                     [
                       "01-",
                       "Shrinking: The explosion releases a shrinking gas, causing",
-                      "27-"
+                      "27-",
+                      "Ghost: The explosion releases spectral energy, causing ghostly"
                     ],
                     [
                       "02",
                       "all creatures in the blast radius to make a Constitution",
-                      "28 saving throw or be reduced one size category smaller for 1 minute, halving their movement speed."
+                      "28",
+                      "apparitions to appear; creatures within the blast must make a"
+                    ],
+                    [
+                      "saving throw or be reduced one size category smaller for 1",
+                      "Wisdom saving throw or be frightened until the end of their"
+                    ],
+                    [
+                      "minute, halving their movement speed.",
+                      "next turn."
                     ],
                     [
                       "03-",
-                      "Dividing: The explosion creates a splitting effect, causing the 29-"
+                      "Dividing: The explosion creates a splitting effect, causing the 29-",
+                      "Hormones: The explosion releases a stimulating mist that"
                     ],
                     [
                       "04",
                       "bomb to break into two smaller explosions in adjacent 5-",
-                      "30 foot areas, each dealing half the original damage."
+                      "30",
+                      "boosts combat abilities; creatures within the blast radius gain"
+                    ],
+                    [
+                      "foot areas, each dealing half the original damage.",
+                      "a +1 bonus to attack rolls and saving throws until the end of their next turn. This effect removes the bomb’s damage."
                     ],
                     [
                       "05-",
                       "Springs: The bomb gains a bouncy, unpredictable nature;",
-                      "31-"
+                      "31-",
+                      "Genie Lamp: The explosion releases a magical smoke that"
                     ],
                     [
                       "06",
                       "after being thrown, it bounces up to double the thrown",
-                      "32 distance following the trajectory of the throw, and even bouncing off other surfaces, before detonating."
+                      "32",
+                      "briefly conjures a spectral genie; allies in the radius gain one"
+                    ],
+                    [
+                      "distance following the trajectory of the throw, and even",
+                      "wish-like effect that grants a +3 bonus to their next attack roll,"
+                    ],
+                    [
+                      "bouncing off other surfaces, before detonating.",
+                      "saving throw, or ability check within 1 minute. This effect removes the bomb’s damage."
                     ],
                     [
                       "07-",
                       "Spikes: The explosion scatters sharp, ethereal spikes;",
-                      "33-"
+                      "33-",
+                      "Stone Control: The explosion releases a burst of seismic"
                     ],
                     [
                       "08",
                       "creatures in the blast radius must make a Dexterity saving",
-                      "34 throw or take additional 1d6 piercing damage and have their movement speed reduced by 10 feet until the end of their next turn."
+                      "34",
+                      "energy, allowing you to momentarily control the ground; you"
+                    ],
+                    [
+                      "throw or take additional 1d6 piercing damage and have their",
+                      "can raise or lower the terrain in a 10-foot radius by up to 5"
+                    ],
+                    [
+                      "movement speed reduced by 10 feet until the end of their",
+                      "feet, creating barriers, pits, or difficult terrain until the start of"
+                    ],
+                    [
+                      "next turn.",
+                      "your next turn."
                     ],
                     [
                       "09-",
                       "Smooth: The explosion coats the area in a slick, oily",
-                      "35-"
+                      "35-",
+                      "Mushroom Spores: The explosion releases a cloud of toxic"
                     ],
                     [
                       "10",
                       "substance; creatures in the blast radius must make a",
-                      "36 Dexterity saving throw or fall prone."
+                      "36",
+                      "spores; creatures in the radius must make a Constitution"
+                    ],
+                    [
+                      "Dexterity saving throw or fall prone.",
+                      "saving throw or be poisoned until the end of their next turn."
                     ],
                     [
                       "11-",
                       "Door: The explosion briefly creates a magical door that can",
-                      "37-"
+                      "37-",
+                      "Encourage: The explosion triggers the effects of the Heroism"
                     ],
                     [
                       "12",
                       "be opened or closed; allies can use this door to teleport up",
-                      "38 to 30 feet to an unoccupied space they can see until the end of your next turn, when the door disappears."
+                      "38",
+                      "spell within the bomb’s radius, effecting all creatures in the"
+                    ],
+                    [
+                      "to 30 feet to an unoccupied space they can see until the end",
+                      "radius. This effect removes the bomb’s damage. of your next turn, when the door disappears."
                     ],
                     [
                       "13-",
                       "Bubble: The bomb gains buoyant properties, allowing it to",
-                      "39-"
+                      "39-",
+                      "Beast Control: The explosion triggers the effects of the"
                     ],
                     [
                       "14",
                       "float and hover in the air; after being thrown, it drifts up to",
-                      "40 20 feet in a predetermined direction before detonating."
+                      "40",
+                      "Dominate Beast spell within the bomb’s radius, effecting all"
+                    ],
+                    [
+                      "20 feet in a predetermined direction before detonating.",
+                      "beast’s in the radius."
                     ],
                     [
                       "15-",
                       "Mark: The explosion coats enemies in a glowing substance",
-                      "41-"
+                      "41-",
+                      "Shadows: The explosion envelops the area in swirling"
                     ],
                     [
                       "16",
                       "that makes them easier to target until the end of your next",
-                      "42 turn; the next attack made against a marked creature is an automatic hit, bypassing the need for an attack roll, and deals additional damage equal to your proficiency bonus."
+                      "42",
+                      "shadows; allies within the blast radius gain partial"
+                    ],
+                    [
+                      "turn; the next attack made against a marked creature is an",
+                      "concealment, granting them advantage on Dexterity (Stealth)"
+                    ],
+                    [
+                      "automatic hit, bypassing the need for an attack roll, and",
+                      "checks and imposing disadvantage on attack rolls against"
+                    ],
+                    [
+                      "deals additional damage equal to your proficiency bonus.",
+                      "them until the start of their next turn. This effect removes the bomb’s damage."
                     ],
                     [
                       "17-",
                       "Brightness: The explosion creates a lingering field of bright",
-                      "43-"
+                      "43-",
+                      "Invisibility: The explosion releases a shroud of shimmering"
                     ],
                     [
                       "18",
-                      "light in a 20-foot radius that lasts for 1 minute; allies can see 44 through magical darkness and gain advantage on perception checks made in the light. This effect removes the bomb’s damage."
+                      "light in a 20-foot radius that lasts for 1 minute; allies can see 44",
+                      "mist that cloaks allies; creatures within the blast radius"
+                    ],
+                    [
+                      "through magical darkness and gain advantage on",
+                      "become invisible until for 1 minute or until they make an"
+                    ],
+                    [
+                      "perception checks made in the light. This effect removes the",
+                      "attack, granting them advantage on their next attack roll or"
+                    ],
+                    [
+                      "bomb’s damage.",
+                      "stealth check. This effect removes the bomb’s damage and explosion sound."
                     ],
                     [
                       "19-",
                       "Tendrils: The explosion releases dark, writhing tendrils that",
-                      "45-"
+                      "45-",
+                      "Castle: The explosion momentarily conjures the effects of the"
                     ],
                     [
                       "20",
-                      "latch onto nearby creatures; creatures within the blast radius 46 must make a Strength saving throw or be restrained until the end of their next turn."
+                      "latch onto nearby creatures; creatures within the blast radius 46",
+                      "Mighty Fortress spell. This structure lasts for 1 hour. This effect"
+                    ],
+                    [
+                      "must make a Strength saving throw or be restrained until",
+                      "removes the bomb’s damage. the end of their next turn."
                     ],
                     [
                       "21-",
                       "Silence: The bomb does not make sound when exploding.",
-                      "47-"
+                      "47-",
+                      "Sleep: The explosion triggers the effects of the Sleep spell"
                     ],
                     [
                       "22",
-                      "48"
+                      "48",
+                      "within the bomb’s radius."
                     ],
                     [
                       "23-",
                       "Flash: The explosion releases a blinding burst of light that",
-                      "49-"
+                      "49-",
+                      "String: The explosion releases strands of thread; creatures hit"
                     ],
                     [
                       "24",
                       "lingers momentarily; creatures in the blast radius must",
-                      "50 make a Constitution saving throw or be blinded until the start of your next turn."
+                      "50",
+                      "by the bomb are entangled in the threads, reducing their"
+                    ],
+                    [
+                      "make a Constitution saving throw or be blinded until the",
+                      "movement speed by half and imposing disadvantage on"
+                    ],
+                    [
+                      "start of your next turn.",
+                      "Dexterity saving throws until the end of their next turn."
                     ],
                     [
                       "25-",
                       "Rope: The explosion unleashes coils of enchanted rope that",
-                      "51-"
+                      "51-",
+                      "Super Speed: The explosion emits an energizing burst that"
                     ],
                     [
                       "26",
                       "lash out; Choose up to two points within a 60 ft. radius of",
-                      "52 the bomb’s center, the expanding rope will attach to the points chosen. This effect removes the bomb’s damage."
-                    ]
-                  ],
-                  "page": 118
-                },
-                {
-                  "rows": [
-                    [
-                      "Ghost: The explosion releases spectral energy, causing ghostly"
-                    ],
-                    [
-                      "apparitions to appear; creatures within the blast must make a"
-                    ],
-                    [
-                      "Wisdom saving throw or be frightened until the end of their"
-                    ],
-                    [
-                      "next turn."
-                    ],
-                    [
-                      "Hormones: The explosion releases a stimulating mist that"
-                    ],
-                    [
-                      "boosts combat abilities; creatures within the blast radius gain"
-                    ],
-                    [
-                      "a +1 bonus to attack rolls and saving throws until the end of"
-                    ],
-                    [
-                      "their next turn. This effect removes the bomb’s damage."
-                    ],
-                    [
-                      "Genie Lamp: The explosion releases a magical smoke that"
-                    ],
-                    [
-                      "briefly conjures a spectral genie; allies in the radius gain one"
-                    ],
-                    [
-                      "wish-like effect that grants a +3 bonus to their next attack roll,"
-                    ],
-                    [
-                      "saving throw, or ability check within 1 minute. This effect"
-                    ],
-                    [
-                      "removes the bomb’s damage."
-                    ],
-                    [
-                      "Stone Control: The explosion releases a burst of seismic"
-                    ],
-                    [
-                      "energy, allowing you to momentarily control the ground; you"
-                    ],
-                    [
-                      "can raise or lower the terrain in a 10-foot radius by up to 5"
-                    ],
-                    [
-                      "feet, creating barriers, pits, or difficult terrain until the start of"
-                    ],
-                    [
-                      "your next turn."
-                    ],
-                    [
-                      "Mushroom Spores: The explosion releases a cloud of toxic"
-                    ],
-                    [
-                      "spores; creatures in the radius must make a Constitution"
-                    ],
-                    [
-                      "saving throw or be poisoned until the end of their next turn."
-                    ],
-                    [
-                      "Encourage: The explosion triggers the effects of the Heroism"
-                    ],
-                    [
-                      "spell within the bomb’s radius, effecting all creatures in the"
-                    ],
-                    [
-                      "radius. This effect removes the bomb’s damage."
-                    ],
-                    [
-                      "Beast Control: The explosion triggers the effects of the"
-                    ],
-                    [
-                      "Dominate Beast spell within the bomb’s radius, effecting all"
-                    ],
-                    [
-                      "beast’s in the radius."
-                    ],
-                    [
-                      "Shadows: The explosion envelops the area in swirling"
-                    ],
-                    [
-                      "shadows; allies within the blast radius gain partial"
-                    ],
-                    [
-                      "concealment, granting them advantage on Dexterity (Stealth)"
-                    ],
-                    [
-                      "checks and imposing disadvantage on attack rolls against"
-                    ],
-                    [
-                      "them until the start of their next turn. This effect removes the"
-                    ],
-                    [
-                      "bomb’s damage."
-                    ],
-                    [
-                      "Invisibility: The explosion releases a shroud of shimmering"
-                    ],
-                    [
-                      "mist that cloaks allies; creatures within the blast radius"
-                    ],
-                    [
-                      "become invisible until for 1 minute or until they make an"
-                    ],
-                    [
-                      "attack, granting them advantage on their next attack roll or"
-                    ],
-                    [
-                      "stealth check. This effect removes the bomb’s damage and"
-                    ],
-                    [
-                      "explosion sound."
-                    ],
-                    [
-                      "Castle: The explosion momentarily conjures the effects of the"
-                    ],
-                    [
-                      "Mighty Fortress spell. This structure lasts for 1 hour. This effect"
-                    ],
-                    [
-                      "removes the bomb’s damage."
-                    ],
-                    [
-                      "Sleep: The explosion triggers the effects of the Sleep spell"
-                    ],
-                    [
-                      "within the bomb’s radius."
-                    ],
-                    [
-                      "String: The explosion releases strands of thread; creatures hit"
-                    ],
-                    [
-                      "by the bomb are entangled in the threads, reducing their"
-                    ],
-                    [
-                      "movement speed by half and imposing disadvantage on"
-                    ],
-                    [
-                      "Dexterity saving throws until the end of their next turn."
-                    ],
-                    [
-                      "Super Speed: The explosion emits an energizing burst that"
-                    ],
-                    [
+                      "52",
                       "temporarily accelerates movement; creatures within the blast"
                     ],
                     [
+                      "the bomb’s center, the expanding rope will attach to the",
                       "radius gain +20 feet to their movement speed and can take"
                     ],
                     [
-                      "the Dash action as a bonus action until the end of their next"
-                    ],
-                    [
-                      "turn. This effect removes the bomb’s damage."
+                      "points chosen. This effect removes the bomb’s damage.",
+                      "the Dash action as a bonus action until the end of their next turn. This effect removes the bomb’s damage."
                     ]
                   ],
                   "page": 118
@@ -1967,15 +1917,17 @@
           "id": "maddening_frequency",
           "name": "Maddening Frequency",
           "group": "Fifth Level Emanations",
-          "text": "The radius of sound gives you advantage on Charisma (Intimidation) checks but disadvantage on all other Charisma checks. Any other creature that starts its turn in the radius around you takes thunder damage equal to your Charisma modifier (minimum 0 damage).\nOnce you use this emanation, you can’t use it again until you finish a short or long rest.",
+          "text": "As a bonus action, you can emit a sound frequency from your infused item which negatively influences the minds of other creatures around you. The sound can be heard by any creation 5 feet away from your in every direction, but not in total cover. It lasts until you’re incapacitated or you dismiss it as a bonus action.\nThe radius of sound gives you advantage on Charisma (Intimidation) checks but disadvantage on all other Charisma checks. Any other creature that starts its turn in the radius around you takes thunder damage equal to your Charisma modifier (minimum 0 damage).\nOnce you use this emanation, you can’t use it again until you finish a short or long rest.",
           "page": 128,
-          "prerequisite": "5th Level Devilforged As a bonus action, you can emit a sound frequency from your infused item which negatively influences the minds of other creatures around you. The sound can be heard by any creation 5 feet away from your in every direction, but not in total cover. It lasts until you’re incapacitated or you dismiss it as a bonus action.",
+          "prerequisite": "5th Level Devilforged",
           "uses": {
             "max": 1,
             "recharge": "short"
           },
+          "action": "bonus",
           "auto": [
-            "uses"
+            "uses",
+            "action"
           ]
         },
         {

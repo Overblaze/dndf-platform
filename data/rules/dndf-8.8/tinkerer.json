@@ -447,7 +447,7 @@
         {
           "level": 10,
           "name": "Savant Crafter",
-          "text": "At 10th level, using the table below and the rules from Basic Crafter, when you create weapons or equipment or wish to upgrade an existing peice of gear, you may add additional stats to the equipment.\n฿\n฿\n฿\n฿\n฿",
+          "text": "At 10th level, using the table below and the rules from Basic Crafter, when you create weapons or equipment or wish to upgrade an existing peice of gear, you may add additional stats to the equipment.",
           "page": 193,
           "tables": [
             {
@@ -455,56 +455,31 @@
                 [
                   "Unlocks at Level Upgrade",
                   "Additional Cost"
-                ]
-              ],
-              "page": 193
-            },
-            {
-              "rows": [
+                ],
                 [
                   "10th",
                   "+1",
-                  "100,000 worth of raw materials"
-                ]
-              ],
-              "page": 193
-            },
-            {
-              "rows": [
+                  "฿100,000 worth of raw materials"
+                ],
                 [
                   "10th",
                   "+2",
-                  "200,000 worth of raw materials"
-                ]
-              ],
-              "page": 193
-            },
-            {
-              "rows": [
+                  "฿200,000 worth of raw materials"
+                ],
                 [
                   "12th",
                   "+3",
-                  "400,000 worth of raw materials"
-                ]
-              ],
-              "page": 193
-            },
-            {
-              "rows": [
+                  "฿400,000 worth of raw materials"
+                ],
                 [
                   "15th",
                   "+4",
-                  "800,000 worth of raw materials"
-                ]
-              ],
-              "page": 193
-            },
-            {
-              "rows": [
+                  "฿800,000 worth of raw materials"
+                ],
                 [
                   "18th",
                   "+5",
-                  "1,000,000 worth of raw materials"
+                  "฿1,000,000 worth of raw materials"
                 ]
               ],
               "page": 193

@@ -32,6 +32,14 @@ Run `python3 tools/extract/pdfdoc.py V10_D_DF_EH.pdf 85 87` to see any pages as 
 - **Feats**: a first line starting "Prerequisite:" is kept apart from the text. A prerequisite line that fills the column runs into the text and is parted at the first sentence.
 - **Races**: paragraphs led by a bold name ("Darkvision.") are traits; bullets and plain paragraphs after one belong to it. Walking speed, size and fixed ability increases are read from the wording and listed under `auto`. "X Subraces" sections become `subrace` entries.
 
+## Chapters 4, 5, 6 and 7 (also in `extract_chapters.py`)
+
+- **Spell lists** are four narrow columns of names under level headings, so they are read straight from the positioned text, down each column in turn. Only names are stored; the spells' own text is SRD material, to be added separately. The eleven **custom spells** have their full text.
+- **Spirit Surges**: each option's first line is its type and rarity ("Armament Haki Advancement, Rare — Tier 2"). Which family an option belongs to comes from the section it is printed in, because "Amateur Haki Advancement" appears under all three Colors. A Haki prerequisite is a list of other features' names; the line after it often runs on and is parted using those names.
+- **Devil Fruit advancements are never extracted here.** The page ranges stop before them, and the extractor stops with an error if a "Devil Fruit Advancement" type line or section turns up. The same goes for the generation tables after the fruit rules.
+- **Devil Fruit rules for players** (how Paramecia, Zoan and Logia work, creation steps, appraisal) are public and become `rule` entries.
+- **Armory**: every top-level section becomes a `rule` entry (ids prefixed `armory_`). The armor and weapon tables also become `item` entries with numbers the sheet can use: AC base and how Dexterity applies, Strength needed, damage, type, properties. Weapon tables span the page in two halves with the Properties column on the right; the reader joins halves whose rows line up. The ฿ sign is set in its own font and is folded into the price cell beside it.
+
 ## Two handbooks (`tools/extract/extract_all.py`)
 
 `extract_all.py` is the one command that rebuilds `data/rules/`. It extracts v10, then v8.8, and compares them entry by entry:

@@ -217,9 +217,13 @@ def make_feature(heading: Heading, blocks: list[Block], deeper: int) -> dict:
     if first_para and re.match(r"prerequisites?:", first_para.text, re.I):
         prerequisite = re.sub(r"^prerequisites?:\s*", "", first_para.text, flags=re.I)
         rest = [b for b in own if b is not first_para]
-        run_on = re.match(r"(.*?)\s+((?:You|Your|When|While|Once|As|Through|Whenever|If|Always|Gain|Gains|Add|Increase|Choose|Cast|Use|After|Each|Any|All|This|These|At|On|In|Creatures|Enemies)\b.*)", prerequisite)
-        if run_on and not any(isinstance(b, Para) for b in rest):
-            # A prerequisite line that fills the column runs into the text: part them at the first sentence.
+        # The line after a prerequisite often runs on from it: part them where the first sentence starts.
+        # With nothing else to be the text, more sentence openers are accepted.
+        openers = "You|Your|When|While|Once|As|Through|Whenever|If|Always|Learn|Gain"
+        if not any(isinstance(b, Para) for b in rest):
+            openers += "|Gain|Gains|Add|Increase|Choose|Cast|Use|After|Each|Any|All|This|These|At|On|In|Creatures|Enemies"
+        run_on = re.match(rf"(.*?)\s+((?:{openers})\b.*)", prerequisite)
+        if run_on:
             prerequisite = run_on.group(1)
             rest = [Para(run_on.group(2), first_para.page)] + rest
         own = rest

@@ -1,0 +1,1414 @@
+{
+  "$schemaVersion": 1,
+  "entries": [
+    {
+      "id": "rule.armory_weapons",
+      "kind": "rule",
+      "name": "Weapons",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 333
+      },
+      "text": "Weapons define a fighter as much as their skill. Whether it’s a cutlass, pistol, or improvised club, the weapon you wield, and your ability to wield it well, often decides life or death on the seas.\nThe Weapons table lists the most common arms found across the One Piece world, including their cost, weight, damage, and special properties.",
+      "sections": [
+        {
+          "name": "Weapon Proficiency",
+          "text": "Classes, races, and feats grant proficiency with specific weapon groups, classified as simple or martial. If you are proficiency with a weapon, add your proficiency bonus to attack rolls.",
+          "page": 333
+        },
+        {
+          "name": "Improvised Weapons",
+          "text": "Any object can become a weapon in desperate hands.\nDamage. Improvised weapons deal 1d4 damage (type determined by the DM).\nThrown. Range of 20 ft. (normal) / 60 ft. (long).\nProficiency. If the item is similar to a known weapon (e.g., chair leg as a club), the DM may allow proficiency to apply.",
+          "page": 333
+        },
+        {
+          "name": "Special Weapons",
+          "text": "Some weapons function differently than others:\nLance. Disadvantage on attacks against targets within 5 ft. Requires two hands unless mounted.\nNet. On a hit, restrains a Large or smaller creature until freed. A creature can escape with a DC 10 Strength check, or by",
+          "page": 333
+        },
+        {
+          "name": "Simple Weapons",
+          "text": "destroying the net (AC 10, 5 slashing damage). Attacks made with a net are limited to one per action, bonus action, or reaction.",
+          "page": 333
+        },
+        {
+          "name": "Weapon Properties",
+          "text": "Weapons may have one or more properties that alter how they function, such as finesse, heavy, light, loading, range, reach, special, thrown, two-handed, or versatile. These properties function as described in the standard 5e rules.\nIn addition, there are additional properties not found in 5e rules.\nConcealed. You have advantage on Dexterity or Intelligence (Sleight of Hand) checks made to conceal this weapon on your person.\nConcussing. Once per turn when you hit a creature concentrating with a concussing weapon, the creature subtracts your proficiency bonus from its concentration saves.\nDefensive. While wielding a defensive weapon, the weapon gives a +1 to AC.\nFinisher. When you damage a prone creature with a finisher weapon, you roll an additional weapon damage die.\nPush. If you hit a creature with this weapon, you can push the creature 5 feet away from yourself if it is Large or smaller.\nRicochet. The weapon returns to your hand after a hit or miss provided you have a free hand.\nFist. This weapon cannot attack normally. Instead, the weapons damage is added onto your unarmed damage when equipped.",
+          "page": 333,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Weapon",
+                  "Cost",
+                  "Damage",
+                  "Weight",
+                  "Properties"
+                ],
+                [
+                  "Simple Melee Weapons"
+                ],
+                [
+                  "Brass Knuckles",
+                  "฿10,000",
+                  "+2 bludgeoning",
+                  "1/4 lb.",
+                  "Fist"
+                ],
+                [
+                  "Club",
+                  "฿1,000",
+                  "1d4 bludgeoning",
+                  "2 lb.",
+                  "Light"
+                ],
+                [
+                  "Dagger",
+                  "฿20,000",
+                  "1d4 piercing",
+                  "1 lb.",
+                  "Finesse, light, thrown (range 20/60)"
+                ],
+                [
+                  "Greatclub",
+                  "฿2,000",
+                  "1d8 bludgeoning",
+                  "10 lb.",
+                  "Two-handed"
+                ],
+                [
+                  "Handaxe",
+                  "฿50,000",
+                  "1d6 slashing",
+                  "2 lb.",
+                  "Light, thrown (range 20/60)"
+                ],
+                [
+                  "Javelin",
+                  "฿5,000",
+                  "1d6 piercing",
+                  "2 lb.",
+                  "Thrown (range 30/120)"
+                ],
+                [
+                  "Light hammer",
+                  "฿20,000",
+                  "1d4 bludgeoning",
+                  "2 lb.",
+                  "Light, thrown (range 20/60)"
+                ],
+                [
+                  "Mace",
+                  "฿50,000",
+                  "1d6 bludgeoning",
+                  "4 lb.",
+                  "-"
+                ],
+                [
+                  "Pillar Weapon",
+                  "฿60,000",
+                  "1d10 bludgeoning",
+                  "18 lb.",
+                  "Heavy, two-handed, concussing, finisher"
+                ],
+                [
+                  "Quarterstaff",
+                  "฿2,000",
+                  "1d6 bludgeoning",
+                  "4 lb.",
+                  "Versatile (1d8)"
+                ],
+                [
+                  "Scythe",
+                  "฿25,000",
+                  "1d8 slashing",
+                  "6 lb.",
+                  "Heavy, two-handed, reach"
+                ],
+                [
+                  "Sickle",
+                  "฿10,000",
+                  "1d4 slashing",
+                  "2 lb.",
+                  "Light"
+                ],
+                [
+                  "Spear",
+                  "฿10,000",
+                  "1d6 piercing",
+                  "3 lb.",
+                  "Thrown (range 20/60), versatile (1d8)"
+                ],
+                [
+                  "Tonfa",
+                  "฿20,000",
+                  "1d6 bludgeoning",
+                  "2 lb.",
+                  "Light, defensive"
+                ],
+                [
+                  "Simple Ranged Weapons"
+                ],
+                [
+                  "Dart",
+                  "฿500",
+                  "1d4 piercing",
+                  "1/4 lb.",
+                  "Finesse, thrown (range 20/60)"
+                ],
+                [
+                  "Musket",
+                  "฿250,000",
+                  "1d10 bludgeoning",
+                  "8 lb.",
+                  "Ammunition (range 80/320), loading, two-handed"
+                ],
+                [
+                  "Shortbow",
+                  "฿250,000",
+                  "1d6 piercing",
+                  "2 lb.",
+                  "Ammunition (range 80/320), two-handed"
+                ],
+                [
+                  "Sling",
+                  "฿1,000",
+                  "1d4 bludgeoning",
+                  "-",
+                  "Ammunition (range 30/120)"
+                ]
+              ],
+              "page": 333
+            }
+          ]
+        },
+        {
+          "name": "Martial Weapons",
+          "text": "",
+          "page": 334,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Weapon",
+                  "Cost",
+                  "Damage",
+                  "Weight",
+                  "Properties"
+                ],
+                [
+                  "Martial Melee Weapons"
+                ],
+                [
+                  "Battleaxe",
+                  "฿100,000",
+                  "1d8 slashing",
+                  "4 lb.",
+                  "Versatile (1d10)"
+                ],
+                [
+                  "Cane Sword",
+                  "฿400,000",
+                  "1d6 piercing",
+                  "2 lb.",
+                  "Light, finesse, concealed"
+                ],
+                [
+                  "Chakram",
+                  "฿30,000",
+                  "1d6 slashing",
+                  "1 lb.",
+                  "Finesse, light, thrown (30/60)"
+                ],
+                [
+                  "Cutlass",
+                  "฿300,000",
+                  "1d6 slashing",
+                  "3 lb.",
+                  "Light"
+                ],
+                [
+                  "Flail",
+                  "฿100,000",
+                  "1d8 bludgeoning",
+                  "2 lb.",
+                  "-"
+                ],
+                [
+                  "Glaive",
+                  "฿200,000",
+                  "1d10 slashing",
+                  "6 lb.",
+                  "Heavy, reach, two-handed"
+                ],
+                [
+                  "Greataxe",
+                  "฿300,000",
+                  "1d12 slashing",
+                  "7 lb.",
+                  "Heavy, two-handed"
+                ],
+                [
+                  "Greatsword",
+                  "฿500,000",
+                  "2d6 slashing",
+                  "6 lb.",
+                  "Heavy, two-handed"
+                ],
+                [
+                  "Halberd",
+                  "฿200,000",
+                  "1d10 slashing",
+                  "6 lb.",
+                  "Heavy, reach, two-handed"
+                ],
+                [
+                  "Jitte",
+                  "฿80,000",
+                  "1d6 bludgeoning",
+                  "3 lb.",
+                  "Light, defensive"
+                ],
+                [
+                  "Kanabo",
+                  "฿400,000",
+                  "1d12 bludgeoning",
+                  "20 lb.",
+                  "Heavy, two-handed, finisher"
+                ],
+                [
+                  "Katana",
+                  "฿200,000",
+                  "1d8 slashing",
+                  "3 lb.",
+                  "Versatile (1d10)"
+                ],
+                [
+                  "Katana, light",
+                  "฿300,000",
+                  "1d8 slashing",
+                  "2 lb.",
+                  "Finesse"
+                ],
+                [
+                  "Lance",
+                  "฿100,000",
+                  "1d12 piercing",
+                  "6 lb.",
+                  "Reach, special"
+                ],
+                [
+                  "Longsword",
+                  "฿150,000",
+                  "1d8 slashing",
+                  "3 lb.",
+                  "Versatile (1d10)"
+                ],
+                [
+                  "Maul",
+                  "฿100,000",
+                  "2d6 bludgeoning",
+                  "10 lb.",
+                  "Heavy, two-handed"
+                ],
+                [
+                  "Morningstar",
+                  "฿150,000",
+                  "1d8 piercing",
+                  "4 lb.",
+                  "-"
+                ],
+                [
+                  "Pike",
+                  "฿50,000",
+                  "1d10 piercing",
+                  "18 lb.",
+                  "Heavy, reach, two-handed"
+                ],
+                [
+                  "Rapier",
+                  "฿250,000",
+                  "1d8 piercing",
+                  "2 lb.",
+                  "Finesse"
+                ],
+                [
+                  "Saber",
+                  "฿300,000",
+                  "1d8 slashing",
+                  "3 lb.",
+                  "Finesse"
+                ],
+                [
+                  "Scimitar",
+                  "฿250,000",
+                  "1d6 slashing",
+                  "3 lb.",
+                  "Finesse, light"
+                ],
+                [
+                  "Shortsword",
+                  "฿100,000",
+                  "1d6 piercing",
+                  "2 lb.",
+                  "Finesse, light"
+                ],
+                [
+                  "Trident",
+                  "฿50,000",
+                  "1d6 piercing",
+                  "4 lb.",
+                  "Thrown (range 20/60), versatile (1d8)"
+                ],
+                [
+                  "War Fan",
+                  "฿60,000",
+                  "1d6 bludgeoning",
+                  "3 lb.",
+                  "Light, defensive, concealed"
+                ],
+                [
+                  "War Pick",
+                  "฿50,000",
+                  "1d8 piercing",
+                  "2 lb.",
+                  "-"
+                ],
+                [
+                  "Warhammer",
+                  "฿150,000",
+                  "1d8 bludgeoning",
+                  "2 lb.",
+                  "Versatile (1d10)"
+                ],
+                [
+                  "Whip",
+                  "฿20,000",
+                  "1d4 slashing",
+                  "3 lb.",
+                  "Finesse, reach"
+                ],
+                [
+                  "Martial Ranged Weapons"
+                ],
+                [
+                  "Bazooka",
+                  "฿5,000,000",
+                  "2d6 fire",
+                  "18 lb.",
+                  "Ammunition (range 60/300), heavy, loading, two-handed"
+                ],
+                [
+                  "Blowgun",
+                  "฿100,000",
+                  "1 piercing",
+                  "1 lb.",
+                  "Ammunition (range 25/100), loading"
+                ],
+                [
+                  "Boomerang",
+                  "฿5,000",
+                  "1d6 bludgeoning",
+                  "1/2 lb.",
+                  "Finesse, ricochet, thrown (30/60)"
+                ],
+                [
+                  "Greatbow",
+                  "฿1,000,000",
+                  "2d6 piercing",
+                  "3 lb.",
+                  "Ammunition (150/600), heavy, two-handed"
+                ],
+                [
+                  "Kunai",
+                  "฿20,000",
+                  "1d6 piercing",
+                  "1 lb.",
+                  "Finesse, light, thrown (20/60), concealed"
+                ],
+                [
+                  "Longbow",
+                  "฿500,000",
+                  "1d8 bludgeoning",
+                  "2 lb.",
+                  "Ammunition (range 150/600), heavy, two-handed"
+                ],
+                [
+                  "Machine Gun",
+                  "฿2,500,000",
+                  "3d4 piercing",
+                  "18 lb.",
+                  "Ammunition (range 80/320), heavy, loading, two-handed"
+                ],
+                [
+                  "Net",
+                  "฿10,000",
+                  "-",
+                  "3 lb.",
+                  "Special, thrown (range 5/15)"
+                ],
+                [
+                  "Pistol",
+                  "฿750,000",
+                  "1d10 piercing",
+                  "3 lb.",
+                  "Ammunition (range 30/120), light, loading"
+                ],
+                [
+                  "Pistol, .36 Caliber",
+                  "฿5,000,000",
+                  "2d6 piercing",
+                  "5 lb.",
+                  "Ammunition (range 30/120), loading"
+                ],
+                [
+                  "Rifle",
+                  "฿1,000,000",
+                  "1d12 piercing",
+                  "18 lb.",
+                  "Ammunition (range 80/320), heavy, loading, two-handed"
+                ],
+                [
+                  "Rifle, sniper",
+                  "฿5,000,000",
+                  "2d6 piercing",
+                  "18 lb.",
+                  "Ammunition (range 150/600), heavy, loading, two-handed"
+                ],
+                [
+                  "Shotgun",
+                  "฿3,000,000",
+                  "2d8 piercing",
+                  "15 lb.",
+                  "Ammunition (range 30/90), reload, two-handed, push"
+                ],
+                [
+                  "Sling, giant",
+                  "฿150,000",
+                  "1d8 bludgeoning",
+                  "5 lb.",
+                  "Ammunition (range 60/600), heavy, two-handed"
+                ]
+              ],
+              "page": 334
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule.armory_dials_dial_inventions",
+      "kind": "rule",
+      "name": "Dials & Dial Inventions",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 341
+      },
+      "text": "Dials are mysterious seashell devices native to the Sky Islands, each capable of storing and releasing specific forms of energy. They vary in size and strength with some serving everyday purposes like cooking, refrigeration, or generating wind, while others enhance weapons or unleash devastating power in combat.\nCommon dials are relatively easy to find along Sky Island shorelines, but rare dials which are larger shells used in warfare or advanced machinery, are far harder to acquire.",
+      "sections": [
+        {
+          "name": "Using a Dial",
+          "text": "Each dial stores energy, whether it be elemental, kinetic, or otherwise, then releases it when the button on its shell is pressed. Their effectiveness depends on type and intended use, ranging from utility tools to destructive weaponry.\nYou may attach dials to your weapons or body however you deem fit.",
+          "page": 341
+        },
+        {
+          "name": "Dial Proficiency",
+          "text": "If you are proficient with Dials, you add your proficiency bonus to any ability check or attack roll made while using one.",
+          "page": 341
+        },
+        {
+          "name": "Finding a Simple Dial",
+          "text": "While exploring Sky Island shores, a character may spend 24 hours searching and roll a DC 15 Intelligence (Investigation) check to locate a simple dial. Characters proficient with Dials roll with advantage. On success, roll a d20 on the Simple Dial Table to determine which shell was found.",
+          "page": 341
+        },
+        {
+          "name": "Simple Dial Table",
+          "text": "",
+          "page": 341,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d20",
+                  "Simple Dial"
+                ],
+                [
+                  "1-4",
+                  "Breath Dial"
+                ],
+                [
+                  "5-7",
+                  "Flavor Dial"
+                ],
+                [
+                  "8",
+                  "Freeze Dial"
+                ],
+                [
+                  "9",
+                  "Heat Dial"
+                ],
+                [
+                  "10-12",
+                  "Lamp Dial"
+                ],
+                [
+                  "13-15",
+                  "Milky Dial"
+                ],
+                [
+                  "16",
+                  "Thunder Dial"
+                ],
+                [
+                  "17",
+                  "Tone Dial"
+                ],
+                [
+                  "18",
+                  "Vision Dial"
+                ],
+                [
+                  "19",
+                  "Water Dial"
+                ],
+                [
+                  "20",
+                  "Rare Dial Table"
+                ]
+              ],
+              "page": 341
+            }
+          ]
+        },
+        {
+          "name": "Finding a Rare Dial",
+          "text": "When searching Sky Island shores for Dials, characters roll on the Simple Dial Table as normal. However, there is always a slim chance of uncovering a Rare Dial instead.\nBy default, a roll of 20 on the d20 used for the Simple Dial Table indicates the discovery of a Rare Dial. If a Rare Dial is found, roll on the Rare Dial Table or have the DM assign one directly.\nIf you roll a Large Simple Dial, reroll on the Simple Dial Table and take the large version of the dial.",
+          "page": 341
+        },
+        {
+          "name": "Rare Dial Table",
+          "text": "",
+          "page": 341,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d20",
+                  "Rare Dial"
+                ],
+                [
+                  "1",
+                  "Axe Dial +1"
+                ],
+                [
+                  "2",
+                  "Axe Dial +2"
+                ],
+                [
+                  "3",
+                  "Axe Dial +3"
+                ],
+                [
+                  "4",
+                  "Ball Dial"
+                ],
+                [
+                  "5",
+                  "Eisen Dial"
+                ],
+                [
+                  "6-8",
+                  "Flash Dial"
+                ],
+                [
+                  "9-10",
+                  "Flame Dial"
+                ],
+                [
+                  "11",
+                  "Impact Dial"
+                ],
+                [
+                  "12",
+                  "Jet Dial"
+                ],
+                [
+                  "13-18",
+                  "Large Simple Dial"
+                ],
+                [
+                  "19",
+                  "Reject Dial"
+                ],
+                [
+                  "20",
+                  "Storm Dial"
+                ]
+              ],
+              "page": 341
+            }
+          ]
+        },
+        {
+          "name": "Simple Dials",
+          "text": "Simple Dials store modest amounts of energy and produce practical or low-risk effects. They are common on Sky Islands and rarely overwhelming in power.",
+          "page": 341
+        },
+        {
+          "name": "Breath Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Breath Dial stores air, gases, or wind currents, releasing them later as a focused gust. This dial holds 5 charges, regaining 1d4 + 1 charges each dawn.\nAbsorb. As a bonus action, absorb up to a 5-foot cube of gas or wind within 5 feet of you. The last gas absorbed determines what is expelled.\nExpel. As an action, by spending 1 charge release a stored cube of gas into a space within 5 feet. If the gas is harmful, that effect applies as normal. Creatures in the space must succeed on a DC 10 Strength (Athletics) check or be pushed 5 feet away. Objects under 10 pounds are automatically pushed out.\nLarge Dial Variant. This dial holds 10 charges, regaining 1d6 + 4 charges each dawn.\nA Large Breath Dial can also power a standard Waver, reducing its construction cost to ฿1,000,000.",
+          "page": 341
+        },
+        {
+          "name": "Flavor Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Flavor Dial absorbs gases and scents, from foul odors to explosive vapors, and releases them later. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nAbsorb. As a bonus action, absorb up to a 5-foot cube of gas or scent. The last gas absorbed determines what is expelled.\nExpel. As an action, spend 1 charge to release a stored cube of gas into a space within 5 feet. The gas behaves as it normally would.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn.",
+          "page": 341
+        },
+        {
+          "name": "Freeze Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Freeze Dial absorbs cold energy from frigid sources such as ice, snow, or freezing air, then releases it to chill spaces or unleash icy bursts. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nAbsorb. As a bonus action, absorb cold energy from a 5-foot cube of material, spell, or gas at or below 0°C (32°F) within 5 feet.\nExpel. As an action, spend 1 charge to release freezing energy into a 5-foot cube within 5 feet, lowering its temperature to freezing for up to 24 hours. This can preserve food, create iceboxes, or chill areas.\nCold Burst. As part of a weapon attack, spend 1 charge to release stored cold. On a hit, the target takes 1d6 cold damage.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn.",
+          "page": 342
+        },
+        {
+          "name": "Heat Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Heat Dial absorbs energy from extremely hot sources such as fire, magma, or burning gases, then releases it as searing heat. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nAbsorb. As a bonus action, absorb heat from a 5-foot cube of material or gas at or above 100°C (212°F) within 5 feet.\nExpel. As an action, spend 1 charge to release heat into a 5-foot cube within 5 feet, raising it to burning or boiling temperatures for up to 24 hours. This can create ovens, heaters, or dangerous hazards.\nHeat Burst. As part of a weapon attack, spend 1 charge to release stored heat. On a hit, the target takes 1d6 fire damage.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn.",
+          "page": 342
+        },
+        {
+          "name": "Lamp Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000 A Lamp Dial absorbs light from natural or artificial sources and re-emits it as steady illumination. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nExpel. As an action, spend 1 charge to shed bright light in a 20-foot radius and dim light for an additional 20 feet for 1 hour.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn.",
+          "page": 342
+        },
+        {
+          "name": "Milky Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Milky Dial absorbs and releases chunks of cloud, creating floating pathways or barriers. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nExpel. As an action, spend 1 charge to release a solid 5-foot cube of cloud into a space within 5 feet. Each cube has AC 6 and 1 hit point. At the start of each of your turns, the cube remains in place or drifts up to 5 feet in a direction of your choice.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn.",
+          "page": 342
+        },
+        {
+          "name": "Thunder Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Thunder Dial absorbs electrical energy from natural or artificial sources, then channels it into devices or unleashes it as a surge of lightning. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nAbsorb. As a bonus action, absorb electrical energy from a 5-foot cube within 5 feet, such as a lightning strike, live wire, or generator.\nExpel. As an action, spend 1 charge to channel stored electricity into a nearby device, powering it for up to 24 hours. This can operate machines such as lamps, fans, or other simple mechanisms.\nLightning Burst. As part of a weapon attack, spend 1 charge to release stored energy. On a hit, the target takes 1d6 lightning damage.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn.",
+          "page": 342
+        },
+        {
+          "name": "Tone Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Tone Dial records and replays sounds or spoken messages. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nRecord. As a bonus action, by spending 1 charge, capture up to 60 seconds of audio. The last recording determines what is played back.\nPlayback. As an action, press the button to replay stored sound, audible up to 120 feet. Messages may be replayed, looped (up to 1 hour per day), or erased in 10- second segments.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn. Recordings may be looped indefinitely.",
+          "page": 342
+        },
+        {
+          "name": "Vision Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Vision Dial captures light to create still images, functioning like a camera. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nCapture. As a bonus action, spend 1 charge to take a single photo. You can only store 1 picture per vision dial.\nPrint. As an action, press the button to print the stored photo onto paper or parchment, deleting the image from the dial.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn. By spending 2 charges, record a video up to 10 seconds long. Videos may be projected directly from the dial, and individual frames can be printed without deleting the stored file.",
+          "page": 343
+        },
+        {
+          "name": "Water Dial",
+          "text": "Wondrous Item (dial), Uncommon\nCost: ฿500,000\nA Water Dial absorbs liquids and releases them later in controlled amounts. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nAbsorb. As a bonus action, absorb a 5-foot cube of water or liquid within 5 feet. The last absorbed liquid determines what is expelled.\nExpel. As an action, spend 1 charge to release liquid into a space within 5 feet. The liquid pours naturally, filling containers, spreading across surfaces, or extinguishing flames.\nLarge Dial Variant. Holds 10 charges, regaining 1d6 + 4 charges each dawn.",
+          "page": 343
+        },
+        {
+          "name": "Rare Dials",
+          "text": "Rare Dials, by contrast, are designed for combat and capable of unleashing devastating bursts of energy. Their immense force can endanger both the wielder and their target when released.",
+          "page": 343
+        },
+        {
+          "name": "Axe Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000 Axe Dials are among the most powerful combat dials, designed to amplify the force of physical attacks. Attaching an Axe Dial requires a short or long rest. A weapon or body part can only benefit from one dial at a time, and bonuses from multiple dials do not stack. Axe Dials also do not stack with innate weapon bonuses and may only raise a weapon’s total bonus to a maximum of +3. They do, however, stack with bonuses from character features or feats.\nAxe Dial +1. Grants a +1 bonus to attack and damage rolls.\nAxe Dial +2. Grants a +2 bonus to attack and damage rolls.\nAxe Dial +3. Grants a +3 bonus to attack and damage rolls.",
+          "page": 343
+        },
+        {
+          "name": "Eisen Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000 An Eisen Dial absorbs and releases chunks of dense iron cloud, forming floating barriers or weapons. Holds 10 charges, regaining 1d6 + 4 charges each dawn.\nExpel Iron Clouds. As an action, spend 1 charge to release a 5-foot cube of iron cloud into a space within 5 feet. Each cube has AC 20 and 30 hit points, drifting up to 5 feet at the start of your turn in a direction you choose. When destroyed, it shatters into metallic dust.\nWeapon Creation. As an action, you may release a 5- foot cube of stored cloud and shape it into a simple melee weapon of your choice. If you are proficient with Dials, you are also proficient with this weapon. The weapon lasts for 1 hour or until dispelled as a bonus action, after which it crumbles into dust.",
+          "page": 343
+        },
+        {
+          "name": "Flame Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000 A Flame Dial absorbs fire or burning material and unleashes it as scorching blasts. Holds 10 charges, regaining 1d6 + 4 charges each dawn.\nAbsorb. As a bonus action, absorb fire from a 5-foot cube of flame, magma, or burning material within 5 feet.\nExpel. As an action, spend 1 charge to release a blazing ray of fire at a target within 60 feet. Make a ranged attack using any ability score of your choice for the attack roll. On a hit, the target takes 2d6 fire damage.",
+          "page": 343
+        },
+        {
+          "name": "Flash Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000 A Flash Dial absorbs light from natural or artificial sources and unleashes it as a blinding burst. Holds 10 charges, regaining 1d6 + 4 charges each dawn.\nFlash. As an action, spend 1 charge to release a burst of light. All creatures within 30 feet of the dial (except the user) must succeed on a DC 15 Constitution saving throw or be blinded until the end of their next turn.",
+          "page": 343
+        },
+        {
+          "name": "Ball Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000\nA Ball Dial absorbs and releases chunks of cloud, creating static balls of cloud. Holds 10 charges, regaining 1d6 + 4 charges each dawn.\nExpel Cloud Balls. As an action, spend 1 charge to release a 5-foot ball of cloud into a space within 5 feet. At the start of each round, the ball remains in place or drifts up to 5 feet in any direction of your choice at the start of your turn. Each cube has AC 6 and 1 hit point.",
+          "page": 344
+        },
+        {
+          "name": "Combat Ball Surge Table",
+          "text": "Balls can attach to one another without breaking, forming floating chains or clusters.\nRanged Attack. A ball can be pushed up to 30 feet in any direction as a ranged weapon attack. It bursts on impact with the first creature or object it touches. You may use any ability score when making a weapon attack with this dial.\nWhen a cloud ball is destroyed or popped, roll on one of the Ball Surge tables below. The resulting effect targets the nearest creature to the ball or the ball itself, if no creature is within 5 feet of the ball.",
+          "page": 344,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d20 Effect 1 Static shocks erupt, dealing 1d6 lightning damage to all creatures within 5 ft. 2 A deafening bang bursts. Creatures within 10 ft. must succeed on a DC 12 Con save or be deafened for 1 minute. 3 Colored smoke fills a 10-ft. radius, heavily obscuring the area for 1 minute. 4 Sticky foam coats the nearest creature. They are restrained until the end of their next turn unless they succeed on a DC 12 Strength save. 5 Glittering sparks blind nearby creatures. All creatures within 10 ft. must succeed on a DC 12 Dex save or be blinded until the start of their next turn. 6 Freezing mist bursts forth. The nearest creature takes 1d6 cold damage and has their speed reduced by 10 ft. until the end of their next turn. 7 A concussive boom erupts. The nearest creature must succeed on a DC 12 Strength save or be pushed 15 ft. away. 8 The last phrase spoken near the ball echoes for 1 minute. 9 A dazzling flash bursts. The nearest creature has disadvantage on their next attack roll."
+                ],
+                [
+                  "10 A sudden downpour erupts, drenching the nearest creature and extinguishing flames within 10 ft."
+                ],
+                [
+                  "11 A foul stench bursts. The nearest creature must succeed on a DC 12 Con save or be poisoned until the end of their next turn."
+                ],
+                [
+                  "12 A strong gust knocks unsecured objects within 10 ft. The nearest creature must succeed on a DC 12 Dex save or fall prone."
+                ],
+                [
+                  "13 The ball pops into harmless confetti and streamers, coating the nearest creature."
+                ],
+                [
+                  "14 Wild mantra energy jolts the nearest creature, dealing 1d4 force damage and causing them to glow faintly until the start of their next turn."
+                ],
+                [
+                  "15 Sticky bubbles erupt. The nearest creature must succeed on a DC 12 Strength save or have their weapon or held item stuck until freed."
+                ],
+                [
+                  "16 A loud ringing echoes. The nearest creature has disadvantage on Perception checks for 1 minute."
+                ],
+                [
+                  "17 A flash of fire bursts outward. The nearest creature takes 1d6 fire damage; flammable objects within 5 ft. may ignite."
+                ],
+                [
+                  "18 Slippery liquid spills out, creating a 5-ft. radius of difficult terrain for 1 minute."
+                ],
+                [
+                  "19 A rainbow shimmer fills the air. All creatures within 10 ft. must succeed on a DC 12 Wis save or be charmed by the ball until the end of their next turn."
+                ],
+                [
+                  "20 A thunderous crack erupts. The nearest creature takes 1d8 thunder damage, and unsecured objects within 10 ft. are pushed 5 ft. away."
+                ]
+              ],
+              "page": 344
+            }
+          ]
+        },
+        {
+          "name": "Support Ball Surge Table",
+          "text": "",
+          "page": 344,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d12 Effect 1 A soothing mist heals the nearest ally for 1d4 hit points. 2 A sudden pulse of energy grants the nearest ally +2 AC until the start of their next turn. 3 A loud motivational cheer echoes. The nearest ally gains advantage on their next attack roll. 4 A bright shimmer grants the nearest ally advantage on their next saving throw. 5 A jolt of static shocks the nearest ally, dealing 1d4 lightning damage but granting them +10 ft. movement speed until the end of their next turn. 6 A sudden burst of bubbles distracts. The nearest ally has disadvantage on their next attack roll. 7 A sweet fragrance calms the nearest ally, granting 1d4 temporary hit points, but they are also poisoned until the end of their next turn. 8 A sudden ringing noise disrupts focus. The nearest ally must succeed on a DC 12 Con save or lose their reaction until the start of their next turn. 9 A flash of clarity inspires the nearest ally, allowing them to reroll one ability check made within the next minute."
+                ],
+                [
+                  "10 A rainbow burst fills the air. All allies within 10 ft. gain advantage on their next attack roll, but enemies in the same radius do as well."
+                ]
+              ],
+              "page": 344
+            }
+          ]
+        },
+        {
+          "name": "Impact Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000\nAn Impact Dial absorbs the force of incoming attacks and unleashes it later as a shock wave. Holds 5 charges and can store up to 30 force damage at a time. Regains 1d4 + 1 charges each dawn. Any excess damage beyond this cap cannot be absorbed and is instead taken normally.\nAbsorb Blow. As a reaction when targeted by an attack, spell, or damaging effect, you may expend charges to reduce the damage. For each charge spent, roll 1d10 and subtract the total from the damage taken, storing the reduced amount in the dial. You cannot store more than the total damage of the effect. If the damage is reduced to 0, the attack is completely nullified.\nExpel Blow. Make a melee attack with the dial, expending stored force. On a hit, the target takes additional force damage equal to the amount released. Regardless of the result, the user takes half of the expended force damage (rounded down) as recoil.",
+          "page": 345
+        },
+        {
+          "name": "Jet Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000 A Jet Dial absorbs powerful gusts of wind and releases them in concentrated bursts, propelling the user or machinery at high speeds. Holds 10 charges, regaining 1d6 + 4 charges each dawn.\nAbsorb. As a bonus action, absorb a 5-foot cube of strong wind or gas within 5 feet. The last absorbed source determines the expelled force.\nExpel. As a bonus action, spend 1 charge to propel yourself 30 feet in any direction.\nWaver Integration. Attaching a Jet Dial to a Waver doubles its travel speed.",
+          "page": 345
+        },
+        {
+          "name": "Reject Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000\nThe Reject Dial is one of the rarest and most dangerous dials in existence. Absorbing the force of incoming attacks and unleashes it later as a devastating shock wave. However, its immense recoil makes it incredibly risky to use, often being as lethal to the wielder as to their target. Holds 10 charges and can store up to 60 force damage at a time. Regains 1d6 + 4 charges each dawn.\nAbsorb Blow. As a reaction when targeted by an attack, spell, or damaging effect, you may expend charges to reduce the damage. For each charge spent, roll 1d20 and subtract the total from the damage taken, storing the reduced amount in the dial. You cannot store more than the total damage of the effect. If the damage is reduced to 0, the attack is completely nullified.\nExpel Shock Wave. Release stored force in a melee attack. On a hit, the target takes additional force damage equal to the expended amount, and the user suffers recoil damage equal to half the expended total (rounded down).",
+          "page": 345
+        },
+        {
+          "name": "Storm Dial",
+          "text": "Wondrous Item (dial), Rare\nCost: ฿5,000,000 A Storm Dial absorbs and releases condensed storm clouds charged with violent winds and lightning. Holds 5 charges, regaining 1d4 + 1 charges each dawn.\nExpel Lightning Cloud. As an action, spend 1 charge to release a 5-foot cube of storm cloud into a space within 5 feet. Each cube lasts 1 minute or until it has made attacks for 3 rounds.\nAt the start of each round, each cloud automatically targets the nearest creature within 30 feet, dealing 1d6 lightning damage.\nAny creature that ends its turn inside a storm cloud must succeed on a DC 15 Strength saving throw or take 2d6 bludgeoning damage from crushing winds.",
+          "page": 345
+        },
+        {
+          "name": "Dial Inventions",
+          "text": "Dial Weapons are conventional arms enhanced with the shell technology of Skypiea and other Sky Islands. These unique devices store elemental forces, energy, or sound, releasing them in powerful bursts when activated.",
+          "page": 345
+        },
+        {
+          "name": "Burn Blade",
+          "text": "Weapon (scimitar), Rare (requires attunement by a creature proficient with dials)\nCost: ฿25,000,000\nThis simple wooden hilt contains a rare Breath Dial that projects a high-pressure jet of flame, forming a razor edge of fire. When active, the Burn Blade cuts through wood and scorches steel. This weapon is a magical weapon.\nFlame Edge. As a bonus action, you can ignite or extinguish the Burn Blade. While active, it sheds bright light in a 20-foot radius and dim light for an additional 20 feet, and attacks made with it deal an additional 1d6 fire damage. The blade can remain active for up to 10 minutes per long rest.\nWhen you hit a creature or object made of wood, plant matter, or other flammable material, it must succeed on a DC 15 Constitution saving throw or catch fire. A burning creature takes 1d6 fire damage at the start of each of its turns until extinguished as an action.",
+          "page": 345
+        },
+        {
+          "name": "Burn Bazooka",
+          "text": "Weapon (bazooka), Very Rare (requires attunement by a creature proficient with dials)\nCost: ฿50,000,000\nIn additional to being a normal bazooka, this massive Shandian cannon channels stored thermal energy into devastating blasts of fire. The bazooka holds up to 3 charges in an internal Heat Dial Reservoir. It requires no ammunition, but expended charges replenish at each dawn.\nBurn Bazooka Shot. As an action, you can expend 1 charge to fire a line of searing fire 120 feet long and 5 feet wide. Each creature in the line must make a DC 17 Dexterity saving throw, taking 5d10 fire damage on a failed save or half as much on a success.\nOverloaded Inferno. As an action, you can expend all 3 charges to release a wave of fire in a 60-foot cone. Each creature in the area must make a DC 18 Dexterity saving throw, taking 10d10 fire damage on a failed save or half as much on a success. On a failed save, the creature also ignites, taking 1d10 fire damage at the end of each of its turns until extinguished with an action.",
+          "page": 346
+        },
+        {
+          "name": "Clima-Tact",
+          "text": "Weapon (quarterstaff), Uncommon (requires attunement)\nCost: ฿5,000,000 This segmented staff, designed as a scientific marvel rather than a blade, stores “weather bubbles” that allow its wielder to bend the elements for tactical control.\nWhile wielding the Clima-Tact, you gain a +1 bonus to spell attack rolls and your spell save DC.\nWeather Manipulation. As a bonus action, you can release a weather bubble, creating one of the following effects in a 10-foot cube within 30 feet. You can create a number of bubbles equal to your proficiency bonus per long rest.\nHeat Bubble. Each creature in the area takes 1d4 fire damage. Creatures in the area cannot benefit from concealment caused by fog, smoke, or light cover.\nCool Bubble. Creatures that enter or start their turn there have their speed reduced by 10 feet until the end of their turn.\nThunder Bubble. Each creature in the area must make a Dexterity saving throw against your Spell save DC, taking 1d6 lightning damage on a failed save or half as much on a success.\nCyclone Tempo (1/Long Rest). As an action, you combine Heat and Cool bubbles into a spinning blast of wind. Creatures in a 15-foot line must make a Strength saving throw against your Spell save DC. On a failed save, they take 2d6 bludgeoning damage and are pushed 10 feet away from you. On a success, they take half damage and are not moved.",
+          "page": 346
+        },
+        {
+          "name": "Clima-Tact, Perfect",
+          "text": "Weapon (quarterstaff), Very Rare (requires attunement)\nCost: ฿50,000,000\nThis segmented staff is fitted with dial-infused spheres that amplify its weather controlling effects.\nWhile wielding the Clima-Tact, you gain a +3 bonus to spell attack rolls and your spell save DC.\nWeather Manipulation. As a bonus action, you can release a weather bubble, creating one of the following effects in a 10-foot cube within 60 feet. You can create a number of bubbles equal to your proficiency bonus per long rest.\nHeat Sphere. Each creature in the area takes 1d8 fire damage. Creatures in the area cannot benefit from concealment caused by fog, smoke, or light cover.\nCool Sphere. Creatures that enter or start their turn there have their speed reduced by 20 feet until the end of their turn.\nThunder Sphere. Each creature in the area must make a Dexterity saving throw against your Spell save DC, taking 2d8 lightning damage on a failed save or half as much on a success.\nThunderbolt Tempo (1/Long Rest). As an action, unleash a 30-foot line of lightning. Each creature in the line must make a Dexterity saving throw against your Spell save DC, taking 3d8 lightning damage on a failed save and are pushed 10 feet away from you, or half as much and no push on a success.\nMirage Fata Morgana (1/Long Rest). Cast the mirror image spell. You create 5 illusory duplicates of yourself instead of 3.",
+          "page": 346
+        },
+        {
+          "name": "Eisen Whip",
+          "text": "Weapon (whip), Rare (requires attunement by a creature proficient with dials)\nCost: ฿25,000,000\nThis segmented whip projects from an Iron Dial in its hilt, forming a flexible blade of metallic vapor. The weapon flows like smoke but strikes with the strength of steel.\nWhen you attack with the Eisen Whip, you may choose to have it ignore half cover.\nWrithing Bind. As an action, you can command the Iron Cloud to coil around a Medium or smaller creature within 10 feet. The target must succeed on a DC 14 Dexterity saving throw or be grappled until the start of your next turn.\nPiercing Lance (1/Long Rest). When you successfully hit or grapple a creature with the Eisen Whip, you can cause the Iron Cloud to spear forward in a 5-foot line. The target and any creature directly behind it must make a DC 15 Constitution saving throw, taking 4d8 piercing damage on a failed save, or half as much on a success.",
+          "page": 346
+        },
+        {
+          "name": "Flash Gun",
+          "text": "Weapon (pistol), Rare (requires attunement by a creature proficient with dials)\nCost: ฿25,000,000\nThis sleek obsidian-black, dual-barreled derringer is a relic of Skypiean craftsmanship. Each shot is accompanied by a sudden flare of light, designed to confuse and disorient enemies.\nWhen you fire the Flash Gun, it first emits a dazzling burst from its embedded Flash Dial before firing a bullet. The target and all creatures within 5 feet of it must succeed on a DC 12 Constitution saving throw or be blinded until the end of their next turn. You can use this effect once per turn.\nYou have advantage on attack rolls with the Flash Gun against creatures blinded by its flash.",
+          "page": 347
+        },
+        {
+          "name": "Heat Lance",
+          "text": "Weapon (lance), Uncommon (requires attunement by a creature proficient with dials)\nCost: ฿5,000,000\nThis long, metallic lance contains a rare Heat Dial embedded within its shaft. When activated, the tip glows red-hot, capable of both piercing and burning flesh in a single strike.\nAs a bonus action, you can activate the Heat Dial, causing the tip of the lance to glow red-hot. While active, the lance deals an additional 1d6 fire damage on a hit. On a critical hit, the target ignites, taking 1d6 fire damage at the start of its turn until it or another creature uses an action to extinguish the flames.",
+          "page": 347
+        },
+        {
+          "name": "Jet Board",
+          "text": "Wondrous Item (surfboard), Uncommon (requires attunement by a creature proficient with dials)\nCost: ฿5,000,000\nCrafted from Sky Island driftwood and fitted with twin Jet Dials, this lightweight skyboard allows its rider to hover and propel themselves with bursts of compressed air.\nWhile standing on the Jet Board, you can fly up to your walking speed, to a maximum altitude of 10 feet. If you fall off or are knocked prone, the board loses thrust and drops to the ground.\nThe Jet Board can support a Medium or smaller rider and up to 250 lbs. of total weight. In heavy rain or magical wind effects (such as gust of wind or control winds), you must succeed on a DC 13 Dexterity (Acrobatics or land vehicles) check to maintain control. The board loses power if submerged in water.\nJet Burst. As a bonus action, activate the Jet Dials to surge forward. Until the end of your turn, your flying speed is doubled, and you do not provoke opportunity attacks when moving. You can use this feature a number of times equal to your proficiency bonus per long rest.",
+          "page": 347
+        },
+        {
+          "name": "Jet Skates",
+          "text": "Wondrous Item (footwear), Uncommon (requires attunement by a creature proficient with dials)\nCost: ฿5,000,000\nThese crude but powerful skates are fitted with Jet Dials, blasting compressed air to hurl their wearer forward at reckless speeds. Your walking speed increases by 15 feet while wearing the skates. You have advantage on Acrobatics checks to maintain balance or land safely after falling up to 30 feet.\nJet Burst. As a bonus action, you can dash in a straight line up to 60 feet in any direction, gaining hover if you travel into the air. Each creature in your path must succeed on a DC 15 Dexterity saving throw or take 3d6 bludgeoning damage and be knocked prone. You can use this feature a number of times equal to your proficiency bonus per long rest. You do not provoke opportunity attacks when dashing in this way.",
+          "page": 347
+        },
+        {
+          "name": "Ten-Fold Axe",
+          "text": "Wondrous Item (battle cloth), Very Rare (requires attunement by a creature proficient with dials)\nCost: ฿50,000,000\nThis strip of black cloth conceals ten Axe Dials sewn along one side. When unfurled, it becomes a wall of slicing force, capable of cleaving through steel and stone alike.\nIf you activate the Ten-Fold Axe while you are grappled, restrained, or confused, make a DC 15 Dexterity saving throw. On a failed save, you take the same slashing damage your target takes.\nSlicing Surge. As an action, you may activate the dials to target a creature within 5 feet. The target must make a DC 15 Dexterity saving throw or take 3d10 slashing damage. If the target is Large or smaller, it must also succeed on a DC 15 Strength saving throw or be knocked prone.\nWhirlbind Execution (1/Long Rest). As an action, you may unfurl the cloth in a 10-foot cone and activate all ten dials at once. Each creature in the area must make a DC 17 Dexterity saving throw, taking 8d10 slashing damage and being pushed 10 feet back on a failure, or half damage with no push on a success.",
+          "page": 347
+        }
+      ]
+    },
+    {
+      "id": "rule.armory_stars_and_special_ammo",
+      "kind": "rule",
+      "name": "Stars and Special Ammo",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 349
+      },
+      "text": "Special ammunition are designed to deliver additional effects beyond ordinary damage. Once fired, the projectile is destroyed, regardless of whether it hits or misses.",
+      "sections": [
+        {
+          "name": "Crafting Ammunition",
+          "text": "Creating special ammunition requires smith’s or mason’s tools, proficiency in Arcana or Sleight of Hand, and proficiency with a ranged weapon. Each batch produces a single projectile (arrows, bullets, bolts, or sling stones).\nHeavy Ammunition. Machine gun, sniper, or bazooka ammo costs double the money.\nLight Ammunition. Sling bullets cost half the listed time and money.",
+          "page": 349
+        },
+        {
+          "name": "Special Ammunition Cost",
+          "text": "Legendary ammunition can only be bought at the Underworld Market in extremely low numbers or found at Marine Headquarters.",
+          "page": 349,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Ammunition Rarity",
+                  "Time",
+                  "Cost"
+                ],
+                [
+                  "Uncommon",
+                  "10 minutes",
+                  "฿100,000"
+                ],
+                [
+                  "Rare",
+                  "1 hour",
+                  "฿250,000"
+                ],
+                [
+                  "Very Rare",
+                  "1 day",
+                  "฿500,000"
+                ],
+                [
+                  "Legendary",
+                  "-",
+                  "-"
+                ]
+              ],
+              "page": 349
+            }
+          ]
+        },
+        {
+          "name": "Ammunition Types",
+          "text": "These rare projectiles carry unique properties. Each piece of ammunition is consumed on use.",
+          "page": 349
+        },
+        {
+          "name": "Element Shot",
+          "text": "Weapon (any ammunition), Uncommon\nWhen you finish crafting this ammunition, choose one damage type other than psychic or force. On a hit, the attack deals an additional 1d6 damage of the chosen type.",
+          "page": 349
+        },
+        {
+          "name": "Slow Shot",
+          "text": "Weapon (any ammunition), Uncommon\nOn a hit, the target must succeed on a DC 13 Constitution saving throw or have its movement speed reduced by 10 feet until the end of its next turn.",
+          "page": 349
+        },
+        {
+          "name": "Metallic Shot",
+          "text": "Weapon (any ammunition), Uncommon\nAttacks made with this ammunition gain a +1 bonus to attack and damage rolls. On a hit, a Medium or smaller creature must succeed on a DC 12 Strength saving throw or be knocked prone.",
+          "page": 349
+        },
+        {
+          "name": "Terror Shot",
+          "text": "Weapon (any ammunition), Uncommon\nOn a hit, the target must succeed on a DC 13 Wisdom saving throw or is frightened of you until the end of its next turn.",
+          "page": 349
+        },
+        {
+          "name": "Tabasco Shot",
+          "text": "Weapon (any ammunition), Uncommon\nOn a hit, the target has disadvantage on attack rolls until the end of its next turn.",
+          "page": 349
+        },
+        {
+          "name": "Slip Shot",
+          "text": "Weapon (any ammunition), Rare\nOn impact, oil splashes onto all creatures within 5 feet of the target. Each creature must succeed on a DC 12 Dexterity saving throw or fall prone. Until the oil dries (1 minute), any creature coated in oil must repeat this save at the start of its turn if it attempts to move.",
+          "page": 349
+        },
+        {
+          "name": "Smoke Shot",
+          "text": "Weapon (any ammunition), Rare\nOn impact, this shot creates a 20-foot-radius sphere of smoke centered on the point of impact. The area is heavily obscured for 1 minute, or until dispersed by moderate wind (10+ mph).",
+          "page": 349
+        },
+        {
+          "name": "Cactus Shot",
+          "text": "Weapon (any ammunition), Rare\nOn impact, the target and all creatures within 5 feet of the target take 2d4 piercing damage.",
+          "page": 349
+        },
+        {
+          "name": "Caltrop Shot",
+          "text": "Weapon (any ammunition), Rare\nOn impact, sharp caltrops scatter across a 20-foot radius centered on the target space. The area becomes difficult terrain for 1 minute. When a creature moves into or through the area, it takes 2d4 piercing damage for every 5 feet it travels.",
+          "page": 349
+        },
+        {
+          "name": "Thunder Shot",
+          "text": "Weapon (any ammunition), Rare\nOn impact, all creatures within 10 feet of the target must succeed on a DC 15 Constitution saving throw or be pushed 10 feet away from the point of impact.",
+          "page": 349
+        },
+        {
+          "name": "Dumb Shot",
+          "text": "Weapon (any ammunition), Very Rare\nOn a hit, the target immediately loses concentration on any spell it is maintaining.",
+          "page": 349
+        },
+        {
+          "name": "Poisoner Shot",
+          "text": "Weapon (any ammunition), Very Rare\nOn a hit, the target is poisoned for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on a success.",
+          "page": 349
+        },
+        {
+          "name": "Seastone Bullet",
+          "text": "Weapon (any ammunition), Legendary\nOn a hit, the target takes an additional 3d10 force damage. If the target is a Devil Fruit user, the target must succeed on a DC 18 Constitution saving throw or lose access to all Devil Fruit powers until the end of its next turn, and suffer disadvantage on Strength and Dexterity checks during that time.",
+          "page": 349
+        }
+      ]
+    },
+    {
+      "id": "rule.armory_meitos",
+      "kind": "rule",
+      "name": "Meitos",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 350
+      },
+      "text": "Meito are famed weapons of extraordinary quality, passed down through generations and forged by master smiths. Each is a piece of legend, often wielded by great warriors, pirates, or marines.\nIn this setting, the total number of named Meito is limited. Each blade carries a history, a reputation, and often a curse or legacy tied to its past owners. However, not every Meito is a named blade, many exist as Grade Meitos, which are still well made in their own regard but have not gotten to chance to make history.",
+      "sections": [
+        {
+          "name": "Meito Saving Throws",
+          "text": "Some Meitos use the will of their user to inflict effects.\nMeito save DC = 10 + half of your Willpower score",
+          "page": 350
+        },
+        {
+          "name": "Upgrading a Weapon into a Grade Meito",
+          "text": "Grade Meitos are not defined by their names but by their quality. Any blade, whether a humble cutlass or a finely crafted katana, may become a Grade Meito if it is refined or enhanced.\nAny weapon has the potential to become a Grade Meito, but the process requires more than just coin, it also demands craftsmanship. Here are the steps to upgrading your weapon into a Grade Meito: 1. Master Smith. The weapon must be reforged or\nenhanced by a smith renowned enough to handle the work.\n2. Payment. The wielder must invest the required cost\nin rare materials, labor, and enchantments. See the table below for upgrade cost and how many workweeks it will take the smith to enhance. If you have already enhanced a weapon you may minus the cost of your previous enhancement by the upgrades cost.\n3. Meito Ability The wielder of this weapon and the\nDungeon Master should discuss and forge a unique ability for the meito to possess based around the enhancement level of the blade. All enhanced weapon are considered magical.\n4. Naming the Blade. Once reforged, the weapon must\nbe given a name by its wielder. Without a name, the weapon remains a fine tool but not a true Meito. A name marks the weapon’s entry into legend and ensures its recognition as a Grade Meito.",
+          "page": 350
+        },
+        {
+          "name": "Grade Meito Upgrades",
+          "text": "",
+          "page": 350,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Enhancement Level",
+                  "Cost",
+                  "Time"
+                ],
+                [
+                  "+1",
+                  "฿5,000,000",
+                  "1 workweek"
+                ],
+                [
+                  "+2",
+                  "฿25,000,000",
+                  "2 workweeks"
+                ],
+                [
+                  "+3",
+                  "฿500,000,000",
+                  "4 workweeks"
+                ],
+                [
+                  "+4",
+                  "฿1,000,000,000",
+                  "6 workweeks"
+                ]
+              ],
+              "page": 350
+            }
+          ]
+        },
+        {
+          "name": "Unkown & Known Grade Meitos",
+          "text": "There are an unknown number of grade meitos, this section are for the meitos that have been discovered and shown in the setting.",
+          "page": 350
+        },
+        {
+          "name": "Bamboo",
+          "text": "Weapon (longsword), Uncommon (requires attunement)\nCost: ฿500,000\nYou have a +1 bonus to attack and damage rolls made with this magic weapon.\nThis perfectly straight blade boasts a green-and- yellow hilt, a straight-edged tsuba, and a trapezoidal pommel with a cross engraving.\nAttacks with Bamboo deal double damage to objects, ships, and large structures. In addition, when you hit a creature that is at least one size larger than you or an object or structure, the attack deals an extra 3d4 slashing damage.",
+          "page": 350
+        },
+        {
+          "name": "Cat Claws",
+          "text": "Weapon (brass knuckles), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nThese black furred gloves bear katana-like blades at each fingertip. Your unarmed attack damage is slashing when wearing these gloves\nShakushi. As an action, you unleash a storm of claw strikes in a 10 feet radius around you. Each creature must make a Dexterity saving throw against your Meito save DC. On a failure a creature takes 2d6 slashing damage. On a success, they take half as much damage. You can use this ability an amount of times equal to your proficiency bonus per long rest.",
+          "page": 350
+        },
+        {
+          "name": "Daisenso",
+          "text": "Weapon (spear), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nThis massive spear extends to strike distant foes and detonates with explosives.\nExplosive Impetus. When you hit a creature with Daisenso, you may cause an explosion. The target takes an additional 1d6 fire damage, and each creature within 5 feet of the target other than yourself must make a Dexterity saving throw against your Meito save DC or take 2d6 fire damage. On a success, they take half as much damage. You can use this ability an amount of times equal to your proficiency bonus per short rest.",
+          "page": 350
+        },
+        {
+          "name": "Durandal",
+          "text": "Weapon (rapier), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nDurandals sheath and hilt have a dark-light colored, vertical-striped pattern. The hilt adorned with several rings and graven flowers.\nElegant Riposte. When a creature misses you with a melee attack, you can use your reaction to immediately make one melee attack with Durandal against that creature.",
+          "page": 351
+        },
+        {
+          "name": "Hassaikai",
+          "text": "Weapon (kanabo), Legendary (requires attunement by a creature with a Strength score of 18 or higher)\nCost: ฿500,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nThis massive, spiked kanabo is said to have crushed countless foes and even leveled entire fortresses with a single swing. Its black steel is etched with battle scars.\nOn a hit, Hassaikai deals an extra 1d6 × a quarter of your Willpower in lightning damage.\nThunder Bagua. As an action, you channel the full fury of Hassaikai into a devastating charge attack. You move up to 30 ft in a straight line and make a single melee attack. On a hit, the target takes 3d12 x half your Willpower in lightning damage and must succeed on a Strength saving throw equal to 10 + half your Willpower or be knocked prone and pushed back 20 ft. On a miss, the target takes half of the damage. You can use this ability once per long rest.",
+          "page": 351
+        },
+        {
+          "name": "Kakusan",
+          "text": "Weapon (katana), Very Rare (requires attunement)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nThis katana bears a rectangular guard and a scabbard adorned with flame motifs. Forged in Wano, Kakusan is the right fang of the Foxfire Style.\nWhen a creature within 5 feet of you hits you with a melee attack, you can use your reaction to release a burst of flames. The attacker takes 1d4 × half your Willpower in fire damage.\nTwin Flame Style - Foxfire Stance. If you are attuned to both Sukesan and Kakusan and wield them simultaneously, you may enter the Foxfire Stance as a bonus action once per long rest. While in Foxfire Stance, you gain immunity to fire damage, and once per turn, you can replace one of your attacks with a sweeping dual slash of fire. Each creature in a 15 foot cone must make a Dexterity saving throw against your Meito save DC. On a failure, they take 2d8 × half your Willpower fire damage. On a success, they take half as much damage.",
+          "page": 351
+        },
+        {
+          "name": "Kikoku",
+          "text": "Weapon (longsword), Very Rare (requires attunement)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nThis massive odachi is shrouded in a heavy curse. Wrapped in periwinkle cloth with a dark purple underlayer and a fur-lined guard, its lacquered sheath carries white cross motifs.\nThe wielder has resistance to slashing damage and Kikoku’s attacks ignore immunity to slashing damage.\nOn a hit, the target takes an additional 1d6 necrotic damage. If the target dies as a result, the wielder regains hit points equal to their Willpower score. Any healing that would exceed the wielder’s hit point maximum is instead gained as temporary hit points.\nCurse. Once attuned, the wielder cannot voluntarily drop or stow Kikoku unless freed by a remove curse or similar effect.",
+          "page": 351
+        },
+        {
+          "name": "Kiribachi",
+          "text": "Weapon (greatsword), Uncommon (requires attunement)\nCost: ฿500,000\nYou have a +1 bonus to attack and damage rolls made with this magic weapon.\nThis massive serrated blade resembles a saw more than a sword, designed to tear through flesh, armor, and even stone.\nOn a hit, the target takes an additional 1d4 slashing damage as the serrated edge tears into them.",
+          "page": 351
+        },
+        {
+          "name": "Kogarashi",
+          "text": "Weapon (longsword), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nThe counterpart to Oto, Kogarashi features the same red-wrapped grip and sleek tapering blade—embodying the chill of a wintry gale in its silent strike.\nOnce per turn when you hit with Kogarashi, you may force the target to make a Strength saving throw against your Meito save DC or be pushed 10 feet and knocked prone.\nTwin Cleavage. If you are attuned to both Oto and Kogarashi and wield them simultaneously, you gain the following:\nYou gain +2 AC against melee attacks.\nAs an action, you unleash a devastating forked slash in a 30-ft cone. Each creature must make a Dexterity saving throw against your Meito save DC. On a failure they take 2d8 slashing damage.",
+          "page": 351
+        },
+        {
+          "name": "Kuro Kabuto",
+          "text": "Weapon (sling, giant), Very Rare (requires attunement)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nThis living slingshot, cultivated from a Pop Green seed, grows with its wielder. Attacks with Kuro Kabuto ignore partial and three-quarters cover.\nPop Green Super Grower. You may instantly grow a pop green seed from a husk plant when wielding this weapon.",
+          "page": 352
+        },
+        {
+          "name": "Mogura",
+          "text": "Weapon (trident), Very Rare (requires attunement)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nA pink trident, with its three prongs tightly together. The middle prong is a full spear-shape, while the two on the sides are half-blades.\nThis weapon crits on a 19-20. When you score a critical hit, the target suffers bleeding wounds, taking 1d8 piercing damage at the start of its turn until it receives magical healing or a creature uses its action to staunch the wound.\nExecutioner’s Impale. As an action, you hurl or drive Mogura with overwhelming force. A single target within range must make a Dexterity saving throw against your Meito save DC. On a failure, the target takes 2d10 x half your Willpower piercing damage and is restrained until the end of your next turn. On a success, the target takes half damage and is not restrained. You can use this ability once per long rest.",
+          "page": 352
+        },
+        {
+          "name": "Oto",
+          "text": "Weapon (longsword), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nThe counterpart to Kogarashi, Oto is gracefully proportioned blade bears a four-sided tsuka and a red- wrapped hilt.\nOnce per turn when you wield Oto, you may use a bonus action to send forth a slashing wave of wind in a 10 foot line. Creatures in the line must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d6 slashing damage.\nTwin Cleavage. If you are attuned to both Oto and Kogarashi and wield them simultaneously, you gain the following:\nYou gain +2 AC against melee attacks.\nAs an action, you unleash a devastating forked slash in a 30-ft cone. Each creature must make a Dexterity saving throw against your Meito save DC. On a failure they take 2d8 slashing damage.",
+          "page": 352
+        },
+        {
+          "name": "Raiu",
+          "text": "Weapon (katana), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nA dark katana those edge is said to cut through flesh and armor alike as though they were mist. Raiu ignores immunity against slashing damage.\nStorm’s Edge. As part of an action action, you may make a flurry of slashes in a 10 foot radius around you. All creatures of your choice in the area must make a Dexterity saving throw against your Meito save DC, or take 2d8 slashing damage on a failed save. You can use this ability once per short rest.",
+          "page": 352
+        },
+        {
+          "name": "Sandai Kitetsu",
+          "text": "Weapon (katana), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nThis crimson-hued blade is the weakest of the infamous Kitetsu line, yet it still carries the malevolent will of its ancestors.\nWhen you hit a creature with an attack from this blade, you may deal an additional 1d8 necrotic damage.\nCursed. Whenever you roll a natural 1 on an attack with Sandai Kitetsu you suffer 2d8 necrotic damage as the sword cuts into your own flesh.",
+          "page": 352
+        },
+        {
+          "name": "Shigure",
+          "text": "Weapon (katana), Uncommon (requires attunement)\nCost: ฿500,000\nYou have a +1 bonus to attack and damage rolls made with this magic weapon.\nNamed after the gentle autumn rain, Shigure is a blade of grace and clarity. This meito rewards those who fight with precision and control, striking like rain falling unerringly from the sky.\nWhen you roll a natural 19 or 20 on an attack with Shigure, the strike is considered a critical hit.",
+          "page": 352
+        },
+        {
+          "name": "Soto Muso",
+          "text": "Weapon (katana, light), Very Rare (requires attunement by a Fishman or Merfolk)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nSoto Muso is a large and simple sword consisting of only a blade, scabbard, and hilt with no handguard. Its hilt is dark with diamond patterns on it.\nWhen you take the Dodge action while wielding Soto Muso, you may make one melee weapon attack as a bonus action.\nKappa’s Flood. Summon a roaring flood of spiritual water in a 30 foot cone. Each creature in the area must make a Strength saving throw against your Meito save DC. On a failed save, they take 1d8 × half your Willpower in cold damage and are knocked prone. On a success, they take half damage and remain standing. You can use this ability once per long rest.",
+          "page": 353
+        },
+        {
+          "name": "Soul Solid",
+          "text": "Weapon (cane sword), Very Rare (requires attunement)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nThis elegant katana was once an ordinary blade, but through soul and music it became a weapon that bridges the worlds of the living and the dead. Its edge carries a chilling frost, said to be the cold of the underworld itself.\nOn a hit, Soul Solid deals an additional 1d4 × half your Willpower in cold damage and when you kill a creature with Soul Solid, you may gain temporary hit points equal to your Willpower score.",
+          "page": 353
+        },
+        {
+          "name": "Sukesan",
+          "text": "Weapon (katana), Very Rare (requires attunement)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nThis katana bears a rectangular guard and a scabbard adorned with flame motifs. Forged in Wano, Sukesan is the left fang of the Foxfire Style. You gain resistance to fire damage.\nOnce per turn when you hit a creature with Sukesan, you may deal an additional 1d4 fire damage.\nTwin Flame Style - Foxfire Stance. If you are attuned to both Sukesan and Kakusan and wield them simultaneously, you may enter the Foxfire Stance as a bonus action once per long rest. While in Foxfire Stance, you gain immunity to fire damage, and once per turn, you can replace one of your attacks with a sweeping dual slash of fire. Each creature in a 15 foot cone must make a Dexterity saving throw against your Meito save DC. On a failure, they take 2d8 × half your Willpower fire damage. On a success, they take half as much damage.",
+          "page": 353
+        },
+        {
+          "name": "Takeru",
+          "text": "Weapon (kanabo), Very Rare (requires attunement)\nCost: ฿50,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nTakeru is a giant studded kanabo it is more slender compared to other kanabos.\nWhen you score a critical hit with Takeru, the target must succeed on a Strength saving throw against your Meito save DC or be pushed 20 feet and knocked prone.\nRaijin Slam. When you hit a creature with Takeru, you may cause a surge of thunder to echo from the strike. The target takes an additional 1d6 × half your Willpower in lightning damage. You can use this feature a number of times equal to your Willpower per Long Rest.",
+          "page": 353
+        },
+        {
+          "name": "Tsuji Shibai",
+          "text": "Weapon (katana), Legendary (requires attunement by a creature with a Charisma score of 18 or higher)\nCost: ฿500,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nThis oversized ink brush bears a katana’s hilt and guard, with an elegant tassel at its pommel. Tsuji Shibai is the “blade of the stage,” a weapon that turns battle into performance and transforms strikes into strokes of art.\nDramatic Stroke. Once per turn, when you hit a creature with Tsuji Shibai, you can embellish the strike with flair. Choose one:\nThe target takes an extra 1d6 psychic damage, as your attack dazzles or confuses them.\nYou grant an ally within 10 feet advantage on their next attack roll before the end of your next turn.\nCurtain Call. As an action, you unleash a sweeping, theatrical strike. Every creature of your choice in a 15 foot cone must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d8 × half your Willpower in psychic damage. You can use this ability once per long rest.\nUnderworld Marketplace THE UNDERWORLD IS A SPRAWLING NETWORK OF\nsmugglers, brokers, and crime lords who traffic in goods too rare for ordinary markets. Its\noperations thrive across the Grand Line, with secretive auctions and black markets drawing pirates, nobles, and powerful figures seeking items that the World Government would never allow to circulate openly.\nSome underworld markets hide in plain sight, disguised as lavish trade houses or exclusive clubs for the wealthy. Others lurk in the shadows of remote ports, accessible only by those with the right contacts. What all share in common is the promise of rarity: treasures and tools that can change the tide of battle or fortune.",
+          "page": 353
+        }
+      ]
+    },
+    {
+      "id": "rule.armory_slavery_in_the_setting",
+      "kind": "rule",
+      "name": "Slavery in the Setting",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 354
+      },
+      "text": "The practice of slavery is an infamous reality in the world of One Piece, perpetuated by the world’s authorities and the darkest corners of the Underworld. Non-human races such as Fish-men, Giants, and Merfolk are frequent victims of this cruelty. While slavery remains a major theme within the setting, it is not represented mechanically in this system. Instead, DMs may choose to acknowledge or exclude its presence in their campaigns according to their table’s comfort level.\nDevil Fruits. The most coveted treasures on the underwolrd market, Devil Fruits grant supernatural powers at the cost of the sea’s fury. Their exact abilities are rarely known until consumed.\nDials. Imported from the Sky Islands, Dials are shells capable of storing and releasing energy.\nMeitos. Renowned named blades, or Meito, are among the most prestigious underworld market items. Each blade carries a unique power for dedicated swordsmen to unlock. Some meitos are cursed, sold at discounted prices to lure reckless buyers into buying them.\nOther Magic Items. The underworld market occasionally trades in other powerful artifacts and equipment outside of typical weapons and armors.\nEternal Poses. Eternal Poses are specialized compasses that permanently point to a single island making them priceless navigational tools for any crew looking to cross the grand line.\nDevil Fruit Appraisal. Specialists within the underworld market offer Devil Fruit appraisal services to learn more about a Devil Fruit you may possess.\nRare Materials. From Adam Wood to exotic metals and monster hides, the underworld market supplies rare crafting materials in bulk.\nSeastone Bullets. Among the deadliest contraband, Seastone Bullets suppress Devil Fruit powers on impact.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Item",
+              "Rarity",
+              "Minimum Cost",
+              "Limited Amount"
+            ],
+            [
+              "Devil Fruits"
+            ],
+            [
+              "Uncommon - Rare",
+              "Uncommon - Rare",
+              "฿10,000,000",
+              "1d6"
+            ],
+            [
+              "Very Rare",
+              "Very Rare",
+              "฿100,000,000",
+              "25% chance for 1d4"
+            ],
+            [
+              "Legendary",
+              "Legendary",
+              "฿1,000,000,000",
+              "10% chance for 1"
+            ],
+            [
+              "Dials"
+            ],
+            [
+              "Simple Dial",
+              "Common",
+              "฿500,000",
+              "1d8"
+            ],
+            [
+              "Rare Dial",
+              "Rare",
+              "฿5,000,000",
+              "1d6"
+            ],
+            [
+              "Meitos COMING SOON"
+            ],
+            [
+              "Unknown & Known Grade",
+              "Uncommon - Legendary",
+              "฿500,000+",
+              "1d8"
+            ],
+            [
+              "Skillful Grade",
+              "Rare",
+              "฿5,000,000",
+              "1d6"
+            ],
+            [
+              "Great Grade",
+              "Very Rare",
+              "฿50,000,000",
+              "25% chance for 1d4"
+            ],
+            [
+              "Supreme Grade",
+              "Legendary",
+              "฿500,000,000",
+              "10% chance for 1"
+            ],
+            [
+              "Other Magic Items"
+            ],
+            [
+              "Dial Invention",
+              "Uncommon - Very Rare",
+              "฿5,000,000+",
+              "1d6"
+            ],
+            [
+              "Future Gadget COMING SOON",
+              "Uncommon - Very Rare",
+              "฿5,000,000+",
+              "10% chance for 1"
+            ],
+            [
+              "Den Den Mushi",
+              "Rare",
+              "฿1,000,000",
+              "1d6"
+            ],
+            [
+              "Devil Fruit Appraisal",
+              "-",
+              "฿2,500,000",
+              "-"
+            ],
+            [
+              "Pop Seed Husk",
+              "Very Rare",
+              "฿800,000",
+              "25% chance for 1d4"
+            ],
+            [
+              "Eternal Pose",
+              "Rare",
+              "฿50,000,000",
+              "1d6"
+            ],
+            [
+              "Rare Materials",
+              "Rare",
+              "฿20,000,000",
+              "1d6"
+            ],
+            [
+              "Seastone Bullet",
+              "Legendary",
+              "฿100,000,000",
+              "10% chance for 1"
+            ]
+          ],
+          "page": 354
+        }
+      ]
+    },
+    {
+      "id": "item.pillar_weapon",
+      "kind": "item",
+      "name": "Pillar Weapon",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 333
+      },
+      "itemType": "weapon",
+      "category": "simple",
+      "ranged": false,
+      "cost": 60000,
+      "damage": "1d10",
+      "damageType": "bludgeoning",
+      "weight": "18 lb.",
+      "properties": "Heavy, two-handed, concussing, finisher",
+      "twoHanded": true,
+      "heavy": true,
+      "text": "Pillar Weapon: 1d10 bludgeoning. Heavy, two-handed, concussing, finisher."
+    },
+    {
+      "id": "item.kanabo",
+      "kind": "item",
+      "name": "Kanabo",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 334
+      },
+      "itemType": "weapon",
+      "category": "martial",
+      "ranged": false,
+      "cost": 400000,
+      "damage": "1d12",
+      "damageType": "bludgeoning",
+      "weight": "20 lb.",
+      "properties": "Heavy, two-handed, finisher",
+      "twoHanded": true,
+      "heavy": true,
+      "text": "Kanabo: 1d12 bludgeoning. Heavy, two-handed, finisher."
+    },
+    {
+      "id": "item.katana_light",
+      "kind": "item",
+      "name": "Katana, light",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 334
+      },
+      "itemType": "weapon",
+      "category": "martial",
+      "ranged": false,
+      "cost": 300000,
+      "damage": "1d8",
+      "damageType": "slashing",
+      "weight": "2 lb.",
+      "properties": "Finesse",
+      "finesse": true,
+      "text": "Katana, light: 1d8 slashing. Finesse."
+    },
+    {
+      "id": "item.longbow",
+      "kind": "item",
+      "name": "Longbow",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 334
+      },
+      "itemType": "weapon",
+      "category": "martial",
+      "ranged": true,
+      "cost": 500000,
+      "damage": "1d8",
+      "damageType": "bludgeoning",
+      "weight": "2 lb.",
+      "properties": "Ammunition (range 150/600), heavy, two-handed",
+      "twoHanded": true,
+      "heavy": true,
+      "text": "Longbow: 1d8 bludgeoning. Ammunition (range 150/600), heavy, two-handed."
+    }
+  ],
+  "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."
+}
