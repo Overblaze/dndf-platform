@@ -740,6 +740,55 @@ more("subclass.hybrid.germa", {
     "Cell Regeneration": {"expect": "regain a number of HP equal to your Strength modifier", "rolls": [{"label": "Hit points regained (1 hybrid point)", "dice": "{max(0, mod.str)}", "kind": "heal"}]},
 })
 
+# --- Choices inside a subclass ---------------------------------------------------------
+GERMA_STRIKE = lambda dice, label: [{"label": label, "dice": dice, "kind": "damage"}]  # noqa: E731
+
+more("subclass.hybrid.germa", {
+    "Genetic Superpower": {"expect": "Choose one of the following powers", "choose": {"id": "germaSuperpower", "count": 1, "options": {
+        "Poison Pink": {
+            "expect": "You can use this ability a number of times equal to your proficiency bonus, regaining all expended uses after a long rest",
+            "rolls": GERMA_STRIKE("1d6", "Acidic Touch (once per turn)"), "uses": {"max": "prof", "recharge": "long"},
+            "effects": [note("Immune to poison damage and the poisoned condition"), note("Flying speed 45 ft. while not wearing medium or heavy armor")],
+        },
+        "Stealth Black": {
+            "expect": "a number of times equal to your Dexterity modifier (minimum of once), regaining all uses after a long rest",
+            "rolls": GERMA_STRIKE("1d6", "Flame Strike (once per turn)"), "uses": {"max": "max(1, mod.dex)", "recharge": "long"},
+            "effects": [note("Advantage on Dexterity (Stealth) checks made to move silently or hide")],
+        },
+        "Winch Green": {
+            "expect": "Increase your strength score by +2 and your maximum strength score to 22. You count as gargantuan when determining your carrying capacity",
+            "rolls": GERMA_STRIKE("1d8", "Bionic Strike (once per turn)"),
+            # Gargantuan is three sizes above Medium: carrying doubles three times.
+            "effects": [{"type": "ability", "ability": "str", "value": 2, "max": 22}, {"type": "carryMultiplier", "value": 8}],
+        },
+        "Dengeki Blue": {
+            "expect": "Your walking speed increases by an amount equal to 10 x your proficiency bonus",
+            "rolls": GERMA_STRIKE("1d6", "Lightning Strike (once per turn)"), "effects": [{"type": "speed", "expr": "10 * prof"}],
+        },
+        "Sparking Red": {"expect": "you deal an additional 1d6 radiant damage with the spell", "rolls": GERMA_STRIKE("1d6", "Flash Burst (once per turn)")},
+    }}},
+})
+more("subclass.marksman.rope_master", {
+    # Each trick has its own uses; the count the detector put on the feature belonged to them.
+    "Rope Tricks": {
+        "expect": "You can use each of your Rope Tricks a number of times equal to double your proficiency bonus per short rest", "uses": None,
+        "choose": {"id": "ropeTricks", "count": "level>=15 ? 4 : level>=7 ? 3 : 2", "inline": ["Whiplash", "Tether Throw", "Tripwire", "Hookshot"],
+                   "each": {"uses": {"max": "prof * 2", "recharge": "short"}},
+                   "options": {"Tether Throw": {"expect": "As a reaction", "action": "reaction"}, "Hookshot": {"expect": "As a bonus action", "action": "bonus"}}},
+    },
+})
+more("subclass.devilforged.mechadevil", {
+    "Mechadevil Mark 2": {
+        "only": "dndf-10",
+        "expect": "You can activate each weapon system a number of times equal to your proficiency bonus, and you regain all expended uses when you finish a short or long rest", "uses": None,
+        "choose": {"id": "mechadevilWeapons", "count": "level>=14 ? 4 : level>=10 ? 3 : 2", "inline": ["Swarm Cannons", "Energy Blast", "Energy Lance", "Railcannon", "Power Fist"],
+                   "each": {"uses": {"max": "prof", "recharge": "short"}, "action": "action"}},
+    },
+})
+more("subclass.chemist.botany", {
+    "Field Invention Powers (Spells)": {"expect": "Choose that land", "choose": {"id": "botanyLand", "count": 1}},
+})
+
 _seen_subclasses: set[str] = set()
 _missing: dict[tuple[str, str], list[str]] = {}
 _found: set[tuple[str, str]] = set()
@@ -751,12 +800,13 @@ def unused_subclass_structure() -> list[str]:
     return sorted(set(SUBCLASS_STRUCTURE) - _seen_subclasses) + sorted(never)
 
 
-def apply_subclass_structure(version: str, entry: dict, problems: list[str]) -> None:
+def apply_subclass_structure(version: str, entry: dict, problems: list[str]) -> list[dict]:
     """A feature's patch is one dict, or a list of them when the handbooks word it differently.
     "only" limits a patch to one handbook, for a number the other handbook does not give."""
     patch = SUBCLASS_STRUCTURE.get(entry["id"])
+    made: list[dict] = []
     if not patch:
-        return
+        return made
     _seen_subclasses.add(entry["id"])
     squash = lambda t: re.sub(r"\s+", " ", t)
     features = {f["name"]: f for f in entry["features"]}
@@ -783,3 +833,44 @@ def apply_subclass_structure(version: str, entry: dict, problems: list[str]) -> 
             feature["auto"] = [a for a in feature["auto"] if a not in fields]
             if not feature["auto"]:
                 del feature["auto"]
+        choose = fields.get("choose")
+        if choose:
+            made.append(_subclass_options(version, entry, feature, choose, problems))
+    return made
+
+
+def _subclass_options(version: str, entry: dict, feature: dict, choose: dict, problems: list[str]) -> dict:
+    """The things a subclass feature lets the player pick, as an option list.
+    They are the feature's sub-headed parts, or (with "inline") the paragraphs of its text that
+    open with one of the names given, as in "Whiplash. When you hit…". Inline text stays in the feature too."""
+    key = entry["id"].split(".")[1]
+    group_id = f"optionGroup.{key}_{entry['id'].split('.')[2]}_{_slug(feature['name'])}"
+    where = f"{entry['name']} ({version}): '{feature['name']}"
+    options = []
+    if choose.get("inline"):
+        for name in choose["inline"]:
+            line = next((p for p in feature["text"].split("\n") if p.startswith(name + ". ")), None)
+            if line is None:
+                problems.append(f"{where}' has no paragraph that opens with '{name}.'")
+                continue
+            options.append({"id": _slug(name), "name": name, "text": line[len(name) + 2:], "page": feature["page"]})
+    else:
+        for section in feature.pop("sections", []):
+            option = {"id": _slug(section["name"]), "name": section["name"], "text": section["text"], "page": section["page"]}
+            if section.get("tables"):
+                option["tables"] = section["tables"]
+            options.append(option)
+    for option in options:
+        extra = dict(choose.get("each", {}))
+        extra.update(choose.get("options", {}).get(option["name"], {}))
+        expect = extra.pop("expect", None)
+        if expect and expect not in option["text"]:
+            problems.append(f"{where}: {option['name']}' is worded differently here, so its numbers were not applied")
+            continue
+        option.update(extra)
+    missing = set(choose.get("options", {})) - {o["name"] for o in options}
+    if missing:
+        problems.append(f"{where}' has no option {sorted(missing)}")
+    feature["choices"] = {"id": choose["id"], "count": choose["count"], "from": group_id}
+    return {"id": group_id, "kind": "optionGroup", "name": f"{entry['name']}: {feature['name']}", "versions": [version],
+            "source": {**entry["source"], "page": feature["page"]}, "options": options}

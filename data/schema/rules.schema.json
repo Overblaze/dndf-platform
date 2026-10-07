@@ -438,7 +438,8 @@
           "$ref": "#/$defs/text"
         },
         "text": {
-          "$ref": "#/$defs/text"
+          "type": "string",
+          "description": "Book text, word for word. Empty only when the option is nothing but a table (a Botany land and its powers)."
         },
         "page": {
           "$ref": "#/$defs/page"

@@ -654,33 +654,11 @@
           "name": "Genetic Superpower",
           "text": "Starting when you choose this lineage, your body has been infused with cutting-edge genetic modifications. These enhancements grant you one of five unique combat abilities.\nChoose one of the following powers. The chosen power reflects your specific genetic engineering and grants you features as described below.",
           "page": 141,
-          "sections": [
-            {
-              "name": "Poison Pink",
-              "text": "You gain the following abilities:\nAcidic Touch. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 acid damage.\nToxic Immunity. You are immune to poison damage and the poisoned condition.\nPoisonous Kiss. As an action, you can attempt to poison a creature you touch. The creature must succeed on a Constitution saving throw against your Hybrid save DC or become poisoned for 1 minute. The poisoned creature can repeat the save at the end of each of its turns. You can use this ability a number of times equal to your proficiency bonus, regaining all expended uses after a long rest.\nFlight. You gain a flying speed of 45 ft. while you are not wearing medium or heavy armor.",
-              "page": 141
-            },
-            {
-              "name": "Stealth Black",
-              "text": "You gain the following abilities:\nFlame Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 fire damage.\nOptical Camouflage. As a bonus action, you can become invisible until the start of your next turn or until you attack or cast a spell. You can use this ability a number of times equal to your Dexterity modifier (minimum of once), regaining all uses after a long rest.\nSilent Movement. You have advantage on Dexterity (Stealth) checks made to move silently or hide.",
-              "page": 141
-            },
-            {
-              "name": "Winch Green",
-              "text": "You gain the following abilities:\nEnhanced Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d8 damage.\nEnhanced Strength. Increase your strength score by +2 and your maximum strength score to 22. You count as gargantuan when determining your carrying capacity and the weight you can push, drag, or lift.\nExtendable Arm. As an action, you can launch your arm up to 30 ft. to grab objects or pull creatures. Make a melee weapon attack using your unarmed strike. On a hit, pull the target up to 15 ft. toward you if it is large or smaller.",
-              "page": 141
-            },
-            {
-              "name": "Dengeki Blue",
-              "text": "You gain the following abilities:\nLightning Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 lightning damage.\nBlitz. Your walking speed increases by an amount equal to 10 x your proficiency bonus.\nSpeed Demon. You can Dash as a bonus action.",
-              "page": 141
-            },
-            {
-              "name": "Sparking Red",
-              "text": "You gain the following abilities:\nFlash Burst. Once per turn when you hit with a spell attack, you deal an additional 1d6 radiant damage with the spell.\nEnergy Blast. As an action, you may cast a spell at it’s normal spell range instead of only activating in melee range as stated in Hybrid Powers (Spellcasting). The damage for your spells is lightning, fire, or radiant (your choice).\nRadiant Charge. When you roll damage for a hybrid spell, melee attack, or unarmed attack, you may reroll any 1s.",
-              "page": 142
-            }
-          ]
+          "choices": {
+            "id": "germaSuperpower",
+            "count": 1,
+            "from": "optionGroup.hybrid_germa_genetic_superpower"
+          }
         },
         {
           "level": 1,
@@ -749,6 +727,127 @@
             {
               "type": "note",
               "label": "Resistance to all damage except force and psychic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optionGroup.hybrid_germa_genetic_superpower",
+      "kind": "optionGroup",
+      "name": "Germa Lineage: Genetic Superpower",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 141
+      },
+      "options": [
+        {
+          "id": "poison_pink",
+          "name": "Poison Pink",
+          "text": "You gain the following abilities:\nAcidic Touch. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 acid damage.\nToxic Immunity. You are immune to poison damage and the poisoned condition.\nPoisonous Kiss. As an action, you can attempt to poison a creature you touch. The creature must succeed on a Constitution saving throw against your Hybrid save DC or become poisoned for 1 minute. The poisoned creature can repeat the save at the end of each of its turns. You can use this ability a number of times equal to your proficiency bonus, regaining all expended uses after a long rest.\nFlight. You gain a flying speed of 45 ft. while you are not wearing medium or heavy armor.",
+          "page": 141,
+          "rolls": [
+            {
+              "label": "Acidic Touch (once per turn)",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "effects": [
+            {
+              "type": "note",
+              "label": "Immune to poison damage and the poisoned condition"
+            },
+            {
+              "type": "note",
+              "label": "Flying speed 45 ft. while not wearing medium or heavy armor"
+            }
+          ]
+        },
+        {
+          "id": "stealth_black",
+          "name": "Stealth Black",
+          "text": "You gain the following abilities:\nFlame Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 fire damage.\nOptical Camouflage. As a bonus action, you can become invisible until the start of your next turn or until you attack or cast a spell. You can use this ability a number of times equal to your Dexterity modifier (minimum of once), regaining all uses after a long rest.\nSilent Movement. You have advantage on Dexterity (Stealth) checks made to move silently or hide.",
+          "page": 141,
+          "rolls": [
+            {
+              "label": "Flame Strike (once per turn)",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "uses": {
+            "max": "max(1, mod.dex)",
+            "recharge": "long"
+          },
+          "effects": [
+            {
+              "type": "note",
+              "label": "Advantage on Dexterity (Stealth) checks made to move silently or hide"
+            }
+          ]
+        },
+        {
+          "id": "winch_green",
+          "name": "Winch Green",
+          "text": "You gain the following abilities:\nEnhanced Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d8 damage.\nEnhanced Strength. Increase your strength score by +2 and your maximum strength score to 22. You count as gargantuan when determining your carrying capacity and the weight you can push, drag, or lift.\nExtendable Arm. As an action, you can launch your arm up to 30 ft. to grab objects or pull creatures. Make a melee weapon attack using your unarmed strike. On a hit, pull the target up to 15 ft. toward you if it is large or smaller.",
+          "page": 141,
+          "rolls": [
+            {
+              "label": "Bionic Strike (once per turn)",
+              "dice": "1d8",
+              "kind": "damage"
+            }
+          ],
+          "effects": [
+            {
+              "type": "ability",
+              "ability": "str",
+              "value": 2,
+              "max": 22
+            },
+            {
+              "type": "carryMultiplier",
+              "value": 8
+            }
+          ]
+        },
+        {
+          "id": "dengeki_blue",
+          "name": "Dengeki Blue",
+          "text": "You gain the following abilities:\nLightning Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 1d6 lightning damage.\nBlitz. Your walking speed increases by an amount equal to 10 x your proficiency bonus.\nSpeed Demon. You can Dash as a bonus action.",
+          "page": 141,
+          "rolls": [
+            {
+              "label": "Lightning Strike (once per turn)",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "effects": [
+            {
+              "type": "speed",
+              "expr": "10 * prof"
+            }
+          ]
+        },
+        {
+          "id": "sparking_red",
+          "name": "Sparking Red",
+          "text": "You gain the following abilities:\nFlash Burst. Once per turn when you hit with a spell attack, you deal an additional 1d6 radiant damage with the spell.\nEnergy Blast. As an action, you may cast a spell at it’s normal spell range instead of only activating in melee range as stated in Hybrid Powers (Spellcasting). The damage for your spells is lightning, fire, or radiant (your choice).\nRadiant Charge. When you roll damage for a hybrid spell, melee attack, or unarmed attack, you may reroll any 1s.",
+          "page": 142,
+          "rolls": [
+            {
+              "label": "Flash Burst (once per turn)",
+              "dice": "1d6",
+              "kind": "damage"
             }
           ]
         }

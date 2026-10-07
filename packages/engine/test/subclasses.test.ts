@@ -259,6 +259,78 @@ describe('pools a subclass owns', () => {
   });
 });
 
+describe('choices inside a subclass', () => {
+  const pool = (sheet: Sheet, name: string) => sheet.resources.find((r) => r.name === name);
+  const feature = (sheet: Sheet, name: string) => sheet.features.find((f) => f.name === name);
+  const germa = (version: RulesVersion, power: string, scores: Partial<AbilityScores> = {}, level = 5) =>
+    build(version, 'class.hybrid', 'subclass.hybrid.germa', level, scores, [], { choices: { germaSuperpower: [power] } });
+
+  it.each(BOTH)('Germa, Genetic Superpower: nothing chosen adds nothing; an unknown power warns (%s)', (version) => {
+    const none = build(version, 'class.hybrid', 'subclass.hybrid.germa', 5);
+    expect(none.speed.value).toBe(30);
+    expect(feature(none, 'Dengeki Blue')).toBeUndefined();
+    expect(germa(version, 'nope').warnings).toHaveLength(1);
+  });
+
+  it.each(BOTH)('Germa, Dengeki Blue: walking speed + 10 × proficiency → 30 + 30 = 60 at 5th, 70 at 9th; Lightning Strike 1d6 (%s)', (version) => {
+    expect(germa(version, 'dengeki_blue').speed.value).toBe(60);
+    expect(germa(version, 'dengeki_blue', {}, 9).speed.value).toBe(70);
+    expect(feature(germa(version, 'dengeki_blue'), 'Dengeki Blue')!.rolls[0]).toMatchObject({ dice: '1d6', kind: 'damage' });
+  });
+
+  it.each(BOTH)('Germa, Winch Green: Strength + 2 to at most 22, carrying × 8 as Gargantuan; Bionic Strike 1d8 (%s)', (version) => {
+    const sheet = germa(version, 'winch_green', { str: 16 });
+    expect(sheet.abilities.str.score).toBe(18);
+    expect(sheet.ac.value).toBe(13 + 4); // Combat Exoskeleton with the raised Strength
+    expect(sheet.carry.value).toBe(18 * 15 * 8);
+    expect(germa(version, 'winch_green', { str: 21 }).abilities.str.score).toBe(22);
+    expect(feature(sheet, 'Winch Green')!.rolls[0]!.dice).toBe('1d8');
+  });
+
+  it.each(BOTH)('Germa, Poison Pink and Stealth Black: Poisonous Kiss proficiency times, Optical Camouflage Dex times (at least once), per long rest (%s)', (version) => {
+    const pink = germa(version, 'poison_pink');
+    expect(pool(pink, 'Poison Pink')).toMatchObject({ max: 3, recharge: 'long' });
+    expect(notes(pink)).toContain('Immune to poison damage and the poisoned condition');
+    expect(pool(germa(version, 'stealth_black', { dex: 18 }), 'Stealth Black')).toMatchObject({ max: 4, recharge: 'long' });
+    expect(pool(germa(version, 'stealth_black', { dex: 8 }), 'Stealth Black')!.max).toBe(1);
+  });
+
+  it.each(BOTH)('Marksman, Rope Master: two tricks at 3rd, three at 7th, four at 15th; each trick 2 × proficiency uses per short rest (%s)', (version) => {
+    const rules = loadRules(version);
+    const tricks = rules.get('subclass.marksman.rope_master')!.features!.find((f) => f.name === 'Rope Tricks')!;
+    const group = rules.get(tricks.choices!.from)!;
+    expect((group.options as { name: string }[]).map((o) => o.name)).toEqual(['Whiplash', 'Tether Throw', 'Tripwire', 'Hookshot']);
+    const sheet = build(version, 'class.marksman', 'subclass.marksman.rope_master', 5, {}, [], { choices: { ropeTricks: ['whiplash', 'hookshot'] } });
+    expect(pool(sheet, 'Whiplash')).toMatchObject({ max: 6, recharge: 'short' });
+    expect(pool(sheet, 'Hookshot')).toMatchObject({ max: 6, recharge: 'short' });
+    expect(pool(sheet, 'Tripwire')).toBeUndefined();
+    expect(pool(sheet, 'Rope Tricks')).toBeUndefined();
+    expect(feature(sheet, 'Hookshot')!.action).toBe('bonus');
+    expect(tricks.choices!.count).toBe('level>=15 ? 4 : level>=7 ? 3 : 2');
+    // The book's paragraphs are still in the feature, word for word.
+    for (const option of group.options as { name: string; text: string }[]) expect(tricks.text).toContain(`${option.name}. ${option.text}`);
+  });
+
+  it('Devilforged, Mechadevil (v10): two weapon systems at 6th, three at 10th, four at 14th; each proficiency times per short rest with its own dice', () => {
+    const sheet = build(V10, 'class.devilforged', 'subclass.devilforged.mechadevil', 6, {}, [], { choices: { mechadevilWeapons: ['railcannon', 'energy_blast'] } });
+    expect(pool(sheet, 'Railcannon')).toMatchObject({ max: 3, recharge: 'short' });
+    expect(feature(sheet, 'Railcannon')!.rolls[0]!.dice).toBe('6d10');
+    expect(feature(sheet, 'Energy Blast')!.rolls[0]!.dice).toBe('6d6');
+    expect(feature(sheet, 'Power Fist')).toBeUndefined();
+    expect(pool(sheet, 'Mechadevil Mark 2')).toBeUndefined();
+  });
+
+  it.each(BOTH)('Chemist, Botany: one land of eight, each with its table of powers (%s)', (version) => {
+    const rules = loadRules(version);
+    const lands = rules.get(rules.get('subclass.chemist.botany')!.features!.find((f) => f.name === 'Field Invention Powers (Spells)')!.choices!.from)!;
+    expect((lands.options as { name: string; tables?: unknown[] }[]).map((o) => [o.name, o.tables?.length])).toEqual(
+      ['Arctic', 'Coast', 'Desert', 'Forest', 'Grassland', 'Mountain', 'Swamp', 'Underground'].map((name) => [name, 1]));
+    const sheet = build(version, 'class.chemist', 'subclass.chemist.botany', 3, {}, [], { choices: { botanyLand: ['swamp'] } });
+    expect(sheet.warnings).toEqual([]);
+    expect(feature(sheet, 'Swamp')).toBeDefined();
+  });
+});
+
 describe('every wired subclass feature', () => {
   it.each(BOTH)('shows its standing resistances and immunities under “In effect” (%s)', (version) => {
     const cases: [string, string, number, string][] = [

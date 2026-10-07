@@ -64,7 +64,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const cls = classes.find((c) => c.id === classId) ?? classes[0]!;
   const subclassLevel = cls.subclass?.level ?? 3;
   const styles = mainSubclasses(cls.id);
-  const picks = choiceFeatures(cls).filter((f) => f.level <= level);
+  const picks = choiceFeatures(cls, level >= subclassLevel ? subclass : undefined).filter((f) => f.level <= level);
   const allowed = (expr: number | string) => evaluateNumber(expr, classScope({ cls, classLevel: level, scores }));
   const classSkills = cls.proficiencies as { skills?: { choose?: number; from?: string[] | string; text?: string } } | undefined;
   const skillHint = classSkills?.skills?.choose
@@ -234,7 +234,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         const known = allowed(feature.choices.count);
         return (
           <fieldset key={feature.choices.id}>
-            <legend className="label">{feature.name} options: {picked.length} of {known} · {cite(cls.source.book, feature.page)}</legend>
+            <legend className="label">{feature.from === cls.name ? '' : `${feature.from}: `}{feature.name} options: {picked.length} of {known} · {cite(cls.source.book, feature.page)}</legend>
             {picked.length > known && <p className="notice">That is more than the {known} the rules give at this level. It's your call.</p>}
             {feature.options.map((option) => (
               <label key={option.id} className="check">
