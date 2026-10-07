@@ -11,6 +11,7 @@ Python scripts (standard library only, plus `pdftohtml` from poppler-utils) that
 | `extract_classes.py [class …]` | extracts v10 classes on their own (add `--v88` for v8.8); useful while working on one class |
 | `extract_classes.py --check` | re-extracts the Bruiser and compares it with the hand-verified file |
 | `extract_classes.py --notes` | also lists the feature levels that were inferred from position |
+| `extract_secret.py` | writes Devil Fruits, fruit advancements, generation tables and the DM chapters to `~/dndf/secret/` only; prints counts, never names |
 | `extract_chapters.py` | extracts everything that isn't a class on its own: chapters 1 and 2, spell lists, Spirit Surges and Haki, fruit rules for players, the armory |
 
 - Public rules go to `data/rules/<version>/` and must pass `npm run validate`.
