@@ -1,4 +1,4 @@
-import { dawn, longRest, rollDie, shortRest, type RestResult } from '@dndf/engine';
+import { dawn, longRest, nextHitDice, rollDie, shortRest, type RestResult } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { rng } from '../lib/rules';
@@ -39,9 +39,9 @@ export function RestDialog({ live, onClose }: { live: LiveCharacter; onClose: ()
 
       {kind === 'short' && (
         <div className="field">
-          <span className="label">Hit dice: {diceLeft} of {sheet.hitDice.total} d{sheet.hitDice.die} left</span>
+          <span className="label">Hit dice: {diceLeft} of {sheet.hitDice.pool.map((p) => `${p.count}d${p.die}`).join(' + ')} left</span>
           <div className="row wrap">
-            <button className="btn" disabled={diceLeft <= 0} onClick={() => setRolls([...rolls, rollDie(sheet.hitDice.die, rng)])}>
+            <button className="btn" disabled={diceLeft <= 0} onClick={() => setRolls([...rolls, rollDie(nextHitDice(sheet, 1, rolls.length)[0] ?? sheet.hitDice.die, rng)])}>
               Roll a hit die
             </button>
             <button className="btn" disabled={rolls.length === 0} onClick={() => setRolls([])}>Undo rolls</button>

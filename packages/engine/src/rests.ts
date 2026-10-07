@@ -47,6 +47,16 @@ function refill(state: CharacterState, sheet: Sheet, recharges: string[], option
   return { ...state, spent, counters, toggles, trackers };
 }
 
+/**
+ * The sizes of the next hit dice to roll, largest first, for a character who has already spent
+ * some. A single-class character always gets the same die; a multiclass one works down the pool.
+ */
+export function nextHitDice(sheet: Sheet, count: number, alreadyRolled = 0): number[] {
+  const all = sheet.hitDice.pool.flatMap((p) => Array.from({ length: p.count }, () => p.die));
+  const spent = sheet.hitDice.total - sheet.hitDice.remaining + alreadyRolled;
+  return all.slice(spent, spent + count);
+}
+
 /** Spend hit dice (each roll + Con, at least 0); refill short-rest uses. */
 export function shortRest(doc: CharacterDoc, sheet: Sheet, options: RestOptions & { hitDiceRolls?: number[] } = {}): RestResult {
   const changes: string[] = [];

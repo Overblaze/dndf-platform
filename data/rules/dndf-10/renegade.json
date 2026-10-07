@@ -479,7 +479,16 @@
           "level": 3,
           "name": "Stage of Battle",
           "text": "When you choose this archetype at 3rd level, combat is your stage, and each movement enhances your deadly performance. Once per turn, when you make a Dueling Strike attack with a finesse weapon, you can perform a flourish, choosing one of the following effects:\nYou gain a +2 bonus to AC until the start of your next turn.\nYou add an extra 1d6 damage to the attack.\nYou also gain proficiency in the Performance skill if you don’t already have it.",
-          "page": 177
+          "page": 177,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "performance"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 3,

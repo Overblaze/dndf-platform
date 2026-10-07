@@ -631,7 +631,16 @@
           "level": 2,
           "name": "Prophetic Vision",
           "text": "When you choose this subclass at 2nd level, you gain the ability to see brief glimpses of the immediate future, allowing you to react swiftly to unfolding events. You gain proficiency in Insight.\nAdditionally, when you or an ally within 30 feet of you makes an ability check, attack roll, or saving throw, you can use your reaction to expend one die of eternity adding the result of the die to the roll.",
-          "page": 160
+          "page": 160,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "insight"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 5,

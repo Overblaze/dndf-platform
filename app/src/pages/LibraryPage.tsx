@@ -1,4 +1,4 @@
-import { ABILITY_NAMES, columnLabel, proficiencyBonus, signed, type Ability, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry, type SectionDef, type TableDef, type TraitDef } from '@dndf/engine';
+import { ABILITY_NAMES, cite, columnLabel, proficiencyBonus, signed, type Ability, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry, type SectionDef, type TableDef, type TraitDef } from '@dndf/engine';
 import { createContext, Fragment, useContext, useMemo, useState, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { RuleText } from '../components/RuleText';
@@ -23,13 +23,13 @@ function Feature({ feature, book }: { feature: FeatureDef | OptionDef; book: str
     <details className="feature">
       <summary>
         <span className="resource-name">{feature.name}</span>
-        <span className="page-ref">{level}p.{feature.page}</span>
+        <span className="page-ref">{level}{cite(book, feature.page)}</span>
       </summary>
-      <RuleText text={feature.text} sections={(feature as FeatureDef).sections} tables={(feature as FeatureDef).tables} />
+      <RuleText text={feature.text} sections={(feature as FeatureDef).sections} tables={(feature as FeatureDef).tables} book={book} />
       {uses && typeof uses === 'object' && (
         <p className="page-ref">Tracked on the sheet: {uses.max === 'prof' ? 'proficiency bonus' : uses.max} use{uses.max === 1 ? '' : 's'} per {uses.recharge} rest</p>
       )}
-      <p className="page-ref">{book}, p.{feature.page}</p>
+      <p className="page-ref">{book} ({cite(book, feature.page)})</p>
     </details>
   );
 }
@@ -82,7 +82,7 @@ function ClassView({ cls }: { cls: ClassEntry }) {
   return (
     <>
       <section className="card">
-        <p className="page-ref"><Link to={home}>Library</Link> · Class · {book}, p.{cls.source.page}</p>
+        <p className="page-ref"><Link to={home}>Library</Link> · Class · {book} ({cite(book, cls.source.page)})</p>
         <h1>{cls.name}</h1>
         {typeof cls.quote === 'string' && <p className="quote">{cls.quote}</p>}
         {typeof cls.flavor === 'string' && <p className="feature-text">{cls.flavor}</p>}
@@ -110,7 +110,7 @@ function ClassView({ cls }: { cls: ClassEntry }) {
           {subs.filter((s) => String(s.group ?? 'Subclasses') === group).map((sub) => (
             <Link key={sub.id} className="resource character-link" to={link(sub.id)}>
               <span className="resource-name">{sub.name}</span>
-              <span className="page-ref">{sub.features?.length} features · p.{sub.source.page}</span>
+              <span className="page-ref">{sub.features?.length} features · {cite(sub.source.book, sub.source.page)}</span>
             </Link>
           ))}
         </section>
@@ -120,7 +120,7 @@ function ClassView({ cls }: { cls: ClassEntry }) {
           <h2>Options</h2>
           <Link className="resource character-link" to={link(group.id)}>
             <span className="resource-name">{group.name}</span>
-            <span className="page-ref">{(group.options as OptionDef[]).length} options · p.{group.source.page}</span>
+            <span className="page-ref">{(group.options as OptionDef[]).length} options · {cite(group.source.book, group.source.page)}</span>
           </Link>
         </section>
       ))}
@@ -165,7 +165,7 @@ function EntryView({ entry }: { entry: RuleEntry }) {
         <p className="page-ref">
           <Link to={home}>Library</Link>
           {parent && <> · <Link to={link(parent.id)}>{parent.name}</Link></>} · {KIND_LABEL[entry.kind] ?? entry.kind}
-          {entry.optional === true && ' (optional)'} · {entry.source.book}, p.{entry.source.page}
+          {entry.optional === true && ' (optional)'} · {entry.source.book} ({cite(entry.source.book, entry.source.page)})
         </p>
         <h1>{entry.name}</h1>
         {(facts.length > 0 || typeof entry.speed === 'number' || entry.kind === 'item') && (
@@ -185,7 +185,7 @@ function EntryView({ entry }: { entry: RuleEntry }) {
         )}
         {typeof entry.flavor === 'string' && <p className="feature-text">{entry.flavor}</p>}
         {Boolean(text || entry.sections || entry.tables) && (
-          <RuleText text={text} sections={(entry.sections ?? []) as SectionDef[]} tables={(entry.tables ?? []) as TableDef[]} />
+          <RuleText text={text} sections={(entry.sections ?? []) as SectionDef[]} tables={(entry.tables ?? []) as TableDef[]} book={entry.source.book} />
         )}
         {entry.kind === 'spellList' && Object.entries(entry.levels as Record<string, string[]>).map(([level, names]) => (
           <div key={level} className="rule-section">
@@ -209,8 +209,8 @@ function EntryView({ entry }: { entry: RuleEntry }) {
           <h2>Traits</h2>
           {traits.map((trait) => (
             <div key={trait.name} className="rule-section">
-              <h3>{trait.name} <span className="page-ref">p.{trait.page}</span></h3>
-              <RuleText text={trait.text} tables={trait.tables} />
+              <h3>{trait.name} <span className="page-ref">{cite(entry.source.book, trait.page)}</span></h3>
+              <RuleText text={trait.text} tables={trait.tables} book={entry.source.book} />
             </div>
           ))}
         </section>
@@ -238,7 +238,7 @@ function EntryLinks({ entries, detail }: { entries: RuleEntry[]; detail?: (entry
       {entries.map((entry) => (
         <Link key={entry.id} className="resource character-link" to={link(entry.id)}>
           <span className="resource-name">{entry.name}</span>
-          <span className="page-ref">{[detail?.(entry), `p.${entry.source.page}`].filter(Boolean).join(' · ')}</span>
+          <span className="page-ref">{[detail?.(entry), cite(entry.source.book, entry.source.page)].filter(Boolean).join(' · ')}</span>
         </Link>
       ))}
     </>
@@ -264,6 +264,7 @@ interface Hit {
   title: string;
   where: string;
   page: number;
+  book: string;
 }
 
 function search(query: string, rules: RuleSet['rules']): Hit[] {
@@ -273,10 +274,10 @@ function search(query: string, rules: RuleSet['rules']): Hit[] {
   for (const entry of rules.values()) {
     const parent = typeof entry.parent === 'string' ? rules.get(entry.parent)?.name : undefined;
     const kind = [parent, KIND_LABEL[entry.kind] ?? entry.kind].filter(Boolean).join(' ').replace(/ Subclass$/, ' subclass');
-    if (entry.name.toLowerCase().includes(q)) hits.push({ id: entry.id, title: entry.name, where: kind, page: entry.source.page });
+    if (entry.name.toLowerCase().includes(q)) hits.push({ id: entry.id, title: entry.name, where: kind, page: entry.source.page, book: entry.source.book });
     const parts = [...(entry.features ?? []), ...((entry.options ?? []) as OptionDef[]), ...((entry.traits ?? []) as TraitDef[]), ...((entry.sections ?? []) as SectionDef[])];
     for (const item of parts) {
-      if (item.name.toLowerCase().includes(q)) hits.push({ id: entry.id, title: item.name, where: parent ? `${parent}: ${entry.name}` : entry.name, page: item.page });
+      if (item.name.toLowerCase().includes(q)) hits.push({ id: entry.id, title: item.name, where: parent ? `${parent}: ${entry.name}` : entry.name, page: item.page, book: entry.source.book });
     }
   }
   return hits.slice(0, 80);
@@ -312,7 +313,7 @@ function LibraryHome() {
         {hits.map((hit, i) => (
           <Link key={i} className="resource character-link" to={link(hit.id)}>
             <span className="resource-name">{hit.title}</span>
-            <span className="page-ref">{hit.where} · p.{hit.page}</span>
+            <span className="page-ref">{hit.where} · {cite(hit.book, hit.page)}</span>
           </Link>
         ))}
       </section>
@@ -322,7 +323,7 @@ function LibraryHome() {
           <Link key={cls.id} className="resource character-link" to={link(cls.id)}>
             <span className="resource-name">{cls.name}</span>
             <span className="page-ref">
-              d{cls.hitDie} · {(cls.savingThrows ?? []).map((a) => ABILITY_NAMES[a]).join(' and ')} saves · {subclassesOf(cls.id).length} subclasses · p.{cls.source.page}
+              d{cls.hitDie} · {(cls.savingThrows ?? []).map((a) => ABILITY_NAMES[a]).join(' and ')} saves · {subclassesOf(cls.id).length} subclasses · {cite(cls.source.book, cls.source.page)}
             </span>
           </Link>
         ))}

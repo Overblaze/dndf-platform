@@ -16,13 +16,15 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from extract_classes import ABILITIES, BOOKS, ROOT, body_text, make_feature, slug, split_sections, table_rows  # noqa: E402
+from extract_classes import ABILITIES, BOOKS, ROOT, body_text, make_feature, skills_granted, slug, split_sections, table_rows  # noqa: E402
+from structure import apply_feat_structure  # noqa: E402
 from pdfdoc import Block, Heading, Para, Table, is_footer, load_items, read_blocks  # noqa: E402
 
 # Page ranges in the v10 handbook.
 PAGES = {
     "dndf-10": {
-        "rules": [(9, 12), (18, 19), (66, 66)],
+        # Chapter 1's general rules, Character Dreams, and Multiclassing at the end of chapter 3.
+        "rules": [(9, 12), (18, 19), (66, 66), (209, 210)],
         "crew_roles": (13, 17),
         "backgrounds": (20, 51),
         "feats": (52, 65),
@@ -42,7 +44,7 @@ PAGES = {
         "surges": [(221, 234), (238, 238)],
         "fruit_rules": [(239, 246), (355, 355)],
         "armory": (330, 354),
-        "rules": [(9, 12), (18, 19), (66, 66)],
+        "rules": [(9, 12), (18, 19), (66, 66), (208, 209)],
         "crew_roles": (13, 17),
         "backgrounds": (20, 51),
         "feats": (52, 65),
@@ -187,6 +189,12 @@ def extract_feats(version: str) -> list[dict]:
         for key in ("prerequisite", "sections", "tables", "uses", "action", "auto"):
             if key in made:
                 feat[key] = made[key]
+        # A feat's skills are granted outright; the sheet reads them from "skills".
+        granted = [e["skill"] for e in made.get("effects", []) if e.get("type") == "proficiency"]
+        if granted:
+            feat["skills"] = granted
+            feat["auto"] = [a for a in feat.get("auto", []) if a != "effects"] + ["skills"]
+        apply_feat_structure(version, feat, problems)
         if len(feat["text"]) < 30:
             problems.append(f"feat {heading.text}: text is only '{feat['text']}'")
         out.append(feat)
@@ -209,7 +217,11 @@ def traits_from(blocks: list[Block], who: str) -> tuple[str, list[dict]]:
             continue
         lead = block.lead
         if lead.endswith(".") and not block.listed and len(lead) <= 60:
-            traits.append({"name": lead[:-1].strip(), "text": block.text[len(lead):].strip(), "page": block.page})
+            trait = {"name": lead[:-1].strip(), "text": block.text[len(lead):].strip(), "page": block.page}
+            granted = skills_granted(trait["text"])
+            if granted:
+                trait["skills"] = granted
+            traits.append(trait)
         elif traits:
             traits[-1]["text"] += "\n" + block.text
         else:

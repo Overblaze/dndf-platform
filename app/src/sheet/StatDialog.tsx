@@ -1,4 +1,4 @@
-import type { Stat } from '@dndf/engine';
+import { cite, type Stat } from '@dndf/engine';
 import { useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { useRolls } from '../lib/rolls';
@@ -31,7 +31,7 @@ export function StatDialog({ stat, kind, rollable, live, onClose }: { stat: Stat
       <div className="breakdown">
         <div className="breakdown-head">
           <span className="label">Calculated</span>
-          {stat.page !== undefined && <span className="page-ref">p.{stat.page}</span>}
+          {stat.page !== undefined && <span className="page-ref">{cite(stat.book, stat.page)}</span>}
         </div>
         <ul>
           {stat.lines.map((line, i) => (

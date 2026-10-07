@@ -580,7 +580,16 @@
           "level": 1,
           "name": "Bonus Proficiencies",
           "text": "At 1st level, your connection to the natural world grants you profound understanding and practical knowledge. You gain proficiency in the Nature skill. If you are already proficient, you can choose another skill of your choice.\nAdditionally, you gain proficiency with the Herbalism Kit.",
-          "page": 167
+          "page": 167,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "nature"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,

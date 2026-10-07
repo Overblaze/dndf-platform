@@ -279,6 +279,27 @@ FIXED_TIMES = re.compile(
 ACTION = re.compile(r"^(?:[^.]{0,80}?\b)?as (?:a|an) (bonus action|action|reaction)\b", re.I)
 
 
+SKILL_IDS = [
+    "acrobatics", "animal_handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation",
+    "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight_of_hand", "stealth", "survival",
+]
+GRANTS_SKILLS = re.compile(r"\b(?:gain|gains|have|has) proficiency (?:in|with) (?:the )?([^.;:]{3,80}?)(?: skills?\b|\.|$)", re.I)
+
+
+def skills_granted(text: str) -> list[str]:
+    """Skills a text grants outright ("You gain proficiency in Athletics and Intimidation"). A choice
+    ("Persuasion or Intimidation", "one skill of your choice") grants nothing here."""
+    found: list[str] = []
+    for m in GRANTS_SKILLS.finditer(text):
+        names = m.group(1)
+        if re.search(r"\bor\b|choice|choose|either|one of|any\b", names, re.I):
+            continue
+        parts = [slug(p) for p in re.split(r",\s*(?:and\s+)?|\s+and\s+", names.strip()) if p.strip()]
+        if parts and all(p in SKILL_IDS for p in parts):
+            found.extend(p for p in parts if p not in found)
+    return found
+
+
 def recharge_of(rest: str) -> str:
     return "long" if rest.lower() == "long" else "short"
 
@@ -316,6 +337,10 @@ def derive_structure(feature: dict) -> None:
     if m:
         feature["action"] = {"bonus action": "bonus", "action": "action", "reaction": "reaction"}[m.group(1).lower()]
         auto.append("action")
+    skills = skills_granted(text)
+    if skills and "effects" not in feature:
+        feature["effects"] = [{"type": "proficiency", "skill": skill} for skill in skills]
+        auto.append("effects")
     if auto:
         feature["auto"] = auto
 

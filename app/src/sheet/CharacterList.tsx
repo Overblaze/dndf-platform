@@ -1,4 +1,4 @@
-import { deriveSheet, kaito, type CharacterDoc } from '@dndf/engine';
+import { deriveSheet, kaito, TEST_CHARACTERS, type CharacterDoc } from '@dndf/engine';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dialog } from '../components/Dialog';
@@ -64,6 +64,14 @@ export function CharacterList({ store }: { store: CharacterStore }) {
           <button className="btn btn-primary" onClick={() => setCreating(true)}>New character</button>
           <button className="btn" onClick={() => create(kaito(ruleSet('dndf-10').rules))}>Add the sample: Kaito, Bruiser 7</button>
         </div>
+        <details className="rule-text">
+          <summary>Test characters</summary>
+          <p className="soft">Made-up characters whose numbers were worked out by hand from the books. The automated tests check every one; add one here to look at it.</p>
+          <select value="" onChange={(e) => { const picked = TEST_CHARACTERS.find((c) => c.id === e.target.value); if (picked) void create(picked.build(ruleSet(picked.version).rules)); }} aria-label="Add a test character">
+            <option value="">Add a test character…</option>
+            {TEST_CHARACTERS.map((c) => <option key={c.id} value={c.id}>{c.name} ({VERSION_NAMES[c.version]}): {c.checks}</option>)}
+          </select>
+        </details>
         <p className="page-ref">Classes, races, backgrounds, crew roles and feats from both handbooks (v10 and v8.8) are available. The step-by-step builder comes later, so ability scores are typed in as final values.</p>
       </section>
 

@@ -1,4 +1,4 @@
-import { CONDITIONS, DREAM_POINT_DIE, healingSurge, iWontAbandonMyDreams, rescueDeathSave, rollDie, spendResource, ABANDON_DREAMS_DC } from '@dndf/engine';
+import { cite, CONDITIONS, DREAM_POINT_DIE, healingSurge, iWontAbandonMyDreams, nextHitDice, rescueDeathSave, rollDie, spendResource, ABANDON_DREAMS_DC } from '@dndf/engine';
 import { useState } from 'react';
 import { Pips } from '../components/Pips';
 import { RuleText } from '../components/RuleText';
@@ -12,8 +12,8 @@ function BookText({ sheet, name, note }: { sheet: LiveCharacter['sheet']; name: 
   if (!rule) return null;
   return (
     <details className="rule-text">
-      <summary>Rules text · p.{rule.page}</summary>
-      <RuleText text={rule.text} tables={rule.tables} />
+      <summary>Rules text · {cite(sheet.book, rule.page)}</summary>
+      <RuleText text={rule.text} tables={rule.tables} book={sheet.book} />
       {note && <p className="page-ref">{note}</p>}
     </details>
   );
@@ -40,7 +40,7 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
     live.setState(outcome.state, `I Won't Abandon My Dreams: rolled ${result.die}, ${outcome.survived ? 'back at 1 HP' : 'not enough'}`);
   };
   const doSurge = () => {
-    const result = healingSurge(doc, sheet, Array.from({ length: dice }, () => rollDie(sheet.hitDice.die, rng)));
+    const result = healingSurge(doc, sheet, nextHitDice(sheet, dice).map((die) => rollDie(die, rng)));
     live.setState(result.state, result.changes.join('; '));
   };
   const dream = (amount: number) => {
@@ -63,7 +63,7 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
         <div className="resource">
           <div>
             <div className="resource-name">{sheet.dreamPoints.remaining} of {sheet.dreamPoints.max}</div>
-            <div className="page-ref">+{DREAM_POINT_DIE} after an attack, check or save · reset on level-up · p.11</div>
+            <div className="page-ref">+{DREAM_POINT_DIE} after an attack, check or save · reset on level-up · {cite(sheet.book, 11)}</div>
           </div>
           <Pips remaining={sheet.dreamPoints.remaining} max={sheet.dreamPoints.max} label="Dream Points" />
           <div className="row">
@@ -71,7 +71,7 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
             <button className="btn" onClick={() => dream(-1)} disabled={state.dreamPointsSpent === 0} aria-label="Regain a Dream Point">+</button>
           </div>
         </div>
-        <p className="page-ref">Pirate Prestige maximum: {sheet.prestigeMax} · p.12</p>
+        <p className="page-ref">Pirate Prestige maximum: {sheet.prestigeMax} · {cite(sheet.book, 12)}</p>
         <BookText sheet={sheet} name="Dream Points" />
       </section>
 
@@ -79,14 +79,14 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
         <h2>Hit dice and Healing Surge</h2>
         <div className="resource">
           <div>
-            <div className="resource-name">Hit dice: {sheet.hitDice.remaining} of {sheet.hitDice.total} d{sheet.hitDice.die}</div>
+            <div className="resource-name">Hit dice: {sheet.hitDice.remaining} of {sheet.hitDice.pool.map((p) => `${p.count}d${p.die}`).join(' + ')}</div>
             <div className="page-ref">spend them in a short rest, or with a Healing Surge</div>
           </div>
         </div>
         <div className="resource">
           <div>
             <div className="resource-name">Healing Surge</div>
-            <div className="page-ref">up to {sheet.healingSurgeDice} dice, each + Con · once per rest · table ruling · p.11</div>
+            <div className="page-ref">up to {sheet.healingSurgeDice} dice, each + Con · once per rest · table ruling · {cite(sheet.book, 11)}</div>
           </div>
           <Pips remaining={surge.remaining} max={1} label="Healing Surge" />
         </div>
@@ -126,7 +126,7 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
           <button className="btn" onClick={abandon}>I Won't Abandon My Dreams (d20, {ABANDON_DREAMS_DC}+)</button>
           <button className="btn" disabled={successes + failures === 0} onClick={() => live.setState({ ...state, deathSaves: { successes: 0, failures: 0 } }, 'Death saves cleared')}>Clear</button>
         </div>
-        <p className="page-ref">A Dream Point turns a failed death save into a success. On death, a d20 of {ABANDON_DREAMS_DC} or more leaves you at 1 HP · p.11</p>
+        <p className="page-ref">A Dream Point turns a failed death save into a success. On death, a d20 of {ABANDON_DREAMS_DC} or more leaves you at 1 HP · {cite(sheet.book, 11)}</p>
         <BookText sheet={sheet} name="I Won’t Abandon My Dreams" />
       </section>
 

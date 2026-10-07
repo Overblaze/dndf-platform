@@ -184,7 +184,10 @@
         {
           "name": "Natural Athlete",
           "text": "You have proficiency in the Athletics skill.",
-          "page": 67
+          "page": 67,
+          "skills": [
+            "athletics"
+          ]
         },
         {
           "name": "Warrior Training",
@@ -294,7 +297,10 @@
         {
           "name": "Medical Mastery",
           "text": "Torino Humans gain proficiency with the Medicine skill. Additionally, they can use a herbalism kit to create basic healing supplies. Once during a long rest, you can craft a standard bandage from Chapter 9: Medical Log. You may also craft your explosive spear during your long rest.",
-          "page": 68
+          "page": 68,
+          "skills": [
+            "medicine"
+          ]
         },
         {
           "name": "Hunter’s Agility",
@@ -372,7 +378,10 @@
         {
           "name": "Underwater Athlete",
           "text": "You have proficiency in the Athletics skill. While underwater, you face no penalties or disadvantage as a result of underwater combat rules.",
-          "page": 69
+          "page": 69,
+          "skills": [
+            "athletics"
+          ]
         },
         {
           "name": "Adapted to the Sea",
@@ -523,7 +532,10 @@
         {
           "name": "Underwater Acrobatics",
           "text": "You gain proficiency in the Acrobatics skill. You have advantage on acrobatics checks made while underwater.",
-          "page": 69
+          "page": 69,
+          "skills": [
+            "acrobatics"
+          ]
         },
         {
           "name": "Sea Glide",
@@ -611,7 +623,10 @@
         {
           "name": "Apex Predator",
           "text": "You have proficiency in the Intimidation skill.",
-          "page": 70
+          "page": 70,
+          "skills": [
+            "intimidation"
+          ]
         },
         {
           "name": "Bite",
@@ -1098,7 +1113,11 @@
         {
           "name": "Animal Instinct",
           "text": "You have proficiency in the Perception and Stealth Skills.",
-          "page": 73
+          "page": 73,
+          "skills": [
+            "perception",
+            "stealth"
+          ]
         },
         {
           "name": "Electro",
@@ -1160,7 +1179,11 @@
         {
           "name": "Tribal Charisma",
           "text": "The pride of your race and features has made you unbelievably confident in conversations. You have proficiency in the Intimidation and Persuasion skills.",
-          "page": 74
+          "page": 74,
+          "skills": [
+            "intimidation",
+            "persuasion"
+          ]
         },
         {
           "name": "Crafty",
@@ -1314,7 +1337,10 @@
         {
           "name": "Serpentine Senses",
           "text": "You have proficiency in the Perception skill.",
-          "page": 74
+          "page": 74,
+          "skills": [
+            "perception"
+          ]
         }
       ],
       "size": "Medium",
@@ -1711,7 +1737,10 @@
         {
           "name": "Fungal Camouflage",
           "text": "Your connection to the natural world allows you to blend into forested or plant-dense environments. You gain proficiency in the Stealth skill, and you can attempt to hide even when only lightly obscured by foliage, mist, or other natural phenomena.",
-          "page": 77
+          "page": 77,
+          "skills": [
+            "stealth"
+          ]
         },
         {
           "name": "Spore Burst",
@@ -1858,7 +1887,10 @@
         {
           "name": "Underwater Athlete",
           "text": "You have proficiency in the Athletics skill. While underwater, you face no penalties or disadvantage as a result of underwater combat rules.",
-          "page": 78
+          "page": 78,
+          "skills": [
+            "athletics"
+          ]
         },
         {
           "name": "Adapted to the Sea",
@@ -2097,7 +2129,11 @@
         {
           "name": "Sheer Size",
           "text": "You have proficiency in the Athletics and Intimidation skills.",
-          "page": 80
+          "page": 80,
+          "skills": [
+            "athletics",
+            "intimidation"
+          ]
         },
         {
           "name": "Warrior Training",
@@ -2224,7 +2260,10 @@
         {
           "name": "Goatlike Agility",
           "text": "You have proficiency in the Acrobatics skill.",
-          "page": 81
+          "page": 81,
+          "skills": [
+            "acrobatics"
+          ]
         },
         {
           "name": "Mountain Adaptation",
@@ -2400,7 +2439,11 @@
         {
           "name": "Intimidating Presence",
           "text": "You have proficiency in the Athletics and Intimidation skills.",
-          "page": 81
+          "page": 81,
+          "skills": [
+            "athletics",
+            "intimidation"
+          ]
         },
         {
           "name": "Brute Endurance",
