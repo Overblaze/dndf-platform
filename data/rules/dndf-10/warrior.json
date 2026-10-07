@@ -365,6 +365,24 @@
               "text": "You begin to grow illusory cursed arms, allowing you to make additional attacks on your turn.\nWhen you hit a creature with an Attack, you can expend one Cursed Spirit die to attempt to damage another creature with a mirrored version of the same Attack. Choose another creature within 5 feet of the original target and within 30 feet of you. If the original Attack roll would hit the second creature, it takes necrotic, psychic or radiant damage (your choice) equal to the number you roll on your Cursed Spirit die.",
               "page": 203
             }
+          ],
+          "uses": {
+            "max": "prof * 2",
+            "recharge": "long"
+          },
+          "effects": [
+            {
+              "type": "display",
+              "label": "Curse save DC",
+              "expr": "8 + prof + mod.int"
+            }
+          ],
+          "rolls": [
+            {
+              "label": "Cursed Spirit die",
+              "dice": "1{level>=17 ? 'd12' : level>=11 ? 'd10' : level>=5 ? 'd8' : 'd6'}",
+              "kind": "other"
+            }
           ]
         },
         {
@@ -402,6 +420,13 @@
           "name": "Silver Mist",
           "text": "Starting at 15th level, you can enhance yourself with an intense demonic aura which allows you to manifest spirital arms and weapons for a period of time. As a bonus action, you grow extra arms that give you advantage on one of your attacks made each turn and gain a bonus of +2 to Armor Class. This lasts for 1 minute or until you’re Incapacitated.\nOnce you take this bonus action, you can’t do so again until you finish a long rest, unless you expend 2 Cursed Spirit die to take it again.",
           "page": 204,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ],
           "toggle": {
             "id": "silver_mist",
             "label": "Silver Mist (1 minute)",
@@ -736,19 +761,56 @@
           "level": 3,
           "name": "Apprentice Chef",
           "text": "Beginning when you choose this style at 3rd level, you’ve begun to learn the fundamentals of Ramen Kenpo, transforming noodles into formidable weapons. You gain proficiency with Cook’s Utensils, and any melee weapon you have equipped can be used as Cook’s Utensils for the purposes of checks. Also you may use your ramen dice in place of the damage dice for the weapon if your ramen dice is higher.\nAdditionally, when you make an attack action, you may replace one of your attacks with one of the following ramen techniques. You can only use one of these features per turn.\nRamen Beam. Fire sharpened ramen noodles in a 10 ft. cone. Creatures in the area must make a Dexterity saving throw against your Ramen save DC. On a failed save, they take 2 Ramen Dice in piercing damage, or half as much on a success.\nNoodle Whip. Make a melee attack against a creature within 15 ft. On a hit, they take 2 Ramen Dice + Dexterity or Strength modifier in bludgeoning damage and you may pull the creature up to 10 ft. towards you.",
-          "page": 206
+          "page": 206,
+          "effects": [
+            {
+              "type": "display",
+              "label": "Ramen save DC",
+              "expr": "8 + prof + mod.con"
+            }
+          ],
+          "rolls": [
+            {
+              "label": "Ramen Beam",
+              "dice": "2{level>=18 ? 'd12' : level>=15 ? 'd10' : level>=10 ? 'd8' : level>=7 ? 'd6' : 'd4'}",
+              "kind": "damage"
+            },
+            {
+              "label": "Noodle Whip",
+              "dice": "2{level>=18 ? 'd12' : level>=15 ? 'd10' : level>=10 ? 'd8' : level>=7 ? 'd6' : 'd4'} + {max(mod.str, mod.dex)}",
+              "kind": "damage"
+            }
+          ]
         },
         {
           "level": 3,
           "name": "Home Cooking",
           "text": "Also at 3rd level, during a short or long rest, you can prepare an amount of special ramen dishes equal to double your proficiency bonus. Each creature that eats the dish gains temporary hit points equal to 1 Ramen Dice + half your Warrior level (rounded up). These temporary hit points last until their next short or long rest.",
-          "page": 206
+          "page": 206,
+          "uses": {
+            "max": "prof * 2",
+            "recharge": "short"
+          },
+          "rolls": [
+            {
+              "label": "Temporary hit points from a dish",
+              "dice": "{level>=18 ? 4 : level>=15 ? 3 : level>=10 ? 2 : 1}{level>=18 ? 'd12' : level>=15 ? 'd10' : level>=10 ? 'd8' : level>=7 ? 'd6' : 'd4'} + {ceil(level / 2)}",
+              "kind": "other"
+            }
+          ]
         },
         {
           "level": 7,
           "name": "Advanced Formula",
           "text": "At 7th level, your ramen mastery reaches new heights, allowing you to create defensive armor. As a bonus action, you can summon Ra-Men’s Formal Suit, lasting for 1 minute or until its temporary hit points are depleted. While active, you gain:\nTemporary hit points equal to 3 times your Warrior level.\nAC bonus equal to your proficiency bonus / 2 (rounded up).\nYou grow one size larger, and your melee and noodle features reach increases by 5 feet.\nIncrease ramen technique’s ramen dice by 1.\nOnce you use Ra-Men’s Formal Suit, you can’t do so again until you finish a long rest.",
-          "page": 206
+          "page": 206,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 10,
@@ -829,7 +891,25 @@
           "level": 3,
           "name": "Ryuo Training",
           "text": "Also at 3rd level, you awaken your skill in Ryuo, represented by your Ryuo Dice. You have a number of these dice equal to twice your proficiency bonus, fueling various techniques described below.\nSome techniques expend Ryuo Dice, as specified in their descriptions. You cannot use a technique if you lack the required dice. You regain all expended Ryuo Dice after finishing a long rest. Additionally, when you roll initiative, you regain one expended Ryuo Die.\nTo use these features, you must be wielding two melee weapons that deal slashing damage.\nParadise Waterfall. When you hit a creature with a melee weapon attack, you can expend one Ryuo Die to deal extra damage equal to the roll. For each size category the target is larger than you, you can expend an additional Ryuo Die, adding the result to the damage for each die spent.\nTwin Peach Guard. As a reaction when you are hit by an attack or forced to make a saving throw, you can expend one Ryuo Die and roll it. Add the result to your AC against the triggering attack or to your saving throw.",
-          "page": 207
+          "page": 207,
+          "effects": [
+            {
+              "type": "display",
+              "label": "Ryuo save DC",
+              "expr": "8 + prof + mod.str"
+            }
+          ],
+          "uses": {
+            "max": "prof * 2",
+            "recharge": "long"
+          },
+          "rolls": [
+            {
+              "label": "Ryuo Die",
+              "dice": "1{level>=17 ? 'd12' : level>=11 ? 'd10' : level>=5 ? 'd8' : 'd6'}",
+              "kind": "other"
+            }
+          ]
         },
         {
           "level": 7,

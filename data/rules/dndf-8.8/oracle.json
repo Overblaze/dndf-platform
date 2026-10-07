@@ -20,7 +20,14 @@
           "level": 2,
           "name": "Whispering Bones",
           "text": "When you choose this subclass at 2nd level, you can roll a set of marked bones to curse a target with bad luck. As an action, target a creature within 30 ft. of you to make a Wisdom saving throw against your Spell save DC. On a failed save the creature has disadvantage on its next attack roll or saving throw.\nYou can use this feature a number of times equal to your proficiency bonus, regaining expended uses after a long rest.",
-          "page": 164
+          "page": 164,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 6,
@@ -31,6 +38,11 @@
             {
               "type": "note",
               "label": "Advantage on death saving throws"
+            },
+            {
+              "type": "display",
+              "label": "Temporary hit points",
+              "expr": "level * 2"
             }
           ]
         },

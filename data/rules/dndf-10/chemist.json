@@ -549,7 +549,14 @@
           "level": 2,
           "name": "Vaporous Concoctions",
           "text": "Starting at 2nd level, you can create airborne chemical mixtures that affect the battlefield. As an action, you can throw a flask of vaporous concoction to a point within 30 feet, creating a 10-foot-radius cloud of gas that lasts for 1 minute. The cloud is embued following effects:\nAllies who enter for the first time on their turn or start their turn in the area within the cloud gain temporary hit points equal to your Proficiency Bonus + your Wisdom modifier.\nEnemies within the cloud have disadvantage on Strength and Dexterity saving throws until the end of their next turn.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all expended uses after a long rest.",
-          "page": 96
+          "page": 96,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 2,
@@ -947,7 +954,21 @@
           "level": 2,
           "name": "Icy Fortitude",
           "text": "Starting at 2nd level, you can enhance yourself or an ally with a surge of icy resilience. As a bonus action, you touch a willing creature and grant them temporary hit points equal to your Chemist level + your Wisdom modifier. Additionally, the affected creature becomes coated in a thin layer of frost, which chills any attacker.\nFor the duration of these temporary hit points, any creature that hits the target with a melee attack takes cold damage equal to your Wisdom modifier and is slowed by 10 ft until the end of their next turn.\nYou may not use this feature on a target that has icy fortitude active on themself. You can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses after a long rest.",
-          "page": 98
+          "page": 98,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ],
+          "rolls": [
+            {
+              "label": "Temporary hit points granted",
+              "dice": "{level + mod.wis}",
+              "kind": "other"
+            }
+          ]
         },
         {
           "level": 2,
@@ -981,6 +1002,10 @@
           "name": "Full Yeti Transformation",
           "text": "At 10th level, you can fully transform into a Yeti, taking on its monstrous form to unleash your full icy potential. As an action, you can transform into a Yeti Form for up to 1 hour or until you end the transformation as a bonus action. While in this form, you gain the following benefits as well as all benefits from the partial yeti transformation feature:\nYeti Strength: You gain advantage on Strength checks and saving throws, and your unarmed strikes deal 1d8 + your Strength modifier cold damage.\nChilling Presence: As an action, you can unleash a chilling roar that forces all creatures within 15 feet of you to make a Wisdom saving throw against your Chemist spell save DC or be frightened and slowed by 10 ft. until the start of your next turn.\nIcy Breath: As an action, you can exhale a cone of icy wind in a 15-foot cone. Creatures in the area must make a Constitution saving throw, taking 4d6 cold damage on a failed save and having their speed reduced to 0 until the end of their next turn. On a successful save, they take half damage and are not slowed.\nOnce you use Full Yeti Transformation, you cannot do so again until you finish a long rest.",
           "page": 98,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
           "rolls": [
             {
               "label": "1d8",
@@ -994,6 +1019,7 @@
             }
           ],
           "auto": [
+            "uses",
             "rolls"
           ]
         },
@@ -1238,6 +1264,10 @@
           "name": "Firebombs",
           "text": "At 6nd level, you can craft volatile firebombs that create fiery explosions. As an action, you can throw a firebomb at a point you can see within 30 feet exploding in a 10- foot radius. Creatures in the radius must make a Dexterity saving throw against your Chemist spell save DC, taking 3d6 fire damage on a failed save and half damage on a success.\nThe damage increases by 1d6 when you reach 10th level (4d6), and 14th level (5d6).\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses after a short or long rest.",
           "page": 100,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
           "rolls": [
             {
               "label": "3d6 fire damage",
@@ -1261,6 +1291,7 @@
             }
           ],
           "auto": [
+            "uses",
             "rolls"
           ]
         },
@@ -1269,6 +1300,10 @@
           "name": "Ignition Burst",
           "text": "At 10th level, you can unleash a burst of fiery energy from your body when struck. When a creature hits you with a melee attack, you can use your reaction to release an Ignition Burst, dealing 3d6 fire damage to the attacker and all creatures within 5 feet of you. Creatures in the area must make a Dexterity saving throw or take full damage; on a successful save, they take half damage.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses after a long rest.",
           "page": 100,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
           "rolls": [
             {
               "label": "3d6 fire damage",
@@ -1277,6 +1312,7 @@
             }
           ],
           "auto": [
+            "uses",
             "rolls"
           ]
         },

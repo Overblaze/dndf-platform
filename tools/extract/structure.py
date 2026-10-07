@@ -527,6 +527,9 @@ more("subclass.bruiser.drunken_dragon", {
     "Liquid Courage": {"expect": "but your movement speed is reduced by 10 feet",
                        "toggle": {"id": "sorrowful_stagger", "label": "Sorrowful Stagger (rolled a 2)", "effects": [{"type": "speed", "value": -10}, note("Resistance to all damage")]}},
 })
+more("subclass.bruiser.drunken_dragon", {
+    "Drunken State": {"only": "dndf-10", "expect": "You can create up to 5 beverages per long rest", "uses": {"max": 5, "recharge": "long"}},
+})
 more("subclass.conqueror.warmonger", {
     "Warmonger’s Rage": {
         "expect": "Your movement speed increases by 10 feet",
@@ -535,6 +538,7 @@ more("subclass.conqueror.warmonger", {
             {**note("One additional weapon attack when you take the Attack action"), "when": "level<16"},
             {**note("Three additional weapon attacks when you take the Attack action"), "when": "level>=16"},
         ]},
+        "rolls": [{"label": "Hit points when you drop a creature", "dice": "{level}", "kind": "heal"}],
     },
     "Battlefield Veteran": {"expect": "you have advantage on saving throws against being frightened", "effects": [note("Advantage on saving throws against being frightened")]},
 })
@@ -633,6 +637,109 @@ more("subclass.warrior.black_weapon", {
     "Superior Sharpened Spirit": {"only": "dndf-8.8", "expect": "your weapon attacks score a critical hit on a roll of 17-20", "effects": [note("Weapon attacks score a critical hit on 17–20")]},
 })
 
+# --- Subclass pools: dice and uses a subclass owns, the die growing with level -----------
+
+
+def die(*steps: tuple[int, str], first: str) -> str:
+    """A die that grows: die((5, "d8"), (11, "d10"), first="d6") → "{level>=11 ? 'd10' : level>=5 ? 'd8' : 'd6'}"."""
+    expr = f"'{first}'"
+    for level, size in steps:
+        expr = f"level>={level} ? '{size}' : {expr}"
+    return "{" + expr + "}"
+
+
+def show(label: str, expr: str) -> dict:
+    return {"type": "display", "label": label, "expr": expr}
+
+
+CURSED_DIE = die((5, "d8"), (11, "d10"), (17, "d12"), first="d6")
+RYUO_DIE = die((5, "d8"), (11, "d10"), (17, "d12"), first="d6")
+RAMEN_DIE = die((7, "d6"), (10, "d8"), (15, "d10"), (18, "d12"), first="d4")
+SIGIL_DIE = die((5, "d6"), (11, "d8"), (17, "d10"), first="d4")
+ETERNITY_DIE = die((5, "d6"), (9, "d8"), (13, "d10"), (17, "d12"), first="d4")
+RAMEN_DISHES = "{level>=18 ? 4 : level>=15 ? 3 : level>=10 ? 2 : 1}"
+
+more("subclass.oracle.eyes_of_the_future", {
+    "Dice of Eternity": {"expect": "You have an amount of dice of eternity equal to your proficiency bonus",
+                         "uses": {"max": "prof", "recharge": "short"}, "rolls": [{"label": "Die of eternity", "dice": "1" + ETERNITY_DIE, "kind": "other"}]},
+})
+more("subclass.oracle.occult_sigilist", {
+    "Sacrificial Sigil Creation": {
+        "expect": "You gain a number of sigil dice equal to twice your proficiency bonus",
+        "uses": {"max": "prof * 2", "recharge": "long"},
+        "rolls": [{"label": "Sigil die (the damage you take)", "dice": "1" + SIGIL_DIE, "kind": "other"}],
+    },
+})
+more("subclass.oracle.soul_of_the_present", {
+    # Sustained Vitality (11th) doubles Soul Aura's uses; the counter stays on Soul Aura.
+    "Soul Aura": {"expect": "temporary hit points equal to your Wisdom modifier + your Oracle level (minimum of 1)",
+                  "uses": {"max": "level>=11 ? prof * 2 : prof", "recharge": "long"}, "action": "bonus",
+                  "rolls": [{"label": "Temporary hit points granted", "dice": "{max(1, mod.wis + level)}", "kind": "other"}]},
+    "Sustained Vitality": {"expect": "you can use your Soul Aura feature a number of times equal to double your proficiency bonus", "uses": None},
+})
+more("subclass.oracle.bones_of_sight", {
+    "Death’s Rattle": {"expect": "you gain advantage on death saving throws", "effects": [note("Advantage on death saving throws"), show("Temporary hit points", "level * 2")]},
+})
+more("subclass.warrior.cursed_soul", {
+    "Champion of Malice": {
+        "expect": "You have a number of these dice equal to twice your Proficiency Bonus",
+        "uses": {"max": "prof * 2", "recharge": "long"},
+        "rolls": [{"label": "Cursed Spirit die", "dice": "1" + CURSED_DIE, "kind": "other"}],
+        "effects": [show("Curse save DC", "8 + prof + mod.int")],
+    },
+})
+more("subclass.warrior.ryuo_samurai", {
+    "Ryuo Training": {
+        "expect": "You have a number of these dice equal to twice your proficiency bonus",
+        "uses": {"max": "prof * 2", "recharge": "long"},
+        "rolls": [{"label": "Ryuo Die", "dice": "1" + RYUO_DIE, "kind": "other"}],
+        "effects": [show("Ryuo save DC", "8 + prof + mod.str")],
+    },
+})
+more("subclass.warrior.ramen_kenpo", {
+    "Apprentice Chef": {
+        "expect": "they take 2 Ramen Dice in piercing damage",
+        "rolls": [{"label": "Ramen Beam", "dice": "2" + RAMEN_DIE, "kind": "damage"},
+                  {"label": "Noodle Whip", "dice": "2" + RAMEN_DIE + " + {max(mod.str, mod.dex)}", "kind": "damage"}],
+        "effects": [show("Ramen save DC", "8 + prof + mod.con")],
+    },
+    "Home Cooking": {
+        "expect": "you can prepare an amount of special ramen dishes equal to double your proficiency bonus",
+        "uses": {"max": "prof * 2", "recharge": "short"},
+        "rolls": [{"label": "Temporary hit points from a dish", "dice": RAMEN_DISHES + RAMEN_DIE + " + {ceil(level / 2)}", "kind": "other"}],
+    },
+})
+more("subclass.martial_artist.six_powers", {
+    "Shave": {"expect": "You can use this feature a number of times equal to your proficiency bonus", "uses": {"max": "prof", "recharge": "long"}, "action": "bonus"},
+})
+more("subclass.priest.cherry_blossom", {
+    # One use comes back on a short rest, all of them on a long rest.
+    "Calming Branches": {"expect": "You regain one use of this feature after a short rest and all expended uses after a long rest", "uses": {"max": "prof", "recharge": "long"}, "action": "reaction"},
+})
+more("subclass.devilforged.devil_bombardier", {
+    "Devilbomb Creation": {"expect": "you can create a number of bombs equal to your proficiency bonus, regaining all expended uses after a long rest", "uses": {"max": "prof", "recharge": "long"}},
+})
+more("subclass.devilforged.firearm_smithing", {
+    "Hellfire Artillery": {"expect": "a number of times equal to your porficiency bonus", "uses": {"max": "prof", "recharge": "long"}, "action": "bonus"},
+})
+more("subclass.devilforged.devil_bulwark", {
+    "Improved Bulwark Stance": {"expect": "Gain an amount of temporary hit points equal to double your devilforged level",
+                                "rolls": [{"label": "Temporary hit points", "dice": "{level * 2}", "kind": "tempHp"}]},
+})
+more("subclass.chemist.cryochemist", {
+    "Icy Fortitude": {"expect": "temporary hit points equal to your Chemist level + your Wisdom modifier",
+                      "rolls": [{"label": "Temporary hit points granted", "dice": "{level + mod.wis}", "kind": "other"}]},
+})
+more("subclass.martial_artist.black_leg_style", {
+    "Stylish Boost": [
+        {"expect": "temporary hit points equal to half you Martial Artist level rounded up", "rolls": [{"label": "Temporary hit points", "dice": "{ceil(level / 2)}", "kind": "tempHp"}]},
+        {"expect": "Gain temporary hit points equal to your martial artist level", "rolls": [{"label": "Temporary hit points", "dice": "{level}", "kind": "tempHp"}]},
+    ],
+})
+more("subclass.hybrid.germa", {
+    "Cell Regeneration": {"expect": "regain a number of HP equal to your Strength modifier", "rolls": [{"label": "Hit points regained (1 hybrid point)", "dice": "{max(0, mod.str)}", "kind": "heal"}]},
+})
+
 _seen_subclasses: set[str] = set()
 _missing: dict[tuple[str, str], list[str]] = {}
 _found: set[tuple[str, str]] = set()
@@ -668,7 +775,9 @@ def apply_subclass_structure(version: str, entry: dict, problems: list[str]) -> 
             problems.append(f"{entry['name']} ({version}): '{name}' is worded differently here, so its numbers were not applied")
             continue
         for field in FEATURE_FIELDS:
-            if field in fields:
+            if field in fields and fields[field] is None:
+                feature.pop(field, None)  # the detector's guess was wrong and there is nothing to put in its place
+            elif field in fields:
                 feature[field] = fields[field]
         if "auto" in feature:
             feature["auto"] = [a for a in feature["auto"] if a not in fields]

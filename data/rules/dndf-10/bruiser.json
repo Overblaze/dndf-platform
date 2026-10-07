@@ -716,7 +716,11 @@
           "level": 3,
           "name": "Drunken State",
           "text": "Starting when you choose this subclass at 3rd level, you learn how to make alchoholic beverages. During a long rest, you may spend ฿2,000 to create an alcoholic beverage of your choice. You can create up to 5 beverages per long rest.\nEvery time you drink an alcoholic beverage you increase your Drunken State level by +1. If you do not consume any alcohol for 1 minute your Drunken State level decreases by -1 until you get to 0, which is considered your sober state.",
-          "page": 89
+          "page": 89,
+          "uses": {
+            "max": 5,
+            "recharge": "long"
+          }
         },
         {
           "level": 3,

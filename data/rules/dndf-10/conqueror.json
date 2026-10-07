@@ -661,7 +661,14 @@
                 "when": "level>=16"
               }
             ]
-          }
+          },
+          "rolls": [
+            {
+              "label": "Hit points when you drop a creature",
+              "dice": "{level}",
+              "kind": "heal"
+            }
+          ]
         },
         {
           "level": 12,
@@ -722,7 +729,14 @@
           "level": 12,
           "name": "Legacy of Defiance",
           "text": "Starting at 12th level, your will inspires others to press on even in the darkest hour. When an allied creature within 30 feet of you drops to 0 hit points but is not killed outright, you can use your reaction to let them remain at 1 hit point instead.\nOnce a creature benefits from this feature, it can’t do so again until it finishes a long rest. You can use this reaction a number of times equal to your Wisdom modifier (minimum of once), regaining all uses on a long rest.",
-          "page": 112
+          "page": 112,
+          "uses": {
+            "max": "max(1, mod.wis)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 16,

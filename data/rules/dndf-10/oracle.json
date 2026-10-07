@@ -535,7 +535,14 @@
           "level": 2,
           "name": "Whispering Bones",
           "text": "When you choose this subclass at 2nd level, you can roll a set of marked bones to curse a target with bad luck. As an action, target a creature within 30 ft. of you to make a Wisdom saving throw against your Spell save DC. On a failed save the creature has disadvantage on its next attack roll or saving throw.\nYou can use this feature a number of times equal to your proficiency bonus, regaining expended uses after a long rest.",
-          "page": 159
+          "page": 159,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 6,
@@ -546,6 +553,11 @@
             {
               "type": "note",
               "label": "Advantage on death saving throws"
+            },
+            {
+              "type": "display",
+              "label": "Temporary hit points",
+              "expr": "level * 2"
             }
           ]
         },
@@ -658,7 +670,18 @@
           "level": 5,
           "name": "Dice of Eternity",
           "text": "You have an amount of dice of eternity equal to your proficiency bonus, which are d4s. A die of eternity is expended when you use it. You regain all of your expended dice of eternity when you finish a short or long rest.\nAdditionally, at 5th level the die turn into a d6, at 9th level the die turn into a d8, at 13th level the die turn into a d10, and at 17th level the die turn into a d12.",
-          "page": 160
+          "page": 160,
+          "uses": {
+            "max": "prof",
+            "recharge": "short"
+          },
+          "rolls": [
+            {
+              "label": "Die of eternity",
+              "dice": "1{level>=17 ? 'd12' : level>=13 ? 'd10' : level>=9 ? 'd8' : level>=5 ? 'd6' : 'd4'}",
+              "kind": "other"
+            }
+          ]
         },
         {
           "level": 6,
@@ -912,29 +935,15 @@
           "page": 161,
           "rolls": [
             {
-              "label": "1d4",
-              "dice": "1d4",
-              "kind": "other"
-            },
-            {
-              "label": "1d6",
-              "dice": "1d6",
-              "kind": "other"
-            },
-            {
-              "label": "1d8",
-              "dice": "1d8",
-              "kind": "other"
-            },
-            {
-              "label": "1d10",
-              "dice": "1d10",
+              "label": "Sigil die (the damage you take)",
+              "dice": "1{level>=17 ? 'd10' : level>=11 ? 'd8' : level>=5 ? 'd6' : 'd4'}",
               "kind": "other"
             }
           ],
-          "auto": [
-            "rolls"
-          ]
+          "uses": {
+            "max": "prof * 2",
+            "recharge": "long"
+          }
         },
         {
           "level": 6,
@@ -1001,11 +1010,16 @@
           "text": "When you choose this subclass at 2nd level, you gain the ability to create a soul aura that grants temporary hit points to your allies. As a bonus action, you can choose one ally within 30 feet of you (including yourself) to gain temporary hit points equal to your Wisdom modifier + your Oracle level (minimum of 1). These temporary hit points last for 1 hour. You can use this feature a number of times equal to your proficiency bonus, regaining all expended uses when you finish a long rest.",
           "page": 162,
           "uses": {
-            "max": "prof",
+            "max": "level>=11 ? prof * 2 : prof",
             "recharge": "long"
           },
-          "auto": [
-            "uses"
+          "action": "bonus",
+          "rolls": [
+            {
+              "label": "Temporary hit points granted",
+              "dice": "{max(1, mod.wis + level)}",
+              "kind": "other"
+            }
           ]
         },
         {

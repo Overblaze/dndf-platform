@@ -178,6 +178,29 @@ Tested in `packages/engine/test/subclasses.test.ts`. "Switch" means a toggle on 
 | Warrior, Kuja Huntress: Snake Companion | expertise in Acrobatics and Survival | EH10 p.204 · EH8.8 p.205 |
 | Oracle, Voices of the Past: Ancestral Echoes | proficiency in History | EH10 p.163 · EH8.8 p.168 |
 
+### Subclass pools and dice
+| Subclass, feature | Pool | Die or amount | Page |
+|---|---|---|---|
+| Warrior, Ryuo Samurai: Ryuo Training | 2 × prof, long rest | d6, d8 at 5th, d10 at 11th, d12 at 17th; Ryuo save DC 8 + prof + Str | EH10 p.207 · EH8.8 p.207 |
+| Warrior, Cursed Soul: Champion of Malice | 2 × prof Cursed Spirit dice, long rest | d6, d8 at 5th, d10 at 11th, d12 at 17th; Curse save DC 8 + prof + Int | EH10 p.203 · EH8.8 p.202 |
+| Warrior, Ramen Kenpo: Apprentice Chef | — | Ramen Die d4, d6 at 7th, d8 at 10th, d10 at 15th, d12 at 18th; Ramen save DC 8 + prof + Con | EH10 p.206 · EH8.8 p.206 |
+| Warrior, Ramen Kenpo: Home Cooking | 2 × prof dishes, short rest | 1 Ramen Die + ceil(level / 2) temporary hit points; one more die at 10th, 15th and 18th | EH10 p.206 · EH8.8 p.206 |
+| Oracle, Eyes of the Future: Dice of Eternity | prof, short rest | d6 at 5th, d8 at 9th, d10 at 13th, d12 at 17th | EH10 p.160 · EH8.8 p.165 |
+| Oracle, Occult Sigilist: Sacrificial Sigil Creation | 2 × prof sigil dice, long rest | d4, d6 at 5th, d8 at 11th, d10 at 17th | EH10 p.161 · EH8.8 p.166 |
+| Oracle, Soul of the Present: Soul Aura | prof, long rest; 2 × prof from 11th (Sustained Vitality) | Wis + level temporary hit points (minimum 1) | EH10 p.162 · EH8.8 p.167 |
+| Priest, Cherry Blossom Domain: Calming Branches | prof, long rest (one use back on a short rest, by hand) | — | EH10 p.167 · EH8.8 p.172 |
+| Martial Artist, Six Powers: Shave | prof, long rest | — | EH10 p.155 |
+| Bruiser, Drunken Dragon: Drunken State | 5 beverages, long rest | — | EH10 p.89 |
+| Devilforged, Devil Bombardier: Devilbomb Creation | prof bombs, long rest | — | EH8.8 p.117 |
+| Devilforged, Firearm Smithing: Hellfire Artillery | prof, long rest | — | EH8.8 p.120 |
+| Chemist, Cryochemist: Icy Fortitude | prof, long rest | level + Wis temporary hit points | EH10 p.98 · EH8.8 p.98 |
+| Martial Artist, Black Leg Style: Stylish Boost | once per short rest | ceil(level / 2) temporary hit points (v10); level (v8.8) | EH10 p.152 · EH8.8 p.157 |
+| Devilforged, Devil Bulwark: Improved Bulwark Stance | — | 2 × level temporary hit points | EH10 p.123 |
+| Conqueror, Warmonger: Warmonger’s Rage | once per long rest | level hit points when you drop a creature | EH10 p.111 · EH8.8 p.110 |
+| Hybrid, Germa Lineage: Cell Regeneration | 1 hybrid point | Str modifier hit points | EH10 p.137 · EH8.8 p.142 |
+
+Every other "a number of times equal to your proficiency bonus / X modifier … per rest" and "once … until you finish a rest" sentence in a subclass feature is read automatically into a counter (`auto: ["uses"]`).
+
 "You gain expertise in X" is read as proficiency with the bonus doubled, whether or not the character had the proficiency already.
 Standing resistances, immunities and advantages a subclass gives are listed on the sheet under "In effect" (word for word in the feature); they change no number.
 Dice named in a feature's text ("takes 2d8 fire damage") become roll buttons on that feature automatically; these are marked `auto: ["rolls"]` in the data.

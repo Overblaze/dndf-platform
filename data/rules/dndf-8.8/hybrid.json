@@ -703,7 +703,14 @@
           "level": 6,
           "name": "Cell Regeneration",
           "text": "Starting at 6th level, due to your lineage factor your body heals quicker than normal. As a bonus action you can spend one hybrid point to instantly regain a number of HP equal to your Strength modifier.\nAt 14th level this bonus increases to 2 x your Strength modifier.",
-          "page": 142
+          "page": 142,
+          "rolls": [
+            {
+              "label": "Hit points regained (1 hybrid point)",
+              "dice": "{max(0, mod.str)}",
+              "kind": "heal"
+            }
+          ]
         },
         {
           "level": 10,

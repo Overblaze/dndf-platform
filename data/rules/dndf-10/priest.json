@@ -617,7 +617,12 @@
           "level": 6,
           "name": "Calming Branches",
           "text": "At 6th level, your serene presence calms aggressors. When a creature within 10 feet of you makes a melee attack against you or an ally, you can use your reaction to impose disadvantage on the attack roll.\nYou can use this feature a number of times equal to your proficiency bonus. You regain one use of this feature after a short rest and all expended uses after a long rest.",
-          "page": 167
+          "page": 167,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "action": "reaction"
         },
         {
           "level": 8,

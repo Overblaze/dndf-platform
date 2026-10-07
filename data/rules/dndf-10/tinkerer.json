@@ -609,7 +609,14 @@
           "level": 20,
           "name": "Ultimate Technology",
           "text": "When you reach 20th level, you gain mastery over two powerful Creation Powers (Spells) and can cast them with little effort. Choose two 3rd-level Tinkerer creation powers in your spellbook as your signature creation powers . You always have these creation powers prepared, they don’t count against the number of creation powers you have prepared, and you can cast each of them once at 3rd Level without expending a creation power (spell) slot. When you do so, you can’t do so again until you finish a short or Long Rest.\nIf you want to cast either creation power at a higher level, you must expend a creation power slot as normal.",
-          "page": 184
+          "page": 184,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
         }
       ],
       "formulas": {
@@ -929,7 +936,14 @@
           "level": 2,
           "name": "Contagion Canister",
           "text": "Also at 2nd level, you create Contagion Canisters, throwable devices that release airborne pathogens. As an action, you can throw a canister to a point within 30 feet, creating a 10-foot-radius cloud that lasts for 1 minute. Choose an Airborne Disease from the Plague Engineer Disease Table. Creatures that start their turn in the cloud or enter it for the first time must make a Constitution saving throw against your Creation Power save DC or suffer the disease’s Active Effect for 1 minute. The cloud disperses early if subjected to strong wind.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once), regaining all uses after a long rest.",
-          "page": 187
+          "page": 187,
+          "uses": {
+            "max": "max(1, mod.int)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 6,
@@ -947,7 +961,14 @@
           "level": 10,
           "name": "Epidemic Protocol",
           "text": "Beginning at 10th level, you develop advanced techniques to deliver pathogens with precision through your technological creations. When you cast a single- target spell that requires an attack roll, you can expend one use of your Pathogen Injector to infuse the spell with an Injectable Disease from the Plague Engineer Disease Table. If the spell hits, they must also make a Constitution saving throw against your Creation Power save DC. On a failure, they suffer the Active Effect of the chosen disease for 1 minute. They can repeat the saving throw at the end of each of their turns, ending the effect on a success. The disease’s effects apply after the damage is dealt.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once), regaining all expended uses after a long rest.",
-          "page": 187
+          "page": 187,
+          "uses": {
+            "max": "max(1, mod.int)",
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 14,

@@ -2035,6 +2035,13 @@
       },
       "text": "You have discovered the secrets of the sky and refined your mastery over its relics.\nIncrease your Wisdom or Intelligence by 1, to a maximum of 20.\nYou can cast Feather Fall a number of times equal to your proficiency bonus without expending a spell slot, regaining all uses after a long rest.\nWhenever you use a dial, you may add your proficiency bonus to attack rolls, saving throw DCs, or damage rolls associated with that dial’s effect.",
       "prerequisite": "Sky Islander",
+      "uses": {
+        "max": "prof",
+        "recharge": "long"
+      },
+      "auto": [
+        "uses"
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

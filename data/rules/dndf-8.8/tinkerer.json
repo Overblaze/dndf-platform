@@ -602,7 +602,14 @@
           "level": 20,
           "name": "Ultimate Technology",
           "text": "When you reach 20th level, you gain mastery over two powerful Creation Powers (Spells) and can cast them with little effort. Choose two 3rd-level Tinkerer creation powers in your spellbook as your signature creation powers . You always have these creation powers prepared, they don’t count against the number of creation powers you have prepared, and you can cast each of them once at 3rd Level without expending a creation power (spell) slot. When you do so, you can’t do so again until you finish a short or Long Rest.\nIf you want to cast either creation power at a higher level, you must expend a creation power slot as normal.",
-          "page": 194
+          "page": 194,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
         }
       ],
       "formulas": {
