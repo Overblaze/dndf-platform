@@ -264,13 +264,13 @@ def make_feature(heading: Heading, blocks: list[Block], deeper: int) -> dict:
 
 REST = r"(short or long|long|short)"
 ONCE = re.compile(
-    rf"(?:once you use this (?:feature|ability|trait)[^.]*?|you (?:can’t|cannot|can not) use (?:this feature|it)(?: this way)? again )until you (?:finish|complete) a {REST} rest"
+    rf"(?:once you use this (?:feature|ability|trait)[^.]*?|you (?:can’t|cannot|can not) (?:use (?:this feature|it)(?: this way)?|do so) again )until you (?:finish|complete) a {REST} rest"
     rf"|once you use (?:this feature|it)[^.]*?you must (?:finish|complete) a {REST} rest before you can use it again", re.I
 )
 ONCE_PER = re.compile(rf"\bonce per {REST} rest\b", re.I)
 TIMES = re.compile(
     rf"(?:a number|an amount) of times equal to (double |twice |half )?your (proficiency bonus|\w+ modifier)"
-    rf"(?:[^.]*?\.?[^.]*?(?:regain|until)[^.]*?(?:finish|complete) a| per|, regaining all uses after a) {REST} rest", re.I
+    rf"(?:[^.]*?\.?[^.]*?(?:regain\w*|until|before needing)[^.]*?(?:finish|complete|after|on|take) a| per) {REST} rest", re.I
 )
 WORD_TIMES = {"once": 1, "twice": 2, "two times": 2, "three times": 3, "four times": 4}
 FIXED_TIMES = re.compile(

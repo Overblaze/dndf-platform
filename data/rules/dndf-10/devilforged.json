@@ -441,7 +441,14 @@
           "level": 12,
           "name": "Lineage Imitation",
           "text": "At 12th level, you learn to briefly replicate Devil Fruit techniques by analyzing their lineage expression.\nWhen a creature you can see other than yourself within 60 feet of you uses a Devil Fruit feature, you can use your reaction to copy the structure of that feature, provided you are wielding a Devil Fruit-infused weapon of the same type as the feature’s source fruit: Zoan, Paramecia, or Logia.\nThe copied feature is stored in your active infused weapon until the end of your next turn. While it is stored, you can use the copied feature once, requiring the same action, bonus action, or reaction that the original feature required. If the copied feature requires a saving throw or attack roll, it uses your Devilforged save DC or Devilforged attack modifier.\nWhen you use the copied feature, apply the following changes:\nAny damage dealt by the copied feature is halved. Any range of the copied feature is halved.\nIf the feature creates an area of effect, halve each of the area’s dimensions.\nIf the feature has a duration longer than 1 minute, its duration becomes 1 minute.\nIf the feature has limited uses, special resources, or a cost, you do not pay that cost, but you cannot copy a feature that consumes a permanent resource or requires the user to sacrifice a Devil Fruit, body part, soul, or other irreplaceable component.\nYou cannot copy an Awakening, transformation, passive trait, resistance, immunity, Legendary action, lair action, regional effect, or feature granted by another infused weapon.\nOnce you successfully copy a devil fruit feature with this feature, you cannot do so again until you finish a short or long rest.",
-          "page": 119
+          "page": 119,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 14,
@@ -690,7 +697,14 @@
           "level": 10,
           "name": "Improved Bulwark Stance",
           "text": "Starting at 10th level, while your Expanding Bulwark is active, its benefits improve, replacing the feature with the following:\nYou gain three-quarters cover.\nAllied creatures of your choice within 10 ft. of you gain half cover.\nGain an amount of temporary hit points equal to double your devilforged level.\nYou cannot wield any weapons while the shield is expanded.",
-          "page": 123
+          "page": 123,
+          "rolls": [
+            {
+              "label": "Temporary hit points",
+              "dice": "{level * 2}",
+              "kind": "tempHp"
+            }
+          ]
         },
         {
           "level": 14,

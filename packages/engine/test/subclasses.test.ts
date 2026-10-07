@@ -185,6 +185,80 @@ describe('skills and saves', () => {
   });
 });
 
+describe('pools a subclass owns', () => {
+  const pool = (sheet: Sheet, name: string) => sheet.resources.find((r) => r.name === name);
+  const feature = (sheet: Sheet, name: string) => sheet.features.find((f) => f.name === name)!;
+  const dieAt = (version: RulesVersion, classId: string, subclass: string, name: string, levels: number[], scores: Partial<AbilityScores> = {}) =>
+    levels.map((level) => feature(build(version, classId, subclass, level, scores), name).rolls[0]!.dice);
+
+  it.each(BOTH)('Warrior, Ryuo Samurai: twice proficiency in Ryuo Dice, back on a long rest; d6, d8 at 5th, d10 at 11th, d12 at 17th; save DC 8 + prof + Str (%s)', (version) => {
+    const sheet = build(version, 'class.warrior', 'subclass.warrior.ryuo_samurai', 5, { str: 16 });
+    expect(pool(sheet, 'Ryuo Training')).toMatchObject({ max: 6, recharge: 'long' }); // prof 3 × 2
+    expect(pool(build(version, 'class.warrior', 'subclass.warrior.ryuo_samurai', 17), 'Ryuo Training')!.max).toBe(12); // prof 6 × 2
+    expect(dieAt(version, 'class.warrior', 'subclass.warrior.ryuo_samurai', 'Ryuo Training', [3, 5, 11, 17])).toEqual(['1d6', '1d8', '1d10', '1d12']);
+    expect(feature(sheet, 'Ryuo Training').displays).toContainEqual({ label: 'Ryuo save DC', value: '14' }); // 8 + 3 + 3
+  });
+
+  it.each(BOTH)('Warrior, Cursed Soul: twice proficiency in Cursed Spirit dice; d6, d8 at 5th, d10 at 11th, d12 at 17th; Curse save DC 8 + prof + Int (%s)', (version) => {
+    const sheet = build(version, 'class.warrior', 'subclass.warrior.cursed_soul', 9, { int: 14 });
+    expect(pool(sheet, 'Champion of Malice')).toMatchObject({ max: 8, recharge: 'long' }); // prof 4 × 2
+    expect(dieAt(version, 'class.warrior', 'subclass.warrior.cursed_soul', 'Champion of Malice', [3, 5, 11, 17])).toEqual(['1d6', '1d8', '1d10', '1d12']);
+    expect(feature(sheet, 'Champion of Malice').displays).toContainEqual({ label: 'Curse save DC', value: '14' }); // 8 + 4 + 2
+  });
+
+  it.each(BOTH)('Warrior, Ramen Kenpo: Ramen Die d4, d6 at 7th, d8 at 10th, d10 at 15th, d12 at 18th; dishes twice proficiency; a dish gives dice + half level (%s)', (version) => {
+    const sub = 'subclass.warrior.ramen_kenpo';
+    expect(dieAt(version, 'class.warrior', sub, 'Apprentice Chef', [3, 7, 10, 15, 18])).toEqual(['2d4', '2d6', '2d8', '2d10', '2d12']);
+    const sheet = build(version, 'class.warrior', sub, 10, { con: 16, dex: 14 });
+    expect(feature(sheet, 'Apprentice Chef').rolls[1]!.dice).toBe('2d8 + 2'); // Noodle Whip: 2 Ramen Dice + the better of Str 0 and Dex 2
+    expect(feature(sheet, 'Apprentice Chef').displays).toContainEqual({ label: 'Ramen save DC', value: '15' }); // 8 + 4 + 3
+    expect(pool(sheet, 'Home Cooking')).toMatchObject({ max: 8, recharge: 'short' });
+    expect(dieAt(version, 'class.warrior', sub, 'Home Cooking', [3, 10, 15, 18])).toEqual(['1d4 + 2', '2d8 + 5', '3d10 + 8', '4d12 + 9']); // one more die at 10th, 15th and 18th
+  });
+
+  it.each(BOTH)('Oracle, Eyes of the Future: proficiency in dice of eternity, back on a short rest; d6 at 5th up to d12 at 17th (%s)', (version) => {
+    const sub = 'subclass.oracle.eyes_of_the_future';
+    const level = (loadRules(version).get(sub)!.features as { name: string; level: number }[]).find((f) => f.name === 'Dice of Eternity')!.level;
+    expect(pool(build(version, 'class.oracle', sub, 9), 'Dice of Eternity')).toMatchObject({ max: 4, recharge: 'short' });
+    expect(dieAt(version, 'class.oracle', sub, 'Dice of Eternity', [Math.max(level, 5), 9, 13, 17])).toEqual(['1d6', '1d8', '1d10', '1d12']);
+  });
+
+  it.each(BOTH)('Oracle, Occult Sigilist: twice proficiency in sigil dice; d4, d6 at 5th, d8 at 11th, d10 at 17th (%s)', (version) => {
+    const sub = 'subclass.oracle.occult_sigilist';
+    expect(pool(build(version, 'class.oracle', sub, 2), 'Sacrificial Sigil Creation')).toMatchObject({ max: 4, recharge: 'long' });
+    expect(dieAt(version, 'class.oracle', sub, 'Sacrificial Sigil Creation', [2, 5, 11, 17])).toEqual(['1d4', '1d6', '1d8', '1d10']);
+  });
+
+  it.each(BOTH)('Oracle, Soul of the Present: Soul Aura proficiency times a long rest, doubled by Sustained Vitality at 11th; grants Wis + level temporary hit points (%s)', (version) => {
+    const sub = 'subclass.oracle.soul_of_the_present';
+    const at = (level: number) => build(version, 'class.oracle', sub, level, { wis: 16 });
+    expect(pool(at(10), 'Soul Aura')).toMatchObject({ max: 4, recharge: 'long' });
+    expect(pool(at(11), 'Soul Aura')!.max).toBe(8);
+    expect(pool(at(11), 'Sustained Vitality')).toBeUndefined();
+    expect(feature(at(4), 'Soul Aura').rolls[0]!.dice).toBe('7'); // Wis 3 + level 4
+  });
+
+  it.each(BOTH)('counts uses for the features the detector now reads: Icy Fortitude, Firebombs, Legacy of Defiance, Calming Branches (%s)', (version) => {
+    expect(pool(build(version, 'class.chemist', 'subclass.chemist.cryochemist', 5, { wis: 16 }), 'Icy Fortitude')).toMatchObject({ max: 3, recharge: 'long' });
+    expect(feature(build(version, 'class.chemist', 'subclass.chemist.cryochemist', 5, { wis: 16 }), 'Icy Fortitude').rolls[0]!.dice).toBe('8'); // level 5 + Wis 3
+    expect(pool(build(version, 'class.chemist', 'subclass.chemist.pyrochemist', 6), 'Firebombs')).toMatchObject({ max: 3, recharge: 'short' });
+    expect(pool(build(version, 'class.conqueror', 'subclass.conqueror.will_of_d', 12, { wis: 8 }), 'Legacy of Defiance')).toMatchObject({ max: 1, recharge: 'long' }); // minimum of once
+    expect(pool(build(version, 'class.priest', 'subclass.priest.cherry_blossom', 6), 'Calming Branches')).toMatchObject({ max: 3, recharge: 'long' });
+  });
+
+  it('v10 only: Six Powers Shave proficiency times a long rest; Drunken Dragon makes 5 beverages; Black Leg Stylish Boost half level rounded up', () => {
+    expect(pool(build(V10, 'class.martial_artist', 'subclass.martial_artist.six_powers', 11), 'Shave')).toMatchObject({ max: 4, recharge: 'long' });
+    expect(pool(build(V10, 'class.bruiser', 'subclass.bruiser.drunken_dragon', 3), 'Drunken State')).toMatchObject({ max: 5, recharge: 'long' });
+    expect(feature(build(V10, 'class.martial_artist', 'subclass.martial_artist.black_leg_style', 5), 'Stylish Boost').rolls[0]).toMatchObject({ dice: '3', kind: 'tempHp' });
+  });
+
+  it('v8.8 only: Stylish Boost gives the full level; Devil Bombardier makes proficiency bombs; Firearm Smithing summons its cannon proficiency times', () => {
+    expect(feature(build(V88, 'class.martial_artist', 'subclass.martial_artist.black_leg_style', 5), 'Stylish Boost').rolls[0]!.dice).toBe('5');
+    expect(pool(build(V88, 'class.devilforged', 'subclass.devilforged.devil_bombardier', 5), 'Devilbomb Creation')).toMatchObject({ max: 3, recharge: 'long' });
+    expect(pool(build(V88, 'class.devilforged', 'subclass.devilforged.firearm_smithing', 5), 'Hellfire Artillery')).toMatchObject({ max: 3, recharge: 'long' });
+  });
+});
+
 describe('every wired subclass feature', () => {
   it.each(BOTH)('shows its standing resistances and immunities under “In effect” (%s)', (version) => {
     const cases: [string, string, number, string][] = [

@@ -51,7 +51,14 @@
           "level": 3,
           "name": "Stylish Boost",
           "text": "Also at 3rd level, your confidence and swagger in battle invigorate you. As an action, you can perform a thematic action such as lighting a cigarette, putting your hands in your pockets, adjusting your tie, striking a confident pose, or talking about what you stand for. Immediately afterwards you gain the following:\nYour next unarmed kick if used within a minute of activating this feature automatically critically hits. Gain temporary hit points equal to your martial artist level.\nYou may not use this feature again until you complete a short or long rest.",
-          "page": 157
+          "page": 157,
+          "rolls": [
+            {
+              "label": "Temporary hit points",
+              "dice": "{level}",
+              "kind": "tempHp"
+            }
+          ]
         },
         {
           "level": 6,
@@ -162,7 +169,12 @@
           "level": 11,
           "name": "Shave",
           "text": "Starting at 11th level, you gain the ability to move or fly at extremely high speeds, appearing to teleport. You can use a bonus action to teleport up to 60 feet to an unoccupied space you can see . You then have advantage on the first melee Attack you make before the end of the turn.\nYou can use this feature a number of times equal to your proficiency bonus. After you’ve expended all these uses, you can only use Shave again by spending 1 ki point to activate it. You regain all uses of this feature after you complete a long rest.",
-          "page": 160
+          "page": 160,
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "action": "bonus"
         },
         {
           "level": 11,

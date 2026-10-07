@@ -558,7 +558,11 @@
           ],
           "auto": [
             "rolls"
-          ]
+          ],
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          }
         },
         {
           "level": 6,
@@ -1182,7 +1186,12 @@
           ],
           "auto": [
             "rolls"
-          ]
+          ],
+          "uses": {
+            "max": "prof",
+            "recharge": "long"
+          },
+          "action": "bonus"
         },
         {
           "level": 6,
@@ -1968,7 +1977,14 @@
           "name": "Thief of Five Fates",
           "group": "General Emanations",
           "text": "You can cast bane once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
-          "page": 127
+          "page": 127,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "vacuum_blast",
@@ -2056,7 +2072,14 @@
           "group": "Fifth Level Emanations",
           "text": "You can cast slow once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
           "page": 128,
-          "prerequisite": "5th Level Devilforged"
+          "prerequisite": "5th Level Devilforged",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "ice_tomb",
@@ -2144,7 +2167,14 @@
           "group": "Fifth Level Emanations",
           "text": "You can cast bestow curse once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
           "page": 129,
-          "prerequisite": "5th Level Devilforged"
+          "prerequisite": "5th Level Devilforged",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "zoan_mount",
@@ -2160,7 +2190,14 @@
           "group": "Seventh Level Emanations",
           "text": "You can cast compulsion once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
           "page": 129,
-          "prerequisite": "7th Level Devilforged"
+          "prerequisite": "7th Level Devilforged",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "blooming_logia_powers",
@@ -2208,7 +2245,14 @@
           "group": "Seventh Level Emanations",
           "text": "You can cast confusion once using a devilforged spell slot. You can’t do so again until you finish a long rest.",
           "page": 129,
-          "prerequisite": "7th Level Devilforged"
+          "prerequisite": "7th Level Devilforged",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "elemental_summon",
@@ -2216,7 +2260,14 @@
           "group": "Ninth Level Emanations",
           "text": "weapon You can cast conjure elemental once using a devilforged spell slot, the elemental dealing and resisting the appropriate damage types related to your logia infusion. (Work with your DM to choose which elemental fits your element the best.) You can’t do so again until you finish a long rest.",
           "page": 130,
-          "prerequisite": "9th Level Devilforged, Logia Infused"
+          "prerequisite": "9th Level Devilforged, Logia Infused",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "gift_of_logia_immunity",
@@ -2433,7 +2484,14 @@
           "group": "Blade Smithing Emanations",
           "text": "You can cast steel wind strike once using a devilforged spell slot, using your infused weapon as a component. You can’t do so again until you finish a long rest.",
           "page": 132,
-          "prerequisite": "9th Level Devilforged, Blade Smithing"
+          "prerequisite": "9th Level Devilforged, Blade Smithing",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "blast_hopping",
@@ -2465,7 +2523,14 @@
           "group": "Devil Bombardier Emanations",
           "text": "You can cast Flame Strike once for free. You can’t do so again until you finish a long rest.",
           "page": 132,
-          "prerequisite": "9th Level Devilforged, Devil Bombardier"
+          "prerequisite": "9th Level Devilforged, Devil Bombardier",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "short_fuse",
@@ -2499,7 +2564,14 @@
           "group": "Firearm Smithing Emanations",
           "text": "You can cast Magic Missile once for free. You can’t do so again until you finish a long rest. Additionally, you may cast Magic Missile using a devilforged spell slot.",
           "page": 133,
-          "prerequisite": "3rd Level Devilforged, Firearm Smithing"
+          "prerequisite": "3rd Level Devilforged, Firearm Smithing",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "blast_shot",
@@ -2507,7 +2579,14 @@
           "group": "Firearm Smithing Emanations",
           "text": "You can cast Fireball once for free. You can’t do so again until you finish a long rest.",
           "page": 133,
-          "prerequisite": "5th Level Devilforged, Firearm Smithing"
+          "prerequisite": "5th Level Devilforged, Firearm Smithing",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "force_cannon",
@@ -2523,7 +2602,14 @@
           "group": "Firearm Smithing Emanations",
           "text": "If your infused weapon is a firearm or ranged weapon, you can cast lightning arrow using a devilforged spell slot. You can’t do so again until you finish a short or long rest.",
           "page": 133,
-          "prerequisite": "5th Level Devilforged, Firearm Smithing"
+          "prerequisite": "5th Level Devilforged, Firearm Smithing",
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "expanded_tool_infusion",
@@ -2555,7 +2641,14 @@
           "group": "Gear Smithing Emanations",
           "text": "You can cast Absorb Elements and Shield each once for free. You can’t do so again until you finish a long rest.",
           "page": 133,
-          "prerequisite": "3rd Level Devilforged, Gear Smithing"
+          "prerequisite": "3rd Level Devilforged, Gear Smithing",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "reinforced_armor",

@@ -496,7 +496,14 @@
                 "when": "level>=16"
               }
             ]
-          }
+          },
+          "rolls": [
+            {
+              "label": "Hit points when you drop a creature",
+              "dice": "{level}",
+              "kind": "heal"
+            }
+          ]
         },
         {
           "level": 12,
