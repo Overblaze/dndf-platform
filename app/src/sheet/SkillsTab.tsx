@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { ABILITIES, ABILITY_NAMES, signed, type Stat } from '@dndf/engine';
 import { useRolls } from '../lib/rolls';
 import type { LiveCharacter } from '../lib/useCharacter';
@@ -55,6 +56,21 @@ export function SkillsTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
           <Tile stat={sheet.passivePerception} kind="plain" onOpen={onOpen} sub={' '} />
           <Tile stat={sheet.carry} kind="lb" label="Carry" onOpen={onOpen} />
         </div>
+      </section>
+      <section className="card">
+        <h2>Proficiencies</h2>
+        <dl className="facts facts-plain">
+          {([['Armor', sheet.proficiencies.armor], ['Weapons', sheet.proficiencies.weapons], ['Tools', sheet.proficiencies.tools]] as const).map(([title, list]) => (
+            <Fragment key={title}>
+              <dt>{title}</dt>
+              <dd>
+                {list.length === 0 ? 'None' : list.map((p, i) => (
+                  <span key={p.id}>{i > 0 && ', '}{p.name} <span className="page-ref">({p.from})</span></span>
+                ))}
+              </dd>
+            </Fragment>
+          ))}
+        </dl>
       </section>
     </>
   );

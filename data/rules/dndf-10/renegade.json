@@ -248,7 +248,20 @@
           "level": 3,
           "name": "Covert Operative",
           "text": "Also at 3rd level, your training in infiltration and disguise gives you the tools to operate unnoticed. You gain proficiency with the Disguise Kit, Forgery Kit, and one additional tool of your choice.\nAdditionally, when you make a Dexterity (Stealth), Charisma (Persuasion), or Charisma (Deception) check, you can treat a roll of 11 or lower on the d20 as a 12.",
-          "page": 173
+          "page": 173,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Disguise Kit"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Forgery Kit"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 5,
@@ -365,6 +378,15 @@
                 }
               ]
             }
+          ],
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Poisoner’s Kit"
+            }
+          ],
+          "auto": [
+            "effects"
           ]
         },
         {

@@ -268,7 +268,20 @@
           "level": 3,
           "name": "Covert Operative",
           "text": "Also at 3rd level, your training in infiltration and disguise gives you the tools to operate unnoticed. You gain proficiency with the Disguise Kit, Forgery Kit, and one additional tool of your choice.\nAdditionally, when you make a Dexterity (Stealth) or Charisma (Deception) check, you can treat a roll of 9 or lower on the d20 as a 10.",
-          "page": 178
+          "page": 178,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Disguise Kit"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Forgery Kit"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 9,
@@ -378,6 +391,15 @@
                 }
               ]
             }
+          ],
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Poisoner’s Kit"
+            }
+          ],
+          "auto": [
+            "effects"
           ]
         },
         {
@@ -538,7 +560,20 @@
           "level": 3,
           "name": "Bonus Proficiencies",
           "text": "When you choose this archetype at 3rd level, you gain proficiency with darts, blowguns, and giant slings.",
-          "page": 180
+          "page": 180,
+          "effects": [
+            {
+              "type": "weaponProficiency",
+              "weapon": "dart"
+            },
+            {
+              "type": "weaponProficiency",
+              "weapon": "blowgun"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 3,

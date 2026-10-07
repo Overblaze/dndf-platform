@@ -25,6 +25,8 @@ export interface ArmorDef {
   /** Armor formula: base + Dex modifier, limited to dexCap when set (0 for heavy armor). */
   base: number;
   dexCap?: number | null;
+  /** Set to force proficiency on or off; otherwise it comes from the classes, subclasses and feats. */
+  proficient?: boolean;
 }
 
 export interface CharacterClass {

@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from extract_classes import ABILITIES, BOOKS, ROOT, body_text, make_feature, skills_granted, slug, split_sections, table_rows  # noqa: E402
+from extract_classes import ABILITIES, BOOKS, ROOT, body_text, make_feature, proficiencies_granted, skills_granted, slug, split_sections, table_rows  # noqa: E402
 from structure import apply_feat_structure  # noqa: E402
 from pdfdoc import Block, Heading, Para, Table, is_footer, load_items, read_blocks  # noqa: E402
 
@@ -186,7 +186,7 @@ def extract_feats(version: str) -> list[dict]:
         made = sections_from(feat_blocks, 3, heading)
         feat = entry(version, "feat", slug(heading.text), heading.text, heading.page)
         feat["text"] = made["text"]
-        for key in ("prerequisite", "sections", "tables", "uses", "action", "auto"):
+        for key in ("prerequisite", "sections", "tables", "uses", "action", "rolls", "auto"):
             if key in made:
                 feat[key] = made[key]
         # A feat's skills are granted outright; the sheet reads them from "skills".
@@ -195,6 +195,10 @@ def extract_feats(version: str) -> list[dict]:
             feat["skills"] = granted
             feat["auto"] = [a for a in feat.get("auto", []) if a != "effects"] + ["skills"]
         apply_feat_structure(version, feat, problems)
+        # Armor, weapon and tool proficiencies the feat grants outright (Heavily Armored, Burglar).
+        granted = [e for e in proficiencies_granted(feat["text"]) if e not in feat.get("effects", [])]
+        if granted:
+            feat["effects"] = feat.get("effects", []) + granted
         if len(feat["text"]) < 30:
             problems.append(f"feat {heading.text}: text is only '{feat['text']}'")
         out.append(feat)

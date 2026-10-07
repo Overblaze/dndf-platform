@@ -615,6 +615,18 @@
             {
               "type": "hp",
               "expr": "level * 2"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "heavy"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "shields"
+            },
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial"
             }
           ]
         },

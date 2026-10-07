@@ -615,6 +615,10 @@
             {
               "type": "note",
               "label": "Advantage on saving throws against being frightened"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "heavy"
             }
           ]
         },

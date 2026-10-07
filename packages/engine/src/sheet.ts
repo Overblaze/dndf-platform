@@ -173,10 +173,26 @@ export interface Sheet {
   generalRules: Record<string, SectionDef>;
   /** Effects in force right now (resistances, advantage, exhaustion). */
   notes: { label: string; from: string }[];
+  /** Armor, weapons and tools the character is proficient with, each with where it comes from. */
+  proficiencies: { armor: Proficiency[]; weapons: Proficiency[]; tools: Proficiency[] };
   warnings: string[];
 }
 
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+
+export interface Proficiency {
+  /** "light", "shields", "martial", "martial_ranged", a weapon's name as a slug, or a tool's. */
+  id: string;
+  name: string;
+  from: string;
+}
+
+const capital = (word: string) => word.charAt(0).toUpperCase() + word.slice(1);
+const WEAPON_GROUPS: Record<string, string> = {
+  simple: 'Simple weapons', martial: 'Martial weapons', improvised: 'Improvised weapons', simple_melee: 'Simple melee weapons',
+  simple_ranged: 'Simple ranged weapons', martial_melee: 'Martial melee weapons', martial_ranged: 'Martial ranged weapons',
+};
+const weaponGroupName = (id: string) => WEAPON_GROUPS[id] ?? capital(id.replace(/_/g, ' '));
 
 function stat(doc: CharacterDoc, key: string, label: string, derived: Derived): Stat {
   const own = doc.overrides[key];
@@ -370,6 +386,33 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
       .filter((line, i) => line.value !== 0 || !ofType(type, extra)[i]!.effect.expr);
 
   const notes: Sheet['notes'] = ofType('note').map((e) => ({ label: String(e.effect.label ?? ''), from: e.from }));
+  // Armor, weapon and tool proficiencies: each class's own, then what features and feats add.
+  const proficiencies: Sheet['proficiencies'] = { armor: [], weapons: [], tools: [] };
+  const grant = (list: Proficiency[], id: string, name: string, from: string) => {
+    if (!list.some((p) => p.id === id)) list.push({ id, name, from });
+  };
+  const ARMOR_KINDS = ['light', 'medium', 'heavy'] as const;
+  const grantArmor = (kind: string, from: string) => {
+    const id = kind.replace(/_armor$/, '');
+    if (id === 'all') for (const each of ARMOR_KINDS) grant(proficiencies.armor, each, `${capital(each)} armor`, from);
+    else grant(proficiencies.armor, id, id === 'shields' ? 'Shields' : `${capital(id)} armor`, from);
+  };
+  for (const source of sources) {
+    if (source.entry !== source.cls) continue;
+    const own = source.cls.proficiencies as { armor?: string[]; weapons?: string[]; tools?: string[] } | undefined;
+    for (const kind of own?.armor ?? []) grantArmor(kind, source.cls.name);
+    for (const weapon of own?.weapons ?? []) grant(proficiencies.weapons, weapon, weaponGroupName(weapon), source.cls.name);
+    for (const tool of own?.tools ?? []) grant(proficiencies.tools, slug(tool), tool, source.cls.name);
+  }
+  for (const e of ofType('armorProficiency')) if (typeof e.effect.armor === 'string') grantArmor(e.effect.armor, e.from);
+  for (const e of ofType('weaponProficiency')) if (typeof e.effect.weapon === 'string') grant(proficiencies.weapons, e.effect.weapon, weaponGroupName(e.effect.weapon), e.from);
+  for (const e of ofType('toolProficiency')) if (typeof e.effect.label === 'string') grant(proficiencies.tools, slug(e.effect.label), e.effect.label, e.from);
+  // Armor worn or a shield carried without the proficiency: said plainly, never blocked.
+  const armorKind = doc.armor ? (doc.armor.dexCap === 0 ? 'heavy' : doc.armor.dexCap == null ? 'light' : 'medium') : undefined;
+  const unproficient = 'disadvantage on Strength and Dexterity checks, saves and attack rolls, and you can’t cast spells';
+  if (doc.armor && !(doc.armor.proficient ?? proficiencies.armor.some((p) => p.id === armorKind))) notes.push({ label: `Not proficient with ${armorKind} armor: ${unproficient}`, from: doc.armor.name });
+  if (doc.shield && !proficiencies.armor.some((p) => p.id === 'shields')) notes.push({ label: `Not proficient with shields: ${unproficient}`, from: 'Shield' });
+
   const exhaustion = doc.state.exhaustion;
   const exhaustionNote = (min: number, label: string) => exhaustion >= min && notes.push({ label, from: `Exhaustion ${exhaustion}` });
   exhaustionNote(1, 'Disadvantage on ability checks');
@@ -578,7 +621,9 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     const value = String(evaluate(e.effect.expr!, e.scopeOf()));
     return { from: e.from, dice: /^d/.test(value) ? `1${value}` : value, covers: e.effect.weapons, dexterity: e.effect.finesse === true };
   });
-  const weaponProfs = new Set(sources.flatMap((s) => ((s.cls.proficiencies as { weapons?: string[] } | undefined)?.weapons ?? [])));
+  const weaponProfs = new Set(proficiencies.weapons.map((p) => p.id));
+  const proficientWith = (weapon: WeaponDef) =>
+    weaponProfs.has(weapon.category) || weaponProfs.has(slug(weapon.name)) || weaponProfs.has(`${weapon.category}_${weapon.ranged ? 'ranged' : 'melee'}`);
   const unarmed: WeaponDef = { id: 'unarmed', name: 'Unarmed strike', damage: '1', damageType: 'bludgeoning', category: 'simple', proficient: true };
 
   const attacks: SheetAttack[] = [unarmed, ...doc.weapons].map((weapon) => {
@@ -596,7 +641,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     else if ((dexAllowed || (weapon.finesse && covering.length === 0)) && mod.dex! > mod.str!) ability = 'dex';
     if (weapon.finesse && covering.length > 0 && !dexAllowed && !weapon.ability) attackNotes.push('Finesse can\'t be used with a bruiser weapon');
 
-    const proficient = weapon.proficient ?? (weaponProfs.has(weapon.category) || weaponProfs.has(slug(weapon.name)));
+    const proficient = weapon.proficient ?? proficientWith(weapon);
     const hitLines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[ability]} modifier`, value: mod[ability]! }];
     if (proficient) hitLines.push({ label: 'Proficiency bonus', value: prof.value });
     else attackNotes.push('Not proficient');
@@ -675,6 +720,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     }
     extra(`${feat.id}`, feat.name, String(feat.text ?? ''), feat.source.page, feat, 'Feat', {
       resource,
+      rolls: ((feat.rolls ?? []) as RollDef[]).map((r) => ({ label: r.label, kind: r.kind, dice: formatDice(parseDice(fillTemplate(r.dice, plainScope))) })),
       action: feat.action as string | undefined,
       sections: (feat.sections ?? []) as SectionDef[],
       tables: (feat.tables ?? []) as TableDef[],
@@ -750,6 +796,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     resources,
     toggles,
     trackers,
+    proficiencies,
     counters,
     attacks,
     features,

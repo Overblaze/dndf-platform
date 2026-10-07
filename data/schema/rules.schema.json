@@ -176,6 +176,20 @@
         },
         "finesse": {
           "type": "boolean"
+        },
+        "armor": {
+          "description": "armorProficiency: the kind of armor.",
+          "enum": [
+            "light",
+            "medium",
+            "heavy",
+            "shields"
+          ]
+        },
+        "weapon": {
+          "description": "weaponProficiency: simple, martial, martial_melee, martial_ranged, simple_melee, simple_ranged, or one weapon's name as a slug.",
+          "type": "string",
+          "minLength": 1
         }
       }
     },

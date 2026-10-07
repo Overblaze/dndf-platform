@@ -585,6 +585,10 @@
             {
               "type": "proficiency",
               "skill": "nature"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Herbalism Kit"
             }
           ],
           "auto": [
@@ -702,7 +706,16 @@
           "level": 1,
           "name": "Bonus Proficiencies",
           "text": "At 1st level, you gain proficiency with Painter’s Supplies, which also serve as your holy symbol for casting spells. To use any of your Color Domain features, you must have Painter’s Supplies in hand.",
-          "page": 167
+          "page": 167,
+          "effects": [
+            {
+              "type": "toolProficiency",
+              "label": "Painter’s Supplies"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,
@@ -929,7 +942,16 @@
           "level": 1,
           "name": "Bonus Proficiency",
           "text": "When the Priest chooses this domain at 1st level, they gain proficiency with Martial Weapons.",
-          "page": 168
+          "page": 168,
+          "effects": [
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,
@@ -1143,7 +1165,16 @@
           "level": 1,
           "name": "Bonus Proficiencies",
           "text": "At 1st level, you gain proficiency with martial weapons.",
-          "page": 169
+          "page": 169,
+          "effects": [
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial"
+            }
+          ],
+          "auto": [
+            "effects"
+          ]
         },
         {
           "level": 1,
@@ -1277,6 +1308,18 @@
             {
               "type": "note",
               "label": "Resistance to thunder and lightning damage"
+            },
+            {
+              "type": "toolProficiency",
+              "label": "Dials"
+            },
+            {
+              "type": "weaponProficiency",
+              "weapon": "martial"
+            },
+            {
+              "type": "armorProficiency",
+              "armor": "heavy"
             }
           ]
         },

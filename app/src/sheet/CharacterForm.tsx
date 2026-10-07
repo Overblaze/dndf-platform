@@ -361,6 +361,19 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
             </label>
           </div>
         )}
+        {armor && (
+          <label className="field">
+            <span className="label">Proficient with this armor</span>
+            <select
+              value={armor.proficient === undefined ? '' : armor.proficient ? 'yes' : 'no'}
+              onChange={(e) => setArmor({ ...armor, proficient: e.target.value === '' ? undefined : e.target.value === 'yes' })}
+            >
+              <option value="">Use calculated (class, subclass and feats)</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </label>
+        )}
         <label className="check">
           <input type="checkbox" checked={shield} onChange={(e) => setShield(e.target.checked)} />
           <span>Carrying a shield (+2)</span>
