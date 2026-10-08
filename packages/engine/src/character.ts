@@ -2,7 +2,7 @@
 import type { ScoreOrigin } from './abilityScores';
 import type { CustomClass } from './customClass';
 import type { InventoryItem } from './inventory';
-import type { KnownSpell } from './spells';
+import { cleanSpellDetails, type KnownSpell } from './spells';
 import type { PuristPick, SurgePick, SurgeRecord } from './surges';
 import { ABILITIES, type Ability, type AbilityScores, type RulesVersion } from './types';
 
@@ -305,6 +305,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     spells: !Array.isArray(doc.spells) ? undefined : uniqueIds((objects<KnownSpell>(doc.spells) ?? []).filter((spell) => typeof spell.name === 'string' && spell.name.trim()), 'spell').map((spell) => ({
       ...spell,
       level: Math.min(9, Math.max(0, whole(spell.level, 0))),
+      own: spell.own === undefined ? undefined : cleanSpellDetails(spell.own),
     })),
     money: typeof doc.money === 'number' && Number.isFinite(doc.money) ? Math.round(doc.money) : undefined,
     willpower: isObject(doc.willpower)

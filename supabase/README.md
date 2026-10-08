@@ -89,3 +89,16 @@ It prints counts only. Running it again replaces rows by key and never removes o
    DM cannot see that character at all.
 4. On the DM page, *Grant a fruit* next to a character: search by name, choose whether the character **has** the fruit
    or only **knows about** it. *Reveal* tells the rest of the table which fruit it is; *Take away* closes it again.
+
+## Your own spells (`0004_homebrew.sql`)
+
+Run `0004_homebrew.sql` in the SQL Editor like the others. It creates one table, `homebrew`, for things a player
+writes themselves (custom spells for now).
+
+| Table | Holds | Who can read / write |
+|---|---|---|
+| `homebrew` | a spell someone wrote, with who owns it and, if shared, which campaign | its owner always; everyone in the campaign it is shared with reads it; only the owner changes it; the campaign's DMs may remove a shared one |
+
+Until this file is run, the Library's "Your spells" says which file to run, and spells written while signed out are
+kept in the browser instead. A spell added to a character is copied onto the character, so sheets do not depend on
+this table.

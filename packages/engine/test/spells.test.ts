@@ -1,6 +1,6 @@
 // Spells: the class lists, what a character knows, and casting with slots.
 import { describe, expect, it } from 'vitest';
-import { SRD_BOOK, castSpell, deriveSheet, longRest, newCharacter, normalizeDoc, spellEntryFor, spellLists, type AbilityScores, type CharacterDoc, type KnownSpell, type RulesVersion } from '../src';
+import { CUSTOM_SPELL_BOOK, SRD_BOOK, castSpell, cleanCustomSpell, deriveSheet, learnCustomSpell, longRest, newCharacter, normalizeDoc, spellEntryFor, spellLists, type AbilityScores, type CharacterDoc, type KnownSpell, type RulesVersion } from '../src';
 import { loadRules } from './load';
 
 const scores: AbilityScores = { str: 10, dex: 12, con: 14, int: 10, wis: 16, cha: 10 };
@@ -157,5 +157,37 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('spell text from the 5e
     const withText = [...names.values()].filter(Boolean).length;
     expect(names.size).toBe(version === 'dndf-10' ? 324 : 345);
     expect(withText).toBe(version === 'dndf-10' ? 215 : 222);
+  });
+});
+
+describe('spells a player writes', () => {
+  const rules = loadRules('dndf-10');
+  const doc = newCharacter({ name: 'T', rulesVersion: 'dndf-10', classId: 'class.priest', level: 5, scores }, rules);
+  const zap = { id: 'lib-1', name: '  Storm Lance ', level: 2.4, school: 'evocation', castingTime: '1 action', range: '60 feet', duration: 'Instantaneous', ritual: true, text: 'A lance of lightning. The target takes 3d8 lightning damage, or regains 1d4 hit points if it is you.' };
+
+  it('a typed spell is tidied: trimmed name, a whole level from 0 to 9, text parts as text, and no name means no spell', () => {
+    expect(cleanCustomSpell(zap)).toEqual({ id: 'lib-1', name: 'Storm Lance', level: 2, school: 'evocation', castingTime: '1 action', range: '60 feet', duration: 'Instantaneous', ritual: true, text: zap.text });
+    expect(cleanCustomSpell({ name: 'X', level: 99, range: 7, ritual: 'yes', text: 5 }, 'made')).toEqual({ id: 'made', name: 'X', level: 9, text: '' });
+    expect(cleanCustomSpell({ name: '   ', level: 1 }, 'a')).toBeNull();
+    expect(cleanCustomSpell({ name: 'No id' })).toBeNull();
+    expect(cleanCustomSpell(null)).toBeNull();
+  });
+
+  it('learning one copies it onto the character: its words, lines, ritual mark and dice are on the sheet with no library at hand', () => {
+    const known = learnCustomSpell(cleanCustomSpell(zap)!, 'k1');
+    expect(known).toEqual({ id: 'k1', name: 'Storm Lance', level: 2, own: { school: 'evocation', castingTime: '1 action', range: '60 feet', duration: 'Instantaneous', ritual: true, text: zap.text } });
+    const shown = deriveSheet({ ...doc, spells: [known] }, rules).spellbook.known[0]!;
+    expect(shown).toMatchObject({ name: 'Storm Lance', level: 2, school: 'evocation', range: '60 feet', ritual: true, book: CUSTOM_SPELL_BOOK, page: undefined, text: zap.text, castableWith: [2, 3] });
+    expect(shown.rolls).toEqual([{ label: '3d8 lightning damage', dice: '3d8', kind: 'damage' }, { label: '1d4 hit points', dice: '1d4', kind: 'heal' }]);
+  });
+
+  it('survives a save, and a damaged one still opens', () => {
+    const known = learnCustomSpell(cleanCustomSpell(zap)!, 'k1');
+    expect(normalizeDoc(JSON.parse(JSON.stringify({ ...doc, spells: [known] })))!.spells).toEqual([known]);
+    const odd = normalizeDoc({ ...doc, spells: [{ id: 'a', name: 'Odd', level: 1, own: { text: 9, range: {}, ritual: 1, school: 'x'.repeat(900) } }, { id: 'b', name: 'Null', level: 1, own: null }] })!;
+    expect(odd.spells![0]!.own).toEqual({ text: '', school: 'x'.repeat(200) });
+    expect(odd.spells![1]!.own).toEqual({ text: '' });
+    expect(() => deriveSheet(odd, rules)).not.toThrow();
+    expect(() => deriveSheet({ ...doc, spells: [{ id: 'a', name: 'Raw', level: 1, own: 'nope' as never }] }, rules)).not.toThrow();
   });
 });

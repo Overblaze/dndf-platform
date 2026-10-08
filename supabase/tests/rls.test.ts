@@ -463,8 +463,51 @@ describe('private content: Devil Fruits and the grants that open them', () => {
   });
 });
 
+describe('homebrew: spells a player writes', () => {
+  const add = `insert into public.homebrew (kind, name, data, campaign_id) values ('spell', $1, $2, $3) returning id`;
+  const names = async (who: string | null) => (await as(who, `select name from public.homebrew order by name`)).map((r) => r.name);
+  let mine: string;
+  let shared: string;
+
+  it('a private spell is its owner’s alone; a shared one is read by the whole campaign and nobody outside it', async () => {
+    mine = (await as(ana, add, ['Ana Private', { level: 1, text: 'secret' }, null]))[0]!.id;
+    shared = (await as(ana, add, ['Ana Shared', { level: 2, text: 'for the table' }, campaign]))[0]!.id;
+    expect(await names(ana)).toEqual(['Ana Private', 'Ana Shared']);
+    expect(await names(ben)).toEqual(['Ana Shared']);
+    expect(await names(matt)).toEqual(['Ana Shared']); // the DM sees what is shared, not what is private
+    expect(await names(zed)).toEqual([]);
+    expect(await as(ben, `select data->>'text' as text from public.homebrew where id = $1`, [shared])).toEqual([{ text: 'for the table' }]);
+  });
+
+  it('nobody can add a spell as someone else, or share into a campaign they are not in', async () => {
+    await expect(as(ben, `insert into public.homebrew (owner_id, kind, name, data) values ($1, 'spell', 'Forged', '{}')`, [ana])).rejects.toThrow(/row-level security/);
+    await expect(as(zed, add, ['Gatecrasher', {}, campaign])).rejects.toThrow(/row-level security/);
+    await expect(as(ana, `insert into public.homebrew (kind, name, data) values ('monster', 'X', '{}')`)).rejects.toThrow(/check constraint/);
+    await expect(as(ana, add, ['   ', {}, null])).rejects.toThrow(/check constraint/);
+  });
+
+  it('only the owner changes a spell; a crewmate and the DM cannot, though the DM may remove a shared one', async () => {
+    expect(await as(ben, `update public.homebrew set name = 'Hacked' where id = $1 returning id`, [shared])).toEqual([]);
+    expect(await as(matt, `update public.homebrew set name = 'Hacked' where id = $1 returning id`, [shared])).toEqual([]);
+    expect(await as(ben, `delete from public.homebrew where id = $1 returning id`, [shared])).toEqual([]);
+    expect(await as(matt, `delete from public.homebrew where id = $1 returning id`, [mine])).toEqual([]); // private: not even the DM
+    expect(await as(ana, `update public.homebrew set name = 'Ana Shared v2' where id = $1 returning name`, [shared])).toEqual([{ name: 'Ana Shared v2' }]);
+    await expect(as(ana, `update public.homebrew set owner_id = $2 where id = $1`, [shared, ben])).rejects.toThrow(/row-level security/);
+    expect(await as(matt, `delete from public.homebrew where id = $1 returning id`, [shared])).toEqual([{ id: shared }]);
+    expect(await names(ana)).toEqual(['Ana Private']);
+  });
+
+  it('un-sharing closes it to the campaign; the owner deletes their own', async () => {
+    const [again] = await as(ana, add, ['Ana Again', {}, campaign]);
+    expect(await names(ben)).toEqual(['Ana Again']);
+    await as(ana, `update public.homebrew set campaign_id = null where id = $1`, [again!.id]);
+    expect(await names(ben)).toEqual([]);
+    expect(await as(ana, `delete from public.homebrew where owner_id = $1 returning name`, [ana])).toHaveLength(2);
+  });
+});
+
 describe('signed-out visitors', () => {
-  it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history', 'secret_entries', 'grants'])(
+  it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history', 'secret_entries', 'grants', 'homebrew'])(
     'cannot read %s',
     async (table) => {
       await expect(as(null, `select * from public.${table}`)).rejects.toThrow(/permission denied/);

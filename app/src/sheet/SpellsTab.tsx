@@ -1,12 +1,14 @@
-import { SRD_BOOK, castSpell, cite, gainTempHp, ordinal, spellLevelName, spellLists, spendResource, type KnownSpell, type SheetSpell, type SpellChoice } from '@dndf/engine';
-import { useMemo, useState } from 'react';
+import { CUSTOM_SPELL_BOOK, SRD_BOOK, castSpell, cite, gainTempHp, learnCustomSpell, ordinal, spellLevelName, spellLists, spendResource, type CustomSpell, type KnownSpell, type SheetSpell, type SpellChoice } from '@dndf/engine';
+import { useEffect, useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { RuleText } from '../components/RuleText';
 import { useRolls } from '../lib/rolls';
+import { useAuth } from '../lib/auth';
+import { spellLibraryFor, type LibrarySpell } from '../lib/homebrew';
 import type { LiveCharacter } from '../lib/useCharacter';
+import { SpellEditor } from './SpellEditor';
 import { Tile, type OpenStat } from './Vitals';
 
-const LEVELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 /** Pick spells from a class list, or write one in by name. */
 function AddSpellsDialog({ live, onClose }: { live: LiveCharacter; onClose: () => void }) {
@@ -15,7 +17,14 @@ function AddSpellsDialog({ live, onClose }: { live: LiveCharacter; onClose: () =
   const [listId, setListId] = useState(lists[0]?.id ?? '');
   const [level, setLevel] = useState<number | null>(null);
   const [text, setText] = useState('');
-  const [own, setOwn] = useState({ name: '', level: 0 });
+  const { session } = useAuth();
+  const library = useMemo(() => spellLibraryFor(session?.user.id ?? null), [session?.user.id]);
+  const [mine, setMine] = useState<LibrarySpell[]>([]);
+  const [libraryProblem, setLibraryProblem] = useState<string | null>(null);
+  const [writing, setWriting] = useState(false);
+  const [keep, setKeep] = useState(true);
+  const loadMine = () => library.list().then((found) => { setMine(found); setLibraryProblem(null); }, (e: Error) => setLibraryProblem(e.message));
+  useEffect(() => { void loadMine(); }, [library]); // eslint-disable-line react-hooks/exhaustive-deps
   const list = lists.find((l) => l.id === listId);
   const known = doc.spells ?? [];
   const has = (spell: SpellChoice) => known.some((k) => k.name === spell.name);
@@ -25,24 +34,55 @@ function AddSpellsDialog({ live, onClose }: { live: LiveCharacter; onClose: () =
     if (has(spell)) live.setDoc({ ...doc, spells: known.filter((k) => k.name !== spell.name) }, `Forgot ${spell.name}`);
     else live.setDoc({ ...doc, spells: [...known, { id: crypto.randomUUID(), name: spell.name, level: spell.level, list: spell.list, entry: spell.entry }] }, `Learned ${spell.name}`);
   };
-  const addOwn = () => {
-    const name = own.name.trim();
-    if (!name) return;
-    live.setDoc({ ...doc, spells: [...known, { id: crypto.randomUUID(), name, level: own.level }] }, `Learned ${name}`);
-    setOwn({ name: '', level: own.level });
+  const knows = (spell: CustomSpell) => known.some((k) => k.name === spell.name && k.own);
+  const toggleMine = (spell: CustomSpell) => {
+    if (knows(spell)) live.setDoc({ ...doc, spells: known.filter((k) => !(k.name === spell.name && k.own)) }, `Forgot ${spell.name}`);
+    else live.setDoc({ ...doc, spells: [...known, learnCustomSpell(spell, crypto.randomUUID())] }, `Learned ${spell.name}`);
   };
+  // A spell written here goes on this character at once, and into the library too unless the box is unticked.
+  const write = (spell: CustomSpell) => {
+    live.setDoc({ ...doc, spells: [...known, learnCustomSpell(spell, crypto.randomUUID())] }, `Learned ${spell.name}`);
+    setWriting(false);
+    if (keep) library.save(spell, null).then(loadMine, (e: Error) => setLibraryProblem(`${spell.name} is on this character, but was not kept in your library: ${e.message}`));
+  };
+  const shownMine = mine.filter((s) => (level === null || s.level === level) && s.name.toLowerCase().includes(text.trim().toLowerCase()));
+  if (writing) {
+    return (
+      <SpellEditor
+        title="Write a spell"
+        onSave={write}
+        onClose={() => setWriting(false)}
+        extra={(
+          <label className="check">
+            <input type="checkbox" checked={keep} onChange={(e) => setKeep(e.target.checked)} />
+            <span>Also keep it in my spell library, for other characters{library.local ? ' (in this browser)' : ''}</span>
+          </label>
+        )}
+      />
+    );
+  }
   return (
     <Dialog title="Add spells" onClose={onClose}>
       <label className="field">
         <span className="label">Spell list</span>
         <select value={listId} onChange={(e) => { setListId(e.target.value); setLevel(null); }}>
           {lists.map((l) => <option key={l.id} value={l.id}>{l.name}{l.own ? ' (your class)' : ''}</option>)}
+          <option value="mine">Your spells{mine.length ? ` (${mine.length})` : ''}</option>
         </select>
       </label>
       {list && <p className="page-ref">{list.spells.length} spells · {cite(list.book, list.page)} · {list.spells.filter((x) => x.entry).length} with their text (the handbook’s own, and the ones in the free 5e rules); the rest are in other 5th Edition books and are listed by name.</p>}
+      {listId === 'mine' && (
+        <>
+          <p className="page-ref">Spells you wrote, and any your table has shared. They are copied onto the character, so later changes to the library do not change this sheet.</p>
+          {libraryProblem && <p className="notice" role="alert">{libraryProblem}</p>}
+        </>
+      )}
+      <div className="row wrap">
+        <button className="btn" onClick={() => setWriting(true)}>Write a new spell</button>
+      </div>
       <div className="segmented surge-tabs" role="tablist" aria-label="Spell level">
         <button role="tab" aria-selected={level === null} className={level === null ? 'active' : ''} onClick={() => setLevel(null)}>All</button>
-        {levels.map((l) => (
+        {(listId === 'mine' ? [...new Set(mine.map((m) => m.level))].sort((a, b) => a - b) : levels).map((l) => (
           <button key={l} role="tab" aria-selected={level === l} className={level === l ? 'active' : ''} onClick={() => setLevel(l)}>{l === 0 ? 'Cantrip' : ordinal(l)}</button>
         ))}
       </div>
@@ -56,24 +96,14 @@ function AddSpellsDialog({ live, onClose }: { live: LiveCharacter; onClose: () =
           <span>{spell.name} <span className="page-ref">{spell.level === 0 ? 'cantrip' : `${ordinal(spell.level)} level`}{spell.entry ? ' · with text' : ' · name only'}</span></span>
         </label>
       ))}
-      {shown.length === 0 && <p className="soft">Nothing by that name at that level in this list.</p>}
+      {listId === 'mine' && shownMine.map((spell) => (
+        <label key={spell.id} className="check">
+          <input type="checkbox" checked={knows(spell)} onChange={() => toggleMine(spell)} />
+          <span>{spell.name} <span className="page-ref">{spell.level === 0 ? 'cantrip' : `${ordinal(spell.level)} level`}{spell.mine ? '' : ' · shared by a crewmate'}</span></span>
+        </label>
+      ))}
+      {(listId === 'mine' ? shownMine.length : shown.length) === 0 && <p className="soft">{listId === 'mine' && mine.length === 0 ? 'You have not written any spells yet. “Write a new spell” starts one.' : 'Nothing by that name at that level in this list.'}</p>}
 
-      <fieldset>
-        <legend className="label">Or write one in</legend>
-        <div className="grid-2">
-          <label className="field">
-            <span className="label">Name</span>
-            <input value={own.name} onChange={(e) => setOwn({ ...own, name: e.target.value })} maxLength={80} />
-          </label>
-          <label className="field">
-            <span className="label">Level</span>
-            <select value={own.level} onChange={(e) => setOwn({ ...own, level: Number(e.target.value) })}>
-              {LEVELS.map((l) => <option key={l} value={l}>{l === 0 ? 'Cantrip' : ordinal(l)}</option>)}
-            </select>
-          </label>
-        </div>
-        <button className="btn" disabled={!own.name.trim()} onClick={addOwn}>Add it</button>
-      </fieldset>
       <button className="btn btn-primary" onClick={onClose}>Done</button>
     </Dialog>
   );
@@ -95,6 +125,7 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
     const result = rolls.dice(`${spell.name}: ${r.label}`, r.dice);
     if (r.kind === 'tempHp') live.setState(gainTempHp(live.doc.state, result.total), `${spell.name}: temporary hit points`);
   };
+  const [editing, setEditing] = useState(false);
   const hasSlots = sheet.spellbook.slots.some((s) => Number(s.id.slice(5)) >= spell.level);
   return (
     <div className="action">
@@ -127,14 +158,29 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
         <summary>{spell.text ? 'Rules text and notes' : 'Notes'}</summary>
         {spell.text
           ? <RuleText text={[spell.components ? `Components: ${spell.components}` : '', spell.text].filter(Boolean).join('\n')} tables={spell.tables} book={spell.book} />
-          : <p className="page-ref">This spell is from a 5th Edition book outside the free rules (the SRD), so its text cannot be shown here. Keep what you need to remember in the notes.</p>}
+          : spell.own
+            ? <p className="page-ref">{spell.components ? `Components: ${spell.components}. ` : ''}You have not written what this spell does yet.</p>
+            : <p className="page-ref">This spell is from a 5th Edition book outside the free rules (the SRD), so its text cannot be shown here. Keep what you need to remember in the notes, or write its details yourself.</p>}
+        {spell.book === CUSTOM_SPELL_BOOK && <p className="page-ref">Your own spell.</p>}
         {spell.book === SRD_BOOK && <p className="page-ref">From the System Reference Document 5.1 by Wizards of the Coast LLC, CC-BY-4.0 ({cite(spell.book, spell.page ?? 0)}).</p>}
         <label className="field">
           <span className="label">Your notes</span>
           <textarea rows={3} value={notes} onChange={(e) => setNotes(e.target.value)} onBlur={() => notes !== (spell.notes ?? '') && change({ notes: notes || undefined }, `Notes on ${spell.name}`)} placeholder="Range, damage, what it does…" />
         </label>
-        <button className="btn" onClick={() => live.setDoc({ ...doc, spells: known.filter((k) => k.id !== spell.id) }, `Forgot ${spell.name}`)}>Forget this spell</button>
+        <div className="row wrap">
+          {(spell.own || !spell.text) && <button className="btn" onClick={() => setEditing(true)}>{spell.own ? 'Change this spell' : 'Write its details yourself'}</button>}
+          <button className="btn" onClick={() => live.setDoc({ ...doc, spells: known.filter((k) => k.id !== spell.id) }, `Forgot ${spell.name}`)}>Forget this spell</button>
+        </div>
       </details>
+      {editing && (
+        <SpellEditor
+          initial={{ id: spell.id, name: spell.name, level: spell.level, ...(spell.own ?? { text: '' }) }}
+          title={`Change ${spell.name}`}
+          onClose={() => setEditing(false)}
+          onSave={(next) => { const { id: _id, name, level, ...own } = next; change({ name, level, own }, `Changed ${name}`); setEditing(false); }}
+          extra={<p className="page-ref">This changes the spell on this character only.</p>}
+        />
+      )}
     </div>
   );
 }

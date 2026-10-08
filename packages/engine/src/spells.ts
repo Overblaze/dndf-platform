@@ -6,6 +6,55 @@ import type { CharacterDoc, CharacterState } from './character';
 import type { Sheet, SheetFeature, SheetResource, Stat } from './sheet';
 import type { RuleEntry, TableDef } from './types';
 
+/** What a spell says, for one a player writes. Everything but the text is optional. */
+export interface SpellDetails {
+  school?: string;
+  castingTime?: string;
+  range?: string;
+  components?: string;
+  duration?: string;
+  ritual?: boolean;
+  text: string;
+}
+
+/** A spell in a player's own library: something to pick from, for any of their characters or their table's. */
+export interface CustomSpell extends SpellDetails {
+  id: string;
+  name: string;
+  level: number;
+}
+
+export const CUSTOM_SPELL_BOOK = 'Custom';
+const line = (value: unknown, max = 200) => (typeof value === 'string' && value.trim() ? value.trim().slice(0, max) : undefined);
+
+/** A spell someone typed, with every part the right kind of thing; null when it has no name. */
+export function cleanCustomSpell(raw: unknown, id?: string): CustomSpell | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const r = raw as Record<string, unknown>;
+  const name = line(r.name, 120);
+  const ownId = typeof r.id === 'string' && r.id ? r.id : id;
+  if (!name || !ownId) return null;
+  const level = typeof r.level === 'number' && Number.isFinite(r.level) ? Math.min(9, Math.max(0, Math.round(r.level))) : 0;
+  return { id: ownId, name, level, ...cleanSpellDetails(r) };
+}
+
+export function cleanSpellDetails(raw: unknown): SpellDetails {
+  const r = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+  const details: SpellDetails = { text: typeof r.text === 'string' ? r.text.slice(0, 20000) : '' };
+  for (const key of ['school', 'castingTime', 'range', 'components', 'duration'] as const) {
+    const value = line(r[key]);
+    if (value) details[key] = value;
+  }
+  if (r.ritual === true) details.ritual = true;
+  return details;
+}
+
+/** A library spell as one a character knows: its details are copied, so changing or deleting the library entry later does not change the character. */
+export function learnCustomSpell(spell: CustomSpell, id: string): KnownSpell {
+  const { id: _library, name, level, ...details } = spell;
+  return { id, name, level, own: details };
+}
+
 export interface KnownSpell {
   id: string;
   name: string;
@@ -15,6 +64,8 @@ export interface KnownSpell {
   list?: string;
   /** For a spell the handbook prints in full: its entry. */
   entry?: string;
+  /** A spell the player wrote: its details travel with the character, so the sheet, the printed sheet and the bot all have them. */
+  own?: SpellDetails;
   /** For classes that prepare: whether it is prepared today. */
   prepared?: boolean;
   notes?: string;
