@@ -251,7 +251,10 @@
           "level": 3,
           "name": "Ki-Fueled Attack",
           "text": "Also at 3rd level, you may spend 1 ki point after your attack roll to increase the amount of base damage dice rolled by your unarmed or monk weapon by 1.",
-          "page": 151
+          "page": 151,
+          "cost": {
+            "ki": 1
+          }
         },
         {
           "level": 4,
@@ -278,7 +281,18 @@
           "level": 4,
           "name": "Heart Chakra",
           "text": "At 4th level, you have complete control over your heart chakra. As an action, you can spend 2 ki points and roll a Martial Arts die. You regain a number of hit points equal to the number rolled plus your proficiency bonus.",
-          "page": 151
+          "page": 151,
+          "action": "action",
+          "rolls": [
+            {
+              "label": "Hit points regained",
+              "dice": "{col.martialArtsDie} + {prof}",
+              "kind": "heal"
+            }
+          ],
+          "cost": {
+            "ki": 2
+          }
         },
         {
           "level": 5,
@@ -363,25 +377,84 @@
           "level": 14,
           "name": "Crown Chakra",
           "text": "Beginning at 14th level, through control over your crown chakra, you gain proficiency in all Saving Throws.\nAdditionally, whenever you make a saving throw and fail, you can spend 1 ki point to reroll it and take the second result.",
-          "page": 151
+          "page": 151,
+          "effects": [
+            {
+              "type": "saveProficiency",
+              "ability": "str"
+            },
+            {
+              "type": "saveProficiency",
+              "ability": "dex"
+            },
+            {
+              "type": "saveProficiency",
+              "ability": "con"
+            },
+            {
+              "type": "saveProficiency",
+              "ability": "int"
+            },
+            {
+              "type": "saveProficiency",
+              "ability": "wis"
+            },
+            {
+              "type": "saveProficiency",
+              "ability": "cha"
+            }
+          ],
+          "cost": {
+            "ki": 1
+          }
         },
         {
           "level": 15,
           "name": "Sacral Chakra",
           "text": "At 15th level, through control over your sacral chakra, when you roll Initiative and have 3 Ki Points or fewer, you regain expended Ki Points until you have 4.",
-          "page": 151
+          "page": 151,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Rolling initiative with 3 ki points or fewer: regain ki until you have 4"
+            }
+          ]
         },
         {
           "level": 18,
           "name": "Third Eye Chakra",
           "text": "Beginning at 18th level, through control over your third eye chakra, you can use your action to spend 3 ki points to perfectly brace yourself against harm for 1 minute or until you are incapacitated. During that time, you have resistance to all damage except force damage.",
-          "page": 151
+          "page": 151,
+          "toggle": {
+            "id": "third_eye_chakra",
+            "label": "Third Eye Chakra (1 minute)",
+            "effects": [
+              {
+                "type": "note",
+                "label": "Resistance to all damage except force"
+              }
+            ]
+          },
+          "action": "action",
+          "cost": {
+            "ki": 3
+          }
         },
         {
           "level": 20,
           "name": "Death Chakra",
           "text": "At 20th level, if you drop to 0 hit points, you can spend 4 ki points, roll four Martial Arts dice, and add the dice together. Your number of Hit Points instead changes to the total rolled.\nEach time you use this feature after the first, the ki point cost increases by 2. When you finish a short or long rest, the Ki Point cost resets to 4.",
-          "page": 152
+          "page": 152,
+          "rolls": [
+            {
+              "label": "Hit points you are left with",
+              "dice": "{col.martialArtsDie} + {col.martialArtsDie} + {col.martialArtsDie} + {col.martialArtsDie}",
+              "kind": "other"
+            }
+          ],
+          "cost": {
+            "ki": 4
+          }
         }
       ],
       "formulas": {

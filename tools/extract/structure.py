@@ -361,6 +361,74 @@ def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
     feat["effects"] = fields["effects"]
 
 
+def more_class(key: str, features: dict[str, dict], versions: tuple[str, ...] = ("dndf-10", "dndf-8.8")) -> None:
+    """Adds feature patches to a class, in the handbooks named (a class stored once under "*" gets them there)."""
+    table = STRUCTURE[key]
+    for version in versions:
+        if version not in table:
+            if "*" not in table:
+                continue
+            # Split the shared patch so one handbook can differ from the other.
+            table["dndf-10"] = {**table["*"], "features": dict(table["*"].get("features", {}))}
+            table["dndf-8.8"] = {**table["*"], "features": dict(table["*"].get("features", {}))}
+            del table["*"]
+        table[version].setdefault("features", {}).update(features)
+
+
+ALL_SAVES = [{"type": "saveProficiency", "ability": a} for a in ("str", "dex", "con", "int", "wis", "cha")]
+LEADERSHIP_ROLL = [{"label": "Leadership Die", "dice": "{col.leadershipDie}", "kind": "other"}]
+MELODY = "level>=14 ? 3 : level>=8 ? 2 : 1"
+EMPOWERING_MELODY = {
+    "expect": "gain a +1 bonus to your harmonic weapons attack and damage rolls while you wield it. This bonus increases to +2 at 8th level and +3 at 14th level",
+    "toggle": {"id": "harmonic_weapon", "label": "Attacking with your harmonic weapon", "effects": [{"type": "attack", "expr": MELODY}, {"type": "damage", "expr": MELODY}]},
+    "effects": [{"type": "display", "label": "Added to spell damage and healing rolls", "expr": MELODY}],
+}
+RELIABLE = {"expect": "you can treat a d20 roll of 9 or lower as a 10", "effects": [{"type": "note", "label": "Ability checks that add your proficiency bonus: treat a d20 roll of 9 or lower as a 10"}]}
+
+more_class("martial_artist", {
+    "Ki-Fueled Attack": {"expect": "you may spend 1 ki point after your attack roll", "cost": {"ki": 1}},
+    "Heart Chakra": {"expect": "You regain a number of hit points equal to the number rolled plus your proficiency bonus", "action": "action", "cost": {"ki": 2},
+                     "rolls": [{"label": "Hit points regained", "dice": "{col.martialArtsDie} + {prof}", "kind": "heal"}]},
+    "Crown Chakra": {"expect": "you gain proficiency in all Saving Throws", "effects": ALL_SAVES, "cost": {"ki": 1}},
+    "Sacral Chakra": {"expect": "when you roll Initiative and have 3 Ki Points or fewer, you regain expended Ki Points until you have 4",
+                      "effects": [{"type": "note", "label": "Rolling initiative with 3 ki points or fewer: regain ki until you have 4"}]},
+    "Third Eye Chakra": {"expect": "you have resistance to all damage except force damage", "action": "action", "cost": {"ki": 3},
+                         "toggle": {"id": "third_eye_chakra", "label": "Third Eye Chakra (1 minute)", "effects": [{"type": "note", "label": "Resistance to all damage except force"}]}},
+    "Death Chakra": {"expect": "you can spend 4 ki points, roll four Martial Arts dice", "cost": {"ki": 4},
+                     "rolls": [{"label": "Hit points you are left with", "dice": "{col.martialArtsDie} + {col.martialArtsDie} + {col.martialArtsDie} + {col.martialArtsDie}", "kind": "other"}]},
+})
+more_class("hybrid", {
+    "Power Enhancements": {"expect": "you may spend 1 Hybrid Point and apply one of the following Power Enhancements", "action": "reaction", "cost": {"hybrid_points": 1}},
+    "Flash Augment": {"expect": "you can expend 2 Hybrid Points to teleport up to 30 feet", "action": "bonus", "cost": {"hybrid_points": 2}},
+    "Resilience Augment": {"expect": "you can spend 1 Hybrid Point to reroll the saving throw", "cost": {"hybrid_points": 1}},
+    "Re-Energized": {"expect": "When you finish a short or long rest, you regain 4 Hybrid Points",
+                     "effects": [{"type": "note", "label": "Finishing a short or long rest: regain 4 Hybrid Points"}]},
+    "Chain Channeling": {"expect": "you can expend 2 Hybrid Points to immediately cast a second Hybrid Power", "cost": {"hybrid_points": 2}},
+})
+more_class("conqueror", {
+    "Conqueror’s Command": {"expect": "choose one of the following options and expend a Leadership Die", "cost": {"leadership": 1}, "rolls": LEADERSHIP_ROLL},
+    "Empower Conqueror’s Haki": {"expect": "you can expend a Leadership Die to increase the DC by the number rolled", "cost": {"leadership": 1}, "rolls": LEADERSHIP_ROLL},
+    "Supreme Coordination": {"expect": "friendly creatures within 60 feet of you gain a +2 bonus to initiative rolls",
+                             "effects": [{"type": "note", "label": "Friendly creatures within 60 feet: +2 to initiative rolls"}]},
+})
+more_class("priest", {
+    "Kami’s Will": {"expect": "immune to the disease and poisoned conditions and resistant to poison damage",
+                    "effects": [{"type": "note", "label": "Immune to the disease and poisoned conditions; resistance to poison damage"}]},
+})
+more_class("oracle", {
+    "Enhanced Divination": {"expect": "cast the Divination spell once per day without expending a spell slot", "uses": {"max": 1, "recharge": "long"}},
+})
+more_class("virtuoso", {"Empowering Melody": EMPOWERING_MELODY}, ("dndf-10",))
+more_class("skald", {"Empowering Melody": EMPOWERING_MELODY}, ("dndf-8.8",))
+more_class("renegade", {
+    "Reliable Talent": RELIABLE,
+    "Fast Talker": {"expect": "you can add 1d4 to the roll", "rolls": [{"label": "Added to a Persuasion or Deception check", "dice": "1d4", "kind": "other"}]},
+}, ("dndf-10",))
+more_class("rogue", {
+    "Reliable Talent": RELIABLE,
+    "Fast Talker": {"expect": "you can treat a d20 roll of 9 or lower as a 10", "effects": [{"type": "note", "label": "Persuasion and Deception checks: treat a d20 roll of 9 or lower as a 10"}]},
+}, ("dndf-8.8",))
+
 FEATURE_FIELDS = ("effects", "toggle", "uses", "action", "rolls", "onUse", "counter", "choices", "cost")
 
 
