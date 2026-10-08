@@ -1,6 +1,7 @@
 // Where characters are kept: the signed-in player's rows in Supabase, or this
 // browser's storage when nobody is signed in (a try-it-out mode).
 import { normalizeDoc, type CharacterDoc } from '@dndf/engine';
+import { LOCAL_HISTORY_CAP, pushHistory, type HistoryEntry } from './history';
 import { blobToDataUrl } from './image';
 import { supabase } from './supabase';
 
@@ -18,8 +19,10 @@ export interface CharacterStore {
   create(doc: CharacterDoc): Promise<StoredCharacter>;
   save(id: string, doc: CharacterDoc): Promise<void>;
   remove(id: string): Promise<void>;
-  /** Adds a line to the character's history. Never fails the action it describes. */
-  log(id: string, summary: string): Promise<void>;
+  /** Adds a line to the character's history, with the character as it was before. Never fails the action it describes. */
+  log(id: string, summary: string, before?: CharacterDoc): Promise<void>;
+  /** The character's history, newest first. */
+  history(id: string): Promise<HistoryEntry[]>;
   /** Stores a sheet background picture and returns the reference to keep in the character. */
   uploadBackground(id: string, picture: Blob): Promise<string>;
   /** A URL the browser can show for a stored picture, or null if it is gone. */
@@ -47,6 +50,18 @@ function writeLocal(all: Record<string, StoredCharacter>) {
 
 const memory: Record<string, StoredCharacter> = readLocal();
 
+const LOCAL_HISTORY_KEY = 'dndf.history.';
+const localHistory = new Map<string, HistoryEntry[]>();
+function readHistory(id: string): HistoryEntry[] {
+  const known = localHistory.get(id);
+  if (known) return known;
+  try {
+    return JSON.parse(localStorage.getItem(LOCAL_HISTORY_KEY + id) ?? '[]') as HistoryEntry[];
+  } catch {
+    return [];
+  }
+}
+
 const LOCAL_PICTURE_KEY = 'dndf.background.';
 const localPictures = new Map<string, string>();
 
@@ -71,9 +86,22 @@ const localStore: CharacterStore = {
   async remove(id) {
     delete memory[id];
     writeLocal(memory);
+    localHistory.delete(id);
+    try { localStorage.removeItem(LOCAL_HISTORY_KEY + id); } catch { /* nothing stored */ }
     await this.removeBackground(`local:${id}`);
   },
-  async log() {},
+  async log(id, summary, before) {
+    const list = pushHistory(readHistory(id), { id: crypto.randomUUID(), summary, at: new Date().toISOString(), before }, LOCAL_HISTORY_CAP);
+    localHistory.set(id, list);
+    try {
+      localStorage.setItem(LOCAL_HISTORY_KEY + id, JSON.stringify(list));
+    } catch {
+      // No room: the history still lasts until the tab closes.
+    }
+  },
+  async history(id) {
+    return readHistory(id);
+  },
   async uploadBackground(id, picture) {
     const ref = `local:${id}`;
     const dataUrl = await blobToDataUrl(picture);
@@ -151,8 +179,15 @@ function remoteStore(userId: string): CharacterStore {
       const { data } = await pictures.list(folder);
       if (data?.length) await pictures.remove(data.map((file) => `${folder}/${file.name}`));
     },
-    async log(id, summary) {
-      await db.from('character_history').insert({ character_id: id, change: { summary } });
+    async log(id, summary, before) {
+      await db.from('character_history').insert({ character_id: id, change: before ? { summary, before } : { summary } });
+    },
+    async history(id) {
+      const { data, error } = await db.from('character_history').select('id, change, at').eq('character_id', id).order('at', { ascending: false }).limit(100);
+      if (error) throw fail('load the history', error.message);
+      return (data as { id: number; change: { summary?: string; before?: unknown }; at: string }[]).map((row) => ({
+        id: String(row.id), summary: row.change.summary ?? 'A change', at: row.at, before: normalizeDoc(row.change.before) ?? undefined,
+      }));
     },
     async uploadBackground(id, picture) {
       const ref = `${userId}/${id}/${crypto.randomUUID()}.jpg`;

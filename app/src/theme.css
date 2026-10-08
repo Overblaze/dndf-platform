@@ -1325,3 +1325,29 @@ a {
   display: grid;
   gap: 8px;
 }
+
+/* The History dialog: one row per logged change, with its Undo. */
+.history-list {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.history-summary {
+  overflow-wrap: anywhere;
+}
+
+.history-row .btn {
+  min-height: 44px;
+}
