@@ -25,5 +25,6 @@ export * from './sheet';
 export * from './sheetChanges';
 export * from './actions';
 export * from './rests';
+export * from './spells';
 export * from './sample';
 export * from './testCharacters';

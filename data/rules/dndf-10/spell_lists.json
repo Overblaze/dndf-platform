@@ -66,8 +66,7 @@
           "Healing Spirit",
           "Heat Metal",
           "Lesser Restoration",
-          "Locate Animals or Plants",
-          "(ritual)",
+          "Locate Animals or Plants (ritual)",
           "Moonbeam",
           "Pass without Trace",
           "Protection from Poison",
@@ -139,7 +138,7 @@
           "Shapechange"
         ]
       },
-      "text": "104 spells, by level.",
+      "text": "103 spells, by level.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

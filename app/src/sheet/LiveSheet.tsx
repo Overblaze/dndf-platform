@@ -19,6 +19,7 @@ import { RestDialog } from './RestDialog';
 import { RollTray } from './RollTray';
 import { SheetBackground, sheetThemeVars } from './SheetBackground';
 import { SkillsTab } from './SkillsTab';
+import { SpellsTab } from './SpellsTab';
 import { StatDialog } from './StatDialog';
 import { findStat, type StatKind } from './stats';
 import { StatusTab } from './StatusTab';
@@ -32,6 +33,7 @@ const TABS = [
   { id: 'haki', label: 'Haki' },
   { id: 'fruit', label: 'Fruit' },
   { id: 'gear', label: 'Gear' },
+  { id: 'spells', label: 'Spells' },
   { id: 'status', label: 'Status' },
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
@@ -140,6 +142,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {tab === 'haki' && <HakiTab live={live} onOpen={onOpen} />}
       {tab === 'fruit' && <FruitTab live={live} onOpen={onOpen} />}
       {tab === 'gear' && <GearTab live={live} onOpen={onOpen} />}
+      {tab === 'spells' && <SpellsTab live={live} onOpen={onOpen} />}
       {tab === 'status' && <StatusTab live={live} />}
 
       <RollTray live={live} />

@@ -65,5 +65,7 @@ Still the player's to apply: traits that say "of your choice" for a skill, tool,
 ## Phase 7 — Inventory, gear, spells
 - [x] Personal inventory (branch `phase7-inventory`): a Gear tab with berries (gain, spend), everything carried with count and weight against carrying capacity, items from the armory (add, or buy with berries) or written by hand, "use it" for armory weapons, armor and shields, and stowing. Over capacity is said, never blocked.
 - [ ] Gear on the printed sheet and in the bot's `/status`.
-- [ ] Spells: the class spell lists as pick-lists, spell cards (SRD text only), slots already on the sheet.
+- [x] Spells (branch `phase7-spells`): a Spells tab with each casting class's save DC and attack modifier, what the class table gives (cantrips known, powers prepared …), slots, and the spells known by level with Prepared, Cast (spends a slot of the level chosen), notes and Forget. Add spells from any class list, from the handbook's own eleven spells (full text, with roll buttons), or by name.
+- [ ] Text for spells the handbooks only name. The SRD's spell text (CC-BY) could be added from an SRD file; none is in `~/dndf/sources`, and nothing is written from memory.
+- [ ] A Devil Fruit's spells cast with its charges; Hybrid Points for Hybrid powers.
 - [ ] Devilforged infusions, Emanations and Splices as usable things (still text).

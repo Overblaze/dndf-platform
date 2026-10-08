@@ -2,6 +2,7 @@
 import type { ScoreOrigin } from './abilityScores';
 import type { CustomClass } from './customClass';
 import type { InventoryItem } from './inventory';
+import type { KnownSpell } from './spells';
 import type { PuristPick, SurgeRecord } from './surges';
 import type { Ability, AbilityScores, RulesVersion } from './types';
 
@@ -123,6 +124,8 @@ export interface CharacterDoc {
   inventory?: InventoryItem[];
   /** Berries (฿) in hand. */
   money?: number;
+  /** Spells (powers, tactics, creations) the character knows. */
+  spells?: KnownSpell[];
   willpower: { strengthenSelf: number; variantAdvancements?: number | null };
   /** Every Haki feature and Standard Advancement unlocked by a Spirit Surge, oldest first. */
   surges?: SurgeRecord[];
@@ -273,6 +276,11 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
       name: typeof item.name === 'string' ? item.name : 'Item',
       qty: Math.max(0, whole(item.qty, 1)),
       weight: typeof item.weight === 'number' && Number.isFinite(item.weight) && item.weight >= 0 ? item.weight : undefined,
+    })),
+    spells: !Array.isArray(doc.spells) ? undefined : (objects<KnownSpell>(doc.spells) ?? []).filter((spell) => typeof spell.name === 'string' && spell.name.trim()).map((spell, i) => ({
+      ...spell,
+      id: typeof spell.id === 'string' ? spell.id : `spell-${i + 1}`,
+      level: Math.min(9, Math.max(0, whole(spell.level, 0))),
     })),
     money: typeof doc.money === 'number' && Number.isFinite(doc.money) ? Math.round(doc.money) : undefined,
     willpower: isObject(doc.willpower) ? { ...doc.willpower, strengthenSelf: whole(doc.willpower.strengthenSelf, 0) } : { strengthenSelf: 0 },

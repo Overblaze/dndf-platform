@@ -513,7 +513,12 @@ def extract_spell_lists(version: str) -> list[dict]:
                 if level is None:
                     problems.append(f"spell list p{page}: unknown level heading '{item.text}'")
             elif item.family.startswith("ScalySans") and item.top > 150 and level is not None:
-                current["levels"].setdefault(str(level), []).append(item.text.strip())
+                names = current["levels"].setdefault(str(level), [])
+                # "(ritual)" pushed onto its own line belongs to the name above it.
+                if item.text.strip().startswith("(") and names:
+                    names[-1] = f"{names[-1]} {item.text.strip()}"
+                else:
+                    names.append(item.text.strip())
     for item in out:
         if not item["levels"]:
             problems.append(f"{item['name']}: no spells found")

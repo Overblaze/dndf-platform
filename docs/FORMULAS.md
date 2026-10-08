@@ -416,3 +416,11 @@ Every racial trait is a feature on the sheet with the book's words. Uses, action
 | Void Century Automaton: Constructed Resilience | AC 15 + Wis without armor | EH10 p.82 |
 | Tontatta: Glass Cannon | hit point maximum −2 per level | EH10 p.77 |
 | Shark: Bite · Wotan: Wotan Vigor · Yeti: Glacial Grasp | 1d6 + Str piercing · regain 1d12 + Con, 1 per long rest · save DC 8 + prof + Str, prof uses per long rest | EH10 p.70, 78, 82 |
+
+### Spells
+
+| What | Rule on the sheet | Source |
+|---|---|---|
+| Casting a spell | a cantrip spends nothing; any other spell spends one slot of the level chosen, never lower than the spell's own. With no slot left it still goes ahead and says so | EH10 p.209 (multiclass slots) and each class's Spellcasting feature |
+| Save DC, attack modifier, number prepared | from each class's Spellcasting feature (see the class rows above) | — |
+| Spell text | only the eleven spells the handbook prints (EH10 p.218–220) have text and roll buttons; every other spell is the name the class list gives, with the player's own notes | EH10 p.211–220 |

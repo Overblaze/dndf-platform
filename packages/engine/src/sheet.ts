@@ -9,6 +9,7 @@ import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { carriedWeight, type InventoryLine } from './inventory';
+import type { SheetSpells } from './spells';
 import { raceChoices, type RaceChoice } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
@@ -194,6 +195,8 @@ export interface Sheet {
   /** What the character carries, with the weight carried against carrying capacity. */
   gear: { lines: InventoryLine[]; carried: number; capacity: number; over: boolean };
   money: number;
+  /** Spells known, the slots to cast them with, and each casting class's DC and attack modifier. */
+  spellbook: SheetSpells;
   /** Racial pick-lists (Cyborg Upgrades), with how many the level gives and what is picked. */
   raceChoices: RaceChoice[];
   /** Devil Fruits the character holds, and ones they only know about. Empty unless private content was handed in. */
@@ -1064,6 +1067,38 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     }
   }
 
+  // Spells: what is known, with the handbook's words for the ones it prints, and what they can be cast with now.
+  const slots = resources.filter((r) => /^slots\d$/.test(r.id)).sort((a, b) => a.id.localeCompare(b.id));
+  const knownSpells: SheetSpells['known'] = (doc.spells ?? []).map((spell) => {
+    const entry = spell.entry ? rules.get(spell.entry) : undefined;
+    const words = entry?.kind === 'spell' ? String(entry.text ?? '') : undefined;
+    const field = (key: string) => (typeof entry?.[key] === 'string' ? (entry[key] as string) : undefined);
+    return {
+      ...spell,
+      text: words,
+      school: field('school'), castingTime: field('castingTime'), range: field('range'), components: field('components'), duration: field('duration'),
+      page: entry?.source.page, book: entry?.source.book,
+      rolls: words ? rollButtons(diceInText(words), plainScope) : [],
+      castableWith: spell.level > 0 ? slots.filter((r) => Number(r.id.slice(5)) >= spell.level && r.remaining > 0).map((r) => Number(r.id.slice(5))) : [],
+    };
+  }).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+  const casting: SheetSpells['casting'] = sources.flatMap((source) => {
+    const of = (id: string) => (source.entry.formulas as Record<string, unknown> | undefined)?.[id] ? formulas.find((f) => f.key === `formula.${id}` && f.from === source.entry.name) : undefined;
+    const dc = of('spellDC');
+    const attack = of('spellAttack');
+    return dc || attack ? [{ from: source.entry.name, dc, attack }] : [];
+  });
+  const limits: SheetSpells['limits'] = [
+    ...classTable.filter((c) => /known$|^highestSpellLevel$/i.test(c.key)).map((c) => ({ label: c.label, value: String(c.value), from: c.from })),
+    ...features.flatMap((f) => f.displays.filter((d) => /prepared/i.test(d.label)).map((d) => ({ label: d.label, value: d.value, from: f.from.replace(/ \d+$/, '') }))),
+  ];
+  const spellbook: SheetSpells = {
+    casting, slots, limits, known: knownSpells,
+    cantrips: knownSpells.filter((k) => k.level === 0).length,
+    leveled: knownSpells.filter((k) => k.level > 0).length,
+    prepared: knownSpells.filter((k) => k.level > 0 && k.prepared).length,
+  };
+
   const hitDie = first?.cls.hitDie ?? 8;
   const dreamMax = dreamPointsMax(level);
   // "Add together the Hit Dice granted by all your classes to form your pool of Hit Dice."
@@ -1130,6 +1165,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     },
     gear: inventory,
     money: doc.money ?? 0,
+    spellbook,
     raceChoices: racePicks,
     fruits,
     knownFruits,
