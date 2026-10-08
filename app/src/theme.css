@@ -1277,3 +1277,24 @@ a {
   text-decoration: line-through;
   opacity: 0.55;
 }
+
+/* The bar offering to undo a level-up, and the buttons at the foot of a dialog. */
+.level-undo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.level-undo span {
+  flex: 1 1 12rem;
+}
+
+.dialog-actions {
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.dialog-actions .btn {
+  min-height: 44px;
+}

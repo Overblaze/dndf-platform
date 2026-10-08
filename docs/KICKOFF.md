@@ -15,6 +15,6 @@ Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (
 
 ## Phase 4 — builder, level-up, build editor, custom features
 1. **Starting ability scores** (branch `phase4-ability-scores`): roll 4d6 drop the lowest, standard array, point buy, or typed in; with a column for race, improvement and feat bonuses.
-2. Level-up flow.
+2. **Level-up flow** (branch `phase4-level-up`): a Level up button on the sheet; pick the class (or a new one), average or rolled hit points, what the level gives, the subclass, option picks and the improvement or feat; one-step Undo.
 3. Custom features.
 4. Guided builder following the book's steps.

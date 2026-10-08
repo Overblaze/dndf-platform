@@ -279,6 +279,20 @@ Tested in `packages/engine/test/abilityScores.test.ts`.
 
 Nothing is refused: an unassigned number or overspent points is said in a notice. The method, the rolls and the bonuses are kept on the character (`scoreOrigin`); `scores` is what the sheet uses.
 
+## Gaining a level
+Tested in `packages/engine/test/levelUp.test.ts`.
+
+| Rule | Formula |
+|---|---|
+| Hit points for the level | half the class's hit die + 1, or the die as rolled; + Constitution modifier |
+| A new class's first level | the same (only the character's very first level takes the die's maximum) |
+| Hit points gained | the change in the hit point maximum, so a higher Constitution, Tough or a level-20 feature reaches back over earlier levels; added to current hit points |
+| Ability Score Improvement | at the class's improvement levels: +2 to one score or +1 to two, or a feat; nothing is capped, a score over 20 is flagged |
+| Dream Points | reset to the new level |
+| Multiclass prerequisites | warned about when taking a first level in another class; never blocked |
+
+A character levelled one level at a time from 1 to 20 has the same hit point maximum as one built at that level (checked for every class in both handbooks).
+
 ## Multiclassing (both versions)
 | Number | Formula | Sample | Page |
 |---|---|---|---|
