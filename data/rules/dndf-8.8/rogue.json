@@ -358,6 +358,7 @@
                     ],
                     [
                       "Rogue",
+                      "",
                       "Crafting",
                       "Potency",
                       "long"
@@ -393,7 +394,9 @@
                     [
                       "13th",
                       "Sea Serpent Venom,",
-                      "฿100,000 24 hours max 2 Amiudake Extract, or The Captain’s Curse"
+                      "",
+                      "฿100,000 24 hours max 2",
+                      " Amiudake Extract, or The Captain’s Curse"
                     ],
                     [
                       "17th Puzzle Scorpion Venom or ฿200,000 24 hours max 1 Sea King Venom"
@@ -601,9 +604,12 @@
                 {
                   "rows": [
                     [
+                      "",
                       "Natural Abilities",
                       "Nature Powers",
+                      "",
                       "Spell Slots per Spell Spell Slots per Spell",
+                      "",
                       "Spell Slots per Spell Spell Slots per Spell"
                     ],
                     [

@@ -677,7 +677,7 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 54
       },
-      "text": "You’ve mastered the art of fighting with a pistol in each hand.\nOnce per turn when you make an attack with a pistol as part of the Attack action, you can fire your off- hand pistol as part of the same action.\nReloading pistols while wielding two no longer requires a free hand; you can reload one pistol as part of the same action you use to reload the other."
+      "text": "You’ve mastered the art of fighting with a pistol in each hand.\nOnce per turn when you make an attack with a pistol as part of the Attack action, you can fire your off-hand pistol as part of the same action.\nReloading pistols while wielding two no longer requires a free hand; you can reload one pistol as part of the same action you use to reload the other."
     },
     {
       "id": "feat.dungeon_delver",
@@ -759,7 +759,7 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 55
       },
-      "text": "Your mastery of the longbow allows you to strike targets at incredible ranges.\nWhen you take the Attack action with a longbow, you may choose to forgo making any attacks this turn to prepare a focused shot. On your next turn, you may use your action to release the prepared shot.\nThe prepared shot doubles the longbow’s normal and maximum range (becoming 300/1200).\nThe shot ignores disadvantage imposed by long- range attacks and half or three-quarters cover. While preparing the shot, your speed is reduced to 0, and attack rolls against you have advantage until the start of your next turn.",
+      "text": "Your mastery of the longbow allows you to strike targets at incredible ranges.\nWhen you take the Attack action with a longbow, you may choose to forgo making any attacks this turn to prepare a focused shot. On your next turn, you may use your action to release the prepared shot.\nThe prepared shot doubles the longbow’s normal and maximum range (becoming 300/1200).\nThe shot ignores disadvantage imposed by long-range attacks and half or three-quarters cover. While preparing the shot, your speed is reduced to 0, and attack rolls against you have advantage until the start of your next turn.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -2586,7 +2586,7 @@
         "book": "DnDF Expanded Handbook v10",
         "page": 64
       },
-      "text": "You master fighting with two weapons, gaining the following benefits:\nYou gain a +1 bonus to AC while you are wielding a separate melee weapon in each hand.\nYou can use two-weapon fighting even when the one- handed melee weapons you are wielding aren’t light. You can draw or stow two one-handed weapons when you would normally be able to draw or stow only one.",
+      "text": "You master fighting with two weapons, gaining the following benefits:\nYou gain a +1 bonus to AC while you are wielding a separate melee weapon in each hand.\nYou can use two-weapon fighting even when the one-handed melee weapons you are wielding aren’t light. You can draw or stow two one-handed weapons when you would normally be able to draw or stow only one.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

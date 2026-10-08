@@ -26,12 +26,7 @@
         },
         {
           "name": "Special Weapons",
-          "text": "Some weapons function differently than others:\nLance. Disadvantage on attacks against targets within 5 ft. Requires two hands unless mounted.\nNet. On a hit, restrains a Large or smaller creature until freed. A creature can escape with a DC 10 Strength check, or by",
-          "page": 333
-        },
-        {
-          "name": "Simple Weapons",
-          "text": "destroying the net (AC 10, 5 slashing damage). Attacks made with a net are limited to one per action, bonus action, or reaction.",
+          "text": "Some weapons function differently than others:\nLance. Disadvantage on attacks against targets within 5 ft. Requires two hands unless mounted.\nNet. On a hit, restrains a Large or smaller creature until freed. A creature can escape with a DC 10 Strength check, or by destroying the net (AC 10, 5 slashing damage). Attacks made with a net are limited to one per action, bonus action, or reaction.",
           "page": 333
         },
         {
@@ -1078,7 +1073,7 @@
         },
         {
           "name": "Bamboo",
-          "text": "Weapon (longsword), Uncommon (requires attunement)\nCost: ฿500,000\nYou have a +1 bonus to attack and damage rolls made with this magic weapon.\nThis perfectly straight blade boasts a green-and- yellow hilt, a straight-edged tsuba, and a trapezoidal pommel with a cross engraving.\nAttacks with Bamboo deal double damage to objects, ships, and large structures. In addition, when you hit a creature that is at least one size larger than you or an object or structure, the attack deals an extra 3d4 slashing damage.",
+          "text": "Weapon (longsword), Uncommon (requires attunement)\nCost: ฿500,000\nYou have a +1 bonus to attack and damage rolls made with this magic weapon.\nThis perfectly straight blade boasts a green-and-yellow hilt, a straight-edged tsuba, and a trapezoidal pommel with a cross engraving.\nAttacks with Bamboo deal double damage to objects, ships, and large structures. In addition, when you hit a creature that is at least one size larger than you or an object or structure, the attack deals an extra 3d4 slashing damage.",
           "page": 350
         },
         {
@@ -1133,7 +1128,7 @@
         },
         {
           "name": "Oto",
-          "text": "Weapon (longsword), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nThe counterpart to Kogarashi, Oto is gracefully proportioned blade bears a four-sided tsuka and a red- wrapped hilt.\nOnce per turn when you wield Oto, you may use a bonus action to send forth a slashing wave of wind in a 10 foot line. Creatures in the line must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d6 slashing damage.\nTwin Cleavage. If you are attuned to both Oto and Kogarashi and wield them simultaneously, you gain the following:\nYou gain +2 AC against melee attacks.\nAs an action, you unleash a devastating forked slash in a 30-ft cone. Each creature must make a Dexterity saving throw against your Meito save DC. On a failure they take 2d8 slashing damage.",
+          "text": "Weapon (longsword), Rare (requires attunement)\nCost: ฿5,000,000\nYou have a +2 bonus to attack and damage rolls made with this magic weapon.\nThe counterpart to Kogarashi, Oto is gracefully proportioned blade bears a four-sided tsuka and a red-wrapped hilt.\nOnce per turn when you wield Oto, you may use a bonus action to send forth a slashing wave of wind in a 10 foot line. Creatures in the line must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d6 slashing damage.\nTwin Cleavage. If you are attuned to both Oto and Kogarashi and wield them simultaneously, you gain the following:\nYou gain +2 AC against melee attacks.\nAs an action, you unleash a devastating forked slash in a 30-ft cone. Each creature must make a Dexterity saving throw against your Meito save DC. On a failure they take 2d8 slashing damage.",
           "page": 352
         },
         {
@@ -1173,7 +1168,7 @@
         },
         {
           "name": "Tsuji Shibai",
-          "text": "Weapon (katana), Legendary (requires attunement by a creature with a Charisma score of 18 or higher)\nCost: ฿500,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nThis oversized ink brush bears a katana’s hilt and guard, with an elegant tassel at its pommel. Tsuji Shibai is the “blade of the stage,” a weapon that turns battle into performance and transforms strikes into strokes of art.\nDramatic Stroke. Once per turn, when you hit a creature with Tsuji Shibai, you can embellish the strike with flair. Choose one:\nThe target takes an extra 1d6 psychic damage, as your attack dazzles or confuses them.\nYou grant an ally within 10 feet advantage on their next attack roll before the end of your next turn.\nCurtain Call. As an action, you unleash a sweeping, theatrical strike. Every creature of your choice in a 15 foot cone must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d8 × half your Willpower in psychic damage. You can use this ability once per long rest.\nUnderworld Marketplace THE UNDERWORLD IS A SPRAWLING NETWORK OF\nsmugglers, brokers, and crime lords who traffic in goods too rare for ordinary markets. Its\noperations thrive across the Grand Line, with secretive auctions and black markets drawing pirates, nobles, and powerful figures seeking items that the World Government would never allow to circulate openly.\nSome underworld markets hide in plain sight, disguised as lavish trade houses or exclusive clubs for the wealthy. Others lurk in the shadows of remote ports, accessible only by those with the right contacts. What all share in common is the promise of rarity: treasures and tools that can change the tide of battle or fortune.",
+          "text": "Weapon (katana), Legendary (requires attunement by a creature with a Charisma score of 18 or higher)\nCost: ฿500,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nThis oversized ink brush bears a katana’s hilt and guard, with an elegant tassel at its pommel. Tsuji Shibai is the “blade of the stage,” a weapon that turns battle into performance and transforms strikes into strokes of art.\nDramatic Stroke. Once per turn, when you hit a creature with Tsuji Shibai, you can embellish the strike with flair. Choose one:\nThe target takes an extra 1d6 psychic damage, as your attack dazzles or confuses them.\nYou grant an ally within 10 feet advantage on their next attack roll before the end of your next turn.\nCurtain Call. As an action, you unleash a sweeping, theatrical strike. Every creature of your choice in a 15 foot cone must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d8 × half your Willpower in psychic damage. You can use this ability once per long rest.\nUnderworld Marketplace The Underworld is a sprawling network of\nsmugglers, brokers, and crime lords who traffic in goods too rare for ordinary markets. Its\noperations thrive across the Grand Line, with secretive auctions and black markets drawing pirates, nobles, and powerful figures seeking items that the World Government would never allow to circulate openly.\nSome underworld markets hide in plain sight, disguised as lavish trade houses or exclusive clubs for the wealthy. Others lurk in the shadows of remote ports, accessible only by those with the right contacts. What all share in common is the promise of rarity: treasures and tools that can change the tide of battle or fortune.",
           "page": 353
         }
       ]

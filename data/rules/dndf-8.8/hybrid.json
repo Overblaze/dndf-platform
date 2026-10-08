@@ -438,7 +438,7 @@
         {
           "level": 20,
           "name": "Overdrive",
-          "text": "At 20th level, you can unleash the full extent of your hybrid potential in a brief, devastating burst. As a bonus action, you can enter your Apex Overdrive for 1 minute. While in this state, you gain the following benefits:\nYour hybrid point total cannot fall below 5 for the duration of apex overdrive.\nYou are immune to damage from your own area-of- effect Hybrid Powers.\nThe damage die for your unarmed strikes and hybrid melee weapon attacks becomes 1d12.\nWhenever you hit a creature with a melee attack, you regain 10 hit points.\nOnce you use this feature, you cannot use it again until you finish a long rest.",
+          "text": "At 20th level, you can unleash the full extent of your hybrid potential in a brief, devastating burst. As a bonus action, you can enter your Apex Overdrive for 1 minute. While in this state, you gain the following benefits:\nYour hybrid point total cannot fall below 5 for the duration of apex overdrive.\nYou are immune to damage from your own area-of-effect Hybrid Powers.\nThe damage die for your unarmed strikes and hybrid melee weapon attacks becomes 1d12.\nWhenever you hit a creature with a melee attack, you regain 10 hit points.\nOnce you use this feature, you cannot use it again until you finish a long rest.",
           "page": 138,
           "uses": {
             "max": 1,
@@ -495,7 +495,7 @@
         {
           "level": 1,
           "name": "Prehistoric Powers",
-          "text": "Starting when you choose this lineage, your modified biology has been engineered to contain the essence of Devil Fruit power. You begin play with a Ancient Zoan- type Devil Fruit. Roll on the Very Rare or Very Rare (Expanded) Devil Fruit Generation Table (your choice) until you receive a Ancient Zoan result; that fruit is permanently infused into your body.\nVariant Rule: Instead of starting with a Devil Fruit, you can instead start with none. Letting you have a chance of finding a specific fruit on your adventures instead.",
+          "text": "Starting when you choose this lineage, your modified biology has been engineered to contain the essence of Devil Fruit power. You begin play with a Ancient Zoan-type Devil Fruit. Roll on the Very Rare or Very Rare (Expanded) Devil Fruit Generation Table (your choice) until you receive a Ancient Zoan result; that fruit is permanently infused into your body.\nVariant Rule: Instead of starting with a Devil Fruit, you can instead start with none. Letting you have a chance of finding a specific fruit on your adventures instead.",
           "page": 138
         },
         {
@@ -573,7 +573,7 @@
         "book": "DnDF Expanded Handbook v8.8",
         "page": 140
       },
-      "flavor": "Subclass Prerequisite: No Starting Race, you begin as a Living Ooze.\nA failed experiment with living ooze and Zoan- enhanced biology, you are a synthetic creature whose body adapts, expands, and evolves as you grow. Infused with a Devil Fruit and lacking a true humanoid form, you fight as an amorphous weapon of war, your mass engulfing the battlefield.",
+      "flavor": "Subclass Prerequisite: No Starting Race, you begin as a Living Ooze.\nA failed experiment with living ooze and Zoan-enhanced biology, you are a synthetic creature whose body adapts, expands, and evolves as you grow. Infused with a Devil Fruit and lacking a true humanoid form, you fight as an amorphous weapon of war, your mass engulfing the battlefield.",
       "features": [
         {
           "level": 1,
@@ -597,7 +597,7 @@
         {
           "level": 6,
           "name": "Ooze Artillery",
-          "text": "Starting at 6th level, you gain the ability to eject a high- pressure glob of your ooze mass as a ranged attack. As an action, you can launch a glob of ooze at a point you can see within 60 feet and mark the space with your ooze which evaporates after 1 minute.\nA creature in the space you target must succeed on a Dexterity saving throw against your Hybrid save DC or take acid damage equal to your engulf’s damage and gain 2 Hybrid Points. On a successful save, the creature takes no damage and you gain no points.\nIf you target a point that is already marked with your ooze, you may choose to teleport to that location as part of the action. You reconstitute your body at the marked space, leaving behind a marked space in your original location. Each creature within 5 ft. of the arrival point must succeed on a Dexterity saving throw against your Hybrid save DC or take 2d6 acid damage.\nYou can use this feature a number of times equal to your Constitution modifier (minimum of once). You regain all expended uses when you finish a short or long rest.",
+          "text": "Starting at 6th level, you gain the ability to eject a high-pressure glob of your ooze mass as a ranged attack. As an action, you can launch a glob of ooze at a point you can see within 60 feet and mark the space with your ooze which evaporates after 1 minute.\nA creature in the space you target must succeed on a Dexterity saving throw against your Hybrid save DC or take acid damage equal to your engulf’s damage and gain 2 Hybrid Points. On a successful save, the creature takes no damage and you gain no points.\nIf you target a point that is already marked with your ooze, you may choose to teleport to that location as part of the action. You reconstitute your body at the marked space, leaving behind a marked space in your original location. Each creature within 5 ft. of the arrival point must succeed on a Dexterity saving throw against your Hybrid save DC or take 2d6 acid damage.\nYou can use this feature a number of times equal to your Constitution modifier (minimum of once). You regain all expended uses when you finish a short or long rest.",
           "page": 140,
           "uses": {
             "max": "max(1, mod.con)",
@@ -683,7 +683,7 @@
         {
           "level": 1,
           "name": "Combat Exoskeleton",
-          "text": "Also at 1st level, your outer skin hardens into an armor- like shell, allowing you to shrug off attacks with ease. You gain the following benefits:\nWhile you are not wearing armor, your AC equals 13 + your Strength modifier.\nYour hit point maximum increases by 1, and it increases by 1 again whenever you gain a level in this class.\nWhen you are attacked and its a critical hit, gain 1 Hybrid Point.",
+          "text": "Also at 1st level, your outer skin hardens into an armor-like shell, allowing you to shrug off attacks with ease. You gain the following benefits:\nWhile you are not wearing armor, your AC equals 13 + your Strength modifier.\nYour hit point maximum increases by 1, and it increases by 1 again whenever you gain a level in this class.\nWhen you are attacked and its a critical hit, gain 1 Hybrid Point.",
           "page": 142,
           "effects": [
             {
@@ -713,7 +713,7 @@
         {
           "level": 10,
           "name": "Warp Implosion",
-          "text": "Starting at 10th level, you can unleash your hidden germa abilities, granting you the ability to use a space- warping dash. As an action, you can teleport to an unoccupied space you can see within 120 feet of you. Immediately after you disappear, each creature within 30 feet of the space you left must make a Strength saving throw. On a failed save, the creature takes 10d10 force damage and is pulled straight toward the space you left, ending in an unoccupied space as close to your former space as possible. On a successful save, the creature takes half as much damage and isn’t pulled.\nOnce you use this feature, you can’t do so again until you finish a long rest, unless you spend 5 hybrid points to use it again.",
+          "text": "Starting at 10th level, you can unleash your hidden germa abilities, granting you the ability to use a space-warping dash. As an action, you can teleport to an unoccupied space you can see within 120 feet of you. Immediately after you disappear, each creature within 30 feet of the space you left must make a Strength saving throw. On a failed save, the creature takes 10d10 force damage and is pulled straight toward the space you left, ending in an unoccupied space as close to your former space as possible. On a successful save, the creature takes half as much damage and isn’t pulled.\nOnce you use this feature, you can’t do so again until you finish a long rest, unless you spend 5 hybrid points to use it again.",
           "page": 142,
           "uses": {
             "max": 1,

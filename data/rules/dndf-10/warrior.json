@@ -307,7 +307,7 @@
         {
           "level": 15,
           "name": "Superior Sharpened Spirit",
-          "text": "Starting at 15th level, you can ignore magical and non- magical bludgeoning, piercing, and slashing resistances.",
+          "text": "Starting at 15th level, you can ignore magical and non-magical bludgeoning, piercing, and slashing resistances.",
           "page": 203
         },
         {
@@ -601,7 +601,7 @@
         {
           "level": 10,
           "name": "Empowered Strikes",
-          "text": "At 10th level, your attacks are empowered to strike through the toughest defenses. Your Snake Weapon’s weapon form weapon attacks now ignore resistance to non-magical attacks and bow attacks can bypass three- quarters cover.\nAdditionally, when you score a critical hit with a weapon form’s weapon attack, you can add your warrior level / 2 to the damage dealt.",
+          "text": "At 10th level, your attacks are empowered to strike through the toughest defenses. Your Snake Weapon’s weapon form weapon attacks now ignore resistance to non-magical attacks and bow attacks can bypass three-quarters cover.\nAdditionally, when you score a critical hit with a weapon form’s weapon attack, you can add your warrior level / 2 to the damage dealt.",
           "page": 205
         },
         {
@@ -1001,7 +1001,7 @@
         {
           "level": 3,
           "name": "Lingering Cut",
-          "text": "Also at 3rd level, your deliberate cuts leave wounds that worsen with each successful strike. When you hit a creature with a melee weapon attack, you can cause the target to begin bleeding for 3 rounds. At the start of each of the bleeding creature’s turns, it takes 1d6 non- resistable necrotic damage. When you successfully hit a bleeding creature with a melee weapon attack, the bleed damage increases by an additional 1d6 and the duration resets. The bleed ends early if a creature uses an action to stanch the wound.\nThe damage per turn of this feature deals increases as you gain levels in the warrior class. The damage becomes 2d6 at 8th level, and 3d6 at 14th level.",
+          "text": "Also at 3rd level, your deliberate cuts leave wounds that worsen with each successful strike. When you hit a creature with a melee weapon attack, you can cause the target to begin bleeding for 3 rounds. At the start of each of the bleeding creature’s turns, it takes 1d6 non-resistable necrotic damage. When you successfully hit a bleeding creature with a melee weapon attack, the bleed damage increases by an additional 1d6 and the duration resets. The bleed ends early if a creature uses an action to stanch the wound.\nThe damage per turn of this feature deals increases as you gain levels in the warrior class. The damage becomes 2d6 at 8th level, and 3d6 at 14th level.",
           "page": 208,
           "rolls": [
             {
@@ -1049,7 +1049,7 @@
         {
           "level": 15,
           "name": "Sheathed Cut",
-          "text": "Starting at 15th level, your strikes cut so cleanly that the wound does not reveal itself until moments later. When you hit a creature with a melee weapon attack, you can delay the strike’s damage. Roll for the damage roll as usual, however the attack deals no damage immediately.\nUntil the start of your next turn, if the creature uses an action, legendary action, or moves, it takes non- resistable necrotic damage equal to double the damage rolled.",
+          "text": "Starting at 15th level, your strikes cut so cleanly that the wound does not reveal itself until moments later. When you hit a creature with a melee weapon attack, you can delay the strike’s damage. Roll for the damage roll as usual, however the attack deals no damage immediately.\nUntil the start of your next turn, if the creature uses an action, legendary action, or moves, it takes non-resistable necrotic damage equal to double the damage rolled.",
           "page": 208
         },
         {

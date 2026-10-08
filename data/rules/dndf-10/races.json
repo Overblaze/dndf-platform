@@ -145,7 +145,7 @@
         },
         {
           "name": "Feat",
-          "text": "You gain one Character Feat of your choice that you meet the prerequisite for in Chapter 6 of the Dungeons and Devil Fruits Player’s Handbook. You may only choose a Haki-related feat if you receive DM permission.",
+          "text": "You gain one Character Feat of your choice that you meet the prerequisite for in Chapter 6 of the may only choose a Haki-related feat if you receive DM permission.",
           "page": 67
         }
       ],
@@ -492,7 +492,7 @@
         },
         {
           "name": "Thick-Skinned",
-          "text": "Reflecting their tough, battle- hardened nature, Fighting Fish Fish-Men have a natural resilience. You gain a +1 bonus to your Armor Class.",
+          "text": "Reflecting their tough, battle-hardened nature, Fighting Fish Fish-Men have a natural resilience. You gain a +1 bonus to your Armor Class.",
           "page": 69
         }
       ],

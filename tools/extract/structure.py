@@ -214,7 +214,7 @@ MARKSMAN_V10 = merge(marksman(2), {"features": {
     "Fighting Style": {"expect": "choose one of the following options", "choose": {"id": "fightingStyle", "count": 1, "options": {
         "Close Quarters Shooter": CLOSE_QUARTERS,
         "Improved Aiming": {"expect": "+3 bonus to attack rolls you make with ranged weapon attacks", "effects": [{"type": "attack", "value": 3, "when": "ranged"}]},
-        "Sharpened Shot": {"expect": "two- handed ranged weapons equal to twice your proficiency bonus", "effects": [{"type": "damage", "expr": "prof * 2", "when": "ranged && twoHanded"}]},
+        "Sharpened Shot": {"expect": "two-handed ranged weapons equal to twice your proficiency bonus", "effects": [{"type": "damage", "expr": "prof * 2", "when": "ranged && twoHanded"}]},
     }}},
 }})
 # v8.8's styles are smaller: Aiming +2 to hit, Sharpened Shot +2 damage with any ranged weapon.
@@ -887,21 +887,21 @@ STEAM_DEVICES = [
 
 
 def repair_steamtech(version: str, entry: dict, problems: list[str]) -> None:
-    """The device table sits mid-sentence in Overclock on the page, so the reader split Overclock in two
-    and hung the table on the last feature. Put Overclock's sentence back together and move the table,
-    rebuilt as the book's three columns, to Steamtech Devices."""
+    """The device table sits in the middle of Overclock on the page, so Overclock's last paragraph is read
+    as a part named after the table, and the table hangs on the last feature. Put the paragraph back and
+    move the table, rebuilt as the book's three columns, to Steamtech Devices."""
     features = {f["name"]: f for f in entry["features"]}
     overclock, devices, last = features.get("Overclock"), features.get("Steamtech Devices"), features.get("Steam Conversion")
     stray = next((s for s in (overclock or {}).get("sections", []) if s["name"] == "Steamtech Device Table"), None)
     table = next((t for t in (last or {}).get("tables", []) if t["rows"] and t["rows"][0][0] == "Steamtech"), None)
-    if not (overclock and devices and stray and table and overclock["text"].endswith("you can increase the spell")):
+    if not (overclock and devices and stray and table and "you can increase the spell level of your devices signature spell by 2" in overclock["text"]):
         problems.append(f"{entry['name']} ({version}): the Steamtech device table is laid out differently here; not repaired")
         return
     cells = re.sub(r"\s+", " ", " ".join(str(c) for row in table["rows"] for c in row))
     if any(part not in cells for device in STEAM_DEVICES for part in device["expect"]):
         problems.append(f"{entry['name']} ({version}): the Steamtech device table reads differently here; not repaired")
         return
-    overclock["text"] += " " + stray["text"]
+    overclock["text"] += "\n" + stray["text"]  # the paragraph printed under the table
     overclock["sections"] = [s for s in overclock["sections"] if s is not stray]
     if not overclock["sections"]:
         del overclock["sections"]

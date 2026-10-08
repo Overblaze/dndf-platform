@@ -96,6 +96,54 @@ def extract_rules(version: str) -> list[dict]:
     return out
 
 
+# What a chapter says before its first heading: the title, then a line that opens with a large
+# capital. Page → title, in each handbook. Chapters whose opening is secret or DM-only are not here.
+OPENINGS = {
+    "dndf-10": {9: "Chapter 1: Making a Character", 67: "Chapter 2: Character Races", 83: "Chapter 3: Character Classes",
+                211: "Chapter 4: Updated Spell Lists", 221: "Chapter 5: Spirit Surges", 242: "Chapter 6: Devil Fruits",
+                255: "Chapter 7: Expanded Armory", 291: "Underworld Marketplace"},
+    "dndf-8.8": {9: "Chapter 1: Making a Character", 67: "Chapter 2: Character Races", 83: "Chapter 3: Character Classes",
+                 210: "Chapter 4: Updated Spell Lists", 221: "Chapter 5: Spirit Surges", 239: "Chapter 6: Devil Fruits",
+                 330: "Chapter 7: Expanded Armory", 354: "Underworld Marketplace"},
+}
+
+
+def extract_openings(version: str) -> list[dict]:
+    out = []
+    for page, title in OPENINGS[version].items():
+        opening: list[str] = []
+        tables: list[dict] = []
+        # The opening ends at the first heading; the list of classes runs on to the next page before it does.
+        for block in read_blocks(BOOKS[version]["pdf"], page, page + 1):
+            if isinstance(block, Heading):
+                break
+            if isinstance(block, Table):
+                # A table before the first heading belongs to the opening (the list of classes and subclasses).
+                if opening:
+                    tables.append({"rows": table_rows(block), "page": block.page})
+            elif isinstance(block, Para) and block.text.strip() != "฿":  # a stray coin sign from the price table below
+                opening.append(block.text)
+        if not opening:
+            continue
+        # The opening runs across both columns, so its lines arrive as short paragraphs: join the
+        # ones that stop mid-sentence.
+        text = ""
+        for part in opening:
+            text += ("\n" if re.search(r"[.!?:”\"]$", text) else " ") + part if text else part
+        if not text.startswith(title):
+            problems.append(f"{version} p{page}: the chapter opening does not start with '{title}'")
+            continue
+        text = text[len(title):].strip()
+        if len(text) < 40:
+            continue
+        item = entry(version, "rule", slug(title) + "_opening", title, page)
+        item["text"] = text
+        if tables:
+            item["tables"] = tables
+        out.append(item)
+    return out
+
+
 # --- Crew roles -----------------------------------------------------------------------
 
 
@@ -595,7 +643,7 @@ def write(version: str, name: str, entries: list[dict]) -> None:
 
 
 CHAPTER_FILES = {
-    "general_rules": extract_rules,
+    "general_rules": lambda version: extract_rules(version) + extract_openings(version),
     "crew_roles": extract_crew_roles,
     "backgrounds": extract_backgrounds,
     "feats": extract_feats,

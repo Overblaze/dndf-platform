@@ -338,6 +338,7 @@
                     ],
                     [
                       "Renegade",
+                      "",
                       "Crafting",
                       "Potency",
                       "long"
@@ -373,11 +374,16 @@
                     [
                       "13th",
                       "Sea Serpent Venom,",
-                      "฿100,000 24 hours max 2 Amiudake Extract, or The Captain’s Curse"
+                      "",
+                      "฿100,000 24 hours max 2",
+                      " Amiudake Extract, or The Captain’s Curse"
                     ],
                     [
                       "17th",
-                      "Puzzle Scorpion Venom ฿200,000 24 hours max 1 or Sea King Venom"
+                      "",
+                      "Puzzle Scorpion Venom ฿200,000 24 hours max 1",
+                      "",
+                      " or Sea King Venom"
                     ]
                   ],
                   "page": 175

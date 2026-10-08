@@ -456,7 +456,7 @@
       "rarity": "Very Rare",
       "tier": 2,
       "repeatable": false,
-      "text": "Your control over your Haki extends beyond your body, imbuing your ranged attacks with potent force.\nWhen you make a ranged attack, you can use a bonus action to imbue your projectile with your Haki, causing it to deal an additional force damage equal to 2d8 + a number of d8s equal to a quarter of your Willpower (rounded up). Furthermore, the attack has a maximum range of 1200 feet with no disadvantage due to long- range. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
+      "text": "Your control over your Haki extends beyond your body, imbuing your ranged attacks with potent force.\nWhen you make a ranged attack, you can use a bonus action to imbue your projectile with your Haki, causing it to deal an additional force damage equal to 2d8 + a number of d8s equal to a quarter of your Willpower (rounded up). Furthermore, the attack has a maximum range of 1200 feet with no disadvantage due to long-range. Once you use this ability a number of times equal to your proficiency bonus, you can’t use it again until you finish a long rest.",
       "uses": {
         "max": "prof",
         "recharge": "long"

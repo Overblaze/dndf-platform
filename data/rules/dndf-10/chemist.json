@@ -622,7 +622,7 @@
         {
           "level": 2,
           "name": "Herbal Remedy",
-          "text": "Starting at 2nd level, you can regain some of your creative energy by consuming herbal concotions you’ve prepared from gathering special local plants. During a short rest, you choose expended invention power slots to recover. The invention power slots can have a combined level that is equal to or less than half your chemist level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.\nFor example, when you are a 4th-level chemist, you can recover up to two levels worth of invention power slots. You can recover either a 2nd-level slot or two 1st- level slots.",
+          "text": "Starting at 2nd level, you can regain some of your creative energy by consuming herbal concotions you’ve prepared from gathering special local plants. During a short rest, you choose expended invention power slots to recover. The invention power slots can have a combined level that is equal to or less than half your chemist level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.\nFor example, when you are a 4th-level chemist, you can recover up to two levels worth of invention power slots. You can recover either a 2nd-level slot or two 1st-level slots.",
           "page": 97,
           "uses": {
             "max": 1,
