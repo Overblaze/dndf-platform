@@ -67,6 +67,8 @@ export interface SheetFeature {
   book: string;
   /** "Bruiser 3", "Black Fist Style 6", "Fury Features". */
   from: string;
+  /** Where the end of the text comes from, when this handbook's own page cuts it off. */
+  completedFrom?: { book: string; page: number };
   action?: string;
   cost?: Record<string, number>;
   /** Resource holding this feature's limited uses. */
@@ -693,6 +695,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
       counter: (def.counter as CounterDef | undefined)?.id,
       sections: (def.sections ?? []) as SectionDef[],
       tables: (def.tables ?? []) as TableDef[],
+      completedFrom: def.completedFrom as SheetFeature['completedFrom'],
     };
   });
 

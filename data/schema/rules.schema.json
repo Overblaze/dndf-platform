@@ -430,6 +430,25 @@
         "prerequisite": {
           "type": "string",
           "minLength": 1
+        },
+        "completedFrom": {
+          "description": "The book and page the end of this text was taken from, when this handbook's own page cuts it off.",
+          "type": "object",
+          "required": [
+            "book",
+            "page"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "book": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
         }
       }
     },

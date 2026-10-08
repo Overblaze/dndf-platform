@@ -404,8 +404,19 @@
         {
           "level": 10,
           "name": "Power Immunity",
-          "text": "Beginning at 10th level, your hybrid body learns to redirect its own volatile magic. When you cast a Hybrid Power that affects an area and would deal damage to",
-          "page": 132
+          "text": "Beginning at 10th level, your hybrid body learns to redirect its own volatile magic. When you cast a Hybrid Power that affects an area and would deal damage to you, you can choose to ignore that damage. You can use this feature once per short or long rest.",
+          "page": 132,
+          "completedFrom": {
+            "book": "DnDF Expanded Handbook v8.8",
+            "page": 138
+          },
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "level": 12,
