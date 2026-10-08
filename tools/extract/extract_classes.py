@@ -264,10 +264,11 @@ def make_feature(heading: Heading, blocks: list[Block], deeper: int) -> dict:
 
 REST = r"(short or long|long|short)"
 ONCE = re.compile(
-    rf"(?:once you use this (?:feature|ability|trait)[^.]*?|you (?:can’t|cannot|can not) (?:use (?:this feature|it)(?: this way)?|do so) again )until you (?:finish|complete) a {REST} rest"
+    rf"(?:once you use this (?:feature|ability|trait)[^.]*?|you (?:can’t|cannot|can not) (?:use (?:this feature|it)(?: this way)?|do so(?: (?:in )?this way)?|cast it(?: in this way)?) again )until you (?:finish|complete) a {REST} rest"
     rf"|once you use (?:this feature|it)[^.]*?you must (?:finish|complete) a {REST} rest before you can use it again", re.I
 )
-ONCE_PER = re.compile(rf"\bonce per {REST} rest\b", re.I)
+# "once per long rest", "once for free per long rest", "cast … once … You regain the ability to do so when you finish a long rest".
+ONCE_PER = re.compile(rf"\bonce (?:for free )?per {REST} rest\b|\bonce\b[^.]*\.\s*You regain the ability to do so when you (?:finish|complete) a {REST} rest", re.I)
 TIMES = re.compile(
     rf"(?:a number|an amount) of times equal to (double |twice |half )?your (proficiency bonus|\w+ modifier)"
     rf"(?:[^.]*?\.?[^.]*?(?:regain\w*|until|before needing)[^.]*?(?:finish|complete|after|on|take) a| per) {REST} rest", re.I

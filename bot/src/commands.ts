@@ -2,7 +2,7 @@
 // and the player's words in, the reply and (when something changed) the new character out.
 // The numbers all come from the shared engine, so the bot and the website can never disagree.
 import {
-  ABILITIES, ABILITY_NAMES, applyDamage, applyHealing, dawn, gainTempHp, longRest, nextHitDice, rollD20, rollDice, rollDie, shortRest, signed,
+  ABILITIES, ABILITY_NAMES, applyDamage, applyHealing, dawn, exactBerries, gainTempHp, longRest, nextHitDice, rollD20, rollDice, rollDie, shortRest, signed,
   type CharacterDoc, type RollMode, type Rng, type Sheet,
 } from '@dndf/engine';
 
@@ -142,6 +142,9 @@ export function status(doc: CharacterDoc, sheet: Sheet): Outcome {
     `Hit dice ${sheet.hitDice.remaining}/${sheet.hitDice.total} · Dream Points ${sheet.dreamPoints.remaining}/${sheet.dreamPoints.max} · Willpower ${sheet.willpower.value} · Haki DC ${sheet.hakiSaveDc.value}`,
   ];
   if (pools.length) lines.push(pools.join(' · '));
+  if (sheet.money !== 0 || sheet.gear.lines.length > 0) lines.push(`${exactBerries(sheet.money)} · carrying ${sheet.gear.carried} of ${sheet.gear.capacity} lb${sheet.gear.over ? ' (over)' : ''}`);
+  const prepared = sheet.spellbook.known.filter((k) => k.level > 0 && k.prepared).map((k) => k.name);
+  if (prepared.length) lines.push(`Prepared: ${prepared.join(', ')}`);
   const on = sheet.toggles.filter((t) => t.on).map((t) => t.label);
   if (on.length) lines.push(`On: ${on.join(', ')}`);
   if (doc.state.conditions.length) lines.push(`Conditions: ${doc.state.conditions.join(', ')}`);

@@ -2404,7 +2404,14 @@
           "group": "Fifth Level Emanations",
           "text": "You can cast animate dead without using a spell slot. Once you do so, you can’t cast it in this way again until you finish a long rest.",
           "page": 129,
-          "prerequisite": "5th Level Devilforged"
+          "prerequisite": "5th Level Devilforged",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "sign_of_ill_omen",
@@ -2482,7 +2489,14 @@
           "group": "Seventh Level Emanations",
           "text": "You can cast freedom of movement once on yourself without expending a spell slot. You regain the ability to do so when you finish a long rest.",
           "page": 129,
-          "prerequisite": "7th Level Devilforged"
+          "prerequisite": "7th Level Devilforged",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "visions_of_chaos",
@@ -2698,7 +2712,14 @@
           "group": "Blade Smithing Emanations",
           "text": "You can cast one of the following spells using a devilforged slot: Searing Smite, Wrathful Smite, or Blinding Smite. Once you do so, you can’t do so this way again until you finish a long rest.",
           "page": 132,
-          "prerequisite": "5th Level Devilforged, Blade Smithing"
+          "prerequisite": "5th Level Devilforged, Blade Smithing",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "extended_strike",
@@ -2903,7 +2924,14 @@
           "group": "Gear Smithing Emanations",
           "text": "You can cast Armor of Agathys at your highest spell level once for free per long rest.",
           "page": 133,
-          "prerequisite": "5th Level Devilforged, Gear Smithing"
+          "prerequisite": "5th Level Devilforged, Gear Smithing",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "digitigrade_joint_upgrade",
@@ -2919,7 +2947,14 @@
           "group": "Mechadevil Emanations",
           "text": "You can cast Hellish Rebuke at your highest spell level once for free per long rest.",
           "page": 134,
-          "prerequisite": "5th Level Devilforged, Mechadevil"
+          "prerequisite": "5th Level Devilforged, Mechadevil",
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "id": "intigrate_weapons",

@@ -159,6 +159,7 @@ Sample: Warrior 8 — Str 18, Dex 12.
 | Strike save DC (Dashing, Crescent, Hawk Strike) | 8 + prof + the higher of Str and Dex | 15 | EH10 p.202 |
 | Second Wind | 1d10 + level | 1d10 + 8 | EH10 p.201 |
 | Action Surge | 1 use per short rest; 2 from 17th | 1 | EH10 p.201 |
+| Warrior fighting style: Dueling | +2 damage with a melee weapon that is not two-handed (a second weapon in the other hand is the player's to discount) | 1d8 + 5 | EH10 p.201 |
 | Execute | v10: Execute Dice column. v8.8: 2d8. Prof uses per long rest | v10 3d6 | EH10 p.201 |
 | Dashing Strike / Crescent Strike | 2d8 + Str / 3d6 + higher of Str and Dex | 2d8 + 4 / 3d6 + 4 | EH10 p.202 |
 | Extra Attack | 2 from 5th, 3 from 11th, 4 from 20th | 2 | EH10 p.202 |
