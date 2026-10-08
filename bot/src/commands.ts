@@ -15,6 +15,19 @@ export interface Outcome {
   log?: string;
 }
 
+/**
+ * Runs a command on the whole sheet, Devil Fruit included, so that what is saved is right (fruit charges
+ * come back at dawn). When the fruit is still secret and the reply can be read by other players, the
+ * reply is the one the same command gives for the sheet without the fruit, with the same dice.
+ */
+export function withPrivacy(run: (sheet: Sheet, rng: Rng) => Outcome, whole: Sheet, withoutSecrets: Sheet, showAll: boolean, rng: Rng): Outcome {
+  const rolled: number[] = [];
+  const outcome = run(whole, () => { const value = rng(); rolled.push(value); return value; });
+  if (showAll) return outcome;
+  let next = 0;
+  return { ...outcome, reply: run(withoutSecrets, () => rolled[next++] ?? rng()).reply };
+}
+
 const dieFaces = (values: number[]) => values.join(', ');
 const norm = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 

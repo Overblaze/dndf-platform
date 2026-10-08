@@ -1,8 +1,8 @@
 // The bot's commands, checked against the same engine and rules data as the website.
 import { describe, expect, it } from 'vitest';
-import { deriveSheet, newCharacter, type CharacterDoc, type Rng } from '@dndf/engine';
+import { DEFAULT_SETTINGS, deriveSheet, newCharacter, spendResource, type CharacterDoc, type Rng, type RuleEntry, type Secrets } from '@dndf/engine';
 import { loadRules } from '../../packages/engine/test/load';
-import { dawnCommand, findRollable, hp, partyLine, rest, roll, status } from '../src/commands';
+import { dawnCommand, findRollable, hp, partyLine, rest, roll, status, withPrivacy } from '../src/commands';
 
 const rules = loadRules('dndf-10');
 const scores = { str: 16, dex: 14, con: 14, int: 10, wis: 12, cha: 8 };
@@ -119,5 +119,39 @@ describe('/status and /party', () => {
     expect(partyLine(doc, sheet, 'matt')).toMatch(/^❤️ \*\*Zoro\*\* \(matt\) — .*Warrior 5 · HP 44 \/ 44 · AC \d+$/);
     expect(partyLine({ ...doc, state: { ...doc.state, hp: 20 } }, sheet)).toMatch(/^🩸/);
     expect(partyLine({ ...doc, state: { ...doc.state, hp: 0 } }, sheet)).toMatch(/^💀/);
+  });
+});
+
+describe('a secret Devil Fruit and what the bot says in front of the table', () => {
+  // A made-up fruit: no private content is in the repository.
+  const entry = { id: 'devilFruit.test', kind: 'devilFruit', name: 'Stand-in Pear', versions: [], source: { book: 'Test Book', page: 1 }, rarity: 'Rare', type: 'Paramecia', features: [] } as unknown as RuleEntry;
+  const secrets: Secrets = { granted: [{ key: 'k', kind: 'owner', revealed: false, entry }], advancements: [] };
+  const { doc: fresh } = make();
+  const whole0 = deriveSheet(fresh, rules, DEFAULT_SETTINGS, secrets);
+  const doc = { ...fresh, state: spendResource(fresh.state, whole0, 'fruit.charges', 3).state };
+  const whole = deriveSheet(doc, rules, DEFAULT_SETTINGS, secrets);
+  const plain = deriveSheet(doc, rules);
+
+  it('/dawn refills the charges either way, but only names them when the reply is private or the fruit is revealed', () => {
+    const inPublic = withPrivacy((sheet) => dawnCommand(doc, sheet), whole, plain, false, Math.random);
+    expect(inPublic.doc!.state.spent['fruit.charges']).toBeUndefined();
+    expect(inPublic.reply).not.toMatch(/fruit|charges/i);
+    expect(inPublic.reply).toContain('Nothing to change');
+    const inPrivate = withPrivacy((sheet) => dawnCommand(doc, sheet), whole, plain, true, Math.random);
+    expect(inPrivate.reply).toContain('Devil Fruit charges 2 → 5 of 5');
+    expect(inPrivate.doc).toEqual(inPublic.doc);
+  });
+
+  it('/status in public lists no fruit charges; in private it does', () => {
+    expect(withPrivacy((sheet) => status(doc, sheet), whole, plain, false, Math.random).reply).not.toMatch(/fruit/i);
+    expect(withPrivacy((sheet) => status(doc, sheet), whole, plain, true, Math.random).reply).toContain('Devil Fruit charges 2/5');
+  });
+
+  it('a short rest shows the same dice in the public reply as were really rolled and saved', () => {
+    const hurt = { ...doc, state: { ...doc.state, hp: 5 } };
+    const out = withPrivacy((sheet, dice) => rest(hurt, sheet, 'short', 2, dice), deriveSheet(hurt, rules, DEFAULT_SETTINGS, secrets), deriveSheet(hurt, rules), false, faces(10, 7, 3));
+    expect(out.reply).toContain('rolled 7, 3');
+    expect(out.doc!.state.hp).toBe(5 + 7 + 3 + 2 * 2);
+    expect(out.reply).toContain(`→ ${out.doc!.state.hp}`);
   });
 });

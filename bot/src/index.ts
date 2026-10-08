@@ -1,7 +1,7 @@
 // The DnDF Discord bot. Run with: npm start --workspace bot   (see bot/README.md)
 import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, type AutocompleteInteraction, type ChatInputCommandInteraction } from 'discord.js';
-import type { RollMode } from '@dndf/engine';
-import { dawnCommand, hp, partyLine, rest, roll, status, type Outcome } from './commands';
+import type { RollMode, Sheet } from '@dndf/engine';
+import { dawnCommand, hp, partyLine, rest, roll, status, withPrivacy, type Outcome } from './commands';
 import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter } from './db';
 import { loadEnv } from './env';
 import { closeBrowser, sheetPdf, SITE } from './pdf';
@@ -47,6 +47,7 @@ async function run(interaction: ChatInputCommandInteraction) {
   const character = pick(characters, wanted);
   if (!character) return interaction.editReply(`You have no character called "${wanted}". Yours: ${characters.map((c) => c.doc.name).join(', ')}.`);
   const { doc } = character;
+  // The sheet anyone may see: the saved character alone. A Devil Fruit is never in it.
   const sheet = sheetOf(doc);
 
   if (name === 'sheet') {
@@ -55,13 +56,20 @@ async function run(interaction: ChatInputCommandInteraction) {
     return interaction.editReply({ content: `📜 **${sheet.name}** — ${sheet.summary}`, files: [file] });
   }
 
-  let outcome: Outcome;
-  if (name === 'roll') outcome = roll(sheet, interaction.options.getString('what', true), (interaction.options.getString('with') ?? 'normal') as RollMode, rng);
-  else if (name === 'hp') outcome = hp(doc, sheet, interaction.options.getString('change', true) as 'damage' | 'heal' | 'temp', interaction.options.getInteger('amount', true));
-  else if (name === 'rest') outcome = rest(doc, sheet, interaction.options.getString('kind', true) as 'short' | 'long', interaction.options.getInteger('hit_dice') ?? 0, rng);
-  else if (name === 'dawn') outcome = dawnCommand(doc, sheet);
-  else if (name === 'status') outcome = status(doc, sheet);
-  else return interaction.editReply(`I don't know /${name}.`);
+  // The sums use the whole sheet, the granted Devil Fruit included. Its details are only in the reply
+  // when the fruit has been revealed to the table, or the reply is one only this player can see.
+  const { secrets, open } = await db.secretsOf(character.id);
+  const whole = sheetOf(doc, secrets);
+  const act = (one: Sheet, dice: typeof rng): Outcome | null => {
+    if (name === 'roll') return roll(one, interaction.options.getString('what', true), (interaction.options.getString('with') ?? 'normal') as RollMode, dice);
+    if (name === 'hp') return hp(doc, one, interaction.options.getString('change', true) as 'damage' | 'heal' | 'temp', interaction.options.getInteger('amount', true));
+    if (name === 'rest') return rest(doc, one, interaction.options.getString('kind', true) as 'short' | 'long', interaction.options.getInteger('hit_dice') ?? 0, dice);
+    if (name === 'dawn') return dawnCommand(doc, one);
+    if (name === 'status') return status(doc, one);
+    return null;
+  };
+  if (!['roll', 'hp', 'rest', 'dawn', 'status'].includes(name)) return interaction.editReply(`I don't know /${name}.`);
+  const outcome = withPrivacy((one, dice) => act(one, dice)!, whole, sheet, hidden || open, rng);
 
   // Save first: the player is only told about a change that was really written.
   if (outcome.doc && outcome.log) await db.save(interaction.user.id, character, outcome.doc, outcome.log);

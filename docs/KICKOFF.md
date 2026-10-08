@@ -52,9 +52,10 @@ Both open items were then closed on branch `save-conflicts`:
 - [x] Haki features and "+ Spirit Surge" on the sheet: rarity, tabs, prerequisites greyed out and never blocked, preview of changed numbers, log, remove. Haki roll buttons scale with Willpower; Haki Purist; Standard Advancements wired where they have a number.
 - [x] Campaigns: the DM page creates a campaign, adds members, grants a fruit or knowledge of one, reveals it, takes it away; the Crew page puts your character in the campaign and shows who is known to have a fruit.
 - [x] A granted fruit on the sheet: a Fruit tab (only when granted) with the book text, charges or Beast Form uses back at dawn, Fruit DC and attack; features with roll buttons on Combat; fruits only known about; Devil Fruit advancements in "+ Spirit Surge". The fruit is never in the saved character, so printed sheets and the bot's PDF leave it out.
-- [ ] The bot does not see fruit charges yet: `/dawn` in Discord does not refill them (the website's Dawn does).
+- [x] The bot does its sums on the whole sheet, the granted fruit included: `/dawn` refills fruit charges and `/status` counts them. While a fruit is unrevealed, a reply other players can read is the one the sheet without the fruit gives; `private: true` shows everything.
 - [x] `/sheet` in Discord never includes a fruit, revealed or not: the fruit is not in the saved character the PDF is drawn from.
-- [ ] Audit the private data (a few fruit type lines are garbled by extraction).
+- [x] `tools/extract/audit_secret.py` audits the private data and prints counts only (`--where` adds book and page, never names or text).
+- [ ] Fix what the audit found: Zoan fruits whose stat block is read into the middle of their features (both encyclopedias and the v8.8 handbook), and a beast's bold name read as a new feature in the original encyclopedia.
 
 ## Racial traits (branch `race-choices`)
 Racial traits were text only. Now each is a feature with its uses, action and dice read from the wording, and the numbers above in `docs/FORMULAS.md` entered by hand. Cyborg Upgrades and the Mink's Animal Characteristics are lists to pick from, in the builder, on the Features tab and at level-up.
