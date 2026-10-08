@@ -16,8 +16,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from extract_classes import ABILITIES, BOOKS, ROOT, body_text, dice_in, make_feature, proficiencies_granted, skills_granted, slug, split_sections, table_rows  # noqa: E402
-from structure import apply_feat_structure, apply_haki_structure  # noqa: E402
+from extract_classes import ABILITIES, BOOKS, ROOT, body_text, derive_structure, dice_in, make_feature, proficiencies_granted, skills_granted, slug, split_sections, table_rows  # noqa: E402
+from structure import RACE_CHOICES, RACE_TRAIT_SPLITS, apply_feat_structure, apply_haki_structure, apply_race_structure  # noqa: E402
 from pdfdoc import Block, Heading, Para, Table, is_footer, load_items, read_blocks  # noqa: E402
 
 # Page ranges in the v10 handbook.
@@ -316,6 +316,83 @@ def traits_from(blocks: list[Block], who: str) -> tuple[str, list[dict]]:
     return "\n".join(intro), traits
 
 
+def split_traits(who: str, traits: list[dict]) -> None:
+    for inside, name in RACE_TRAIT_SPLITS.get(who, []):
+        at = next((i for i, t in enumerate(traits) if t["name"] == inside and f"\n{name} " in t["text"]), None)
+        if at is None:
+            problems.append(f"race {who}: '{name}' was not found inside '{inside}'")
+            continue
+        before, after = traits[at]["text"].split(f"\n{name} ", 1)
+        traits[at]["text"] = before
+        traits.insert(at + 1, {"name": name, "text": after, "page": traits[at]["page"]})
+
+
+DESCRIPTIVE_TRAITS = {"age", "alignment", "size", "speed", "ability score increase", "languages", "subrace"}
+
+
+def structure_trait(version: str, who: str, trait: dict) -> None:
+    """Uses, action and dice a trait's wording names, then the numbers entered by hand. Skills stay under "skills"."""
+    if trait["name"].lower() in DESCRIPTIVE_TRAITS:
+        return
+    # A trait's later paragraphs can grant skills too.
+    granted = skills_granted(trait["text"])
+    if granted:
+        trait["skills"] = granted
+    derive_structure(trait)
+    kept = [e for e in trait.get("effects", []) if not (e.get("type") == "proficiency" and e.get("skill") in trait.get("skills", []))]
+    if kept:
+        trait["effects"] = kept
+    else:
+        trait.pop("effects", None)
+    if "auto" in trait:
+        trait["auto"] = [a for a in trait["auto"] if a != "effects" or kept]
+        if not trait["auto"]:
+            del trait["auto"]
+    apply_race_structure(version, who, trait, problems)
+
+
+def race_choices(version: str, race: dict) -> dict | None:
+    """Splits a trait that is a list to choose from into an option group, and leaves the trait its opening sentence."""
+    spec = RACE_CHOICES.get(race["name"])
+    trait = next((t for t in race.get("traits", []) if spec and t["name"] in spec["trait"]), None)
+    if not trait:
+        return None
+    opening, *lines = trait["text"].split("\n")
+    count = next((expr for start, end, expr in spec["count"] if start in opening and end in opening), None)
+    options = []
+    for line in lines:
+        m = re.match(r"([A-Z][\w’'\- ]{1,40})\. (.+)$", line)
+        if not m:
+            problems.append(f"race {race['name']} / {trait['name']} ({version}): '{line[:40]}' is not an option")
+            return None
+        option = {"id": slug(m.group(1)), "name": m.group(1), "text": m.group(2), "page": trait["page"]}
+        derive_structure(option)
+        needs = re.search(r"This is an upgrade of the (.+?) Feature", option["text"])
+        if needs:
+            option["requires"] = slug(needs.group(1))
+        fields = spec.get("options", {}).get(option["name"])
+        if fields and fields["expect"] in option["text"]:
+            for key in ("toggle", "rolls"):
+                if key in fields:
+                    option[key] = fields[key]
+            if "effects" in fields:
+                option["effects"] = option.get("effects", []) + fields["effects"]
+        elif fields:
+            problems.append(f"race {race['name']} / {option['name']} ({version}) is worded differently here, so its numbers were not applied")
+        options.append(option)
+    if not count or not options:
+        problems.append(f"race {race['name']} / {trait['name']} ({version}): how many may be chosen was not read")
+        return None
+    for key in ("uses", "action", "rolls", "effects", "auto"):
+        trait.pop(key, None)
+    trait["text"] = opening
+    trait["choices"] = {"id": spec["id"], "count": count, "from": f"optionGroup.{spec['group']}"}
+    group = entry(version, "optionGroup", spec["group"], trait["name"], trait["page"])
+    group["parent"] = race["id"]
+    group["options"] = options
+    return group
+
+
 def summarize_traits(target: dict, traits: list[dict]) -> None:
     auto = []
     for trait in traits:
@@ -373,6 +450,9 @@ def extract_races(version: str) -> list[dict]:
                     subrace["parent"] = race["id"]
                     subrace["text"] = sub_text
                     subrace["traits"] = sub_traits
+                    split_traits(f"{name} / {sub_name}", sub_traits)
+                    for trait in sub_traits:
+                        structure_trait(version, f"{name} / {sub_name}", trait)
                     summarize_traits(subrace, sub_traits)
                     if not sub_traits:
                         problems.append(f"subrace {name} / {sub_name}: no traits")
@@ -380,6 +460,8 @@ def extract_races(version: str) -> list[dict]:
             elif part.text.endswith("Traits"):
                 text, traits = traits_from(part_blocks, name)
                 race["traits"] = traits
+                for trait in traits:
+                    structure_trait(version, name, trait)
                 if text:
                     race["text"] = (race["text"] + "\n" + text).strip()
                 summarize_traits(race, traits)
@@ -393,8 +475,11 @@ def extract_races(version: str) -> list[dict]:
             problems.append(f"race {name}: no traits")
         if "speed" not in race and not all("speed" in s for s in subraces):
             problems.append(f"race {name}: no walking speed found")
+        group = race_choices(version, race)
         out.append(race)
         out.extend(subraces)
+        if group:
+            out.append(group)
     return out
 
 

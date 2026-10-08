@@ -1,7 +1,8 @@
-import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, customClassEntry, customClassId, isCustomClassId, rulesFor, type Ability, type AbilityScores, type CustomClass, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, raceChoices, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, customClassEntry, customClassId, isCustomClassId, rulesFor, type Ability, type AbilityScores, type CustomClass, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { AbilityScoresField, originOf } from './AbilityScoresField';
 import { useMemo, useState } from 'react';
 import { CustomClassDialog } from './CustomClassDialog';
+import { RaceChoiceFields } from './RaceChoiceFields';
 import { RuleText } from '../components/RuleText';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -95,7 +96,9 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const skillHint = classSkills?.skills?.choose
     ? `${cls.name}: choose ${classSkills.skills.choose} from ${Array.isArray(classSkills.skills.from) ? classSkills.skills.from.map((id) => SKILLS.find((k) => k.id === id)?.name ?? id).join(', ') : 'any skills'}`
     : classSkills?.skills?.text ?? '';
-  const keptChoices = Object.fromEntries(picks.map((f) => [f.choices.id, choices[f.choices.id] ?? []]));
+  // The race's own pick-lists (Cyborg Upgrades), at the character's whole level.
+  const racePicks = raceChoices({ race: { id: raceId || undefined, subraceId: subraceId || undefined, name: '', speed: 30 }, classes: [{ id: cls.id, level }, ...otherClasses], choices }, rules);
+  const keptChoices = Object.fromEntries([...picks.map((f) => [f.choices.id, choices[f.choices.id] ?? []] as const), ...racePicks.filter((c) => (choices[c.id] ?? []).length > 0).map((c) => [c.id, choices[c.id]!] as const)]);
   const toggle = (list: string[], id: string) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id]);
   const setWeapon = (i: number, patch: Partial<WeaponDef>) => setWeapons(weapons.map((w, j) => (j === i ? { ...w, ...patch } : w)));
 
@@ -171,6 +174,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     ...(name.trim() ? [] : ['No name yet']),
     ...(level >= subclassLevel && styles.length > 0 && !subclass ? [`${cls.subclass?.label ?? 'Subclass'} not chosen`] : []),
     ...picks.filter((f) => (choices[f.choices.id] ?? []).length < f.known).map((f) => `${f.name}: ${(choices[f.choices.id] ?? []).length} of ${f.known} picked`),
+    ...racePicks.filter((c) => (choices[c.id] ?? []).length < c.allowed).map((c) => `${c.name}: ${(choices[c.id] ?? []).length} of ${c.allowed} picked`),
     ...(scoreOrigin.method === 'array' || scoreOrigin.method === 'roll'
       ? ABILITIES.filter((a) => (scoreOrigin.assignment ?? {})[a] == null).length > 0 ? ['Some ability scores have no number yet'] : [] : []),
     ...(backgroundId ? [] : ['No background chosen']),
@@ -283,6 +287,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           </label>
         )}
       </div>
+      <RaceChoiceFields choices={racePicks} picked={choices} onChange={(id, next) => setChoices({ ...choices, [id]: next })} withText />
       <div className="grid-2">
         <label className="field">
           <span className="label">Race shown on the sheet</span>

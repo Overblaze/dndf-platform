@@ -1666,3 +1666,7 @@ a {
   text-align: left;
   cursor: pointer;
 }
+
+.option-text {
+  margin: -6px 0 8px 34px;
+}

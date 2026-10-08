@@ -8,6 +8,7 @@ export * from './classes';
 export * from './bruiser';
 export * from './general';
 export * from './surges';
+export * from './raceChoices';
 export * from './fruit';
 export * from './bounty';
 export * from './ships';

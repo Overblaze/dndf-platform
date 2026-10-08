@@ -538,6 +538,11 @@
         "group": {
           "description": "Sub-heading the option is printed under.",
           "type": "string"
+        },
+        "requires": {
+          "description": "The id of the option in the same group this one upgrades and needs.",
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_]*$"
         }
       }
     },
@@ -990,7 +995,7 @@
       ]
     },
     "roll": {
-      "description": "A dice roll the sheet offers as a button. {\u2026} parts are expressions, e.g. \"1{col.scrapperDie} + {level}\".",
+      "description": "A dice roll the sheet offers as a button. {…} parts are expressions, e.g. \"1{col.scrapperDie} + {level}\".",
       "type": "object",
       "required": [
         "label",
@@ -1118,7 +1123,7 @@
       }
     },
     "trait": {
-      "description": "A racial trait: the bold name it is printed under, and its text.",
+      "description": "A racial trait: the bold name it is printed under, its text, and whatever of it the sheet can use.",
       "type": "object",
       "required": [
         "name",
@@ -1148,6 +1153,43 @@
             "type": "string",
             "pattern": "^[a-z_]+$"
           }
+        },
+        "action": {
+          "$ref": "#/$defs/action"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        },
+        "uses": {
+          "$ref": "#/$defs/uses"
+        },
+        "toggle": {
+          "$ref": "#/$defs/toggle"
+        },
+        "choices": {
+          "$ref": "#/$defs/choices"
+        },
+        "rolls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/roll"
+          }
+        },
+        "auto": {
+          "description": "Fields the extraction tool recognised from the feature's wording, not yet checked by hand.",
+          "type": "array",
+          "items": {
+            "enum": [
+              "uses",
+              "action",
+              "effects",
+              "rolls"
+            ]
+          },
+          "uniqueItems": true
         }
       }
     }

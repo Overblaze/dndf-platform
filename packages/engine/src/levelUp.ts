@@ -1,6 +1,7 @@
 // Gaining a level: what the next level gives (the plan), and the character after taking it.
 // The plan is read from the rules data, so it is the same list the class table prints.
 import { ABILITIES, type Ability, type AbilityScores, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry } from './types';
+import { raceChoices } from './raceChoices';
 import type { CharacterDoc } from './character';
 import { classColumns, classScope } from './classes';
 import { abilityMod, proficiencyBonus } from './core';
@@ -88,6 +89,16 @@ export function levelUpPlan(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
         page: feature.page, book: entry.source.book,
       });
     }
+  }
+
+  // A racial pick-list whose count grows with the character's level (Cyborg Upgrades).
+  for (const choice of raceChoices(doc, rules, before + 1)) {
+    if (choice.picked.length >= choice.allowed) continue;
+    choices.push({
+      id: choice.id, name: choice.name, allowed: choice.allowed, have: choice.picked,
+      options: choice.options.map((o) => ({ id: o.id, name: o.name, text: o.text, page: o.page })),
+      page: choice.page, book: choice.book,
+    });
   }
 
   const columns: LevelUpPlan['columns'] = [];

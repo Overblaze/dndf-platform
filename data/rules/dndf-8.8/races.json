@@ -58,7 +58,11 @@
         {
           "name": "Flotation Bubble",
           "text": "As an action, create a floating bubble around your hips. While wearing this bubble, you are under the effect of the Feather Fall spell, your walking speed increased by 15 ft., and you ignore difficult terrain. If you take an amount of damage equal to your proficiency bonus x 5 from a single attack or you fall unconscious, the bubble pops.",
-          "page": 71
+          "page": 71,
+          "action": "action",
+          "auto": [
+            "action"
+          ]
         },
         {
           "name": "Languages",
@@ -126,7 +130,14 @@
         {
           "name": "Protection of the Clouds",
           "text": "You are able to form fluffy floating clouds around you to reduce the speed of your fall. You gain the ability to cast Feather Fall. Once you use this ability, you cannot use it again until you complete a Short or Long rest.",
-          "page": 72
+          "page": 72,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
         },
         {
           "name": "Dial Proficiency",
@@ -225,7 +236,18 @@
         {
           "name": "Beast’s Slash",
           "text": "Because of your beast-like features, you have a climbing speed of 20 feet. In addition, your body is a natural Weapon, which you can use to make unarmed strikes. You can choose to deal slashing for your unarmed strikes, and your unarmed strike damage dice becomes a minimum of 1d6.",
-          "page": 73
+          "page": 73,
+          "effects": [
+            {
+              "type": "unarmedDie",
+              "expr": "'1d6'",
+              "weapons": "unarmedOnly"
+            },
+            {
+              "type": "note",
+              "label": "Climbing speed 20 feet"
+            }
+          ]
         },
         {
           "name": "Animal Instinct",
@@ -243,13 +265,25 @@
         },
         {
           "name": "Animal Characteristic",
-          "text": "Your body possesses a unique mammalian trait, granting you abilities associated with that animal. You can pick two of the following:\nRetractable Claws. You have retractable claws, which you can use for combat. Your unarmed strikes deal an additional 1d4 slashing damage while you have no weapons equipped.\nNimble Climber. You have a climbing speed equal to your walking speed.\nSensitive Ears. You have exceptional hearing, giving you advantage on Perception checks that rely on sound.\nEnhanced Agility. You are exceptionally nimble. When you make a long jump, you can cover twice the normal distance. Additionally, you have advantage on Dexterity (Acrobatics) checks to avoid being knocked prone.\nExcellent Smell. You have an exceptional sense of smell, giving you advantage on Perception checks that rely on scent. You can detect invisible or hidden creatures within 10 feet if they have a distinctive scent.\nBrute Strength. Your upper body strength allows you to grapple with ease. You gain proficiency in Athletics, and when you hit with an unarmed strike, you can attempt to grapple the target as a bonus action.\nFleet Footed. Your powerful legs grant you speed. Your base walking speed increases by 10 feet.\nGood Swimmer. You have a swimming speed equal to your walking speed and can hold your breath for up to 15 minutes.\nHunter Prowess. You are adept at moving quietly. You gain advantage when rolling Stealth checks, and difficult terrain doesn’t cost you extra movement while you are moving in stealth.\nTough Hide. Your thick hide grants you additional protection. Your Armor Class increases by 1 while you are not wearing heavy armor.\nScavenger Resilience. When you drop to 0 hit points but aren’t killed outright, you can drop to 1 hit point instead. You can’t use this feature again until you finish a long rest.\nOpposable Thumbs. You have agile hands and can use your feet for delicate tasks. You gain proficiency in Sleight of Hand, and you can manipulate simple objects with your feet as though they were hands.\nLeap. You can make powerful pouncing attacks. When you jump at least 10 feet toward a creature and hit it with a melee attack, you can deal an extra 1d6 damage. Additionally, the target must succeed on a Strength save DC equal to 8 + your Strength modifier + your proficiency bonus, or be knocked prone.\nFerocity. You can use your action to make a reckless attack, gaining advantage on melee attack rolls until the end of your turn. However, attack rolls against you also have advantage until the start of your next turn. You can use this feature once per short or long rest.\nThick Coat. You have adapted to colder environments. You have resistance to cold damage and advantage on Constitution saving throws against the effects of extreme cold.",
-          "page": 73
+          "text": "Your body possesses a unique mammalian trait, granting you abilities associated with that animal. You can pick two of the following:",
+          "page": 73,
+          "choices": {
+            "id": "minkCharacteristics",
+            "count": "2",
+            "from": "optionGroup.mink_animal_characteristics"
+          }
         },
         {
           "name": "Sulong Transformation",
           "text": "Starting at 3rd Level, if you can see the full moon, you can use your action to channel moonlight energy into your body and transform into a powerful bright white primal form with longer hair and enhanced size, bolstering your strength, speed, and electro.\nYour transformation lasts for 10 minutes or until you end it as a Bonus Action. During it, your speed increases by 60 feet, you have advantage on strength and dexterity checks, advantage on attack rolls, and you can deal extra lightning damage when you deal damage with an Attack or a spell. The extra lightning damage equals your level. When this feature end, gain 1 exhaustion. Once you use this trait, you can’t use it again until you finish a Long Rest.",
-          "page": 73
+          "page": 73,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
         }
       ],
       "abilityIncrease": {
@@ -261,6 +295,177 @@
         "abilityIncrease",
         "size",
         "speed"
+      ]
+    },
+    {
+      "id": "optionGroup.mink_animal_characteristics",
+      "kind": "optionGroup",
+      "name": "Animal Characteristic",
+      "versions": [
+        "dndf-8.8"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v8.8",
+        "page": 73
+      },
+      "parent": "race.mink",
+      "options": [
+        {
+          "id": "retractable_claws",
+          "name": "Retractable Claws",
+          "text": "You have retractable claws, which you can use for combat. Your unarmed strikes deal an additional 1d4 slashing damage while you have no weapons equipped.",
+          "page": 73,
+          "rolls": [
+            {
+              "label": "1d4 slashing damage",
+              "dice": "1d4",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
+        },
+        {
+          "id": "nimble_climber",
+          "name": "Nimble Climber",
+          "text": "You have a climbing speed equal to your walking speed.",
+          "page": 73
+        },
+        {
+          "id": "sensitive_ears",
+          "name": "Sensitive Ears",
+          "text": "You have exceptional hearing, giving you advantage on Perception checks that rely on sound.",
+          "page": 73
+        },
+        {
+          "id": "enhanced_agility",
+          "name": "Enhanced Agility",
+          "text": "You are exceptionally nimble. When you make a long jump, you can cover twice the normal distance. Additionally, you have advantage on Dexterity (Acrobatics) checks to avoid being knocked prone.",
+          "page": 73
+        },
+        {
+          "id": "excellent_smell",
+          "name": "Excellent Smell",
+          "text": "You have an exceptional sense of smell, giving you advantage on Perception checks that rely on scent. You can detect invisible or hidden creatures within 10 feet if they have a distinctive scent.",
+          "page": 73
+        },
+        {
+          "id": "brute_strength",
+          "name": "Brute Strength",
+          "text": "Your upper body strength allows you to grapple with ease. You gain proficiency in Athletics, and when you hit with an unarmed strike, you can attempt to grapple the target as a bonus action.",
+          "page": 73,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "athletics"
+            }
+          ]
+        },
+        {
+          "id": "fleet_footed",
+          "name": "Fleet Footed",
+          "text": "Your powerful legs grant you speed. Your base walking speed increases by 10 feet.",
+          "page": 73,
+          "effects": [
+            {
+              "type": "speed",
+              "value": 10
+            }
+          ]
+        },
+        {
+          "id": "good_swimmer",
+          "name": "Good Swimmer",
+          "text": "You have a swimming speed equal to your walking speed and can hold your breath for up to 15 minutes.",
+          "page": 73
+        },
+        {
+          "id": "hunter_prowess",
+          "name": "Hunter Prowess",
+          "text": "You are adept at moving quietly. You gain advantage when rolling Stealth checks, and difficult terrain doesn’t cost you extra movement while you are moving in stealth.",
+          "page": 73
+        },
+        {
+          "id": "tough_hide",
+          "name": "Tough Hide",
+          "text": "Your thick hide grants you additional protection. Your Armor Class increases by 1 while you are not wearing heavy armor.",
+          "page": 73,
+          "effects": [
+            {
+              "type": "ac",
+              "value": 1,
+              "when": "!heavyArmor"
+            }
+          ]
+        },
+        {
+          "id": "scavenger_resilience",
+          "name": "Scavenger Resilience",
+          "text": "When you drop to 0 hit points but aren’t killed outright, you can drop to 1 hit point instead. You can’t use this feature again until you finish a long rest.",
+          "page": 73,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "id": "opposable_thumbs",
+          "name": "Opposable Thumbs",
+          "text": "You have agile hands and can use your feet for delicate tasks. You gain proficiency in Sleight of Hand, and you can manipulate simple objects with your feet as though they were hands.",
+          "page": 73,
+          "effects": [
+            {
+              "type": "proficiency",
+              "skill": "sleight_of_hand"
+            }
+          ]
+        },
+        {
+          "id": "leap",
+          "name": "Leap",
+          "text": "You can make powerful pouncing attacks. When you jump at least 10 feet toward a creature and hit it with a melee attack, you can deal an extra 1d6 damage. Additionally, the target must succeed on a Strength save DC equal to 8 + your Strength modifier + your proficiency bonus, or be knocked prone.",
+          "page": 73,
+          "rolls": [
+            {
+              "label": "1d6 damage",
+              "dice": "1d6",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Save DC",
+              "expr": "8 + mod.str + prof"
+            }
+          ]
+        },
+        {
+          "id": "ferocity",
+          "name": "Ferocity",
+          "text": "You can use your action to make a reckless attack, gaining advantage on melee attack rolls until the end of your turn. However, attack rolls against you also have advantage until the start of your next turn. You can use this feature once per short or long rest.",
+          "page": 73,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "auto": [
+            "uses"
+          ]
+        },
+        {
+          "id": "thick_coat",
+          "name": "Thick Coat",
+          "text": "You have adapted to colder environments. You have resistance to cold damage and advantage on Constitution saving throws against the effects of extreme cold.",
+          "page": 73
+        }
       ]
     },
     {
@@ -305,7 +510,13 @@
         {
           "name": "Steel Skin",
           "text": "Your body has a layer of defensive metal beneath or replacing your skin, which can be enhanced with armor:\nYou gain a +1 bonus to Armor Class.\nTo reinforce your metal skin, first you must disassemble a piece of mundane or magical armor. After doing so, you must spend an hour consistently incorporating these parts into your skin. Once you are finished, you gain the AC and bonuses of your chosen armor as if you were wearing it, as well as all of the side-effects of that armor. To remove this armor, you must spend an hour replacing it with artificial skin.\nThis metal skin cannot be removed from your body against your will.",
-          "page": 75
+          "page": 75,
+          "effects": [
+            {
+              "type": "ac",
+              "value": 1
+            }
+          ]
         },
         {
           "name": "Robotic Resistance",
@@ -324,8 +535,13 @@
         },
         {
           "name": "Cyborg Upgrades",
-          "text": "You install a weapon or tool feature of your choice listed below into your body. Each time you level up, you can choose to completely replace one of these features with another one. At 5th level, you can install and use a second upgrade feature of your choice. At 10th level, you can install and use a third upgrade feature of your choice. At 15th level, you can install and use a fourth upgrade feature of your choice. At 20th level, you can install and use a fifth upgrade feature of your choice:\nFlail Arm. When you make an unarmed strike or melee weapon attack on your turn that requires your arms to use, you can choose to extend its reach for that attack by 5 feet. You can only use this once on a single melee attack per turn.\nFlame Breath. You learn the Create Bonfire cantrip, which you produce from your mouth. Constitution is your Spellcasting Ability for this Spell.\nRefrigerated Stomach. You may store up to 30 pounds of gear in your body, concealed and protected by your metallic flesh. This also acts to chill and preserve any food or fuel you may want to store.\nAir Blast. You learn the Thunderclap cantrip, which you produce from air emitted from your body. Constitution is your Spellcasting Ability for this Spell.\nPropeller Body. Your limbs can rotate at extreme speeds in water, acting as a boat propeller. You gain a swimming speed of 25 feet.\nCentaur Form. Using an action to morph your lower body into the form of a horse, your speed increases by 10 feet for one minute. Additionally, you have advantage on all Strength checks and you can allow a medium or smaller creature to use you as a mount for the duration. Once you use this feature, you cannot use it again until you complete a short or long rest.\nShape-Memory Alloy Body. You gain one skill proficiency and one tool proficiency of your choice, which you can choose to swap out each time you level up.\nArsenal Infusion. You can spend an hour incorporating a single weapon you are proficient with into your body. Upon doing so, you can use this weapon as you normally would. Additionally, this weapon cannot be taken or removed from your body against your will. You may spend an hour removing this weapon from your body.\nNight Lens. You can see in dim light within 60 feet of you as if it were bright light, and in Darkness as if it were dim light. You can’t discern color in Darkness, only Shades of Gray.\nHeadlights. Lights on your body emit bright light in a 20-foot radius and dim light for an additional 20 feet.\nExtended Flail. This is an upgrade of the Flail Arm Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. Your Flail Arm reach extends to 10 feet.\nFlamethrower. This is an upgrade of the Flame Breath Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Burning Hands spell cast at the 2nd-Level, which acts as a powerful spray of fire emitted from your body. Constitution is your Spellcasting Ability for this Spell. Once you use this feature, you cannot use it again until you complete a long rest.\nRadical Beam. This is an upgrade of the Air Blast Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Aganazzar’s Scorcher spell, which acts as a powerful explosive laser beam emitted from your body. Constitution is your Spellcasting Ability for this Spell and the damage is radiant instead of fire. Once you use this feature, you cannot use it again until you complete a long rest.\nGeneral Cannon. This is an upgrade of the Air Blast Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn the Shatter spell, which you produce from air emitted from your body. Constitution is your Spellcasting Ability for this Spell. Once you use this feature, you cannot use it again until you complete a long rest.\nLarger Propellers. This is an upgrade of the Propeller Body Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You can now spin parts of your body like a propeller to lift you into the air. You now have a flying speed of 10 feet.\nGeneral Form. This is an upgrade of the Centaur Form Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You can now transform your body into a larger robotic form until you run out of energy. You can cast the Enlarge/Reduce spell on yourself once with this trait, using only the spell’s enlarge option, appearing to transform into a larger metal version of yourself. You regain the ability to cast this spell with this trait when you finish a long rest.\nAdvanced Shape-Memory Alloy. This is an upgrade of the Shape-Memory Alloy Body Feature, meaning you must also have that upgrade learned in order to learn and use this one as well. You learn an additional Skill of your choice. Additionally, you learn the Shield spell. Once you use this feature, you cannot use it again until you complete a long rest.\nGrand Arsenal. This is an upgrade of the Arsenal Infusion Feature, meaning you must also have that Upgrade learned in order to learn and use this one as well. You are able to implement one more weapon into your body using Arsenal Infusion.",
-          "page": 75
+          "text": "You install a weapon or tool feature of your choice listed below into your body. Each time you level up, you can choose to completely replace one of these features with another one. At 5th level, you can install and use a second upgrade feature of your choice. At 10th level, you can install and use a third upgrade feature of your choice. At 15th level, you can install and use a fourth upgrade feature of your choice. At 20th level, you can install and use a fifth upgrade feature of your choice:",
+          "page": 75,
+          "choices": {
+            "id": "cyborgUpgrades",
+            "count": "1 + floor(level / 5)",
+            "from": "optionGroup.cyborg_upgrades"
+          }
         }
       ],
       "abilityIncrease": {
@@ -467,7 +683,14 @@
         {
           "name": "Sturdy Build",
           "text": "Your large size and resilient nature provide you with a natural armor bonus. When not wearing armor, your AC is 13 + your Constitution modifier.",
-          "page": 79
+          "page": 79,
+          "effects": [
+            {
+              "type": "acFormula",
+              "expr": "13 + mod.con",
+              "when": "noArmor"
+            }
+          ]
         },
         {
           "name": "Powerful Build",
@@ -477,7 +700,24 @@
         {
           "name": "Anchor Throw",
           "text": "Once per short or long rest, as an action, you can leverage your giant strength to pick up a loose object up to 3000 lbs. with great force. During the same action or a future separate action, you can make a ranged attack with the object, treating it as an improvised ranged weapon with a normal range of 20 feet and a long range of 60 feet. On a hit, it deals 1d12 in bludgeoning damage, gaining a extra dice at level 5, 11 and 17.",
-          "page": 79
+          "page": 79,
+          "uses": {
+            "max": 1,
+            "recharge": "short"
+          },
+          "action": "action",
+          "rolls": [
+            {
+              "label": "Bludgeoning damage",
+              "dice": "{level >= 17 ? 4 : level >= 11 ? 3 : level >= 5 ? 2 : 1}d12",
+              "kind": "damage"
+            }
+          ],
+          "auto": [
+            "uses",
+            "action",
+            "rolls"
+          ]
         }
       ],
       "abilityIncrease": {
@@ -531,7 +771,17 @@
         {
           "name": "Kick",
           "text": "Your Hind legs are natural weapons, which you can use to make unarmed strikes. They deal 1d4 bludgeoning or slashing (depending on the animal legs you choose) damage on a hit.",
-          "page": 81
+          "page": 81,
+          "rolls": [
+            {
+              "label": "1d4",
+              "dice": "1d4",
+              "kind": "other"
+            }
+          ],
+          "auto": [
+            "rolls"
+          ]
         },
         {
           "name": "Charge",
