@@ -10,3 +10,5 @@ Read CLAUDE.md, docs/SPEC.md and docs/EXTRACTION.md first. Phases 1 and 2 are me
 6. **Part 6 — secret data, to `~/dndf/secret` only** (branch `phase-3-part-6-secret`, stacked on part 4; only the script is in the repository): Devil Fruits from the Expanded Encyclopedia, the v8.8 handbook and the Original Encyclopedia, the fruit advancements, generation tables and DM chapters. Still to do by hand: the six licensed Volo's stat blocks. Loading into private Supabase tables is phase 6.
 
 Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (5), granting and revealing fruits (6).
+
+**Phase 3 audit** (branch `phase3-audit`): `tools/extract/audit.py` compares the data with the PDFs in both directions. It found paragraphs cut at column breaks, split compounds, dropped chapter openings, table rows sliding left and one wrong use counter; all fixed in the reader, with `packages/engine/test/audit.test.ts` holding them fixed. Still open: the front matter (pages 1–8) is not extracted, and the six Volo's stat blocks.

@@ -68,6 +68,9 @@ class Line:
         return out.strip()
 
 
+RIGHT_MARGIN = 862  # the second column ends at 837; the page is 918 wide
+
+
 def load_items(pdf: str, first: int, last: int) -> list[Item]:
     path = SOURCES / pdf
     xml = subprocess.run(
@@ -91,8 +94,13 @@ def load_items(pdf: str, first: int, last: int) -> list[Item]:
             text = html.unescape(re.sub(r"<[^>]+>", "", raw))
             if not text.strip():
                 continue
+            # Text that starts past the right-hand margin is a box that ran off the page: the printed
+            # book shows only its first letters there (v10 p132), so it is not part of any paragraph.
+            if int(left) >= RIGHT_MARGIN:
+                continue
             items.append(Item(page, int(top), int(left), int(width), family, size, color, text,
                               bold="Bold" in family or "<b>" in raw, italic="Italic" in family or "<i>" in raw))
+    items = fold_drop_caps(items)
     # The ฿ sign is set in its own font. In a price column it belongs to the table cell beside it.
     cells = [i for i in items if i.family.startswith("ScalySans")]
     for item in items:
@@ -101,6 +109,35 @@ def load_items(pdf: str, first: int, last: int) -> list[Item]:
         if any(c.page == item.page and abs(c.top - item.top) <= 7 and -3 <= c.left - item.right <= 12 for c in cells):
             item.family = "ScalySansRemakeRegular"
     return items
+
+
+def fold_drop_caps(items: list[Item]) -> list[Item]:
+    """A chapter opens with a large capital and its first line in small capitals, which arrive as a
+    big letter, small upper-case words and the odd full-size capital between them. Put the line back
+    together as one ordinary line of body text: "T" "HE" "RACES" "FROM" "THE" "D" "UNGEONS" → "The races from the Dungeons"."""
+    out: list[Item] = []
+    used: set[int] = set()
+    for cap in [i for i in items if i.family.startswith("MrEavesSC") and i.size == 50 and len(i.text.strip()) == 1]:
+        # The opening line runs the full width of the page, above both columns.
+        line = sorted((i for i in items if i.page == cap.page and i is not cap and id(i) not in used and -2 <= i.top - cap.top <= 8
+                       and i.left > cap.left and i.family.startswith("Bookinsanity")), key=lambda i: i.left)
+        if not line:
+            continue
+        text = cap.text.strip()
+        glue = True  # the next piece continues the word in hand
+        for piece in line:
+            small = piece.size <= 11
+            word = piece.text.lower() if small else piece.text
+            if not glue and not word.startswith(" ") and not re.match(r"[’',.;:!?]", word):
+                text += " "
+            text += word
+            # a full-size capital starts a word that the small capitals after it finish
+            glue = (not small) and bool(re.search(r"[A-Z]$", piece.text))
+            used.add(id(piece))
+        used.add(id(cap))
+        body = next((i for i in line if i.size >= 13), line[0])
+        out.append(Item(cap.page, body.top, cap.left, line[-1].right - cap.left, "BookinsanityRemakeRegular", 14, body.color, re.sub(r"\s+", " ", text).strip()))
+    return sorted([i for i in items if id(i) not in used] + out, key=lambda i: (i.page, items.index(i) if i in items else -1)) if out else items
 
 
 def is_footer(item: Item) -> bool:
@@ -277,14 +314,36 @@ class Table:
             return []
         start = min(row[0].left for row in self.rows)
         width = max(len(row) for row in self.rows)
+        # Where each column starts, from the first row that fills every column (usually the header).
+        full = next((row for row in self.rows if len(row) == width), None)
+        # A stat block has one row of six abilities among single lines: that is not a grid to place cells in.
+        columns = [c.left for c in full] if full and width >= 3 and sum(len(row) == width for row in self.rows) >= 3 else []
         out: list[list[str]] = []
         for row in self.rows:
             wrapped = out and len(row) < max(2, width) and row[0].left > start + 6 and len(row) == 1
             if wrapped:
                 out[-1][-1] += " " + row[0].text
+            elif columns and 1 < len(row) < width:
+                out.append(self._placed(row, columns))
             else:
                 out.append([c.text for c in row])
         return out
+
+    @staticmethod
+    def _placed(row: list["Line"], columns: list[int]) -> list[str]:
+        """A row with an empty cell: put each cell under the column it sits in, leaving the gap blank,
+        so the cells after it do not slide left into the wrong columns."""
+        bounds = [(a + b) / 2 for a, b in zip(columns, columns[1:])]
+        placed = [""] * len(columns)
+        last = -1
+        for cell in row:
+            # centred and right-aligned cells start a little left or right of the header
+            index = sum(1 for bound in bounds if (cell.left + cell.right) / 2 > bound)
+            if index <= last or placed[index]:
+                return [c.text for c in row]  # the columns do not line up with the header: leave the row as read
+            placed[index] = cell.text
+            last = index
+        return placed
 
 
 @dataclass
@@ -311,7 +370,8 @@ def to_blocks(lines: list[Line]) -> list[Block]:
         if para_lines:
             text = para_lines[0].text
             for a, b in zip(para_lines, para_lines[1:]):
-                text += " " + b.text
+                # A compound broken at its hyphen ("fruit-" / "infused") keeps the hyphen and takes no space.
+                text += ("" if re.search(r"[A-Za-z]-$", text.rstrip()) and re.match(r"[a-z]", b.text.lstrip()) else " ") + b.text
             blocks.append(Para(re.sub(r"\s+", " ", text).strip(), para_lines[0].page, para_lines[0].lead, para_listed, [l.text for l in para_lines]))
         para_lines = []
         para_listed = False
@@ -423,8 +483,34 @@ def line_height(line: Line) -> int:
     return 44 if line.level == 1 else 34
 
 
+def join_split_paragraphs(blocks: list[Block]) -> list[Block]:
+    """A paragraph that runs from the foot of one column to the head of the next can have a table and
+    its title between the two halves in reading order. The second half then opens in lower case under
+    the wrong heading. Put it back on the end of the paragraph it continues."""
+    out: list[Block] = []
+    skip: set[int] = set()
+    for i, block in enumerate(blocks):
+        if i in skip:
+            continue
+        out.append(block)
+        if not isinstance(block, Para) or not re.search(r"[a-z,]$", block.text.rstrip()):
+            continue
+        between = 0
+        for j in range(i + 1, min(i + 6, len(blocks))):
+            nxt = blocks[j]
+            if isinstance(nxt, (Heading, Table)):
+                between += 1
+                continue
+            if between and isinstance(nxt, Para) and not nxt.listed and not nxt.lead and re.match(r"[a-z]", nxt.text) and nxt.page - block.page in (0, 1):
+                block.text = block.text.rstrip() + " " + nxt.text
+                block.lines = block.lines + nxt.lines
+                skip.add(j)
+            break
+    return out
+
+
 def read_blocks(pdf: str, first: int, last: int) -> list[Block]:
-    return to_blocks(reading_order(build_lines(load_items(pdf, first, last))))
+    return join_split_paragraphs(to_blocks(reading_order(build_lines(load_items(pdf, first, last)))))
 
 
 if __name__ == "__main__":

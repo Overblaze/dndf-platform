@@ -567,12 +567,7 @@
         },
         {
           "name": "Special Weapons",
-          "text": "Some weapons function differently than others:\nLance. Disadvantage on attacks against targets within 5 ft. Requires two hands unless mounted.\nNet. On a hit, restrains a Large or smaller creature until freed. A creature can escape with a DC 10 Strength check, or by",
-          "page": 258
-        },
-        {
-          "name": "Simple Weapons",
-          "text": "destroying the net (AC 10, 5 slashing damage). Attacks made with a net are limited to one per action, bonus action, or reaction.",
+          "text": "Some weapons function differently than others:\nLance. Disadvantage on attacks against targets within 5 ft. Requires two hands unless mounted.\nNet. On a hit, restrains a Large or smaller creature until freed. A creature can escape with a DC 10 Strength check, or by destroying the net (AC 10, 5 slashing damage). Attacks made with a net are limited to one per action, bonus action, or reaction.",
           "page": 258
         },
         {
@@ -1302,6 +1297,8 @@
             ],
             [
               "Adventuring Items",
+              "",
+              "",
               "Lamp",
               "฿5,000",
               "1 lb."
@@ -1606,7 +1603,9 @@
               "Holy Water (flask)",
               "฿250,000",
               "1 lb.",
-              "Ammunition"
+              "Ammunition",
+              "",
+              ""
             ],
             [
               "Hourglass",
@@ -1995,12 +1994,12 @@
         },
         {
           "name": "Ball Dial",
-          "text": "Wondrous Item (dial), Rare (requires proficiency with dials to use)\nCost: ฿5,000,000\nA Ball Dial absorbs and releases chunks of cloud, creating static balls of cloud. Holds 10 charges, regaining 1d6 + 4 charges each dawn.\nExpel Cloud Balls. As an action, spend 1 charge to release a 5-foot ball of cloud into a space within 5 feet. At the start of each round, the ball remains in place or drifts up to 5 feet in any direction of your choice at the",
+          "text": "Wondrous Item (dial), Rare (requires proficiency with dials to use)\nCost: ฿5,000,000\nA Ball Dial absorbs and releases chunks of cloud, creating static balls of cloud. Holds 10 charges, regaining 1d6 + 4 charges each dawn.\nExpel Cloud Balls. As an action, spend 1 charge to release a 5-foot ball of cloud into a space within 5 feet. At the start of each round, the ball remains in place or drifts up to 5 feet in any direction of your choice at the start of your turn. Each cube has AC 6 and 1 hit point. Balls can attach to one another without breaking, forming floating chains or clusters.",
           "page": 269
         },
         {
           "name": "Combat Ball Surge Table",
-          "text": "start of your turn. Each cube has AC 6 and 1 hit point. Balls can attach to one another without breaking, forming floating chains or clusters.\nRanged Attack. A ball can be pushed up to 30 feet in any direction as a ranged weapon attack. It bursts on impact with the first creature or object it touches. You may use any ability score when making a weapon attack with this dial.\nWhen a cloud ball is destroyed or popped, roll on one of the Ball Surge tables below. The resulting effect targets the nearest creature to the ball or the ball itself, if no creature is within 5 feet of the ball.",
+          "text": "Ranged Attack. A ball can be pushed up to 30 feet in any direction as a ranged weapon attack. It bursts on impact with the first creature or object it touches. You may use any ability score when making a weapon attack with this dial.\nWhen a cloud ball is destroyed or popped, roll on one of the Ball Surge tables below. The resulting effect targets the nearest creature to the ball or the ball itself, if no creature is within 5 feet of the ball.",
           "page": 269,
           "tables": [
             {
@@ -2569,7 +2568,7 @@
         },
         {
           "name": "Wado Ichimonji",
-          "text": "Weapon (katana), Very Rare (requires attunement by a creature with a willpower of 8 or higher)\nCost: ฿500,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nA pristine white katana with a pure-white silk- wrapped hilt, a circular handguard, a matching white sheath, and a straight suguha hamon running cleanly along the blade.\nThis weapon can’t be broken by mundane means and is immune to rust, corrosion, and magical decay. While you wield it, attempts to disarm you are made with disadvantage.\nWhile you are below half your hit point maximum, the first attack you make with this weapon on each of your turns deals an additional 1d6 slashing damage.\nUnyielding Resolve. When you fail a saving throw, you can choose to reroll the save and take the new result.\nYou can use this feature twice, regaining the uses when you finish a long rest.\nShishi Sonson. As an action, you dash in a straight line up to 60 feet, moving through creatures without provoking opportunity attacks. At the end of this movement, each creature whose space you passed through must make a Dexterity saving throw against your Meito save DC. On a failed save, a creature takes slashing damage equal to 1d10 x half of your Willpower and is stunned until the start of your next turn. On a successful save, the creature takes half as much damage and isn’t stunned.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+          "text": "Weapon (katana), Very Rare (requires attunement by a creature with a willpower of 8 or higher)\nCost: ฿500,000,000\nYou have a +3 bonus to attack and damage rolls made with this magic weapon.\nA pristine white katana with a pure-white silk-wrapped hilt, a circular handguard, a matching white sheath, and a straight suguha hamon running cleanly along the blade.\nThis weapon can’t be broken by mundane means and is immune to rust, corrosion, and magical decay. While you wield it, attempts to disarm you are made with disadvantage.\nWhile you are below half your hit point maximum, the first attack you make with this weapon on each of your turns deals an additional 1d6 slashing damage.\nUnyielding Resolve. When you fail a saving throw, you can choose to reroll the save and take the new result.\nYou can use this feature twice, regaining the uses when you finish a long rest.\nShishi Sonson. As an action, you dash in a straight line up to 60 feet, moving through creatures without provoking opportunity attacks. At the end of this movement, each creature whose space you passed through must make a Dexterity saving throw against your Meito save DC. On a failed save, a creature takes slashing damage equal to 1d10 x half of your Willpower and is stunned until the start of your next turn. On a successful save, the creature takes half as much damage and isn’t stunned.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
           "page": 279
         },
         {
@@ -2579,7 +2578,7 @@
         },
         {
           "name": "Ace",
-          "text": "Weapon (cutlass), Legendary (requires attunement by a creature with a willpower of 14 or higher)\nCost: ฿1,000,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nA normal-sized cutlass with a slightly curved blade bearing a saw-shaped hamon, a yellow diamond- patterned hilt, a golden dome-shaped guard, and a thin knuckle guard running along the grip.\nWhile attuned to this weapon, you have resistance to lightning and force damage.\nWhile Ace is visibly carried on your person, you have advantage on Charisma (Intimidation) and Charisma (Persuasion) checks. When you fail one of these checks, you can choose to succeed instead. Once you use this property, you can’t do so again until you finish a long rest.\nBlade of the King. As an action, you awaken the immense Haki sealed within Ace. Until you use a bonus action to end this effect, or until you drop or sheathe the weapon, your weapon attacks made by Ace deal an additional 2d8 lightning damage and 2d8 force damage on a hit.\nConqueror’s Wake. When you reduce a creature to 0 hit points with Ace or score a critical hit, choose one creature of your choice within 30 feet that can see you. That creature must succeed on a Wisdom saving throw against your Meito save DC or be frightened of you until the end of its next turn.\nDivine Departure. As part of the Attack action, you can empower a strike with overwhelming force. On a hit, the attack deals additional force damage equal to 2d10 x half of your Willpower, and the target must succeed on a Strength saving throw or be pushed up to 60 feet away from you.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+          "text": "Weapon (cutlass), Legendary (requires attunement by a creature with a willpower of 14 or higher)\nCost: ฿1,000,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nA normal-sized cutlass with a slightly curved blade bearing a saw-shaped hamon, a yellow diamond-patterned hilt, a golden dome-shaped guard, and a thin knuckle guard running along the grip.\nWhile attuned to this weapon, you have resistance to lightning and force damage.\nWhile Ace is visibly carried on your person, you have advantage on Charisma (Intimidation) and Charisma (Persuasion) checks. When you fail one of these checks, you can choose to succeed instead. Once you use this property, you can’t do so again until you finish a long rest.\nBlade of the King. As an action, you awaken the immense Haki sealed within Ace. Until you use a bonus action to end this effect, or until you drop or sheathe the weapon, your weapon attacks made by Ace deal an additional 2d8 lightning damage and 2d8 force damage on a hit.\nConqueror’s Wake. When you reduce a creature to 0 hit points with Ace or score a critical hit, choose one creature of your choice within 30 feet that can see you. That creature must succeed on a Wisdom saving throw against your Meito save DC or be frightened of you until the end of its next turn.\nDivine Departure. As part of the Attack action, you can empower a strike with overwhelming force. On a hit, the attack deals additional force damage equal to 2d10 x half of your Willpower, and the target must succeed on a Strength saving throw or be pushed up to 60 feet away from you.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
           "page": 280
         },
         {
@@ -2599,7 +2598,7 @@
         },
         {
           "name": "Yoru",
-          "text": "Weapon (greatsword), Legendary (requires attunement by a creature with a willpower of 14 or higher)\nCost: ฿1,000,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nAn enormous, cross-shaped greatsword with a curved, single-edged black blade, fashioned in a western kriegsmesser style and towering well over two meters in length.\nWhile wielding Yoru, you gain advantage on opportunity attacks, and your opportunity attacks with Yoru reduce the target’s speed to 0 until the end of the current turn on a hit.\nKokuto Saku. When a creature you can see hits you with an attack, you can use your reaction to make a melee weapon attack with Yoru against the attacker. On a hit, the target takes Yoru’s normal weapon damage plus force damage equal to 1d6 x one quarter of your Willpower.\nKokuto Kogetsu. As an action, make a number of melee weapon attacks equal to your proficiency bonus against creatures or objects you can see within a 30 foot radius sphere centered on you. On each hit, the attack deals force damage equal to 1d6 x one quarter of your Willpower instead of the weapon’s normal damage.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all uses when you finish a long rest.\nKokuto Issen. As an action, release a supreme slash in a 120 foot long, 5 foot wide line originating from you. Each creature in the line must make a Dexterity saving throw against your Meito save DC, taking force damage equal to 1d12 x one half of your Willpower on a failed save, or half as much on a success. Nonmagical, non- seastone, and non-haki-infused objects and structures in the line are cleaved apart.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
+          "text": "Weapon (greatsword), Legendary (requires attunement by a creature with a willpower of 14 or higher)\nCost: ฿1,000,000,000\nYou have a +4 bonus to attack and damage rolls made with this magic weapon.\nAn enormous, cross-shaped greatsword with a curved, single-edged black blade, fashioned in a western kriegsmesser style and towering well over two meters in length.\nWhile wielding Yoru, you gain advantage on opportunity attacks, and your opportunity attacks with Yoru reduce the target’s speed to 0 until the end of the current turn on a hit.\nKokuto Saku. When a creature you can see hits you with an attack, you can use your reaction to make a melee weapon attack with Yoru against the attacker. On a hit, the target takes Yoru’s normal weapon damage plus force damage equal to 1d6 x one quarter of your Willpower.\nKokuto Kogetsu. As an action, make a number of melee weapon attacks equal to your proficiency bonus against creatures or objects you can see within a 30 foot radius sphere centered on you. On each hit, the attack deals force damage equal to 1d6 x one quarter of your Willpower instead of the weapon’s normal damage.\nYou can use this feature a number of times equal to your proficiency bonus, regaining all uses when you finish a long rest.\nKokuto Issen. As an action, release a supreme slash in a 120 foot long, 5 foot wide line originating from you. Each creature in the line must make a Dexterity saving throw against your Meito save DC, taking force damage equal to 1d12 x one half of your Willpower on a failed save, or half as much on a success. Nonmagical, non-seastone, and non-haki-infused objects and structures in the line are cleaved apart.\nOnce you use this feature, you can’t use it again until you finish a long rest.",
           "page": 282
         }
       ]
@@ -2619,7 +2618,7 @@
       "sections": [
         {
           "name": "Bamboo",
-          "text": "Weapon (longsword), Uncommon (requires attunement)\nCost: ฿5,000,000 You have a +1 bonus to attack and damage rolls made with this magic weapon.\nThis perfectly straight blade boasts a green-and- yellow hilt, a straight-edged tsuba, and a trapezoidal pommel with a cross engraving.\nAttacks with Bamboo deal double damage to objects, ships, and large structures. In addition, when you hit a creature that is at least one size larger than you or an object or structure, the attack deals an extra 3d4 slashing damage.",
+          "text": "Weapon (longsword), Uncommon (requires attunement)\nCost: ฿5,000,000 You have a +1 bonus to attack and damage rolls made with this magic weapon.\nThis perfectly straight blade boasts a green-and-yellow hilt, a straight-edged tsuba, and a trapezoidal pommel with a cross engraving.\nAttacks with Bamboo deal double damage to objects, ships, and large structures. In addition, when you hit a creature that is at least one size larger than you or an object or structure, the attack deals an extra 3d4 slashing damage.",
           "page": 283
         },
         {
@@ -2679,7 +2678,7 @@
         },
         {
           "name": "Oto",
-          "text": "Weapon (shortsword), Rare (requires attunement)\nCost: ฿25,000,000 You have a +2 bonus to attack and damage rolls made with this magic weapon.\nThe counterpart to Kogarashi, Oto is gracefully proportioned blade bears a four-sided tsuka and a red- wrapped hilt.\nOnce per turn when you wield Oto, you may use a bonus action to send forth a slashing wave of wind in a 10 foot line. Creatures in the line must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d6 slashing damage.\nTwin Cleavage. If you are attuned to both Oto and Kogarashi and wield them simultaneously, you gain the following:\nYou gain +2 AC against melee attacks.\nAs an action, you unleash a devastating forked slash in a 30-ft cone. Each creature must make a Dexterity saving throw against your Meito save DC. On a failure they take 2d8 slashing damage.",
+          "text": "Weapon (shortsword), Rare (requires attunement)\nCost: ฿25,000,000 You have a +2 bonus to attack and damage rolls made with this magic weapon.\nThe counterpart to Kogarashi, Oto is gracefully proportioned blade bears a four-sided tsuka and a red-wrapped hilt.\nOnce per turn when you wield Oto, you may use a bonus action to send forth a slashing wave of wind in a 10 foot line. Creatures in the line must make a Dexterity saving throw against your Meito save DC. On a failure, they take 1d6 slashing damage.\nTwin Cleavage. If you are attuned to both Oto and Kogarashi and wield them simultaneously, you gain the following:\nYou gain +2 AC against melee attacks.\nAs an action, you unleash a devastating forked slash in a 30-ft cone. Each creature must make a Dexterity saving throw against your Meito save DC. On a failure they take 2d8 slashing damage.",
           "page": 285
         },
         {
@@ -2799,7 +2798,7 @@
         },
         {
           "name": "Night Enhancer Goggles",
-          "text": "Wondrous Item, Uncommon (requires attunement)\nCost: ฿5,000,000\nThese streamlined goggles are fitted with multi- spectrum lenses and targeting reticles. While wearing the goggles, you gain darkvision out to 60 feet. In addition, when you make a ranged weapon attack, you gain a +1 bonus to attack rolls with that attack.",
+          "text": "Wondrous Item, Uncommon (requires attunement)\nCost: ฿5,000,000\nThese streamlined goggles are fitted with multi-spectrum lenses and targeting reticles. While wearing the goggles, you gain darkvision out to 60 feet. In addition, when you make a ranged weapon attack, you gain a +1 bonus to attack rolls with that attack.",
           "page": 289
         },
         {
@@ -2864,7 +2863,7 @@
         },
         {
           "name": "Winch Green",
-          "text": "This Raid Suit canister is green and emblazoned with a white “4.”\nEnhanced Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 2d8 damage.\nEnhanced Strength. Increase your strength score by +2 and your maximum strength score to 22. You count as gargantuan when determining your carrying capacity and the weight you can push, drag, or lift.\nExtendable Arm. As an action, you can launch your arm up to 30 ft. to grab objects or pull creatures. Make a melee weapon attack using your unarmed strike. On a hit, pull the target up to 30 ft. toward you if it is large or smaller.\nUnderworld Marketplace THE UNDERWORLD IS A SPRAWLING NETWORK OF\nsmugglers, brokers, and crime lords who traffic in goods too rare for ordinary markets. Its\noperations thrive across the Grand Line, with secretive auctions and black markets drawing pirates, nobles, and powerful figures seeking items that the World Government would never allow to circulate openly.\nSome underworld markets hide in plain sight, disguised as lavish trade houses or exclusive clubs for the wealthy. Others lurk in the shadows of remote ports, accessible only by those with the right contacts. What all share in common is the promise of rarity: treasures and tools that can change the tide of battle or fortune.",
+          "text": "This Raid Suit canister is green and emblazoned with a white “4.”\nEnhanced Strike. Once per turn when you hit with a weapon or unarmed attack, you deal an additional 2d8 damage.\nEnhanced Strength. Increase your strength score by +2 and your maximum strength score to 22. You count as gargantuan when determining your carrying capacity and the weight you can push, drag, or lift.\nExtendable Arm. As an action, you can launch your arm up to 30 ft. to grab objects or pull creatures. Make a melee weapon attack using your unarmed strike. On a hit, pull the target up to 30 ft. toward you if it is large or smaller.\nUnderworld Marketplace The Underworld is a sprawling network of\nsmugglers, brokers, and crime lords who traffic in goods too rare for ordinary markets. Its\noperations thrive across the Grand Line, with secretive auctions and black markets drawing pirates, nobles, and powerful figures seeking items that the World Government would never allow to circulate openly.\nSome underworld markets hide in plain sight, disguised as lavish trade houses or exclusive clubs for the wealthy. Others lurk in the shadows of remote ports, accessible only by those with the right contacts. What all share in common is the promise of rarity: treasures and tools that can change the tide of battle or fortune.",
           "page": 290
         }
       ]

@@ -1146,7 +1146,7 @@
         {
           "id": "sharpened_shot",
           "name": "Sharpened Shot",
-          "text": "You gain a bonus to damage rolls you make with two- handed ranged weapons equal to twice your proficiency bonus.",
+          "text": "You gain a bonus to damage rolls you make with two-handed ranged weapons equal to twice your proficiency bonus.",
           "page": 142,
           "effects": [
             {

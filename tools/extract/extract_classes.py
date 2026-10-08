@@ -408,6 +408,9 @@ def derive_structure(feature: dict) -> None:
             auto.append("uses")
     if "uses" not in feature:
         m = ONCE.search(text) or ONCE_PER.search(text)
+        # "For any emanations that grant the use of a spell once per long rest…" describes other features' limits, not this one's.
+        if m and re.search(r"\b(?:any|all|those|other) [\w’ ]{0,30}that grants?\b[^.]*$", text[:m.start()]):
+            m = None
         if m:
             feature["uses"] = {"max": 1, "recharge": recharge_of(next(g for g in m.groups() if g))}
             auto.append("uses")

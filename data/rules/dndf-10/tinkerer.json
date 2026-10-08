@@ -479,6 +479,7 @@
               "rows": [
                 [
                   "Unlocks at Level Upgrade",
+                  "",
                   "Additional Cost"
                 ],
                 [
@@ -767,7 +768,7 @@
         {
           "level": 10,
           "name": "Weather Control",
-          "text": "At 10th level, you gain the ability to create and control weather around you.\nIf it is raining, you can use an action to cause the rain to stop Falling or wind to change direction in a 20-foot- radius Sphere centered on you. You can end this Effect as a Bonus Action.\nAs an action, you can cause clouds to form in a 20- foot-radius Sphere around you and create rain and wind in that area for 1 minute. Up to 10 gallons of water will fall from this rain altogether onto whatever surface is beneath it, extinguishing any small flames, and reducing all fire damage dealt in the area by an amount equal to your intelligence modifier. The wind will disperse any fog within 20 feet of you while this Effect is active. You can also end this Effect as a Bonus Action. You can use this effect a number of times equal to your proficiency bonus until you complete a Long Rest. If you are out of uses of this feature, you may expend a creation power (spell) slot to use it again.",
+          "text": "At 10th level, you gain the ability to create and control weather around you.\nIf it is raining, you can use an action to cause the rain to stop Falling or wind to change direction in a 20-foot-radius Sphere centered on you. You can end this Effect as a Bonus Action.\nAs an action, you can cause clouds to form in a 20- foot-radius Sphere around you and create rain and wind in that area for 1 minute. Up to 10 gallons of water will fall from this rain altogether onto whatever surface is beneath it, extinguishing any small flames, and reducing all fire damage dealt in the area by an amount equal to your intelligence modifier. The wind will disperse any fog within 20 feet of you while this Effect is active. You can also end this Effect as a Bonus Action. You can use this effect a number of times equal to your proficiency bonus until you complete a Long Rest. If you are out of uses of this feature, you may expend a creation power (spell) slot to use it again.",
           "page": 186,
           "uses": {
             "max": "prof",
@@ -922,6 +923,7 @@
               "Feminization/Masculinization"
             ],
             [
+              "",
               "Disease, Sight",
               "Disease, Laughter Disease Disease"
             ],
@@ -932,6 +934,7 @@
             ],
             [
               "14th",
+              "",
               "Ice Oni Plague Mummy Plague"
             ]
           ],
@@ -980,7 +983,7 @@
         {
           "level": 10,
           "name": "Epidemic Protocol",
-          "text": "Beginning at 10th level, you develop advanced techniques to deliver pathogens with precision through your technological creations. When you cast a single- target spell that requires an attack roll, you can expend one use of your Pathogen Injector to infuse the spell with an Injectable Disease from the Plague Engineer Disease Table. If the spell hits, they must also make a Constitution saving throw against your Creation Power save DC. On a failure, they suffer the Active Effect of the chosen disease for 1 minute. They can repeat the saving throw at the end of each of their turns, ending the effect on a success. The disease’s effects apply after the damage is dealt.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once), regaining all expended uses after a long rest.",
+          "text": "Beginning at 10th level, you develop advanced techniques to deliver pathogens with precision through your technological creations. When you cast a single-target spell that requires an attack roll, you can expend one use of your Pathogen Injector to infuse the spell with an Injectable Disease from the Plague Engineer Disease Table. If the spell hits, they must also make a Constitution saving throw against your Creation Power save DC. On a failure, they suffer the Active Effect of the chosen disease for 1 minute. They can repeat the saving throw at the end of each of their turns, ending the effect on a success. The disease’s effects apply after the damage is dealt.\nYou can use this feature a number of times equal to your Intelligence modifier (minimum of once), regaining all expended uses after a long rest.",
           "page": 187,
           "uses": {
             "max": "max(1, mod.int)",

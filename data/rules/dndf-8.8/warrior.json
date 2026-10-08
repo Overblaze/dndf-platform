@@ -332,6 +332,7 @@
                 {
                   "rows": [
                     [
+                      "",
                       "Natural Abilities",
                       "Elemental Powers",
                       "Spell Slots per",
@@ -520,7 +521,7 @@
         {
           "level": 3,
           "name": "Elemental Style",
-          "text": "At 3rd level, you learn a ritual that creates a spiritual bond between yourself and one weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. The weapon must be within your reach throughout the ritual, at the conclusion of which you touch the weapon and forge the bond.\nOnce you have bonded a weapon to yourself, you can use any bonded weapon as a Spellcasting Focus for your Tinkerer Spells. Any spells you cast will emanate from your weapon as if channeling your spirit through your weapon and releasing the spell from it. For example, if you cast Fire Bolt, imagine a fire slash or wave being released from your weapon toward your target.\nAdditionally, when you attack and hit with a bonded weapon, you can expend one spell slot to deal fire, cold, or lightning damage to the target, in addition to the weapon’s damage. The extra damage is 2d6 for a 1st- level spell slot, plus 1d6 for each Spell Level higher than 1st, to a maximum of 5d6.\nYou can have up to three bonded Weapons. If you attempt to bond with a fourth weapon, you must break the bond with one of the other three.",
+          "text": "At 3rd level, you learn a ritual that creates a spiritual bond between yourself and one weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. The weapon must be within your reach throughout the ritual, at the conclusion of which you touch the weapon and forge the bond.\nOnce you have bonded a weapon to yourself, you can use any bonded weapon as a Spellcasting Focus for your Tinkerer Spells. Any spells you cast will emanate from your weapon as if channeling your spirit through your weapon and releasing the spell from it. For example, if you cast Fire Bolt, imagine a fire slash or wave being released from your weapon toward your target.\nAdditionally, when you attack and hit with a bonded weapon, you can expend one spell slot to deal fire, cold, or lightning damage to the target, in addition to the weapon’s damage. The extra damage is 2d6 for a 1st-level spell slot, plus 1d6 for each Spell Level higher than 1st, to a maximum of 5d6.\nYou can have up to three bonded Weapons. If you attempt to bond with a fourth weapon, you must break the bond with one of the other three.",
           "page": 204,
           "rolls": [
             {
@@ -623,7 +624,7 @@
         {
           "level": 10,
           "name": "Empowered Strikes",
-          "text": "At 10th level, your attacks are empowered to strike through the toughest defenses. Your Snake Weapon’s weapon form weapon attacks now ignore resistance to non-magical attacks and bow attacks can bypass three- quarters cover.\nAdditionally, when you score a critical hit with a weapon form’s weapon attack, you can add your warrior level / 2 to the damage dealt.",
+          "text": "At 10th level, your attacks are empowered to strike through the toughest defenses. Your Snake Weapon’s weapon form weapon attacks now ignore resistance to non-magical attacks and bow attacks can bypass three-quarters cover.\nAdditionally, when you score a critical hit with a weapon form’s weapon attack, you can add your warrior level / 2 to the damage dealt.",
           "page": 205
         },
         {

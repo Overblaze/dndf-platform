@@ -219,7 +219,7 @@
             },
             {
               "name": "Infused Item (Spellcasting Focus)",
-              "text": "You produce your devilforged powers (spells) and effects through a special devil fruit-infused item you possess. You must have a power (spellcasting) focus - specifically some kind of weapon, armor, tool, or other item that is infused with devil fruit powers - in hand when you cast any power (spell) with this (spellcasting) feature. You must be proficient with the item to use it this way.\nOnce you have chosen one item or piece of equipment you wish to have infused, it becomes your power (spellcasting) focus. You cannot have more than one item infused with devil fruit powers in this way. If you wish to move the essence stored within your current infused item of choice into a new item or create a new infused item after losing your old one, you must spend 1 hour during a long rest to move the Green Blood from your old weapon into the new item and removing them from the old item. You must be proficient with this new item. In addition, you may choose to infuse items that are connected to your body, but not made of flesh. For example, a cyborg’s iron fists may have devil fruit powers infused into them through green blood, without the cyborg itself having consumed a devil fruit, because they are technically not a part of the cyborg’s natural body.\nDue to the infusion of multiple devil fruits’ essence into your item through the use of Green Blood, the exact devil fruit power it possesses may not be clear. Instead, your item has an infusion of many different powers you have collected through researching, hunting, and foraging for devil fruits. It should not be treated as a creature that has consumed a devil fruit power, but instead as a tool that grows in power with it’s user over time. In addition, the item has the weaknesses of a devil fruit user in that it cannot be used as a power (spellcasting) focus while it is more than half- submerged in water or touching seastone.",
+              "text": "You produce your devilforged powers (spells) and effects through a special devil fruit-infused item you possess. You must have a power (spellcasting) focus - specifically some kind of weapon, armor, tool, or other item that is infused with devil fruit powers - in hand when you cast any power (spell) with this (spellcasting) feature. You must be proficient with the item to use it this way.\nOnce you have chosen one item or piece of equipment you wish to have infused, it becomes your power (spellcasting) focus. You cannot have more than one item infused with devil fruit powers in this way. If you wish to move the essence stored within your current infused item of choice into a new item or create a new infused item after losing your old one, you must spend 1 hour during a long rest to move the Green Blood from your old weapon into the new item and removing them from the old item. You must be proficient with this new item. In addition, you may choose to infuse items that are connected to your body, but not made of flesh. For example, a cyborg’s iron fists may have devil fruit powers infused into them through green blood, without the cyborg itself having consumed a devil fruit, because they are technically not a part of the cyborg’s natural body.\nDue to the infusion of multiple devil fruits’ essence into your item through the use of Green Blood, the exact devil fruit power it possesses may not be clear. Instead, your item has an infusion of many different powers you have collected through researching, hunting, and foraging for devil fruits. It should not be treated as a creature that has consumed a devil fruit power, but instead as a tool that grows in power with it’s user over time. In addition, the item has the weaknesses of a devil fruit user in that it cannot be used as a power (spellcasting) focus while it is more than half-submerged in water or touching seastone.",
               "page": 113
             }
           ]
@@ -246,7 +246,7 @@
         {
           "level": 3,
           "name": "Infuse Devil Fruit",
-          "text": "At 3rd level, you learn to infuse Devil Fruit powers into non-magical weapons, merging the fruit’s abilities with the item. You can infuse one weapon at a time. Infusing a new weapon dispels the previous infusion. The infusion lasts indefinitely but can be removed prematurely with a full week of focused effort.\nInfusing a fruit into an item requires 8 hours of uninterrupted work and access to both the fruit and the item. The infused item retains its original properties and gains additional abilities based on the type of fruit.\nIf the item is broken or the infusion is removed, the devil fruit is cast back out onto the open seas and can be found using the “Finding a Devil Fruit” rules in Chapter 7 of the Dungeons and Devil Fruits Player’s Handbook.\nAt 8th level, you may infuse any number of non- magical weapons.",
+          "text": "At 3rd level, you learn to infuse Devil Fruit powers into non-magical weapons, merging the fruit’s abilities with the item. You can infuse one weapon at a time. Infusing a new weapon dispels the previous infusion. The infusion lasts indefinitely but can be removed prematurely with a full week of focused effort.\nInfusing a fruit into an item requires 8 hours of uninterrupted work and access to both the fruit and the item. The infused item retains its original properties and gains additional abilities based on the type of fruit.\nIf the item is broken or the infusion is removed, the devil fruit is cast back out onto the open seas and can be found using the “Finding a Devil Fruit” rules in Chapter 7 of the Dungeons and Devil Fruits Player’s Handbook.\nAt 8th level, you may infuse any number of non-magical weapons.",
           "page": 114,
           "sections": [
             {
@@ -449,7 +449,7 @@
         {
           "level": 1,
           "name": "Hell’s Duelist",
-          "text": "At 1st level, you acquire the training necessary to effectively arm yourself for battle. You gain proficiency with medium armor, shields, and martial melee weapons.\nThe experience you have gained in working with infusing various devil fruit powers into weapons has allowed you to become proficient with various weapons. When you finish a long rest, you can touch one weapon that you are proficient with and that lacks the two- handed property. When you attack with that weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for the attack and damage rolls. This benefit lasts until you finish a long rest.",
+          "text": "At 1st level, you acquire the training necessary to effectively arm yourself for battle. You gain proficiency with medium armor, shields, and martial melee weapons.\nThe experience you have gained in working with infusing various devil fruit powers into weapons has allowed you to become proficient with various weapons. When you finish a long rest, you can touch one weapon that you are proficient with and that lacks the two-handed property. When you attack with that weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for the attack and damage rolls. This benefit lasts until you finish a long rest.",
           "page": 116,
           "effects": [
             {
@@ -640,7 +640,9 @@
                 {
                   "rows": [
                     [
+                      "",
                       "d100 Effect",
+                      "",
                       "d100 Effect"
                     ],
                     [
@@ -656,15 +658,20 @@
                       "apparitions to appear; creatures within the blast must make a"
                     ],
                     [
+                      "",
                       "saving throw or be reduced one size category smaller for 1",
+                      "",
                       "Wisdom saving throw or be frightened until the end of their"
                     ],
                     [
+                      "",
                       "minute, halving their movement speed.",
+                      "",
                       "next turn."
                     ],
                     [
                       "03-",
+                      "",
                       "Dividing: The explosion creates a splitting effect, causing the 29-",
                       "Hormones: The explosion releases a stimulating mist that"
                     ],
@@ -675,7 +682,9 @@
                       "boosts combat abilities; creatures within the blast radius gain"
                     ],
                     [
+                      "",
                       "foot areas, each dealing half the original damage.",
+                      "",
                       "a +1 bonus to attack rolls and saving throws until the end of their next turn. This effect removes the bomb’s damage."
                     ],
                     [
@@ -691,11 +700,15 @@
                       "briefly conjures a spectral genie; allies in the radius gain one"
                     ],
                     [
+                      "",
                       "distance following the trajectory of the throw, and even",
+                      "",
                       "wish-like effect that grants a +3 bonus to their next attack roll,"
                     ],
                     [
+                      "",
                       "bouncing off other surfaces, before detonating.",
+                      "",
                       "saving throw, or ability check within 1 minute. This effect removes the bomb’s damage."
                     ],
                     [
@@ -711,15 +724,21 @@
                       "energy, allowing you to momentarily control the ground; you"
                     ],
                     [
+                      "",
                       "throw or take additional 1d6 piercing damage and have their",
+                      "",
                       "can raise or lower the terrain in a 10-foot radius by up to 5"
                     ],
                     [
+                      "",
                       "movement speed reduced by 10 feet until the end of their",
+                      "",
                       "feet, creating barriers, pits, or difficult terrain until the start of"
                     ],
                     [
+                      "",
                       "next turn.",
+                      "",
                       "your next turn."
                     ],
                     [
@@ -735,7 +754,9 @@
                       "spores; creatures in the radius must make a Constitution"
                     ],
                     [
+                      "",
                       "Dexterity saving throw or fall prone.",
+                      "",
                       "saving throw or be poisoned until the end of their next turn."
                     ],
                     [
@@ -751,7 +772,9 @@
                       "spell within the bomb’s radius, effecting all creatures in the"
                     ],
                     [
+                      "",
                       "to 30 feet to an unoccupied space they can see until the end",
+                      "",
                       "radius. This effect removes the bomb’s damage. of your next turn, when the door disappears."
                     ],
                     [
@@ -767,7 +790,9 @@
                       "Dominate Beast spell within the bomb’s radius, effecting all"
                     ],
                     [
+                      "",
                       "20 feet in a predetermined direction before detonating.",
+                      "",
                       "beast’s in the radius."
                     ],
                     [
@@ -783,15 +808,21 @@
                       "shadows; allies within the blast radius gain partial"
                     ],
                     [
+                      "",
                       "turn; the next attack made against a marked creature is an",
+                      "",
                       "concealment, granting them advantage on Dexterity (Stealth)"
                     ],
                     [
+                      "",
                       "automatic hit, bypassing the need for an attack roll, and",
+                      "",
                       "checks and imposing disadvantage on attack rolls against"
                     ],
                     [
+                      "",
                       "deals additional damage equal to your proficiency bonus.",
+                      "",
                       "them until the start of their next turn. This effect removes the bomb’s damage."
                     ],
                     [
@@ -802,19 +833,26 @@
                     ],
                     [
                       "18",
+                      "",
                       "light in a 20-foot radius that lasts for 1 minute; allies can see 44",
                       "mist that cloaks allies; creatures within the blast radius"
                     ],
                     [
+                      "",
                       "through magical darkness and gain advantage on",
+                      "",
                       "become invisible until for 1 minute or until they make an"
                     ],
                     [
+                      "",
                       "perception checks made in the light. This effect removes the",
+                      "",
                       "attack, granting them advantage on their next attack roll or"
                     ],
                     [
+                      "",
                       "bomb’s damage.",
+                      "",
                       "stealth check. This effect removes the bomb’s damage and explosion sound."
                     ],
                     [
@@ -825,11 +863,14 @@
                     ],
                     [
                       "20",
+                      "",
                       "latch onto nearby creatures; creatures within the blast radius 46",
                       "Mighty Fortress spell. This structure lasts for 1 hour. This effect"
                     ],
                     [
+                      "",
                       "must make a Strength saving throw or be restrained until",
+                      "",
                       "removes the bomb’s damage. the end of their next turn."
                     ],
                     [
@@ -840,6 +881,7 @@
                     ],
                     [
                       "22",
+                      "",
                       "48",
                       "within the bomb’s radius."
                     ],
@@ -856,11 +898,15 @@
                       "by the bomb are entangled in the threads, reducing their"
                     ],
                     [
+                      "",
                       "make a Constitution saving throw or be blinded until the",
+                      "",
                       "movement speed by half and imposing disadvantage on"
                     ],
                     [
+                      "",
                       "start of your next turn.",
+                      "",
                       "Dexterity saving throws until the end of their next turn."
                     ],
                     [
@@ -876,11 +922,15 @@
                       "temporarily accelerates movement; creatures within the blast"
                     ],
                     [
+                      "",
                       "the bomb’s center, the expanding rope will attach to the",
+                      "",
                       "radius gain +20 feet to their movement speed and can take"
                     ],
                     [
+                      "",
                       "points chosen. This effect removes the bomb’s damage.",
+                      "",
                       "the Dash action as a bonus action until the end of their next turn. This effect removes the bomb’s damage."
                     ]
                   ],
@@ -896,7 +946,9 @@
                 {
                   "rows": [
                     [
+                      "",
                       "d100 Effect",
+                      "",
                       "d100 Effect"
                     ],
                     [
@@ -912,7 +964,9 @@
                       "Wall of Force spell until the start of your next turn. This"
                     ],
                     [
+                      "",
                       "points equal to 1d6 + your spellcasting modifier.",
+                      "",
                       "effect removes the bomb’s damage."
                     ],
                     [
@@ -928,11 +982,14 @@
                       "energy that mimics the Enlarge effect of the Enlarge/Reduce"
                     ],
                     [
+                      "",
                       "radius. This effect removes the bomb’s damage and sound.",
+                      "",
                       "spell. This effect removes the bomb’s damage."
                     ],
                     [
                       "57-",
+                      "",
                       "Magnetism: The explosion generates a magnetic field that pulls 81-",
                       "Earthquake: The explosion triggers a localized tremor,"
                     ],
@@ -943,11 +1000,15 @@
                       "causing the ground within it’s radius to violently shake;"
                     ],
                     [
+                      "",
                       "it’s radius toward the center; creatures must make a Strength",
+                      "",
                       "creatures in the area must make a Dexterity saving throw or"
                     ],
                     [
+                      "",
                       "saving throw or be pulled to the center to the blast.",
+                      "",
                       "be knocked prone, and the area becomes difficult terrain until the end of your next turn."
                     ],
                     [
@@ -963,15 +1024,21 @@
                       "within it’s radius; creatures in the area must make a"
                     ],
                     [
+                      "",
                       "affected creatures must make a Wisdom saving throw or",
+                      "",
                       "Strength saving throw or be pulled to the ground, reducing"
                     ],
                     [
+                      "",
                       "spend their next turn dancing, unable to take actions or",
+                      "",
                       "their movement speed by half and imposing disadvantage"
                     ],
                     [
+                      "",
                       "reactions.",
+                      "",
                       "on attack rolls until the end of their next turn."
                     ],
                     [
@@ -987,7 +1054,9 @@
                       "radius, covering the area in icy snow turning the ground"
                     ],
                     [
+                      "",
                       "must make a Dexterity saving throw or become restrained.",
+                      "",
                       "into difficult terrain."
                     ],
                     [
@@ -1003,7 +1072,9 @@
                       "automatically locks or unlocks all doors, chests, and similar"
                     ],
                     [
+                      "",
                       "Constitution saving throw or be poisoned for 1 minute.",
+                      "",
                       "objects within it’s radius."
                     ],
                     [
@@ -1014,23 +1085,32 @@
                     ],
                     [
                       "66",
+                      "",
                       "that affects all creatures within it’s radius; allies within the area 90",
                       "15-foot radius, creating a blinding storm; creatures within"
                     ],
                     [
+                      "",
                       "are invigorated, gaining a +1 bonus to Charisma-based checks",
+                      "",
                       "the area must make a Dexterity saving throw or be blinded"
                     ],
                     [
+                      "",
                       "and saving throws, while enemies must make a Wisdom",
+                      "",
                       "until the start of their next turn, while the rough winds"
                     ],
                     [
+                      "",
                       "saving throw or be charmed by you for 1 minute. This effect",
+                      "",
                       "impose disadvantage on ranged weapon attacks made into"
                     ],
                     [
+                      "",
                       "removes the bomb’s damage.",
+                      "",
                       "or out of the storm."
                     ],
                     [
@@ -1046,15 +1126,21 @@
                       "ghostly properties; creatures in the blast radius gain the"
                     ],
                     [
+                      "",
                       "the ground; affected creatures must make a Dexterity saving",
+                      "",
                       "ability to phase through solid objects until the end of their"
                     ],
                     [
+                      "",
                       "throw or have their movement speed reduced to 0 and",
+                      "",
                       "next turn. While this effect persists the creature cannot"
                     ],
                     [
+                      "",
                       "disadvantage on attack rolls until the end of it’s next turn.",
+                      "",
                       "attack targets and they also cannot be attacked or take damage."
                     ],
                     [
@@ -1065,11 +1151,14 @@
                     ],
                     [
                       "70",
+                      "",
                       "into molten magma; creatures in the area that move within the 94",
                       "lightning damage and deals an additional damage die of"
                     ],
                     [
+                      "",
                       "area take 1d6 fire damage for every 5 ft. they move.",
+                      "",
                       "damage."
                     ],
                     [
@@ -1080,19 +1169,26 @@
                     ],
                     [
                       "72",
+                      "",
                       "projectile that, upon impact, creates a cage of force around the 96",
                       "radius, forcing all creatures within the area to make a"
                     ],
                     [
+                      "",
                       "struck creature; the target must make a Dexterity saving throw",
+                      "",
                       "Strength saving throw or be pushed back 10 feet from the"
                     ],
                     [
+                      "",
                       "or be restrained within the cage, unable to move or escape for",
+                      "",
                       "blast center, knocking them prone if they collide with an"
                     ],
                     [
+                      "",
                       "1 minute.",
+                      "",
                       "obstacle or another creature."
                     ],
                     [
@@ -1382,7 +1478,7 @@
         {
           "level": 10,
           "name": "Resilient Equipment",
-          "text": "Starting at 10th level, you can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feautre. Damage from magical weapons, haki- coated weapons, or silver weapons ignores this resistance.",
+          "text": "Starting at 10th level, you can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feautre. Damage from magical weapons, haki-coated weapons, or silver weapons ignores this resistance.",
           "page": 121
         },
         {
@@ -1615,13 +1711,16 @@
                   "rows": [
                     [
                       "Devilforged",
+                      "",
                       "Base",
-                      "Base HP"
+                      "Base HP",
+                      ""
                     ],
                     [
                       "Level",
                       "Mech Size",
                       "AC",
+                      "",
                       "Formula Movement"
                     ],
                     [
@@ -1653,8 +1752,11 @@
                       "50 ft."
                     ],
                     [
+                      "",
                       "Gargantuan",
-                      "level"
+                      "",
+                      "level",
+                      ""
                     ]
                   ],
                   "page": 122
@@ -2506,14 +2608,7 @@
           "group": "Fifteenth Level Emanations",
           "text": "weapon For any emanations that grant the use of a spell once per long rest, you may cast them once per short rest instead.",
           "page": 131,
-          "prerequisite": "15th Level Devilforged, Logia Infused",
-          "uses": {
-            "max": 1,
-            "recharge": "long"
-          },
-          "auto": [
-            "uses"
-          ]
+          "prerequisite": "15th Level Devilforged, Logia Infused"
         },
         {
           "id": "monstrous_submission",

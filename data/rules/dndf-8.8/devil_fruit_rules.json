@@ -138,7 +138,7 @@
         },
         {
           "name": "Step 5: Devil Fruit Advancement and Awakening",
-          "text": "As players grow in strength, so too do their Devil Fruits. At higher levels, fruits “Awaken,” unlocking greater power often breaking their earlier limitations. Awakenings typically allow casting a powerful, high- level spell once per day without expending charges. See Chapter 5: Spirit Surges for more information.\nExample: Bara Bara no Mi (Dividing)\nDesign Tips",
+          "text": "As players grow in strength, so too do their Devil Fruits. At higher levels, fruits “Awaken,” unlocking greater power often breaking their earlier limitations. Awakenings typically allow casting a powerful, high-level spell once per day without expending charges. See Chapter 5: Spirit Surges for more information.\nExample: Bara Bara no Mi (Dividing)\nDesign Tips",
           "page": 240,
           "tables": [
             {
@@ -284,7 +284,7 @@
         },
         {
           "name": "Paramecia Awakening",
-          "text": "As Paramecia users grow stronger, they may eventually unlock the power of Awakening. This allows them to transcend the initial limitations of their fruit’s subtype and gain new, transformative powers.\nTypically, an Awakening grants a single, high-impact ability that allows the user to manipulate their environment in ways previously impossible. Awakening features often bypass normal charge limits or provide access to higher-level spells.\nAn example is the Nuke Nuke no Mi, which upon Awakening allows the user to cast Etherealness once per day without using any charges.\nHere is another example below still using the Nuke\nNuke no Mi as a template to show what kind of\nawakening ability might be appropriate for the devil\nfruit.\nAll spells that come with your devil fruit can be upcasted at the cost of costing additional charges.\nFor example, the Toge Toge no Mi (Spikes) can cast 1st level Armor of Agathys for 1 charge. A level 5 character can upcast the spell to a max of 3rd level for a cost of 3 charges.\nHere is an example still using the Nuke Nuke no Mi as a template to show which type of spells might be appropriate for the devil fruit.",
+          "text": "As Paramecia users grow stronger, they may eventually unlock the power of Awakening. This allows them to transcend the initial limitations of their fruit’s subtype and gain new, transformative powers.\nTypically, an Awakening grants a single, high-impact ability that allows the user to manipulate their environment in ways previously impossible. Awakening features often bypass normal charge limits or provide access to higher-level spells.\nAn example is the Nuke Nuke no Mi, which upon Awakening allows the user to cast Etherealness once per day without using any charges.\nHere is another example below still using the Nuke\nNuke no Mi as a template to show what kind of awakening ability might be appropriate for the devil\nfruit.\nAll spells that come with your devil fruit can be upcasted at the cost of costing additional charges.\nFor example, the Toge Toge no Mi (Spikes) can cast 1st level Armor of Agathys for 1 charge. A level 5 character can upcast the spell to a max of 3rd level for a cost of 3 charges.\nHere is an example still using the Nuke Nuke no Mi as a template to show which type of spells might be appropriate for the devil fruit.",
           "page": 242,
           "tables": [
             {
@@ -512,6 +512,7 @@
             {
               "rows": [
                 [
+                  "",
                   "Max Hit",
                   "Ability Save DC (8 +",
                   "Attack"
@@ -530,9 +531,12 @@
                 ],
                 [
                   "Rare Zoan",
-                  "level"
+                  "level",
+                  "",
+                  ""
                 ],
                 [
+                  "",
                   "Very Rare Zoan 10 x your",
                   "4",
                   "1d10 level"
@@ -545,7 +549,9 @@
                 ],
                 [
                   "Infernal Zoan",
-                  "level"
+                  "level",
+                  "",
+                  ""
                 ]
               ],
               "page": 244

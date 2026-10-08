@@ -723,6 +723,628 @@
           "page": 210
         }
       ]
+    },
+    {
+      "id": "rule.chapter_1_making_a_character_opening",
+      "kind": "rule",
+      "name": "Chapter 1: Making a Character",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 9
+      },
+      "text": "While the process for making a character isn’ t changed from Dungeons and Devil Fruits Player’ s Handbook.\nThere are a few more features players are given during character creation."
+    },
+    {
+      "id": "rule.chapter_2_character_races_opening",
+      "kind": "rule",
+      "name": "Chapter 2: Character Races",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 67
+      },
+      "text": "The races from the Dungeons and Devil Fruits Dungeons and Devil Fruits Player’s Handbook. You Player’s Handbook have been slightly reworked in this section, the only races not touched are the Dwarves and Elbaf Giants. Additionally, several new races have been added to the roster.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 67
+        }
+      }
+    },
+    {
+      "id": "rule.chapter_3_character_classes_opening",
+      "kind": "rule",
+      "name": "Chapter 3: Character Classes",
+      "versions": [
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 83
+      },
+      "text": "All original classes can be found in Chapter 3 of a diverse range of character classes that cater to every the Dungeons and Devil Fruits Player’s Handbook.\nCharacters are the lifeblood of the story, driving the adventure and shaping the world around them. Unlock your imagination and live out your wildest fantasies with style of play.\nThis section covers the changes made to the Base D&DF classes, gives an introduction to the Oracle and Conqueror classes, and adds additional subclasses into Dungeons and Devil Fruits.",
+      "tables": [
+        {
+          "rows": [
+            [
+              "Level"
+            ],
+            [
+              "Class",
+              "Subclass",
+              "Available",
+              "Description"
+            ],
+            [
+              "Bruiser",
+              "Beast Style",
+              "3rd",
+              "Use the raw power of animalistic attacks to deal crushing blows."
+            ],
+            [
+              "Bruiser",
+              "Black Fist Style",
+              "3rd",
+              "Harness immense strength and haki-infused fists to protect allies."
+            ],
+            [
+              "Bruiser",
+              "Drunken Dragon Style",
+              "3rd",
+              "Gain enhanced fighting stances as you create and consume liquor."
+            ],
+            [
+              "Bruiser",
+              "Eastern Dragon Style",
+              "3rd",
+              "Smash through enemies with devastating aerial maneuvers."
+            ],
+            [
+              "Bruiser",
+              "Hasshoken Style",
+              "3rd",
+              "Attack with small shockwaves, damaging foes from the inside out."
+            ],
+            [
+              "Bruiser",
+              "King Style",
+              "3rd",
+              "Builds up the strength to unleash a devastating punch."
+            ],
+            [
+              "Chemist",
+              "Aerostatic",
+              "2nd",
+              "Prepare airborne concoctions that strengthen allies and weaken foes."
+            ],
+            [
+              "Chemist",
+              "Botany",
+              "2nd",
+              "Utilize the power of plants to create potent remedies and enhancements."
+            ],
+            [
+              "Chemist",
+              "Cryochemist",
+              "2nd",
+              "Protect allies and engage enemies with the strength of a yeti."
+            ],
+            [
+              "Chemist",
+              "Genetics",
+              "2nd",
+              "Unlock the secrets of mutation, reshaping your life through genetic alterations."
+            ],
+            [
+              "Chemist",
+              "Medicine",
+              "2nd",
+              "Pioneer advanced treatments and life-saving technologies to heal and protect."
+            ],
+            [
+              "Chemist",
+              "Pyrochemist",
+              "2nd",
+              "Spread fiery chaos across the battlefield."
+            ],
+            [
+              "Conqueror",
+              "Celestial Doctrine",
+              "3rd",
+              "Use control, status, and inevitability to overwhelm lesser wills."
+            ],
+            [
+              "Conqueror",
+              "Kingly Order",
+              "3rd",
+              "Form coordinated strikes and defend your allies."
+            ],
+            [
+              "Conqueror",
+              "Manipulator",
+              "3rd",
+              "Master psychological warfare and you bend enemies to your will."
+            ],
+            [
+              "Conqueror",
+              "Supreme King Master",
+              "3rd",
+              "Gain full command of your Supreme King Haki."
+            ],
+            [
+              "Conqueror",
+              "Warmonger",
+              "3rd",
+              "A relentless frontline general, you thrive in the chaos of close combat."
+            ],
+            [
+              "Conqueror",
+              "Will of D.",
+              "3rd",
+              "Embody defiance and flip fate, rallying others through sheer conviction."
+            ],
+            [
+              "",
+              "Devilforged Bestial",
+              "3rd",
+              "Infuse Zoan Devil Fruits into ships to create living ships. Klabautermann"
+            ],
+            [
+              "",
+              "Devilforged Devil Blade",
+              "3rd",
+              "Infuse multiple devil fruits a single melee weapon."
+            ],
+            [
+              "",
+              "Devilforged Devil Bulwark",
+              "3rd",
+              "Infuse Zoan and Logia devil fruits into shields to protect your allies."
+            ],
+            [
+              "",
+              "Devilforged Devil Gunner",
+              "3rd",
+              "Infuse devil fruits into ranged weapons, allowing for greater combat versatility."
+            ],
+            [
+              "",
+              "Devilforged Mechadevil",
+              "3rd",
+              "Build mech suits to help add you in combat."
+            ],
+            [
+              "",
+              "Devilforged No Mi Trainer",
+              "3rd",
+              "Create powerful technology to unleash dangerous zoan beasts."
+            ],
+            [
+              "Hybrid",
+              "Beast Lineage",
+              "1st",
+              "Tap into ancient power with cybernetic enhancements and unleash your inner predator."
+            ],
+            [
+              "Hybrid",
+              "Caesar Lineage",
+              "1st",
+              "Spread volatile chemicals across the battlefield as a living, mutating ooze."
+            ],
+            [
+              "Hybrid",
+              "Germa Lineage",
+              "1st",
+              "Embody comic-book superpowers from the Sora, Warrior of the Sea™ comic strip."
+            ],
+            [
+              "Hybrid",
+              "Satellite Lineage",
+              "1st",
+              "Control a network of clones to fight, scout, and support from a distance."
+            ],
+            [
+              "Hybrid",
+              "Seraphim Lineage",
+              "1st",
+              "Ascend with Lunarian flame, becoming a relentless weapon."
+            ],
+            [
+              "Hybrid",
+              "Twin Devil Lineage",
+              "1st",
+              "Gain the ability to eat multiple devil fruits."
+            ],
+            [
+              "",
+              "Marksman Beast Tamer",
+              "3rd",
+              "Tame beasts to aid you in combat."
+            ],
+            [
+              "",
+              "Marksman Bounty Hunter",
+              "3rd",
+              "Become a relentless hunter who marks foes and ensures no prey escapes."
+            ],
+            [
+              "",
+              "Marksman Gunslinger",
+              "3rd",
+              "Master the way to outdraw, outgun, and outlast any foe."
+            ],
+            [
+              "",
+              "Marksman Rope Master",
+              "3rd",
+              "Using precise knotwork, attack and immobilize enemies with rope tricks."
+            ],
+            [
+              "",
+              "Marksman Sniper",
+              "3rd",
+              "Master long-range precision to take down targets from incredible distances."
+            ],
+            [
+              "",
+              "Marksman Trapper",
+              "3rd",
+              "Prepare the battlefield with traps to gain the upper hand."
+            ]
+          ],
+          "page": 83
+        },
+        {
+          "rows": [
+            [
+              "Level"
+            ],
+            [
+              "Class",
+              "Subclass",
+              "Available",
+              "Description"
+            ],
+            [
+              "Martial",
+              "Black Leg Style",
+              "3rd",
+              "Specialize in kicks and acrobatic feets as you dash through the battlefield."
+            ],
+            [
+              "Artist"
+            ],
+            [
+              "Martial",
+              "Combustion Boxer",
+              "3rd",
+              "Make swift explosive punches with your bare fists."
+            ],
+            [
+              "Artist"
+            ],
+            [
+              "Martial",
+              "Fish-Man Karate",
+              "3rd",
+              "Channel the flow of water to unleash powerful martial strikes."
+            ],
+            [
+              "Artist"
+            ],
+            [
+              "Martial",
+              "New Kama Kenpo",
+              "3rd",
+              "Embrace fluid movements to unleash unpredictable and powerful attacks."
+            ],
+            [
+              "Artist"
+            ],
+            [
+              "Martial",
+              "Six Powers",
+              "3rd",
+              "Master combat techniques to dominate high defense opponents."
+            ],
+            [
+              "Artist"
+            ],
+            [
+              "Martial",
+              "Wano Ninpo",
+              "3rd",
+              "Stalk the shadows to gather intel and use Ninjutsu to aid you in battle."
+            ],
+            [
+              "Artist"
+            ],
+            [
+              "Oracle",
+              "Bones of Sight",
+              "2nd",
+              "Commune with the bones to learn vital information and aid allies."
+            ],
+            [
+              "Oracle",
+              "Eyes of the Future",
+              "2nd",
+              "Focuses on guiding allies to succeed in critical moments."
+            ],
+            [
+              "Oracle",
+              "Gambler of Fate",
+              "2nd",
+              "Roll for a chance to win big in combat scenarios."
+            ],
+            [
+              "Oracle",
+              "Occult Sigilist",
+              "2nd",
+              "Manifest elder sigils to damage and support others in combat."
+            ],
+            [
+              "Oracle",
+              "Soul of the Present",
+              "2nd",
+              "Enhance the bodies of your allies with temporary hit points."
+            ],
+            [
+              "Oracle",
+              "Voices of the Past",
+              "2nd",
+              "Empowers allies and enhance their abilities."
+            ],
+            [
+              "Priest",
+              "Cherry Blossom Domain",
+              "1st",
+              "Spread the joy of cherry blossoms, rejuvenating allies."
+            ],
+            [
+              "Priest",
+              "Color Domain",
+              "1st",
+              "Influence a person’s personality through the use of color theory."
+            ],
+            [
+              "Priest",
+              "Death Domain",
+              "1st",
+              "Invoke destruction and negative energy, unleashing death’s touch to reap souls."
+            ],
+            [
+              "Priest",
+              "Desert Domain",
+              "1st",
+              "Wield the power of sun and sand, unleashing the fury of the endless dunes."
+            ],
+            [
+              "Priest",
+              "Infernal Domain",
+              "1st",
+              "Punish foes with hellish retribution."
+            ],
+            [
+              "Priest",
+              "Sky Domain",
+              "1st",
+              "Command the power of dials, striking with thunderous force."
+            ],
+            [
+              "Renegade",
+              "Agent",
+              "3rd",
+              "Specialize in disguises and mimicry to learn intel."
+            ],
+            [
+              "Renegade",
+              "Assassin",
+              "3rd",
+              "Create and use poisons to help you dispatch foes."
+            ],
+            [
+              "Renegade",
+              "Circus Tricks",
+              "3rd",
+              "Become the perfect entertainer, using acrobat and circus gear to fight your foes."
+            ],
+            [
+              "Renegade",
+              "Dancing Duelist",
+              "3rd",
+              "With blade in hand, dance around the battle, slice foes with elegance."
+            ],
+            [
+              "Renegade",
+              "Swashbuckler",
+              "3rd",
+              "Test your luck in the middle of the battlefield. Lets go gambling!"
+            ],
+            [
+              "Renegade",
+              "Thief",
+              "3rd",
+              "Become the master of stealth and sleight of hand."
+            ],
+            [
+              "Tinkerer",
+              "Holo Science",
+              "2nd",
+              "Create holograms to confuse enemies on the battlefield."
+            ],
+            [
+              "Tinkerer",
+              "Meteorology",
+              "2nd",
+              "Harness the power of weather-altering devices to unleash elemental forces in battle."
+            ],
+            [
+              "Tinkerer",
+              "Military Science",
+              "2nd",
+              "Engineer advanced weaponry for battlefield superiority."
+            ],
+            [
+              "Tinkerer",
+              "Plague Engineer",
+              "2nd",
+              "Spread plagues through the battlefield, creating havoc wherever you go."
+            ],
+            [
+              "Tinkerer",
+              "Robotics",
+              "2nd",
+              "Construct and command powerful mechanical constructs to fight alongside you."
+            ],
+            [
+              "Tinkerer",
+              "Steamtech",
+              "2nd",
+              "Specialize in steampunk inspired machinery to mow down enemies."
+            ],
+            [
+              "Virtuoso",
+              "School of Battlehymn",
+              "3rd",
+              "Empower yourself and allies with triumphant verses that fuel the fight."
+            ],
+            [
+              "Virtuoso",
+              "School of Hypnotism",
+              "3rd",
+              "Use mesmerizing words to bend minds and control the battlefield."
+            ],
+            [
+              "Virtuoso",
+              "School of Mockery",
+              "3rd",
+              "You know just the right words to get under your opponent’s skin."
+            ],
+            [
+              "Virtuoso",
+              "School of Style",
+              "3rd",
+              "Charm your enemies and allies alike with impeccable style."
+            ],
+            [
+              "Virtuoso",
+              "School of the",
+              "3rd",
+              "Weave haunting melodies that channel otherworldly powers. Underworld"
+            ],
+            [
+              "Virtuoso",
+              "School of Wordsmithing",
+              "3rd",
+              "Know the right things to say at the right times."
+            ],
+            [
+              "Warrior",
+              "Black Weapon",
+              "3rd",
+              "Channel powerful armament haki to forge black weapons."
+            ],
+            [
+              "Warrior",
+              "Cursed Soul",
+              "3rd",
+              "Harbor a dark presence within, wielding cursed energy to devastate foes."
+            ],
+            [
+              "Warrior",
+              "Kuja Huntress",
+              "3rd",
+              "Stalk the battlefield with your beloved snake companion."
+            ],
+            [
+              "Warrior",
+              "Ramen Kenpo",
+              "3rd",
+              "Using the power of noodles, brawl your way through the battlefield."
+            ],
+            [
+              "Warrior",
+              "Ryuo Samurai",
+              "3rd",
+              "Learn the ways of the katana to dice your way through any obstacle."
+            ],
+            [
+              "Warrior",
+              "Slow Cutting",
+              "3rd",
+              "Abandon fast slashes for slower, more precise cuts."
+            ]
+          ],
+          "page": 84
+        }
+      ]
+    },
+    {
+      "id": "rule.chapter_4_updated_spell_lists_opening",
+      "kind": "rule",
+      "name": "Chapter 4: Updated Spell Lists",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 211
+      },
+      "text": "This list provides all of the updated spell lists for each of the spellcasting classes. You might notice the spell lists are shorter than the versions in the original module, and you would be right. These lists are trimmed down to fit the one piece world better. That includes removing water spells, resurrection spells, summoning spells, and spells that feel like devilfruit abilities.\nAs always, these are optional, so If you want the longers spell lists feel free to use them.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 210
+        }
+      }
+    },
+    {
+      "id": "rule.chapter_7_expanded_armory_opening",
+      "kind": "rule",
+      "name": "Chapter 7: Expanded Armory",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 255
+      },
+      "text": "I would like to extend my sincere thanks to Kami and Anvil for their dedication and hard work in developing this section. After months of effort, I am delighted to share the results of their creativity and commitment with all of you.\nThe seas are full of merchants, markets, and hidden traders who keep adventurers supplied. From the humble stalls of a fishing village to the bustling markets of great cities, and even the shadowy exchanges of the black market, the world offers countless opportunities to buy, barter, and prepare for the journey ahead.\nIn smaller settlements, goods are often limited to food, rations, rope, and a handful of simple tools. Larger ports, however, provide greater variety: weapons, armor, kits, navigational gear, repair tools, and clothing suitable for long voyages. These purchases are often the difference between survival and disaster on the open sea.\nThe black market, when discovered, offers an entirely different selection. Here one may find cursed weapons, Devil Fruits, and contraband too risky or valuable to appear in ordinary shops. Prices are steep, and the risks higher still, but the rewards are unparalleled.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 330
+        }
+      }
+    },
+    {
+      "id": "rule.underworld_marketplace_opening",
+      "kind": "rule",
+      "name": "Underworld Marketplace",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF Expanded Handbook v10",
+        "page": 291
+      },
+      "text": "The Underworld is a sprawling network of smugglers, brokers, and crime lords who traffic in goods too rare for ordinary markets. Its operations thrive across the Grand Line, with secretive auctions and black markets drawing pirates, nobles, and powerful figures seeking items that the World Government would never allow to circulate openly.\nSome underworld markets hide in plain sight, disguised as lavish trade houses or exclusive clubs for the wealthy. Others lurk in the shadows of remote ports, accessible only by those with the right contacts. What all share in common is the promise of rarity: treasures and tools that can change the tide of battle or fortune.",
+      "sources": {
+        "dndf-8.8": {
+          "book": "DnDF Expanded Handbook v8.8",
+          "page": 354
+        }
+      }
     }
   ],
   "$note": "Extracted from DnDF Expanded Handbook v10 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."

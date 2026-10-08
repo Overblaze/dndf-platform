@@ -751,7 +751,10 @@
                   "rows": [
                     [
                       "Color",
-                      "Damage"
+                      "",
+                      "Damage",
+                      "",
+                      ""
                     ],
                     [
                       "Type",
@@ -763,18 +766,21 @@
                     [
                       "White",
                       "Calm",
+                      "",
                       "Radiant Gain +2 to passive perception.",
                       "Must use an Action to use a Bonus Action."
                     ],
                     [
                       "Grey",
                       "Apathy",
+                      "",
                       "Slashing Gain +1 AC when not wearing heavy armor.",
                       "Cannot use reactions."
                     ],
                     [
                       "Black",
                       "Fear",
+                      "",
                       "Necrotic Gain +1 bonus to death saves.",
                       "Inflicts frightened condition."
                     ],
@@ -788,11 +794,14 @@
                     [
                       "Orange",
                       "Anger",
+                      "",
                       "Thunder Gain proficiency with all weapons.",
                       "Cannot critically hit with attack rolls"
                     ],
                     [
                       "Yellow",
+                      "",
+                      "",
                       "Insecurity Lightning Gain advantage on Dexterity saving throws.",
                       "Has disadvantage on attack rolls against you."
                     ],
@@ -813,6 +822,7 @@
                     [
                       "Indigo",
                       "Grief",
+                      "",
                       "Psychic Gain advantage on saving throws against spell effects.",
                       "Inflicts your priest level in psychic damage."
                     ],
@@ -824,6 +834,9 @@
                       "Reduces healing and regeneration"
                     ],
                     [
+                      "",
+                      "",
+                      "",
                       "action if the creature does not have extra attack.",
                       "received by half of your priest level."
                     ]

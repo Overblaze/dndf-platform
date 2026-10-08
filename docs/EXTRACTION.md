@@ -82,3 +82,21 @@ The hand-verified `data/rules/dndf-10/bruiser.json` is never rewritten, so its s
 A subclass patch can also carry `choose`: the feature's sub-headed parts (or, with `inline`, the paragraphs of its text that open with the names given) become an `optionGroup` entry, and the feature gets `choices` pointing at it. `each` gives every option the same fields (its own uses); `options` adds numbers to one option, guarded by `expect` like everything else.
 
 `proficiencies_granted` reads "you gain proficiency with …" in class features, subclass features and feats into `armorProficiency`, `weaponProficiency` and `toolProficiency` effects; a choice grants nothing. They are added even to a feature whose other effects were entered by hand.
+
+## Auditing the data against the books
+`python3 tools/extract/audit.py` changes nothing and reports three things:
+
+- **shape**: text that stops mid-sentence, an empty part, a compound left split at a line break, a table row with the wrong number of cells, a level out of order, a page outside the book.
+- **text**: every sentence in the data looked up in an independent reading of the same PDF page (`pdftotext`), so a misplaced or mangled paragraph shows.
+- **coverage**: the other direction — every sentence the PDF prints on a page we took entries from should be in the data.
+
+Coverage still lists table rows and lists (they are held cell by cell, so a "sentence" across cells never matches) and lines where the page footer falls inside a sentence. Anything else it lists is worth reading.
+
+What the audit led to in the reader (`pdfdoc.py`):
+- a paragraph that runs from the foot of one column to the head of the next is joined even when a table title sits between the halves;
+- a compound broken at its hyphen keeps the hyphen and takes no space ("fruit-infused");
+- a chapter's first line, set as a large capital and small capitals, is rebuilt as an ordinary line;
+- a table row with an empty cell keeps its columns instead of sliding left;
+- text that starts past the right-hand margin (a box that ran off the page) is dropped.
+
+Known and left as the book prints them: v10 Hybrid *Power Immunity* stops mid-sentence because its box runs off the page (v8.8 prints it whole); Marksman *Hawk-Eyed* and Eastern Dragon *Dragon Emperor* end without a full stop; one row of the Paramecia Awakening table has an extra cell; a few misprints ("your your", "the the"). Tables whose rows are printed on two lines each (Virtuoso *Performing Chords*) are held as two rows per entry.
