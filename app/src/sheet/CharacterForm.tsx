@@ -1,4 +1,5 @@
-import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { AbilityScoresField, originOf } from './AbilityScoresField';
 import { useState } from 'react';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -39,6 +40,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const [otherClasses, setOtherClasses] = useState<CharacterClass[]>(initial?.classes.slice(1) ?? []);
   const setOther = (i: number, patch: Partial<CharacterClass>) => setOtherClasses(otherClasses.map((c, j) => (j === i ? { ...c, ...patch } : c)));
   const [scores, setScores] = useState<AbilityScores>(initial?.scores ?? BLANK_SCORES);
+  const [scoreOrigin, setScoreOrigin] = useState<ScoreOrigin>(originOf(initial?.scores ?? BLANK_SCORES, initial?.scoreOrigin));
   const [subclass, setSubclass] = useState(first?.subclass ?? '');
   const [skills, setSkills] = useState<string[]>(initial?.skills ?? []);
   const [expertise, setExpertise] = useState<string[]>(initial?.expertise ?? []);
@@ -90,7 +92,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     };
     if (!initial) {
       const built = newCharacter(shared, rules);
-      const doc = { ...built, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
+      const doc = { ...built, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return onSave(doc, `Created ${doc.name}`);
     }
@@ -107,6 +109,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       feats,
       classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...otherClasses],
       scores,
+      scoreOrigin,
       skills,
       expertise,
       choices: keptChoices,
@@ -218,17 +221,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         </button>
         {otherClasses.length > 0 && <p className="page-ref">Total level {level + otherClasses.reduce((n, c) => n + c.level, 0)}. The class above is the first class: it gives the saving throws and the full first hit die.</p>}
       </fieldset>
-      <fieldset>
-        <legend className="label">Ability scores (after race and improvements)</legend>
-        <div className="grid-6">
-          {ABILITIES.map((a) => (
-            <label key={a} className="field">
-              <span className="label" title={ABILITY_NAMES[a]}>{a}</span>
-              <input type="number" inputMode="numeric" value={scores[a]} onChange={(e) => setScores({ ...scores, [a]: clamp(Number(e.target.value), 1, 40) })} aria-label={ABILITY_NAMES[a]} />
-            </label>
-          ))}
-        </div>
-      </fieldset>
+      <AbilityScoresField origin={scoreOrigin} book={HANDBOOKS[version]} onChange={(next, origin) => { setScores(next); setScoreOrigin(origin); }} />
       {level >= subclassLevel && styles.length > 0 && (
         <label className="field">
           <span className="label">{cls.subclass?.label ?? 'Subclass'} · level {subclassLevel}</span>

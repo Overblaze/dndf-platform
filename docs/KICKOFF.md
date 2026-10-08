@@ -12,3 +12,9 @@ Read CLAUDE.md, docs/SPEC.md and docs/EXTRACTION.md first. Phases 1 and 2 are me
 Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (5), granting and revealing fruits (6).
 
 **Phase 3 audit** (branch `phase3-audit`): `tools/extract/audit.py` compares the data with the PDFs in both directions. It found paragraphs cut at column breaks, split compounds, dropped chapter openings, table rows sliding left and one wrong use counter; all fixed in the reader, with `packages/engine/test/audit.test.ts` holding them fixed. Still open: the front matter (pages 1–8) is not extracted, and the six Volo's stat blocks.
+
+## Phase 4 — builder, level-up, build editor, custom features
+1. **Starting ability scores** (branch `phase4-ability-scores`): roll 4d6 drop the lowest, standard array, point buy, or typed in; with a column for race, improvement and feat bonuses.
+2. Level-up flow.
+3. Custom features.
+4. Guided builder following the book's steps.

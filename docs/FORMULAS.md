@@ -267,6 +267,18 @@ Tested in `packages/engine/test/subclasses.test.ts`. Shown on the Skills tab, ea
 
 Not read: a proficiency that is a choice ("one tool of your choice", "four weapons of your choice"), and racial traits. In a multiclass build every class's full list is counted.
 
+## Starting ability scores (the builder)
+Tested in `packages/engine/test/abilityScores.test.ts`.
+
+| Method | Rule | Page |
+|---|---|---|
+| Roll | four d6, total of the highest three, six times; give each total to an ability | EH10 p.10 · EH8.8 p.10 |
+| Standard array | 15, 14, 13, 12, 10, 8, one to each ability | EH10 p.10 · EH8.8 p.10 |
+| Point buy | 27 points; every score from 8 to 15; cost 0, 1, 2, 3, 4, 5, 7, 9 | standard 5e variant, not printed in the DnDF handbooks |
+| Final score | the method's number + what race, improvements and feats add | — |
+
+Nothing is refused: an unassigned number or overspent points is said in a notice. The method, the rolls and the bonuses are kept on the character (`scoreOrigin`); `scores` is what the sheet uses.
+
 ## Multiclassing (both versions)
 | Number | Formula | Sample | Page |
 |---|---|---|---|
