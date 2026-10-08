@@ -26,6 +26,8 @@ export function useCharacter(store: CharacterStore, id: string) {
   const [status, setStatus] = useState<SaveStatus>('saved');
   const [saveError, setSaveError] = useState<string | null>(null);
   const pending = useRef<CharacterDoc | null>(null);
+  /** The character as last shown, whether or not React has re-rendered since. */
+  const latest = useRef<CharacterDoc | null>(null);
   const timer = useRef<number | undefined>(undefined);
 
   const flush = useCallback(() => {
@@ -55,7 +57,7 @@ export function useCharacter(store: CharacterStore, id: string) {
     store.get(id).then(
       (stored) => {
         if (!current) return;
-        if (stored) setDocState(stored.doc);
+        if (stored) { latest.current = stored.doc; setDocState(stored.doc); }
         else setMissing(true);
       },
       (error: Error) => current && setLoadError(error.message),
@@ -71,12 +73,14 @@ export function useCharacter(store: CharacterStore, id: string) {
 
   const setDoc = useCallback(
     (next: CharacterDoc, log?: string) => {
+      // A logged change keeps the character as it was, so the History can put it back.
+      if (log) void store.log(id, log, latest.current ?? undefined);
+      latest.current = next;
       setDocState(next);
       pending.current = next;
       setStatus('saving');
       window.clearTimeout(timer.current);
       timer.current = window.setTimeout(flush, SAVE_DELAY_MS);
-      if (log) void store.log(id, log);
     },
     [store, id, flush],
   );

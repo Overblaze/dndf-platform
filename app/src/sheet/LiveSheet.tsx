@@ -10,6 +10,7 @@ import { AppearanceDialog } from './AppearanceDialog';
 import { CharacterForm } from './CharacterForm';
 import { CombatTab } from './CombatTab';
 import { FeaturesTab } from './FeaturesTab';
+import { HistoryDialog } from './HistoryDialog';
 import { LevelUpDialog } from './LevelUpDialog';
 import { RestDialog } from './RestDialog';
 import { RollTray } from './RollTray';
@@ -34,7 +35,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
   const { live, loadError, missing } = useCharacter(store, id);
   const [tab, setTab] = useState<TabId>('combat');
   const [open, setOpen] = useState<{ key: string; kind: StatKind; rollable: boolean } | null>(null);
-  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | null>(null);
+  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | null>(null);
   // The character as it was before the last level-up, kept until it is undone or dismissed.
   const [beforeLevel, setBeforeLevel] = useState<CharacterDoc | null>(null);
 
@@ -72,6 +73,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           <button className="btn btn-primary" onClick={() => setDialog('rest')}>Rest</button>
           <button className="btn" onClick={() => setDialog('level')}>Level up</button>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
+          <button className="btn" onClick={() => setDialog('history')}>History</button>
           <button className="btn" onClick={() => setDialog('look')}>Appearance</button>
           <Link className="btn" to="/sheet">All characters</Link>
         </div>
@@ -105,6 +107,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {open && openStat && <StatDialog stat={openStat} kind={open.kind} rollable={open.rollable} live={live} onClose={() => setOpen(null)} />}
       {dialog === 'rest' && <RestDialog live={live} onClose={() => setDialog(null)} />}
       {dialog === 'look' && <AppearanceDialog live={live} store={store} id={id} onClose={() => setDialog(null)} />}
+      {dialog === 'history' && <HistoryDialog live={live} store={store} id={id} onClose={() => setDialog(null)} />}
       {dialog === 'level' && <LevelUpDialog live={live} onClose={() => setDialog(null)} onLevelled={setBeforeLevel} />}
       {dialog === 'edit' && (
         <Dialog title="Edit character" onClose={() => setDialog(null)}>

@@ -19,4 +19,6 @@ Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (
 3. **Custom and borrowed features** (branch `phase4-custom-features`): write your own feature with uses, dice, bonuses, a note and a switch; borrow any feature from the handbook, with its counter and pool.
 4. **Guided builder** (branch `phase4-builder`): a new character is made one step at a time in the handbook's order (EH10 p.9–10), each step with the book's own text, a step picker, a review of the finished numbers and what is still open; "All on one page" stays available, and editing opens on one page.
 
-Still to do in Phase 4: swapping a class's own features for others, a fully custom class, and full history with undo.
+5. **History with undo** (branch `phase4-history`): every logged change keeps the character as it was just before, in `character_history` (signed in) or this browser (last 60); the History dialog undoes back to any line, and the undo is itself a line.
+
+Still to do in Phase 4: swapping a class's own features for others, and a fully custom class.
