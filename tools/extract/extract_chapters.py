@@ -512,7 +512,9 @@ def extract_spell_lists(version: str) -> list[dict]:
                 level = LEVEL_NAMES.get(item.text.strip().lower())
                 if level is None:
                     problems.append(f"spell list p{page}: unknown level heading '{item.text}'")
-            elif item.family.startswith("ScalySans") and item.top > 150 and level is not None:
+            # No cut-off by height: a column that continues the level above it starts at the very top of the page,
+            # so its first names sit beside the list's title. (A cut-off here once dropped them all.)
+            elif item.family.startswith("ScalySans") and level is not None:
                 names = current["levels"].setdefault(str(level), [])
                 # "(ritual)" pushed onto its own line belongs to the name above it.
                 # … and so does the end of a name too long for its column ("Protection from Evil and" / "Good").

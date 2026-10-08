@@ -64,6 +64,8 @@ export interface KnownSpell {
   list?: string;
   /** For a spell the handbook prints in full: its entry. */
   entry?: string;
+  /** The class this spell counts for: it is known or prepared as that class, and cast with that class's ability (p210). */
+  cls?: string;
   /** A spell the player wrote: its details travel with the character, so the sheet, the printed sheet and the bot all have them. */
   own?: SpellDetails;
   /** For classes that prepare: whether it is prepared today. */
@@ -86,12 +88,49 @@ export interface SheetSpell extends KnownSpell {
   rolls: SheetFeature['rolls'];
   /** Slot levels it can be cast with now (its own level and higher, where a slot is left). */
   castableWith: number[];
+  /** The class it counts for, when the character has one that casts. */
+  cls?: string;
+  clsName?: string;
+  /** How that class comes by its spells; undefined when the spell belongs to no class. */
+  mode?: 'prepared' | 'known';
+  /** Whether it can be cast as things stand: a cantrip, a spell of a class that learns, or a prepared one. */
+  ready: boolean;
+  /** Higher than that class can learn or prepare at its level. */
+  tooHigh: boolean;
+  /** Counts for a class whose own spell list does not have it: the player's override, marked with an asterisk. */
+  override: boolean;
+}
+
+/** One class's spellcasting, worked out as if it were the character's only class (p210). */
+export interface SpellClass {
+  id: string;
+  name: string;
+  level: number;
+  /** 'prepared': chooses a number of spells each day from its whole list. 'known': learns a fixed number, always ready. */
+  mode: 'prepared' | 'known';
+  dc?: Stat;
+  attack?: Stat;
+  /** What the class's table and Spellcasting feature give at this class level; undefined where it gives no such number. */
+  cantripsMax?: number;
+  knownMax?: number;
+  preparedMax?: number;
+  /** The highest spell level this class can learn or prepare at its level, from its own table. */
+  maxSpellLevel?: number;
+  /** What is on the sheet for this class. */
+  cantrips: number;
+  known: number;
+  prepared: number;
+  list?: string;
 }
 
 export interface SheetSpells {
   /** Save DC and attack modifier, for each class that casts. */
   casting: { from: string; dc?: Stat; attack?: Stat }[];
   slots: SheetResource[];
+  /** Each class that casts, on its own. */
+  classes: SpellClass[];
+  /** True when slots come from the Multiclass Spellcaster table: they can be of a higher level than any class's spells. */
+  pooledSlots: boolean;
   /** What the class table says about how many: "Cantrips known 3", "Powers prepared 6". */
   limits: { label: string; value: string; from: string }[];
   known: SheetSpell[];
@@ -106,6 +145,8 @@ const slugOf = (name: string) => name.toLowerCase().replace(/\s*\(ritual\)\s*/g,
 /** The SRD prints some spells without the wizard's name the class lists give them: "Melf’s Acid Arrow" is its "Acid Arrow". */
 const withoutOwner = (name: string) => name.replace(/^[A-Z][a-z]+[’']s\s+/, '');
 export const SRD_BOOK = '5e SRD 5.1';
+/** A spell's name as lists are compared: "Feign Death (ritual)" and "Melf’s Acid Arrow" match "Feign Death" and "Acid Arrow". */
+export const spellKey = (name: string) => slugOf(withoutOwner(name));
 
 /** The entry holding a spell's text, by the name a class list gives it; undefined when no text is held. */
 export function spellEntryFor(name: string, rules: Map<string, RuleEntry>): RuleEntry | undefined {

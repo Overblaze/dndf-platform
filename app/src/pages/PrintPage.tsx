@@ -114,19 +114,23 @@ function Paper({ doc, sheet, withText }: { doc: CharacterDoc; sheet: Sheet; with
         ))}
       </section>
 
-      {(book.known.length > 0 || book.casting.length > 0) && (
+      {(book.known.length > 0 || book.classes.length > 0) && (
         <section>
           <h2>Spells</h2>
-          {book.casting.map((c) => (
-            <p key={c.from}><b>{c.from}:</b> {[c.dc ? `save DC ${c.dc.value}` : '', c.attack ? `attack ${signed(c.attack.value)}` : ''].filter(Boolean).join(', ')}</p>
+          {book.classes.map((c) => (
+            <p key={c.id}>
+              <b>{c.name} {c.level}:</b>{' '}
+              {[c.dc ? `save DC ${c.dc.value}` : '', c.attack ? `attack ${signed(c.attack.value)}` : '', c.mode === 'prepared' ? `prepares ${c.preparedMax ?? '?'}` : c.knownMax !== undefined ? `knows ${c.knownMax}` : '', c.cantripsMax !== undefined ? `${c.cantripsMax} cantrips` : '', c.maxSpellLevel !== undefined ? `spells up to level ${c.maxSpellLevel}` : ''].filter(Boolean).join(', ')}
+            </p>
           ))}
           {spellLevels.map((level) => (
             <p key={level}>
               <b>{spellLevelName(level)}:</b>{' '}
-              {book.known.filter((k) => k.level === level).map((k) => `${level > 0 ? (k.prepared ? '● ' : '○ ') : ''}${k.name}${k.notes ? ` (${k.notes})` : ''}`).join(' · ')}
+              {book.known.filter((k) => k.level === level).map((k) => `${level > 0 && k.mode === 'prepared' ? (k.prepared ? '● ' : '○ ') : ''}${k.name}${k.override ? '*' : ''}${book.classes.length > 1 && k.clsName ? ` [${k.clsName}]` : ''}${k.notes ? ` (${k.notes})` : ''}`).join(' · ')}
             </p>
           ))}
-          {book.known.some((k) => k.level > 0) && <p className="print-small">● prepared</p>}
+          {book.known.some((k) => k.level > 0 && k.mode === 'prepared') && <p className="print-small">● prepared · ○ not prepared today · unmarked spells are known and always ready</p>}
+          {book.known.some((k) => k.override) && <p className="print-small">* override: not on that class’s spell list</p>}
           {withText && book.known.filter((k) => k.text).map((k) => (
             <div key={k.id} className="print-feature">
               <p><b>{k.name}</b> <small>{[k.school, k.castingTime, k.range, k.components, k.duration, k.book && k.page ? cite(k.book, k.page) : ''].filter(Boolean).join(' · ')}</small></p>

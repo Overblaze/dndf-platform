@@ -306,6 +306,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
       ...spell,
       level: Math.min(9, Math.max(0, whole(spell.level, 0))),
       own: spell.own === undefined ? undefined : cleanSpellDetails(spell.own),
+      cls: typeof spell.cls === 'string' && spell.cls ? spell.cls : undefined,
     })),
     money: typeof doc.money === 'number' && Number.isFinite(doc.money) ? Math.round(doc.money) : undefined,
     willpower: isObject(doc.willpower)

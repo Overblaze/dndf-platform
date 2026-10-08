@@ -143,7 +143,8 @@ export function status(doc: CharacterDoc, sheet: Sheet): Outcome {
   ];
   if (pools.length) lines.push(pools.join(' · '));
   if (sheet.money !== 0 || sheet.gear.lines.length > 0) lines.push(`${exactBerries(sheet.money)} · carrying ${sheet.gear.carried} of ${sheet.gear.capacity} lb${sheet.gear.over ? ' (over)' : ''}`);
-  const prepared = sheet.spellbook.known.filter((k) => k.level > 0 && k.prepared).map((k) => k.name);
+  // Only a class that prepares has a list for the day; a class that learns always has all its spells.
+  const prepared = sheet.spellbook.known.filter((k) => k.level > 0 && k.prepared && k.mode !== 'known').map((k) => k.name);
   if (prepared.length) lines.push(`Prepared: ${prepared.join(', ')}`);
   const on = sheet.toggles.filter((t) => t.on).map((t) => t.label);
   if (on.length) lines.push(`On: ${on.join(', ')}`);
