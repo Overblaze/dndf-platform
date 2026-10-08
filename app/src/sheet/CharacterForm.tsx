@@ -1,6 +1,7 @@
-import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, customClassEntry, customClassId, isCustomClassId, rulesFor, type Ability, type AbilityScores, type CustomClass, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { AbilityScoresField, originOf } from './AbilityScoresField';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { CustomClassDialog } from './CustomClassDialog';
 import { RuleText } from '../components/RuleText';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -14,12 +15,18 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const first = initial?.classes[0];
   // A character is pinned to one handbook; it is chosen when the character is made.
   const [version, setVersion] = useState<RulesVersion>(initial?.rulesVersion ?? 'dndf-10');
-  const { rules, classes, races, backgrounds, crewRoles, feats: allFeats, armors, weapons: armory, mainSubclasses, subracesOf, choiceFeatures } = ruleSet(version);
+  // Classes the player wrote for this character sit beside the handbook's.
+  const [customClasses, setCustomClasses] = useState<CustomClass[]>(initial?.customClasses ?? []);
+  const [classEditor, setClassEditor] = useState<CustomClass | 'new' | null>(null);
+  const handbook = ruleSet(version);
+  const rules = useMemo(() => rulesFor({ customClasses, rulesVersion: version }, handbook.rules), [customClasses, version, handbook]);
+  const classes = useMemo(() => [...handbook.classes, ...customClasses.map((c) => customClassEntry(c, version))], [customClasses, version, handbook]);
+  const { races, backgrounds, crewRoles, feats: allFeats, armors, weapons: armory, mainSubclasses, subracesOf, choiceFeatures } = handbook;
   const changeVersion = (next: RulesVersion) => {
     // The other handbook has its own classes, subclasses and feats: start those picks again.
     const other = ruleSet(next);
     setVersion(next);
-    if (!other.rules.has(classId)) setClassId('class.bruiser');
+    if (!other.rules.has(classId) && !isCustomClassId(classId)) setClassId('class.bruiser');
     setSubclass('');
     setOtherClasses([]);
     setChoices({});
@@ -100,7 +107,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     };
     if (!initial) {
       const built = newCharacter(shared, rules);
-      const doc: CharacterDoc = { ...built, notes, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
+      const doc: CharacterDoc = { ...built, customClasses, notes, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return doc;
     }
@@ -125,6 +132,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       shield,
       weapons,
       notes,
+      customClasses,
       willpower: { ...initial.willpower, strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 },
     };
     const newMax = deriveSheet(doc, rules).maxHp.value;
@@ -229,6 +237,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   );
 
   return (
+    <>
     <form className="form" onSubmit={(e) => { e.preventDefault(); save(); }}>
       {stepHead}
       {show('basics') && (
@@ -299,6 +308,18 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           <span className="label">Level</span>
           <input type="number" inputMode="numeric" min={1} max={20} value={level} onChange={(e) => setLevel(clamp(Number(e.target.value), 1, 20))} />
         </label>
+      </div>
+      <div className="custom-classes">
+        {customClasses.map((c) => (
+          <div key={c.id} className="resource">
+            <div>
+              <div className="resource-name">{c.name || 'Custom class'}</div>
+              <div className="page-ref">Your own class · d{c.hitDie} · {c.features.length} feature{c.features.length === 1 ? '' : 's'}</div>
+            </div>
+            <button type="button" className="btn" onClick={() => setClassEditor(c)}>Edit class</button>
+          </div>
+        ))}
+        <button type="button" className="btn" onClick={() => setClassEditor('new')}>Write a custom class</button>
       </div>
       <fieldset>
         <legend className="label">Multiclassing: levels in other classes · {cite(HANDBOOKS[version], version === 'dndf-10' ? 209 : 208)}</legend>
@@ -603,5 +624,21 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       {reviewStep}
       {stepFoot}
     </form>
+    {/* Outside the form, so Enter in the class editor cannot submit the character. */}
+    {classEditor && (
+      <CustomClassDialog
+        initial={classEditor === 'new' ? undefined : classEditor}
+        inUse={classEditor !== 'new' && [classId, ...otherClasses.map((o) => o.id)].includes(customClassId(classEditor.id))}
+        onSave={(saved) => {
+          const exists = customClasses.some((c) => c.id === saved.id);
+          setCustomClasses(exists ? customClasses.map((c) => (c.id === saved.id ? saved : c)) : [...customClasses, saved]);
+          if (!exists) { setClassId(customClassId(saved.id)); setSubclass(''); }
+          setClassEditor(null);
+        }}
+        onDelete={classEditor === 'new' ? undefined : () => { setCustomClasses(customClasses.filter((c) => c.id !== classEditor.id)); setClassEditor(null); }}
+        onClose={() => setClassEditor(null)}
+      />
+    )}
+    </>
   );
 }

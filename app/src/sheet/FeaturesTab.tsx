@@ -75,7 +75,7 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
       {editing && (
         <CustomFeatureDialog
           initial={editing === 'new' ? undefined : editing}
-          onSave={saveCustom}
+          onSave={(feature) => saveCustom(feature)}
           onDelete={editing === 'new' ? undefined : () => deleteCustom(editing)}
           onClose={() => setEditing(null)}
         />

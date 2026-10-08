@@ -6,6 +6,7 @@ import { classColumns, classScope } from './classes';
 import { abilityMod, proficiencyBonus } from './core';
 import { evaluateNumber } from './expr';
 import { multiclassWarnings } from './multiclass';
+import { rulesFor } from './customClass';
 import { deriveSheet } from './sheet';
 
 export interface LevelUpFeature {
@@ -57,7 +58,8 @@ export interface LevelUpPlan {
 const subclassesOf = (rules: Map<string, RuleEntry>, classId: string) => [...rules.values()].filter((e) => e.kind === 'subclass' && e.parent === classId);
 
 /** What the character gains by taking one more level in `classId` (a class it has, or a new one). */
-export function levelUpPlan(doc: CharacterDoc, rules: Map<string, RuleEntry>, classId: string): LevelUpPlan {
+export function levelUpPlan(doc: CharacterDoc, handbook: Map<string, RuleEntry>, classId: string): LevelUpPlan {
+  const rules = rulesFor(doc, handbook);
   const cls = rules.get(classId) as ClassEntry | undefined;
   if (!cls || cls.kind !== 'class') throw new Error(`"${classId}" is not a class in the ${doc.rulesVersion} rules.`);
   const held = doc.classes.find((c) => c.id === classId);
@@ -131,7 +133,8 @@ export interface LevelUpPicks {
  * The character one level higher. Hit points gained are added to current hit points, and Dream
  * Points reset to the new level. Nothing is capped: a score may pass 20 if the player says so.
  */
-export function applyLevelUp(doc: CharacterDoc, rules: Map<string, RuleEntry>, picks: LevelUpPicks): { doc: CharacterDoc; hpGained: number; summary: string } {
+export function applyLevelUp(doc: CharacterDoc, handbook: Map<string, RuleEntry>, picks: LevelUpPicks): { doc: CharacterDoc; hpGained: number; summary: string } {
+  const rules = rulesFor(doc, handbook);
   const plan = levelUpPlan(doc, rules, picks.classId);
   const index = doc.classes.findIndex((c) => c.id === picks.classId);
   const classes = doc.classes.map((c) => ({ ...c }));

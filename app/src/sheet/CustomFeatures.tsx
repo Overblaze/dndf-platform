@@ -13,8 +13,8 @@ const diceProblem = (dice: string): string | null => {
 };
 
 /** Write or change one of the player's own features. */
-export function CustomFeatureDialog({ initial, onSave, onDelete, onClose }: { initial?: CustomFeature; onSave: (feature: CustomFeature) => void; onDelete?: () => void; onClose: () => void }) {
-  const [f, setF] = useState<CustomFeature>(initial ?? blank());
+export function CustomFeatureDialog({ initial, withLevel, onSave, onDelete, onClose }: { initial?: CustomFeature & { level?: number }; withLevel?: boolean; onSave: (feature: CustomFeature & { level?: number }) => void; onDelete?: () => void; onClose: () => void }) {
+  const [f, setF] = useState<CustomFeature & { level?: number }>(initial ?? { ...blank(), ...(withLevel ? { level: 1 } : {}) });
   const bonus = (type: CustomBonusType) => f.bonuses?.find((b) => b.type === type)?.value ?? 0;
   const setBonus = (type: CustomBonusType, value: number) =>
     setF({ ...f, bonuses: [...(f.bonuses ?? []).filter((b) => b.type !== type), ...(value ? [{ type, value }] : [])] });
@@ -30,6 +30,12 @@ export function CustomFeatureDialog({ initial, onSave, onDelete, onClose }: { in
         <span className="label">Name</span>
         <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} placeholder="Sea Legs" />
       </label>
+      {withLevel && (
+        <label className="field">
+          <span className="label">Gained at class level</span>
+          <input type="number" inputMode="numeric" min={1} max={20} value={f.level ?? 1} onChange={(e) => setF({ ...f, level: Math.max(1, Math.min(20, Math.round(Number(e.target.value)) || 1)) })} />
+        </label>
+      )}
       <label className="field">
         <span className="label">What it does, in your words</span>
         <textarea rows={4} value={f.text} onChange={(e) => setF({ ...f, text: e.target.value })} />

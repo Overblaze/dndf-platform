@@ -306,6 +306,18 @@ A class, subclass or option feature can be taken off a character: it leaves the 
 
 A borrowed feature the character already has is not doubled. Trackers a borrowed feature reads (Hybrid Points, chords) are not brought along.
 
+## Custom classes
+Tested in `packages/engine/test/customClass.test.ts`.
+
+| Rule | How the sheet works it out |
+|---|---|
+| Hit points and hit dice | the class's own die (d6, d8, d10 or d12), by the same formula as a handbook class |
+| Saving throws, armor, weapons, tools | the ones ticked or typed for the class; saving throws count only when it is the character's first class |
+| Features | each arrives at the class level it names, with its counter, dice, flat bonuses, note and switch |
+| Improvements | at the levels listed for the class (4, 8, 12, 16, 19 unless changed) |
+
+A custom class levels up and multiclasses like any other. It has no subclasses, class table columns or option lists.
+
 ## Multiclassing (both versions)
 | Number | Formula | Sample | Page |
 |---|---|---|---|

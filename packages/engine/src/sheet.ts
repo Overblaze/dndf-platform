@@ -1,5 +1,6 @@
 // Turns a saved character + the rules data into every number on the sheet, each with
 // its line-by-line breakdown. The website and the Discord bot both call this.
+import { CUSTOM_BOOK, customFeatureDef, rulesFor } from './customClass';
 import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type CharacterDoc, type WeaponDef } from './character';
 import { GENERAL_PAGES, HANDBOOKS } from './citations';
 import { classColumns } from './classes';
@@ -184,9 +185,6 @@ export interface Sheet {
 
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 
-/** The "book" of a feature the player wrote. */
-export const CUSTOM_BOOK = 'Custom';
-
 export interface Proficiency {
   /** "light", "shields", "martial", "martial_ranged", a weapon's name as a slug, or a tool's. */
   id: string;
@@ -253,7 +251,9 @@ interface ActiveFeature {
   key: string;
 }
 
-export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS): Sheet {
+export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS): Sheet {
+  // The handbook's rules, plus any classes the player wrote for this character.
+  const rules = rulesFor(doc, handbook);
   const warnings: string[] = [];
   const level = doc.classes.reduce((total, c) => total + c.level, 0);
 
@@ -330,17 +330,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
   if (home) {
     const own: RuleEntry = { id: 'custom', kind: 'rule', name: 'Custom', versions: [doc.rulesVersion], source: { book: CUSTOM_BOOK, page: 0 } };
     for (const custom of doc.customFeatures ?? []) {
-      const effects: EffectDef[] = [
-        ...(custom.bonuses ?? []).filter((b) => b.value).map((b) => ({ type: b.type, value: b.value })),
-        ...(custom.note ? [{ type: 'note', label: custom.note }] : []),
-      ];
-      const def: FeatureDef = {
-        level: 1, name: custom.name || 'Custom feature', text: custom.text, page: 0,
-        ...(custom.action ? { action: custom.action } : {}),
-        ...(custom.uses && custom.uses.max > 0 ? { uses: custom.uses } : {}),
-        ...(custom.rolls?.length ? { rolls: custom.rolls } : {}),
-        ...(custom.switched && effects.length ? { toggle: { id: `custom.${custom.id}`, label: custom.name, effects } } : effects.length ? { effects } : {}),
-      };
+      const def = customFeatureDef(custom, 1, `custom.${custom.id}`);
       active.push({ def, source: { entry: own, cls: home.cls, classLevel: level, label: 'Custom' }, from: custom.origin?.trim() || 'Custom', key: `custom/${custom.id}` });
     }
   }

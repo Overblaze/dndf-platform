@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, abilityMod, applyLevelUp, cite, columnLabel, levelUpPlan, rollDie, signed, type Ability, type CharacterDoc } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, abilityMod, applyLevelUp, customClassEntry, cite, columnLabel, levelUpPlan, rollDie, signed, type Ability, type CharacterDoc } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { RuleText } from '../components/RuleText';
@@ -14,7 +14,8 @@ const NONE: Record<Ability, number> = { str: 0, dex: 0, con: 0, int: 0, wis: 0, 
  */
 export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharacter; onClose: () => void; onLevelled: (before: CharacterDoc) => void }) {
   const { doc } = live;
-  const { rules, classes, feats } = ruleSet(doc.rulesVersion);
+  const { rules, classes: bookClasses, feats } = ruleSet(doc.rulesVersion);
+  const classes = [...bookClasses, ...(doc.customClasses ?? []).map((c) => customClassEntry(c, doc.rulesVersion))];
   const [classId, setClassId] = useState(doc.classes[0]!.id);
   const [hpMode, setHpMode] = useState<HpMode>('average');
   const [rolled, setRolled] = useState<number | null>(null);
