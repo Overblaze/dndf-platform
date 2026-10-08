@@ -351,8 +351,105 @@ describe('tidying change logs older than 90 days', () => {
   });
 });
 
+describe('private content: Devil Fruits and the grants that open them', () => {
+  // Stand-ins: no real fruit is ever in the repository.
+  const load = `insert into public.secret_entries (key, id, kind, name, book, audience, data) values ($1, $2, $3, $4, 'Test Book', $5, $6)`;
+  const names = async (who: string | null) => (await as(who, `select name from public.secret_entries order by name`)).map((r) => r.name);
+  const grant = `insert into public.grants (campaign_id, entry_key, character_id, kind) values ($1, $2, $3, $4) returning id`;
+  let anaGrant: string;
+
+  beforeAll(async () => {
+    await admin(load, ['devilFruit.alpha@test', 'devilFruit.alpha', 'devilFruit', 'Alpha Fruit', 'grant', { text: 'alpha secret' }]);
+    await admin(load, ['devilFruit.beta@test', 'devilFruit.beta', 'devilFruit', 'Beta Fruit', 'grant', { text: 'beta secret' }]);
+    await admin(load, ['devilFruit.gamma@test', 'devilFruit.gamma', 'devilFruit', 'Gamma Fruit', 'grant', { text: 'gamma secret' }]);
+    await admin(load, ['fruitAdvancement.one@test', 'fruitAdvancement.one', 'fruitAdvancement', 'Fruit Advancement', 'holders', {}]);
+    await admin(load, ['rule.dm_chapter@test', 'rule.dm_chapter', 'rule', 'DM Chapter', 'dm', {}]);
+  });
+
+  it('with nothing granted, a player reads no private entry at all; the DM reads them all', async () => {
+    expect(await names(ana)).toEqual([]);
+    expect(await names(ben)).toEqual([]);
+    expect(await names(zed)).toEqual([]);
+    expect(await names(matt)).toEqual(['Alpha Fruit', 'Beta Fruit', 'DM Chapter', 'Fruit Advancement', 'Gamma Fruit']);
+    // Not even a count leaks.
+    expect(await as(ana, `select count(*)::int as n from public.secret_entries`)).toEqual([{ n: 0 }]);
+    expect(await as(ana, `select name from public.secret_entries where key = 'devilFruit.alpha@test'`)).toEqual([]);
+  });
+
+  it('a fruit granted to a character opens that fruit, and the fruit advancements, to its owner only', async () => {
+    anaGrant = (await as(matt, grant, [campaign, 'devilFruit.alpha@test', anaChar, 'owner']))[0]!.id;
+    expect(await names(ana)).toEqual(['Alpha Fruit', 'Fruit Advancement']);
+    expect(await names(ben)).toEqual([]); // a crewmate learns nothing
+    expect(await names(zed)).toEqual([]);
+    expect(await as(ana, `select data->>'text' as text from public.secret_entries where id = 'devilFruit.alpha'`)).toEqual([{ text: 'alpha secret' }]);
+    expect(await as(ana, `select data from public.secret_entries where id = 'devilFruit.beta'`)).toEqual([]);
+  });
+
+  it('knowledge of a fruit (an appraisal) opens that fruit but not the fruit advancements', async () => {
+    await as(matt, grant, [campaign, 'devilFruit.beta@test', benChar, 'knowledge']);
+    expect(await names(ben)).toEqual(['Beta Fruit']);
+    expect(await names(ana)).toEqual(['Alpha Fruit', 'Fruit Advancement']);
+  });
+
+  it('DM-only entries stay DM-only whatever is granted', async () => {
+    await as(matt, grant, [campaign, 'rule.dm_chapter@test', anaChar, 'knowledge']);
+    expect(await names(ana)).not.toContain('DM Chapter');
+    expect(await names(matt)).toContain('DM Chapter');
+  });
+
+  it('the table knows who has a fruit but not which, until it is revealed', async () => {
+    const seen = async (who: string) => as(who, `select character_name, revealed, entry_name from public.campaign_fruits($1) order by character_name`, [campaign]);
+    expect(await seen(ben)).toEqual([{ character_name: 'Kaito Rourke', revealed: false, entry_name: null }]);
+    expect(await seen(ana)).toEqual([{ character_name: 'Kaito Rourke', revealed: false, entry_name: 'Alpha Fruit' }]); // her own
+    expect(await seen(matt)).toEqual([{ character_name: 'Kaito Rourke', revealed: false, entry_name: 'Alpha Fruit' }]);
+    expect(await seen(zed)).toEqual([]); // not in the campaign: nothing, not even that someone has one
+    await as(matt, `update public.grants set revealed = true where id = $1`, [anaGrant]);
+    expect(await seen(ben)).toEqual([{ character_name: 'Kaito Rourke', revealed: true, entry_name: 'Alpha Fruit' }]);
+    expect(await names(ben)).toEqual(['Alpha Fruit', 'Beta Fruit']); // revealed to the campaign: Ben may now read it
+    expect(await names(zed)).toEqual([]); // still nobody outside the campaign
+  });
+
+  it('a player sees their own grants and revealed ones; only the campaign DM can make, change or remove one', async () => {
+    expect((await as(ana, `select entry_key from public.grants order by entry_key`)).map((r) => r.entry_key)).toEqual(['devilFruit.alpha@test', 'rule.dm_chapter@test']);
+    expect((await as(ben, `select entry_key from public.grants order by entry_key`)).map((r) => r.entry_key)).toEqual(['devilFruit.alpha@test', 'devilFruit.beta@test']);
+    expect(await as(zed, `select count(*)::int as n from public.grants`)).toEqual([{ n: 0 }]);
+    await expect(as(ana, grant, [campaign, 'devilFruit.gamma@test', anaChar, 'owner'])).rejects.toThrow(/row-level security/);
+    expect(await as(ana, `update public.grants set revealed = false where id = $1 returning id`, [anaGrant])).toEqual([]);
+    expect(await as(ana, `delete from public.grants where id = $1 returning id`, [anaGrant])).toEqual([]);
+    expect(await names(ana)).not.toContain('Gamma Fruit');
+  });
+
+  it('a DM cannot grant to a character outside the campaign', async () => {
+    await expect(as(matt, grant, [campaign, 'devilFruit.gamma@test', zedChar, 'owner'])).rejects.toThrow(/row-level security/);
+    expect(await names(zed)).toEqual([]);
+  });
+
+  it('nobody signed in can add, change or remove a private entry, the DM included', async () => {
+    for (const who of [ana, matt]) {
+      await expect(as(who, load, ['devilFruit.x@test', 'devilFruit.x', 'devilFruit', 'X', 'grant', {}])).rejects.toThrow(/permission denied/);
+      await expect(as(who, `update public.secret_entries set audience = 'grant'`)).rejects.toThrow(/permission denied/);
+      await expect(as(who, `delete from public.secret_entries`)).rejects.toThrow(/permission denied/);
+    }
+  });
+
+  it('taking a grant away closes the fruit again', async () => {
+    await as(matt, `delete from public.grants where id = $1`, [anaGrant]);
+    expect(await names(ana)).toEqual([]);
+    expect(await names(ben)).toEqual(['Beta Fruit']);
+  });
+
+  it('deleting a character removes its grants and nothing else', async () => {
+    const [made] = await as(ana, `insert into public.characters (campaign_id, rules_version, doc) values ($1, 'dndf-10', '{"name":"Short Lived"}') returning id`, [campaign]);
+    await as(matt, grant, [campaign, 'devilFruit.gamma@test', made!.id, 'owner']);
+    expect(await names(ana)).toContain('Gamma Fruit');
+    await as(ana, `delete from public.characters where id = $1`, [made!.id]);
+    expect(await names(ana)).toEqual([]);
+    expect(await admin(`select count(*)::int as n from public.secret_entries`)).toEqual([{ n: 5 }]);
+  });
+});
+
 describe('signed-out visitors', () => {
-  it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history'])(
+  it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history', 'secret_entries', 'grants'])(
     'cannot read %s',
     async (table) => {
       await expect(as(null, `select * from public.${table}`)).rejects.toThrow(/permission denied/);

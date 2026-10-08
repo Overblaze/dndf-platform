@@ -58,3 +58,25 @@ also see that character's picture. Until this file is run, the built-in backgrou
 
 Row-level security is on for every table and signed-out visitors can read nothing. `npm test` runs
 `supabase/tests/rls.test.ts`, which loads these migrations into an in-memory Postgres and checks each rule above.
+
+## Private content: Devil Fruits and DM chapters (`0003_secret_entries.sql`)
+
+Run `0003_secret_entries.sql` in the SQL Editor like the others. It creates two tables:
+
+| Table | Holds | Who can read / write |
+|---|---|---|
+| `secret_entries` | every private entry: Devil Fruits, fruit advancements, DM chapters. One row per entry per book | DMs read everything. A player reads a fruit only when a grant names it for one of their characters, and the rules for fruit users only once they hold a fruit. Nobody can add or change rows through the site |
+| `grants` | which character has (`owner`) or has learned about (`knowledge`) which entry, and whether the table has been told (`revealed`) | the campaign's DMs give, change and take away; the character's owner sees their own; other members see a grant only after it is revealed |
+
+`campaign_fruits(campaign id)` answers "who has a fruit" for a campaign: other players get *that* a character has one,
+and its name only after the DM reveals it.
+
+The content itself never goes in this repository. It is loaded from `~/dndf/secret/*.json` on the DM's machine with the
+service-role key that is already in `~/dndf/secret/bot.env`:
+
+```bash
+npm run load-secret --workspace bot -- --dry   # count what would be loaded, change nothing
+npm run load-secret --workspace bot            # load; safe to run again after re-extracting
+```
+
+It prints counts only. Running it again replaces rows by key and never removes one, so existing grants are kept.

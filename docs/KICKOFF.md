@@ -48,6 +48,9 @@ Both open items were then closed on branch `save-conflicts`:
 - **Change logs older than 90 days are removed** once a day by the bot (`Db.pruneHistory`), and left out of the browser's own history. Only `character_history` is named; a character is never removed for its age, and a database test holds that.
 
 ## Phase 6 — Haki, Spirit Surges, Devil Fruits
-- [x] Haki features and "+ Spirit Surge" on the sheet (branch `phase6-haki-surges`): rarity, tabs, prerequisites greyed out and never blocked, preview of changed numbers, log, remove. Haki roll buttons scale with Willpower; Haki Purist; Standard Advancements wired where they have a number.
-- [ ] Private content table, grants and loader (branch `phase6-secret-table`, PR #34).
-- [ ] DM grant screen, fruit on the sheet, Devil Fruit advancements tab, `/sheet` redaction.
+- [x] Private content table and grants (`0003_secret_entries.sql`), with database tests that use stand-in entries; loader `npm run load-secret --workspace bot`.
+- [x] Haki features and "+ Spirit Surge" on the sheet: rarity, tabs, prerequisites greyed out and never blocked, preview of changed numbers, log, remove. Haki roll buttons scale with Willpower; Haki Purist; Standard Advancements wired where they have a number.
+- [ ] DM screen: grant a fruit or knowledge of one to a character, reveal it to the table, take it away.
+- [ ] A granted fruit on the sheet (features, resources, rolls), "unknown until revealed" for everyone else, fruit advancements for holders.
+- [ ] `/sheet` in Discord leaves an unrevealed fruit out when posted publicly.
+- [ ] Audit the private data (a few fruit type lines are garbled by extraction).
