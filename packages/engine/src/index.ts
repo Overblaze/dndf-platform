@@ -12,6 +12,7 @@ export * from './raceChoices';
 export * from './fruit';
 export * from './bounty';
 export * from './ships';
+export * from './shipSheet';
 export * from './devilforged';
 export * from './abilityScores';
 export * from './character';

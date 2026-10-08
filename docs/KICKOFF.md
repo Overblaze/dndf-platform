@@ -100,5 +100,6 @@ Known and left: a player who moves a character to a different campaign keeps a f
 - [x] Crew page: every crewmate's issued poster and the crew's total bounty (`0005_crew.sql`).
 - [x] DM page: Party, with each character's HP, AC, passive Perception, speed, bounty, exhaustion and conditions, and a link that opens the sheet.
 - [x] The DM Guide's ship chapter as public data (Matt's ruling, 2026-10-08; branch `phase8-ships`): 11 ships with their components, 25 upgrades, and the chapter's rules and tables, in the Library under "Ships and sailing".
-- [ ] Ship sheet, hold and crew treasury, built on that data.
+- [x] Ship sheet (branch `phase8-ship-sheet`, `0006_ships.sql`): launch one of the book's eleven ships or a blank one; components with Armor Class, hit points, damage thresholds and repair; speed from the working movement component, less damage, short-handedness and overloading; crew, passengers and rations; upgrades from the book (bought from the treasury at this ship's price, or a gift) or your own, against her slots; the shared hold in tons and the crew treasury, with a log; a voyage calculator and the ship's soul. Shared with a campaign, the whole crew can change her, and two changes at once cannot overwrite each other.
+- [ ] Ships in the bot (`/ship`), and on a printed page.
 - [ ] `/bounty` in the bot.

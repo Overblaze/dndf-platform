@@ -1410,7 +1410,7 @@
         },
         {
           "name": "Control and Movement: Dial",
-          "role": "other",
+          "role": "movement",
           "count": 1,
           "ac": 12,
           "hp": 25,
@@ -1466,7 +1466,7 @@
         },
         {
           "name": "Control and Movement: Oars",
-          "role": "other",
+          "role": "movement",
           "count": 1,
           "ac": 12,
           "hp": 25,

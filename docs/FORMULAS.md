@@ -389,6 +389,9 @@ A feat's "+1 to an ability score" is not applied: ability scores are entered as 
 | Travel | days = miles ÷ (pace × 24) | 240 ÷ 96 = 2.5 | DMG p.15 |
 | Rations | days = rations ÷ people aboard | 120 ÷ 8 = 15 | — |
 | Ship's soul | per voyage, crew roll (DC 10 Large/Huge, 15 Gargantuan); > half succeed = 1; 3 = sentient | 1/3 | DMG p.11 |
+| Ship speed on the sheet | the fastest movement component that still works, less its own damage loss; then halved (rounded down) if short-handed, and halved again if over cargo capacity | Caravel 35 → 25 after 60 damage to the sails | DMG p.11, 15 |
+| Upgrade price | flat price + the book's percentage of the ship's own cost | Paddle-Wheel on a Caravel: ฿10M + 20% of ฿50M = ฿20M | DMG p.23–27 |
+| A component from the book with a count | "Cannon (2)" becomes two components, each with its own hit points | — | DMG p.15 |
 
 ## Devilforged v8.8 (example: Marlo, Devilforged 5, Blade Smithing, Cha 18)
 | Number | Formula | Marlo | Page (v8.8) |

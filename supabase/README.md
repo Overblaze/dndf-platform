@@ -109,3 +109,13 @@ Run `0005_crew.sql` in the SQL Editor like the others. It adds no table, only on
 members of a campaign get each character's name, level and the wanted poster its player has **issued** (bounty,
 epithet, terms, date). A player still cannot read a crewmate's character; nothing else of a sheet leaves it. Until
 this file is run, the Crew page says which file to run and everything else works.
+
+## Ships (`0006_ships.sql`)
+
+Run `0006_ships.sql` in the SQL Editor like the others. It creates one table, `ships`.
+
+| Table | Holds | Who can read / write |
+|---|---|---|
+| `ships` | a ship as one JSON `doc` (components, crew, upgrades, hold, treasury, log) | its owner always. Put in a campaign, everyone in that campaign opens **and changes** it (the hold and treasury are shared). Only the owner can take it out of the campaign; only the owner or the campaign's DMs can delete it; nobody can change who owns it |
+
+Until this file is run, the Ship page says which file to run, and ships made while signed out are kept in the browser.
