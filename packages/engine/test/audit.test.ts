@@ -1,7 +1,7 @@
 // What the Phase 3 audit found, kept fixed: text the PDF reader used to cut off or misplace, and
 // shapes no book text should have. The full comparison with the PDFs is tools/extract/audit.py.
 import { describe, expect, it } from 'vitest';
-import type { RuleEntry, RulesVersion } from '../src';
+import { deriveSheet, newCharacter, type RuleEntry, type RulesVersion } from '../src';
 import { loadRules } from './load';
 
 const BOTH = ['dndf-10', 'dndf-8.8'] as RulesVersion[];
@@ -80,4 +80,24 @@ it('Logia Recharge (v8.8) has no use counter: its "once per long rest" describes
   const options = loadRules('dndf-8.8' as RulesVersion).get('optionGroup.devilforged_sea_devils_emanations')!.options as Part[];
   expect(options.find((o) => o.name === 'Logia Recharge')!.uses).toBeUndefined();
   expect(options.find((o) => o.name === 'Blast Shot')!.uses).toEqual({ max: 1, recharge: 'long' });
+});
+
+it('v10 Hybrid Power Immunity is finished from the v8.8 handbook, says so, and is once per short rest in both', () => {
+  const feature = (version: string) => (loadRules(version as RulesVersion).get('class.hybrid')!.features as (Part & { completedFrom?: { book: string; page: number } })[]).find((f) => f.name === 'Power Immunity')!;
+  const v10 = feature('dndf-10');
+  const v88 = feature('dndf-8.8');
+  expect(v10.text).toBe(v88.text);
+  expect(v10.text).toMatch(/\.$/);
+  expect(v10.uses).toEqual({ max: 1, recharge: 'short' });
+  expect(v10.completedFrom).toEqual({ book: 'DnDF Expanded Handbook v8.8', page: 138 });
+  expect(v88.completedFrom).toBeUndefined();
+});
+
+it('a v10 Hybrid of 10th level has the Power Immunity counter on the sheet, with where its ending comes from', () => {
+  const rules = loadRules('dndf-10' as RulesVersion);
+  const scores = { str: 14, dex: 12, con: 14, int: 10, wis: 10, cha: 14 };
+  const sheet = deriveSheet(newCharacter({ name: 'T', rulesVersion: 'dndf-10' as RulesVersion, classId: 'class.hybrid', level: 10, scores }, rules), rules);
+  expect(sheet.resources.find((r) => r.name === 'Power Immunity')).toMatchObject({ max: 1, recharge: 'short' });
+  expect(sheet.features.find((f) => f.name === 'Power Immunity')!.completedFrom).toEqual({ book: 'DnDF Expanded Handbook v8.8', page: 138 });
+  expect(deriveSheet(newCharacter({ name: 'T', rulesVersion: 'dndf-10' as RulesVersion, classId: 'class.hybrid', level: 9, scores }, rules), rules).resources.find((r) => r.name === 'Power Immunity')).toBeUndefined();
 });

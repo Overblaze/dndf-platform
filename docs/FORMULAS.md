@@ -233,6 +233,7 @@ Tested in `packages/engine/test/classgaps.test.ts`.
 | Martial Artist: Ki-Fueled Attack, Heart, Crown, Third Eye and Death Chakra | spend 1, 2, 1, 3 and 4 ki; Heart heals a Martial Arts die + prof; Death rolls four Martial Arts dice; Third Eye is a switch for its resistance |
 | Martial Artist: Crown Chakra (14th) | proficiency in every saving throw |
 | Hybrid: Power Enhancements, Flash Augment, Resilience Augment, Chain Channeling | spend 1, 2, 1 and 2 Hybrid Points |
+| Hybrid: Power Immunity (10th) | once per short or long rest (EH8.8 p.138; the v10 page, EH10 p.132, cuts the sentence off, so v10 uses the v8.8 wording by table ruling) |
 | Conqueror: Conqueror’s Command, Empower Conqueror’s Haki | spend a Leadership Die and roll it |
 | Virtuoso / Skald: Empowering Melody | switch: +1 to hit and damage with the harmonic weapon, +2 at 8th, +3 at 14th; the same number added to spell damage and healing |
 | Oracle: Enhanced Divination | once per long rest |

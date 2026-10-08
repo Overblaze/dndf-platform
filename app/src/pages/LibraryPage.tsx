@@ -21,6 +21,7 @@ function Feature({ feature, book }: { feature: FeatureDef | OptionDef; book: str
   const uses = feature.uses as { max: number | string; recharge: string } | string | undefined;
   const { rules } = useSet();
   // A feature whose sub-headed parts became a list to pick from still shows them here, as the book prints them.
+  const completedFrom = (feature as FeatureDef).completedFrom as { book: string; page: number } | undefined;
   const choices = (feature as FeatureDef).choices;
   const options = choices ? ((rules.get(choices.from)?.options ?? []) as OptionDef[]) : [];
   const tabled = new Set(((feature as FeatureDef).tables ?? []).flatMap((t) => t.rows.map((row) => String(row[0]))));
@@ -37,6 +38,7 @@ function Feature({ feature, book }: { feature: FeatureDef | OptionDef; book: str
         <p className="page-ref">Tracked on the sheet: {uses.max === 'prof' ? 'proficiency bonus' : uses.max} use{uses.max === 1 ? '' : 's'} per {uses.recharge} rest</p>
       )}
       <p className="page-ref">{book} ({cite(book, feature.page)})</p>
+      {completedFrom && <p className="page-ref">This handbook’s page cuts the text off; the end is from {completedFrom.book} ({cite(completedFrom.book, completedFrom.page)}).</p>}
     </details>
   );
 }

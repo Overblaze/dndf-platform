@@ -95,8 +95,33 @@ def note(version: str, script: str) -> str:
             "Text is word for word; fields listed under \"auto\" were recognised from the wording.")
 
 
+# A v10 feature whose text box runs off the page in the v10 PDF, finished from the v8.8 handbook, which
+# prints it whole (Matt's ruling). Only done while the v10 text is still the opening of the v8.8 text.
+COMPLETED_FROM_V88 = [("hybrid", "class.hybrid", "Power Immunity")]
+
+
+def complete_from_v88(new: dict, old: dict) -> list[str]:
+    said: list[str] = []
+    squash = lambda text: " ".join(text.split())
+    for name, entry_id, feature_name in COMPLETED_FROM_V88:
+        find = lambda files: next((f, e) for e in files[name] if e["id"] == entry_id for f in e["features"] if f["name"] == feature_name)
+        (cut, _), (whole, source) = find(new), find(old)
+        if squash(cut["text"]) == squash(whole["text"]):
+            continue  # the v10 book has been corrected: nothing to do
+        if not squash(whole["text"]).startswith(squash(cut["text"])):
+            said.append(f"{entry_id} '{feature_name}': the v10 text is no longer the opening of the v8.8 text, so it was not completed")
+            continue
+        cut["text"] = whole["text"]
+        cut["completedFrom"] = {"book": source["source"]["book"], "page": whole["page"]}
+        for field in ("uses", "action", "auto"):
+            if field in whole:
+                cut[field] = whole[field]
+    return said
+
+
 def main() -> int:
     new, old = extract(V10), extract(V88)
+    classes.problems.extend(complete_from_v88(new, old))
     shared = only_old = changed = 0
     for directory in (ROOT / "data" / "rules" / V88,):
         directory.mkdir(parents=True, exist_ok=True)

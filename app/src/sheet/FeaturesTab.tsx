@@ -18,6 +18,9 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
           </summary>
           <RuleText text={feature.text} sections={feature.sections} tables={feature.tables} book={feature.book} />
           <p className="page-ref">{feature.book} ({cite(feature.book, feature.page)})</p>
+          {feature.completedFrom && (
+            <p className="page-ref">This handbook’s page cuts the text off; the end is from {feature.completedFrom.book} ({cite(feature.completedFrom.book, feature.completedFrom.page)}).</p>
+          )}
         </details>
       ))}
     </section>
