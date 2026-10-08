@@ -106,12 +106,13 @@ export function puristStamina(doc: SurgeDoc, rarity: unknown): number {
   return extra;
 }
 
-export type SurgeTab = 'standard' | HakiColor | 'amateur';
+export type SurgeTab = 'standard' | HakiColor | 'fruit' | 'amateur';
 export const SURGE_TABS: { id: SurgeTab; name: string }[] = [
   { id: 'standard', name: 'Standard' },
   { id: 'armament', name: 'Armament' },
   { id: 'observation', name: 'Observation' },
   { id: 'supremeKing', name: 'Supreme King' },
+  { id: 'fruit', name: 'Devil Fruit' },
   { id: 'amateur', name: 'Amateur' },
 ];
 
@@ -129,6 +130,8 @@ export interface SurgeContext {
   /** Tier reached in each Color. */
   tiers: Record<HakiColor, number>;
   spellcaster: boolean;
+  /** The types of the Devil Fruits held ("paramecia", "zoan", "logia"); empty without one. */
+  fruitCategories?: string[];
 }
 
 /**
@@ -142,7 +145,7 @@ export function surgeOptions(doc: SurgeDoc, rules: Map<string, RuleEntry>, surge
   const hakiNames = new Set(haki.flatMap((h) => [h.entry.name, ...(h.upgradedFrom ? [h.upgradedFrom.name] : [])]));
   const options: SurgeOption[] = [];
   for (const entry of rules.values()) {
-    if (entry.kind !== 'hakiFeature' && entry.kind !== 'surgeAdvancement') continue;
+    if (entry.kind !== 'hakiFeature' && entry.kind !== 'surgeAdvancement' && entry.kind !== 'fruitAdvancement') continue;
     const taken = records.filter((r) => r.entry === entry.id).length + (haki.some((h) => h.entry.id === entry.id && h.upgradedFrom) ? 1 : 0);
     const blocked: string[] = [];
     if (taken > 0 && entry.repeatable !== true) blocked.push('Already taken; it can be chosen once');
@@ -152,7 +155,16 @@ export function surgeOptions(doc: SurgeDoc, rules: Map<string, RuleEntry>, surge
     if (color && tier > 1 && (context.tiers[color] ?? 0) < tier) {
       blocked.push(`Needs Tier ${tier} in this Color (${tier === 2 ? 4 : 6} features of it)`);
     }
-    for (const need of String(entry.prerequisite ?? '').split(/,\s*/).filter(Boolean)) {
+    const held = context.fruitCategories ?? [];
+    if (entry.kind === 'fruitAdvancement') {
+      // A fruit advancement's prerequisite is a sentence. The part that can be judged is the fruit type it names;
+      // the rest is shown with the text and left to the player and the DM.
+      const need = String(entry.prerequisite ?? '');
+      const types = (need.match(/paramecia|zoan|logia/gi) ?? []).map((t) => t.toLowerCase());
+      if (held.length === 0) blocked.push('Needs a Devil Fruit');
+      else if (types.length && !types.some((t) => held.includes(t))) blocked.push(`Needs a ${[...new Set(types)].map((t) => t.charAt(0).toUpperCase() + t.slice(1)).join(' or ')} fruit`);
+    }
+    for (const need of entry.kind === 'fruitAdvancement' ? [] : String(entry.prerequisite ?? '').split(/,\s*/).filter(Boolean)) {
       const range = /^Character level (\d+)\s*-\s*(\d+)$/i.exec(need);
       if (range) {
         if (level < Number(range[1]) || level > Number(range[2])) blocked.push(`For characters of level ${range[1]}–${range[2]}`);
@@ -166,7 +178,7 @@ export function surgeOptions(doc: SurgeDoc, rules: Map<string, RuleEntry>, surge
         blocked.push(`Needs ${need}`);
       }
     }
-    const tab: SurgeTab = entry.kind === 'surgeAdvancement' ? 'standard' : entry.amateur === true ? 'amateur' : color ?? 'standard';
+    const tab: SurgeTab = entry.kind === 'fruitAdvancement' ? 'fruit' : entry.kind === 'surgeAdvancement' ? 'standard' : entry.amateur === true ? 'amateur' : color ?? 'standard';
     options.push({ entry, tab, taken, blocked });
   }
   return options.sort((a, b) => rarityRank(a.entry.rarity) - rarityRank(b.entry.rarity) || a.entry.name.localeCompare(b.entry.name));

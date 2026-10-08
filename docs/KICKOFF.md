@@ -51,6 +51,7 @@ Both open items were then closed on branch `save-conflicts`:
 - [x] Private content table and grants (`0003_secret_entries.sql`), with database tests that use stand-in entries; loader `npm run load-secret --workspace bot`.
 - [x] Haki features and "+ Spirit Surge" on the sheet: rarity, tabs, prerequisites greyed out and never blocked, preview of changed numbers, log, remove. Haki roll buttons scale with Willpower; Haki Purist; Standard Advancements wired where they have a number.
 - [x] Campaigns: the DM page creates a campaign, adds members, grants a fruit or knowledge of one, reveals it, takes it away; the Crew page puts your character in the campaign and shows who is known to have a fruit.
-- [ ] A granted fruit on the sheet (features, resources, rolls), "unknown until revealed" for everyone else, fruit advancements for holders.
-- [ ] `/sheet` in Discord leaves an unrevealed fruit out when posted publicly.
+- [x] A granted fruit on the sheet: a Fruit tab (only when granted) with the book text, charges or Beast Form uses back at dawn, Fruit DC and attack; features with roll buttons on Combat; fruits only known about; Devil Fruit advancements in "+ Spirit Surge". The fruit is never in the saved character, so printed sheets and the bot's PDF leave it out.
+- [ ] The bot does not see fruit charges yet: `/dawn` in Discord does not refill them (the website's Dawn does).
+- [x] `/sheet` in Discord never includes a fruit, revealed or not: the fruit is not in the saved character the PDF is drawn from.
 - [ ] Audit the private data (a few fruit type lines are garbled by extraction).
