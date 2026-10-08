@@ -91,3 +91,28 @@ describe('Empowering Melody, Reliable Talent, Fast Talker', () => {
     }
   });
 });
+
+describe('Warrior fighting styles that were text only', () => {
+  it.each(['dndf-10', 'dndf-8.8'] as const)('Dueling: +2 damage with a one-handed melee weapon, not a two-handed one, a ranged one or a fist (%s)', (version) => {
+    const rules = loadRules(version);
+    const weapons = [
+      { id: 'a', name: 'Longsword', damage: '1d8', damageType: 'slashing', category: 'martial' as const },
+      { id: 'b', name: 'Greatsword', damage: '2d6', damageType: 'slashing', category: 'martial' as const, twoHanded: true },
+      { id: 'c', name: 'Longbow', damage: '1d8', damageType: 'piercing', category: 'martial' as const, ranged: true, twoHanded: true },
+    ];
+    const base = { ...newCharacter({ name: 'T', rulesVersion: version, classId: 'class.warrior', level: 3, scores: { str: 16, dex: 14, con: 14, int: 10, wis: 10, cha: 10 } }, rules), weapons };
+    const damage = (choices: string[]) => deriveSheet({ ...base, choices: { fightingStyle: choices } }, rules).attacks.map((a) => a.damage);
+    const plain = damage([]);
+    const dueling = damage(['dueling']);
+    expect(dueling[1]).toBe(plain[1]!.replace('+ 3', '+ 5'));
+    expect([dueling[0], dueling[2], dueling[3]]).toEqual([plain[0], plain[2], plain[3]]);
+    const thrown = deriveSheet({ ...base, choices: { fightingStyle: ['thrown_weapon_fighting'] } }, rules);
+    expect(thrown.notes.map((n) => n.label)).toContain('+2 damage on a ranged attack with a thrown weapon');
+  });
+
+  it('emanations that let you cast a spell once per long rest have a counter', () => {
+    const group = loadRules('dndf-8.8').get('optionGroup.devilforged_sea_devils_emanations')!;
+    const uses = Object.fromEntries((group.options as { name: string; uses?: unknown }[]).map((o) => [o.name, o.uses]));
+    for (const name of ['Shadow Puppets', 'Trickster’s Escape', 'Wrathful Weapon', 'Reinforced Armor', 'Reactive Armor']) expect(uses[name], name).toEqual({ max: 1, recharge: 'long' });
+  });
+});

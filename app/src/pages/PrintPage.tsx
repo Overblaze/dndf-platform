@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, cite, deriveSheet, signed, type CharacterDoc, type Sheet } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, cite, deriveSheet, exactBerries, signed, spellLevelName, type CharacterDoc, type Sheet } from '@dndf/engine';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
@@ -13,6 +13,8 @@ const Boxes = ({ count }: { count: number }) =>
 function Paper({ doc, sheet, withText }: { doc: CharacterDoc; sheet: Sheet; withText: boolean }) {
   const ref = (f: { book: string; from: string; page: number }) => (f.book === 'Custom' ? `${f.from} · your own` : `${f.from} · ${cite(f.book, f.page)}`);
   const pools = sheet.resources.filter((r) => !r.id.startsWith('sr.'));
+  const book = sheet.spellbook;
+  const spellLevels = [...new Set(book.known.map((k) => k.level))];
   return (
     <article className="paper">
       <header className="print-head">
@@ -111,6 +113,43 @@ function Paper({ doc, sheet, withText }: { doc: CharacterDoc; sheet: Sheet; with
           </div>
         ))}
       </section>
+
+      {(book.known.length > 0 || book.casting.length > 0) && (
+        <section>
+          <h2>Spells</h2>
+          {book.casting.map((c) => (
+            <p key={c.from}><b>{c.from}:</b> {[c.dc ? `save DC ${c.dc.value}` : '', c.attack ? `attack ${signed(c.attack.value)}` : ''].filter(Boolean).join(', ')}</p>
+          ))}
+          {spellLevels.map((level) => (
+            <p key={level}>
+              <b>{spellLevelName(level)}:</b>{' '}
+              {book.known.filter((k) => k.level === level).map((k) => `${level > 0 ? (k.prepared ? '● ' : '○ ') : ''}${k.name}${k.notes ? ` (${k.notes})` : ''}`).join(' · ')}
+            </p>
+          ))}
+          {book.known.some((k) => k.level > 0) && <p className="print-small">● prepared</p>}
+          {withText && book.known.filter((k) => k.text).map((k) => (
+            <div key={k.id} className="print-feature">
+              <p><b>{k.name}</b> <small>{[k.school, k.castingTime, k.range, k.components, k.duration, k.book && k.page ? cite(k.book, k.page) : ''].filter(Boolean).join(' · ')}</small></p>
+              <p className="print-text">{k.text}</p>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {(sheet.gear.lines.length > 0 || sheet.money !== 0) && (
+        <section>
+          <h2>Gear</h2>
+          <p><b>Berries:</b> {exactBerries(sheet.money)} · <b>Carried:</b> {sheet.gear.carried} lb of {sheet.gear.capacity} lb</p>
+          <table className="print-table">
+            <thead><tr><th>Item</th><th>Count</th><th>Weight</th><th>Notes</th></tr></thead>
+            <tbody>
+              {sheet.gear.lines.map((line) => (
+                <tr key={line.id}><td>{line.name}{line.carried ? '' : ' (stowed)'}</td><td>{line.qty}</td><td>{line.weight !== undefined ? `${line.total} lb` : ''}</td><td>{line.notes ?? ''}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
 
       {doc.notes.trim() && (
         <section>

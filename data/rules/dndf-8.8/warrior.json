@@ -792,7 +792,14 @@
           "id": "dueling",
           "name": "Dueling",
           "text": "When you are wielding a melee weapon in one hand and no other Weapons, you gain a +2 bonus to Damage Rolls with that weapon.",
-          "page": 200
+          "page": 200,
+          "effects": [
+            {
+              "type": "damage",
+              "value": 2,
+              "when": "melee && !twoHanded && weapon != 'unarmed_strike'"
+            }
+          ]
         },
         {
           "id": "great_weapon_fighting",
@@ -837,7 +844,13 @@
           "id": "thrown_weapon_fighting",
           "name": "Thrown Weapon Fighting",
           "text": "You can draw a weapon that has the Thrown property as part of the Attack you make with the weapon.\nIn addition, when you hit with a ranged Attack using a Thrown weapon, you gain a +2 bonus to the damage roll.",
-          "page": 200
+          "page": 200,
+          "effects": [
+            {
+              "type": "note",
+              "label": "+2 damage on a ranged attack with a thrown weapon"
+            }
+          ]
         },
         {
           "id": "two_weapon_fighting",

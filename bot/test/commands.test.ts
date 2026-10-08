@@ -155,3 +155,14 @@ describe('a secret Devil Fruit and what the bot says in front of the table', () 
     expect(out.reply).toContain(`→ ${out.doc!.state.hp}`);
   });
 });
+
+describe('/status with gear and spells', () => {
+  it('shows berries, weight carried and prepared spells when there are any, and nothing extra when there are none', () => {
+    const plain = make();
+    expect(status(plain.doc, plain.sheet).reply).not.toMatch(/฿|Prepared/);
+    const { doc, sheet } = make({ money: 1250000, inventory: [{ id: 'a', name: 'Chest', qty: 1, weight: 300 }], spells: [{ id: 's', name: 'Bless', level: 1, prepared: true }, { id: 't', name: 'Guidance', level: 0 }] });
+    const reply = status(doc, sheet).reply;
+    expect(reply).toContain('฿1,250,000 · carrying 300 of 240 lb (over)');
+    expect(reply).toContain('Prepared: Bless');
+  });
+});

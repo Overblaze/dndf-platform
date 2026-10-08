@@ -272,6 +272,9 @@ WARRIOR_BASE = {
                 "Aiming": AIMING,
                 "Close Quarters Shooter": {"expect": "+1 bonus to attack rolls on ranged attacks", "effects": [{"type": "attack", "value": 1, "when": "ranged"}]},
                 "Defense": {"expect": "While you are wearing armor, you gain a +1 bonus to AC", "effects": [{"type": "ac", "value": 1, "when": "wearingArmor"}]},
+                # "in one hand and no other weapons": counted for every one-handed melee weapon; a second weapon in hand is the player's to discount.
+                "Dueling": {"expect": "you gain a +2 bonus to Damage Rolls with that weapon", "effects": [{"type": "damage", "value": 2, "when": "melee && !twoHanded && weapon != 'unarmed_strike'"}]},
+                "Thrown Weapon Fighting": {"expect": "you gain a +2 bonus to the damage roll", "effects": [{"type": "note", "label": "+2 damage on a ranged attack with a thrown weapon"}]},
                 "Interception": {"expect": "reduce the damage the target takes by 1d10 + your proficiency bonus", "action": "reaction",
                                  "rolls": [{"label": "Damage reduced", "dice": "1d10 + {prof}", "kind": "other"}]},
                 "Mariner": {"expect": "not wearing heavy armor or using a shield", "effects": [{"type": "ac", "value": 1, "when": "!heavyArmor && noShield"}]},
