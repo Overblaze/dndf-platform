@@ -4,6 +4,7 @@
   "type": "module",
   "workspaces": [
     "app",
+    "bot",
     "packages/*"
   ],
   "engines": {
