@@ -49,7 +49,7 @@ Both open items were then closed on branch `save-conflicts`:
 
 ## Phase 6 — Haki, Spirit Surges, Devil Fruits
 - [x] Private content table and grants (`0003_secret_entries.sql`), with database tests that use stand-in entries; loader `npm run load-secret --workspace bot`.
-- [ ] Haki features and "+ Spirit Surge" on the sheet: rarity tabs, prerequisites greyed out (never blocked), preview, log, undo.
+- [x] Haki features and "+ Spirit Surge" on the sheet: rarity, tabs, prerequisites greyed out and never blocked, preview of changed numbers, log, remove. Haki roll buttons scale with Willpower; Haki Purist; Standard Advancements wired where they have a number.
 - [ ] DM screen: grant a fruit or knowledge of one to a character, reveal it to the table, take it away.
 - [ ] A granted fruit on the sheet (features, resources, rolls), "unknown until revealed" for everyone else, fruit advancements for holders.
 - [ ] `/sheet` in Discord leaves an unrevealed fruit out when posted publicly.

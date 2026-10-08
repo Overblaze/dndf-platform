@@ -1,6 +1,7 @@
 // The saved character document (the `doc` column of the characters table).
 import type { ScoreOrigin } from './abilityScores';
 import type { CustomClass } from './customClass';
+import type { PuristPick, SurgeRecord } from './surges';
 import type { Ability, AbilityScores, RulesVersion } from './types';
 
 export interface WeaponDef {
@@ -118,6 +119,12 @@ export interface CharacterDoc {
   shield: boolean;
   weapons: WeaponDef[];
   willpower: { strengthenSelf: number; variantAdvancements?: number | null };
+  /** Every Haki feature and Standard Advancement unlocked by a Spirit Surge, oldest first. */
+  surges?: SurgeRecord[];
+  /** Whether the DM (or the d20) says this character can awaken the Color of the Supreme King. */
+  qualitiesOfAKing?: boolean;
+  /** Haki Purist improvements, in the order they were taken. */
+  hakiPurist?: PuristPick[];
   /** Classes the player wrote for this character. A class in `classes` with id `class.custom.<id>` is one of these. */
   customClasses?: CustomClass[];
   /** Class, subclass and option features taken off this character, by feature key ("class.warrior/second_wind"). */
@@ -256,6 +263,9 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     shield: doc.shield === true,
     weapons: (objects<WeaponDef>(doc.weapons) ?? []).map((w, i) => ({ ...w, id: typeof w.id === 'string' ? w.id : `weapon-${i}`, name: typeof w.name === 'string' ? w.name : 'Weapon', damage: typeof w.damage === 'string' ? w.damage : '', damageType: typeof w.damageType === 'string' ? w.damageType : '' })),
     willpower: isObject(doc.willpower) ? { ...doc.willpower, strengthenSelf: whole(doc.willpower.strengthenSelf, 0) } : { strengthenSelf: 0 },
+    surges: !Array.isArray(doc.surges) ? undefined : (objects<SurgeRecord>(doc.surges) ?? []).filter((r) => typeof r.entry === 'string').map((r, i) => ({ ...r, id: typeof r.id === 'string' ? r.id : `surge-${i + 1}`, pick: isObject(r.pick) ? r.pick : undefined })),
+    qualitiesOfAKing: doc.qualitiesOfAKing === true ? true : undefined,
+    hakiPurist: Array.isArray(doc.hakiPurist) ? doc.hakiPurist.filter((p): p is PuristPick => p === 'quality' || p === 'quantity' || p === 'stamina') : undefined,
     overrides: isObject(doc.overrides) ? Object.fromEntries(Object.entries(doc.overrides).filter(([, v]) => typeof v === 'number' && Number.isFinite(v))) as Record<string, number> : {},
     state: {
       ...fresh,

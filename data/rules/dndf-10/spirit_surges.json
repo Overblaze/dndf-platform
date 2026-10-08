@@ -422,8 +422,14 @@
       "repeatable": false,
       "text": "You find chips in your opponents defense.\nOnce per turn, your weapon attacks and unarmed strikes deal increased damage. Whenever you roll damage dice for a weapon or unarmed strike, increase each die by one size up to a maximum of d8 (e.g., 1d4’s becomes 1d6’s, 1d6’s become 1d8’s, ect).\nUpgrades to Enhanced Strike when you reach character level 5\nThis advancement can be chosen once.",
       "prerequisite": "Character level 1-4",
-      "auto": [
-        "rolls"
+      "auto": [],
+      "upgradesTo": "hakiFeature.enhanced_strike",
+      "effects": [
+        {
+          "type": "weaponDieStep",
+          "max": 8,
+          "label": "once per turn"
+        }
       ]
     },
     {
@@ -451,7 +457,15 @@
       "auto": [
         "uses",
         "rolls"
-      ]
+      ],
+      "rolls": [
+        {
+          "label": "Temporary hit points",
+          "dice": "1d4 + {level}",
+          "kind": "tempHp"
+        }
+      ],
+      "upgradesTo": "hakiFeature.aura_of_life"
     },
     {
       "id": "hakiFeature.resolve_within",
@@ -477,7 +491,18 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "upgradesTo": "hakiFeature.vessel_of_resilience",
+      "toggle": {
+        "id": "resolve_within",
+        "label": "Resolve Within",
+        "effects": [
+          {
+            "type": "note",
+            "label": "Resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks"
+          }
+        ]
+      }
     },
     {
       "id": "hakiFeature.aura_of_life",
@@ -503,6 +528,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Temporary hit points",
+          "dice": "1d6 + {ceil(willpower / 2) + level}",
+          "kind": "tempHp"
+        }
       ]
     },
     {
@@ -522,8 +554,12 @@
       "tier": 1,
       "repeatable": false,
       "text": "You learn how to look for weaknesses in a opponents defense.\nYour weapon attacks and unarmed strikes deal increased damage. Whenever you roll damage dice for a weapon or unarmed strike, increase the base weapon/unarmed strike die by one size up to a maximum of d12 (e.g., 1d4’s becomes 1d6’s, 1d6’s become 1d8’s, ect).\nYou cannot increase the dice size of haki or class feature related dice.\nThis advancement can be chosen once.",
-      "auto": [
-        "rolls"
+      "auto": [],
+      "effects": [
+        {
+          "type": "weaponDieStep",
+          "max": 12
+        }
       ]
     },
     {
@@ -549,7 +585,18 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "toggle": {
+        "id": "soul_armor",
+        "label": "Soul Armor",
+        "effects": [
+          {
+            "type": "acFormula",
+            "expr": "min(20, 10 + prof + ceil(willpower / 2))",
+            "when": "noArmor"
+          }
+        ]
+      }
     },
     {
       "id": "hakiFeature.vessel_of_resilience",
@@ -574,7 +621,21 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "toggle": {
+        "id": "vessel_of_resilience",
+        "label": "Vessel of Resilience",
+        "effects": [
+          {
+            "type": "note",
+            "label": "Resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks"
+          },
+          {
+            "type": "note",
+            "label": "Advantage on Constitution saving throws"
+          }
+        ]
+      }
     },
     {
       "id": "hakiFeature.force_of_will",
@@ -600,6 +661,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{1 + ceil(willpower / 4)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -624,7 +692,15 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{ceil(willpower / 4)}d6",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -676,6 +752,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "1d8 force damage",
+          "dice": "1d8",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -697,6 +780,13 @@
       "text": "You gain the ability to send bursts of energy through your enemies using your spirit.\nWhen you hit a creature with a weapon attack or unarmed strike, you can unleash a surge of spirit energy from your body to deal extra 1d4 force damage to the target, in addition to the attack’s normal damage.\nThis advancement can be chosen once.",
       "auto": [
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "1d4 force damage",
+          "dice": "1d4",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -722,6 +812,13 @@
       },
       "auto": [
         "uses"
+      ],
+      "effects": [
+        {
+          "type": "display",
+          "label": "Attack and damage bonus with the coated weapon",
+          "expr": "ceil(willpower / 4)"
+        }
       ]
     },
     {
@@ -748,6 +845,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{2 + ceil(willpower / 2)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -774,6 +878,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{2 + ceil(willpower / 4)}d8",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -798,7 +909,15 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{ceil(willpower / 4)}d8",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -825,6 +944,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{2 + ceil(willpower / 2)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -874,7 +1000,15 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{willpower}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -900,7 +1034,25 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "toggle": {
+        "id": "dark_armor",
+        "label": "Dark Armor",
+        "effects": [
+          {
+            "type": "acMinimum",
+            "expr": "5 + willpower"
+          },
+          {
+            "type": "note",
+            "label": "Resistance to all types of damage except force"
+          },
+          {
+            "type": "note",
+            "label": "Immune to being grappled or restrained"
+          }
+        ]
+      }
     },
     {
       "id": "hakiFeature.galaxy_impact",
@@ -926,6 +1078,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{4 + ceil(willpower / 2)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -948,6 +1107,13 @@
       "prerequisite": "Weapon Hardening",
       "auto": [
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "4d6 damage",
+          "dice": "4d6",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -974,6 +1140,13 @@
       "auto": [
         "uses",
         "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{6 + ceil(willpower / 2)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -1013,7 +1186,14 @@
       "amateur": true,
       "repeatable": false,
       "text": "You’ve honed a mysterious intuition, allowing you to sense the presence of beings more efficiently.\nYou gain a +2 bonus to your passive Wisdom (Perception).\nUpgrades to Spirit Sense when you reach character level 5\nThis advancement can be chosen once.",
-      "prerequisite": "Character level 1-4"
+      "prerequisite": "Character level 1-4",
+      "upgradesTo": "hakiFeature.spirit_sense",
+      "effects": [
+        {
+          "type": "passivePerception",
+          "value": 2
+        }
+      ]
     },
     {
       "id": "hakiFeature.keen_gaze",
@@ -1039,7 +1219,8 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "upgradesTo": "hakiFeature.far_sight"
     },
     {
       "id": "hakiFeature.lucky_shot",
@@ -1065,7 +1246,8 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "upgradesTo": "hakiFeature.echoing_shot"
     },
     {
       "id": "hakiFeature.aura_detection",
@@ -1194,7 +1376,13 @@
       "rarity": "Uncommon",
       "tier": 1,
       "repeatable": false,
-      "text": "You have trained your haki to feel the presence of beings who are invisible, hidden or disguised.\nYou gain a +8 bonus to your passive Wisdom (Perception) and you can see invisible creatures. Additionally, you can sense the location hidden creatures within 30 feet of you.\nWhen you reach Willpower 10, your senses increase to 60 ft. and you can automatically tell if you are looking at an illusion.\nThis advancement can be chosen once."
+      "text": "You have trained your haki to feel the presence of beings who are invisible, hidden or disguised.\nYou gain a +8 bonus to your passive Wisdom (Perception) and you can see invisible creatures. Additionally, you can sense the location hidden creatures within 30 feet of you.\nWhen you reach Willpower 10, your senses increase to 60 ft. and you can automatically tell if you are looking at an illusion.\nThis advancement can be chosen once.",
+      "effects": [
+        {
+          "type": "passivePerception",
+          "value": 8
+        }
+      ]
     },
     {
       "id": "hakiFeature.echo_of_futures_past",
@@ -1297,7 +1485,15 @@
         "recharge": "short"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Extra damage",
+          "dice": "{ceil(willpower / 4)}d6",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -1446,7 +1642,17 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "toggle": {
+        "id": "clairvoyant_strike",
+        "label": "Clairvoyant Strike",
+        "effects": [
+          {
+            "type": "attack",
+            "expr": "willpower"
+          }
+        ]
+      }
     },
     {
       "id": "hakiFeature.future_sight",
@@ -1542,7 +1748,8 @@
       },
       "auto": [
         "uses"
-      ]
+      ],
+      "upgradesTo": "hakiFeature.lords_demand"
     },
     {
       "id": "hakiFeature.compelling_tone",
@@ -1562,9 +1769,20 @@
       "repeatable": false,
       "text": "You naturally inspire others and sway their actions, as though born with a quiet authority that draws people to you.\nYou gain proficiency in the Deception and Persuasion skills.\nUpgrades to Voice of Influence when you reach character level 5\nThis advancement can be chosen once.",
       "prerequisite": "Qualities of a King, Character level 1-4",
+      "effects": [
+        {
+          "type": "proficiency",
+          "skill": "deception"
+        },
+        {
+          "type": "proficiency",
+          "skill": "persuasion"
+        }
+      ],
       "auto": [
         "effects"
-      ]
+      ],
+      "upgradesTo": "hakiFeature.voice_of_influence"
     },
     {
       "id": "hakiFeature.intimidating_look",
@@ -1584,9 +1802,16 @@
       "repeatable": false,
       "text": "You emanate a presence that makes others feel an inexplicable sense of helplessness.\nYou gain proficiency in the Intimidation skill.\nUpgrades to Roar of the Monarch when you reach character level 5\nThis advancement can be chosen once.",
       "prerequisite": "Qualities of a King, Character level 1-4",
+      "effects": [
+        {
+          "type": "proficiency",
+          "skill": "intimidation"
+        }
+      ],
       "auto": [
         "effects"
-      ]
+      ],
+      "upgradesTo": "hakiFeature.roar_of_the_monarch"
     },
     {
       "id": "hakiFeature.kings_companion",
@@ -1681,6 +1906,12 @@
         "max": "prof",
         "recharge": "long"
       },
+      "effects": [
+        {
+          "type": "proficiency",
+          "skill": "intimidation"
+        }
+      ],
       "auto": [
         "uses",
         "effects"
@@ -1708,6 +1939,16 @@
         "max": "prof",
         "recharge": "long"
       },
+      "effects": [
+        {
+          "type": "proficiency",
+          "skill": "deception"
+        },
+        {
+          "type": "proficiency",
+          "skill": "persuasion"
+        }
+      ],
       "auto": [
         "uses",
         "effects"
@@ -1762,7 +2003,15 @@
         "recharge": "short"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Psychic damage",
+          "dice": "{ceil(willpower / 4)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -1790,7 +2039,15 @@
       "action": "action",
       "auto": [
         "uses",
-        "action"
+        "action",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Psychic damage",
+          "dice": "{ceil(willpower / 4)}d8",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -1870,7 +2127,15 @@
       "action": "action",
       "auto": [
         "uses",
-        "action"
+        "action",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{ceil(willpower / 2)}d12",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -1994,6 +2259,13 @@
       },
       "auto": [
         "uses"
+      ],
+      "effects": [
+        {
+          "type": "display",
+          "label": "Attack and damage bonus with the coated weapon",
+          "expr": "ceil(willpower / 4)"
+        }
       ]
     },
     {
@@ -2038,7 +2310,15 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{ceil(willpower / 4)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -2066,7 +2346,15 @@
       "action": "action",
       "auto": [
         "uses",
-        "action"
+        "action",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{willpower}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -2092,7 +2380,20 @@
         "recharge": "long"
       },
       "auto": [
-        "uses"
+        "uses",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{willpower}d10",
+          "kind": "damage"
+        },
+        {
+          "label": "Force damage (2)",
+          "dice": "{ceil(willpower / 2)}d10",
+          "kind": "damage"
+        }
       ]
     },
     {
@@ -2177,7 +2478,15 @@
       "action": "action",
       "auto": [
         "uses",
-        "action"
+        "action",
+        "rolls"
+      ],
+      "rolls": [
+        {
+          "label": "Force damage",
+          "dice": "{willpower}d12",
+          "kind": "damage"
+        }
       ]
     },
     {

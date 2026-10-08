@@ -1609,3 +1609,60 @@ a {
 .conflict-bar .btn {
   min-height: 44px;
 }
+
+/* Spirit Surge dialog */
+.surge-rarity,
+.surge-tabs {
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.surge-rarity button,
+.surge-tabs button {
+  flex: 1 0 30%;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+}
+
+.surge-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.surge-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--touch);
+  padding: 8px 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.surge-option.held .resource-name {
+  opacity: 0.5;
+}
+
+.held-why {
+  font-style: italic;
+}
+
+.link-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: var(--touch);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}

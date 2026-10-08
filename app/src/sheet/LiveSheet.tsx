@@ -10,6 +10,7 @@ import { AppearanceDialog } from './AppearanceDialog';
 import { CharacterForm } from './CharacterForm';
 import { CombatTab } from './CombatTab';
 import { FeaturesTab } from './FeaturesTab';
+import { HakiTab } from './HakiTab';
 import { HistoryDialog } from './HistoryDialog';
 import { LevelUpDialog } from './LevelUpDialog';
 import { RestDialog } from './RestDialog';
@@ -19,12 +20,14 @@ import { SkillsTab } from './SkillsTab';
 import { StatDialog } from './StatDialog';
 import { findStat, type StatKind } from './stats';
 import { StatusTab } from './StatusTab';
+import { SurgeDialog } from './SurgeDialog';
 import { Vitals } from './Vitals';
 
 const TABS = [
   { id: 'combat', label: 'Combat' },
   { id: 'skills', label: 'Skills' },
   { id: 'features', label: 'Features' },
+  { id: 'haki', label: 'Haki' },
   { id: 'status', label: 'Status' },
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
@@ -45,7 +48,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
   const { live, loadError, missing } = useCharacter(store, id);
   const [tab, setTab] = useState<TabId>('combat');
   const [open, setOpen] = useState<{ key: string; kind: StatKind; rollable: boolean } | null>(null);
-  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | null>(null);
+  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | 'surge' | null>(null);
   // The character as it was before the last level-up, kept until it is undone or dismissed.
   const [beforeLevel, setBeforeLevel] = useState<CharacterDoc | null>(null);
 
@@ -82,6 +85,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           </span>
           <button className="btn btn-primary" onClick={() => setDialog('rest')}>Rest</button>
           <button className="btn" onClick={() => setDialog('level')}>Level up</button>
+          <button className="btn" onClick={() => setDialog('surge')}>+ Spirit Surge</button>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
           <button className="btn" onClick={() => setDialog('history')}>History</button>
           <Link className="btn" to={`/print/${id}`}>Print</Link>
@@ -127,6 +131,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {tab === 'combat' && <CombatTab live={live} onOpen={onOpen} />}
       {tab === 'skills' && <SkillsTab live={live} onOpen={onOpen} />}
       {tab === 'features' && <FeaturesTab live={live} />}
+      {tab === 'haki' && <HakiTab live={live} onOpen={onOpen} />}
       {tab === 'status' && <StatusTab live={live} />}
 
       <RollTray live={live} />
@@ -135,6 +140,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {dialog === 'rest' && <RestDialog live={live} onClose={() => setDialog(null)} />}
       {dialog === 'look' && <AppearanceDialog live={live} store={store} id={id} onClose={() => setDialog(null)} />}
       {dialog === 'history' && <HistoryDialog live={live} store={store} id={id} onClose={() => setDialog(null)} />}
+      {dialog === 'surge' && <SurgeDialog live={live} onClose={() => setDialog(null)} />}
       {dialog === 'level' && <LevelUpDialog live={live} onClose={() => setDialog(null)} onLevelled={setBeforeLevel} />}
       {dialog === 'edit' && (
         <Dialog title="Edit character" onClose={() => setDialog(null)}>

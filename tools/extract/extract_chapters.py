@@ -16,8 +16,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from extract_classes import ABILITIES, BOOKS, ROOT, body_text, make_feature, proficiencies_granted, skills_granted, slug, split_sections, table_rows  # noqa: E402
-from structure import apply_feat_structure  # noqa: E402
+from extract_classes import ABILITIES, BOOKS, ROOT, body_text, dice_in, make_feature, proficiencies_granted, skills_granted, slug, split_sections, table_rows  # noqa: E402
+from structure import apply_feat_structure, apply_haki_structure  # noqa: E402
 from pdfdoc import Block, Heading, Para, Table, is_footer, load_items, read_blocks  # noqa: E402
 
 # Page ranges in the v10 handbook.
@@ -217,6 +217,38 @@ def extract_backgrounds(version: str) -> list[dict]:
             problems.append(f"background {name}: no Feature section")
         out.append(bg)
     return out
+
+
+# --- Haki dice ---------------------------------------------------------------------------
+
+WILLPOWER_DICE = re.compile(r"(?:(\d+)d(\d+) \+ )?a number of d(\d+)s equal to (a quarter of |half of )?your Willpower")
+WILLPOWER_SHARE = {"a quarter of ": "ceil(willpower / 4)", "half of ": "ceil(willpower / 2)", None: "willpower"}
+TEMP_HP = re.compile(r"(\d+d\d+) \+ (half of your Willpower \(rounded up\) \+ )?your character level in temporary hit points")
+
+
+def haki_rolls(text: str) -> list[dict]:
+    """Roll buttons for a Haki feature. Most Haki dice grow with Willpower ("2d10 + a number of d10s
+    equal to half of your Willpower (rounded up)"), which the sheet works out when it draws the button."""
+    rolls: list[dict] = []
+    covered: set[str] = set()
+    for m in WILLPOWER_DICE.finditer(text):
+        base, base_sides, sides, share = m.groups()
+        if base and base_sides != sides:
+            continue
+        count = f"{base} + {WILLPOWER_SHARE[share]}" if base else WILLPOWER_SHARE[share]
+        if base:
+            covered.add(f"{base}d{sides}")
+        before = text[max(0, m.start() - 90):m.start()]
+        named = re.findall(r"\b(force|psychic|weapon)\b", before)
+        label = f"{named[-1].capitalize()} damage" if named else "Extra damage"
+        if any(r["label"] == label for r in rolls):
+            label = f"{label} ({len([r for r in rolls if r['label'].startswith(label)]) + 1})"
+        rolls.append({"label": label, "dice": f"{{{count}}}d{sides}", "kind": "damage"})
+    for m in TEMP_HP.finditer(text):
+        covered.add(m.group(1))
+        rolls.append({"label": "Temporary hit points", "dice": f"{m.group(1)} + {{{'ceil(willpower / 2) + level' if m.group(2) else 'level'}}}", "kind": "tempHp"})
+    rolls += [r for r in dice_in(text) if r["dice"] not in covered]
+    return rolls[:4]
 
 
 # --- Feats ------------------------------------------------------------------------------
@@ -496,9 +528,20 @@ def extract_surges(version: str) -> list[dict]:
                     item["amateur"] = True  # doesn't count toward Haki tiers (p221)
                 item["repeatable"] = bool(re.search(r"can be chosen multiple times", made["text"]))
                 item["text"] = made["text"]
-                for key in ("prerequisite", "sections", "tables", "uses", "action", "auto"):
+                for key in ("prerequisite", "sections", "tables", "uses", "action", "effects", "auto"):
                     if key in made:
                         item[key] = made[key]
+                if kind == "hakiFeature":
+                    rolls = haki_rolls(made["text"])
+                    if rolls:
+                        item["rolls"] = rolls
+                    item["auto"] = [a for a in item.get("auto", []) if a != "rolls"] + (["rolls"] if rolls else [])
+                    if not item["auto"]:
+                        del item["auto"]
+                    upgrade = re.search(r"Upgrades to (.+?) when you reach character level 5", made["text"])
+                    if upgrade:
+                        item["upgradesTo"] = f"hakiFeature.{slug(upgrade.group(1))}"
+                    apply_haki_structure(version, item, problems)
                 out.append(item)
     # A Haki prerequisite is a list of other features' names; whatever follows the last name is the
     # feature's opening line, run on from the line above.
