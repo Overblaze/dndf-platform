@@ -49,12 +49,17 @@ export function CharacterList({ store }: { store: CharacterStore }) {
         {!characters && !error && <p>Checking the crew list…</p>}
         {characters?.length === 0 && <p>No characters yet. Create one, or add the sample character to look around.</p>}
         {characters?.map((character) => {
-          const sheet = deriveSheet(character.doc, ruleSet(character.doc.rulesVersion).rules);
+          // A character whose numbers can't be worked out still gets its row, so it can be opened or deleted.
+          const sheet = (() => { try { return deriveSheet(character.doc, ruleSet(character.doc.rulesVersion).rules); } catch { return null; } })();
           return (
             <div key={character.id} className="resource">
               <Link className="character-link" to={`/sheet/${character.id}`}>
-                <span className="resource-name">{sheet.name}</span>
-                <span className="page-ref">{sheet.summary} · {VERSION_NAMES[character.doc.rulesVersion]} · HP {character.doc.state.hp} / {sheet.maxHp.value}</span>
+                <span className="resource-name">{sheet?.name ?? character.doc.name}</span>
+                <span className="page-ref">
+                  {sheet
+                    ? `${sheet.summary} · ${VERSION_NAMES[character.doc.rulesVersion]} · HP ${character.doc.state.hp} / ${sheet.maxHp.value}`
+                    : 'This character could not be worked out. Open it to see why, or delete it.'}
+                </span>
               </Link>
               <button className="btn" onClick={() => setDeleting(character)}>Delete</button>
             </div>

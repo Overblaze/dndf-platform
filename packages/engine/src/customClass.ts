@@ -59,7 +59,7 @@ export function customClassEntry(custom: CustomClass, version: RulesVersion): Cl
     savingThrows: custom.savingThrows,
     proficiencies: { armor: custom.armor.map((a) => (a === 'shields' ? a : `${a}_armor`)), weapons: custom.weapons, tools: custom.tools },
     asiLevels: custom.asiLevels,
-    features: levels.map((f) => customFeatureDef(f, Math.max(1, Math.min(20, Math.round(f.level) || 1)), `custom.${custom.id}.${f.id}`)),
+    features: levels.map((f) => ({ ...customFeatureDef(f, Math.max(1, Math.min(20, Math.round(f.level) || 1)), `custom.${custom.id}.${f.id}`), customId: f.id })),
     custom: true,
   };
 }

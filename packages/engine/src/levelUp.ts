@@ -136,17 +136,19 @@ export interface LevelUpPicks {
 export function applyLevelUp(doc: CharacterDoc, handbook: Map<string, RuleEntry>, picks: LevelUpPicks): { doc: CharacterDoc; hpGained: number; summary: string } {
   const rules = rulesFor(doc, handbook);
   const plan = levelUpPlan(doc, rules, picks.classId);
+  // A roll typed in by hand is kept to what the die can show: a whole number from 1 to its size.
+  const hpRoll = picks.hpRoll === null || !Number.isFinite(picks.hpRoll) ? null : Math.min(plan.hitDie, Math.max(1, Math.round(picks.hpRoll)));
   const index = doc.classes.findIndex((c) => c.id === picks.classId);
   const classes = doc.classes.map((c) => ({ ...c }));
   if (index < 0) {
     // A new class: every one of its levels is a "later" level, so its first roll is slot 0.
-    classes.push({ id: picks.classId, level: 1, hpRolls: [picks.hpRoll], subclass: picks.subclass });
+    classes.push({ id: picks.classId, level: 1, hpRolls: [hpRoll], subclass: picks.subclass });
   } else {
     const held = classes[index]!;
     const rolls = [...(held.hpRolls ?? [])];
     const laterLevels = index === 0 ? held.level - 1 : held.level;
     while (rolls.length < laterLevels) rolls.push(null);
-    rolls.push(picks.hpRoll);
+    rolls.push(hpRoll);
     classes[index] = { ...held, level: held.level + 1, hpRolls: rolls, subclass: picks.subclass ?? held.subclass };
   }
 
@@ -173,7 +175,7 @@ export function applyLevelUp(doc: CharacterDoc, handbook: Map<string, RuleEntry>
   const next: CharacterDoc = { ...taken, state: { ...taken.state, hp: Math.max(0, doc.state.hp + hpGained) } };
   const what = [
     `${plan.className} ${plan.classLevel}`,
-    `${hpGained >= 0 ? '+' : ''}${hpGained} hit points${picks.hpRoll === null ? '' : ` (rolled ${picks.hpRoll})`}`,
+    `${hpGained >= 0 ? '+' : ''}${hpGained} hit points${hpRoll === null ? '' : ` (rolled ${hpRoll})`}`,
     ...(picks.subclass ? [rules.get(picks.subclass)?.name ?? picks.subclass] : []),
     ...(picks.feat ? [`feat: ${rules.get(picks.feat)?.name ?? picks.feat}`] : []),
     ...ABILITIES.filter((a) => picks.scoreIncrease?.[a]).map((a) => `${a.toUpperCase()} +${picks.scoreIncrease![a]}`),

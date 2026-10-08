@@ -1,5 +1,6 @@
 import { deriveSheet, type CharacterDoc, type CharacterState, type Sheet } from '@dndf/engine';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { shouldSnapshot } from './history';
 import { ruleSet } from './rules';
 import type { CharacterStore } from './store';
 
@@ -26,6 +27,8 @@ export function useCharacter(store: CharacterStore, id: string) {
   const [status, setStatus] = useState<SaveStatus>('saved');
   const [saveError, setSaveError] = useState<string | null>(null);
   const pending = useRef<CharacterDoc | null>(null);
+  /** When a copy of the character was last kept for History. */
+  const lastSnapshotAt = useRef(0);
   /** The character as last shown, whether or not React has re-rendered since. */
   const latest = useRef<CharacterDoc | null>(null);
   const timer = useRef<number | undefined>(undefined);
@@ -62,7 +65,18 @@ export function useCharacter(store: CharacterStore, id: string) {
       },
       (error: Error) => current && setLoadError(error.message),
     );
-    const onHide = () => document.visibilityState === 'hidden' && flush();
+    const onHide = () => {
+      if (document.visibilityState === 'hidden') return flush();
+      // Back on this tab. If nothing here is waiting to be saved, read the character again: the
+      // Discord bot or another device may have changed it, and saving this copy would undo that.
+      if (pending.current) return;
+      store.get(id).then((stored) => {
+        if (!current || !stored || pending.current) return;
+        if (JSON.stringify(stored.doc) === JSON.stringify(latest.current)) return;
+        latest.current = stored.doc;
+        setDocState(stored.doc);
+      }, () => { /* offline: keep what is on screen */ });
+    };
     document.addEventListener('visibilitychange', onHide);
     return () => {
       current = false;
@@ -72,9 +86,15 @@ export function useCharacter(store: CharacterStore, id: string) {
   }, [store, id, flush]);
 
   const setDoc = useCallback(
-    (next: CharacterDoc, log?: string) => {
-      // A logged change keeps the character as it was, so the History can put it back.
-      if (log) void store.log(id, log, latest.current ?? undefined);
+    (next: CharacterDoc, log?: string, small = false) => {
+      // A logged change keeps the character as it was, so the History can put it back. A run of
+      // small changes (hit points ticking down, a pool being spent) shares one copy: every line
+      // is still listed, and Undo is offered at the start of the run.
+      if (log) {
+        const keep = !small || shouldSnapshot(lastSnapshotAt.current, Date.now());
+        if (keep) lastSnapshotAt.current = Date.now();
+        void store.log(id, log, keep ? latest.current ?? undefined : undefined);
+      }
       latest.current = next;
       setDocState(next);
       pending.current = next;
@@ -90,7 +110,7 @@ export function useCharacter(store: CharacterStore, id: string) {
 
   const live: LiveCharacter | null =
     doc && sheet
-      ? { doc, sheet, status, saveError, setDoc, setState: (state, log) => setDoc({ ...doc, state }, log) }
+      ? { doc, sheet, status, saveError, setDoc, setState: (state, log) => setDoc({ ...doc, state }, log, true) }
       : null;
   return { live, loadError, missing };
 }

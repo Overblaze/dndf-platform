@@ -2,7 +2,7 @@
 import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, type AutocompleteInteraction, type ChatInputCommandInteraction } from 'discord.js';
 import type { RollMode } from '@dndf/engine';
 import { dawnCommand, hp, partyLine, rest, roll, status, type Outcome } from './commands';
-import { Db, type BotCharacter } from './db';
+import { ChangedElsewhere, Db, type BotCharacter } from './db';
 import { loadEnv } from './env';
 import { closeBrowser, sheetPdf, SITE } from './pdf';
 import { sheetOf } from './rules';
@@ -77,6 +77,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (interaction.isAutocomplete()) await autocomplete(interaction);
     else if (interaction.isChatInputCommand()) await run(interaction);
   } catch (error) {
+    if (error instanceof ChangedElsewhere && interaction.isChatInputCommand()) {
+      await interaction.editReply('That character was changed somewhere else a moment ago (the website, or another command). Nothing was changed here. Run the command again.').catch(() => {});
+      return;
+    }
     // The error's text goes to the log on this machine; the player gets a plain line with no internals.
     console.error(`/${'commandName' in interaction ? interaction.commandName : '?'} failed:`, (error as Error).message);
     if (interaction.isChatInputCommand()) {

@@ -13,7 +13,9 @@ export function applyDamage(state: CharacterState, amount: number): CharacterSta
 export function applyHealing(state: CharacterState, amount: number, maxHp: number): CharacterState {
   const healed = Math.max(0, Math.floor(amount));
   if (healed === 0) return state;
-  const hp = Math.min(Math.max(maxHp, state.hp), state.hp + healed);
+  // Hit points below zero can only come from a damaged save: healing starts from 0.
+  const from = Math.max(0, state.hp);
+  const hp = Math.min(Math.max(maxHp, from), from + healed);
   return { ...state, hp, deathSaves: { successes: 0, failures: 0 } };
 }
 

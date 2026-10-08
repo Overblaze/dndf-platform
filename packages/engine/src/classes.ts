@@ -46,8 +46,11 @@ export function getClass(rules: Map<string, RuleEntry>, id: string): ClassEntry 
 export function classColumns(cls: ClassEntry, classLevel: number): Record<string, number | string> {
   const out: Record<string, number | string> = {};
   for (const [name, values] of Object.entries(cls.progression?.columns ?? {})) {
-    const value = values[classLevel - 1];
-    if (value === undefined) throw new Error(`${cls.name} has no "${name}" value for level ${classLevel}`);
+    // The table stops at 20. A level past it (nothing caps a character) keeps the last row's numbers,
+    // and a level below 1 reads the first, so an odd level can never take the whole sheet down.
+    const row = Math.min(values.length, Math.max(1, Math.floor(classLevel) || 1));
+    const value = values[row - 1];
+    if (value === undefined) throw new Error(`${cls.name} has no "${name}" column values`);
     out[name] = value;
   }
   return out;

@@ -192,36 +192,69 @@ export function crewRolesOf(doc: Pick<CharacterDoc, 'crewRoles' | 'crewRole'>): 
   return [...new Set(ids)].map((id) => ({ id }));
 }
 
+/** Ability scores as whole numbers. A score that is missing or not a number becomes 10, so it can never turn every total into "not a number". */
+function cleanScores(scores: Partial<Record<Ability, unknown>>): Record<Ability, number> {
+  const clean = (value: unknown) => (typeof value === 'number' && Number.isFinite(value) ? Math.round(value) : 10);
+  return { str: clean(scores.str), dex: clean(scores.dex), con: clean(scores.con), int: clean(scores.int), wis: clean(scores.wis), cha: clean(scores.cha) };
+}
+
 export function normalizeDoc(raw: unknown): CharacterDoc | null {
   if (!raw || typeof raw !== 'object') return null;
   const doc = raw as Partial<CharacterDoc>;
-  if (doc.schema !== 1 || !Array.isArray(doc.classes) || !doc.scores) return null;
+  if (doc.schema !== 1 || !Array.isArray(doc.classes) || !doc.scores || typeof doc.scores !== 'object') return null;
+  // A save can be older than the app, edited by hand, or damaged. Everything read from it is checked
+  // for its shape here, once, so nothing later has to wonder whether a list is a list.
+  const isObject = (value: unknown): value is Record<string, unknown> => Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+  const strings = (value: unknown): string[] => (Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : []);
+  const objects = <T>(value: unknown): T[] | undefined => (Array.isArray(value) ? (value.filter(isObject) as T[]) : undefined);
+  const whole = (value: unknown, fallback: number) => (typeof value === 'number' && Number.isFinite(value) ? Math.round(value) : fallback);
+  const race: Record<string, unknown> = isObject(doc.race) ? doc.race : {};
+  const state = isObject(doc.state) ? (doc.state as Partial<CharacterState>) : {};
+  const fresh = freshState(0);
   return {
     schema: 1,
-    name: doc.name ?? 'Unnamed',
-    rulesVersion: doc.rulesVersion ?? 'dndf-10',
-    race: doc.race ?? { name: 'Human (Standard)', speed: 30 },
-    background: doc.background,
-    crewRoles: crewRolesOf(doc),
-    feats: doc.feats,
-    classes: doc.classes,
-    scores: doc.scores,
-    scoreOrigin: doc.scoreOrigin,
-    customClasses: Array.isArray(doc.customClasses) ? doc.customClasses : undefined,
-    removedFeatures: Array.isArray(doc.removedFeatures) ? doc.removedFeatures : undefined,
-    customFeatures: Array.isArray(doc.customFeatures) ? doc.customFeatures : undefined,
-    borrowedFeatures: Array.isArray(doc.borrowedFeatures) ? doc.borrowedFeatures : undefined,
-    skills: doc.skills ?? [],
-    expertise: doc.expertise ?? [],
-    extraSaves: doc.extraSaves,
-    choices: doc.choices ?? {},
-    armor: doc.armor ?? null,
-    shield: doc.shield ?? false,
-    weapons: doc.weapons ?? [],
-    willpower: doc.willpower ?? { strengthenSelf: 0 },
-    overrides: doc.overrides ?? {},
-    state: { ...freshState(0), ...doc.state },
-    notes: doc.notes ?? '',
-    appearance: doc.appearance,
+    name: typeof doc.name === 'string' ? doc.name : 'Unnamed',
+    rulesVersion: doc.rulesVersion === 'dndf-8.8' ? 'dndf-8.8' : 'dndf-10',
+    race: {
+      ...(race as Partial<CharacterDoc['race']>),
+      name: typeof race.name === 'string' ? race.name : 'Human (Standard)',
+      speed: whole(race.speed, 30),
+    },
+    background: isObject(doc.background) && typeof doc.background.id === 'string' ? doc.background : undefined,
+    crewRoles: crewRolesOf({ crewRoles: objects(doc.crewRoles), crewRole: isObject(doc.crewRole) ? doc.crewRole : undefined }),
+    feats: Array.isArray(doc.feats) ? strings(doc.feats) : undefined,
+    classes: (objects<CharacterClass>(doc.classes) ?? []).filter((c) => typeof c.id === 'string').map((c) => ({ ...c, level: Math.max(0, whole(c.level, 1)) })),
+    scores: cleanScores(doc.scores),
+    scoreOrigin: isObject(doc.scoreOrigin) ? doc.scoreOrigin : undefined,
+    customClasses: objects(doc.customClasses),
+    removedFeatures: Array.isArray(doc.removedFeatures) ? strings(doc.removedFeatures) : undefined,
+    customFeatures: objects(doc.customFeatures),
+    borrowedFeatures: objects(doc.borrowedFeatures),
+    skills: strings(doc.skills),
+    expertise: strings(doc.expertise),
+    extraSaves: Array.isArray(doc.extraSaves) ? (strings(doc.extraSaves) as Ability[]) : undefined,
+    choices: isObject(doc.choices) ? Object.fromEntries(Object.entries(doc.choices).map(([id, picks]) => [id, strings(picks)])) : {},
+    armor: isObject(doc.armor) && typeof doc.armor.base === 'number' ? doc.armor : null,
+    shield: doc.shield === true,
+    weapons: (objects<WeaponDef>(doc.weapons) ?? []).map((w, i) => ({ ...w, id: typeof w.id === 'string' ? w.id : `weapon-${i}`, name: typeof w.name === 'string' ? w.name : 'Weapon', damage: typeof w.damage === 'string' ? w.damage : '', damageType: typeof w.damageType === 'string' ? w.damageType : '' })),
+    willpower: isObject(doc.willpower) ? { ...doc.willpower, strengthenSelf: whole(doc.willpower.strengthenSelf, 0) } : { strengthenSelf: 0 },
+    overrides: isObject(doc.overrides) ? Object.fromEntries(Object.entries(doc.overrides).filter(([, v]) => typeof v === 'number' && Number.isFinite(v))) as Record<string, number> : {},
+    state: {
+      ...fresh,
+      ...state,
+      hp: whole(state.hp, 0),
+      tempHp: Math.max(0, whole(state.tempHp, 0)),
+      hitDiceSpent: Math.max(0, whole(state.hitDiceSpent, 0)),
+      exhaustion: Math.min(6, Math.max(0, whole(state.exhaustion, 0))),
+      dreamPointsSpent: Math.max(0, whole(state.dreamPointsSpent, 0)),
+      spent: isObject(state.spent) ? state.spent : fresh.spent,
+      toggles: isObject(state.toggles) ? state.toggles : fresh.toggles,
+      trackers: isObject(state.trackers) ? state.trackers : fresh.trackers,
+      counters: isObject(state.counters) ? state.counters : fresh.counters,
+      conditions: strings(state.conditions),
+      deathSaves: isObject(state.deathSaves) ? { successes: whole(state.deathSaves.successes, 0), failures: whole(state.deathSaves.failures, 0) } : fresh.deathSaves,
+    },
+    notes: typeof doc.notes === 'string' ? doc.notes : '',
+    appearance: isObject(doc.appearance) ? doc.appearance : undefined,
   };
 }

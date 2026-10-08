@@ -5,7 +5,7 @@ import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type Char
 import { GENERAL_PAGES, HANDBOOKS } from './citations';
 import { classColumns } from './classes';
 import { abilityMod, maxHp, proficiencyBonus } from './core';
-import { fillTemplate, formatDice, parseDice } from './dice';
+import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
@@ -235,7 +235,21 @@ export function columnLabel(key: string): string {
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
 
-const averageOf = (dice: string) => parseDice(dice).terms.reduce((total, t) => total + (t.count * (t.sides + 1)) / 2, 0);
+/** What is left of a pool: never below zero or above its size, whatever a save says was spent. */
+const left = (max: number, spent: number | undefined) => Math.min(max, Math.max(0, max - (Number.isFinite(spent) ? (spent as number) : 0)));
+/** The dice a player typed, or null when they can't be read ("lots", "1d"). */
+const readDice = (dice: string): DiceSpec | null => { try { return parseDice(dice); } catch { return null; } };
+const averageOf = (dice: string) => (readDice(dice)?.terms ?? []).reduce((total, t) => total + (t.count * (t.sides + 1)) / 2, 0);
+/** A feature's roll buttons, leaving out any whose dice can't be read rather than failing the whole sheet. */
+function rollButtons(rolls: RollDef[], scope: ExprScope): SheetFeature['rolls'] {
+  return rolls.flatMap((r) => {
+    try {
+      return [{ label: r.label, kind: r.kind, dice: formatDice(parseDice(fillTemplate(r.dice, scope))) }];
+    } catch {
+      return [];
+    }
+  });
+}
 
 interface Source {
   entry: RuleEntry;
@@ -249,6 +263,8 @@ interface ActiveFeature {
   source: Source;
   from: string;
   key: string;
+  /** For a chosen option: the feature it was chosen under. */
+  parent?: string;
 }
 
 export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS): Sheet {
@@ -275,13 +291,15 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       sources.push(source);
       for (const def of entry.features ?? []) {
         if (def.level > picked.level) continue;
-        active.push({ def, source, from: `${entry.name} ${def.level}`, key: `${entry.id}/${slug(def.name)}` });
+        // A player's class may have two features with one name: its own features are told apart by id.
+        const key = `${entry.id}/${typeof def.customId === 'string' ? def.customId : slug(def.name)}`;
+        active.push({ def, source, from: `${entry.name} ${def.level}`, key });
         if (!def.choices) continue;
         const group = rules.get(def.choices.from);
         const options = (group?.options ?? []) as OptionDef[];
         for (const id of doc.choices[def.choices.id] ?? []) {
           const option = options.find((o) => o.id === id);
-          if (option && group) active.push({ def: option, source: { ...source, entry: group }, from: group.name, key: `${group.id}/${option.id}` });
+          if (option && group) active.push({ def: option, source: { ...source, entry: group }, from: group.name, key: `${group.id}/${option.id}`, parent: key });
           else warnings.push(`"${id}" is not one of the ${group?.name ?? def.choices.from}.`);
         }
       }
@@ -294,6 +312,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   const offSheet: Sheet['takenOff'] = [];
   for (let i = active.length - 1; i >= 0; i--) {
     const a = active[i]!;
+    // Options picked under a feature leave with it; they come back when it does.
+    if (a.parent && takenOff.has(a.parent) && !takenOff.has(a.key)) { active.splice(i, 1); continue; }
     if (!takenOff.has(a.key)) continue;
     offSheet.unshift({ key: a.key, name: a.def.name, from: a.from, page: a.def.page, book: a.source.entry.source.book });
     active.splice(i, 1);
@@ -327,11 +347,13 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     const cls = [...rules.values()].find((e): e is ClassEntry => e.kind === 'class' && ((e as ClassEntry).resources ?? []).includes(pool));
     return cls ? { entry: cls, cls, classLevel: Math.min(20, level), label: cls.name } : undefined;
   };
-  if (home) {
+  {
     const own: RuleEntry = { id: 'custom', kind: 'rule', name: 'Custom', versions: [doc.rulesVersion], source: { book: CUSTOM_BOOK, page: 0 } };
+    // They need a class only to read from; with none to be found (a class missing from the rules) a blank one will do.
+    const blank: ClassEntry = { ...own, kind: 'class', hitDie: 8, features: [] };
     for (const custom of doc.customFeatures ?? []) {
       const def = customFeatureDef(custom, 1, `custom.${custom.id}`);
-      active.push({ def, source: { entry: own, cls: home.cls, classLevel: level, label: 'Custom' }, from: custom.origin?.trim() || 'Custom', key: `custom/${custom.id}` });
+      active.push({ def, source: { entry: own, cls: home?.cls ?? blank, classLevel: Math.max(1, level), label: 'Custom' }, from: custom.origin?.trim() || 'Custom', key: `custom/${custom.id}` });
     }
   }
 
@@ -406,7 +428,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   }
   if (doc.background && !background) warnings.push(`Background "${doc.background.id}" is not in the rules data.`);
   const feats: RuleEntry[] = [];
-  for (const id of doc.feats ?? []) {
+  for (const id of new Set(doc.feats ?? [])) {
     const feat = rules.get(id);
     if (feat?.kind === 'feat') feats.push(feat);
     else warnings.push(`Feat "${id}" is not in the rules data.`);
@@ -591,7 +613,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       featureResource.set(a.key, uses.slice(4));
     } else {
       // A player's own feature keeps its counter by its id, so renaming it does not reset what is spent.
-      const id = a.key.startsWith('custom/') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
+      const id = a.key.startsWith('custom/') || a.key.startsWith('class.custom.') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
       featureResource.set(a.key, id);
       resourceDefs.push({ def: { id, name: a.def.name, max: uses.max, recharge: uses.recharge }, source: a.source, page: a.def.page });
     }
@@ -627,10 +649,10 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     const max = stat(doc, `resource.${def.id}`, def.name, { value: calculated, lines: [] }).value;
     // Nothing to track yet (5th-level slots at level 3): leave it off the sheet.
     if (max <= 0) return [];
-    return [{ id: def.id, name: def.name, max, remaining: Math.max(0, max - (doc.state.spent[def.id] ?? 0)), recharge: def.recharge, confirm: def.confirm, page, book }];
+    return [{ id: def.id, name: def.name, max, remaining: left(max, doc.state.spent[def.id]), recharge: def.recharge, confirm: def.confirm, page, book }];
   });
   const general = (id: string, name: string, max: number) =>
-    resources.push({ id, name, max, remaining: Math.max(0, max - (doc.state.spent[id] ?? 0)), recharge: 'short', page: 11 });
+    resources.push({ id, name, max, remaining: left(max, doc.state.spent[id]), recharge: 'short', page: 11 });
   // Special Reactions: all five from the general rules when they are loaded, else the two the formulas name.
   const reactionRules = (rules.get('rule.special_reactions')?.sections ?? []) as SectionDef[];
   const reductionRoll = specialReactionReduction(level).text;
@@ -715,14 +737,17 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     ];
     if (weapon.bonus) damageLines.push({ label: 'Item bonus', value: weapon.bonus });
     damageLines.push(...bonusLines('damage', extra).filter((l) => l.value !== 0));
-    const spec = parseDice(dice);
-    spec.bonus += damageLines.slice(1).reduce((total, l) => total + Number(l.value), 0);
+    // Damage typed by hand may not be dice at all. Show it as typed and say so; the attack still rolls to hit.
+    const spec = readDice(dice);
+    const flat = damageLines.slice(1).reduce((total, l) => total + Number(l.value), 0);
+    if (spec) spec.bonus += flat;
+    else attackNotes.push(`Can't read "${String(dice).slice(0, 20)}" as dice: fix the weapon's damage in Edit`);
 
     return {
       id: weapon.id,
       name: weapon.name,
       toHit: stat(doc, `attack.${weapon.id}`, `${weapon.name} attack`, { value: sum(hitLines), lines: hitLines }),
-      damage: formatDice(spec),
+      damage: spec ? formatDice(spec) : String(flat),
       damageType: weapon.damageType,
       damageLines,
       notes: attackNotes,
@@ -744,7 +769,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       cost: def.cost as Record<string, number> | undefined,
       resource: featureResource.get(a.key),
       toggle: (def.toggle as ToggleDef | undefined)?.id,
-      rolls: ((def.rolls ?? []) as RollDef[]).map((r) => ({ label: r.label, kind: r.kind, dice: formatDice(parseDice(fillTemplate(r.dice, scope))) })),
+      rolls: rollButtons((def.rolls ?? []) as RollDef[], scope),
       displays: ((def.effects ?? []) as EffectDef[])
         .filter((e) => e.type === 'display' && e.expr)
         .map((e) => ({ label: String(e.label ?? def.name), value: String(evaluate(e.expr!, scope)) })),
@@ -776,11 +801,11 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     if (uses && typeof uses === 'object') {
       resource = `use.${slug(feat.name)}`;
       const max = evaluateNumber(uses.max, plainScope);
-      if (max > 0) resources.push({ id: resource, name: feat.name, max, remaining: Math.max(0, max - (doc.state.spent[resource] ?? 0)), recharge: uses.recharge, page: feat.source.page });
+      if (max > 0) resources.push({ id: resource, name: feat.name, max, remaining: left(max, doc.state.spent[resource]), recharge: uses.recharge, page: feat.source.page });
     }
     extra(`${feat.id}`, feat.name, String(feat.text ?? ''), feat.source.page, feat, 'Feat', {
       resource,
-      rolls: ((feat.rolls ?? []) as RollDef[]).map((r) => ({ label: r.label, kind: r.kind, dice: formatDice(parseDice(fillTemplate(r.dice, plainScope))) })),
+      rolls: rollButtons((feat.rolls ?? []) as RollDef[], plainScope),
       action: feat.action as string | undefined,
       sections: (feat.sections ?? []) as SectionDef[],
       tables: (feat.tables ?? []) as TableDef[],
@@ -842,7 +867,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     willpower: wp,
     hakiSaveDc: hakiDc,
     hakiAttack,
-    hitDice: { die: hitDie, total: level, remaining: Math.max(0, level - doc.state.hitDiceSpent), pool: hitDicePool },
+    hitDice: { die: hitDie, total: level, remaining: left(level, doc.state.hitDiceSpent), pool: hitDicePool },
     book: HANDBOOKS[doc.rulesVersion],
     dreamPoints: { max: dreamMax, remaining: Math.max(0, dreamMax - doc.state.dreamPointsSpent) },
     prestigeMax: piratePrestigeMax(level),

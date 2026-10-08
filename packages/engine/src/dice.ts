@@ -30,6 +30,9 @@ export function fillTemplate(template: string, scope: ExprScope): string {
   return template.replace(/\{([^}]+)\}/g, (_, expr: string) => String(evaluate(expr, scope))).replace(/\+\s*-/g, '- ');
 }
 
+/** More dice or bigger dice than these are refused: nothing in the game needs them, and rolling them would stall the app or the bot. */
+export const DICE_LIMITS = { dice: 500, sides: 1000, bonus: 1_000_000 };
+
 export function parseDice(text: string): DiceSpec {
   const spec: DiceSpec = { terms: [], bonus: 0 };
   const compact = text.replace(/\s+/g, '');
@@ -47,7 +50,12 @@ export function parseDice(text: string): DiceSpec {
     else spec.bonus += sign * Number(m[4]);
     consumed = pattern.lastIndex;
   }
-  if (compact === '' || consumed !== compact.length) throw new Error(`Can't read dice "${text}"`);
+  if (compact === '' || consumed !== compact.length) throw new Error(`Can't read dice "${text.slice(0, 40)}"`);
+  const total = spec.terms.reduce((n, t) => n + t.count, 0);
+  if (total > DICE_LIMITS.dice) throw new Error(`Can't roll ${total} dice at once (the most is ${DICE_LIMITS.dice})`);
+  const odd = spec.terms.find((t) => t.sides < 1 || t.sides > DICE_LIMITS.sides);
+  if (odd) throw new Error(`Can't roll a d${odd.sides} (dice have 1 to ${DICE_LIMITS.sides} sides)`);
+  if (Math.abs(spec.bonus) > DICE_LIMITS.bonus) throw new Error(`Can't add ${spec.bonus} to a roll`);
   return spec;
 }
 

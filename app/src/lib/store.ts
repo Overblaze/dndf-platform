@@ -34,17 +34,58 @@ const LOCAL_KEY = 'dndf.characters.v1';
 
 function readLocal(): Record<string, StoredCharacter> {
   try {
-    return JSON.parse(localStorage.getItem(LOCAL_KEY) ?? '{}') as Record<string, StoredCharacter>;
+    const raw = JSON.parse(localStorage.getItem(LOCAL_KEY) ?? '{}') as Record<string, { id?: unknown; doc?: unknown; updatedAt?: unknown }>;
+    const out: Record<string, StoredCharacter> = {};
+    for (const [id, stored] of Object.entries(raw ?? {})) {
+      // Older saves and damaged ones are put into shape here; one that is not a character at all is left out.
+      const doc = normalizeDoc(stored?.doc);
+      if (doc) out[id] = { id, doc, updatedAt: typeof stored.updatedAt === 'string' ? stored.updatedAt : new Date(0).toISOString() };
+    }
+    return out;
   } catch {
     return {};
   }
 }
 
-function writeLocal(all: Record<string, StoredCharacter>) {
+/** Whether this browser lets pages keep anything at all (a private window may not). */
+function storageWorks(): boolean {
   try {
-    localStorage.setItem(LOCAL_KEY, JSON.stringify(all));
+    localStorage.setItem('dndf.probe', '1');
+    localStorage.removeItem('dndf.probe');
+    return true;
   } catch {
-    // Private windows may refuse storage; the character then lasts until the tab closes.
+    return false;
+  }
+}
+
+/**
+ * Writes every character to this browser. If the browser's store is full, the undo history kept
+ * here is given up first (characters matter more than their history) and the write is tried again.
+ * Throws when the characters still do not fit, so the sheet can say "Not saved" instead of losing
+ * work silently. A browser that refuses storage altogether keeps characters until the tab closes.
+ */
+function writeLocal(all: Record<string, StoredCharacter>) {
+  const text = JSON.stringify(all);
+  try {
+    localStorage.setItem(LOCAL_KEY, text);
+    return;
+  } catch {
+    if (!storageWorks()) return;
+  }
+  dropLocalHistory();
+  try {
+    localStorage.setItem(LOCAL_KEY, text);
+  } catch {
+    throw new Error('This browser has no room left to save characters. Sign in to keep them on your account, or delete a character or a sheet picture you no longer need');
+  }
+}
+
+function dropLocalHistory() {
+  localHistory.clear();
+  try {
+    for (const key of Object.keys(localStorage)) if (key.startsWith(LOCAL_HISTORY_KEY)) localStorage.removeItem(key);
+  } catch {
+    // Nothing to give up.
   }
 }
 
@@ -93,10 +134,14 @@ const localStore: CharacterStore = {
   async log(id, summary, before) {
     const list = pushHistory(readHistory(id), { id: crypto.randomUUID(), summary, at: new Date().toISOString(), before }, LOCAL_HISTORY_CAP);
     localHistory.set(id, list);
-    try {
-      localStorage.setItem(LOCAL_HISTORY_KEY + id, JSON.stringify(list));
-    } catch {
-      // No room: the history still lasts until the tab closes.
+    // When the store is nearly full, keep fewer lines rather than none.
+    for (let keep = list.length; keep >= 1; keep = Math.floor(keep / 2)) {
+      try {
+        localStorage.setItem(LOCAL_HISTORY_KEY + id, JSON.stringify(list.slice(0, keep)));
+        break;
+      } catch {
+        if (keep === 1) break; // no room for even one line: the history lasts until the tab closes
+      }
     }
   },
   async history(id) {
