@@ -2525,7 +2525,7 @@
         "page": 25
       },
       "group": "Control Components",
-      "text": "Component Type. Large\nUpgrade DC. 10\nComponent Cost. ฿5% of ship cost\nUpgrade slots required. 1\nArmor Class. 12\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the vehicle can't turn.",
+      "text": "Component Type. Large\nUpgrade DC. 10\nComponent Cost. 5% of ship cost\nUpgrade slots required. 1\nArmor Class. 12\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the vehicle can't turn.",
       "componentType": "Large",
       "upgradeDc": 10,
       "costText": "5% of ship cost",

@@ -225,7 +225,7 @@ def read() -> tuple[list[dict], list[dict], list[dict]]:
                 labelled = label_of(row)
                 if labelled and labelled[0]:
                     field = labelled[0]
-                    ship["lines"][field] = labelled[1].replace("฿", "").strip()
+                    ship["lines"][field] = re.sub(r"฿\s+", "฿", labelled[1]).strip()
                 elif field:
                     ship["lines"][field] = (ship["lines"][field] + " " + text).strip()
                 else:
@@ -260,7 +260,7 @@ def read() -> tuple[list[dict], list[dict], list[dict]]:
         if upgrade is not None and rule["name"] == "Ship Upgrades" and kind == "text":
             labelled = label_of(row)
             if labelled and labelled[0] and (head.bold or head.italic):
-                upgrade["lines"].append([labelled[0], labelled[1].replace("฿", "").strip()])
+                upgrade["lines"].append([labelled[0], re.sub(r"฿\s+", "฿", labelled[1]).strip()])
                 field = "line"
             elif field == "line" and gap < 15 and head.left - edge <= 4 and not upgrade["text"]:
                 upgrade["lines"][-1][1] = (upgrade["lines"][-1][1] + " " + text).strip()
@@ -340,8 +340,7 @@ def ship_entry(ship: dict) -> dict:
         "id": f"shipType.{slug(ship['name'])}", "kind": "shipType", "name": ship["name"], "versions": VERSIONS, "source": {"book": BOOK, "page": ship["page"]},
         "typeLine": ship.get("typeLine", ""),
         "size": size.group(1) if size else "",
-        # The book sets the ฿ sign as a piece of its own before the price; it goes back where it was printed.
-        "text": "\n".join(f"{k} {'฿' if k == 'Cost' and v[:1].isdigit() else ''}{v}" for k, v in lines.items()),
+        "text": "\n".join(f"{k} {v}" for k, v in lines.items()),
         "components": components,
         "actions": actions,
     }
@@ -384,7 +383,7 @@ def upgrade_entry(upgrade: dict) -> dict:
     entry = {
         "id": f"shipUpgrade.{slug(upgrade['name'])}", "kind": "shipUpgrade", "name": upgrade["name"], "versions": VERSIONS, "source": {"book": BOOK, "page": upgrade["page"]},
         "group": upgrade["group"],
-        "text": "\n".join([f"{k}{':' if k == 'Requirement' else '.'} {'฿' if k == 'Component Cost' and v[:1].isdigit() else ''}{v}".strip() for k, v in upgrade["lines"]] + upgrade["text"]),
+        "text": "\n".join([f"{k}{':' if k == 'Requirement' else '.'} {v}".strip() for k, v in upgrade["lines"]] + upgrade["text"]),
     }
     if by.get("Requirement"):
         entry["requirement"] = by["Requirement"]
@@ -395,9 +394,9 @@ def upgrade_entry(upgrade: dict) -> dict:
     if by.get("Component Cost"):
         # "10,000,000 + 20% of ship cost", "5% of ship cost", "4,000,000": a flat part and a share of the ship's own cost.
         text = by["Component Cost"].rstrip(".")
-        flat = re.match(r"([\d,]+)(?!\s*%)", text)
+        flat = re.match(r"฿?\s*([\d,]+)(?![\d,]*\s*%)", text)
         share = re.search(r"(\d+)% of ship cost", text)
-        entry["costText"] = ("฿" if flat else "") + text
+        entry["costText"] = text
         if flat:
             entry["cost"] = int(flat.group(1).replace(",", ""))
         if share:
