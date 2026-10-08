@@ -1179,3 +1179,101 @@ a {
     padding-bottom: 170px;
   }
 }
+
+/* Ability scores in the builder: method buttons, then one row per ability. */
+.score-methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.score-methods .btn {
+  min-height: 44px;
+}
+
+.score-rows {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.score-row {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr) 4.6rem 4.4rem;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-row input,
+.score-row select {
+  min-height: 44px;
+  width: 100%;
+}
+
+.score-row > input {
+  grid-column: 2 / 4;
+}
+
+.score-stepper {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  text-align: center;
+}
+
+.score-stepper .btn {
+  min-height: 44px;
+  padding: 0;
+}
+
+.score-bonus {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 4px;
+}
+
+.score-final {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.score-final .num,
+.score-base,
+.score-total {
+  font-size: 1.15rem;
+}
+
+.score-rolls {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.score-roll-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.score-roll-list li {
+  display: grid;
+  justify-items: center;
+  padding: 6px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.die {
+  display: inline-block;
+  min-width: 1.1em;
+  text-align: center;
+}
+
+.die-dropped {
+  text-decoration: line-through;
+  opacity: 0.55;
+}

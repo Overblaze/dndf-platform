@@ -10,6 +10,7 @@ export * from './general';
 export * from './bounty';
 export * from './ships';
 export * from './devilforged';
+export * from './abilityScores';
 export * from './character';
 export * from './hp';
 export * from './items';

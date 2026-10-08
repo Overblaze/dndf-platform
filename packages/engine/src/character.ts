@@ -1,4 +1,5 @@
 // The saved character document (the `doc` column of the characters table).
+import type { ScoreOrigin } from './abilityScores';
 import type { Ability, AbilityScores, RulesVersion } from './types';
 
 export interface WeaponDef {
@@ -78,6 +79,8 @@ export interface CharacterDoc {
   feats?: string[];
   classes: CharacterClass[];
   scores: AbilityScores;
+  /** How the starting scores were set (array, point buy, rolls), so the builder can show it again. `scores` is always what counts. */
+  scoreOrigin?: ScoreOrigin;
   skills: string[];
   expertise: string[];
   extraSaves?: Ability[];
@@ -167,6 +170,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     feats: doc.feats,
     classes: doc.classes,
     scores: doc.scores,
+    scoreOrigin: doc.scoreOrigin,
     skills: doc.skills ?? [],
     expertise: doc.expertise ?? [],
     extraSaves: doc.extraSaves,
