@@ -11,6 +11,7 @@ import { CharacterForm } from './CharacterForm';
 import { CombatTab } from './CombatTab';
 import { FeaturesTab } from './FeaturesTab';
 import { FruitTab } from './FruitTab';
+import { GearTab } from './GearTab';
 import { HakiTab } from './HakiTab';
 import { HistoryDialog } from './HistoryDialog';
 import { LevelUpDialog } from './LevelUpDialog';
@@ -30,6 +31,7 @@ const TABS = [
   { id: 'features', label: 'Features' },
   { id: 'haki', label: 'Haki' },
   { id: 'fruit', label: 'Fruit' },
+  { id: 'gear', label: 'Gear' },
   { id: 'status', label: 'Status' },
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
@@ -135,6 +137,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {tab === 'features' && <FeaturesTab live={live} />}
       {tab === 'haki' && <HakiTab live={live} onOpen={onOpen} />}
       {tab === 'fruit' && <FruitTab live={live} onOpen={onOpen} />}
+      {tab === 'gear' && <GearTab live={live} onOpen={onOpen} />}
       {tab === 'status' && <StatusTab live={live} />}
 
       <RollTray live={live} />

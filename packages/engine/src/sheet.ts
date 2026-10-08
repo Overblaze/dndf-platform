@@ -8,6 +8,7 @@ import { abilityMod, maxHp, proficiencyBonus } from './core';
 import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
+import { carriedWeight, type InventoryLine } from './inventory';
 import { raceChoices, type RaceChoice } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
@@ -190,6 +191,9 @@ export interface Sheet {
     purist: { earned: number; levels: number[]; picks: PuristPick[] };
     surges: { record: SurgeRecord; name: string; kind: string; rarity: string; page: number; book: string; feature?: string }[];
   };
+  /** What the character carries, with the weight carried against carrying capacity. */
+  gear: { lines: InventoryLine[]; carried: number; capacity: number; over: boolean };
+  money: number;
   /** Racial pick-lists (Cyborg Upgrades), with how many the level gives and what is picked. */
   raceChoices: RaceChoice[];
   /** Devil Fruits the character holds, and ones they only know about. Empty unless private content was handed in. */
@@ -702,6 +706,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   for (let i = 0; i < (doc.race.sizeSteps ?? 0); i++) multiply('Counts as one size larger: × 2', 2);
   for (const e of ofType('carryMultiplier')) multiply(`${e.from}: × ${amount(e)}`, amount(e));
   const carry = stat(doc, 'carry', 'Carrying capacity', { value: sum(carryLines), lines: carryLines, page: 10 });
+  const inventory = carriedWeight(doc.inventory, carry.value);
+  if (inventory.over) notes.push({ label: `Carrying ${inventory.carried} lb, more than your capacity of ${carry.value} lb`, from: 'Gear' });
 
   // 7. Willpower and Haki.
   const hakiDc = stat(doc, 'hakiSaveDc', 'Haki save DC', hakiSaveDc(wp.value));
@@ -1122,6 +1128,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       purist: { earned: hakiPuristPicks(level, heldFruits.length > 0, doc.rulesVersion), levels: HAKI_PURIST_LEVELS[doc.rulesVersion], picks: doc.hakiPurist ?? [] },
       surges: surgeLog,
     },
+    gear: inventory,
+    money: doc.money ?? 0,
     raceChoices: racePicks,
     fruits,
     knownFruits,

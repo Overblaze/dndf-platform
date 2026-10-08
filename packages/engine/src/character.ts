@@ -1,6 +1,7 @@
 // The saved character document (the `doc` column of the characters table).
 import type { ScoreOrigin } from './abilityScores';
 import type { CustomClass } from './customClass';
+import type { InventoryItem } from './inventory';
 import type { PuristPick, SurgeRecord } from './surges';
 import type { Ability, AbilityScores, RulesVersion } from './types';
 
@@ -118,6 +119,10 @@ export interface CharacterDoc {
   armor: ArmorDef | null;
   shield: boolean;
   weapons: WeaponDef[];
+  /** What the character carries or owns, besides the armor worn and weapons above. */
+  inventory?: InventoryItem[];
+  /** Berries (฿) in hand. */
+  money?: number;
   willpower: { strengthenSelf: number; variantAdvancements?: number | null };
   /** Every Haki feature and Standard Advancement unlocked by a Spirit Surge, oldest first. */
   surges?: SurgeRecord[];
@@ -262,6 +267,14 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     armor: isObject(doc.armor) && typeof doc.armor.base === 'number' ? doc.armor : null,
     shield: doc.shield === true,
     weapons: (objects<WeaponDef>(doc.weapons) ?? []).map((w, i) => ({ ...w, id: typeof w.id === 'string' ? w.id : `weapon-${i}`, name: typeof w.name === 'string' ? w.name : 'Weapon', damage: typeof w.damage === 'string' ? w.damage : '', damageType: typeof w.damageType === 'string' ? w.damageType : '' })),
+    inventory: !Array.isArray(doc.inventory) ? undefined : (objects<InventoryItem>(doc.inventory) ?? []).map((item, i) => ({
+      ...item,
+      id: typeof item.id === 'string' ? item.id : `item-${i + 1}`,
+      name: typeof item.name === 'string' ? item.name : 'Item',
+      qty: Math.max(0, whole(item.qty, 1)),
+      weight: typeof item.weight === 'number' && Number.isFinite(item.weight) && item.weight >= 0 ? item.weight : undefined,
+    })),
+    money: typeof doc.money === 'number' && Number.isFinite(doc.money) ? Math.round(doc.money) : undefined,
     willpower: isObject(doc.willpower) ? { ...doc.willpower, strengthenSelf: whole(doc.willpower.strengthenSelf, 0) } : { strengthenSelf: 0 },
     surges: !Array.isArray(doc.surges) ? undefined : (objects<SurgeRecord>(doc.surges) ?? []).filter((r) => typeof r.entry === 'string').map((r, i) => ({ ...r, id: typeof r.id === 'string' ? r.id : `surge-${i + 1}`, pick: isObject(r.pick) ? r.pick : undefined })),
     qualitiesOfAKing: doc.qualitiesOfAKing === true ? true : undefined,

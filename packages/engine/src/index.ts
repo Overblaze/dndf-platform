@@ -19,6 +19,7 @@ export * from './customClass';
 export * from './levelUp';
 export * from './hp';
 export * from './items';
+export * from './inventory';
 export * from './multiclass';
 export * from './sheet';
 export * from './sheetChanges';

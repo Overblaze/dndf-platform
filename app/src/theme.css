@@ -1670,3 +1670,31 @@ a {
 .option-text {
   margin: -6px 0 8px 34px;
 }
+
+/* Gear tab */
+.weight-bar {
+  height: 8px;
+  margin: 4px 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.weight-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+.weight-fill.over {
+  background: var(--damage, #a33);
+}
+
+.sheet-tabs {
+  flex-wrap: wrap;
+}
+
+.sheet-tabs button {
+  flex: 1 0 25%;
+  border-bottom: 1px solid var(--rule);
+}
