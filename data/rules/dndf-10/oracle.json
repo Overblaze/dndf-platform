@@ -457,7 +457,11 @@
           "level": 7,
           "name": "Enhanced Divination",
           "text": "At 7th level, your divination abilities have grown stronger. You gain the ability to cast the Divination spell once per day without expending a spell slot.\nAdditionally, you can use your Oracle’s Insight feature to grant advantage on two rolls instead of one when you use it.",
-          "page": 159
+          "page": 159,
+          "uses": {
+            "max": 1,
+            "recharge": "long"
+          }
         },
         {
           "level": 9,

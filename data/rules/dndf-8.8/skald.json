@@ -518,7 +518,28 @@
           "level": 5,
           "name": "Empowering Melody",
           "text": "Starting at 5th level, gain a +1 bonus to your harmonic weapons attack and damage rolls while you wield it. This bonus increases to +2 at 8th level and +3 at 14th level.\nWhen you cast a skald spell while wielding your harmonic weapon, you add your weapon’s empowering melody bonus to your spell’s damage or healing rolls.",
-          "page": 185
+          "page": 185,
+          "effects": [
+            {
+              "type": "display",
+              "label": "Added to spell damage and healing rolls",
+              "expr": "level>=14 ? 3 : level>=8 ? 2 : 1"
+            }
+          ],
+          "toggle": {
+            "id": "harmonic_weapon",
+            "label": "Attacking with your harmonic weapon",
+            "effects": [
+              {
+                "type": "attack",
+                "expr": "level>=14 ? 3 : level>=8 ? 2 : 1"
+              },
+              {
+                "type": "damage",
+                "expr": "level>=14 ? 3 : level>=8 ? 2 : 1"
+              }
+            ]
+          }
         },
         {
           "level": 6,

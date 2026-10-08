@@ -336,7 +336,11 @@
               "text": "Choose one creature targeted by the spell. That creature has disadvantage on its saving throw against the spell.",
               "page": 137
             }
-          ]
+          ],
+          "action": "reaction",
+          "cost": {
+            "hybrid_points": 1
+          }
         },
         {
           "level": 3,
@@ -363,7 +367,11 @@
           "level": 3,
           "name": "Flash Augment",
           "text": "Also at 3rd level, you can briefly propel yourself with hybrid energy. As a bonus action, you can expend 2 Hybrid Points to teleport up to 30 feet to an unoccupied space you can see.",
-          "page": 137
+          "page": 137,
+          "action": "bonus",
+          "cost": {
+            "hybrid_points": 2
+          }
         },
         {
           "level": 4,
@@ -388,7 +396,10 @@
           "level": 5,
           "name": "Resilience Augment",
           "text": "Also at 5th level, your hybrid form begins to defend itself instinctively. When you fail a saving throw, you can spend 1 Hybrid Point to reroll the saving throw. You must use the new result.",
-          "page": 138
+          "page": 138,
+          "cost": {
+            "hybrid_points": 1
+          }
         },
         {
           "level": 10,
@@ -407,13 +418,22 @@
           "level": 12,
           "name": "Re-Energized",
           "text": "At 12th level, your hybrid systems become more efficient. When you finish a short or long rest, you regain 4 Hybrid Points.",
-          "page": 138
+          "page": 138,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Finishing a short or long rest: regain 4 Hybrid Points"
+            }
+          ]
         },
         {
           "level": 14,
           "name": "Chain Channeling",
           "text": "Starting at 14th level, your control over hybrid power allows you to unleash multiple powers in rapid succession. When you hit a creature with a spell cast through a melee attack, you can expend 2 Hybrid Points to immediately cast a second Hybrid Power.\nThis second Hybrid Power can target the same creature or a different creature within 10 feet of the original target.",
-          "page": 138
+          "page": 138,
+          "cost": {
+            "hybrid_points": 2
+          }
         },
         {
           "level": 20,

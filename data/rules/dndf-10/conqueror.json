@@ -155,7 +155,17 @@
           "level": 1,
           "name": "Conqueror’s Command",
           "text": "At 2nd level, you can issue precise commands that shift the flow of battle. When you change stances using the Conqueror’s Command feature, you may also choose to command an ally within 30 ft. of you, choose one of the following options and expend a Leadership Die:\nAdvance. An ally that can see or hear you can immediately move up to half its movement without provoking opportunity attacks.\nStrike. An ally immediately makes 1 unarmed or weapon attack, adding the Leadership Die to the attack roll.\nBrace. An ally can add the Leadership Die to one saving throw of its choice made before the start of your next turn.",
-          "page": 106
+          "page": 106,
+          "rolls": [
+            {
+              "label": "Leadership Die",
+              "dice": "{col.leadershipDie}",
+              "kind": "other"
+            }
+          ],
+          "cost": {
+            "leadership": 1
+          }
         },
         {
           "level": 2,
@@ -247,7 +257,17 @@
           "level": 9,
           "name": "Empower Conqueror’s Haki",
           "text": "At 9th level, your commanding spirit enhances the power of King’s Haki. When you use a Supreme King Haki feature, you can expend a Leadership Die to apply one of the following enhancements:\nWhen you use a Supreme King Haki feature that requires a saving throw, you can expend a Leadership Die to increase the DC by the number rolled.\nWhen you use a Supreme King Haki feature, you can expend a Leadership Die to increase the range by 15 feet or to target one additional creature within range.",
-          "page": 107
+          "page": 107,
+          "rolls": [
+            {
+              "label": "Leadership Die",
+              "dice": "{col.leadershipDie}",
+              "kind": "other"
+            }
+          ],
+          "cost": {
+            "leadership": 1
+          }
         },
         {
           "level": 10,
@@ -288,7 +308,13 @@
           "level": 17,
           "name": "Supreme Coordination",
           "text": "At 17th level, your commands take effect before battle begins.\nWhen you roll initiative, choose up to three friendly creatures who can see or hear you. Each creature can choose to use your initiative count instead of their own.\nIn addition, friendly creatures within 60 feet of you gain a +2 bonus to initiative rolls.",
-          "page": 107
+          "page": 107,
+          "effects": [
+            {
+              "type": "note",
+              "label": "Friendly creatures within 60 feet: +2 to initiative rolls"
+            }
+          ]
         },
         {
           "level": 18,
