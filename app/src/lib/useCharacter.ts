@@ -1,14 +1,20 @@
-import { deriveSheet, type CharacterDoc, type CharacterState, type Sheet } from '@dndf/engine';
+import { DEFAULT_SETTINGS, NO_SECRETS, deriveSheet, withSecrets, type CharacterDoc, type CharacterState, type RuleEntry, type Secrets, type Sheet } from '@dndf/engine';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { shouldSnapshot } from './history';
 import { ruleSet } from './rules';
+import { loadSecrets } from './secrets';
 import { ChangedElsewhere, type CharacterStore } from './store';
+import { supabase } from './supabase';
 
 export type SaveStatus = 'saved' | 'saving' | 'error' | 'conflict';
 
 export interface LiveCharacter {
   doc: CharacterDoc;
   sheet: Sheet;
+  /** Private content this character has been granted (Devil Fruits). Empty for a character kept on this device. */
+  secrets: Secrets;
+  /** The character's handbook, with any private advancements it may see. */
+  rules: Map<string, RuleEntry>;
   status: SaveStatus;
   saveError: string | null;
   /** The version saved somewhere else, when a save was refused because of it. */
@@ -28,6 +34,17 @@ export function useCharacter(store: CharacterStore, id: string) {
   const [doc, setDocState] = useState<CharacterDoc | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [missing, setMissing] = useState(false);
+  const [secrets, setSecrets] = useState<Secrets>(NO_SECRETS);
+  // Granted Devil Fruits live in the database, never in the saved character. Read again whenever the tab comes back, so a grant made at the table shows up.
+  useEffect(() => {
+    setSecrets(NO_SECRETS);
+    if (store.local || !supabase) return;
+    let current = true;
+    const read = () => { if (document.visibilityState === 'visible') void loadSecrets(supabase!, id).then((found) => current && setSecrets(found)); };
+    read();
+    document.addEventListener('visibilitychange', read);
+    return () => { current = false; document.removeEventListener('visibilitychange', read); };
+  }, [store, id]);
   const [status, setStatus] = useState<SaveStatus>('saved');
   const [saveError, setSaveError] = useState<string | null>(null);
   const pending = useRef<CharacterDoc | null>(null);
@@ -153,11 +170,12 @@ export function useCharacter(store: CharacterStore, id: string) {
   );
 
   // Each character is pinned to one rules version and only ever sees that handbook.
-  const sheet = useMemo(() => (doc ? deriveSheet(doc, ruleSet(doc.rulesVersion).rules) : null), [doc]);
+  const sheet = useMemo(() => (doc ? deriveSheet(doc, ruleSet(doc.rulesVersion).rules, DEFAULT_SETTINGS, secrets) : null), [doc, secrets]);
+  const rules = useMemo(() => (doc ? withSecrets(ruleSet(doc.rulesVersion).rules, secrets, doc.rulesVersion) : null), [doc?.rulesVersion, secrets]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const live: LiveCharacter | null =
-    doc && sheet
-      ? { doc, sheet, status, saveError, conflict, resolveConflict, setDoc, setState: (state, log) => setDoc({ ...doc, state }, log, true) }
+    doc && sheet && rules
+      ? { doc, sheet, secrets, rules, status, saveError, conflict, resolveConflict, setDoc, setState: (state, log) => setDoc({ ...doc, state }, log, true) }
       : null;
   return { live, loadError, missing };
 }

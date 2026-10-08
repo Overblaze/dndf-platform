@@ -7,9 +7,10 @@ import { classColumns } from './classes';
 import { abilityMod, maxHp, proficiencyBonus } from './core';
 import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
-import { hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
+import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
+import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
-import { HAKI_PURIST_LEVELS, dreamPointsMax, hakiPuristPicks, hakiTier, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
+import { HAKI_PURIST_LEVELS, logiaCharges, parameciaCharges, zoanBeastForm, dreamPointsMax, hakiPuristPicks, hakiTier, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
 import { HAKI_COLORS, hakiTaken, puristStamina, type HakiColor, type PuristPick, type SurgeRecord } from './surges';
 import {
   ABILITIES,
@@ -188,6 +189,12 @@ export interface Sheet {
     purist: { earned: number; levels: number[]; picks: PuristPick[] };
     surges: { record: SurgeRecord; name: string; kind: string; rarity: string; page: number; book: string; feature?: string }[];
   };
+  /** Devil Fruits the character holds, and ones they only know about. Empty unless private content was handed in. */
+  fruits: SheetFruit[];
+  knownFruits: SheetFruit[];
+  /** Devil Fruit save DC and attack bonus; null without a fruit. */
+  fruitSaveDc: Stat | null;
+  fruitAttack: Stat | null;
   warnings: string[];
 }
 
@@ -297,9 +304,10 @@ interface ActiveFeature {
   parent?: string;
 }
 
-export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS): Sheet {
-  // The handbook's rules, plus any classes the player wrote for this character.
-  const rules = rulesFor(doc, handbook);
+export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS, secrets: Secrets = NO_SECRETS): Sheet {
+  // The handbook's rules, plus any classes the player wrote for this character and any private advancements it may see.
+  const rules = withSecrets(rulesFor(doc, handbook), secrets, doc.rulesVersion);
+  const heldFruits = secrets.granted.filter((g) => g.kind === 'owner' && g.entry.kind === 'devilFruit');
   const warnings: string[] = [];
   const level = doc.classes.reduce((total, c) => total + c.level, 0);
 
@@ -405,11 +413,14 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   }
   const advancements = surgeRecords.flatMap((record) => {
     const entry = rules.get(record.entry);
-    if (entry?.kind === 'surgeAdvancement') return [{ record, entry }];
-    if (entry?.kind !== 'hakiFeature') warnings.push(`Spirit Surge advancement "${record.entry}" is not in the ${doc.rulesVersion} rules data.`);
+    if (entry?.kind === 'surgeAdvancement' || entry?.kind === 'fruitAdvancement') return [{ record, entry }];
+    // A Devil Fruit advancement is private: without it in hand (a printed or public sheet) it is left out, not named.
+    if (entry?.kind !== 'hakiFeature' && !record.entry.startsWith('fruitAdvancement.')) warnings.push(`Spirit Surge advancement "${record.entry}" is not in the ${doc.rulesVersion} rules data.`);
     return [];
   });
   const advancementsOf = (id: string) => advancements.filter((a) => a.entry.id === `surgeAdvancement.${id}`);
+  // "You immediately lose access to all of these improvements when your character gains Devil Fruit powers."
+  const puristDoc = heldFruits.length ? { ...doc, hakiPurist: [] } : doc;
 
   // 2. Ability scores, after features that raise them (The King) and Strengthen Self.
   const scores: AbilityScores = { ...doc.scores };
@@ -695,7 +706,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       const id = isHaki || a.key.startsWith('custom/') || a.key.startsWith('class.custom.') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
       featureResource.set(a.key, id);
       // Haki Purist, Train Stamina: one more charge for the Haki features it covers.
-      const stamina = isHaki ? puristStamina(doc, (a.def as { rarity?: unknown }).rarity) : 0;
+      const stamina = isHaki ? puristStamina(puristDoc, (a.def as { rarity?: unknown }).rarity) : 0;
       const max = stamina ? `(${uses.max}) + ${stamina}` : uses.max;
       resourceDefs.push({ def: { id, name: a.def.name, max, recharge: uses.recharge }, source: a.source, page: a.def.page });
     }
@@ -846,7 +857,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   });
 
   // 11. Features, with their dice and display values worked out.
-  const purist = doc.hakiPurist ?? [];
+  const purist = puristDoc.hakiPurist ?? [];
   const features: SheetFeature[] = active.map((a) => {
     const scope = scopeFor(a.source);
     const def = a.def;
@@ -914,8 +925,77 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       pick.resource ? resources.find((r) => r.id === pick.resource)?.name ?? '' : '',
       pick.note ?? '',
     ].filter(Boolean).join(', ');
-    extra(`surge/${record.id}`, entry.name, String(entry.text ?? ''), entry.source.page, entry, `Spirit Surge${chose ? `: ${chose}` : ''}`);
+    const uses = entry.kind === 'fruitAdvancement' ? (entry.uses as UsesDef | undefined) : undefined;
+    let resource: string | undefined;
+    if (uses && typeof uses === 'object') {
+      resource = `use.surge/${record.id}`;
+      const max = evaluateNumber(uses.max, plainScope);
+      if (max > 0) resources.push({ id: resource, name: entry.name, max, remaining: left(max, doc.state.spent[resource]), recharge: uses.recharge, page: entry.source.page, book: entry.source.book });
+    }
+    extra(`surge/${record.id}`, entry.name, String(entry.text ?? ''), entry.source.page, entry, `${entry.kind === 'fruitAdvancement' ? 'Devil Fruit advancement' : 'Spirit Surge'}${chose ? `: ${chose}` : ''}`, {
+      resource,
+      rolls: entry.kind === 'fruitAdvancement' ? rollButtons(diceInText(String(entry.text ?? '')), plainScope) : [],
+    });
   }
+
+  // Devil Fruits. A fruit held puts its features, charges and DC on the sheet; one only known about is there to read.
+  // Counters are named by position, never by the fruit: the saved character must not say which fruit it is.
+  const fruitOf = (granted: Secrets['granted'][number], held: boolean, nth = 0): SheetFruit => {
+    const entry = granted.entry;
+    const parts = fruitParts(entry);
+    const category = fruitCategory(entry);
+    const keys: string[] = [];
+    const pools: string[] = [];
+    const poolId = (what: string) => `fruit${nth ? nth + 1 : ''}.${what}`;
+    if (held) {
+      const add = (p: { name: string; text: string; page: number }, label: string) => {
+        const key = `fruit/${granted.key}/${slug(label)}/${slug(p.name)}`;
+        if (features.some((f) => f.key === key)) return;
+        keys.push(key);
+        extra(key, p.name, p.text, p.page || entry.source.page, entry, `Devil Fruit: ${entry.name}${label === 'feature' ? '' : ` (${label})`}`, { rolls: rollButtons(diceInText(p.text), plainScope) });
+      };
+      parts.features.forEach((p) => add(p, 'feature'));
+      parts.spells.forEach((p) => add(p, 'spells'));
+      parts.awakening.forEach((p) => add(p, 'awakening'));
+    }
+    const table = category === 'paramecia' ? parameciaCharges(Math.max(1, level)) : category === 'logia' ? logiaCharges(Math.max(1, level)) : undefined;
+    if (held && table) {
+      const id = poolId('charges');
+      pools.push(id);
+      const max = stat(doc, `resource.${id}`, 'Devil Fruit charges', { value: table.charges, lines: [] }).value;
+      if (max > 0) resources.push({ id, name: 'Devil Fruit charges', max, remaining: left(max, doc.state.spent[id]), recharge: 'dawn', page: entry.source.page, book: entry.source.book });
+    }
+    if (held && category === 'zoan') {
+      const id = poolId('beast_form');
+      pools.push(id);
+      const max = zoanBeastForm(level, prof.value).uses;
+      resources.push({ id, name: 'Beast Form', max, remaining: left(max, doc.state.spent[id]), recharge: 'dawn', page: entry.source.page, book: entry.source.book });
+    }
+    return {
+      key: granted.key,
+      name: entry.name,
+      book: entry.source.book,
+      page: entry.source.page,
+      rarity: String(entry.rarity ?? ''),
+      type: String(entry.type ?? ''),
+      category,
+      appearance: String(entry.appearance ?? ''),
+      description: String(entry.description ?? ''),
+      seaWeakness: String(entry.seaWeakness ?? ''),
+      revealed: granted.revealed,
+      features: keys,
+      resources: pools,
+      parts: [...parts.features, ...parts.spells, ...parts.awakening],
+      statBlock: Array.isArray(entry.statBlockLines) ? entry.statBlockLines.filter((l): l is string => typeof l === 'string') : [],
+      highestSpellLevel: table?.highestSpellLevel,
+    };
+  };
+  const fruits = heldFruits.map((g, i) => fruitOf(g, true, i));
+  const knownFruits = secrets.granted
+    .filter((g) => g.kind === 'knowledge' && g.entry.kind === 'devilFruit' && !heldFruits.some((h) => h.key === g.key))
+    .map((g) => fruitOf(g, false));
+  const fruitSaveDc = fruits.length ? stat(doc, 'fruitSaveDc', 'Devil Fruit save DC', devilFruitSaveDc(wp.value)) : null;
+  const fruitAttack = fruits.length ? stat(doc, 'fruitAttack', 'Devil Fruit attack', devilFruitAttackBonus(wp.value)) : null;
 
   // Haki by Color. A count can be overridden, because Haki from a class or subclass counts toward tiers too.
   const hakiColors: Sheet['haki']['colors'] = HAKI_COLORS.map((color) => {
@@ -1013,10 +1093,13 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     notes,
     haki: {
       colors: hakiColors,
-      // Every pick is lost on gaining a Devil Fruit; fruits are not on the sheet yet, so none is counted as held.
-      purist: { earned: hakiPuristPicks(level, false, doc.rulesVersion), levels: HAKI_PURIST_LEVELS[doc.rulesVersion], picks: purist },
+      purist: { earned: hakiPuristPicks(level, heldFruits.length > 0, doc.rulesVersion), levels: HAKI_PURIST_LEVELS[doc.rulesVersion], picks: doc.hakiPurist ?? [] },
       surges: surgeLog,
     },
+    fruits,
+    knownFruits,
+    fruitSaveDc,
+    fruitAttack,
     warnings,
   };
 }

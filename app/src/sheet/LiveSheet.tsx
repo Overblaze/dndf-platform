@@ -10,6 +10,7 @@ import { AppearanceDialog } from './AppearanceDialog';
 import { CharacterForm } from './CharacterForm';
 import { CombatTab } from './CombatTab';
 import { FeaturesTab } from './FeaturesTab';
+import { FruitTab } from './FruitTab';
 import { HakiTab } from './HakiTab';
 import { HistoryDialog } from './HistoryDialog';
 import { LevelUpDialog } from './LevelUpDialog';
@@ -28,6 +29,7 @@ const TABS = [
   { id: 'skills', label: 'Skills' },
   { id: 'features', label: 'Features' },
   { id: 'haki', label: 'Haki' },
+  { id: 'fruit', label: 'Fruit' },
   { id: 'status', label: 'Status' },
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
@@ -121,7 +123,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       <Vitals live={live} onOpen={onOpen} />
 
       <div className="segmented sheet-tabs" role="tablist" aria-label="Sheet sections">
-        {TABS.map((t) => (
+        {TABS.filter((t) => t.id !== 'fruit' || sheet.fruits.length + sheet.knownFruits.length > 0).map((t) => (
           <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'active' : ''} onClick={() => setTab(t.id)}>
             {t.label}
           </button>
@@ -132,6 +134,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {tab === 'skills' && <SkillsTab live={live} onOpen={onOpen} />}
       {tab === 'features' && <FeaturesTab live={live} />}
       {tab === 'haki' && <HakiTab live={live} onOpen={onOpen} />}
+      {tab === 'fruit' && <FruitTab live={live} onOpen={onOpen} />}
       {tab === 'status' && <StatusTab live={live} />}
 
       <RollTray live={live} />

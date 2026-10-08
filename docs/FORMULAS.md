@@ -55,6 +55,9 @@ The made-up characters in `packages/engine/src/testCharacters.ts` are checked ag
 | Upcast fruit spell | +1 charge per level above base, up to highest level | — | EDFE p.8 |
 | Zoan (eater) | human form: matching score + ceil(beast mod/2) (max 20); Beast Form uses = prof per dawn; lasts ceil(level/2) h | 3 uses, 4 h | EDFE p.9–10 |
 | Power penalty variant | Very Rare Paramecia/Logia −2 max charges; Legendary/Infernal −3 | — | EH10 p.250 |
+| Granted fruit on the sheet | held fruit: every feature, its spells and its awakening become features with the book's words; dice named in the text become roll buttons; Paramecia / Logia get "Devil Fruit charges" from the tables above and Zoan gets "Beast Form" uses, all back at dawn; Fruit DC and attack shown. A fruit only known about is text to read | — | EDFE p.8–11 |
+| Haki Purist with a fruit | every pick stops counting while a fruit is held (kept in the save, so it returns if the fruit is taken away) | — | EH10 p.221 |
+| Fruit advancement prerequisites | only the fruit type a prerequisite names is judged (greyed, never refused); the rest is shown as written | — | — |
 | Dream Points | = level, reset on level-up; +1d6 to attack/check/save after roll, or turn a failed death save into a success | 7 | EH10 p.11 |
 | I Won't Abandon My Dreams | on death d20 ≥ 12 → 1 HP; exhaustion-6 death → exhaustion 5 | — | EH10 p.11 |
 | Healing Surge (ruling) | spend up to max(1, floor(total HD / 2)), ≤ remaining; each die + Con; once per short/long rest | up to 3 | EH10 p.11 |

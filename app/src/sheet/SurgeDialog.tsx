@@ -1,17 +1,16 @@
 import {
-  ABILITIES, ABILITY_NAMES, RARITIES, SKILLS, SURGE_TABS, cite, deriveSheet, newSurgeId, sheetChanges, surgeAsks, surgeOptions,
+  ABILITIES, ABILITY_NAMES, DEFAULT_SETTINGS, RARITIES, SKILLS, SURGE_TABS, cite, deriveSheet, newSurgeId, sheetChanges, surgeAsks, surgeOptions,
   type Ability, type CharacterDoc, type Rarity, type SurgeOption, type SurgePick, type SurgeRecord, type SurgeTab,
 } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { RuleText } from '../components/RuleText';
-import { ruleSet } from '../lib/rules';
 import type { LiveCharacter } from '../lib/useCharacter';
 
 const ARMOR = [['light', 'Light armor'], ['medium', 'Medium armor'], ['heavy', 'Heavy armor'], ['shields', 'Shields']] as const;
 const WEAPONS = [['simple', 'Simple weapons'], ['martial', 'Martial weapons']] as const;
-type Tab = SurgeTab | 'fruit';
-const TABS: { id: Tab; name: string }[] = [...SURGE_TABS.slice(0, 4), { id: 'fruit', name: 'Devil Fruit' }, ...SURGE_TABS.slice(4)];
+type Tab = SurgeTab;
+const TABS = SURGE_TABS;
 
 /** "Rare · Tier 1 · EH10 p.224" */
 const optionRef = (option: SurgeOption) =>
@@ -19,8 +18,7 @@ const optionRef = (option: SurgeOption) =>
 
 /** Add a Spirit Surge: pick the surge's rarity, then any advancement. Nothing is refused; what the rules would hold back is greyed and says why. */
 export function SurgeDialog({ live, onClose }: { live: LiveCharacter; onClose: () => void }) {
-  const { doc, sheet } = live;
-  const rules = ruleSet(doc.rulesVersion).rules;
+  const { doc, sheet, rules, secrets } = live;
   const [rarity, setRarity] = useState<Rarity>('Uncommon');
   const [tab, setTab] = useState<Tab>('standard');
   const [reason, setReason] = useState('');
@@ -30,7 +28,7 @@ export function SurgeDialog({ live, onClose }: { live: LiveCharacter; onClose: (
 
   const options = useMemo(() => {
     const tiers = Object.fromEntries(sheet.haki.colors.map((c) => [c.id, c.tier])) as Record<'armament' | 'observation' | 'supremeKing', number>;
-    return surgeOptions(doc, rules, rarity, { tiers, spellcaster: sheet.resources.some((r) => /^slots\d$/.test(r.id)) });
+    return surgeOptions(doc, rules, rarity, { tiers, spellcaster: sheet.resources.some((r) => /^slots\d$/.test(r.id)), fruitCategories: sheet.fruits.map((f) => f.category) });
   }, [doc, rules, rarity, sheet]);
   const option = chosen ? options.find((o) => o.entry.id === chosen) : undefined;
   const choose = (id: string | null) => { setChosen(id); setPick({}); };
@@ -39,7 +37,7 @@ export function SurgeDialog({ live, onClose }: { live: LiveCharacter; onClose: (
     ? { id: newSurgeId(doc.surges), entry: option.entry.id, rarity, reason: reason.trim() || undefined, session: session.trim() || undefined, at: new Date().toISOString().slice(0, 10), pick: Object.keys(pick).length ? pick : undefined }
     : null;
   const next: CharacterDoc | null = record ? { ...doc, surges: [...(doc.surges ?? []), record] } : null;
-  const changes = useMemo(() => (next ? sheetChanges(sheet, deriveSheet(next, rules)) : []), [next && JSON.stringify(next.surges), sheet, rules]); // eslint-disable-line react-hooks/exhaustive-deps
+  const changes = useMemo(() => (next ? sheetChanges(sheet, deriveSheet(next, rules, DEFAULT_SETTINGS, secrets)) : []), [next && JSON.stringify(next.surges), sheet, rules, secrets]); // eslint-disable-line react-hooks/exhaustive-deps
   const add = () => {
     if (!next || !option) return;
     live.setDoc(next, `Spirit Surge (${rarity}): ${option.entry.name}${reason.trim() ? `, ${reason.trim()}` : ''}`);
@@ -148,11 +146,17 @@ export function SurgeDialog({ live, onClose }: { live: LiveCharacter; onClose: (
       <div className="segmented surge-tabs" role="tablist" aria-label="Kind of advancement">
         {TABS.map((t) => (
           <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'active' : ''} onClick={() => setTab(t.id)}>
-            {t.name}{t.id !== 'fruit' && <span className="num"> {options.filter((o) => o.tab === t.id).length}</span>}
+            {t.name}<span className="num"> {options.filter((o) => o.tab === t.id).length}</span>
           </button>
         ))}
       </div>
-      {tab === 'fruit' && <p className="notice">Devil Fruit advancements are kept secret. They will show here once your DM has granted this character a fruit; granting is the next piece being built.</p>}
+      {tab === 'fruit' && shown.length === 0 && (
+        <p className="notice">
+          {sheet.fruits.length > 0
+            ? 'No Devil Fruit advancements came back for this handbook. If your DM has loaded them, reload the page.'
+            : 'Devil Fruit advancements are kept secret. They show here once your DM has granted this character a Devil Fruit.'}
+        </p>
+      )}
       {tab === 'supremeKing' && (
         <label className="field-inline">
           <input type="checkbox" checked={doc.qualitiesOfAKing === true} onChange={(e) => live.setDoc({ ...doc, qualitiesOfAKing: e.target.checked || undefined }, e.target.checked ? 'Has the Qualities of a King' : 'Does not have the Qualities of a King')} />
