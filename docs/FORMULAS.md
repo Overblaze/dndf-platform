@@ -225,6 +225,19 @@ Power Surges "reset to one" on a long rest and are gained in play; the sheet kee
 Standing resistances, immunities and advantages a subclass gives are listed on the sheet under "In effect" (word for word in the feature); they change no number.
 Dice named in a feature's text ("takes 2d8 fire damage") become roll buttons on that feature automatically; these are marked `auto: ["rolls"]` in the data.
 
+## Companions
+Tested in `packages/engine/test/subclasses.test.ts`. A companion's own stat block (the chosen beast or Zoan form) is not on the sheet; these are the numbers that come from the character, shown on the feature.
+
+| Companion | What the sheet works out | Page |
+|---|---|---|
+| Marksman, Beast Tamer: bonded beast | hit points added: level × prof; highest CR 1/2, 1 at 5th, 2 at 9th, 4 at 13th, 8 at 17th; extra damage dice 0 / 1 / 2 / 3 / 4 at the same levels; shares your proficiency bonus | EH10 p.144 · EH8.8 p.150 |
+| Devilforged, No Mi Trainer: Bloodline Beast | hit points 2 × Int + 5 × level (v10), 2 × Cha + 5 × level (v8.8), kept as a pool that returns on a long rest; hit dice: level d8; save DC is yours | EH10 p.126 · EH8.8 p.123 |
+| Devilforged, Mechadevil: the suit (v8.8) | AC 16 / 17 / 18 / 19 and speed 30 / 35 / 40 / 50 ft. at levels 1, 5, 11, 17; hit points 6 / 8 / 10 / 12 × level, kept as a pool | EH8.8 p.121 |
+| Devilforged, Mechadevil: Elemental Blast (v10) | 1d10 + Int, 2d10 at 5th, 3d10 at 11th, 4d10 at 17th | EH10 p.125 |
+| Devilforged, Bestial Klabautermann: Figurehead Form | AC = Devilforged save DC; hit points 2 × level; speed 30 ft. | EH10 p.120 |
+| Tinkerer, Robotics: Simple Robot | AC 8 + Int; 1 hit point; speed 30 ft. | EH10 p.188 · EH8.8 p.197 |
+| Devilforged, Firearm Smithing: cannon shot | 1d8 + Cha, 2d8 from 10th | EH8.8 p.120 |
+
 ## Armor, weapon and tool proficiencies (both versions)
 Tested in `packages/engine/test/subclasses.test.ts`. Shown on the Skills tab, each with where it comes from.
 

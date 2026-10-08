@@ -540,6 +540,23 @@
           "action": "action",
           "auto": [
             "action"
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Figurehead: Armor Class",
+              "expr": "8 + prof + mod.int"
+            },
+            {
+              "type": "display",
+              "label": "Figurehead: hit points",
+              "expr": "level * 2"
+            },
+            {
+              "type": "display",
+              "label": "Figurehead: speed (ft.)",
+              "expr": "30"
+            }
           ]
         },
         {
@@ -875,29 +892,30 @@
           "page": 125,
           "rolls": [
             {
-              "label": "1d10",
-              "dice": "1d10",
-              "kind": "other"
-            },
-            {
-              "label": "2d10",
-              "dice": "2d10",
-              "kind": "other"
-            },
-            {
-              "label": "3d10",
-              "dice": "3d10",
-              "kind": "other"
-            },
-            {
-              "label": "4d10",
-              "dice": "4d10",
-              "kind": "other"
+              "label": "Elemental Blast",
+              "dice": "{level>=17 ? '4d10' : level>=11 ? '3d10' : level>=5 ? '2d10' : '1d10'} + {mod.int}",
+              "kind": "damage"
             }
           ],
-          "auto": [
-            "rolls"
-          ]
+          "toggle": {
+            "id": "mechadevil_armor",
+            "label": "Wearing your Mechadevil Armor",
+            "effects": [
+              {
+                "type": "note",
+                "label": "Flying speed 30 ft. (60 ft. from Mark 3, 120 ft. from Mark 4)"
+              },
+              {
+                "type": "note",
+                "label": "Resistance to nonmagical bludgeoning, piercing and slashing; immune to poison and the poisoned condition"
+              },
+              {
+                "type": "note",
+                "label": "+2 to spell attack rolls made through the armor"
+              }
+            ]
+          },
+          "action": "action"
         },
         {
           "level": 6,
@@ -1192,6 +1210,28 @@
           ],
           "auto": [
             "rolls"
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Beast: hit point maximum",
+              "expr": "max(1, 2 * mod.int + 5 * level)"
+            },
+            {
+              "type": "display",
+              "label": "Beast: hit dice (d8)",
+              "expr": "level"
+            },
+            {
+              "type": "display",
+              "label": "Beast: save DC",
+              "expr": "8 + prof + mod.int"
+            },
+            {
+              "type": "display",
+              "label": "Beast: proficiency bonus",
+              "expr": "prof"
+            }
           ]
         },
         {
@@ -1224,6 +1264,15 @@
           "name": "Supreme Combat Mastery",
           "text": "At 14th level, your beast reaches the pinnacle of its combat effectiveness, gaining Supreme Combat Mastery. This feature allows your beast to operate at peak performance, pushing its abilities beyond normal limits. Choose one of the following mastery upgrades for each beast:\nFrenzied Rampage: As a reaction, your beast can enter a frenzied state once per combat encounter, gaining advantage on all attack rolls and dealing critical hits on rolls of 19-20 for 1 minute. After the frenzy ends, the beast becoming stunned, regaining control of itself at the end of it’s next turn.\nElemental Overdrive: Grant the bloodline beast immunity to its own beast’s element’s resistance type or removes the vulnerability of its element.\nPerfected Guardian: Your beast’s presence on the battlefield inspires allies, granting all allies within 30 feet a +1 bonus to AC and saving throws while the beast is active. Additionally, the beast gains an extra 20 hit points.\nUnholy Infusion: Choose one additional beast’s element to infuse into your bloodline beast.",
           "page": 129
+        }
+      ],
+      "resources": [
+        {
+          "id": "bloodline_beast_hp",
+          "name": "Bloodline Beast hit points",
+          "max": "max(1, 2 * mod.int + 5 * level)",
+          "recharge": "long",
+          "minLevel": 3
         }
       ]
     }

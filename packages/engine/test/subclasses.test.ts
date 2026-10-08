@@ -452,6 +452,69 @@ describe('armor, weapon and tool proficiencies', () => {
   });
 });
 
+describe('companions', () => {
+  const pool = (sheet: Sheet, name: string) => sheet.resources.find((r) => r.name === name);
+  const shown = (sheet: Sheet, name: string) => Object.fromEntries(sheet.features.find((f) => f.name === name)!.displays.map((d) => [d.label, d.value]));
+
+  it.each(BOTH)('Marksman, Beast Tamer: the beast gains level × proficiency hit points; CR and extra dice by the Beast Progression table (%s)', (version) => {
+    const at = (level: number) => shown(build(version, 'class.marksman', 'subclass.marksman.beast_tamer', level), 'Bonded Companion');
+    expect(at(3)).toMatchObject({ 'Beast: hit points added to its own': '6', 'Beast: highest challenge rating': '1/2', 'Beast: extra damage dice': '0', 'Beast: proficiency bonus': '2' });
+    expect(at(9)).toMatchObject({ 'Beast: hit points added to its own': '36', 'Beast: highest challenge rating': '2', 'Beast: extra damage dice': '2' }); // 9 × 4
+    expect([5, 13, 17].map((level) => at(level)['Beast: highest challenge rating'])).toEqual(['1', '4', '8']);
+    expect(at(17)['Beast: extra damage dice']).toBe('4');
+    const beastNotes = (level: number) => notes(build(version, 'class.marksman', 'subclass.marksman.beast_tamer', level)).filter((n) => n.startsWith('Beast:')).length;
+    expect([3, 5, 9, 13].map(beastNotes)).toEqual([0, 1, 2, 3]);
+    // The skill the feature grants is still there beside the beast's numbers.
+    expect(skill(build(version, 'class.marksman', 'subclass.marksman.beast_tamer', 3, { wis: 14 }), 'animal_handling').value).toBe(version === V10 ? 6 : 4);
+  });
+
+  it('Devilforged, No Mi Trainer (v10): Bloodline Beast hit points 2 × Int + 5 × level → 2 × 3 + 25 = 31, with a pool that starts full; save DC 8 + prof + Int', () => {
+    const sheet = build(V10, 'class.devilforged', 'subclass.devilforged.no_mi_trainer', 5, { int: 16 });
+    expect(pool(sheet, 'Bloodline Beast hit points')).toMatchObject({ max: 31, remaining: 31, recharge: 'long' });
+    expect(shown(sheet, 'No Mi Star Synthesis')).toMatchObject({ 'Beast: hit point maximum': '31', 'Beast: hit dice (d8)': '5', 'Beast: save DC': '14', 'Beast: proficiency bonus': '3' });
+    expect(pool(build(V10, 'class.devilforged', 'subclass.devilforged.no_mi_trainer', 2, { int: 16 }), 'Bloodline Beast hit points')).toBeUndefined();
+  });
+
+  it('Devilforged, No Mi Trainer (v8.8): the same with Charisma, from 1st level → 2 × 4 + 5 = 13', () => {
+    const sheet = build(V88, 'class.devilforged', 'subclass.devilforged.no_mi_trainer', 1, { cha: 18 });
+    expect(pool(sheet, 'Bloodline Beast hit points')).toMatchObject({ max: 13, recharge: 'long' });
+    expect(shown(sheet, 'Bloodline Beast Synthesis')).toMatchObject({ 'Beast: hit point maximum': '13', 'Beast: save DC': '14' });
+  });
+
+  it('Devilforged, Mechadevil (v8.8): the suit’s AC, hit points and speed by the Mech Scaling table', () => {
+    const at = (level: number) => build(V88, 'class.devilforged', 'subclass.devilforged.mechadevil', level);
+    const row = (level: number) => { const d = shown(at(level), 'Mechadevil Mark 1'); return [d['Mech: Armor Class'], d['Mech: hit point maximum'], d['Mech: speed (ft.)']]; };
+    expect(row(1)).toEqual(['16', '6', '30']);
+    expect(row(5)).toEqual(['17', '40', '35']); // 8 × 5
+    expect(row(11)).toEqual(['18', '110', '40']); // 10 × 11
+    expect(row(17)).toEqual(['19', '204', '50']); // 12 × 17
+    expect(pool(at(5), 'Mechadevil Suit hit points')).toMatchObject({ max: 40, remaining: 40 });
+    expect(pool(build(V10, 'class.devilforged', 'subclass.devilforged.mechadevil', 5), 'Mechadevil Suit hit points')).toBeUndefined();
+  });
+
+  it('Devilforged, Mechadevil (v10): Elemental Blast 1d10 + Int, 2d10 at 5th, 3d10 at 11th, 4d10 at 17th; the armor’s benefits behind a switch', () => {
+    const blast = (level: number) => build(V10, 'class.devilforged', 'subclass.devilforged.mechadevil', level, { int: 16 }).features.find((f) => f.name === 'Mechadevil Mark 1')!.rolls[0]!.dice;
+    expect([3, 5, 11, 17].map(blast)).toEqual(['1d10 + 3', '2d10 + 3', '3d10 + 3', '4d10 + 3']);
+    expect(notes(build(V10, 'class.devilforged', 'subclass.devilforged.mechadevil', 3))).not.toContain('+2 to spell attack rolls made through the armor');
+    expect(notes(build(V10, 'class.devilforged', 'subclass.devilforged.mechadevil', 3, {}, ['mechadevil_armor']))).toContain('+2 to spell attack rolls made through the armor');
+  });
+
+  it('Devilforged, Bestial Klabautermann (v10): Figurehead AC is the Devilforged save DC, hit points twice the level', () => {
+    const sheet = build(V10, 'class.devilforged', 'subclass.devilforged.bestial_klabautermann', 6, { int: 18 });
+    expect(shown(sheet, 'Figurehead Form')).toMatchObject({ 'Figurehead: Armor Class': '15', 'Figurehead: hit points': '12' }); // 8 + 3 + 4
+    expect(sheet.formulas.find((f) => f.label === 'Devilforged save DC')!.value).toBe(15);
+  });
+
+  it.each(BOTH)('Tinkerer, Robotics: a Simple Robot has AC 8 + Int and 1 hit point (%s)', (version) => {
+    expect(shown(build(version, 'class.tinkerer', 'subclass.tinkerer.robotics', 2, { int: 16 }), 'Simple Robots')).toMatchObject({ 'Robot: Armor Class': '11', 'Robot: hit points': '1' });
+  });
+
+  it('Devilforged, Firearm Smithing (v8.8): the cannon’s shot is 1d8 + Cha, 2d8 from 10th', () => {
+    const shot = (level: number) => build(V88, 'class.devilforged', 'subclass.devilforged.firearm_smithing', level, { cha: 18 }).features.find((f) => f.name === 'Hellfire Artillery')!.rolls[0]!.dice;
+    expect([1, 10].map(shot)).toEqual(['1d8 + 4', '2d8 + 4']);
+  });
+});
+
 describe('every wired subclass feature', () => {
   it.each(BOTH)('shows its standing resistances and immunities under “In effect” (%s)', (version) => {
     const cases: [string, string, number, string][] = [
