@@ -617,7 +617,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         <>
       {version === 'dndf-10' ? (
         <label className="field">
-          <span className="label">Strengthen Self taken for Willpower (+2 each, total capped at 20) · {cite(HANDBOOKS[version], 222)}</span>
+          <span className="label">Strengthen Self taken for Willpower, not counting any added with “+ Spirit Surge” (+2 each, total capped at 20) · {cite(HANDBOOKS[version], 222)}</span>
           <input type="number" inputMode="numeric" min={0} value={strengthenSelf} onChange={(e) => setStrengthenSelf(clamp(Number(e.target.value), 0, 10))} />
         </label>
       ) : (

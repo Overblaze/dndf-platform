@@ -3,8 +3,8 @@ import type { ScoreOrigin } from './abilityScores';
 import type { CustomClass } from './customClass';
 import type { InventoryItem } from './inventory';
 import type { KnownSpell } from './spells';
-import type { PuristPick, SurgeRecord } from './surges';
-import type { Ability, AbilityScores, RulesVersion } from './types';
+import type { PuristPick, SurgePick, SurgeRecord } from './surges';
+import { ABILITIES, type Ability, type AbilityScores, type RulesVersion } from './types';
 
 export interface WeaponDef {
   id: string;
@@ -231,6 +231,32 @@ function cleanScores(scores: Partial<Record<Ability, unknown>>): Record<Ability,
   return { str: clean(scores.str), dex: clean(scores.dex), con: clean(scores.con), int: clean(scores.int), wis: clean(scores.wis), cha: clean(scores.cha) };
 }
 
+/** Each record with an id of its own: a missing one is made up, and a second use of one is renamed. Everything on the sheet is told apart by these. */
+function uniqueIds<T extends { id?: unknown }>(list: T[], prefix: string): (T & { id: string })[] {
+  const seen = new Set<string>();
+  return list.map((item, i) => {
+    let id = typeof item.id === 'string' && item.id ? item.id : `${prefix}-${i + 1}`;
+    for (let n = 2; seen.has(id); n++) id = `${typeof item.id === 'string' && item.id ? item.id : prefix}-${i + 1}-${n}`;
+    seen.add(id);
+    return { ...item, id };
+  });
+}
+
+/** What was chosen for a Spirit Surge advancement, keeping only the parts that are what they should be. */
+function cleanPick(raw: unknown): SurgePick | undefined {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return undefined;
+  const p = raw as Record<string, unknown>;
+  const pick: SurgePick = {};
+  if (typeof p.ability === 'string' && (ABILITIES as readonly string[]).includes(p.ability)) pick.ability = p.ability as Ability;
+  if (p.willpower === true) pick.willpower = true;
+  if (typeof p.skill === 'string' && p.skill) pick.skill = p.skill;
+  const prof = p.proficiency as { kind?: unknown; id?: unknown } | null | undefined;
+  if (prof && typeof prof === 'object' && (prof.kind === 'armor' || prof.kind === 'weapon') && typeof prof.id === 'string' && prof.id) pick.proficiency = { kind: prof.kind, id: prof.id };
+  if (typeof p.resource === 'string' && p.resource) pick.resource = p.resource;
+  if (typeof p.note === 'string' && p.note) pick.note = p.note;
+  return Object.keys(pick).length ? pick : undefined;
+}
+
 export function normalizeDoc(raw: unknown): CharacterDoc | null {
   if (!raw || typeof raw !== 'object') return null;
   const doc = raw as Partial<CharacterDoc>;
@@ -270,21 +296,21 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     armor: isObject(doc.armor) && typeof doc.armor.base === 'number' ? doc.armor : null,
     shield: doc.shield === true,
     weapons: (objects<WeaponDef>(doc.weapons) ?? []).map((w, i) => ({ ...w, id: typeof w.id === 'string' ? w.id : `weapon-${i}`, name: typeof w.name === 'string' ? w.name : 'Weapon', damage: typeof w.damage === 'string' ? w.damage : '', damageType: typeof w.damageType === 'string' ? w.damageType : '' })),
-    inventory: !Array.isArray(doc.inventory) ? undefined : (objects<InventoryItem>(doc.inventory) ?? []).map((item, i) => ({
+    inventory: !Array.isArray(doc.inventory) ? undefined : uniqueIds(objects<InventoryItem>(doc.inventory) ?? [], 'item').map((item) => ({
       ...item,
-      id: typeof item.id === 'string' ? item.id : `item-${i + 1}`,
       name: typeof item.name === 'string' ? item.name : 'Item',
       qty: Math.max(0, whole(item.qty, 1)),
       weight: typeof item.weight === 'number' && Number.isFinite(item.weight) && item.weight >= 0 ? item.weight : undefined,
     })),
-    spells: !Array.isArray(doc.spells) ? undefined : (objects<KnownSpell>(doc.spells) ?? []).filter((spell) => typeof spell.name === 'string' && spell.name.trim()).map((spell, i) => ({
+    spells: !Array.isArray(doc.spells) ? undefined : uniqueIds((objects<KnownSpell>(doc.spells) ?? []).filter((spell) => typeof spell.name === 'string' && spell.name.trim()), 'spell').map((spell) => ({
       ...spell,
-      id: typeof spell.id === 'string' ? spell.id : `spell-${i + 1}`,
       level: Math.min(9, Math.max(0, whole(spell.level, 0))),
     })),
     money: typeof doc.money === 'number' && Number.isFinite(doc.money) ? Math.round(doc.money) : undefined,
-    willpower: isObject(doc.willpower) ? { ...doc.willpower, strengthenSelf: whole(doc.willpower.strengthenSelf, 0) } : { strengthenSelf: 0 },
-    surges: !Array.isArray(doc.surges) ? undefined : (objects<SurgeRecord>(doc.surges) ?? []).filter((r) => typeof r.entry === 'string').map((r, i) => ({ ...r, id: typeof r.id === 'string' ? r.id : `surge-${i + 1}`, pick: isObject(r.pick) ? r.pick : undefined })),
+    willpower: isObject(doc.willpower)
+      ? { ...doc.willpower, strengthenSelf: Math.max(0, whole(doc.willpower.strengthenSelf, 0)), variantAdvancements: typeof doc.willpower.variantAdvancements === 'number' && Number.isFinite(doc.willpower.variantAdvancements) ? Math.max(0, Math.round(doc.willpower.variantAdvancements)) : doc.willpower.variantAdvancements === null ? null : undefined }
+      : { strengthenSelf: 0 },
+    surges: !Array.isArray(doc.surges) ? undefined : uniqueIds((objects<SurgeRecord>(doc.surges) ?? []).filter((r) => typeof r.entry === 'string'), 'surge').map((r) => ({ ...r, pick: cleanPick(r.pick) })),
     qualitiesOfAKing: doc.qualitiesOfAKing === true ? true : undefined,
     hakiPurist: Array.isArray(doc.hakiPurist) ? doc.hakiPurist.filter((p): p is PuristPick => p === 'quality' || p === 'quantity' || p === 'stamina') : undefined,
     overrides: isObject(doc.overrides) ? Object.fromEntries(Object.entries(doc.overrides).filter(([, v]) => typeof v === 'number' && Number.isFinite(v))) as Record<string, number> : {},

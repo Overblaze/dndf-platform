@@ -70,3 +70,16 @@ Still the player's to apply: traits that say "of your choice" for a skill, tool,
 - [ ] A Devil Fruit's spells cast with its charges; Hybrid Points for Hybrid powers.
 - [x] More of the text-only options are usable: Warrior's Dueling (+2 damage, one-handed melee) and Thrown Weapon Fighting (noted), and five Emanations that cast a spell once per long rest now have a counter (the wording patterns for "once" were widened).
 - [ ] Still text only: Emanations and Splices that change an infused weapon, a summoned beast or the abomination (they act on a companion or an item, not on the character's own numbers).
+
+## Review of phases 6 and 7 (branch `review-phases-6-7`)
+A 600-character stress run using races, pick-lists, Haki, surges, fruits, gear and spells in extreme and damaged states (kept as `fuzz2.test.ts`), a browser pass over every tab, dialog and page with a maxed-out character in both handbooks, the DM and fruit walk-throughs again, the database rules for a character that leaves a campaign, and both data audits. Fixed, each with a test:
+- two Spirit Surge records (or items, or spells) saved under one id showed as one feature, the second hidden; ids are now made unique on reading;
+- a surge pick that was not what it should be (a number where a weapon kind belongs) crashed the whole sheet;
+- Willpower could go below zero from a damaged save;
+- a private entry with a field that was not text put "undefined" or "[object Object]" on the Fruit tab, and one with a count that could not be worked out crashed the sheet;
+- casting with a slot level that was not a number asked for "NaNth-level slots"; a negative item weight lowered the weight carried;
+- a long name or note typed without spaces made the Gear tab four times wider than a phone;
+- the DM could not take a fruit away from a character whose player had taken it out of the campaign: the grant was still there but the page had no row for it;
+- the DM page called the grant note "for yourself" although the character's player can read it;
+- a Build page link (`?do=level`) reopened its dialog on every reload.
+Known and left: a player who moves a character to a different campaign keeps a fruit granted in the first until that campaign's DM takes it away; the printed sheet works out Haki Purist without knowing about a fruit (the fruit is never on paper), so a fruit holder's printed Haki dice can be one die higher than the live sheet's.

@@ -25,7 +25,9 @@ export function willpower(input: WillpowerInput): Derived {
   }
   const sum = lines.reduce((acc, l) => acc + Number(l.value), 0);
   if (sum > WILLPOWER_MAX) lines.push({ label: `Willpower maximum ${WILLPOWER_MAX}`, value: WILLPOWER_MAX - sum });
-  return { value: Math.min(sum, WILLPOWER_MAX), lines, page: 221 };
+  // Never below zero, whatever a damaged save says was taken.
+  if (sum < 0) lines.push({ label: 'Willpower can’t be below 0', value: -sum });
+  return { value: Math.max(0, Math.min(sum, WILLPOWER_MAX)), lines, page: 221 };
 }
 
 function halfWillpower(wp: number, base: number, page?: number): Derived {

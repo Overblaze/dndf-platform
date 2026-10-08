@@ -2,7 +2,7 @@
 // must never take the sheet down, share a counter, or stall the app or the bot.
 import { describe, expect, it } from 'vitest';
 import {
-  DICE_LIMITS, applyHealing, applyLevelUp, classColumns, customClassId, deriveSheet, levelUpPlan, newCharacter, normalizeDoc, parseDice, rollDice,
+  DEFAULT_SETTINGS, DICE_LIMITS, applyHealing, applyLevelUp, carriedWeight, castSpell, classColumns, customClassId, deriveSheet, levelUpPlan, newCharacter, normalizeDoc, parseDice, rollDice,
   type CharacterDoc, type ClassEntry, type CustomClass, type RulesVersion, type Sheet,
 } from '../src';
 import { loadRules } from './load';
@@ -229,5 +229,56 @@ describe('telling whether two copies of a character are the same', () => {
     expect(sameDoc(doc, { ...doc, notes: 'x' })).toBe(false);
     expect(sameDoc(null, undefined)).toBe(true);
     expect(sameDoc(0, '0')).toBe(false);
+  });
+});
+
+describe('found by the review of phases 6 and 7', () => {
+  const rules = loadRules('dndf-10');
+  const base = newCharacter({ name: 'T', rulesVersion: 'dndf-10', classId: 'class.priest', level: 5, scores: { str: 10, dex: 10, con: 10, int: 10, wis: 16, cha: 10 } }, rules);
+
+  it('two surge records with one id are told apart, so neither feature hides the other', () => {
+    const saved = normalizeDoc({ ...base, surges: [{ id: 'x', entry: 'surgeAdvancement.strengthen_self', pick: { ability: 'str' } }, { id: 'x', entry: 'surgeAdvancement.strengthen_self', pick: { ability: 'con' } }, { entry: 'hakiFeature.aura_of_life' }] })!;
+    expect(new Set(saved.surges!.map((s) => s.id)).size).toBe(3);
+    const sheet = deriveSheet(saved, rules);
+    expect(new Set(sheet.features.map((f) => f.key)).size).toBe(sheet.features.length);
+    expect([sheet.abilities.str.score, sheet.abilities.con.score]).toEqual([12, 12]);
+    // and the same for items and spells
+    const more = normalizeDoc({ ...base, inventory: [{ id: 'a', name: 'A', qty: 1 }, { id: 'a', name: 'B', qty: 1 }], spells: [{ id: 's', name: 'A', level: 1 }, { id: 's', name: 'B', level: 1 }] })!;
+    expect(more.inventory!.map((i) => i.id)).toEqual(['a', 'a-2-2']);
+    expect(new Set(more.spells!.map((i) => i.id)).size).toBe(2);
+  });
+
+  it('a surge pick that is not what it should be is dropped instead of breaking the sheet', () => {
+    const saved = normalizeDoc({ ...base, surges: [
+      { id: 'a', entry: 'surgeAdvancement.warriors_path', pick: { proficiency: 4 } },
+      { id: 'b', entry: 'surgeAdvancement.warriors_path', pick: { proficiency: { kind: 'weapon' } } },
+      { id: 'c', entry: 'surgeAdvancement.strengthen_self', pick: { ability: 'luck', note: 7 } },
+      { id: 'd', entry: 'surgeAdvancement.warriors_path', pick: { proficiency: { kind: 'armor', id: 'shields' }, extra: 'ignored' } },
+    ] })!;
+    expect(saved.surges!.map((s) => s.pick)).toEqual([undefined, undefined, undefined, { proficiency: { kind: 'armor', id: 'shields' } }]);
+    const raw = { ...base, surges: [{ id: 'a', entry: 'surgeAdvancement.warriors_path', pick: { proficiency: 4 as never } }] };
+    expect(() => deriveSheet(raw, rules)).not.toThrow();
+  });
+
+  it('Willpower is never below zero, whatever a save says was taken', () => {
+    expect(deriveSheet({ ...base, willpower: { strengthenSelf: -9 } }, rules).willpower.value).toBe(0);
+    expect(deriveSheet({ ...base, willpower: { strengthenSelf: 0, variantAdvancements: -3 } }, rules).willpower.value).toBe(0);
+    expect(normalizeDoc({ ...base, willpower: { strengthenSelf: -9, variantAdvancements: -3 } })!.willpower).toEqual({ strengthenSelf: 0, variantAdvancements: 0 });
+    expect(normalizeDoc({ ...base, willpower: { strengthenSelf: 1, variantAdvancements: null } })!.willpower).toEqual({ strengthenSelf: 1, variantAdvancements: null });
+  });
+
+  it('a private entry with fields that are not text, or a count that cannot be worked out, still shows', () => {
+    const fruit = { id: 'devilFruit.x', kind: 'devilFruit', name: 'X', versions: [], source: { book: 'T', page: 1 }, rarity: 7, type: { a: 1 }, appearance: null, description: NaN, seaWeakness: ['x'], features: 'nope' } as never;
+    const advancement = { id: 'fruitAdvancement.x', kind: 'fruitAdvancement', name: 'Adv', versions: ['dndf-10'], source: { book: 'T', page: 1 }, text: 'Text.', uses: { max: 'nonsense(', recharge: 'long' } } as never;
+    const sheet = deriveSheet({ ...base, surges: [{ id: 'a', entry: 'fruitAdvancement.x' }] }, rules, DEFAULT_SETTINGS, { granted: [{ key: 'k', kind: 'owner', revealed: false, entry: fruit }], advancements: [advancement] });
+    expect(sheet.fruits[0]).toMatchObject({ name: 'X', rarity: '', type: '', appearance: '', description: '', seaWeakness: '', category: 'other', parts: [] });
+    expect(sheet.features.find((f) => f.name === 'Adv')).toMatchObject({ text: 'Text.', resource: undefined });
+  });
+
+  it('casting with a slot level that is not a number uses the spell’s own level; weight is never negative', () => {
+    const sheet = deriveSheet(base, rules);
+    expect(castSpell(base.state, sheet, { name: 'Bless', level: 1 }, NaN).summary).toBe('Cast Bless: 1st-level slots 4 → 3 of 4');
+    expect(castSpell(base.state, sheet, { name: 'Bless', level: 1 }, 99).warning).toBe('You have no 9th-level slots; nothing was spent.');
+    expect(carriedWeight([{ id: 'a', name: 'A', qty: 3, weight: -5 }, { id: 'b', name: 'B', qty: 2, weight: NaN }, { id: 'c', name: 'C', qty: 2, weight: 1.5 }], 10).carried).toBe(3);
   });
 });

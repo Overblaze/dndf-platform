@@ -1,5 +1,5 @@
 import { deriveSheet, type CharacterDoc, type Stat } from '@dndf/engine';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Dialog } from '../components/Dialog';
 import { RollsProvider } from '../lib/rolls';
@@ -53,7 +53,9 @@ function conflictSummary(other: CharacterDoc): string {
 export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) {
   const { live, loadError, missing } = useCharacter(store, id);
   // The Build page links straight to a tab or a dialog: /sheet/<id>?do=level, ?tab=features.
-  const [asked] = useSearchParams();
+  const [asked, setAsked] = useSearchParams();
+  // Used once: a reload or the Back button should not open the same dialog again.
+  useEffect(() => { if (asked.get('do') || asked.get('tab')) setAsked({}, { replace: true }); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const [tab, setTab] = useState<TabId>(() => TABS.find((t) => t.id === asked.get('tab'))?.id ?? 'combat');
   const [open, setOpen] = useState<{ key: string; kind: StatKind; rollable: boolean } | null>(null);
   const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | 'surge' | null>(() => { const wanted = asked.get('do'); return wanted === 'level' || wanted === 'edit' || wanted === 'surge' || wanted === 'history' ? wanted : null; });
