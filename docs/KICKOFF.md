@@ -29,4 +29,4 @@ Phase 4 is complete. Not built: the builder walking a higher-level character thr
 
 ## Phase 5 — Discord bot and printable sheet
 1. **Printable sheet** (branch `phase5-print`): `#/print/<character id>` lays the character out for paper or a PDF, with or without the text of each feature (`?text=0` opens on the short one). The bot will render this page to make its PDFs.
-2. Discord bot: /sheet, /roll, /hp, /rest, /dawn, /status, /party. Needs the bot token on the mini PC (never in the repo) and a way for the bot to read characters.
+2. **Discord bot** (branch `phase5-bot`, `bot/`): /roll, /hp, /rest, /dawn, /status, /sheet (PDF) and /party, on the shared engine. Secrets live in `~/dndf/secret/bot.env` on the mini PC; `bash bot/install-service.sh` runs it as a user service from `~/dndf/bot-live`. See `bot/README.md`.
