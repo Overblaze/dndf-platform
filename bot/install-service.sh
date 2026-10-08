@@ -31,6 +31,9 @@ fi
 echo "Bot copy is at $(git -C "$LIVE" log --oneline -1)"
 (cd "$LIVE" && npm ci --silent --no-audit --no-fund)
 
+# Node may come from nvm, whose folder is not on a service's search path: name it outright.
+NODE_BIN="$(dirname "$(command -v node)")"
+
 mkdir -p "$(dirname "$UNIT")"
 cat > "$UNIT" <<UNITFILE
 [Unit]
@@ -40,7 +43,8 @@ Wants=network-online.target
 
 [Service]
 WorkingDirectory=$LIVE/bot
-ExecStart=$(command -v npx) tsx src/index.ts
+Environment=PATH=$NODE_BIN:/usr/local/bin:/usr/bin:/bin
+ExecStart=$NODE_BIN/npx tsx src/index.ts
 Restart=always
 RestartSec=10
 # Its secrets are read by the program itself from ~/dndf/secret/bot.env; none are named here.
@@ -54,6 +58,16 @@ systemctl --user daemon-reload
 (cd "$LIVE/bot" && npx tsx src/register.ts)
 systemctl --user enable --quiet dndf-bot.service
 systemctl --user restart dndf-bot.service
-sleep 6
-systemctl --user --no-pager --lines=4 status dndf-bot.service | sed -n '1,4p;/signed in/p'
+# Give it time to sign in, then say plainly whether it did.
+for _ in 1 2 3 4 5 6 7 8 9 10; do
+  sleep 2
+  journalctl --user -u dndf-bot --since "-40s" --no-pager 2>/dev/null | grep -q "signed in as" && break
+done
+if journalctl --user -u dndf-bot --since "-40s" --no-pager 2>/dev/null | grep -q "signed in as"; then
+  echo "The bot is running: $(journalctl --user -u dndf-bot --since "-40s" --no-pager | grep "signed in as" | tail -1 | sed 's/.*: DnDF bot //')"
+else
+  echo "The bot did NOT start. Last lines of its log:"
+  journalctl --user -u dndf-bot --no-pager -n 8 | cut -c1-200
+  exit 1
+fi
 echo "Logs: journalctl --user -u dndf-bot -f"

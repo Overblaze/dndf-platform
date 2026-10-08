@@ -30,6 +30,8 @@ a user can edit. Commands from any server other than the one in `bot.env` are ig
    readable only by you). The steps are in the project conversation and in `docs/KICKOFF.md`.
 2. `bash bot/install-service.sh` — copies `main` to `~/dndf/bot-live`, installs it, registers the
    slash commands on the server, and starts the service. Run it again after a merge to update.
+   The service is told where this machine's Node is. After changing Node's version (for example
+   with nvm), run the script again.
 3. `journalctl --user -u dndf-bot -f` shows its log. `bash bot/install-service.sh --remove` stops it.
 
 Nothing secret is in this repository: no token, no key, no `bot.env`.
