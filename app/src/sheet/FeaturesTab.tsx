@@ -21,6 +21,8 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
     live.setDoc({ ...doc, customFeatures: customs.filter((c) => c.id !== feature.id) }, `Deleted ${feature.name}`);
     setEditing(null);
   };
+  const takeOff = (key: string, name: string) => live.setDoc({ ...doc, removedFeatures: [...(doc.removedFeatures ?? []), key] }, `Took ${name} off the sheet`);
+  const putBack = (key: string, name: string) => live.setDoc({ ...doc, removedFeatures: (doc.removedFeatures ?? []).filter((k) => k !== key) }, `Put ${name} back`);
   const unborrow = (key: string, name: string) =>
     live.setDoc({ ...doc, borrowedFeatures: (doc.borrowedFeatures ?? []).filter((b) => !(key.startsWith(`${b.entry}/`) && b.name === name)) }, `Gave back ${name}`);
   return (
@@ -49,9 +51,27 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
             )}
             {custom && <button className="btn" onClick={() => setEditing(custom)}>Edit or delete</button>}
             {borrowed && <button className="btn" onClick={() => unborrow(feature.key, feature.name)}>Give it back</button>}
+            {!custom && !borrowed && feature.page > 0 && /^(class|subclass|optionGroup)\./.test(feature.key) && (
+              <button className="btn" onClick={() => takeOff(feature.key, feature.name)}>Take it off this character</button>
+            )}
           </details>
         );
       })}
+      {sheet.takenOff.length > 0 && (
+        <div className="taken-off">
+          <h3>Taken off this character</h3>
+          <p className="page-ref">These belong to your class but are not counted: no buttons, no counters, no numbers. To swap one for something else, borrow the replacement above.</p>
+          {sheet.takenOff.map((f) => (
+            <div key={f.key} className="resource">
+              <div>
+                <div className="resource-name">{f.name}</div>
+                <div className="page-ref">{f.from} · {cite(f.book, f.page)}</div>
+              </div>
+              <button className="btn" onClick={() => putBack(f.key, f.name)}>Put it back</button>
+            </div>
+          ))}
+        </div>
+      )}
       {editing && (
         <CustomFeatureDialog
           initial={editing === 'new' ? undefined : editing}

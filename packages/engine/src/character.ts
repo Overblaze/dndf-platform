@@ -117,6 +117,8 @@ export interface CharacterDoc {
   shield: boolean;
   weapons: WeaponDef[];
   willpower: { strengthenSelf: number; variantAdvancements?: number | null };
+  /** Class, subclass and option features taken off this character, by feature key ("class.warrior/second_wind"). */
+  removedFeatures?: string[];
   /** Features the player wrote: a boon from the DM, a house rule, something from a book the app does not hold. */
   customFeatures?: CustomFeature[];
   /** Features taken from anywhere in the rules data, outside the character's own classes. They bring their own uses. */
@@ -202,6 +204,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     classes: doc.classes,
     scores: doc.scores,
     scoreOrigin: doc.scoreOrigin,
+    removedFeatures: Array.isArray(doc.removedFeatures) ? doc.removedFeatures : undefined,
     customFeatures: Array.isArray(doc.customFeatures) ? doc.customFeatures : undefined,
     borrowedFeatures: Array.isArray(doc.borrowedFeatures) ? doc.borrowedFeatures : undefined,
     skills: doc.skills ?? [],

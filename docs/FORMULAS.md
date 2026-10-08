@@ -302,6 +302,8 @@ Tested in `packages/engine/test/customFeatures.test.ts`.
 | A borrowed feature | any feature or option in the handbook, outside the character's classes; expressions that read a level use the whole character level against the table of the class it comes from |
 | What a borrowed feature brings | its own use counter, and the pool it spends (ki, for Stunning Strike) when the character has none, sized for the whole character level |
 
+A class, subclass or option feature can be taken off a character: it leaves the sheet with its counter, its buttons and its numbers, and is listed so it can be put back. Taking one off and borrowing another is a swap.
+
 A borrowed feature the character already has is not doubled. Trackers a borrowed feature reads (Hybrid Points, chords) are not brought along.
 
 ## Multiclassing (both versions)

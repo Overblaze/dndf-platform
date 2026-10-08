@@ -101,3 +101,43 @@ describe('borrowed features', () => {
     expect(make([{ entry: 'class.warrior', name: 'No Such Thing' }]).sheet.warnings).toEqual(['Borrowed feature "No Such Thing" is not in the rules data.']);
   });
 });
+
+describe('taking a class feature off the character', () => {
+  const rules = loadRules('dndf-10' as RulesVersion);
+  const make = (classId: string, level: number, more: Partial<CharacterDoc> = {}) => {
+    const doc = { ...newCharacter({ name: 'T', rulesVersion: 'dndf-10' as RulesVersion, classId, level, scores }, rules), ...more };
+    return { doc, sheet: deriveSheet(doc, rules) };
+  };
+
+  it('a removed feature is gone with its counter and listed for putting back', () => {
+    const before = make('class.warrior', 5).sheet;
+    expect(pool(before, 'Second Wind')).toBeDefined();
+    const { sheet } = make('class.warrior', 5, { removedFeatures: ['class.warrior/second_wind'] });
+    expect(feature(sheet, 'Second Wind')).toBeUndefined();
+    expect(pool(sheet, 'Second Wind')).toBeUndefined();
+    expect(sheet.takenOff).toEqual([{ key: 'class.warrior/second_wind', name: 'Second Wind', from: 'Warrior 1', page: before.features.find((f) => f.name === 'Second Wind')!.page, book: 'DnDF Expanded Handbook v10' }]);
+    expect(sheet.features.length).toBe(before.features.length - 1);
+    expect(sheet.warnings).toEqual([]);
+  });
+
+  it('its numbers go with it: without Extra Attack a 5th-level Warrior attacks once; without Unarmored Defense a Martial Artist has AC 10 + Dex', () => {
+    expect(make('class.warrior', 5).sheet.attacksPerAction).toBe(2);
+    expect(make('class.warrior', 5, { removedFeatures: ['class.warrior/extra_attack'] }).sheet.attacksPerAction).toBe(1);
+    expect(make('class.martial_artist', 1).sheet.ac.value).toBe(13); // 10 + Dex 2 + Wis 1
+    expect(make('class.martial_artist', 1, { removedFeatures: ['class.martial_artist/unarmored_defense'] }).sheet.ac.value).toBe(12);
+  });
+
+  it('a swap: Second Wind out, the Martial Artist’s Unarmored Defense in', () => {
+    const { sheet } = make('class.warrior', 5, { removedFeatures: ['class.warrior/second_wind'], borrowedFeatures: [{ entry: 'class.martial_artist', name: 'Unarmored Defense' }] });
+    expect(feature(sheet, 'Second Wind')).toBeUndefined();
+    expect(sheet.ac.value).toBe(13);
+  });
+
+  it('a key that matches nothing is ignored, a level not reached yet is not listed, and the list survives saving', () => {
+    const { doc, sheet } = make('class.warrior', 1, { removedFeatures: ['class.warrior/extra_attack', 'class.nobody/nothing'] });
+    expect(sheet.takenOff).toEqual([]);
+    expect(sheet.warnings).toEqual([]);
+    expect(normalizeDoc(JSON.parse(JSON.stringify(doc)))!.removedFeatures).toEqual(doc.removedFeatures);
+    expect(make('class.warrior', 5, { removedFeatures: doc.removedFeatures }).sheet.takenOff.map((f) => f.name)).toEqual(['Extra Attack']);
+  });
+});
