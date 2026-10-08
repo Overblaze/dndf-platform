@@ -122,3 +122,11 @@ attribution it asks for is in the file, the README, the Library and under each s
 - Where the two disagree the document is kept (Revivify is necromancy; Mass Heal and Mass Cure Wounds are evocation).
 - A class list's "Melf’s Acid Arrow" finds the SRD's "Acid Arrow". A spell that is not in the SRD has no text, and none
   is to be added from any other source: other 5th Edition books are not free to reproduce.
+
+### A lesson from the spell lists
+
+A list's four columns flow one into the next, so a column that continues a level starts at the very top of the page
+beside the list's title. The reader once skipped everything above a fixed height and so dropped those names, and the
+check written for it counted with the same rule and agreed. A check must count a different way from the thing it
+checks: the test now pins each list's size to the number of pieces in the list's type anywhere on the page, and the
+coverage audit's "in the book, not in the data" lines for these pages were the real signal all along.

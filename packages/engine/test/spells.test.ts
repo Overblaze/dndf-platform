@@ -155,8 +155,8 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('spell text from the 5e
     const names = new Map<string, boolean>();
     for (const list of lists) for (const spell of list.spells) names.set(spell.name.replace(/ \(ritual\)$/, ''), Boolean(spell.entry));
     const withText = [...names.values()].filter(Boolean).length;
-    expect(names.size).toBe(version === 'dndf-10' ? 324 : 345);
-    expect(withText).toBe(version === 'dndf-10' ? 215 : 222);
+    expect(names.size).toBe(version === 'dndf-10' ? 345 : 369);
+    expect(withText).toBe(version === 'dndf-10' ? 228 : 237);
   });
 });
 
@@ -189,5 +189,102 @@ describe('spells a player writes', () => {
     expect(odd.spells![1]!.own).toEqual({ text: '' });
     expect(() => deriveSheet(odd, rules)).not.toThrow();
     expect(() => deriveSheet({ ...doc, spells: [{ id: 'a', name: 'Raw', level: 1, own: 'nope' as never }] }, rules)).not.toThrow();
+  });
+});
+
+describe('spells by class: preparing, learning, and multiclassing (EH10 p.210)', () => {
+  const rules = loadRules('dndf-10');
+  const cast: AbilityScores = { str: 10, dex: 12, con: 14, int: 16, wis: 16, cha: 14 };
+  const make = (classes: { id: string; level: number }[], spells: KnownSpell[] = []) => {
+    const base = newCharacter({ name: 'T', rulesVersion: 'dndf-10', classId: classes[0]!.id, level: classes[0]!.level, scores: cast }, rules);
+    const doc: CharacterDoc = { ...base, classes: [base.classes[0]!, ...classes.slice(1)], spells };
+    return { doc, sheet: deriveSheet(doc, rules) };
+  };
+  const cls = (sheet: ReturnType<typeof make>['sheet'], id: string) => sheet.spellbook.classes.find((c) => c.id === `class.${id}`)!;
+
+  it('a class that prepares (Priest, Chemist, Tinkerer) and a class that learns (Oracle, Virtuoso, Marksman, Hybrid) say so, with their own limits', () => {
+    const priest = cls(make([{ id: 'class.priest', level: 5 }]).sheet, 'priest');
+    expect(priest).toMatchObject({ mode: 'prepared', cantripsMax: 4, preparedMax: 8, knownMax: undefined, maxSpellLevel: 3, list: 'spellList.priest' }); // Wisdom +3 + level 5
+    expect(priest.dc!.value).toBe(14);
+    expect(cls(make([{ id: 'class.chemist', level: 5 }]).sheet, 'chemist')).toMatchObject({ mode: 'prepared', preparedMax: 8 });
+    expect(cls(make([{ id: 'class.tinkerer', level: 5 }]).sheet, 'tinkerer')).toMatchObject({ mode: 'prepared', preparedMax: 8 }); // Intelligence +3 + 5
+    const oracle = cls(make([{ id: 'class.oracle', level: 5 }]).sheet, 'oracle');
+    expect(oracle).toMatchObject({ mode: 'known', cantripsMax: 4, knownMax: 8, preparedMax: undefined, maxSpellLevel: 3 });
+    const virtuoso = cls(make([{ id: 'class.virtuoso', level: 5 }]).sheet, 'virtuoso');
+    expect(virtuoso).toMatchObject({ mode: 'known', cantripsMax: 3, knownMax: 8 });
+    expect(virtuoso.dc!.value).toBe(8 + 3 + 2); // its own formula, from Charisma
+    expect(cls(make([{ id: 'class.marksman', level: 5 }]).sheet, 'marksman')).toMatchObject({ mode: 'known', knownMax: 4, cantripsMax: undefined });
+    expect(cls(make([{ id: 'class.hybrid', level: 5 }]).sheet, 'hybrid')).toMatchObject({ mode: 'known', cantripsMax: 5, knownMax: 6, maxSpellLevel: 3 }); // no slots: its own "highest spell level"
+    expect(make([{ id: 'class.warrior', level: 5 }]).sheet.spellbook.classes).toEqual([]);
+  });
+
+  it('a prepared class’s spell is ready only when prepared; a learned class’s is always ready; cantrips always', () => {
+    const { sheet } = make([{ id: 'class.priest', level: 5 }, { id: 'class.oracle', level: 3 }], [
+      { id: 'a', name: 'Bless', level: 1, list: 'spellList.priest' },
+      { id: 'b', name: 'Cure Wounds', level: 1, list: 'spellList.priest', prepared: true },
+      { id: 'c', name: 'Guidance', level: 0, list: 'spellList.priest' },
+      { id: 'd', name: 'Detect Magic', level: 1, list: 'spellList.oracle' },
+      { id: 'e', name: 'Augury', level: 2, list: 'spellList.oracle', prepared: true },
+    ]);
+    const of = (name: string) => sheet.spellbook.known.find((k) => k.name === name)!;
+    expect(of('Bless')).toMatchObject({ cls: 'class.priest', clsName: 'Priest', mode: 'prepared', ready: false });
+    expect(of('Cure Wounds')).toMatchObject({ mode: 'prepared', ready: true });
+    expect(of('Guidance')).toMatchObject({ cls: 'class.priest', ready: true });
+    expect(of('Detect Magic')).toMatchObject({ cls: 'class.oracle', mode: 'known', ready: true });
+    expect(cls(sheet, 'priest')).toMatchObject({ cantrips: 1, known: 2, prepared: 1 });
+    expect(cls(sheet, 'oracle')).toMatchObject({ cantrips: 0, known: 2 });
+  });
+
+  it('multiclass: each class keeps its own limits at its own level, while Priest and Tinkerer levels pool for slots', () => {
+    const { sheet } = make([{ id: 'class.priest', level: 3 }, { id: 'class.tinkerer', level: 4 }], [
+      { id: 'a', name: 'Bless', level: 1, list: 'spellList.priest', prepared: true },
+      { id: 'b', name: 'Spirit Guardians', level: 3, list: 'spellList.priest', prepared: true },
+      { id: 'c', name: 'Fireball', level: 3, list: 'spellList.tinkerer', prepared: true },
+      { id: 'd', name: 'Shield', level: 1, cls: 'class.tinkerer' },
+      { id: 'e', name: 'Homebrew', level: 2 },
+    ]);
+    // Priest 3: prepares Wis 3 + 3 = 6, up to 2nd level. Tinkerer 4: Int 3 + 4 = 7, up to 2nd level.
+    expect(cls(sheet, 'priest')).toMatchObject({ level: 3, preparedMax: 6, maxSpellLevel: 2, known: 2, prepared: 2 });
+    expect(cls(sheet, 'tinkerer')).toMatchObject({ level: 4, preparedMax: 7, maxSpellLevel: 2, known: 2, prepared: 1 });
+    expect(cls(sheet, 'priest').dc!.value).toBe(8 + 3 + 3);
+    // Slots are a 7th-level caster's (3 + 4), which reach 4th level: higher than either class can prepare.
+    expect(sheet.spellbook.pooledSlots).toBe(true);
+    expect(sheet.spellbook.slots.map((s) => [s.id, s.max])).toEqual([['slots1', 4], ['slots2', 3], ['slots3', 3], ['slots4', 1]]);
+    const of = (name: string) => sheet.spellbook.known.find((k) => k.name === name)!;
+    expect(of('Spirit Guardians')).toMatchObject({ cls: 'class.priest', tooHigh: true });
+    expect(of('Bless')).toMatchObject({ tooHigh: false, castableWith: [1, 2, 3, 4] }); // a lower-level spell may use the higher slots
+    expect(of('Shield')).toMatchObject({ cls: 'class.tinkerer', clsName: 'Tinkerer', ready: false });
+    expect(of('Homebrew')).toMatchObject({ cls: undefined, mode: undefined, ready: true, tooHigh: false }); // two casting classes and no way to tell: left for the player to say
+  });
+
+  it('with one casting class every spell counts for it; a class that no longer casts lets go of its spells', () => {
+    const one = make([{ id: 'class.oracle', level: 5 }, { id: 'class.warrior', level: 2 }], [{ id: 'a', name: 'Anything', level: 1 }, { id: 'b', name: 'Old', level: 1, cls: 'class.priest', prepared: true }]).sheet;
+    expect(one.spellbook.known.map((k) => [k.name, k.cls, k.ready])).toEqual([['Anything', 'class.oracle', true], ['Old', 'class.oracle', true]]);
+    expect(one.spellbook.pooledSlots).toBe(false);
+    expect(normalizeDoc({ ...make([{ id: 'class.oracle', level: 5 }]).doc, spells: [{ id: 'a', name: 'X', level: 1, cls: 7 }, { id: 'b', name: 'Y', level: 1, cls: 'class.oracle' }] })!.spells!.map((s) => s.cls)).toEqual([undefined, 'class.oracle']);
+  });
+});
+
+describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('the class lists hold every name on their page (%s)', (version) => {
+  const rules = loadRules(version);
+  const size = (id: string) => Object.values((rules.get(id)?.levels ?? {}) as Record<string, string[]>).reduce((n, names) => n + names.length, 0);
+  const at = (id: string, level: number) => ((rules.get(id)!.levels as Record<string, string[]>)[String(level)] ?? []);
+
+  it('each list has as many spells as are printed, counted from the page', () => {
+    // Counted independently from the PDF: every piece in the list's own type on the page, less a "(ritual)" or a name's second line.
+    expect([size('spellList.chemist'), size('spellList.hybrid'), size('spellList.marksman'), size('spellList.oracle'), size('spellList.priest'), size('spellList.tinkerer')]).toEqual([103, 61, 54, 69, 89, 190]);
+    expect(size(version === 'dndf-10' ? 'spellList.virtuoso' : 'spellList.skald')).toBe(110);
+    if (version === 'dndf-8.8') expect(size('spellList.devilforged')).toBe(88);
+  });
+
+  it('the names at the top of each column are there, under the level the column continues', () => {
+    // These sit beside the list's title, above where a column's first heading is; a height cut-off once dropped them.
+    expect(at('spellList.priest', 0)).toEqual(expect.arrayContaining(['Guidance', 'Light', 'Mending']));
+    expect(at('spellList.priest', 2)).toEqual(expect.arrayContaining(['Aid', 'Augury', 'Blindness/Deafness']));
+    expect(at('spellList.priest', 3)).toEqual(expect.arrayContaining(['Glyph of Warding', 'Mass Healing Word']));
+    expect(at('spellList.priest', 5)).toEqual(expect.arrayContaining(['Holy Weapon', 'Insect Plague', 'Mass Cure Wounds']));
+    expect(at('spellList.oracle', 0)).toEqual(expect.arrayContaining(['Guidance', 'Light']));
+    expect(at('spellList.oracle', 1)).toEqual(expect.arrayContaining(['Identify', 'Sanctuary', 'Shield of Faith']));
+    expect(at('spellList.marksman', 1)).toEqual(expect.arrayContaining(['Longstrider', 'Searing Smite', 'Snare', 'Zephyr Strike']));
   });
 });

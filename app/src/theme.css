@@ -1714,3 +1714,17 @@ a {
 .action-head > div:first-child {
   min-width: 0;
 }
+
+.spell-class {
+  padding: 8px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.spell-class:first-of-type {
+  border-top: 0;
+}
+
+.chip-lg.chip-damage {
+  border-color: var(--damage);
+  color: var(--damage-ink);
+}

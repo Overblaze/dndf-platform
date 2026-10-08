@@ -14,6 +14,7 @@
       },
       "levels": {
         "0": [
+          "Blade Ward",
           "Booming Blade",
           "Chill Touch",
           "Create Bonfire",
@@ -36,6 +37,11 @@
         ],
         "1": [
           "Armor of Agathys",
+          "Arms of Hadar",
+          "Cause Fear",
+          "Charm Person",
+          "Distort Value",
+          "Expeditious Retreat",
           "Hellish Rebuke",
           "Hex",
           "Illusory Script",
@@ -58,6 +64,11 @@
         "3": [
           "Enemies Abound",
           "Fear",
+          "Hunger of Hadar",
+          "Hypnotic Pattern",
+          "Incite Greed",
+          "Intellect Fortress",
+          "Magic Circle",
           "Major Image",
           "Thunder Step",
           "Vampiric Touch"
@@ -83,6 +94,10 @@
           "Wall of Light"
         ],
         "6": [
+          "Circle of Death",
+          "Flesh to Stone",
+          "Mass Suggestion",
+          "Mental Prison",
           "Scatter",
           "Soul Cage"
         ],
@@ -107,7 +122,7 @@
           "Weird"
         ]
       },
-      "text": "73 spells, by level."
+      "text": "88 spells, by level."
     },
     {
       "id": "spellList.skald",
@@ -122,6 +137,8 @@
       },
       "levels": {
         "0": [
+          "Blade Ward",
+          "Dancing Lights",
           "Friends",
           "Light",
           "Mending",
@@ -149,7 +166,11 @@
           "Heroism",
           "Identify",
           "Longstrider",
-          "Silent Image"
+          "Silent Image",
+          "Silvery Barbs",
+          "Sleep",
+          "Tasha’s Hideous Laughter",
+          "Thunderwave"
         ],
         "2": [
           "Aid",
@@ -179,6 +200,11 @@
         ],
         "3": [
           "Bestow Curse",
+          "Catnap",
+          "Clairvoyance",
+          "Enemies Abound",
+          "Fast Friends",
+          "Fear",
           "Feign Death",
           "Glyph of Warding",
           "Hypnotic Pattern",
@@ -206,7 +232,10 @@
           "Greater Restoration",
           "Hold Monster",
           "Mass Cure Wounds",
-          "Mislead"
+          "Mislead",
+          "Rary’s Telepathic Bond",
+          "Skill Empowerment",
+          "Synaptic Static"
         ],
         "6": [
           "Eyebite",
@@ -238,7 +267,7 @@
           "Psychic Scream"
         ]
       },
-      "text": "96 spells, by level."
+      "text": "110 spells, by level."
     }
   ],
   "$note": "Extracted from DnDF Expanded Handbook v8.8 (PDF page = printed page) by tools/extract/extract_chapters.py. Text is word for word; fields listed under \"auto\" were recognised from the wording."

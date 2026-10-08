@@ -1073,6 +1073,40 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
 
   // Spells: what is known, with the handbook's words for the ones it prints, and what they can be cast with now.
   const slots = resources.filter((r) => /^slots\d$/.test(r.id)).sort((a, b) => a.id.localeCompare(b.id));
+  // Each casting class on its own: "You determine what spells you know and can prepare for each class
+  // individually, as if you were a single-classed member of that class."
+  const castingClasses: SheetSpells['classes'] = sources.filter((source) => source.entry === source.cls).flatMap((source) => {
+    const cls = source.cls;
+    const columns = classColumns(cls, source.classLevel);
+    const own = Object.entries((cls.formulas ?? {}) as Record<string, unknown>);
+    const formulaOf = (suffix: RegExp) => {
+      const id = own.map(([key]) => key).find((key) => suffix.test(key));
+      return id ? formulas.find((f) => f.key === `formula.${id}` && f.from === cls.name) : undefined;
+    };
+    const number = (key: string | undefined) => (key && typeof columns[key] === 'number' ? (columns[key] as number) : undefined);
+    const knownColumn = Object.keys(columns).find((key) => /^(powers|spells|tactics)Known$/.test(key));
+    const hasSlots = Object.keys(columns).some((key) => /^slots\d$/.test(key));
+    const dc = formulaOf(/DC$/);
+    if (!('cantripsKnown' in columns) && !knownColumn && !hasSlots) return [];
+    if (!dc && !knownColumn && !('cantripsKnown' in columns)) return [];
+    // A class that prepares says how many in its Spellcasting feature; one that learns has a "known" column.
+    const preparedText = features.flatMap((f) => (f.key.startsWith(`${cls.id}/`) ? f.displays.filter((d) => /prepared/i.test(d.label)) : []))[0]?.value;
+    const preparedMax = preparedText !== undefined && Number.isFinite(Number(preparedText)) ? Number(preparedText) : undefined;
+    const slotLevels = Object.keys(columns).flatMap((key) => (/^slots\d$/.test(key) && Number(columns[key]) > 0 ? [Number(key.slice(5))] : []));
+    const named = /^(\d)/.exec(String(columns.highestSpellLevel ?? ''));
+    return [{
+      id: cls.id, name: cls.name, level: source.classLevel,
+      mode: preparedMax !== undefined ? 'prepared' as const : 'known' as const,
+      dc, attack: formulaOf(/Attack$/),
+      cantripsMax: number('cantripsKnown'), knownMax: number(knownColumn), preparedMax,
+      maxSpellLevel: slotLevels.length ? Math.max(...slotLevels) : named ? Number(named[1]) : undefined,
+      cantrips: 0, known: 0, prepared: 0,
+      list: rules.has(`spellList.${cls.id.slice('class.'.length)}`) ? `spellList.${cls.id.slice('class.'.length)}` : undefined,
+    }];
+  });
+  /** The class a spell counts for: the one chosen, else the one whose list it was picked from, else the only one there is. */
+  const classOf = (spell: { cls?: string; list?: string }) =>
+    castingClasses.find((c) => c.id === spell.cls) ?? castingClasses.find((c) => c.list !== undefined && c.list === spell.list) ?? (castingClasses.length === 1 ? castingClasses[0] : undefined);
   const knownSpells: SheetSpells['known'] = (doc.spells ?? []).map((spell) => {
     const entry = spell.entry ? rules.get(spell.entry) : undefined;
     // A spell the player wrote carries its own words; otherwise they come from the rules data, when it has them.
@@ -1082,6 +1116,11 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       const value = own ? own[key] : entry?.[key];
       return typeof value === 'string' && value ? value : undefined;
     };
+    const of = classOf(spell);
+    if (of) {
+      if (spell.level === 0) of.cantrips += 1;
+      else { of.known += 1; if (spell.prepared) of.prepared += 1; }
+    }
     return {
       ...spell,
       text: words,
@@ -1091,20 +1130,19 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       ritual: (own ? own.ritual === true : entry?.kind === 'spell' && entry.ritual === true) ? true : undefined,
       rolls: words ? rollButtons(diceInText(words), plainScope) : [],
       castableWith: spell.level > 0 ? slots.filter((r) => Number(r.id.slice(5)) >= spell.level && r.remaining > 0).map((r) => Number(r.id.slice(5))) : [],
+      cls: of?.id, clsName: of?.name, mode: of?.mode,
+      // A class that learns its spells always has them ready; one that prepares has only today's.
+      ready: spell.level === 0 || of?.mode !== 'prepared' || spell.prepared === true,
+      tooHigh: spell.level > 0 && of?.maxSpellLevel !== undefined && spell.level > of.maxSpellLevel,
     };
   }).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
-  const casting: SheetSpells['casting'] = sources.flatMap((source) => {
-    const of = (id: string) => (source.entry.formulas as Record<string, unknown> | undefined)?.[id] ? formulas.find((f) => f.key === `formula.${id}` && f.from === source.entry.name) : undefined;
-    const dc = of('spellDC');
-    const attack = of('spellAttack');
-    return dc || attack ? [{ from: source.entry.name, dc, attack }] : [];
-  });
+  const casting: SheetSpells['casting'] = castingClasses.filter((c) => c.dc || c.attack).map((c) => ({ from: c.name, dc: c.dc, attack: c.attack }));
   const limits: SheetSpells['limits'] = [
     ...classTable.filter((c) => /known$|^highestSpellLevel$/i.test(c.key)).map((c) => ({ label: c.label, value: String(c.value), from: c.from })),
     ...features.flatMap((f) => f.displays.filter((d) => /prepared/i.test(d.label)).map((d) => ({ label: d.label, value: d.value, from: f.from.replace(/ \d+$/, '') }))),
   ];
   const spellbook: SheetSpells = {
-    casting, slots, limits, known: knownSpells,
+    casting, slots, limits, known: knownSpells, classes: castingClasses, pooledSlots: pooled.length > 1,
     cantrips: knownSpells.filter((k) => k.level === 0).length,
     leveled: knownSpells.filter((k) => k.level > 0).length,
     prepared: knownSpells.filter((k) => k.level > 0 && k.prepared).length,

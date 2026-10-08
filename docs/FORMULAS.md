@@ -425,3 +425,14 @@ Every racial trait is a feature on the sheet with the book's words. Uses, action
 | Casting a spell | a cantrip spends nothing; any other spell spends one slot of the level chosen, never lower than the spell's own. With no slot left it still goes ahead and says so | EH10 p.209 (multiclass slots) and each class's Spellcasting feature |
 | Save DC, attack modifier, number prepared | from each class's Spellcasting feature (see the class rows above) | — |
 | Spell text | only the eleven spells the handbook prints (EH10 p.218–220) have text and roll buttons; every other spell is the name the class list gives, with the player's own notes | EH10 p.211–220 |
+
+### Spells by class (multiclassing, EH10 p.210 · EH8.8 p.209)
+
+| What | Rule on the sheet |
+|---|---|
+| A class that **prepares** (Priest, Chemist, Tinkerer) | each long rest chooses up to (ability modifier + class level, at least 1) spells from its whole list; only prepared spells are ready, cantrips always are |
+| A class that **learns** (Oracle, Virtuoso / Skald, Marksman, Hybrid, v8.8 Devilforged) | knows the number its table gives ("powers / tactics known"); every one is always ready; nothing is prepared |
+| Each class on its own | cantrips known, spells known or prepared, and the highest spell level are read from that class's table at **that class's level**, "as if you were a single-classed member of that class" |
+| A spell's class | each spell counts for one class and uses that class's ability, save DC and attack modifier. It is the class chosen, else the class whose list it was picked from, else the only casting class |
+| Slots | Priest, Skald / Virtuoso and Tinkerer levels are added together and read on the Multiclass Spellcaster table; every other class keeps its own table's slots. Pooled slots can be of a higher level than any class's spells and are then only for casting lower-level spells at a higher level |
+| Highest spell level of a class | the highest slot level its own table gives at its level (Hybrid: its "highest spell level" column). A spell above it is flagged, never refused |

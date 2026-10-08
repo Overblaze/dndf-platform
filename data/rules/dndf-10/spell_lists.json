@@ -160,6 +160,8 @@
       },
       "levels": {
         "0": [
+          "Acid Splash",
+          "Booming Blade",
           "Chill Touch",
           "Fire Bolt",
           "Frostbite",
@@ -176,6 +178,11 @@
         "1": [
           "Arms of Hadar",
           "Catapult",
+          "Chaos Bolt",
+          "Chromatic Orb",
+          "Color Spray",
+          "Dissonant Whispers",
+          "Earth Tremor",
           "Ice Knife",
           "Ray of Sickness",
           "Tasha’s Caustic Brew",
@@ -193,6 +200,10 @@
           "Wither and Bloom"
         ],
         "3": [
+          "Dispel Magic",
+          "Erupting Earth",
+          "Fireball",
+          "Lightning Bolt",
           "Tidal Wave",
           "Vampiric Touch"
         ],
@@ -207,7 +218,12 @@
           "Synaptic Static"
         ],
         "6": [
-          "Chain Lightning"
+          "Chain Lightning",
+          "Circle of Death",
+          "Disintegrate",
+          "Harm",
+          "Otiluke’s Freezing Sphere",
+          "Sunbeam"
         ],
         "7": [
           "Finger of Death",
@@ -225,7 +241,7 @@
           "Psychic Scream"
         ]
       },
-      "text": "45 spells, by level.",
+      "text": "61 spells, by level.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -247,6 +263,7 @@
       },
       "levels": {
         "1": [
+          "Absorb Elements",
           "Alarm",
           "Animal Friendship",
           "Beast Bond",
@@ -257,7 +274,11 @@
           "Fog Cloud",
           "Hail of Thorns",
           "Hunter’s Mark",
-          "Jump"
+          "Jump",
+          "Longstrider",
+          "Searing Smite",
+          "Snare",
+          "Zephyr Strike"
         ],
         "2": [
           "Aid",
@@ -271,6 +292,11 @@
           "Find Traps",
           "Gust of Wind",
           "Lesser Restoration",
+          "Locate Animals or Plants",
+          "Locate Object",
+          "Magic Weapon",
+          "Pass without Trace",
+          "Protection from Poison",
           "Silence",
           "Spike Growth"
         ],
@@ -282,7 +308,10 @@
           "Flame Arrows",
           "Lightning Arrow",
           "Nondetection",
-          "Protection from Energy"
+          "Protection from Energy",
+          "Speak with Plants",
+          "Water Breathing",
+          "Wind Wall"
         ],
         "4": [
           "Freedom of Movement",
@@ -298,7 +327,7 @@
           "Swift Quiver"
         ]
       },
-      "text": "41 spells, by level.",
+      "text": "54 spells, by level.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -320,6 +349,8 @@
       },
       "levels": {
         "0": [
+          "Guidance",
+          "Light",
           "Mending",
           "Message",
           "Resistance",
@@ -337,7 +368,10 @@
           "Faerie Fire",
           "Guiding Bolt",
           "Healing Word",
-          "Heroism"
+          "Heroism",
+          "Identify",
+          "Sanctuary",
+          "Shield of Faith"
         ],
         "2": [
           "Aid",
@@ -356,7 +390,10 @@
           "Beacon of Hope",
           "Bestow Curse",
           "Clairvoyance",
-          "Dispel Magic"
+          "Dispel Magic",
+          "Mass Healing Word",
+          "Sending",
+          "Speak with Dead"
         ],
         "4": [
           "Compulsion",
@@ -376,6 +413,13 @@
           "Scrying",
           "Wall of Force"
         ],
+        "6": [
+          "Find the Path",
+          "Heal",
+          "Heroes’ Feast",
+          "True Seeing",
+          "Word of Recall"
+        ],
         "7": [
           "Divine Word",
           "Etherealness",
@@ -394,7 +438,7 @@
           "Mass Heal"
         ]
       },
-      "text": "56 spells, by level.",
+      "text": "69 spells, by level.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -416,6 +460,8 @@
       },
       "levels": {
         "0": [
+          "Guidance",
+          "Light",
           "Mending",
           "Resistance",
           "Sacred Flame",
@@ -440,6 +486,10 @@
           "Shield of Faith"
         ],
         "2": [
+          "Aid",
+          "Augury",
+          "Blindness/Deafness",
+          "Borrowed Knowledge",
           "Calm Emotions",
           "Continual Flame",
           "Enhance Ability",
@@ -462,6 +512,11 @@
           "Daylight",
           "Fast Friends",
           "Feign Death (ritual)",
+          "Glyph of Warding",
+          "Incite Greed",
+          "Life Transference",
+          "Mass Healing Word",
+          "Motivational Speech",
           "Protection from Energy",
           "Remove Curse",
           "Sending",
@@ -484,7 +539,10 @@
           "Dispel Evil and Good",
           "Geas",
           "Greater Restoration",
-          "Hallow"
+          "Hallow",
+          "Holy Weapon",
+          "Insect Plague",
+          "Mass Cure Wounds"
         ],
         "6": [
           "Find the Path",
@@ -511,7 +569,7 @@
           "Power Word Heal"
         ]
       },
-      "text": "75 spells, by level.",
+      "text": "89 spells, by level.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -533,6 +591,8 @@
       },
       "levels": {
         "0": [
+          "Acid Splash",
+          "Blade Ward",
           "Booming Blade",
           "Chill Touch",
           "Control Flames",
@@ -581,6 +641,11 @@
           "Fog Cloud",
           "Frost Fingers",
           "Gift of Alacrity",
+          "Grease",
+          "Ice Knife",
+          "Jump",
+          "Longstrider",
+          "Mage Armor",
           "Magic Missile",
           "Ray of Sickness",
           "Shield",
@@ -628,7 +693,12 @@
           "See Invisibility",
           "Shatter",
           "Skywrite",
-          "Snilloc’s Snowball Swarm"
+          "Snilloc’s Snowball Swarm",
+          "Spider Climb",
+          "Suggestion",
+          "Web",
+          "Wither and Bloom",
+          "Wristpocket"
         ],
         "3": [
           "Ashardalon’s Stride",
@@ -677,6 +747,11 @@
           "Wall of Fire"
         ],
         "5": [
+          "Bigby’s Hand",
+          "Cloudkill",
+          "Cone of Cold",
+          "Dawn",
+          "Dominate Person",
           "Enervation",
           "Geas",
           "Hold Monster",
@@ -726,7 +801,7 @@
           "Weird"
         ]
       },
-      "text": "173 spells, by level.",
+      "text": "190 spells, by level.",
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -747,6 +822,8 @@
       },
       "levels": {
         "0": [
+          "Blade Ward",
+          "Dancing Lights",
           "Friends",
           "Light",
           "Mending",
@@ -774,7 +851,11 @@
           "Heroism",
           "Identify",
           "Longstrider",
-          "Silent Image"
+          "Silent Image",
+          "Silvery Barbs",
+          "Sleep",
+          "Tasha’s Hideous Laughter",
+          "Thunderwave"
         ],
         "2": [
           "Aid",
@@ -804,6 +885,11 @@
         ],
         "3": [
           "Bestow Curse",
+          "Catnap",
+          "Clairvoyance",
+          "Enemies Abound",
+          "Fast Friends",
+          "Fear",
           "Feign Death",
           "Glyph of Warding",
           "Hypnotic Pattern",
@@ -831,7 +917,10 @@
           "Greater Restoration",
           "Hold Monster",
           "Mass Cure Wounds",
-          "Mislead"
+          "Mislead",
+          "Rary’s Telepathic Bond",
+          "Skill Empowerment",
+          "Synaptic Static"
         ],
         "6": [
           "Eyebite",
@@ -863,7 +952,7 @@
           "Psychic Scream"
         ]
       },
-      "text": "96 spells, by level."
+      "text": "110 spells, by level."
     },
     {
       "id": "rule.custom_spells",
