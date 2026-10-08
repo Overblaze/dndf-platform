@@ -77,7 +77,7 @@ export function CharacterList({ store }: { store: CharacterStore }) {
             {TEST_CHARACTERS.map((c) => <option key={c.id} value={c.id}>{c.name} ({VERSION_NAMES[c.version]}): {c.checks}</option>)}
           </select>
         </details>
-        <p className="page-ref">Classes, races, backgrounds, crew roles and feats from both handbooks (v10 and v8.8) are available. The step-by-step builder comes later, so ability scores are typed in as final values.</p>
+        <p className="page-ref">Classes, races, backgrounds, crew roles and feats from both handbooks (v10 and v8.8) are available. “New character” opens the step-by-step builder; the Build page has it too, with level up and editing for the characters you have.</p>
       </section>
 
       {creating && (

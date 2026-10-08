@@ -1,6 +1,6 @@
 import { deriveSheet, type CharacterDoc, type Stat } from '@dndf/engine';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Dialog } from '../components/Dialog';
 import { RollsProvider } from '../lib/rolls';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
@@ -50,9 +50,11 @@ function conflictSummary(other: CharacterDoc): string {
 
 export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) {
   const { live, loadError, missing } = useCharacter(store, id);
-  const [tab, setTab] = useState<TabId>('combat');
+  // The Build page links straight to a tab or a dialog: /sheet/<id>?do=level, ?tab=features.
+  const [asked] = useSearchParams();
+  const [tab, setTab] = useState<TabId>(() => TABS.find((t) => t.id === asked.get('tab'))?.id ?? 'combat');
   const [open, setOpen] = useState<{ key: string; kind: StatKind; rollable: boolean } | null>(null);
-  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | 'surge' | null>(null);
+  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | 'surge' | null>(() => { const wanted = asked.get('do'); return wanted === 'level' || wanted === 'edit' || wanted === 'surge' || wanted === 'history' ? wanted : null; });
   // The character as it was before the last level-up, kept until it is undone or dismissed.
   const [beforeLevel, setBeforeLevel] = useState<CharacterDoc | null>(null);
 
