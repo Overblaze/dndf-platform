@@ -1351,3 +1351,13 @@ a {
 .history-row .btn {
   min-height: 44px;
 }
+
+.taken-off {
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+
+.taken-off h3 {
+  margin: 0 0 4px;
+}

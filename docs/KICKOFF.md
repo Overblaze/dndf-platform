@@ -21,4 +21,6 @@ Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (
 
 5. **History with undo** (branch `phase4-history`): every logged change keeps the character as it was just before, in `character_history` (signed in) or this browser (last 60); the History dialog undoes back to any line, and the undo is itself a line.
 
-Still to do in Phase 4: swapping a class's own features for others, and a fully custom class.
+6. **Feature swap** (branch `phase4-feature-swap`): take any class, subclass or option feature off a character and put it back; with Borrow a feature this is the build editor's "override".
+
+Still to do in Phase 4: a fully custom class.

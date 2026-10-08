@@ -175,6 +175,8 @@ export interface Sheet {
   generalRules: Record<string, SectionDef>;
   /** Effects in force right now (resistances, advantage, exhaustion). */
   notes: { label: string; from: string }[];
+  /** Features of the character's classes that the player has taken off the sheet. */
+  takenOff: { key: string; name: string; from: string; page: number; book: string }[];
   /** Armor, weapons and tools the character is proficient with, each with where it comes from. */
   proficiencies: { armor: Proficiency[]; weapons: Proficiency[]; tools: Proficiency[] };
   warnings: string[];
@@ -284,6 +286,17 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
         }
       }
     }
+  }
+
+  // Features the player took off the character: gone from the sheet with everything they did, and
+  // listed so they can be put back.
+  const takenOff = new Set(doc.removedFeatures ?? []);
+  const offSheet: Sheet['takenOff'] = [];
+  for (let i = active.length - 1; i >= 0; i--) {
+    const a = active[i]!;
+    if (!takenOff.has(a.key)) continue;
+    offSheet.unshift({ key: a.key, name: a.def.name, from: a.from, page: a.def.page, book: a.source.entry.source.book });
+    active.splice(i, 1);
   }
 
   // Features from outside the character's classes. Their expressions read the character's whole level,
@@ -853,6 +866,7 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     resources,
     toggles,
     trackers,
+    takenOff: offSheet,
     proficiencies,
     counters,
     attacks,
