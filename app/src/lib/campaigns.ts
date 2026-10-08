@@ -20,6 +20,9 @@ export interface Grant {
   entry: { name: string; book: string } | null;
 }
 export interface SecretSummary { key: string; name: string; book: string }
+export interface CrewMember { characterId: string; name: string; player: string; level: number; bounty: number | null; epithet: string | null; terms: string | null; issued: string | null }
+/** A character as the DM sees it at a glance. */
+export interface PartyMember { id: string; name: string; summary: string; player: string; hp: number; maxHp: number; tempHp: number; ac: number; passivePerception: number; speed: number; conditions: string[]; exhaustion: number; bounty: number; unreadable: boolean }
 export interface TableFruit { characterId: string; characterName: string; revealed: boolean; fruit: string | null }
 
 interface Failure { message: string; code?: string }
@@ -126,6 +129,28 @@ export function campaignApi(db: SupabaseClient) {
       const { count, error } = await db.from('secret_entries').select('key', { count: 'exact', head: true }).eq('kind', 'devilFruit');
       if (error) throw explain(error);
       return count ?? 0;
+    },
+    /** The crew as its members may know it: names, levels, and the posters that have been issued. */
+    async crew(campaignId: string): Promise<CrewMember[]> {
+      const list = await rows<{ character_id: string; character_name: string; player_name: string; level: number; bounty: number | string | null; epithet: string | null; terms: string | null; issued: string | null }>(db.rpc('campaign_crew', { cid: campaignId }));
+      return list.map((r) => ({ characterId: r.character_id, name: r.character_name, player: r.player_name, level: Number(r.level) || 0, bounty: r.bounty === null ? null : Number(r.bounty), epithet: r.epithet, terms: r.terms, issued: r.issued }));
+    },
+    /** Every character in a campaign with its numbers, for the campaign's DM (who may read them all). */
+    async party(campaignId: string): Promise<PartyMember[]> {
+      const list = await rows<{ id: string; owner_id: string; doc: unknown; profiles: { display_name: string | null; discord_username: string | null } | null }>(
+        db.from('characters').select('id, owner_id, doc, profiles(display_name, discord_username)').eq('campaign_id', campaignId),
+      );
+      return list.map((row) => {
+        const player = nameOf(row.profiles ?? {});
+        const doc = normalizeDoc(row.doc);
+        try {
+          if (!doc) throw new Error('unreadable');
+          const sheet = deriveSheet(doc, ruleSet(doc.rulesVersion).rules);
+          return { id: row.id, name: sheet.name, summary: sheet.summary, player, hp: doc.state.hp, maxHp: sheet.maxHp.value, tempHp: doc.state.tempHp, ac: sheet.ac.value, passivePerception: sheet.passivePerception.value, speed: sheet.speed.value, conditions: doc.state.conditions, exhaustion: doc.state.exhaustion, bounty: sheet.wanted.value, unreadable: false };
+        } catch {
+          return { id: row.id, name: doc?.name ?? 'Unreadable character', summary: '', player, hp: 0, maxHp: 0, tempHp: 0, ac: 0, passivePerception: 0, speed: 0, conditions: [], exhaustion: 0, bounty: 0, unreadable: true };
+        }
+      }).sort((a, b) => a.name.localeCompare(b.name));
     },
     /** Who at the table has a Devil Fruit. The fruit's name comes back only when this account may know it. */
     async tableFruits(campaignId: string): Promise<TableFruit[]> {

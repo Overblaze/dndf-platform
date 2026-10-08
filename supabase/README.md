@@ -102,3 +102,10 @@ writes themselves (custom spells for now).
 Until this file is run, the Library's "Your spells" says which file to run, and spells written while signed out are
 kept in the browser instead. A spell added to a character is copied onto the character, so sheets do not depend on
 this table.
+
+## The crew's wanted posters (`0005_crew.sql`)
+
+Run `0005_crew.sql` in the SQL Editor like the others. It adds no table, only one function, `campaign_crew(campaign id)`:
+members of a campaign get each character's name, level and the wanted poster its player has **issued** (bounty,
+epithet, terms, date). A player still cannot read a crewmate's character; nothing else of a sheet leaves it. Until
+this file is run, the Crew page says which file to run and everything else works.

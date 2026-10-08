@@ -5,6 +5,8 @@ import { RuleText } from '../components/RuleText';
 import { useRolls } from '../lib/rolls';
 import { rng } from '../lib/rules';
 import type { LiveCharacter } from '../lib/useCharacter';
+import { BountyCard } from './Bounty';
+import type { OpenStat } from './Vitals';
 
 /** The book's own wording for a universal rule, when the general rules are loaded. */
 function BookText({ sheet, name, note }: { sheet: LiveCharacter['sheet']; name: string; note?: string }) {
@@ -19,7 +21,7 @@ function BookText({ sheet, name, note }: { sheet: LiveCharacter['sheet']; name: 
   );
 }
 
-export function StatusTab({ live }: { live: LiveCharacter }) {
+export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenStat }) {
   const rolls = useRolls();
   const { doc, sheet } = live;
   const state = doc.state;
@@ -148,6 +150,8 @@ export function StatusTab({ live }: { live: LiveCharacter }) {
           ))}
         </div>
       </section>
+
+      <BountyCard live={live} onOpen={onOpen} />
 
       <section className="card">
         <h2>Notes</h2>

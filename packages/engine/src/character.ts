@@ -1,5 +1,6 @@
 // The saved character document (the `doc` column of the characters table).
 import type { ScoreOrigin } from './abilityScores';
+import { cleanBounty, type BountyRecord } from './bounty';
 import type { CustomClass } from './customClass';
 import type { InventoryItem } from './inventory';
 import { cleanSpellDetails, type KnownSpell } from './spells';
@@ -124,6 +125,8 @@ export interface CharacterDoc {
   inventory?: InventoryItem[];
   /** Berries (฿) in hand. */
   money?: number;
+  /** The price on the character's head: what it is worked out from, and the poster last issued. */
+  bounty?: BountyRecord;
   /** Spells (powers, tactics, creations) the character knows. */
   spells?: KnownSpell[];
   willpower: { strengthenSelf: number; variantAdvancements?: number | null };
@@ -308,6 +311,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
       own: spell.own === undefined ? undefined : cleanSpellDetails(spell.own),
       cls: typeof spell.cls === 'string' && spell.cls ? spell.cls : undefined,
     })),
+    bounty: cleanBounty(doc.bounty),
     money: typeof doc.money === 'number' && Number.isFinite(doc.money) ? Math.round(doc.money) : undefined,
     willpower: isObject(doc.willpower)
       ? { ...doc.willpower, strengthenSelf: Math.max(0, whole(doc.willpower.strengthenSelf, 0)), variantAdvancements: typeof doc.willpower.variantAdvancements === 'number' && Number.isFinite(doc.willpower.variantAdvancements) ? Math.max(0, Math.round(doc.willpower.variantAdvancements)) : doc.willpower.variantAdvancements === null ? null : undefined }

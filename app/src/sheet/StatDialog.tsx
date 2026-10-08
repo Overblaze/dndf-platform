@@ -37,7 +37,7 @@ export function StatDialog({ stat, kind, rollable, live, onClose }: { stat: Stat
           {stat.lines.map((line, i) => (
             <li key={i}>
               <span>{line.label}</span>
-              <span className="num">{line.value}</span>
+              <span className="num">{kind === 'berries' && typeof line.value === 'number' ? formatStat(line.value, kind) : line.value}</span>
             </li>
           ))}
           <li className="breakdown-total">

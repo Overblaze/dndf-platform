@@ -1,11 +1,12 @@
-import { signed, type Sheet, type Stat } from '@dndf/engine';
+import { exactBerries, signed, type Sheet, type Stat } from '@dndf/engine';
 
-export type StatKind = 'mod' | 'plain' | 'ft' | 'lb';
+export type StatKind = 'mod' | 'plain' | 'ft' | 'lb' | 'berries';
 
 export function formatStat(value: number, kind: StatKind): string {
   if (kind === 'mod') return signed(value);
   if (kind === 'ft') return `${value} ft`;
   if (kind === 'lb') return `${value} lb`;
+  if (kind === 'berries') return exactBerries(value);
   return String(value);
 }
 
@@ -13,7 +14,7 @@ export function formatStat(value: number, kind: StatKind): string {
 export function findStat(sheet: Sheet, key: string): Stat | undefined {
   const all: (Stat | null)[] = [
     sheet.prof, sheet.ac, sheet.speed, sheet.initiative, sheet.maxHp, sheet.carry, sheet.willpower, sheet.hakiSaveDc,
-    sheet.hakiAttack, sheet.fruitSaveDc, sheet.fruitAttack, sheet.passivePerception, ...Object.values(sheet.saves), ...sheet.skills, ...sheet.attacks.map((a) => a.toHit), ...sheet.formulas, ...sheet.haki.colors.map((c) => c.count),
+    sheet.hakiAttack, sheet.wanted, sheet.fruitSaveDc, sheet.fruitAttack, sheet.passivePerception, ...Object.values(sheet.saves), ...sheet.skills, ...sheet.attacks.map((a) => a.toHit), ...sheet.formulas, ...sheet.haki.colors.map((c) => c.count),
   ];
   return all.find((s) => s?.key === key) ?? undefined;
 }

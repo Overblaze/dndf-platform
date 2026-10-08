@@ -506,6 +506,34 @@ describe('homebrew: spells a player writes', () => {
   });
 });
 
+describe('the crew: what members of a campaign see of each other', () => {
+  const crew = (who: string | null) => as(who, `select character_name, player_name, level, bounty, epithet, terms from public.campaign_crew($1) order by character_name`, [campaign]);
+
+  it('members see each character’s name, level and issued poster; someone outside sees nothing', async () => {
+    await as(ana, `update public.characters set doc = doc || $2::jsonb where id = $1`, [anaChar, JSON.stringify({ classes: [{ id: 'class.bruiser', level: 7 }, { id: 'class.warrior', level: 2 }], bounty: { deeds: { majorDeeds: 3 }, epithet: 'not yet public', posted: { value: 112000000, epithet: 'Iron Fist', terms: 'Dead or Alive', at: '2026-10-08' } }, notes: 'my secret plan' })]);
+    const seen = await crew(ben);
+    const kaito = seen.find((r) => r.character_name === 'Kaito Rourke')!;
+    expect(kaito).toMatchObject({ level: 9, epithet: 'Iron Fist', terms: 'Dead or Alive' });
+    expect(Number(kaito.bounty)).toBe(112000000);
+    expect(typeof kaito.player_name).toBe('string');
+    expect(await crew(matt)).toHaveLength(seen.length);
+    expect(await crew(zed)).toEqual([]);
+    await expect(as(null, `select * from public.campaign_crew($1)`, [campaign])).rejects.toThrow(/permission denied/);
+    // Only the issued poster leaves the sheet: not the unissued epithet, the deeds, or anything else.
+    expect(JSON.stringify(seen)).not.toMatch(/not yet public|secret plan|majorDeeds/);
+    // A crewmate still cannot read the character itself.
+    expect(await as(ben, `select id from public.characters where id = $1`, [anaChar])).toEqual([]);
+  });
+
+  it('a character with no poster, or a damaged one, is listed without a bounty rather than breaking the list', async () => {
+    await as(ana, `update public.characters set doc = jsonb_set(doc, '{bounty}', $2::jsonb) where id = $1`, [anaChar, JSON.stringify({ posted: { value: 'lots', epithet: 7 } })]);
+    const kaito = (await crew(ben)).find((r) => r.character_name === 'Kaito Rourke')!;
+    expect(kaito.bounty).toBeNull();
+    await as(ana, `update public.characters set doc = jsonb_set(doc, '{classes}', '"broken"'::jsonb) where id = $1`, [anaChar]);
+    expect((await crew(ben)).find((r) => r.character_name === 'Kaito Rourke')!.level).toBe(0);
+  });
+});
+
 describe('signed-out visitors', () => {
   it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history', 'secret_entries', 'grants', 'homebrew'])(
     'cannot read %s',
