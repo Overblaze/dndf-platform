@@ -390,6 +390,7 @@ A feat's "+1 to an ability score" is not applied: ability scores are entered as 
 | Rations | days = rations ÷ people aboard | 120 ÷ 8 = 15 | — |
 | Ship's soul | per voyage, crew roll (DC 10 Large/Huge, 15 Gargantuan); > half succeed = 1; 3 = sentient | 1/3 | DMG p.11 |
 | Ship speed on the sheet | the fastest movement component that still works, less its own damage loss; then halved (rounded down) if short-handed, and halved again if over cargo capacity | Caravel 35 → 25 after 60 damage to the sails | DMG p.11, 15 |
+| Ship's worth | her own cost + each upgrade (the crew's figure for it, else what was paid, else the book's price for this ship); the crew can type a worth over it | Modified Caravel ฿60M + 15M paid + 22M book price + 8M + 4M as valued = ฿109M | DMG p.15, 23 |
 | Upgrade price | flat price + the book's percentage of the ship's own cost | Paddle-Wheel on a Caravel: ฿10M + 20% of ฿50M = ฿20M | DMG p.23–27 |
 | A component from the book with a count | "Cannon (2)" becomes two components, each with its own hit points | — | DMG p.15 |
 
