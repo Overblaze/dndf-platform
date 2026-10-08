@@ -21,7 +21,7 @@ describe.each(['dndf-10', 'dndf-8.8'] as const)('rules data for %s', (version) =
     for (const entry of rules.values()) {
       expect(entry.versions, entry.id).toContain(version);
       // Spell text from the free 5e rules is the one thing not from the handbook.
-      if (entry.source.book !== '5e SRD 5.1') expect(entry.source.book, entry.id).toContain(version === 'dndf-10' ? 'v10' : 'v8.8');
+      if (entry.source.book !== '5e SRD 5.1' && entry.source.book !== 'DnDF DM Guide') expect(entry.source.book, entry.id).toContain(version === 'dndf-10' ? 'v10' : 'v8.8');
     }
   });
 

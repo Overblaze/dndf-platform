@@ -11,7 +11,7 @@ const entries = allFiles.flatMap((f) => f.entries);
 describe('rules versions', () => {
   it('stores an entry that is the same in both books once, tagged with both versions', () => {
     // Entries from the free 5e rules belong to both versions and have one source, not a page in each handbook.
-    const shared = entries.filter((e) => e.versions.length === 2 && e.source.book !== '5e SRD 5.1');
+    const shared = entries.filter((e) => e.versions.length === 2 && e.source.book !== '5e SRD 5.1' && e.source.book !== 'DnDF DM Guide');
     expect(shared.length).toBeGreaterThan(200);
     for (const entry of shared) {
       expect(entry.versions).toEqual(['dndf-8.8', 'dndf-10']);

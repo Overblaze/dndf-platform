@@ -1,0 +1,2823 @@
+{
+  "$schemaVersion": 1,
+  "$note": "Chapter 2 of the DnDF DM Guide (PDF pages 11–43), which Matt ruled public. Extracted by tools/extract/extract_ships.py; pages are the PDF's.",
+  "entries": [
+    {
+      "id": "rule.ships_ship_stat_blocks",
+      "kind": "rule",
+      "name": "Ship Stat Blocks",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 11
+      },
+      "text": "A ship's stats provide information that can be used for combat and defensive or offensive capabilities. While unmanned or without a crew, a ship cannot take actions or use offensive abilities unless specific exceptions are made.",
+      "sections": [
+        {
+          "name": "Basic Statistics",
+          "text": "",
+          "page": 11
+        },
+        {
+          "name": "Size",
+          "text": "Ships can range in size from Large to Gargantuan. A ship that is between 10 and 14 feet in length or width would be counted as large vessel, a ship that is between 15 and 19 feet in length or width would be counted as huge vessel, and a ship equal to or larger than 20 feet would be counted as a gargantuan vessel.",
+          "page": 11
+        },
+        {
+          "name": "Space",
+          "text": "A ship doesn't have a square space unless its stat block specifies otherwise. For example, a ship that is 20 feet long and 10 feet wide occupies a 20-by-10-foot space.\nA ship can't move into a space that is too small to accomodate it. If it tries to do so, it crashes, as described later in the \"Crashing\" section.",
+          "page": 11
+        },
+        {
+          "name": "Crew Maximum",
+          "text": "A ship's stat block determines how many crew members it needs to run the ship efficiently. This assumes crew members are medium or smaller creatures. If a creature is large, it counts as four crew members. If a creature is huge, it counts as nine crew members. If a creature is gargantuan, it counts as 20 crew members or more (up to DM discretion).\nFuel engines are another way to automate your ship's functions without a need for a large crew. Fuel engines fill a certain number of crew slots based on its type (See \"Ship Upgrades\"), however they also require fuel to function (See \"Fueling Your Ship\").\nAny additional crew members over the crew maximum are counted as passengers. If the ship holds more than the crew max and passenger limit, the ship becomes cramped and all movement on the ship is halved for the duration that it remains cramped. Creatures may also be pushed off the ship, suffocated, or trampled while the ship is cramped.",
+          "page": 11
+        },
+        {
+          "name": "Capacity",
+          "text": "Indicated by the ship's stat block, the capcity of a ship determines how much cargo and creature weight it can carry. Once over weight capacity, the ship will move at half speed, rolls made to maneuver the boat will be made at disadvantage, and it may possibly capsize.",
+          "page": 11
+        },
+        {
+          "name": "Upgrade Slots",
+          "text": "The number of upgrade slots that can be used on a ship is determined by its stat block. Upgrade components can be added when a ship has upgrade slots available (See \"Ship Upgrades\"). Additional upgrade slots can be added during the ship's initial construction.",
+          "page": 11
+        },
+        {
+          "name": "Special Vehicles",
+          "text": "Special vehicles are rare vehicles indicated by their type on their stat block. These vehicles are typically either exotic, extremely powerful, or limited in number, making them far more difficult to find. Special vehicles cannot be purchased from ordinary vendors, and are only available for sale in specific locations determined by the DM.\nBlueprints To build special vehicles or special components, blueprints will be required before attempting the building process. Blueprints might be found in certain locations or be available for high prices or in exchange for favors from specific NPCs, determined by the DM.",
+          "page": 11
+        },
+        {
+          "name": "Ability Scores",
+          "text": "A ship has six ability scores (Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma) and corresponding modifiers.\nA ship's strength represents its size and weight. Dexterity represents a ship's ease of handling. A ship's constitution covers it durability and the quality of its construction. Ships will typically have a score of 0 in Intelligence, Wisdom, and Charisma unless it becomes sentient over time as the crew bonds it with or lends it a devil fruit.\nIf a ship has a 0 in a score, it automatically fails any ability check or saving throw that uses that score.",
+          "page": 11
+        },
+        {
+          "name": "Vulnerabilities, Resistances, and Immunities",
+          "text": "A ship's vulnerabilities, resistances, and Immunities apply to all its components, unless otherwise noted in the stat block. Typically ships will be immune to poison and psychic damage. A sentient ship may be capable of taking psychic damage, however. Ships crafted from metal or stone are also normally immune to necrotic damage. They are also immune to the following conditions unless they are sentient (in which case, the DM chooses which immunities to apply): blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, and unconscious.",
+          "page": 11
+        },
+        {
+          "name": "Sentience",
+          "text": "A ship will become sentient if it consumes a zoan-type devil fruit, becomes influenced by the effects of a devil fruit that might grant it sentience, or develops a soul from the love of its crew.\nA ship will slowly develop a soul as its crew bonds with it over several voyages between islands. At the end of each voyage, every member of the crew must roll a Charisma check (DC 10 for a Large or Huge ship, DC 15 for a Gargantuan ship, and DC 20 for a Battleship). If more than half of the crew succeeds on this check, then the entire check is considered a success. After 3 total successes, the ship begins to develop a soul (see below). The DM may choose to withhold what these rolls are being used for.\nAlternatively, the ship may develop a soul or personality from eating a zoan-type devil fruit. By feeding a devil fruit to a ship, it will become sentient in the same way it would be listed above.\nOnce the ship becomes sentient, it may begin speaking telepathically with its crew or others boarding it. However, because it is likely to be infantile at first, it won't be noticeably intelligent, aware, or charismatic. Its Intelligence, Wisdom, and Charisma scores are all set to 8. While these scores are set to 8, the ship will only be able to form simple sentences and possesses a limited vocabulary based on what words it learns from its crew.\nStarting from the point it becomes sentient, the ship will also be able to grow with its crew along the journey. Each time the crew levels up from here on out, so does the ship. While boarding the ship after the crew has leveled up at least once, the crew will be able to spend ability score points (2 per level up since the crew last boarded the ship) to increase the ship's Intelligence, Wisdom, or Charisma scores.\nIn addition, the ship can be given inspiration dice at the start of each voyage or whenever the DM decides. This inspiration dice may be used to allow for a re-roll on any ability check or saving throw made by the ship.\nSentient Skills While the ship is sentient it can use a number of different skills on its own without needing to be operated or boarded by a crew:\nRescue Crew (Intelligence 12 or higher). A sentient ship that knows its crew is in danger will attempt to sail itself to go save them. Whether it succeeds in doing so depends on the skill checks made by the ship to do so (determined by the DM). This can only be done once per day.\nSupernatural Awareness (Wisdom 12 or higher). A sentient ship is roughly aware of who enters and leaves the ship at all times. It can use this awareness to inform its crew if any creature might be sneaking around on the ship or of any potential sabotage. How precise this awareness is depends on the Wisdom score of the ship and any Wisdom checks made by the ship.\nInspiring Chant (Charisma 12 or higher). A sentient ship that has developed a deep bond with its crew is able to inspire and push them to their limits. If a crew member is within 30 feet of the ship, the ship may use an action on its own to help motivate and inspire them. The inspired crew member gains advantage on the next ability check they make. This can be used a number of times equal to the captain's proficiency modifier, and it regains all uses once the crew completes a long rest.",
+          "page": 11
+        },
+        {
+          "name": "Components",
+          "text": "A ship is composed of different components:\nHull. A ship's hull is its basic frame, on which the other components are mounted.\nControl. A control component is used to steer a ship.\nMovement. A movement component is the element of the ship that enables it to move, such as a set of sails or oars.\nWeapon. A ship capable of being used in combat has one or more weapon components, each of which is operated separately.\nA ship's components might have special rules, as described in the stat block.",
+          "page": 13
+        },
+        {
+          "name": "Armor Class",
+          "text": "A component has an Armor Class. Its AC is meant to reflect its size, the materials used to construct it, and any defensive plating or armor used to augment its toughness.",
+          "page": 13
+        },
+        {
+          "name": "Hit Points",
+          "text": "A ship component is destroyed and becomes unusable when it drops to 0 hit points. A ship is wrecked if its hull is destroyed.\nA ship component does not have Hit Dice.",
+          "page": 13
+        },
+        {
+          "name": "Damage Threshold",
+          "text": "If a ship component has a damage threshold, that threshold appears after its hit points. A component has immunity to all damage unless it takes an amount of damage equal to or greater than its damage threshold, in which case it takes damage as normal. Any damage that fails to meet or exceed the damage threshold is considered superficial and doesn't reduce the component's hit points.",
+          "page": 13
+        },
+        {
+          "name": "Building a Ship",
+          "text": "If a crew desires, they may choose to build a ship or vehicle of their own with the help of a shipwright or shipbuilder. In any case, a shipwright that is proficient in managing or building vehicles will be able to spend a number of days building and assembling their dream ship.\nThe cost of building a ship will be equal to 80% of the listed cost of the desired ship type, since the price of labor is taken off the total and only the materials, parts, and special tools need to be purchased. If the ship is listed as a \"special vehicle\", a shipwright cannot build it until they have acquired the blueprints or any special materials required to do so. Additionally, building a special vehicle requires paying 100% of the listed cost instead.\nThe process of building a ship can be long, strenuous, and risky. Many mishaps may happen, and whole parts can break or might even require replacements. However, the upside of building a ship is that if it is properly crafted by a superior shipwright, it will look and function even greater than an average ship of its type.",
+          "page": 13
+        },
+        {
+          "name": "Building process",
+          "text": "Once all the required parts and materials are gathered in one place, a proficient shipwright or shipbuilder will be able to begin the ship building process:\nThe time it takes to build the ship is determined by the Constitution score of the type of desired vehicle on its stat block. If the constitution score is 11 or less, it will take 1 day to build. If the constitution score is 12 or 13, it will take 1 week to build. If the constitution score is 14 to 17, it will take a month and an additional month for each point over 14 to build. If the Constitution score is 18 or higher, it will take a year plus an additional year for each point over 18 to build. This time is halved for each additional proficient shipwright or shipbuilder that helps work on the vehicle until completion.\nThe construction period is considered downtime, but most of this downtime must be spent working on the ship each day. During this time, a number of skill checks must be made by the head shipwright to determine how successful the construction process is. The number of successful checks that need to be made is equal to 1 + its Constitution modifier on its stat block. The DC of each check is equal to the Constitution score of the vehicle (Minimum of DC 10). Each additional shipwright or shipbuilder working on the ship adds a +1 bonus to these checks (maximum of +5). These checks cannot be changed or given advantage/disadvantage by short-term skills or other abilities unless they are specifically related to the process of the shipbuilding, as it involves many different actions being done over a long period of time.\nIf a successful check is made, one success is counted. A critical success counts as 2 successes. If the check succeeds by 5 or more, it is a major success and you may roll on the \"Major Shipbuilding Success\" table to decide what buffs are applied to a random ship component.\nIf the check fails, one failure is counted. A critical failure is counted as 2 failures. If the check fails by 5 or more, it is a major failure and you must roll on the \"Major Shipbuilding Failure\" table to determine what penalties are applied to a random ship component. Once a component accumulates 3 or more major failures, it falls to 0 hit points and needs to be repaired. If 3 total failed checks or more are counted, the ship needs to be rebuilt from scratch all over again, effectively doubling the building time.\nOnce a number of successes equal to the 1 + the ship's Constitution modifier are counted over the total course of the required building period, the ship is finished and ready for use (using the stat blocks below).",
+          "page": 13
+        },
+        {
+          "name": "Major Shipbuilding Success Table",
+          "text": "",
+          "page": 13,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d4",
+                  "Success Type"
+                ],
+                [
+                  "1",
+                  "Hard Material: Component gains 1d4 bonus to its damage threshold"
+                ],
+                [
+                  "2",
+                  "Dense Coating: Component gains a +1 bonus to AC (Max 20)"
+                ],
+                [
+                  "3",
+                  "Well-Assembled: Component gains 1d12 maximum hit points."
+                ],
+                [
+                  "4",
+                  "Flawless Design: Any critical hit against the component becomes a normal hit."
+                ]
+              ],
+              "page": 13
+            }
+          ]
+        },
+        {
+          "name": "Major Shipbuilding Failure Table",
+          "text": "",
+          "page": 13,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d4",
+                  "Failure Type"
+                ],
+                [
+                  "1",
+                  "Brittle Material: If a component has a damage threshold, it is decreased by 1d4."
+                ],
+                [
+                  "2",
+                  "Cracked exterior: Component loses 1 AC (Min 10)"
+                ],
+                [
+                  "3",
+                  "Poorly Assembled: Component loses 1d12 maximum hit points."
+                ],
+                [
+                  "4",
+                  "Exposed Weakpoint: Attacks made against the component have advantage."
+                ]
+              ],
+              "page": 13
+            }
+          ]
+        },
+        {
+          "name": "Sample Stat Blocks",
+          "text": "Here are some example ship stat blocks of ships you can purchase or attain (availability and price list also included in Chapter 5 of the Unofficial One Piece D&D Player's Guide).",
+          "page": 13
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_ship_upgrades",
+      "kind": "rule",
+      "name": "Ship Upgrades",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 23
+      },
+      "text": "In addition to being able to build a ship, skilled shipwrights may be able to add additional components or weapons to their ship. Upgrade components may vary in price, especially if they are rare. However, sample prices are provided for each upgrade component. Additionally, a crew will need to pay a shipbuilder to upgrade their ship with a new component unless they have access to a shipwright on their crew. A shipwright will be proficient in any checks required to upgrade the ship with a new component.\nBuilding a component from scratch requires paying its component cost in tools and materials. Special components and their materials aren't normally available for purchase from common shops or shipyards. Building individual special components requires special knowledge or blueprints of the component and rare materials.\nUpgrading a ship requires the ship to have empty upgrade slots available. If the ship stat block does not list it has any upgrade slots available, it will not be possible to add new components to it unless the upgrade component states otherwise. Alternatively, a currently existing component on a ship can be replaced with an upgrade component. A currently existing component frees 1 upgrade slot when removed or can be replaced by an identical component. The hull can not be replaced on a ship if it has already been assembled, but can be added during the construction process by adding the upgrade cost to the total ship construction cost.",
+      "sections": [
+        {
+          "name": "Installing Upgrades",
+          "text": "If a ship is taken to a shipyard, a shipbuilder will always succeed on upgrading the ship. If the ship is being upgraded by a shipwright in the crew, they will be able to undergo the upgrading process to add a new component.\nThe upgrading process requires a set amount of downtime for the shipwright to work on the ship and install the upgrade components. The time it takes to upgrade the ship with the component is determined by the component type and how successful the shipwright is in installing the part. When a check is made to install a part, the roll must succeed on the DC listed by the component. The type of check is determined by the skill needed to add to the component (a cannon might require a strength check to carry and place, sails may require a dexterity check to properly align, etc.) and a shipwright will always add their proficiency bonus to these rolls.\nIf a successful check is made, the upgrade component is added to the ship with no issues. If the check succeeds by 5 or more, or is a critical success, you may roll on the \"Major Shipbuilding Success\" table to decide what buffs are applied to the component. You cannot have more than 3 major successes on a component.\nIf the check fails, the upgrade component is not added to the ship. Instead, the time spent adding the component is wasted and another check must be made. If the check fails by 5 or more, or is a critical fail, you must roll on the \"Major Shipbuilding Failure\" table to determine what penalties are applied to the component. If the component receives 3 major failure penalties, the component drops to 0 hit points and needs to be repaired.\nFor each additional shipwright working on the ship there is a +1 bonus made to any checks to install an upgrade component, up to a maximum of +5.\nMedium components. A medium component takes 1 hour for each check to install, and requires one successful DC check for each upgrade slot.\nLarge components. A large component takes 8 hours for each check to install, and requires one successful DC check for each upgrade slot.\nHuge components. A huge component takes 1 day for each check to install, and requires one successful DC checks for each upgrade slot.\nGargantuan components. A gargantuan component takes 1 day for each check to install, and requires two successful DC checks for each upgrade slot.\n*Special components take double the time to install.",
+          "page": 23
+        },
+        {
+          "name": "Acquiring a Ship",
+          "text": "Most parties will not be able to afford a ship early on, especially at lower levels. Even at later levels, decent ships still might be far out of their price range. Some options for providing easy access to a ship for players outside of giving them tons of money to spend include:\nSaving an island of shipbuilders from a pirate invasion, earning them a free ship or\nsupplies and workers to build one.\nReceiving a ship as a gift from a wealthy contact or quest giver.\nStealing a ship from a powerful group of pirates.\nDiscovering a lost ship graveyard filled with enough salvageable parts and weaponry to\nbuild a new ship.\nFinding a legendary artifact in a dungeon that can be traded for a decent ship.\nFurthermore, a crew might seek out a signature ship for them to use over the course of the entire adventure. The creation, purchase, or discovery of their ship should be a special moment and major milestone for the crew. Giving them tools to customize, upgrade, and spend time together on their new ship will help forge a deep bond with it over time, making their journey with together all the more engaging.",
+          "page": 29
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_crew",
+      "kind": "rule",
+      "name": "Crew",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 29
+      },
+      "text": "A ship requires a competent team of crew members to keep it operational when traveling or even harboring. As detailed in the \"Crew Roles\" in section 4 of the Unofficial One Piece D&D Player's Guide, ship crews may require a diverse mix roles on board a ship to safely adventure into dangerous waters. Disease, malnutrition, poor direction, injury, infection, and ship damage or degradation are all potential threats to any crew attempting to sail into open waters. And on the Grand Line, these risks are even further amplified. Characters that take on special roles required to deal with these threats are referred to as \"Officers\". Additional NPC crew members and lackeys may be added to the ship later on, called \"Hirelings\".",
+      "sections": [
+        {
+          "name": "Officers",
+          "text": "Here are example officer roles to determine which player will fill which role on a ship:\nCaptain. The captain is in charge of issuing orders and raising morale. The captain should be one of the strongest members of their crew and simultaneously most charismatic or strategic, with the best captains normally having a high Charisma or Intelligence score.\nFirst Mate. Similar to the captain, the first mate should be the second most powerful and charismatic individual in a crew. The first mate will also cover any weaknesses their captain may have. If the captain is killed or retired, the first mate will be first in line to take over or inherit the crew. The first mate may also have a more dedicated role on the crew, such as being a doctor or chef on the side.\nNavigator. The navigator provides direction and knowledge of maps and weather to the crew. A talented navigator will often have a high Wisdom score, proficiency in Nature or Survival, and proficiency with navigator's tools.\nDoctor. The ship's doctor tends to injuries, monitors illness, and provides basic medical and scientific expertise. A skilled doctor should have a high Wisdom score and proficiency in Medicine to perform medical procedures or be capable of using healing abilities.\nChef. The chef is responsible for nourishing and preparing meals for the crew. Food and drink is the lifeblood of every crew, and the importance of quality and taste in each meal should never be underestimated, as it provides a great deal strength and motivation to every other member of the crew. The best chefs will have proficiency with cook's utensils and brewer's supplies.\nOther Roles. The primary roles listed above cover roles often considered absolutely necessary to keep a ship and crew up and running. However, other important roles may include a shipwright to physically maintain the ship and repair damage, a musician to uplift a crew's spirits, a skilled lookout for spotting danger from far away, a helmsman to properly maneuver a ship and read the waters, and a record keeper to log the adventure and provide insight into new discoveries and the history of locations or treasure.",
+          "page": 29
+        },
+        {
+          "name": "Hirelings",
+          "text": "On ships that require smaller crew sizes, 4-5 player characters with different roles should be sufficient early on. On larger ships, however, crew size may need to be increased and additional officer positions may need to be taken to meet the needs of the increased population on board. Large crews may want to designate officer positions for managing each section of the crew.\nWhen the size of a crew's ship increases, most captains will need to hire additional crew members to keep the ship running. To find more people to fill these spots, hirelings are used. Hirelings can be found in places where seafaring communities are more common, typically in large port cities.\nFor every 10 hirelings on board a ship, there should be at least one officer managing them to maintain order. This officer can take on a leader position in the chain of command under the captain and first mate, reporting to them at the end of each day. If there aren't enough player characters to fill the number of officer positions required, the captain may enlist a specialist to take on the role of an officer on the crew. Additional crew roles can be filled by hired officers or they can be ordered to assist other officers with their job (A chef that needs help in the kitchen may make one officer their assistant chef).\nThe downside to recruiting hirelings is that they can be expensive to maintain in higher quantities and aren't usually as loyal as most player characters will be. The average weekly\nwage for a single hireling crew member is ฿15,000 (฿60,000 each month) and the average\nweekly wage for a hireling officer or specialist is ฿150,000 (฿600,000 each month). In addition, hirelings need to be fed, sheltered, and treated well. You can use \"Recruit\" stats under \"Monster and NPC Statblock Templates\" for an underling, and higher-level stats of choice for an officer or specialist.",
+          "page": 29
+        },
+        {
+          "name": "Mutiny",
+          "text": "If hirelings are underpaid, neglected, or underfed, they will grow to resent the captain and crew over time. Each instance of neglect has an additive 10% chance of leading to a mutiny among hirelings who feel neglected. This chance is reduced when they are given reparation or compensation. When a mutiny occurs, if less than half of the crew partakes in the mutiny, the neglected crew members will simply attempt to commit acts of theft, violence, and subterfuge to sabotage the crew and damage the trust toward the captain without detection, until they manage to escape or resign. If more than half of the crew partakes in the mutiny, a full-scale assassination plot or battle will take place until crew demands are met or the captain is overthrown.",
+          "page": 29
+        },
+        {
+          "name": "Bonds",
+          "text": "Alternatively, if a hireling is treated well and bonds with the crew over time, they might eventually graduate to becoming a permanent member of the crew. After some time has passed, these NPC crew members may start to work as apprentices under player characters, learn new skills, or even receive increases to stats. Higher level NPCs and skilled mercenaries may also end up in the crew over time, creating bonds with the crew. See the optional loyalty rule from chapter 4 of the Official D&D Dungeon Master's Guide for more information on determining the bond and loyalty between NPC crew members and player characters.",
+          "page": 29
+        },
+        {
+          "name": "Fleet",
+          "text": "Once a crew advances into the later stages of the campaign, one ship may not be enough to deal with the impossibly vast number of enemy ships and fleets that are after their heads. Thus, a larger fleet will need to be established.\nThe primary vessel that the crew and captain travel in should be designated as the flagship, which commands all other ships and vessels within the fleet. Additional ships are controlled by Fleet Commanders, which can be NPC or player characters, and a number of officers and crew members working beneath them on the ship. The captain of the entire crew will be called the head commander of the fleet.\nCounting and crunching the total amount of pay for every crew member, officer, and commander as well as total expenses may grow to become tiresome after a while. If this is the case, it might be wise to consider ships other than the flagship to be proficient enough at making money on their own so that expenses aside from major repairs, stolen treasure, etc. can be ignored. Additionally, allied captains may decide to join the fleet under an alliance. In this case, they will rarely require salary pay.\nCommunication between each ship and commander is vital to keeping a fleet healthy. Luckily, Den Den Mushi phones provide easy communication between ships, also allowing for coordinated attacks against enemy ships or fleets. Similar to mutiny rules listed above, fleet commanders that grow resentful toward the head commander may turn against the fleet and leave or attack the fleet. If this occurs, ship battles within the fleet may occur between player characters, fleet comamnder allies, and the now enemy commanders. Defeating a fleet commander that betrays the fleet has a 50% chance of winning back the ship and crew under the commander. Otherwise, defeating the remainder of the traitor crew will be required to regain access to the ship again.",
+          "page": 29
+        },
+        {
+          "name": "Fleet Orders",
+          "text": "Fleet commanders may go off on their own separate journeys, bringing back loot or experiencing tragedy along the way. The head commander can decide if ships in the fleet stick with the flagship or go off on their own under the command of the fleet commander controlling the ship. Communication can be maintained with the flagship and head commander to control what happens with the other sections of the fleet. When a ship in the fleet goes off on its own, roll for it under the \"Traveling Events\" table to see what happens each time the ship travels to a new area or island. If the ship faces a dangerous encounter, there is a 25% chance that something bad will occur. Roll on the \"Ship Tragedy\" table to determine what happens if this occurs. Otherwise, the fleet commander and crew win or escape (determined by DM). If the encounter isn't random or minor, the DM may decide what happens or let the players take control over the NPCs for the duration of the encounter.",
+          "page": 29
+        },
+        {
+          "name": "Ship Tragedy Table",
+          "text": "",
+          "page": 29,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d20",
+                  "Tragedy"
+                ],
+                [
+                  "1-5",
+                  "Minor Damage: The ship withstands insignificant scratches and dents which can easily be patched over the remaining duration of the trip."
+                ],
+                [
+                  "6-7",
+                  "Major Damage: The ship withstands serious damage and the hit points of its hull are reduced by 50% of its maximum"
+                ],
+                [
+                  "8-9",
+                  "Broken Parts: A random component other than the hull of the ship is completely destroyed during the encounter."
+                ],
+                [
+                  "10-11",
+                  "Plague: The crew becomes diseased during the encounter. 1d100 percent of the crew dies."
+                ],
+                [
+                  "12-13",
+                  "Deadly Poison: The crew is poisoned during the encounter. Half of the crew dies."
+                ],
+                [
+                  "14-15",
+                  "Captured: The ship and crew are captured by enemies during the encounter."
+                ],
+                [
+                  "16-17",
+                  "Launched: The ship and crew are suddenly sprung onto a nearby sky island and become stranded."
+                ],
+                [
+                  "18-19",
+                  "Mysterious Disappearance: The ship and crew drop all communication during the encounter and the entire crew vanishes for unknown reasons. However, the ship can still be recovered."
+                ],
+                [
+                  "20",
+                  "Complete Annihilation: The ship is completely destroyed and sinks to the bottom of the ocean along with the crew."
+                ]
+              ],
+              "page": 29
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_sailing",
+      "kind": "rule",
+      "name": "Sailing",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 31
+      },
+      "text": "Here are travel rules you can use at your table for travel at sea. This builds on the travel rules in the Official D&D Player's Handbook and Dungeon Master's Guide.",
+      "sections": [
+        {
+          "name": "Travel Pace",
+          "text": "A traveling party will travel aboard a ship at a pace given by the ship's speed stat on its stat block. A ship cannot go faster than the listed speed, but it can go slower if it chooses. Certain environmental effects or buffs may increase or decrease a ship's pace.\nIf a ship's mode of movement takes damage, it will be slowed for every decreased of 10 in speed, reducing its pace by 1 mile per hour and 24 miles per day.",
+          "page": 31
+        },
+        {
+          "name": "Fueling Your Ship",
+          "text": "If a ship has a fuel engine installed on it, the ship will require fuel each day to keep the engine running. Each engine on a ship will require its respective type of fuel to function, and can hold up to a maximum of a day's worth of fuel in its fuel tank. Additional fuel barrels will need to be stored on the ship. If the engine goes a full day without a full barrel of fuel, it will shut off and cease to function as an engine until it is filled with a barrel of its fuel type.",
+          "page": 31
+        },
+        {
+          "name": "Fuel Barrel Cost",
+          "text": "",
+          "page": 31,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Barrel (Based on Engine Type)",
+                  "Weight Per Barrel",
+                  "Price Per Barrel"
+                ],
+                [
+                  "Standard",
+                  "30 lbs.",
+                  "฿ 8,000"
+                ],
+                [
+                  "Large",
+                  "100 lbs.",
+                  "฿ 20,000"
+                ],
+                [
+                  "Huge",
+                  "300 lbs.",
+                  "฿ 400,000"
+                ]
+              ],
+              "page": 31
+            }
+          ]
+        },
+        {
+          "name": "Activity While Traveling",
+          "text": "A crew can participate in a number of activities while actively sailing. For more information on \"Activity While Traveling\" refer to chapter 8 of the Official D&D Player's Handbook.\nAdditionally, you may refer to the section titled \"Crew Roles\" in chapter 4 of the Unofficial One Piece D&D Player's Guide for more information on what each character may do during travel depending on their crew role.\nThe party's pace has no effect on the activities they can engage in while traveling by ship. Here are some other example activities a crew can partake in while traveling:",
+          "page": 31
+        },
+        {
+          "name": "Fishing",
+          "text": "A character decides to fish for the day using a fishing net, fishing lines, harpoons, etc., making a Wisdom (Survival) check to see what they bring in. The DC depends on the difficulty of the sea being fished in (DC 10 for Easy; DC 15 for Medium, DC 20 for Hard). If the check succeeds, the character may roll on the table below.",
+          "page": 31,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d10",
+                  "Catch Result"
+                ],
+                [
+                  "1",
+                  "Sea Monster: The character reels in an aggravated Sea Beast, which proceeds to attack. There's a 10% chance the character reels in a Sea King instead."
+                ],
+                [
+                  "2-3",
+                  "Trash: The character reels in a bunch of worthless junk."
+                ],
+                [
+                  "4",
+                  "Weapon or Armor: The character reels in a random mundane weapon or piece of armor."
+                ],
+                [
+                  "5",
+                  "Treasure Chest: The character reels in a chest that has 1d100 x ฿ 10,000 worth of treasure and gold inside. There's a 20% chance the chest has a treasure map and eternal pose inside."
+                ],
+                [
+                  "6",
+                  "Small Fish: Character reels in a fish equal to 1 day worth of food. The fish has a 10% chance of being poisonous."
+                ],
+                [
+                  "7-9",
+                  "Large Fish: Character reels in a fish equal to 1d4 + their Wisdom modifier days worth of food."
+                ],
+                [
+                  "10",
+                  "Legendary Fish: Character reels in a fish equal to 10 days worth of food."
+                ]
+              ],
+              "page": 31
+            }
+          ]
+        },
+        {
+          "name": "Banquet",
+          "text": "The crew unanimously decides to have a large banquet or party. To have a successful\nbanquet, the ones organizing the party must spend at least ฿20,000 in food and drink for each crew member. This will reduce the chances of mutiny occurring down to 0%.",
+          "page": 31
+        },
+        {
+          "name": "Lookout Duty",
+          "text": "A character can spend the day analyzing the ship and the surrounding sea. The character rolls a Wisdom (Perception) check to determine if they find anything unusual or detect anything dangerous coming (See \"Random Events\").",
+          "page": 31
+        },
+        {
+          "name": "Ship Repair",
+          "text": "A character who is a shipwright or is proficient with carpenter's tools can roll a strength check (with carpenter's tools proficiency if they have it) to attempt to patch any damage on the ship for the day. On a 15 or higher, one component of choice recovers 1d6 + the character's Strength modifier in hit points. If the component was at 0 hit points and isn't the hull, the component becomes functional again.",
+          "page": 31
+        },
+        {
+          "name": "Making a Map",
+          "text": "A character who is a navigator or is proficient with navigator's tools can spend the day making a detailed map of the area they've explored. If the crew returns to the area that has been drawn on the map again, they cannot become lost in it while sailing.",
+          "page": 31
+        },
+        {
+          "name": "Helping the Kitchen",
+          "text": "A character who is a chef or proficient with a chef's utensils can spend the day helping flavor and divide food in the kitchen to ensure nothing goes to waste. By doing so, the character increases the number of provisions available on the ship by 1d4.",
+          "page": 31
+        },
+        {
+          "name": "Tending to Wounds",
+          "text": "A character who is a doctor or is proficient with the Medicine skill can spend the day treating any injuries. One creature you treat for at least a minute recovers hit points equal to 1d8 + your Wisdom modifier.",
+          "page": 31
+        },
+        {
+          "name": "Traveling Events",
+          "text": "Each day, there is a chance something new will happen while sailing. Some days, nothing will happen. Other days, the crew will find themselves faced with tornadoes, whirlpools, sea monsters, or other horrible hazards. Or something fun and adventurous might pop out in front of them. In any case, a pirate crew will quickly learn to be prepared for anything that comes their way, especially on the grand line.",
+          "page": 31
+        },
+        {
+          "name": "100 Possible Example Events",
+          "text": "To determine if anything happens during a day at sea, at the start of each day, roll a 1d20. On a roll of 16 or higher, a random event occurs and is determined by rolling on the table below. While on the grand line, a random event occurs on a 11 or higher. On a 20, two random events occur instead (perhaps simultaneously).\nWhile outside the grand line, roll a 1d20 on the table below. While traveling in the grand line, roll a 1d100 on the table below. Events involving disaster or bad weather may utilize later sections (See \"Weather\" and \"Disasters\"),\nd20 or",
+          "page": 31,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d100",
+                  "Event"
+                ],
+                [
+                  "1",
+                  "Battle. A sea beast attacks the ship."
+                ],
+                [
+                  "2",
+                  "A lone bounty hunter begins stalking the ship from miles away."
+                ],
+                [
+                  "3",
+                  "A school of bright fish swarm the ship. Roll for fishing check at advantage."
+                ],
+                [
+                  "4",
+                  "Random wanted posters are blown onto the ship."
+                ],
+                [
+                  "5",
+                  "A merchant ship passes by, offering the characters funny-looking food."
+                ],
+                [
+                  "6",
+                  "A tiny island with a single palm tree on it can be seen."
+                ],
+                [
+                  "7",
+                  "Phosphorescent algae floats in the water, becoming visible at night."
+                ],
+                [
+                  "8",
+                  "A talking dolphin emerges and attempts to annoy the crew."
+                ],
+                [
+                  "9",
+                  "An unmanned rowboat full of random trinkets bumps into the ship."
+                ],
+                [
+                  "10",
+                  "Survivors from a boating accident are stranded on a small island ahead."
+                ],
+                [
+                  "11",
+                  "Battle. A Marine ship barrels toward the players ship."
+                ],
+                [
+                  "12",
+                  "A message in a bottle floats past the ship (spot DC 15)."
+                ],
+                [
+                  "13",
+                  "Battle. A group of fish-men pirates begin circling the ship."
+                ],
+                [
+                  "14",
+                  "An island of floating trash and waste is seen floating ahead."
+                ],
+                [
+                  "15",
+                  "Large sea lilies can be seen sprouting over the surface of the water."
+                ],
+                [
+                  "16",
+                  "A hollow floating tree trunk carries green lobsters inside."
+                ],
+                [
+                  "17",
+                  "Battle. A pirate ship attacks with its cannons from afar."
+                ],
+                [
+                  "18",
+                  "Barrels full of cheap booze can be seen floating."
+                ],
+                [
+                  "19",
+                  "Large seahorses with saddles appear, wanting players to ride them."
+                ],
+                [
+                  "20",
+                  "A storm suddenly appears (See \"Weather\") and blows fish onto the ship."
+                ],
+                [
+                  "21",
+                  "The ship drifts into the calm belt and must escape from sea kings."
+                ],
+                [
+                  "22",
+                  "A colossal blowfish trampolines the ship into the sky (See \"Crashing\")."
+                ],
+                [
+                  "23",
+                  "Battle. A group of bounty hunters attack the ship."
+                ],
+                [
+                  "24",
+                  "Layers of seaweed encompass the surrounding ocean surface for the day."
+                ],
+                [
+                  "25",
+                  "A lone researcher on a small boat asks for directions."
+                ],
+                [
+                  "26",
+                  "A floating village full of friendly citizens can be seen ahead."
+                ],
+                [
+                  "27",
+                  "Colossal jellyfish begin to cling to the sides of the ship until pulled off."
+                ],
+                [
+                  "28",
+                  "A navy ship with broken steering is stuck doing circles in the distance."
+                ],
+                [
+                  "29",
+                  "Battle. A group of tribal warriors riding plesiosaurs attack the ship."
+                ],
+                [
+                  "30",
+                  "A giant venus fly trap drifts ahead lifelessly, carrying a pop green."
+                ],
+                [
+                  "31",
+                  "Flaming waterspouts that deal fire damage emerge (See \"Weather\")."
+                ],
+                [
+                  "32",
+                  "A fake poneglyph sits sunken in shallow water (Spot DC 14)."
+                ],
+                [
+                  "33",
+                  "Glaciers form and then melt quickly around the boat (See \"Crashing\")."
+                ],
+                [
+                  "34",
+                  "Multi-colored sea turtles spit sparkling water at the crew."
+                ],
+                [
+                  "35",
+                  "A large ship carrying a map to a nearby sky island falls from the sky."
+                ],
+                [
+                  "36",
+                  "Life rings carrying skeletons drift by."
+                ],
+                [
+                  "37",
+                  "A pirate Warlord flies overhead, only attacking if provoked."
+                ],
+                [
+                  "38",
+                  "Battle. A kraken and colossal whale begin fighting near the ship."
+                ],
+                [
+                  "39",
+                  "An insane samurai rides a giant eagle overhead."
+                ],
+                [
+                  "40",
+                  "Battle. Two pirate ships attempt to sandwich and board the players ship."
+                ],
+                [
+                  "41",
+                  "Giant manta rays fly out of the sea and carry the ship at double pace for the day (See \"Travel Pace\")"
+                ],
+                [
+                  "42",
+                  "A purple palm tree sticks out of shallow water. There is a 50% chance it holds a devil fruit."
+                ],
+                [
+                  "43",
+                  "Battle. Coral reef golems board the ship and attack."
+                ],
+                [
+                  "44",
+                  "The sea begins to boil, badly burning anyone who enters the water."
+                ],
+                [
+                  "45",
+                  "A submarine carrying illegal weapons travels beneath the ship (spot DC 15)."
+                ],
+                [
+                  "46",
+                  "A knockup stream shoots the players ship onto a nearby sky island."
+                ],
+                [
+                  "47",
+                  "A vacationing marine admiral sits in a shallow sandbar, with a 50% chance of attempting to spot the players ship."
+                ],
+                [
+                  "48",
+                  "Battle. Giant flying scorpions attempt to capture players."
+                ],
+                [
+                  "49",
+                  "A killer whale carrying a meito in its mouth defends players from a sea king."
+                ],
+                [
+                  "50",
+                  "A marine battleship is seen miles away, bombing an island. d20 or"
+                ],
+                [
+                  "51",
+                  "A floating magnetic island pulls the ship up to it."
+                ],
+                [
+                  "52",
+                  "Impossibly thick fog surrounds the players ship. Roll for an additional event."
+                ],
+                [
+                  "53",
+                  "Battle. Ships with poisoned arrows attack the players ship."
+                ],
+                [
+                  "54",
+                  "Flying starfish hover over the ship and give directions."
+                ],
+                [
+                  "55",
+                  "A marine prison boat is destroyed by an escaping giant prisoner."
+                ],
+                [
+                  "56",
+                  "The ocean turns blood red and various bones float to the surface."
+                ],
+                [
+                  "57",
+                  "A legendary creature can be seen far away, but disappears when approached."
+                ],
+                [
+                  "58",
+                  "Muscular crab men offer to repair any damage on the players ship."
+                ],
+                [
+                  "59",
+                  "Battle. A ship from a Yonko's crew attempts to raid and steal player treasure."
+                ],
+                [
+                  "60",
+                  "An escaping refugee with devil fruit powers is seen drowning nearby."
+                ],
+                [
+                  "61",
+                  "A huge rift opens in the sea temporarily, threatening to swallow nearby ships."
+                ],
+                [
+                  "62",
+                  "A colossal goldfish consumes a small nearby island."
+                ],
+                [
+                  "63",
+                  "Fallen sky islanders ride around in wavers filled with dials."
+                ],
+                [
+                  "64",
+                  "Swarms of sea termites attack the boat, forming holes in the hull."
+                ],
+                [
+                  "65",
+                  "Eastern-style umbrellas mysteriously fall from the sky onto the boat."
+                ],
+                [
+                  "66",
+                  "A flying elephant and other zoo animals offer to take players on a journey."
+                ],
+                [
+                  "67",
+                  "A volcano instantly rises out of the sea, erupting within minutes."
+                ],
+                [
+                  "68",
+                  "A corporeal rainbow ahead forms a bridge to a cloud holding a pot of gold."
+                ],
+                [
+                  "69",
+                  "Battle. A dragon turtle gives chase to players from far behind."
+                ],
+                [
+                  "70",
+                  "Creepy dolls sit atop empty floating coffins that drift past."
+                ],
+                [
+                  "71",
+                  "Sea bumble bees bring pollen from nearby to their underwater hives."
+                ],
+                [
+                  "72",
+                  "An acidic hailstorm which deals acid damage pelts the players and their ship (See \"Weather\")."
+                ],
+                [
+                  "73",
+                  "The sea freezes over for the day, decreasing travel pace to 0."
+                ],
+                [
+                  "74",
+                  "Battle. Giant crocodiles with top hats attempt to dine on players."
+                ],
+                [
+                  "75",
+                  "Large mushrooms stick out of the water, providing platforms to bounce on."
+                ],
+                [
+                  "76",
+                  "Merfolk request assistance fending off an undersea tyrant, granting waterbreathing to players temporarily."
+                ],
+                [
+                  "77",
+                  "Large bubbles rise out of nearby water, emitting verbs when popped."
+                ],
+                [
+                  "78",
+                  "A small island made of icecream appears, but is actually the lure of a giant anglerfish."
+                ],
+                [
+                  "79",
+                  "Battle. Dozens of crawling claws rain onto the ship and attack."
+                ],
+                [
+                  "80",
+                  "A vicious thunderstorm rampages for a full day, requiring three navigation checks to clear (See \"Weather\")."
+                ],
+                [
+                  "81",
+                  "Traveling priests bless players, preventing any bad weather from occurring around them for 1d4 days."
+                ],
+                [
+                  "82",
+                  "Fish-men running a seafood stall offer extremely overpriced food to humans."
+                ],
+                [
+                  "83",
+                  "Battle. An admiral and marine fleet give chase to players and attempt to surround them."
+                ],
+                [
+                  "84",
+                  "A kind aquamarine dragon has lost its eggs to poachers, and requests help from the players."
+                ],
+                [
+                  "85",
+                  "Light rain showers the players ship (See \"Weather\"), but fully heals all creatures and undestroyed structures it touches."
+                ],
+                [
+                  "86",
+                  "Battle. Giant vultures drop cannonballs onto the players ship."
+                ],
+                [
+                  "87",
+                  "A gas weapon explodes near the ship, spreading a deadly disease to players."
+                ],
+                [
+                  "88",
+                  "A solar eclipse occurs, blinding players who look directly into it for 1d4 days."
+                ],
+                [
+                  "89",
+                  "The players ship enters a field that has zero gravity, but doesn't affect travel pace."
+                ],
+                [
+                  "90",
+                  "Battle. A yonko fleet attempts to surround players, demanding a large toll be paid."
+                ],
+                [
+                  "91",
+                  "A powerful EMP hits the ship, disabling all electronics, compasses, and log poses for 1d4 days."
+                ],
+                [
+                  "92",
+                  "A rainbow-colored barrel full of fake devil fruits is delivered to the players by rainbow penguins. There is a 10% chance one of the devil fruits is actually real."
+                ],
+                [
+                  "93",
+                  "Titanic shadows can be seen from the sky, looking over the players ship."
+                ],
+                [
+                  "94",
+                  "Visible schools of fish underwater form a map to a hidden island nearby."
+                ],
+                [
+                  "95",
+                  "The ship crashes into a real poneglyph in shallow water (See \"Crashing\")."
+                ],
+                [
+                  "96",
+                  "Floating fortresses demand that players allow their goods to be inspected or face imprisonment."
+                ],
+                [
+                  "97",
+                  "Friendly sirens encourage players, raising morale and giving inspiration."
+                ],
+                [
+                  "98",
+                  "Battle. A nearby elbaf battleship threatens to attack all evil crews and ships on sight."
+                ],
+                [
+                  "99",
+                  "A mist rises out of the sea for a minute, causing players to hallucinate."
+                ],
+                [
+                  "100",
+                  "Battle. A number of sea kings chase the players ship."
+                ]
+              ],
+              "page": 31
+            }
+          ]
+        },
+        {
+          "name": "Additional Events",
+          "text": "Alongside random event examples given here, you may add or replace any number of events with your own ideas. Planned events can also occur before, after or during a random event to make travel more unpredictable. Keeping players on their toes with what to expect will make the adventure far more interesting, and may surprise even the DM.",
+          "page": 33
+        },
+        {
+          "name": "Getting lost",
+          "text": "When sailing into uncharted seas, there is a high chance that unprepared crews will get lost, especially on the grand line. Outside the grand line, having a skilled navigator who is proficient with navigator's tools and possesses a compass will allow a ship to automatically succeed at traveling between islands, even in uncharted waters. Without all of these things, one player must attempt navigate the ship to the next island and roll a DC 12 Intelligence (Nature) or Wisdom (Survival) check at the start of each day to determine if the crew remains on course to the next island without getting lost. If the check fails, the the crew becomes lost for the day and travel pace becomes 0 for that day.\nOn the grand line, travel rules work differently. It is virtually impossible to sail on the grand line without a log pose of some kind, and losing a log pose during travel can often mean certain death. Normal compasses will not function on the grand line, and do not provide any form of bonus to travel. A skilled navigator who is proficient with navigator's tools and possesses a functioning log pose will automatically succeed at staying on track during each day of travel. If a log pose is lost or broken during travel, all sense of direction is lost and the navigator must roll a DC 20 Intelligence (Nature) or Wisdom (Survival) check at the start of each day to remain on track. If the check fails, the ship heads in a random direction other than the target location at their travel pace.\nEvery time players get lost, roll on the possible events table to determine what happens while they're lost.",
+          "page": 33
+        },
+        {
+          "name": "Weather",
+          "text": "Weather is one of the biggest threats to each crew traveling into the grand line. Even outside the grand line, weather can still range from bothersome to lethal. Weather hazards may include thunderstorms, cyclones, blizzards, waterspouts, and more.",
+          "page": 33
+        },
+        {
+          "name": "Generating Weather",
+          "text": "Each day, there is a chance that the crew will experience various weather conditions throughout the day. Once per day, roll a number of d20s to determine what type of weather the crew experiences, with a weather event occurring on a roll of 15 or higher. While outside the grand line, roll once each day. While in \"Paradise\", roll three times each day, and four times if in the \"New World\". If it is determined one or more weather event will occur, roll on the \"Standard Weather Event\" table or \"Grand Line Weather Event\" table to determine the type of each event.\nDepending on how the DM decides to run each weather event throughout the day, these weather events can happen right before or after each other, at the same time, or during an encounter.",
+          "page": 33
+        },
+        {
+          "name": "Detecting Weather",
+          "text": "A navigator or captain may be able to forecast what type of weather event the crew will face before it arrives to effectively plan around it. They may roll an Intelligence (Nature) or Wisdom (Survival) check before the crew experiences the weather event. On a successful check, the crew becomes aware of the impending weather conditions and can reroute to avoid it. On a failed check, the weather event strikes the area unexpectedly. If a weather event has a duration of 4 hours or longer, it cannot be avoided but its duration is halved instead if the check succeeds.",
+          "page": 33
+        },
+        {
+          "name": "Standard Weather Event Table",
+          "text": "",
+          "page": 33,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d100",
+                  "Weather Event Difficulty Category"
+                ],
+                [
+                  "1-50",
+                  "Easy Weather Event (Diffuclty DC 10)"
+                ],
+                [
+                  "51-80",
+                  "Medium Weather Event (Diffuclty DC 10)"
+                ],
+                [
+                  "81-99",
+                  "Hard Weather Event (Difficulty DC 12)"
+                ],
+                [
+                  "100",
+                  "Extreme Weather Event (Difficulty DC 14)"
+                ]
+              ],
+              "page": 33
+            }
+          ]
+        },
+        {
+          "name": "Grand Line Weather Event Table",
+          "text": "",
+          "page": 33,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "d100",
+                  "Weather Event Difficulty Category"
+                ],
+                [
+                  "1-30",
+                  "Easy Weather Event (Diffuclty DC 10)"
+                ],
+                [
+                  "31-50",
+                  "Medium Weather Event (Diffuclty DC 10)"
+                ],
+                [
+                  "61-80",
+                  "Hard Weather Event (Difficulty DC 12)"
+                ],
+                [
+                  "81-99",
+                  "Extreme Weather Event (Difficulty DC 14)"
+                ],
+                [
+                  "100",
+                  "Hellish Weather Event (Difficulty DC 15)"
+                ]
+              ],
+              "page": 33
+            }
+          ]
+        },
+        {
+          "name": "Weather Event Type",
+          "text": "After rolling on a Weather Event table, the difficulty or category of weather is determined. Looking at the tables below, each category lists the types of individual weather events included in each category. The exact weather event can usually be determined by local climate or DM choice. If the players are on the grand line, the type of weather is determined randomly by rolling on the individual event tables to reflect the chaotic nature of the grand line.",
+          "page": 33
+        },
+        {
+          "name": "Easy Weather Event",
+          "text": "",
+          "page": 33,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "1d4",
+                  "Climate",
+                  "Duration",
+                  "Event"
+                ],
+                [
+                  "1",
+                  "Moderate",
+                  "2d12 hours",
+                  "Light Rain or Fog"
+                ],
+                [
+                  "2",
+                  "Windy",
+                  "2d12 hours",
+                  "High Winds"
+                ],
+                [
+                  "3",
+                  "Hot",
+                  "2d12 hours",
+                  "Heat Wave"
+                ],
+                [
+                  "4",
+                  "Cold",
+                  "2d12 hours",
+                  "Freezing Cold"
+                ]
+              ],
+              "page": 33
+            }
+          ]
+        },
+        {
+          "name": "Medium Weather Event",
+          "text": "",
+          "page": 35,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "1d4",
+                  "Climate",
+                  "Duration",
+                  "Event"
+                ],
+                [
+                  "1",
+                  "Moderate",
+                  "1d12 hours",
+                  "Heavy Rain"
+                ],
+                [
+                  "2",
+                  "Windy",
+                  "1d12 hours",
+                  "Fast Winds"
+                ],
+                [
+                  "3",
+                  "Hot",
+                  "1d12 hours",
+                  "Scorching Heat"
+                ],
+                [
+                  "4",
+                  "Cold",
+                  "1d12 hours",
+                  "Snowfall"
+                ]
+              ],
+              "page": 35
+            }
+          ]
+        },
+        {
+          "name": "Hard Weather Event",
+          "text": "",
+          "page": 35,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "1d4",
+                  "Climate",
+                  "Duration",
+                  "Event"
+                ],
+                [
+                  "1",
+                  "Hot or Moderate",
+                  "1d4 hours",
+                  "Thunderstorm"
+                ],
+                [
+                  "2",
+                  "Windy",
+                  "1d4 hours",
+                  "Stormy Winds"
+                ],
+                [
+                  "3",
+                  "Dry",
+                  "1d4 hours",
+                  "Sandstorm"
+                ],
+                [
+                  "4",
+                  "Cold",
+                  "1d4 hours",
+                  "Blizzard"
+                ]
+              ],
+              "page": 35
+            }
+          ]
+        },
+        {
+          "name": "Extreme Weather Event",
+          "text": "",
+          "page": 35,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "1d4",
+                  "Climate",
+                  "Duration",
+                  "Event"
+                ],
+                [
+                  "1",
+                  "Hot or Moderate",
+                  "1d4 hours",
+                  "Cyclone"
+                ],
+                [
+                  "2",
+                  "Windy",
+                  "1 hour",
+                  "Waterspout"
+                ],
+                [
+                  "3",
+                  "Dry and hot",
+                  "1 hour",
+                  "Scorching Sands"
+                ],
+                [
+                  "4",
+                  "Cold",
+                  "1 hour",
+                  "Hailstorm"
+                ]
+              ],
+              "page": 35
+            }
+          ]
+        },
+        {
+          "name": "Hellish Weather Event",
+          "text": "Light Rain or Fog Light rain or fog lowers visibility.\nAreas past 120 ft. of vision become lightly obscured.\nAll fire damage is reduced by 1 point for the duration.\nHigh Winds Winds blow moderately in a random direction for the duration, a 1d4 to determine (1-North, 2-East, 3-South, 4-West).\nSpeeds of flying creatures and ships with sails gain +5 movement speed while moving\nwith the wind and -5 movement speed while moving against it.\nHeat Wave The temperature becomes noticeably high for the duration.\nA creature that isn't in shade or water takes 1 fire damage each hour.\nAny exposed water on the ship that is medium or smaller in size evaporates within an\nhour.\nFreezing cold The temperature becomes noticeably low for the duration.\nA creature that isn't kept warm takes 1 cold damage each hour.\nAny exposed water on the ship that is medium or smaller in size freezes within an hour.\nHeavy Rain Heavy rain lowers visibility significantly and makes movement on board difficult.\nAreas past 60 ft. of vision become heavily obscured.\nCreatures that move more than 10 ft on a turn must roll a Dexterity saving throw when\ntraveling across wet surfaces or fall prone.\nAll fire damage is reduced by 1d4 points for the duration.\nFast Winds Winds blow moderately in a random direction for the duration, a 1d4 to determine (1-North, 2-East, 3-South, 4-West).\nSpeeds of flying creatures and ships with sails gain +10 movement speed while moving\nwith the wind and -10 movement speed while moving against it.\nScorching heat The temperature becomes extremely high for the duration.\nA creature that isn't in shade or wearing protective clothing takes 1d4 fire damage each\nhour.\nAny exposed water on the ship that is Large or smaller in size evaporates within an\nhour.\nSnowfall The temperature becomes extremely low for the duration and snow begins to fall.\nA creature that isn't kept warm or touches snow with its bare skin takes 1d4 cold\ndamage each hour.\nAny exposed water on the ship that is Large or smaller in size freezes within an hour.\nThunderstorm Heavy rain lowers visibility significantly and makes movement on board difficult, also increasing risk of lightning strikes.\nAreas past 60 ft. of vision become heavily obscured and the sound of thunder\noverpowers any distant noises.\nCreatures that move more than 10 ft on a turn must roll a Dexterity saving throw when\ntraveling across wet surfaces or fall prone.\nRoll a 1d20, on a 1 the highest creature not under full cover is struck by lightning and it\nmust make a Constitution saving throw, at disadvantage if wearing metal. The target\ntakes 8d6 lightning damage on a failed save, and half as much on a successful save.\nStormy Winds Winds blow moderately in a random direction for the duration, a 1d4 to determine (1-North, 2-East, 3-South, 4-West). Wind direction changes every hour.\nSpeeds of flying creatures and ships with sails gain +15 movement speed while moving\nwith the wind and -15 movement speed while moving against it.\nAll projectile attacks that travel beyond 30 feet have disadvantage.\nAny lit candles or flames are immediately blown out.\nSandstorm\nFast winds carry clouds of sand that pelt creatures caught within.\nAreas past 60 ft. of vision become heavily obscured and the sound of shifting sand and\nwind overpowers any distant noises.\nA creature that isn't behind total cover takes 2d4 piercing damage each hour.\nBlizzard Fast winds carry fast-moving snow that pelts creatures caught within.\nAreas past 60 ft. of vision become heavily obscured and the sound of snow and wind\noverpowers any distant noises.\nA creature that isn't behind total cover takes 2d4 cold damage each hour.\nCyclone Cyclones are large weather systems of thunderstorms and rain, bringing extreme winds and rain.\nAreas past 30 ft. of vision become heavily obscured and the sound of wind is deafening.\nCreatures that aren't behind total cover each turn must succeed on a Strength saving\nthrow or be knocked prone and 10 feet in a random direction.\nCreatures cannot fly for the duration and are knocked prone if they try.\nAll projectile attacks are made at disadvantage.\nEach hour a ship remains in the cyclone it must make a Strength saving throw or each\nof its sails take 3d10 bludgeoning damage.\nAny creature or object exposed to the cyclone takes half fire damage.\nWaterspout A waterspout is a tornado that forms over water. It acts as a vortex of violent winds and water, picking up objects and throwing them.\nThe waterspout appears in a random location 10d6 x 10 feet away from players. Every\n10 minutes roll a 1d20, and on a 1 the waterspout disappears and a new one reappears\n10d6 x 10 feet away from players.\nThe waterspout has a 150-foot radius and reaches up to the clouds, having an initiative\ncount of 20 and moving 60 feet in a random direction each turn. When it is more than\n600 feet away from players, initiative ends.\nWhen creature or ship enters a waterspout on its turn or when a waterspout enters its\nspace, it must make a Strength saving throw. A large or smaller object automatically\nfails. On a failed save, the target takes 8d6 bludgeoning damage plus 2d6 cold damage\nand becomes restrained within the waterspout and must repeat the save at the start of\neach turn. On a successful save, the target is no longer restrained and is launched 10d6\nx 10 feet away from the waterspout in a random direction instead.\nScorching Sands Razor sharp winds carry blazing sands, shredding and burning exposed creatures and weak materials.\nAreas past 30 ft. of vision become heavily obscured and the sound of shifting sand and\nwind overpowers any distant noises.\nA creature that isn't behind total cover at the end of each turn must make a Constitution\nsaving throw or take 1d4 fire damage.\nWeaker material (Such as unfurled sails or hanging clothing) take 3d10 piercing\ndamage for every hour it is exposed.\nHailstorm Razor sharp winds carry sharp hail shards, shredding and freezing exposed creatures and weak materials.\nAreas past 30 ft. of vision become heavily obscured and the sound of ice pelting and\nwind overpowers any distant noises.\nA creature that isn't behind total cover at the end of each turn must make a Constitution\nsaving throw or take 1d4 cold damage.\nWeaker material (Such as unfurled sails or hanging clothing) take 3d10 piercing\ndamage for every hour it is exposed.\nChaos Cyclone Chaos cyclones are brutal weather systems that blast the area with wind, rain, and constant lightning and thunder, using the same rules as both cyclones and thunderstorms except:\nLightning strikes on a roll of 5 or lower from a d20 every hour instead.\nCharacters knocked over are moved 15 feet instead.\nWaterspout Storm Waterspout storms are when several waterspouts form at once in a thunderstorm. These follow the same rules as waterspouts and thunderstorms except:\n1d4 Waterspouts form instead of one.\nWaterspouts move at 90 feet per turn instead.\nFirestorm The sea and sky burn bright red, exposed water begins to boil, and flammable objects begin to ignite unexpectedly.\nA creature that isn't behind total cover at the end of each turn must make a Constitution\nsaving throw or take 1d10 fire damage.\nFlammable objects catch fire and take 1d4 fire damage every 10 minutes unless they\nare doused in water or put out as an action.\nIcewave\nThe sea and sky become dark as even the sun appears to dim, with a wave of subzero frigid air following after.\nA creature that isn't behind total cover at the end of each turn must make a Constitution\nsaving throw or take 1d10 cold damage.\nAll water is completely frozen, including 5 feet of the ocean's surface, for the duration.\nCreatures completely submerged in water are completely frozen, becoming petrified by\nice.\nMeteor Shower Small meteors mysteriously rain from the sky, striking the ocean at random.\nThe rough waves caused by constant meteor strikes force each standing creature to\nmake a Dexterity saving throws, making it fall prone on a failed save.\nEvery 10 minutes for the duration of the meteor shower, roll a 1d20. On a 1, the ship or\na random creature is hit by a meteor. All creatures and objects within 5 feet of the strike\nzone must make a Dexterity saving throw. A creature or object takes 2d6 fire damage\nfrom the blast on a failed save, half as much damage on a successful one.\nTsunami A colossal wall of sea water forms in the distance, engulfing and destroying everything in its path.\nThe tsunami creates a wall of water that is 300 feet long, 300 feet high, and 50 feet\nthick and forms 3d6 x 10 feet away from the ship or players, lasting for 10 minutes\nbefore collapsing.\nThe wall moves 50 feet per turn toward players, initiative count 20.\nAny huge or smaller creature starting its turn inside the wall or whose space the wall\nenters when it moves must succeed on a Strength saving throw or take 5d10\nbludgeoning damage and is knocked prone.\nEach 5-foot section of the wall can be attacked and has AC 5 and 15 hit points, creating\na 5-foot opening connecting to the opposite side of the wall.\nAny ship attempting to move through the wall or pass through it must make a Strength\ncheck to do so, taking crash damage on a failure (See \"Crashing\") as the wall moves\nthrough it.",
+          "page": 35,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "1d6",
+                  "Climate",
+                  "Duration",
+                  "Event"
+                ],
+                [
+                  "1",
+                  "Moderate",
+                  "1d4 hours",
+                  "Chaos Cyclone"
+                ],
+                [
+                  "2",
+                  "Windy",
+                  "1 hour",
+                  "Waterspout Storm"
+                ],
+                [
+                  "3",
+                  "Hot",
+                  "1 hour",
+                  "Firestorm"
+                ],
+                [
+                  "4",
+                  "Cold",
+                  "1 hour",
+                  "Icewave"
+                ],
+                [
+                  "5",
+                  "Any",
+                  "1 hour",
+                  "Meteor Shower"
+                ],
+                [
+                  "6",
+                  "Any",
+                  "-",
+                  "Tsunami"
+                ]
+              ],
+              "page": 35
+            }
+          ]
+        },
+        {
+          "name": "Disasters",
+          "text": "Weather aside, a number of other natural disasters may occur. The chances of a disaster affecting the ship is far more dependent on the local environment and circumstances rather than randomness. For example, a ship full of diseased pirates may spread a plague to the crew after a long battle. Or a nearby volcano eruption may carry flaming debris to the ship and cause it to catch fire. Disasters also may occur as a result of a random event, long periods of bad weather, or too many failed crew rolls. However, the most common reason for a disaster is entering a danger zone on the grand line.",
+          "page": 37
+        },
+        {
+          "name": "Danger Zones",
+          "text": "The grand line holds many dangerous zones within its waters, which have a chance of bringing about ruin to any ship passing through. Zones of potential risk are usually marked on sea maps and can be avoided. Otherwise, an unaware crew must spend at least a day within a danger zone to understand the nature and risk of the region. While passing through a danger zone, the navigator or captain must roll an Intelligence check with navigator's tools (DC 15) at the end of each day to determine the range and size of the danger zone, so that the crew might follow a path around the region. On a successful check, the navigator or captain may mark the zone on their map, or as much as the DM determines they're aware of. On a failed check, the range and area of the zone cannot be determined, and may make the check again at the end of the next day.\nIf a crew is caught within the danger zone at the start of a day or enters a danger zone for the first time, the whole crew must each make skill checks or saving throws to determine how seriously the disaster affects them. The type of skill check or save and its DC is determined by each disaster type.\nIf half or more the crew succeed, the disaster is avoided altogether. If less than half succeed, the disaster strikes, bringing destruction to the ship and crew.\nFire: Dexterity Check DC 12 The hull or a random component on the ship catches fire as a result of nearby volcanic activity, ash, or extreme heat, immediately taking 3d10 fire damage. Have everyone roll initiative, including the ship. At the start of each of the ship's turn, it takes an additional 3d10 fire damage if the fire isn't put out.\nFor the crew to put out the fire, more than half of the crew must succeed on their Dexterity checks at the beginning of their turn to smother or drown the fire. Additionally the captain or helmsman can instead make a successful DC 15 Intellgience (water vehicles) check at the start of their turn instead to splash sea water onto the ship, giving advantage to the whole crew on their checks. Then, if the majority of the crew has succeeded by the beginning of the ship's turn, the fire is put out.\nExplosion: Wisdom (Perception) Check DC 15 A spotter has advantage on this check. An explosion from beneath the ship fires flaming debris all over, originating either from a natural disaster or an explosive such as a naval mine. The hull of the ship takes 8d6 fire damage. Any creature not behind total cover must also roll a Dexterity saving throw (DC 15) or take 8d6 fire damage on a failed save, or half as much damage on a successful one.\nFog Maze: Wisdom or Intelligence Check DC 15 A crew becomes lost in a thick fog, with various maze-like obstacles and large rocks making it impossible to blindly follow a compass or log pose. The area becomes lightly obscured, and it is not possible to see past 60 feet in the fog with normal vision.\nAt the start of each day, the crew can attempt to figure out the maze together, rolling an additional group check. Each time the check fails, the travel pace becomes 0 for the day. If the check succeeds, travel pace is halved.\nIf the ship moves at full speed during an encounter, a successful perception (Wisdom) check, DC 15, must be made by the creature steering the ship or it will crash into a gargantuan wall (See \"Crashing\").\nPlague: Wisdom or Intelligence Check DC 12 A crew is exposed to a diseased animal, a sick group of people, or some form of bioweapon, causing a plague to break out.\nEach creature in the crew must succeed on a DC 12 Constitution saving throw. On a failed save, the creature becomes contagious and falls ill from the sickness after 1d4 days. A doctor can spot signs of the disease early by making a successful Wisdom (Medicine) check, DC 15, to order safety procedures and provide medication to give the entire crew advantage on this save. Once a creature falls ill, it will gain a level of exhaustion, and it regains only half the normal number of Hit Points from spending Hit Dice and no Hit Points from finishing a Long Rest.\nAt the end of each Long Rest, an infected creature must make a DC 12 Constitution saving throw. On a failed save, the character gains one level of Exhaustion. On a successful save, the character’s Exhaustion level decreases by one level. If a successful saving throw reduces the infected creature’s level of Exhaustion below 1, the creature recovers from the disease. A doctor can treat a number of patients up to their Wisdom modifier each day, granting them advantage on their saving throw.\nOptional. Different diseases may be more far more extreme or lethal in nature. This may raise the DC of the disease, make creatures develop symptoms sooner, or cause it to have additional symptoms.\nSudden Obstacle: Dexterity Check DC 12 A sudden obstacle above or below the water, such as a glacier, giant squid, or sharp rocks threatens the ship and cannot be avoided through steering alone. The captain or helmsman can instead make a DC 15 Intelligence (Water Vehicles) check to also give the crew advantage on their check. If the check fails, the ship crashes and the hull takes 10d10 bludgeoning damage.\nInfestation: Wisdom or Intelligence Check DC 12 Pests such as insects or rats begin to contaminate food supplies. Once the infestation has begun, the chef can make a DC 15 Constitution (Brewer's Supplies) check to control the infestation. If the check succeeds, only half of the stored rations are lost. If the check fails, all the stored rations are lost aside from what characters keep on their person.",
+          "page": 37
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_naval_combat",
+      "kind": "rule",
+      "name": "Naval Combat",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 37
+      },
+      "text": "These rules provide guidance for using ships in combat.",
+      "sections": [
+        {
+          "name": "Ships and Initiative",
+          "text": "A ship uses its Dexterity modifier to roll initiative, adding the captain, first mate, or helmsman's Proficiency bonus to the roll (depending on who is driving the ship).\nAt the start of the ship's turn, the creature driving the ship decides what the ship does during its turn.",
+          "page": 37
+        },
+        {
+          "name": "Officer Actions",
+          "text": "Player characters can use their actions to take special officer actions for the ship. Here are example actions officers make use:",
+          "page": 37
+        },
+        {
+          "name": "Aim and Fire",
+          "text": "As an action, a officer can better focus the aim one of the ship's weapons. The chosen weapon gains advantage on the next attack roll made until the end of the ship's next turn.",
+          "page": 37
+        },
+        {
+          "name": "Brace",
+          "text": "As an action, an officer can prepare the crew to brace the ship for any incoming attack or projectiles. Until the start of the officer's next turn, the ship's hull gains +2 Armor Class against outside projectiles being fired at it. This action can only be taken once per round by one member of the crew, and the bonus does not stack.",
+          "page": 37
+        },
+        {
+          "name": "Full Speed Ahead",
+          "text": "As an action, an officer can unfurl the sails and command the crew to work harder. Roll a 1d6 and multiply the result by 5. Apply the total as a bonus to the ship's speed until the end of the ship's next turn. If this bonus is applied to a ship's speed when the ship is already moving faster than normal, use the higher result instead. Don't add the two bonuses together.",
+          "page": 37
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_enhanced_naval_combat_rules",
+      "kind": "rule",
+      "name": "Enhanced Naval Combat Rules",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 39
+      },
+      "text": "Below are several rules designed to spice up naval combat in your campaign. Should ship-based combat begin to feel monotonous or lackluster, you're encouraged to integrate any of these rules to rekindle excitement.",
+      "sections": [
+        {
+          "name": "Optional Rule: Unified Crew Initiative",
+          "text": "Instead of rolling initiative individually for each creature and separately for each ship's crew, consider using a singular initiative roll for the entire crew and their ship. You can use the ship's initiative for this roll, or the Captain or Helmsman's initiative. This permits both the ship and its crew to operate in tandem.\nThis rule is particularly effective for grand naval clashes, enabling crews to coordinate their actions more efficiently. It's strongly advised to employ this rule in large-scale naval combat, especially if naval warfare feels overly drawn out or cumbersome with a large number of creature combatants.",
+          "page": 39
+        },
+        {
+          "name": "Optional Rule: Creature Cannon Propulsion",
+          "text": "For melee characters feeling sidelined in prolonged, ranged naval conflicts, this rule offers another tool for more dynamic combat.\nWhen a ship is equipped with cannons, they can also launch living creatures. If opting to launch a creature rather than a cannonball, the designated cannon forfeits its attack for that turn. To be propelled, a creature uses 15 feet of its movement to enter the cannon. The cannon’s size dictates the maximum creature size it can accommodate: a Carronade holds Small or tinier creatures, a Regular Cannon can contain Medium or smaller creatures, and a Large Cannon holds up to Large creatures. Upon ignition, the creature is thrust in a direction of their choosing, up to the cannon's normal range. Upon landing, an Athletics or Acrobatics check (DC 10) determines the success of the landing. On a failure, the landing creature takes 10 (3d6) bludgeoning damage and gets knocked prone, while a success ensures a safe landing, with the creautre landing on its feet.\nIf a propelled creature collides with a solid vertical obstruction, they must make a Constitution Saving Throw (DC 8 + one per 10 feet traveled). A failed save inflicts 1d6 bludgeoning damage for every 10 feet travelled, up to a maximum of 20d6, while a successful results in half that amount of damage.\nOnce a cannon is fired this way, it cannot be used again until the following round.",
+          "page": 39
+        },
+        {
+          "name": "Optional Rule: Rope Acrobatics",
+          "text": "For heightened drama during close-quarters ship skirmishes, introduce the thrilling prospect of rope swinging. Successfully swinging requires an Athletics or Acrobatics check (DC 10). With a successful roll, a creature can swing a distance equal to twice its Strength or Dexterity score (select one), in any direction. If they're still aloft post-swing and above a ship's deck and below its upper masts, they can clutch another rope as a free action, letting them hang mid-air until their next turn or use their movement to ascend or descend normally. Creatures can still take actions and attack normally while holding onto a rope this way.\nA creature can also make a melee attack mid-swing if another hostile creature is within its range during the swing. On a hit, the attack gains a bonus +1d4 to its damage roll. A creautre can only make a swinging attack this way once per turn.",
+          "page": 39
+        },
+        {
+          "name": "Optional Rule: Naval Warcasting",
+          "text": "Casting using spells or magical powers has always been an integral force in shaping the tides of battle, and its presence can be felt even stronger when utilized in naval combat. Spellcasters aboard ships have the unique opportunity to bend the raw power of their magic in conjunction with the brute force of maritime warfare. By using a spell on a ship's cannons or components, a spellcaster can choose one of the following effects based on the spell and affected component:\nSpell-Infused Cannons: Spellcasters, especially those with evocation or enchantment tendencies, can meld their power with artillery. Before a cannon or weapon component is fired, a spellcaster can channel a stored spell into the cannonball as an action, so long as the spell's casting time is 1 action. When this enchanted cannonball impacts its target, the stored spell is released at the point of impact. For example, a cannonball infused with the Hold Person spell might paralyze a hit crewmember upon detonation. A cannonball infused with the Fireball spell can release the spell's effect centered at its point of impact. The spellcaster must expend a spell slot when infusing the cannonball as an action, and the released spell affects an area equivalent to its normal range or a 10-foot radius, whichever is smaller.\nProtective Barriers: Abjuration magic can offer valuable protection to a vessel and its crew. Tinkerers and other spellcasters can extend spells like Shield or Protective Ward to envelop parts of their ship, so long as they are standing on the ship and are within 5 feet of the component they are trying to protect. This mystical barrier can deflect projectiles or mitigate the impact of spells aimed at the ship. The larger the area covered, the higher the spell slot required. Covering a Medium-sized component (such as a cannon) with a spell requires a 1st-level spell slot or higher, covering a Large component (such as the Helm) requires a 2nd-level spell slot or higher, covering a Huge Component (such as the Sails) requires a 3rd-level spell slot or higher, and covering a Gargantuan component (such as the Hull) requires a 4th-level spell slot or higher. The protection lasts for the duration of the spell.\nWind Magic: Channeling air-based magic (such as from a Gust of Wind spell) into the sails can allow the ship to maneuver with unmatched grace. For the duration, the ship can turn on a dime, gains 15 feet of movement during its turn, and gains advantage on checks related to ship maneuverability. Alternatively, using this on an enemy ship offensively will allow you to slow its speed and reduce its maneuvarability. If you do so against its sails, for the duration, the ship can't turn, it loses 15 feet of movement during its turn, and has disadvantage on checks related to ship maneuverability",
+          "page": 39
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_crashing",
+      "kind": "rule",
+      "name": "Crashing",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 41
+      },
+      "text": "If a ship collides the space of another creature or object, it might crash. A ship does not crash if the creature or object is at least two sizes smaller than it.\nWhen a ship crashes, it must immediately make a DC 10 Constitution saving throw. On a failed save, it takes damage to the hull based on the size of the creature of object it crashed into, as shown on the Crash Damage table. It also stops moving if the object or creature is bigger than it or one size smaller. Otherwise the ship continues moving and the creature or object moves to the nearest unoccupied space that is not in the ship's path. At the DM's discretion, an object that is forced to move but is fixed in place is instead destroyed.",
+      "sections": [
+        {
+          "name": "Crash Damage",
+          "text": "A creature struck must make a Dexterity saving throw with a DC equal to 10 + the ship's Strength modifier, taking damage based on the ship's size (as shown on the Crash Damage table) on a failed save, or half as much damage on a successful one.",
+          "page": 41,
+          "tables": [
+            {
+              "rows": [
+                [
+                  "Size",
+                  "Bludgeoning Damage"
+                ],
+                [
+                  "Small",
+                  "1d6"
+                ],
+                [
+                  "Medium",
+                  "1d10"
+                ],
+                [
+                  "Large",
+                  "4d10"
+                ],
+                [
+                  "Huge",
+                  "8d10"
+                ],
+                [
+                  "Gargantuan",
+                  "16d10"
+                ]
+              ],
+              "page": 41
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_docking_a_ship",
+      "kind": "rule",
+      "name": "Docking a Ship",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 41
+      },
+      "text": "When docking a ship at an island, having a crew and lookout to maintain and guard it can ensure its safety while exploring new locations. Alternatively, leaving a ship guarded at a harbor will usually keep it safe from thieves or disasters, but may cost an additional fee.",
+      "sections": [
+        {
+          "name": "Shipbuilding and Upgrades",
+          "text": "A shipwright or local shipbuilders can spend time constructing or upgrading a boat at a dock or harbor, so long as local supplies are available. More information is provided earlier in the section under \"Building a Ship\" and \"Ship Upgrades\".",
+          "page": 41
+        },
+        {
+          "name": "Repairs",
+          "text": "While a ship is left at a dock or harbor, its damaged component or hull can easily be repaired by local shipwrights for a fee.\nAlternatively, the crew's shipwright or any number of characters proficient with carpenter's tools can spend downtime repairing the ship. At the end of each day, each character actively repairing the ship's component regains 1d6 + the character's Strength modifier in hit points. If the chosen component was at 0 hit points and isn't the hull, the component becomes functional again.",
+          "page": 41
+        },
+        {
+          "name": "Hiring",
+          "text": "While docked, a captain may consider hiring additional crew members for future voyages or to aid in building and repair at the docks or harbor. Prices for hirelings are listed under \"Hirelings\" in a previous section. The price for hiring lackeys to aid in ship repair or\nbuilding is ฿2,000 per day.",
+          "page": 41
+        }
+      ]
+    },
+    {
+      "id": "rule.ships_ship_salvaging",
+      "kind": "rule",
+      "name": "Ship Salvaging",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 41
+      },
+      "text": "When a players ship is destroyed or when a sunken ship is found, a crew may attempt to salvage any broken components to sell or reuse. A character with proficiency in carpenter's tools can attempt to salvage component other than a hull that has an undetermined amount of hit points. To do so, they must succeed on a DC 15 Strength check (Carpenter's Tools) to recover as much as they can from the component in the wreckage. On a successful check, the component has 1d10 hit points remaining. Otherwise, the component is broken.\nSelling a component requires repairing or refurbishing it beforehand. Parts sold are only worth 25% of their base value to shipyards. If a component is damaged, an additional percentage is subtracted from its sell value for every hit point the component is missing."
+    },
+    {
+      "id": "rule.ships_mapping",
+      "kind": "rule",
+      "name": "Mapping",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 41
+      },
+      "text": "Keeping a DM map of the ocean and islands throughout the world, as well as various zones, key locations, and tracking where other crews are will help keep track of travel and properly measure distance between islands and locations.",
+      "sections": [
+        {
+          "name": "Finding a Map",
+          "text": "Completed maps may be found all throughout the adventure that detail specific sections of the world and sea. These maps can be handed out as quest rewards, treasure, or may be available for purchase in some locations. However, finding a detailed world map is practically impossible, as much of the grand line is unexplored and too dangerous for most mapmakers to draw. Other than maps of chunks of the sea and nearby islands, ordinary maps aren't easy to find, especially on the grand line. To figure out which way to venture, most pirates may attempt to create their own maps during their journey and piece together the surrounding regions as they travel.",
+          "page": 41
+        },
+        {
+          "name": "Drawing a Map",
+          "text": "A skilled captain or navigator may attempt to create a map during their journey. To do so, navigator's tools are required. A well-made map details each island, regions of the sea, continents, and danger zones in each area it maps. Players may draw a map themselves when given details of the world, or alternatively the DM may give handouts of each portion of the world map the players explore to help them understand where they are. An example of a DM map, which a player would attempt to replicate on their own with given details, is provided on the next page.",
+          "page": 41
+        },
+        {
+          "name": "Example World Map (Section of Grand Line)",
+          "text": "",
+          "page": 43
+        }
+      ]
+    },
+    {
+      "id": "shipType.waver",
+      "kind": "shipType",
+      "name": "Waver",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 13
+      },
+      "typeLine": "Medium special vehicle (5 ft. by 3 ft.)",
+      "size": "Medium",
+      "text": "Cost ฿5,000,000\nUpgrade Slots 0\nCrew Maximum 1 crew, 1 passenger\nCargo Capacity 0.2 tons\nTravel Pace 25 miles per hour\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 11,
+          "hp": 50,
+          "text": "Armor Class. 11\nHit Points. 50"
+        },
+        {
+          "name": "Control and Movement: Dial",
+          "role": "other",
+          "count": 1,
+          "ac": 12,
+          "hp": 25,
+          "speed": 60,
+          "text": "Armor Class. 12\nHit Points. 25\nLocomotion (water). large breath dial, speed 60 ft.\nMove up to its speed, with one 90-degree turn. Without the breath dial, the waver's speed is 0.\nThe large breath dial on a waver holds a charge that allows for up to 50 miles of movement before it needs to be recharged. Recharging a dial can be done by allowing the waver or dial to rest for up to 8 hours without interruption. Additionally, this dial can be replaced by another large breath dial if it is lost or broken."
+        }
+      ],
+      "actions": "On its turn, the waver can move using its control and one movement component, and attack with any weapons it has.",
+      "dimensions": "5 ft. by 3 ft.",
+      "special": true,
+      "cost": 5000000,
+      "upgradeSlots": 0,
+      "cargoTons": 0.2,
+      "crew": 1,
+      "passengers": 1,
+      "pace": {
+        "mph": 25.0
+      },
+      "abilities": {
+        "str": 10,
+        "dex": 16,
+        "con": 10,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.rowboat",
+      "kind": "shipType",
+      "name": "Rowboat",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 13
+      },
+      "typeLine": "Large vehicle (10 ft. by 5 ft.)",
+      "size": "Large",
+      "text": "Cost ฿500,000\nUpgrade Slots 1\nCrew Maximum 2 crew, 2 passengers\nCargo Capacity 0.25 tons\nTravel Pace 3 miles per hour (24 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 11,
+          "hp": 50,
+          "text": "Armor Class. 11\nHit Points. 50"
+        },
+        {
+          "name": "Control and Movement: Oars",
+          "role": "other",
+          "count": 1,
+          "ac": 12,
+          "hp": 25,
+          "speed": 15,
+          "text": "Armor Class. 12\nHit Points. 25\nLocomotion (water). oars, speed 15 ft.\nMove up to its speed, with one 90-degree turn. Without the oars, the rowboat's speed is 0."
+        }
+      ],
+      "actions": "On its turn, the rowboat can move using its control and one movement component, and attack with any weapons it has.",
+      "dimensions": "10 ft. by 5 ft.",
+      "cost": 500000,
+      "upgradeSlots": 1,
+      "cargoTons": 0.25,
+      "crew": 2,
+      "passengers": 2,
+      "pace": {
+        "mph": 3.0,
+        "milesPerDay": 24
+      },
+      "abilities": {
+        "str": 11,
+        "dex": 8,
+        "con": 11,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.sloop",
+      "kind": "shipType",
+      "name": "Sloop",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 15
+      },
+      "typeLine": "Gargantuan vehicle (60 ft. by 20 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿30,000,000\nUpgrade Slots 3\nCrew Maximum 3 crew, 4 passengers\nCargo Capacity 0.5 tons\nTravel Pace 3 miles per hour (72 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 100,
+          "threshold": 10,
+          "text": "Armor Class. 15\nHit Points. 100 (damage threshold 10)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 12,
+          "hp": 50,
+          "text": "Armor Class. 12\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the sloop can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 25
+          },
+          "speed": 25,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 25 damage taken\nLocomotion (water). sails, speed 25 ft.; 15 ft. while sailing into the wind; 35 ft. while sailing with the wind"
+        },
+        {
+          "name": "Weapon: Cannon",
+          "role": "weapon",
+          "count": 1,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage\nSloops typically include a cannon only when they are equipped for combat."
+        }
+      ],
+      "actions": "On its turn, the sloop can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can't use its cannon.",
+      "dimensions": "60 ft. by 20 ft.",
+      "cost": 30000000,
+      "upgradeSlots": 3,
+      "cargoTons": 0.5,
+      "crew": 3,
+      "passengers": 4,
+      "pace": {
+        "mph": 3.0,
+        "milesPerDay": 72
+      },
+      "abilities": {
+        "str": 16,
+        "dex": 7,
+        "con": 13,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.caravel",
+      "kind": "shipType",
+      "name": "Caravel",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 15
+      },
+      "typeLine": "Gargantuan vehicle (70 ft. by 20 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿50,000,000\nUpgrade Slots 5\nCrew Maximum 8 crew, 10 passengers\nCargo Capacity 10 tons\nTravel Pace 4 miles per hour (96 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 150,
+          "threshold": 10,
+          "text": "Armor Class. 15\nHit Points. 150 (damage threshold 10)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the caravel can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 25
+          },
+          "speed": 35,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 25 damage taken\nLocomotion (water). sails, speed 35 ft.; 15 ft. while sailing into the wind; 50 ft. while sailing with the wind"
+        },
+        {
+          "name": "Weapon: Cannon (2)",
+          "role": "weapon",
+          "count": 2,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage"
+        }
+      ],
+      "actions": "On its turn, the caravel can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "70 ft. by 20 ft.",
+      "cost": 50000000,
+      "upgradeSlots": 5,
+      "cargoTons": 10.0,
+      "crew": 8,
+      "passengers": 10,
+      "pace": {
+        "mph": 4.0,
+        "milesPerDay": 96
+      },
+      "abilities": {
+        "str": 18,
+        "dex": 7,
+        "con": 15,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.submarine",
+      "kind": "shipType",
+      "name": "Submarine",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 17
+      },
+      "typeLine": "Gargantuan special vehicle (80 ft. by 20 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿600,000,000\nUpgrade Slots 6\nCrew Maximum 20 crew, 10 passengers\nCargo Capacity 1 ton\nTravel Pace 5 miles per hour (120 miles per day)\nDamage Immunities poison, psychic, necrotic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 18,
+          "hp": 300,
+          "threshold": 15,
+          "text": "Armor Class. 18\nHit Points. 300 (damage threshold 15)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 18,
+          "hp": 50,
+          "text": "Armor Class. 18\nHit Points. 50\nControls movement components, including the ability to ascend or descend into deep waters, with one 90-degree turn. If the helm is destroyed, the submarine can't turn.\nAdditionally, the submarine detects all objects and creatures within 300 ft using sonar detection and can relay the information to a screen in the helm, as if using blindsight. If the helm is destroyed, the submarine can no longer detect anything using sonar."
+        },
+        {
+          "name": "Movement: Propellers (2)",
+          "role": "movement",
+          "count": 2,
+          "ac": 15,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 10,
+            "per": 25
+          },
+          "speed": 45,
+          "text": "Armor Class. 15\nHit Points. 100; -10 ft. speed per 25 damage taken\nLocomotion and Diving (water). two propellers, speed 45 ft."
+        },
+        {
+          "name": "Weapon: Cannon (4)",
+          "role": "weapon",
+          "count": 4,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage"
+        }
+      ],
+      "actions": "On its turn, the submarine can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "80 ft. by 20 ft.",
+      "special": true,
+      "cost": 600000000,
+      "upgradeSlots": 6,
+      "cargoTons": 1.0,
+      "crew": 20,
+      "passengers": 10,
+      "pace": {
+        "mph": 5.0,
+        "milesPerDay": 120
+      },
+      "abilities": {
+        "str": 16,
+        "dex": 14,
+        "con": 16,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic, necrotic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.cog",
+      "kind": "shipType",
+      "name": "Cog",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 17
+      },
+      "typeLine": "Gargantuan vehicle (70 ft. by 20 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿100,000,000\nUpgrade Slots 6\nCrew Maximum 20 crew, 20 passengers\nCargo Capacity 50 tons\nTravel Pace 4 miles per hour (96 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 250,
+          "threshold": 15,
+          "text": "Armor Class. 15\nHit Points. 250 (damage threshold 15)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 18,
+          "hp": 50,
+          "text": "Armor Class. 18\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the cog can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 25
+          },
+          "speed": 35,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 25 damage taken\nLocomotion (water). sails, speed 35 ft.; 15 ft. while sailing into the wind; 50 ft. while sailing with the wind"
+        },
+        {
+          "name": "Weapon: Cannon (2)",
+          "role": "weapon",
+          "count": 2,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage"
+        }
+      ],
+      "actions": "On its turn, the cog can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "70 ft. by 20 ft.",
+      "cost": 100000000,
+      "upgradeSlots": 6,
+      "cargoTons": 50.0,
+      "crew": 20,
+      "passengers": 20,
+      "pace": {
+        "mph": 4.0,
+        "milesPerDay": 96
+      },
+      "abilities": {
+        "str": 20,
+        "dex": 7,
+        "con": 16,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.brig",
+      "kind": "shipType",
+      "name": "Brig",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 19
+      },
+      "typeLine": "Gargantuan vehicle (80 ft. by 20 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿150,000,000\nUpgrade Slots 7\nCrew Maximum 50 crew, 30 passengers\nCargo Capacity 100 tons\nTravel Pace 5 miles per hour (120 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 300,
+          "threshold": 15,
+          "text": "Armor Class. 15\nHit Points. 300 (damage threshold 15)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 18,
+          "hp": 50,
+          "text": "Armor Class. 18\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the brig can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 25
+          },
+          "speed": 45,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 25 damage taken\nLocomotion (water). sails, speed 45 ft.; 15 ft. while sailing into the wind; 60 ft. while sailing with the wind"
+        },
+        {
+          "name": "Weapon: Cannon (2)",
+          "role": "weapon",
+          "count": 2,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage"
+        },
+        {
+          "name": "Weapon: Carronade",
+          "role": "weapon",
+          "count": 1,
+          "ac": 15,
+          "hp": 30,
+          "text": "Armor Class. 15\nHit Points. 30\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 11 (2d10) bludgeoning damage"
+        }
+      ],
+      "actions": "On its turn, the brig can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "80 ft. by 20 ft.",
+      "cost": 150000000,
+      "upgradeSlots": 7,
+      "cargoTons": 100.0,
+      "crew": 50,
+      "passengers": 30,
+      "pace": {
+        "mph": 5.0,
+        "milesPerDay": 120
+      },
+      "abilities": {
+        "str": 20,
+        "dex": 7,
+        "con": 17,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.carrack",
+      "kind": "shipType",
+      "name": "Carrack",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 19
+      },
+      "typeLine": "Gargantuan vehicle (130 ft. by 20 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿300,000,000\nUpgrade Slots 8\nCrew Maximum 100 crew, 40 passengers\nCargo Capacity 150 tons\nTravel Pace 3 miles per hour (72 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 400,
+          "threshold": 20,
+          "text": "Armor Class. 15\nHit Points. 400 (damage threshold 20)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 16,
+          "hp": 50,
+          "text": "Armor Class. 16\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the carrack can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 20
+          },
+          "speed": 25,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 20 damage taken\nLocomotion (water). sails, speed 25 ft.; 15 ft. while sailing into the wind; 35 ft. while sailing with the wind"
+        },
+        {
+          "name": "Weapon: Cannon (2)",
+          "role": "weapon",
+          "count": 2,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage"
+        },
+        {
+          "name": "Weapon: Large Cannon (2)",
+          "role": "weapon",
+          "count": 2,
+          "ac": 15,
+          "hp": 100,
+          "text": "Armor Class. 15\nHit Points. 100\nRanged Weapon Attack: +5 to hit, reach 200/800 ft. (can't hit targets within 60 ft. of it), one target. Hit: 16 (5d10) bludgeoning damage"
+        }
+      ],
+      "actions": "On its turn, the carrack can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "130 ft. by 20 ft.",
+      "cost": 300000000,
+      "upgradeSlots": 8,
+      "cargoTons": 150.0,
+      "crew": 100,
+      "passengers": 40,
+      "pace": {
+        "mph": 3.0,
+        "milesPerDay": 72
+      },
+      "abilities": {
+        "str": 22,
+        "dex": 4,
+        "con": 18,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.galleon",
+      "kind": "shipType",
+      "name": "Galleon",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 21
+      },
+      "typeLine": "Gargantuan vehicle (150 ft. by 30 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿500,000,000\nUpgrade Slots 10\nCrew Maximum 200 crew, 150 passengers\nCargo Capacity 500 tons\nTravel Pace 4 miles per hour (96 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 600,
+          "threshold": 20,
+          "text": "Armor Class. 15\nHit Points. 600 (damage threshold 20)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 18,
+          "hp": 100,
+          "text": "Armor Class. 18\nHit Points. 100\nControls movement components, with one 90-degree turn. If the helm is destroyed, the galleon can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 20
+          },
+          "speed": 35,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 20 damage taken\nLocomotion (water). sails, speed 35 ft.; 15 ft. while sailing into the wind; 50 ft. while sailing with the wind"
+        },
+        {
+          "name": "Weapon: Cannon (6)",
+          "role": "weapon",
+          "count": 6,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage"
+        },
+        {
+          "name": "Weapon: Large Cannon (2)",
+          "role": "weapon",
+          "count": 2,
+          "ac": 15,
+          "hp": 100,
+          "text": "Armor Class. 15\nHit Points. 100\nRanged Weapon Attack: +5 to hit, reach 200/800 ft. (can't hit targets within 60 ft. of it), one target. Hit: 16 (5d10) bludgeoning damage"
+        }
+      ],
+      "actions": "On its turn, the galleon can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "150 ft. by 30 ft.",
+      "cost": 500000000,
+      "upgradeSlots": 10,
+      "cargoTons": 500.0,
+      "crew": 200,
+      "passengers": 150,
+      "pace": {
+        "mph": 4.0,
+        "milesPerDay": 96
+      },
+      "abilities": {
+        "str": 26,
+        "dex": 7,
+        "con": 20,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.man_o_war",
+      "kind": "shipType",
+      "name": "Man-O-War",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 21
+      },
+      "typeLine": "Gargantuan special vehicle (200 ft. by 30 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿1,000,000,000\nUpgrade Slots 11\nCrew Maximum 400 crew, 300 passengers\nCargo Capacity 1,000 tons\nTravel Pace 3 miles per hour (72 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 1000,
+          "threshold": 20,
+          "text": "Armor Class. 15\nHit Points. 1000 (damage threshold 20)"
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 16,
+          "hp": 50,
+          "text": "Armor Class. 16\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the man-o-war can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 20
+          },
+          "speed": 25,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 20 damage taken\nLocomotion (water). sails, speed 25 ft.; 15 ft. while sailing into the wind; 35 ft. while sailing with the wind"
+        },
+        {
+          "name": "Weapon: Cannon (10)",
+          "role": "weapon",
+          "count": 10,
+          "ac": 15,
+          "hp": 50,
+          "text": "Armor Class. 15\nHit Points. 50\nRanged Weapon Attack: +6 to hit, reach 120/480 ft., one target. Hit: 16 (3d10) bludgeoning damage"
+        },
+        {
+          "name": "Weapon: Large Cannon (4)",
+          "role": "weapon",
+          "count": 4,
+          "ac": 15,
+          "hp": 100,
+          "text": "Armor Class. 15\nHit Points. 100\nRanged Weapon Attack: +5 to hit, reach 200/800 ft. (can't hit targets within 60 ft. of it), one target. Hit: 16 (5d10) bludgeoning damage"
+        },
+        {
+          "name": "Ram",
+          "role": "other",
+          "count": 1,
+          "ac": 18,
+          "hp": 100,
+          "text": "Armor Class. 18\nHit Points. 100 (threshold 10)\nThe vehicle has advantage on all saving throws and checks relating to crashing when it crashes into a creature or object. Any damage it suffers from the crash is instead applied to the ram. These benefits do not apply if another vehicle crashes into the vehicle."
+        }
+      ],
+      "actions": "On its turn, the man-o-war can move using its ccontrol and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "200 ft. by 30 ft.",
+      "special": true,
+      "cost": 1000000000,
+      "upgradeSlots": 11,
+      "cargoTons": 1000.0,
+      "crew": 400,
+      "passengers": 300,
+      "pace": {
+        "mph": 3.0,
+        "milesPerDay": 72
+      },
+      "abilities": {
+        "str": 28,
+        "dex": 4,
+        "con": 20,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipType.battleship",
+      "kind": "shipType",
+      "name": "Battleship",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 23
+      },
+      "typeLine": "Gargantuan special vehicle (300 ft. by 50 ft.)",
+      "size": "Gargantuan",
+      "text": "Cost ฿3,000,000,000\nUpgrade Slots 12\nCrew Maximum 1000 crew, 500 passengers\nCargo Capacity 10,000 tons\nTravel Pace 4 miles per hour (96 miles per day)\nDamage Immunities poison, psychic\nCondition Immunities blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious",
+      "components": [
+        {
+          "name": "Hull",
+          "role": "hull",
+          "count": 1,
+          "ac": 15,
+          "hp": 1000,
+          "threshold": 20,
+          "text": "Armor Class. 15\nHit Points. 1000 (damage threshold 20)"
+        },
+        {
+          "name": "Seastone Bottom",
+          "role": "other",
+          "count": 1,
+          "text": "Incorporates seastone onto the bottom of the ship. This allows the ship to pass by underwater sea beasts, sea kings, and other sea creatures undetected, making it possible to cross over the calm belt."
+        },
+        {
+          "name": "Huge Fuel Engine",
+          "role": "other",
+          "count": 1,
+          "ac": 16,
+          "hp": 100,
+          "text": "Armor Class. 16\nHit Points. 100\nCounts as 50 crew members and gives power to movement components that require an engine. Requires fuel (See the \"Fueling Your Ship\" section)."
+        },
+        {
+          "name": "Control: Helm",
+          "role": "control",
+          "count": 1,
+          "ac": 16,
+          "hp": 50,
+          "text": "Armor Class. 16\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the battleship can't turn."
+        },
+        {
+          "name": "Movement: Sails",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 5,
+            "per": 20
+          },
+          "speed": 25,
+          "text": "Armor Class. 12\nHit Points. 100; -5 ft. speed per 20 damage taken\nLocomotion (water). sails, speed 25 ft.; 15 ft. while sailing into the wind; 35 ft. while sailing with the wind"
+        },
+        {
+          "name": "Movement: Paddle-Wheel",
+          "role": "movement",
+          "count": 1,
+          "ac": 12,
+          "hp": 100,
+          "speedLoss": {
+            "feet": 10,
+            "per": 25
+          },
+          "speed": 35,
+          "text": "Armor Class. 12\nHit Points. 100; -10 ft. speed per 25 damage taken\nLocomotion (water). paddle-wheel, speed 35 ft. when powered by at least one huge engine."
+        },
+        {
+          "name": "Weapon: Large Cannon (14)",
+          "role": "weapon",
+          "count": 14,
+          "ac": 15,
+          "hp": 100,
+          "text": "Armor Class. 15\nHit Points. 100\nRanged Weapon Attack: +5 to hit, reach 200/800 ft. (can't hit targets within 60 ft. of it), one target. Hit: 16 (5d10) bludgeoning damage"
+        }
+      ],
+      "actions": "On its turn, the battleship can move using its control and one movement component, and attack with its weapons. If it has half its crew or fewer, it moves at half speed and can only use half its weapons (rounded down).",
+      "dimensions": "300 ft. by 50 ft.",
+      "special": true,
+      "cost": 3000000000,
+      "upgradeSlots": 12,
+      "cargoTons": 10000.0,
+      "crew": 1000,
+      "passengers": 500,
+      "pace": {
+        "mph": 4.0,
+        "milesPerDay": 96
+      },
+      "abilities": {
+        "str": 28,
+        "dex": 4,
+        "con": 20,
+        "int": 0,
+        "wis": 0,
+        "cha": 0
+      },
+      "damageImmunities": "poison, psychic",
+      "conditionImmunities": "blinded, charmed, deafened, exhaustion, frightened, incapacitated, paralyzed, petrified, poisoned, prone, stunned, unconscious"
+    },
+    {
+      "id": "shipUpgrade.dial_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Dial Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 23
+      },
+      "group": "Movement Components",
+      "text": "Component Type. Special Medium\nUpgrade DC. 12 (requires dial proficiency)\nComponent Cost. ฿5,000,000 + 5% of ship cost.\nUpgrade slots required. 1\nArmor Class. 12\nHit Points. 25\nLocomotion (water). large breath dial or jet dial, adds speed to one movement\ncomponent; speed +60 ft. if attached to a medium vehicle; +30 ft. if attached to a large vehicle; +15 ft. if attached to a huge vehicle; and +10 ft. if attached to a gargantuan vehicle; stacking with each additional dial attached (maximum bonus +60 ft.) Adds 1 mph bonus to travel pace for every +10 ft bonus. A dial will run for up to 2 hours before it needs to be recharged for 8 hours.",
+      "componentType": "Special Medium",
+      "upgradeDc": 12,
+      "costText": "฿5,000,000 + 5% of ship cost",
+      "cost": 5000000,
+      "costPercent": 5,
+      "slots": 1,
+      "ac": 12,
+      "hp": 25
+    },
+    {
+      "id": "shipUpgrade.oars_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Oars Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 23
+      },
+      "group": "Movement Components",
+      "text": "Component Type. Large\nUpgrade DC. 10\nComponent Cost. ฿100,000 + 5% of ship cost.\nUpgrade slots required. 1\nArmor Class. 12\nHit Points. 100; -5 ft. speed per 25 damage taken.\nLocomotion (water). oars, speed based on ship type.",
+      "componentType": "Large",
+      "upgradeDc": 10,
+      "costText": "฿100,000 + 5% of ship cost",
+      "cost": 100000,
+      "costPercent": 5,
+      "slots": 1,
+      "ac": 12,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.sails_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Sails Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 23
+      },
+      "group": "Movement Components",
+      "text": "Component Type. Huge\nUpgrade DC. 15\nComponent Cost. ฿1,000,000 + 10% of ship cost.\nUpgrade slots required. 2\nArmor Class. 12",
+      "componentType": "Huge",
+      "upgradeDc": 15,
+      "costText": "฿1,000,000 + 10% of ship cost",
+      "cost": 1000000,
+      "costPercent": 10,
+      "slots": 2,
+      "ac": 12
+    },
+    {
+      "id": "shipUpgrade.paddle_wheel_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Paddle-Wheel Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Requirement: At least one huge engine installed on the ship and a control component\nComponent Type. Special Huge\nUpgrade DC. 17\nComponent Cost. ฿10,000,000 + 20% of ship cost.\nUpgrade slots required. 2\nArmor Class. 12\nHit Points. 100; -10 ft. speed per 25 damage taken.\nLocomotion (water). paddle-wheel, 35 ft. while the helm is intact. (4 mph)",
+      "requirement": "At least one huge engine installed on the ship and a control component",
+      "componentType": "Special Huge",
+      "upgradeDc": 17,
+      "costText": "฿10,000,000 + 20% of ship cost",
+      "cost": 10000000,
+      "costPercent": 20,
+      "slots": 2,
+      "ac": 12,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.propeller_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Propeller Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Requirement: At least one huge engine installed on the ship and a control component\nComponent Type. Special Huge\nUpgrade DC. 17\nComponent Cost. ฿20,000,000 + 20% of ship cost.\nUpgrade slots required. 2\nArmor Class. 18\nHit Points. 100; -5 ft. speed per 25 damage taken\nLocomotion (water). propeller, speed 45 ft. while the helm is intact. (5 mph)",
+      "requirement": "At least one huge engine installed on the ship and a control component",
+      "componentType": "Special Huge",
+      "upgradeDc": 17,
+      "costText": "฿20,000,000 + 20% of ship cost",
+      "cost": 20000000,
+      "costPercent": 20,
+      "slots": 2,
+      "ac": 18,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.rocket_booster_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Rocket Booster Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Requirement: At least one huge engine installed on the ship and a control component\nComponent Type. Special Huge\nUpgrade DC. 20\nComponent Cost. ฿100,000,000 + 50% of ship cost.\nUpgrade slots required. 2\nArmor Class. 18\nHit Points. 100; -1 mile flight speed per 20 damage taken.\nThe rocket booster allows for a vehicle to fly for up to 5 miles in any direction it chooses. The ship will fly this way for up to 10 seconds. Afterwards, the ship will land and the rocket booster will need to spend 24 hours recharging before it can be used this way again. There is a 25% chance the ship will crash during its landing (see the \"Crashing\" section).",
+      "requirement": "At least one huge engine installed on the ship and a control component",
+      "componentType": "Special Huge",
+      "upgradeDc": 20,
+      "costText": "฿100,000,000 + 50% of ship cost",
+      "cost": 100000000,
+      "costPercent": 50,
+      "slots": 2,
+      "ac": 18,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.flight_core_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Flight Core Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Requirement: At least one huge engine installed on the ship and a control component\nComponent Type. Special Gargantuan\nUpgrade DC. 20\nComponent Cost. ฿500,000,000 + 100% of ship cost.\nUpgrade slots required. 3\nArmor Class. 18\nHit Points. 100; -5 ft. speed per 20 damage taken\nLocomotion (air). Flight, speed 35 ft. if the core is destroyed, the vehicle falls and crashes. (4 mph)",
+      "requirement": "At least one huge engine installed on the ship and a control component",
+      "componentType": "Special Gargantuan",
+      "upgradeDc": 20,
+      "costText": "฿500,000,000 + 100% of ship cost",
+      "cost": 500000000,
+      "costPercent": 100,
+      "slots": 3,
+      "ac": 18,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.standard_fuel_engine_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Standard Fuel Engine Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Component Type. Advanced Medium\nUpgrade DC. 12\nComponent Cost. ฿4,000,000\nUpgrade slots required. 1\nArmor Class. 16\nHit Points. 25\nCounts as 4 crew members and gives power to movement components that require an engine. Requires fuel (See the \"Fueling Your Ship\" section).",
+      "componentType": "Advanced Medium",
+      "upgradeDc": 12,
+      "costText": "฿4,000,000",
+      "cost": 4000000,
+      "slots": 1,
+      "ac": 16,
+      "hp": 25
+    },
+    {
+      "id": "shipUpgrade.large_fuel_engine_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Large Fuel Engine Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Component Type. Advanced Large\nUpgrade DC. 17\nComponent Cost. ฿10,000,000\nUpgrade slots required. 2\nArmor Class. 16\nHit Points. 50\nCounts as 10 crew members and gives power to movement components that require an engine. Requires fuel (See the \"Fueling Your Ship\" section).",
+      "componentType": "Advanced Large",
+      "upgradeDc": 17,
+      "costText": "฿10,000,000",
+      "cost": 10000000,
+      "slots": 2,
+      "ac": 16,
+      "hp": 50
+    },
+    {
+      "id": "shipUpgrade.huge_fuel_engine_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Huge Fuel Engine Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Component Type. Advanced Huge\nUpgrade DC. 20\nComponent Cost. ฿50,000,000\nUpgrade slots required. 2\nArmor Class. 16\nHit Points. 100\nCounts as 50 crew members and gives power to movement components that require an engine. Requires fuel (See the \"Fueling Your Ship\" section).",
+      "componentType": "Advanced Huge",
+      "upgradeDc": 20,
+      "costText": "฿50,000,000",
+      "cost": 50000000,
+      "slots": 2,
+      "ac": 16,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.wing_attachment_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Wing Attachment Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Movement Components",
+      "text": "Component Type. Huge\nUpgrade DC. 15\nComponent Cost. ฿500,000 + 10% of ship cost\nUpgrade slots required. 1\nArmor Class. 12\nHit Points. 50\nA falli ng vehicle’s rate of descent slows to 60 feet per round, and any crash that would occur as a result of falling is avoided. Additionally, a ship can glide If the wings are destroyed while the vehicle is midair, it immediately falls and crashes.",
+      "componentType": "Huge",
+      "upgradeDc": 15,
+      "costText": "฿500,000 + 10% of ship cost",
+      "cost": 500000,
+      "costPercent": 10,
+      "slots": 1,
+      "ac": 12,
+      "hp": 50
+    },
+    {
+      "id": "shipUpgrade.helm_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Helm Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Control Components",
+      "text": "Component Type. Large\nUpgrade DC. 10\nComponent Cost. ฿5% of ship cost\nUpgrade slots required. 1\nArmor Class. 12\nHit Points. 50\nControls movement components, with one 90-degree turn. If the helm is destroyed, the vehicle can't turn.",
+      "componentType": "Large",
+      "upgradeDc": 10,
+      "costText": "5% of ship cost",
+      "costPercent": 5,
+      "slots": 1,
+      "ac": 12,
+      "hp": 50
+    },
+    {
+      "id": "shipUpgrade.control_room_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Control Room Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Control Components",
+      "text": "Component Type. Special Huge\nUpgrade DC. 15\nComponent Cost. ฿5,000,000 + 10% of ship cost\nUpgrade slots required. 2\nArmor Class. 15\nHit Points. 100\nControls movement components, with one 90-degree turn. If the control room is destroyed, the vehicle can't turn. Component has full cover from attacks coming from outside the vehicle, but not inside.",
+      "componentType": "Special Huge",
+      "upgradeDc": 15,
+      "costText": "฿5,000,000 + 10% of ship cost",
+      "cost": 5000000,
+      "costPercent": 10,
+      "slots": 2,
+      "ac": 15,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.steel_plating_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Steel Plating Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Hull Components",
+      "text": "Component Type. Size is determined by vehicle size\nUpgrade DC. 15\nComponent Cost. ฿50,000,000 + 30% of ship cost\nUpgrade slots required. 2\nNote: Can be added after initial construction of the ship. Incorporates Steel plating around the hull of the ship, further strengthening its resistance. The hull's damage threshold is increased by 5, it is now immune to necrotic damage, and its armor class increases to 18. However, the vehicle now moves at half its current speed.",
+      "componentType": "Size is determined by vehicle size",
+      "upgradeDc": 15,
+      "costText": "฿50,000,000 + 30% of ship cost",
+      "cost": 50000000,
+      "costPercent": 30,
+      "slots": 2
+    },
+    {
+      "id": "shipUpgrade.element_resistant_wax_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Element Resistant Wax Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 25
+      },
+      "group": "Hull Components",
+      "text": "Component Type. Special (Size is determined by vehicle size)\nUpgrade DC. 15\nComponent Cost. ฿5,000,000 + 30% of ship cost\nUpgrade slots required. 1\nNote: Can be added after initial construction of the ship. Applies a special wax coating around the vehicle. This wax grants the hull resistance to any one chosen damage type until the coating is removed. Only one type of coating can be actively applied to a vehicle at a time.",
+      "componentType": "Special (Size is determined by vehicle size)",
+      "upgradeDc": 15,
+      "costText": "฿5,000,000 + 30% of ship cost",
+      "cost": 5000000,
+      "costPercent": 30,
+      "slots": 1
+    },
+    {
+      "id": "shipUpgrade.adam_wood_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Adam Wood Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Hull Components",
+      "text": "Component Type. Special (Size is determined by vehicle size)\nUpgrade DC. 17\nComponent Cost. ฿100,000,000 + 50% of ship cost\nUpgrade slots required. 1\nIncorporates Adam Wood into the hull of the ship, further strengthening its durability. The hull's damage threshold is increased by 5 and the vehicle receives a +2 bonus to armor class on all its components.",
+      "componentType": "Special (Size is determined by vehicle size)",
+      "upgradeDc": 17,
+      "costText": "฿100,000,000 + 50% of ship cost",
+      "cost": 100000000,
+      "costPercent": 50,
+      "slots": 1
+    },
+    {
+      "id": "shipUpgrade.seastone_bottom_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Seastone Bottom Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Hull Components",
+      "text": "Component Type. Special (Size is determined by vehicle size)\nUpgrade DC. 20\nComponent Cost. ฿300,000,000 + 50% of ship cost\nUpgrade slots required. 1\nIncorporates seastone onto the bottom of the ship. This allows the ship to pass by underwater sea beasts, sea kings, and other sea creatures undetected, making it possible to cross over the calm belt.",
+      "componentType": "Special (Size is determined by vehicle size)",
+      "upgradeDc": 20,
+      "costText": "฿300,000,000 + 50% of ship cost",
+      "cost": 300000000,
+      "costPercent": 50,
+      "slots": 1
+    },
+    {
+      "id": "shipUpgrade.docking_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Docking Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Hull Components",
+      "text": "Requirement: Vehicle must be gargantuan\nComponent Type. Gargantuan\nUpgrade DC. 15\nComponent Cost. ฿10,000,000 + 30% of ship cost\nUpgrade slots required. 2\nPart of the hull. Allows for up to 7 Huge or smaller vehicles to be stored or docked within the vehicle. One vehicle can be released from docking per turn.",
+      "requirement": "Vehicle must be gargantuan",
+      "componentType": "Gargantuan",
+      "upgradeDc": 15,
+      "costText": "฿10,000,000 + 30% of ship cost",
+      "cost": 10000000,
+      "costPercent": 30,
+      "slots": 2
+    },
+    {
+      "id": "shipUpgrade.carronade_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Carronade Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Weapon Components",
+      "text": "Component Type. Medium\nUpgrade DC. 10\nComponent Cost. ฿10,000,000\nUpgrade slots required. 1\nArmor Class. 15\nHit Points. 30\nRanged Weapon Attack. +6 to hit, reach 120/480 ft., one target. Hit: (2d10)\nbludgeoning damage",
+      "componentType": "Medium",
+      "upgradeDc": 10,
+      "costText": "฿10,000,000",
+      "cost": 10000000,
+      "slots": 1,
+      "ac": 15,
+      "hp": 30
+    },
+    {
+      "id": "shipUpgrade.cannon_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Cannon Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Weapon Components",
+      "text": "Component Type. Medium\nUpgrade DC. 10\nComponent Cost. ฿20,000,000\nUpgrade slots required. 1\nArmor Class. 15\nHit Points. 50\nRanged Weapon Attack. +6 to hit, reach 120/480 ft., one target. Hit: (3d10)\nbludgeoning damage",
+      "componentType": "Medium",
+      "upgradeDc": 10,
+      "costText": "฿20,000,000",
+      "cost": 20000000,
+      "slots": 1,
+      "ac": 15,
+      "hp": 50
+    },
+    {
+      "id": "shipUpgrade.large_cannon_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Large Cannon Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Weapon Components",
+      "text": "Component Type. Medium\nUpgrade DC. 12\nComponent Cost. ฿80,000,000\nUpgrade slots required. 1\nArmor Class. 15\nHit Points. 100\nRanged Weapon Attack. +5 to hit, reach 200/800 ft., one target. Hit: (5d10)\nbludgeoning damage",
+      "componentType": "Medium",
+      "upgradeDc": 12,
+      "costText": "฿80,000,000",
+      "cost": 80000000,
+      "slots": 1,
+      "ac": 15,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.harpoon_cannon_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Harpoon Cannon Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Weapon Components",
+      "text": "Component Type. Medium\nUpgrade DC. 10\nComponent Cost. ฿25,000,000\nUpgrade slots required. 1\nArmor Class. 15\nHit Points. 50\nRanged Weapon Attack. +6 to hit, reach 120/400 ft., one target. Hit: (3d6)\npiercing damage and grapples the target with thick rope and harpoon (escape DC 15). The thick rope has AC 10, 15 hit points, vulnerability to fire, and immunity to bludgeoning, poison, and psychic damage.",
+      "componentType": "Medium",
+      "upgradeDc": 10,
+      "costText": "฿25,000,000",
+      "cost": 25000000,
+      "slots": 1,
+      "ac": 15,
+      "hp": 50
+    },
+    {
+      "id": "shipUpgrade.ram_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Ram Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Weapon Components",
+      "text": "Component Type. Large\nUpgrade DC. 15\nComponent Cost. ฿50,000,000\nUpgrade slots required. 1\nArmor Class. 18\nHit Points. 100 (threshold 10)\nThe vehicle has advantage on all saving throws and checks relating to crashing when it crashes into a creature or object. Any damage it suffers from the crash is instead applied to the ram. These benefits do not apply if another vehicle crashes into the vehicle.",
+      "componentType": "Large",
+      "upgradeDc": 15,
+      "costText": "฿50,000,000",
+      "cost": 50000000,
+      "slots": 1,
+      "ac": 18,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.flamethrower_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Flamethrower Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Weapon Components",
+      "text": "Requirement: At least one huge engine installed on the ship and a control component\nComponent Type. Special Huge\nUpgrade DC. 20\nComponent Cost. ฿300,000,000\nUpgrade slots required. 2\nArmor Class. 18\nHit Points. 100\nFlamethrower. The flamethrower sprays a 30-foot cone of fire. Each creature in the area must succeed on a DC 16 Dexterity saving throw or take 45 (10d8) fire damage. A flammable object hit by this weapon ignites if it isn’t being worn or carried. Afterwards, the flamethrower will need to spend 24 hours recharging before it can be used this way again.",
+      "requirement": "At least one huge engine installed on the ship and a control component",
+      "componentType": "Special Huge",
+      "upgradeDc": 20,
+      "costText": "฿300,000,000",
+      "cost": 300000000,
+      "slots": 2,
+      "ac": 18,
+      "hp": 100
+    },
+    {
+      "id": "shipUpgrade.beam_cannon_upgrade",
+      "kind": "shipUpgrade",
+      "name": "Beam Cannon Upgrade",
+      "versions": [
+        "dndf-8.8",
+        "dndf-10"
+      ],
+      "source": {
+        "book": "DnDF DM Guide",
+        "page": 27
+      },
+      "group": "Weapon Components",
+      "text": "Requirement: At least one huge engine installed on the ship and a control component\nComponent Type. Special Huge\nUpgrade DC. 20\nComponent Cost. ฿500,000,000\nUpgrade slots required. 2\nArmor Class. 18\nHit Points. 100\nForce Beam. The beam cannon fires a ray of energy in a 90-foot line that is 5 ft. wide. Each creature in the line must succeed on a DC 16 Dexterity saving throw or take 45 (10d8) force damage. If this damage reduces the creature to 0 Hit Points, its body becomes a pile of fine gray dust. If the line hits a Medium or smaller nonmagical object or Creation of magical force, it is disintegrated without a saving throw. If the target is a Huge or larger object or Creation of magical force, this beam disintegrates a 5-foot cube of it. Afterwards, the beam cannon will need to spend 24 hours recharging before it can be used this way again.",
+      "requirement": "At least one huge engine installed on the ship and a control component",
+      "componentType": "Special Huge",
+      "upgradeDc": 20,
+      "costText": "฿500,000,000",
+      "cost": 500000000,
+      "slots": 2,
+      "ac": 18,
+      "hp": 100
+    }
+  ]
+}

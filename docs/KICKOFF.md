@@ -99,5 +99,6 @@ Known and left: a player who moves a character to a different campaign keeps a f
 - [x] Bounty (branch `phase8-bounty-party`): on the Status tab, the DM Guide's formula with level, strongest Haki and Devil Fruit read from the sheet and the deeds counted by the player; the player's own number wins; epithet and terms; "Issue a wanted poster" fixes what the world has seen.
 - [x] Crew page: every crewmate's issued poster and the crew's total bounty (`0005_crew.sql`).
 - [x] DM page: Party, with each character's HP, AC, passive Perception, speed, bounty, exhaustion and conditions, and a link that opens the sheet.
-- [ ] Ship sheet, hold and crew treasury. Waiting on a decision: the ship rules are in the DM Guide, and whether that chapter may be public like the handbooks or must stay private like the DM chapters is Matt's call.
+- [x] The DM Guide's ship chapter as public data (Matt's ruling, 2026-10-08; branch `phase8-ships`): 11 ships with their components, 25 upgrades, and the chapter's rules and tables, in the Library under "Ships and sailing".
+- [ ] Ship sheet, hold and crew treasury, built on that data.
 - [ ] `/bounty` in the bot.
