@@ -145,7 +145,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {tab === 'fruit' && <FruitTab live={live} onOpen={onOpen} />}
       {tab === 'gear' && <GearTab live={live} onOpen={onOpen} />}
       {tab === 'spells' && <SpellsTab live={live} onOpen={onOpen} />}
-      {tab === 'status' && <StatusTab live={live} />}
+      {tab === 'status' && <StatusTab live={live} onOpen={onOpen} />}
 
       <RollTray live={live} />
 

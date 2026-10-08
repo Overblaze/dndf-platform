@@ -65,6 +65,7 @@ The made-up characters in `packages/engine/src/testCharacters.ts` are checked ag
 | Special Reactions | 2 per round; each usable prof times per short rest; Parry Blow / Deflect Projectile −(1d10 + level) | 3 each | EH10 p.11 |
 | Pirate Prestige max | ceil(level / 2); MVP +1d4 | 4 | EH10 p.12 |
 | Bounty (suggestion; player-editable) | L²×฿1M + crewmates×฿1M + fruit rarity lvl×฿10M + top Haki rarity lvl×฿10M + minor deeds×฿10M + major×฿100M + ship Con×฿1M + extra ships×฿10M + plunder×2 + civilians×฿100K + cities×฿10M + navy ships×฿10M + nobles×฿100M (Uncommon 1 … Legendary 4) | 49+8+10+30+15 = ฿112M | DMG p.107 (PDF page) |
+| Bounty on the sheet | level, the rarity of the strongest Haki feature and of a held Devil Fruit are read from the sheet; the other parts are counted by the player. A sheet derived without the private content leaves the fruit out. The player's own number replaces the total. A wanted poster keeps the bounty, epithet and terms as they were when it was issued | — | DMG p.107 |
 
 ## Bruiser (v10)
 | Number | Formula | Kaito | Page |

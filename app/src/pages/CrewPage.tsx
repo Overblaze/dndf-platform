@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
-import { campaignApi, type Campaign, type CampaignCharacter, type Member, type TableFruit } from '../lib/campaigns';
+import { exactBerries } from '@dndf/engine';
+import { campaignApi, type Campaign, type CampaignCharacter, type CrewMember, type Member, type TableFruit } from '../lib/campaigns';
+import { WantedPoster } from '../sheet/Bounty';
 import { supabase } from '../lib/supabase';
 
-interface Crew { campaign: Campaign & { role: 'player' | 'dm' }; members: Member[]; fruits: TableFruit[] | null }
+interface Crew { campaign: Campaign & { role: 'player' | 'dm' }; members: Member[]; fruits: TableFruit[] | null; crew: CrewMember[] | null }
 
 /** The campaigns you are in: who is at the table, which of your characters sails with them, and who is known to have a Devil Fruit. */
 export function CrewPage() {
@@ -25,6 +27,8 @@ export function CrewPage() {
         members: await api.members(campaign.id),
         // Fruits arrive with a later migration; the crew list works without it.
         fruits: await api.tableFruits(campaign.id).catch(() => null),
+        // Posters need one more database file (0005); without it this part says so.
+        crew: await api.crew(campaign.id).catch(() => null),
       }))));
       setProblem(null);
     } catch (e) {
@@ -51,7 +55,8 @@ export function CrewPage() {
         {!crews && !problem && <p>Looking for your crew…</p>}
         {crews?.length === 0 && <p>You are not in a campaign yet. Your DM adds you from the DM page once you have signed in here; then come back to this page.</p>}
       </section>
-      {crews?.map(({ campaign, members, fruits }) => {
+      {crews?.map(({ campaign, members, fruits, crew }) => {
+        const wanted = (crew ?? []).filter((c) => c.bounty !== null);
         const here = mine.filter((c) => c.campaignId === campaign.id);
         const elsewhere = mine.filter((c) => c.campaignId !== campaign.id);
         return (
@@ -80,6 +85,23 @@ export function CrewPage() {
                 <button className="btn btn-primary" onClick={() => place(c, campaign.id)}>Put in this campaign</button>
               </div>
             ))}
+
+            <h3>Wanted posters</h3>
+            {crew === null && <p className="soft">Not set up yet: run supabase/migrations/0005_crew.sql in the Supabase SQL Editor.</p>}
+            {crew?.length === 0 && <p className="soft">No characters are in this campaign yet.</p>}
+            {crew && crew.length > 0 && (
+              <>
+                <p className="page-ref">Crew bounty: <strong className="num">{exactBerries(wanted.reduce((sum, c) => sum + (c.bounty ?? 0), 0))}</strong> across {wanted.length} poster{wanted.length === 1 ? '' : 's'}. A poster shows what its player last issued from their sheet’s Status tab.</p>
+                <div className="posters">
+                  {wanted.sort((a, b) => (b.bounty ?? 0) - (a.bounty ?? 0)).map((c) => (
+                    <WantedPoster key={c.characterId} small name={c.name} poster={{ value: c.bounty!, epithet: c.epithet ?? undefined, terms: (c.terms as never) ?? undefined, at: c.issued ?? undefined }} />
+                  ))}
+                </div>
+                {crew.filter((c) => c.bounty === null).length > 0 && (
+                  <p className="page-ref">No poster yet: {crew.filter((c) => c.bounty === null).map((c) => `${c.name} (level ${c.level}, ${c.player})`).join(', ')}.</p>
+                )}
+              </>
+            )}
 
             <h3>Devil Fruits at the table</h3>
             {fruits === null && <p className="soft">Not set up yet.</p>}

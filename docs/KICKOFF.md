@@ -94,3 +94,10 @@ Known and left: a player who moves a character to a different campaign keeps a f
 - [x] Each casting class is worked out on its own at its own level: prepares or learns, cantrips, spells known or prepared, highest spell level, DC and attack. Each spell counts for one class. The Prepared box is only on spells of a class that prepares; a learned class's spells show "Known".
 - [x] Multiclass: the note from p210 about pooled slots reaching past what any class can know, a per-spell "Counts for" choice, and a flag on a spell above its class's highest level.
 - [x] **Spell lists were short by 13 to 17 spells each** (all but the Chemist's) since Phase 3: a height cut-off in the reader dropped the first names of each column, which sit beside the list's title. Priest cantrips had lost Guidance and Light, for instance. The cut-off is gone; every list now matches an independent count of its page, and every recovered spell that is in the SRD sits at the level the SRD gives it. The earlier "all lists match the book" check was wrong because it used the same cut-off.
+
+## Phase 8 — Ship and crew, bounty, DM party view
+- [x] Bounty (branch `phase8-bounty-party`): on the Status tab, the DM Guide's formula with level, strongest Haki and Devil Fruit read from the sheet and the deeds counted by the player; the player's own number wins; epithet and terms; "Issue a wanted poster" fixes what the world has seen.
+- [x] Crew page: every crewmate's issued poster and the crew's total bounty (`0005_crew.sql`).
+- [x] DM page: Party, with each character's HP, AC, passive Perception, speed, bounty, exhaustion and conditions, and a link that opens the sheet.
+- [ ] Ship sheet, hold and crew treasury. Waiting on a decision: the ship rules are in the DM Guide, and whether that chapter may be public like the handbooks or must stay private like the DM chapters is Matt's call.
+- [ ] `/bounty` in the bot.

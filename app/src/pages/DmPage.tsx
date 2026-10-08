@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { useAuth } from '../lib/auth';
-import { campaignApi, type Campaign, type CampaignCharacter, type Grant, type Member, type Person, type SecretSummary } from '../lib/campaigns';
+import { formatBerries } from '@dndf/engine';
+import { Link } from 'react-router-dom';
+import { campaignApi, type Campaign, type CampaignCharacter, type Grant, type Member, type PartyMember, type Person, type SecretSummary } from '../lib/campaigns';
 import { supabase } from '../lib/supabase';
 
 /** Find a Devil Fruit by name and give it, or knowledge of it, to one character. */
@@ -76,6 +78,7 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
   const [people, setPeople] = useState<Person[]>([]);
   const [characters, setCharacters] = useState<CampaignCharacter[]>([]);
   const [grants, setGrants] = useState<Grant[]>([]);
+  const [party, setParty] = useState<PartyMember[]>([]);
   const [fruitCount, setFruitCount] = useState<number | null>(null);
   const [problem, setProblem] = useState<string | null>(null);
   const [adding, setAdding] = useState('');
@@ -86,6 +89,7 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
     try {
       const [m, p, c] = await Promise.all([api.members(campaign.id), api.people(), api.characters(campaign.id)]);
       setMembers(m); setPeople(p); setCharacters(c);
+      setParty(await api.party(campaign.id));
       // Grants live in a later migration: the rest of the page still works without it.
       const [g, n] = await Promise.all([api.grants(campaign.id), api.secretCount()]);
       setGrants(g); setFruitCount(n); setProblem(null);
@@ -127,6 +131,34 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
           <button className="btn btn-primary" disabled={!adding} onClick={() => { void act(api.addMember(campaign.id, adding)); setAdding(''); }}>Add as player</button>
         </div>
         <p className="page-ref">Someone shows up in this list after they have signed in to the site with Discord once.</p>
+      </section>
+
+      <section className="card">
+        <h2>Party</h2>
+        {party.length === 0 && <p className="soft">Nobody yet. A character shows here once its player puts it in this campaign from the Crew page.</p>}
+        {party.map((c) => (
+          <div key={c.id} className="tracker">
+            <div className="resource">
+              <div>
+                <div className="resource-name">{c.name}</div>
+                <div className="page-ref">{[c.summary, `played by ${c.player}`].filter(Boolean).join(' · ')}</div>
+              </div>
+              <Link className="btn" to={`/sheet/${c.id}`}>Open sheet</Link>
+            </div>
+            {c.unreadable ? <p className="notice">This character’s numbers could not be worked out. Open the sheet to see why.</p> : (
+              <div className="chips">
+                <span className={c.hp <= 0 ? 'chip chip-lg chip-damage' : 'chip chip-lg'}>HP <strong className="num">{c.hp}</strong> / {c.maxHp}{c.tempHp ? ` +${c.tempHp}` : ''}</span>
+                <span className="chip chip-lg">AC <strong className="num">{c.ac}</strong></span>
+                <span className="chip chip-lg">Passive Perception <strong className="num">{c.passivePerception}</strong></span>
+                <span className="chip chip-lg">Speed <strong className="num">{c.speed}</strong> ft</span>
+                <span className="chip chip-lg">Bounty <strong className="num">{formatBerries(c.bounty)}</strong></span>
+                {c.exhaustion > 0 && <span className="chip chip-lg chip-damage">Exhaustion {c.exhaustion}</span>}
+                {c.conditions.map((name) => <span key={name} className="chip chip-lg chip-damage">{name}</span>)}
+              </div>
+            )}
+          </div>
+        ))}
+        <p className="page-ref">As this campaign’s DM you can open and change any of these sheets. The numbers are as of when this page loaded; reload to refresh.</p>
       </section>
 
       <section className="card">

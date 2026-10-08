@@ -8,6 +8,7 @@ import { abilityMod, maxHp, proficiencyBonus } from './core';
 import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
+import { RARITY_LEVEL, bounty as bountyOf, type WantedPoster } from './bounty';
 import { carriedWeight, type InventoryLine } from './inventory';
 import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
 import { raceChoices, type RaceChoice } from './raceChoices';
@@ -195,6 +196,9 @@ export interface Sheet {
   /** What the character carries, with the weight carried against carrying capacity. */
   gear: { lines: InventoryLine[]; carried: number; capacity: number; over: boolean };
   money: number;
+  /** The bounty the DM Guide's formula suggests (the player's own number wins), and the poster last issued. */
+  wanted: Stat;
+  poster: WantedPoster | null;
   /** Spells known, the slots to cast them with, and each casting class's DC and attack modifier. */
   spellbook: SheetSpells;
   /** Racial pick-lists (Cyborg Upgrades), with how many the level gives and what is picked. */
@@ -1152,6 +1156,16 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     prepared: knownSpells.filter((k) => k.level > 0 && k.prepared).length,
   };
 
+  // Bounty: the DM Guide's suggestion. Level, the strongest Haki and a held Devil Fruit are read from the sheet;
+  // the deeds are the player's count. A sheet derived without the private content leaves the fruit out.
+  const rarest = (rarities: string[]) => rarities.reduce<string | null>((best, r) => ((RARITY_LEVEL[r] ?? 0) > (best ? RARITY_LEVEL[best] ?? 0 : 0) ? r : best), null);
+  const bountyStat = stat(doc, 'bounty', 'Bounty', bountyOf({
+    level,
+    ...(doc.bounty?.deeds ?? {}),
+    topHakiRarity: rarest(haki.map((h) => String(h.entry.rarity ?? ''))),
+    fruitRarity: rarest(fruits.map((f) => f.rarity)),
+  }));
+
   const hitDie = first?.cls.hitDie ?? 8;
   const dreamMax = dreamPointsMax(level);
   // "Add together the Hit Dice granted by all your classes to form your pool of Hit Dice."
@@ -1218,6 +1232,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     },
     gear: inventory,
     money: doc.money ?? 0,
+    wanted: bountyStat,
+    poster: doc.bounty?.posted ?? null,
     spellbook,
     raceChoices: racePicks,
     fruits,

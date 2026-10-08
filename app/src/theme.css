@@ -1735,3 +1735,76 @@ a {
   text-decoration: none;
   cursor: help;
 }
+
+/* Wanted posters */
+.poster {
+  max-width: 320px;
+  margin: 8px auto;
+  padding: 18px 16px 12px;
+  border: 3px double #5b4630;
+  background: #ead9b0;
+  color: #3a2a18;
+  text-align: center;
+  font-family: var(--font-display, Georgia, serif);
+}
+
+.poster-wanted {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.poster-terms {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+}
+
+.poster-epithet {
+  margin-top: 14px;
+  font-style: italic;
+  overflow-wrap: anywhere;
+}
+
+.poster-name {
+  margin-top: 4px;
+  font-size: 26px;
+  font-weight: 800;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.poster-price {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 2px solid #5b4630;
+  font-size: 24px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.poster-foot {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+}
+
+.posters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.poster-small {
+  max-width: none;
+  margin: 0;
+  padding: 10px 8px 8px;
+}
+
+.poster-small .poster-wanted { font-size: 22px; }
+.poster-small .poster-terms { font-size: 9px; letter-spacing: 0.2em; }
+.poster-small .poster-epithet { margin-top: 6px; font-size: 12px; }
+.poster-small .poster-name { font-size: 15px; }
+.poster-small .poster-price { margin-top: 6px; padding-top: 4px; font-size: 14px; }
