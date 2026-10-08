@@ -207,7 +207,7 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
     </div>
   );
   const dmStep = guided && step === 'dm' ? (
-    <p className="notice">Your DM settles these four steps: your Devil Fruit or Haki, how the fruit scales, universal features and special reactions. Granting fruits and Haki arrives in a later phase of the app; nothing to fill in here yet.</p>
+    <p className="notice">Your DM settles these four steps: your Devil Fruit or Haki, how the fruit scales, universal features and special reactions. Nothing to fill in here: your DM grants a Devil Fruit from the DM page once your character is in the campaign (Crew page), and Haki is added on the sheet with “+ Spirit Surge”.</p>
   ) : null;
   const describeStep = show('describe') ? (
     <label className="field">

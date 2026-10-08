@@ -2,6 +2,7 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AppShell } from './components/AppShell';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from './lib/auth';
+import { BuildPage } from './pages/BuildPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { CrewPage } from './pages/CrewPage';
 import { DmPage } from './pages/DmPage';
@@ -21,14 +22,7 @@ export function App() {
             <Route index element={<Navigate to="/sheet" replace />} />
             <Route path="sheet" element={<SheetPage />} />
             <Route path="sheet/:id" element={<SheetPage />} />
-            <Route
-              path="build"
-              element={
-                <ComingSoon title="Build" phase={4}>
-                  The new character wizard, level up, and the build editor for swapping, adding and inventing features.
-                </ComingSoon>
-              }
-            />
+            <Route path="build" element={<ErrorBoundary where="the Build page"><BuildPage /></ErrorBoundary>} />
             <Route path="library" element={<ErrorBoundary where="the Library"><LibraryPage /></ErrorBoundary>} />
             <Route path="library/:id" element={<ErrorBoundary where="the Library"><LibraryPage /></ErrorBoundary>} />
             <Route
