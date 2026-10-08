@@ -74,6 +74,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           <button className="btn" onClick={() => setDialog('level')}>Level up</button>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
           <button className="btn" onClick={() => setDialog('history')}>History</button>
+          <Link className="btn" to={`/print/${id}`}>Print</Link>
           <button className="btn" onClick={() => setDialog('look')}>Appearance</button>
           <Link className="btn" to="/sheet">All characters</Link>
         </div>

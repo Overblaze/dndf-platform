@@ -26,3 +26,7 @@ Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (
 7. **Custom class** (branch `phase4-custom-class`): write a class with its own hit die, saving throws, proficiencies, improvement levels and features by level; it sits beside the handbook's classes in the builder, level-up and multiclassing.
 
 Phase 4 is complete. Not built: the builder walking a higher-level character through every choice owed level by level (its Review lists what is open instead).
+
+## Phase 5 — Discord bot and printable sheet
+1. **Printable sheet** (branch `phase5-print`): `#/print/<character id>` lays the character out for paper or a PDF, with or without the text of each feature (`?text=0` opens on the short one). The bot will render this page to make its PDFs.
+2. Discord bot: /sheet, /roll, /hp, /rest, /dawn, /status, /party. Needs the bot token on the mini PC (never in the repo) and a way for the bot to read characters.

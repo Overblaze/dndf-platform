@@ -4,6 +4,7 @@ import { AuthProvider } from './lib/auth';
 import { ComingSoon } from './pages/ComingSoon';
 import { DmPage } from './pages/DmPage';
 import { LibraryPage } from './pages/LibraryPage';
+import { PrintPage } from './pages/PrintPage';
 import { SheetPage } from './pages/SheetPage';
 
 export function App() {
@@ -12,6 +13,8 @@ export function App() {
       {/* Hash routes ("#/sheet") work on GitHub Pages without server rewrites. */}
       <HashRouter>
         <Routes>
+          {/* The printable sheet stands alone: no menu, nothing but the paper. */}
+          <Route path="print/:id" element={<PrintPage />} />
           <Route element={<AppShell />}>
             <Route index element={<Navigate to="/sheet" replace />} />
             <Route path="sheet" element={<SheetPage />} />
