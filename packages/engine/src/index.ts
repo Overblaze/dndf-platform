@@ -12,6 +12,7 @@ export * from './ships';
 export * from './devilforged';
 export * from './abilityScores';
 export * from './character';
+export * from './customClass';
 export * from './levelUp';
 export * from './hp';
 export * from './items';

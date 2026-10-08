@@ -23,4 +23,6 @@ Out of scope for phase 3: the builder and level-up wizard (4), the Discord bot (
 
 6. **Feature swap** (branch `phase4-feature-swap`): take any class, subclass or option feature off a character and put it back; with Borrow a feature this is the build editor's "override".
 
-Still to do in Phase 4: a fully custom class.
+7. **Custom class** (branch `phase4-custom-class`): write a class with its own hit die, saving throws, proficiencies, improvement levels and features by level; it sits beside the handbook's classes in the builder, level-up and multiclassing.
+
+Phase 4 is complete. Not built: the builder walking a higher-level character through every choice owed level by level (its Review lists what is open instead).

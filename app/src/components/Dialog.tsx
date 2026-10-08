@@ -18,7 +18,7 @@ export function Dialog({ title, onClose, children }: { title: string; onClose: (
       <div className="dialog-body">
         <div className="dialog-head">
           <h2>{title}</h2>
-          <button className="btn" onClick={onClose} aria-label="Close">
+          <button type="button" className="btn" onClick={onClose} aria-label="Close">
             Close
           </button>
         </div>

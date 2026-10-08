@@ -1,5 +1,6 @@
 // The saved character document (the `doc` column of the characters table).
 import type { ScoreOrigin } from './abilityScores';
+import type { CustomClass } from './customClass';
 import type { Ability, AbilityScores, RulesVersion } from './types';
 
 export interface WeaponDef {
@@ -117,6 +118,8 @@ export interface CharacterDoc {
   shield: boolean;
   weapons: WeaponDef[];
   willpower: { strengthenSelf: number; variantAdvancements?: number | null };
+  /** Classes the player wrote for this character. A class in `classes` with id `class.custom.<id>` is one of these. */
+  customClasses?: CustomClass[];
   /** Class, subclass and option features taken off this character, by feature key ("class.warrior/second_wind"). */
   removedFeatures?: string[];
   /** Features the player wrote: a boon from the DM, a house rule, something from a book the app does not hold. */
@@ -204,6 +207,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     classes: doc.classes,
     scores: doc.scores,
     scoreOrigin: doc.scoreOrigin,
+    customClasses: Array.isArray(doc.customClasses) ? doc.customClasses : undefined,
     removedFeatures: Array.isArray(doc.removedFeatures) ? doc.removedFeatures : undefined,
     customFeatures: Array.isArray(doc.customFeatures) ? doc.customFeatures : undefined,
     borrowedFeatures: Array.isArray(doc.borrowedFeatures) ? doc.borrowedFeatures : undefined,
