@@ -80,3 +80,12 @@ npm run load-secret --workspace bot            # load; safe to run again after r
 ```
 
 It prints counts only. Running it again replaces rows by key and never removes one, so existing grants are kept.
+
+### Setting up the table, once the files above are run
+
+1. **DM page** → type a campaign name → *Create campaign*. Whoever creates it is its DM.
+2. Each player signs in to the site with Discord once. They then appear under *Add someone…* on the DM page.
+3. Each player opens the **Crew** page and presses *Put in this campaign* next to their character. Until they do, the
+   DM cannot see that character at all.
+4. On the DM page, *Grant a fruit* next to a character: search by name, choose whether the character **has** the fruit
+   or only **knows about** it. *Reveal* tells the rest of the table which fruit it is; *Take away* closes it again.
