@@ -186,6 +186,24 @@ export const SKILLS: { id: string; name: string; ability: Ability }[] = [
 ];
 
 /** Fills in anything missing from a saved document, so older saves keep opening. Returns null if it isn't one. */
+/** A value written out with its fields in a fixed order and nothing undefined, so two copies can be compared. */
+function canonical(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map((v) => canonical(v === undefined ? null : v)).join(',')}]`;
+  if (value && typeof value === 'object') {
+    const fields = Object.entries(value as Record<string, unknown>).filter(([, v]) => v !== undefined).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+    return `{${fields.map(([k, v]) => `${JSON.stringify(k)}:${canonical(v)}`).join(',')}}`;
+  }
+  return JSON.stringify(value) ?? 'null';
+}
+
+/**
+ * Whether two copies of a character hold the same thing. A database returns a document with its
+ * fields in its own order, so comparing the text of two copies would call identical ones different.
+ */
+export function sameDoc(a: unknown, b: unknown): boolean {
+  return canonical(a) === canonical(b);
+}
+
 /** The character's crew roles, each once, whichever way they were saved. */
 export function crewRolesOf(doc: Pick<CharacterDoc, 'crewRoles' | 'crewRole'>): { id: string }[] {
   const ids = [...(doc.crewRoles ?? []), ...(doc.crewRole ? [doc.crewRole] : [])].map((r) => r?.id).filter((id): id is string => typeof id === 'string' && id.length > 0);

@@ -288,6 +288,69 @@ describe('character history', () => {
   });
 });
 
+describe('saving only if nobody else has changed the character', () => {
+  // What the website and the bot do: write where the row is still as it was read.
+  const save = `update public.characters set doc = $2 where id = $1 and updated_at = $3 returning updated_at::text as updated_at`;
+  const read = `select updated_at::text as updated_at, doc from public.characters where id = $1`;
+
+  it('a write against the time just read goes through and gives a new time', async () => {
+    const [before] = await as(ana, read, [anaChar]);
+    const written = await as(ana, save, [anaChar, { ...(before!.doc as object), note: 'one' }, before!.updated_at]);
+    expect(written).toHaveLength(1);
+    expect(written[0]!.updated_at).not.toBe(before!.updated_at);
+  });
+
+  it('a write against an older time changes nothing: the other change is kept', async () => {
+    const [mine] = await as(ana, read, [anaChar]);
+    // Someone else (the DM here, standing in for the bot or another tab) saves in between.
+    await as(matt, `update public.characters set doc = doc || '{"note": "theirs"}' where id = $1`, [anaChar]);
+    const stale = await as(ana, save, [anaChar, { ...(mine!.doc as object), note: 'mine' }, mine!.updated_at]);
+    expect(stale).toEqual([]);
+    const [now] = await as(ana, read, [anaChar]);
+    expect((now!.doc as { note: string }).note).toBe('theirs');
+    // Reading again and writing against the new time works.
+    expect(await as(ana, save, [anaChar, { ...(now!.doc as object), note: 'mine' }, now!.updated_at])).toHaveLength(1);
+  });
+});
+
+describe('tidying change logs older than 90 days', () => {
+  // What the bot runs once a day, with the service role (here: the database owner).
+  const tidy = `delete from public.character_history where at < now() - interval '90 days'`;
+
+  it('removes old lines, keeps recent ones, and never removes a character', async () => {
+    const characters = async () => (await admin(`select count(*)::int as n from public.characters`))[0]!.n as number;
+    const lines = async (id: string) => (await admin(`select count(*)::int as n from public.character_history where character_id = $1`, [id]))[0]!.n as number;
+    const before = await characters();
+    const kept = await lines(anaChar);
+    await admin(`insert into public.character_history (character_id, actor_id, change, at) values ($1, $2, '{"summary":"long ago"}', now() - interval '200 days'), ($1, $2, '{"summary":"91 days"}', now() - interval '91 days'), ($1, $2, '{"summary":"89 days"}', now() - interval '89 days')`, [anaChar, ana]);
+    expect(await lines(anaChar)).toBe(kept + 3);
+    await admin(tidy);
+    expect(await lines(anaChar)).toBe(kept + 1); // only the 89-day line of the three is left
+    expect(await characters()).toBe(before);
+    // The character is as it was, and still opens for its owner.
+    expect(await as(ana, `select id from public.characters where id = $1`, [anaChar])).toEqual([{ id: anaChar }]);
+  });
+
+  it('a character with nothing but old history is still there afterwards, with no history', async () => {
+    const [made] = await as(ana, `insert into public.characters (rules_version, doc) values ('dndf-10', '{"name":"Old Salt"}') returning id`);
+    const id = made!.id as string;
+    await admin(`insert into public.character_history (character_id, actor_id, change, at) values ($1, $2, '{"summary":"created"}', now() - interval '400 days')`, [id, ana]);
+    await admin(`update public.characters set updated_at = now() - interval '400 days', created_at = now() - interval '400 days' where id = $1`, [id]).catch(() => {});
+    await admin(tidy);
+    expect(await admin(`select count(*)::int as n from public.character_history where character_id = $1`, [id])).toEqual([{ n: 0 }]);
+    expect(await admin(`select name from public.characters where id = $1`, [id])).toEqual([{ name: 'Old Salt' }]);
+  });
+
+  it('removing history cannot remove a character: the link only runs from character to history', async () => {
+    const links = await admin(`
+      select conrelid::regclass::text as from_table, confrelid::regclass::text as to_table, confdeltype as on_delete
+      from pg_constraint where contype = 'f' and (conrelid = 'public.character_history'::regclass or confrelid = 'public.character_history'::regclass)`);
+    // Nothing points AT character_history, so deleting its rows cascades nowhere.
+    expect(links.filter((l) => l.to_table === 'character_history' || l.to_table === 'public.character_history')).toEqual([]);
+    expect(links.some((l) => /characters$/.test(String(l.to_table)) && l.on_delete === 'c')).toBe(true); // deleting a character removes its history
+  });
+});
+
 describe('signed-out visitors', () => {
   it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history'])(
     'cannot read %s',

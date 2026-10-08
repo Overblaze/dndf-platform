@@ -2,7 +2,7 @@
 import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, type AutocompleteInteraction, type ChatInputCommandInteraction } from 'discord.js';
 import type { RollMode } from '@dndf/engine';
 import { dawnCommand, hp, partyLine, rest, roll, status, type Outcome } from './commands';
-import { ChangedElsewhere, Db, type BotCharacter } from './db';
+import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter } from './db';
 import { loadEnv } from './env';
 import { closeBrowser, sheetPdf, SITE } from './pdf';
 import { sheetOf } from './rules';
@@ -69,7 +69,16 @@ async function run(interaction: ChatInputCommandInteraction) {
 }
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-client.once(Events.ClientReady, (ready) => console.log(`DnDF bot signed in as ${ready.user.tag}; PDFs come from ${SITE}`));
+client.once(Events.ClientReady, (ready) => {
+  console.log(`DnDF bot signed in as ${ready.user.tag}; PDFs come from ${SITE}`);
+  // Once now and once a day: change logs older than 90 days go. Characters are never removed.
+  const tidy = () => db.pruneHistory().then(
+    (removed) => console.log(`History tidy: ${removed} change log line(s) older than ${HISTORY_DAYS} days removed`),
+    (error: Error) => console.error('History tidy failed:', error.message),
+  );
+  void tidy();
+  setInterval(tidy, 24 * 60 * 60 * 1000).unref();
+});
 client.on(Events.InteractionCreate, async (interaction) => {
   // One table, one server: commands from anywhere else are ignored.
   if (interaction.guildId !== env.DISCORD_GUILD_ID) return;

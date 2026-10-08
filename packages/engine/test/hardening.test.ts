@@ -214,3 +214,20 @@ describe('a damaged or hand-edited save loads into a usable character', () => {
     for (const junk of [null, 'x', 5, [], {}, { schema: 1 }, { schema: 2, classes: [], scores: {} }, { schema: 1, classes: 'warrior', scores: {} }, { schema: 1, classes: [], scores: 'high' }]) expect(normalizeDoc(junk)).toBeNull();
   });
 });
+
+describe('telling whether two copies of a character are the same', () => {
+  it('field order, undefined fields and a trip through JSON make no difference; any real change does', async () => {
+    const { sameDoc } = await import('../src');
+    const rules = loadRules('dndf-10');
+    const doc = newCharacter({ name: 'T', rulesVersion: 'dndf-10', classId: 'class.warrior', level: 3, scores }, rules);
+    const reordered = Object.fromEntries(Object.entries(JSON.parse(JSON.stringify(doc))).reverse());
+    expect(sameDoc(doc, reordered)).toBe(true);
+    expect(sameDoc({ a: 1, b: undefined }, { a: 1 })).toBe(true);
+    expect(sameDoc({ a: { y: 2, x: 1 }, list: [1, 2] }, { list: [1, 2], a: { x: 1, y: 2 } })).toBe(true);
+    expect(sameDoc({ list: [1, 2] }, { list: [2, 1] })).toBe(false); // order in a list is content
+    expect(sameDoc(doc, { ...doc, state: { ...doc.state, hp: doc.state.hp - 1 } })).toBe(false);
+    expect(sameDoc(doc, { ...doc, notes: 'x' })).toBe(false);
+    expect(sameDoc(null, undefined)).toBe(true);
+    expect(sameDoc(0, '0')).toBe(false);
+  });
+});

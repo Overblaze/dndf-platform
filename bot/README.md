@@ -18,6 +18,11 @@ Every command takes `character:` (it suggests your characters as you type) and d
 changed most recently. A change made by the bot is written to the character's History with the
 character as it was before, so the website's History can undo it.
 
+## Housekeeping
+When it starts and once a day after, the bot removes change logs older than 90 days from
+`character_history`. It never removes a character: the statement names only the history table, and
+the database's link runs from character to history, not back.
+
 ## Who can see what
 The bot holds the Supabase **service-role key**, which bypasses row-level security. `src/db.ts` is the
 only file that uses it, and every function there starts from the Discord user who ran the command:

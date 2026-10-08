@@ -32,7 +32,7 @@ export function HistoryDialog({ live, store, id, onClose }: { live: LiveCharacte
     <Dialog title="History" onClose={onClose}>
       <p className="page-ref">
         Newest first. Undo puts the character back to how it was just before that line; everything after it is undone too, and the undo itself is added here, so it can be undone.
-        {store.local ? ' This browser keeps the last 60 lines.' : ''}
+        {store.local ? ' This browser keeps the last 60 lines, for 90 days.' : ' Lines older than 90 days are removed; your characters never are.'}
       </p>
       {error && <p className="notice" role="alert">{error}</p>}
       {!entries && !error && <p>Reading the log…</p>}

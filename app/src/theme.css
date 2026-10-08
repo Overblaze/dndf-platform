@@ -1595,3 +1595,17 @@ a {
     columns: 2;
   }
 }
+
+/* A save was refused because the character changed elsewhere: the choice between the two versions. */
+.conflict-bar {
+  display: grid;
+  gap: 6px;
+}
+
+.conflict-bar p {
+  margin: 0;
+}
+
+.conflict-bar .btn {
+  min-height: 44px;
+}

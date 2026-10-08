@@ -20,7 +20,11 @@ export interface HistoryEntry {
 export const SNAPSHOT_GAP_MS = 20_000;
 export const shouldSnapshot = (lastAt: number, now: number): boolean => now - lastAt >= SNAPSHOT_GAP_MS;
 
-/** How many lines this browser keeps for a character. The account keeps them all. */
+/** Change logs older than this are removed, here and on the account. A character itself is never removed for its age. */
+export const HISTORY_DAYS = 90;
+export const withinHistory = (entry: HistoryEntry, now = Date.now()): boolean => now - new Date(entry.at).getTime() <= HISTORY_DAYS * 24 * 60 * 60 * 1000;
+
+/** How many lines this browser keeps for a character. The account keeps the last 90 days. */
 export const LOCAL_HISTORY_CAP = 60;
 
 /** The list with a new line on top, trimmed to the cap. */

@@ -36,3 +36,14 @@ describe('keeping copies for undo', () => {
     expect(shouldSnapshot(1_000_000, 1_000_000 + 20_000)).toBe(true);
   });
 });
+
+describe('change logs older than 90 days', () => {
+  it('are left out; newer ones stay', async () => {
+    const { HISTORY_DAYS, withinHistory } = await import('./history');
+    const now = new Date('2026-10-08T12:00:00Z').getTime();
+    const at = (daysAgo: number) => ({ id: 'x', summary: 's', at: new Date(now - daysAgo * 86_400_000).toISOString() });
+    expect(HISTORY_DAYS).toBe(90);
+    expect([0, 1, 89, 90].map((d) => withinHistory(at(d), now))).toEqual([true, true, true, true]);
+    expect([90.01, 91, 400].map((d) => withinHistory(at(d), now))).toEqual([false, false, false]);
+  });
+});
