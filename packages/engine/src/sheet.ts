@@ -9,7 +9,7 @@ import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { carriedWeight, type InventoryLine } from './inventory';
-import type { SheetSpells } from './spells';
+import { CUSTOM_SPELL_BOOK, type SheetSpells } from './spells';
 import { raceChoices, type RaceChoice } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
@@ -1075,15 +1075,20 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   const slots = resources.filter((r) => /^slots\d$/.test(r.id)).sort((a, b) => a.id.localeCompare(b.id));
   const knownSpells: SheetSpells['known'] = (doc.spells ?? []).map((spell) => {
     const entry = spell.entry ? rules.get(spell.entry) : undefined;
-    const words = entry?.kind === 'spell' ? String(entry.text ?? '') : undefined;
-    const field = (key: string) => (typeof entry?.[key] === 'string' ? (entry[key] as string) : undefined);
+    // A spell the player wrote carries its own words; otherwise they come from the rules data, when it has them.
+    const own = spell.own && typeof spell.own === 'object' ? spell.own : undefined;
+    const words = own ? (typeof own.text === 'string' ? own.text : '') : entry?.kind === 'spell' ? String(entry.text ?? '') : undefined;
+    const field = (key: 'school' | 'castingTime' | 'range' | 'components' | 'duration') => {
+      const value = own ? own[key] : entry?.[key];
+      return typeof value === 'string' && value ? value : undefined;
+    };
     return {
       ...spell,
       text: words,
       school: field('school'), castingTime: field('castingTime'), range: field('range'), components: field('components'), duration: field('duration'),
-      page: entry?.source.page, book: entry?.source.book,
-      tables: entry?.kind === 'spell' && Array.isArray(entry.tables) ? (entry.tables as TableDef[]) : undefined,
-      ritual: entry?.kind === 'spell' && entry.ritual === true ? true : undefined,
+      page: own ? undefined : entry?.source.page, book: own ? CUSTOM_SPELL_BOOK : entry?.source.book,
+      tables: !own && entry?.kind === 'spell' && Array.isArray(entry.tables) ? (entry.tables as TableDef[]) : undefined,
+      ritual: (own ? own.ritual === true : entry?.kind === 'spell' && entry.ritual === true) ? true : undefined,
       rolls: words ? rollButtons(diceInText(words), plainScope) : [],
       castableWith: spell.level > 0 ? slots.filter((r) => Number(r.id.slice(5)) >= spell.level && r.remaining > 0).map((r) => Number(r.id.slice(5))) : [],
     };

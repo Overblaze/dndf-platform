@@ -84,3 +84,8 @@ A 600-character stress run using races, pick-lists, Haki, surges, fruits, gear a
 - the DM page called the grant note "for yourself" although the character's player can read it;
 - a Build page link (`?do=level`) reopened its dialog on every reload.
 Known and left: a player who moves a character to a different campaign keeps a fruit granted in the first until that campaign's DM takes it away; the printed sheet works out Haki Purist without knowing about a fruit (the fruit is never on paper), so a fruit holder's printed Haki dice can be one die higher than the live sheet's.
+
+## Custom spells (branch `custom-spells`)
+- [x] A spell editor (name, level, school, casting time, range, components, duration, ritual, text; dice in the text become roll buttons).
+- [x] Library → "Your spells": write, change, delete; signed in, kept on the account (`0004_homebrew.sql`) and shareable with a campaign; signed out, kept in the browser.
+- [x] Spells tab → Add spells: "Your spells" as a list, "Write a new spell" in place (optionally kept in the library), and "Change this spell" / "Write its details yourself" on any spell without printed text. A learned spell is copied onto the character, so the sheet, the printed sheet and the bot need no library.

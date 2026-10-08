@@ -2,6 +2,7 @@ import { ABILITY_NAMES, SRD_BOOK, cite, columnLabel, proficiencyBonus, signed, s
 import { createContext, Fragment, useContext, useMemo, useState, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { RuleText } from '../components/RuleText';
+import { HomebrewSpells } from './HomebrewSpells';
 import { ruleSet, VERSION_NAMES, type RuleSet } from '../lib/rules';
 
 // The handbook being read. It travels in the address ("?v=8.8") so links and reloads keep it.
@@ -263,7 +264,7 @@ function EntryLinks({ entries, detail }: { entries: RuleEntry[]; detail?: (entry
   );
 }
 
-function Shelf({ title, count, children }: { title: string; count: number; children: ReactNode }) {
+function Shelf({ title, count, children }: { title: string; count: number | string; children: ReactNode }) {
   return (
     <section className="card">
       <details className="shelf">
@@ -380,6 +381,9 @@ function LibraryHome() {
           Spells the class lists name from other 5th Edition books are listed by name only.
         </p>
         <EntryLinks entries={spells.filter((spell) => spell.source.book === SRD_BOOK)} detail={(spell) => `${spell.level === 0 ? 'cantrip' : `${ordinal(Number(spell.level))} level`} ${String(spell.school ?? '')}${spell.ritual === true ? ' (ritual)' : ''}`} />
+      </Shelf>
+      <Shelf title="Your spells" count="write your own">
+        <HomebrewSpells />
       </Shelf>
       <Shelf title="Armory" count={items.length + armoryRules.length}>
         <EntryLinks entries={armoryRules} />
