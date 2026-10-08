@@ -534,8 +534,46 @@ describe('the crew: what members of a campaign see of each other', () => {
   });
 });
 
+describe('ships: one crew, one ship', () => {
+  const launch = `insert into public.ships (doc, campaign_id) values ($1, $2) returning id`;
+  const names = async (who: string | null) => (await as(who, `select name from public.ships order by name`)).map((r) => r.name);
+  let shared: string;
+  let own: string;
+
+  it('a ship kept to yourself is yours alone; one in a campaign is the whole crew’s to see', async () => {
+    own = (await as(ana, launch, [{ schema: 1, name: 'Ana’s Dinghy' }, null]))[0]!.id;
+    shared = (await as(ana, launch, [{ schema: 1, name: 'Going Test', treasury: 100 }, campaign]))[0]!.id;
+    expect(await names(ana)).toEqual(['Ana’s Dinghy', 'Going Test']);
+    expect(await names(ben)).toEqual(['Going Test']);
+    expect(await names(matt)).toEqual(['Going Test']);
+    expect(await names(zed)).toEqual([]);
+  });
+
+  it('the crew changes the shared ship (hold, treasury); someone outside cannot', async () => {
+    expect(await as(ben, `update public.ships set doc = jsonb_set(doc, '{treasury}', '250') where id = $1 returning doc->>'treasury' as t`, [shared])).toEqual([{ t: '250' }]);
+    expect(await as(zed, `update public.ships set doc = jsonb_set(doc, '{treasury}', '0') where id = $1 returning id`, [shared])).toEqual([]);
+    expect(await as(ben, `update public.ships set doc = '{}' where id = $1 returning id`, [own])).toEqual([]); // not his, not shared
+    expect(await as(ana, `select doc->>'treasury' as t from public.ships where id = $1`, [shared])).toEqual([{ t: '250' }]);
+  });
+
+  it('nobody can take a ship: its owner stays its owner, and only the owner can pull it out of the campaign', async () => {
+    await as(ben, `update public.ships set owner_id = $2 where id = $1`, [shared, ben]);
+    expect(await admin(`select owner_id from public.ships where id = $1`, [shared])).toEqual([{ owner_id: ana }]);
+    await expect(as(ben, `update public.ships set campaign_id = null where id = $1`, [shared])).rejects.toThrow(/row-level security/);
+    await expect(as(ben, `insert into public.ships (owner_id, doc) values ($1, '{}')`, [ana])).rejects.toThrow(/row-level security/);
+    await expect(as(zed, launch, [{ schema: 1, name: 'Gatecrasher' }, campaign])).rejects.toThrow(/row-level security/);
+  });
+
+  it('the owner or the campaign’s DM can scuttle a ship; a crewmate cannot', async () => {
+    expect(await as(ben, `delete from public.ships where id = $1 returning id`, [shared])).toEqual([]);
+    expect(await as(matt, `delete from public.ships where id = $1 returning id`, [own])).toEqual([]); // not in his campaign
+    expect(await as(matt, `delete from public.ships where id = $1 returning id`, [shared])).toEqual([{ id: shared }]);
+    expect(await as(ana, `delete from public.ships where id = $1 returning id`, [own])).toEqual([{ id: own }]);
+  });
+});
+
 describe('signed-out visitors', () => {
-  it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history', 'secret_entries', 'grants', 'homebrew'])(
+  it.each(['app_settings', 'profiles', 'campaigns', 'campaign_members', 'characters', 'character_history', 'secret_entries', 'grants', 'homebrew', 'ships'])(
     'cannot read %s',
     async (table) => {
       await expect(as(null, `select * from public.${table}`)).rejects.toThrow(/permission denied/);

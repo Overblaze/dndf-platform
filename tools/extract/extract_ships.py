@@ -310,7 +310,8 @@ def ship_entry(ship: dict) -> dict:
         if c["name"] == "Actions":
             actions = "\n".join(c["text"])
             continue
-        m = re.match(r"(?:(Control|Movement|Weapon): )?(.+?)(?: \((\d+)\))?$", c["name"])
+        # "Control and Movement: Dial" (a Waver, a rowboat's oars) both steers and moves the boat: it is filed as movement, where its speed counts.
+        m = re.match(r"(?:(?:Control and )?(Control|Movement|Weapon): )?(.+?)(?: \((\d+)\))?$", c["name"])
         by = dict((k, v) for k, v in c["lines"])
         hp = by.get("Hit Points", "")
         comp = {
