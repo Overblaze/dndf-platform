@@ -398,3 +398,20 @@ A feat's "+1 to an ability score" is not applied: ability scores are entered as 
 | Bestial Summon | summoned beast +1 attack, damage, AC | — | EH8.8 p.128 |
 | Zoan Mount | ridden: walk 60 ft, Dash as bonus action | — | EH8.8 p.129 |
 | Devil's Branding | +prof damage vs target, crit 19–20, heal level + Cha on its death; 1/short rest | +3, heal 9 | EH8.8 p.116 |
+
+### Racial traits
+
+Every racial trait is a feature on the sheet with the book's words. Uses, actions and plain dice are read from the wording; the rows below are the numbers that are not.
+
+| Trait | What the sheet does | Source |
+|---|---|---|
+| Cyborg: Cyborg Upgrades | a list to pick from: v10 2 + 1 at levels 4, 8, 12, 16, 20 (2 + floor(level / 4)); v8.8 1 + 1 at 5, 10, 15, 20 (1 + floor(level / 5)). An upgrade of another says so when the other is not picked. Level-up asks when the count grows | EH10 p.75 · EH8.8 p.75 |
+| Cyborg: Steel Skin · Fighting Fish: Thick-Skinned · Automata: Iron Shell | +1 Armor Class | EH10 p.75, 69, 77 |
+| Cyborg upgrades | Centaur Form: switch, +10 ft speed, 1 per short rest; Flamethrower, Radical Beam, General Cannon, Advanced Shape-Memory Alloy: 1 per long rest; Propeller Body, Larger Propellers, Night Lens: shown under "In effect" | EH10 p.75 |
+| Mink: Animal Characteristics | pick two. Tough Hide +1 AC unless in heavy armor; Fleet Footed +10 ft; Brute Strength Athletics; Opposable Thumbs Sleight of Hand; Leap DC 8 + Str + prof; Ferocity 1 per short rest; Scavenger Resilience 1 per long rest | EH10 p.73 |
+| Mink: Beast’s Slash | unarmed strike die at least 1d6 | EH10 p.73 |
+| Buccaneer: Sturdy Build | AC 13 + Con without armor | EH10 p.79 |
+| Buccaneer: Anchor Throw | 1d12, 2d12 at 5th, 3d12 at 11th, 4d12 at 17th; 1 per short rest | EH10 p.79 |
+| Void Century Automaton: Constructed Resilience | AC 15 + Wis without armor | EH10 p.82 |
+| Tontatta: Glass Cannon | hit point maximum −2 per level | EH10 p.77 |
+| Shark: Bite · Wotan: Wotan Vigor · Yeti: Glacial Grasp | 1d6 + Str piercing · regain 1d12 + Con, 1 per long rest · save DC 8 + prof + Str, prof uses per long rest | EH10 p.70, 78, 82 |

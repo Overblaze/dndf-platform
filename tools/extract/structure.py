@@ -400,6 +400,88 @@ def apply_haki_structure(version: str, item: dict, problems: list[str]) -> None:
             item["auto"] = [a for a in item["auto"] if a != "rolls"]
 
 
+# Racial traits (p67–82). Uses, actions and plain dice come from the wording; these are the numbers that do not.
+RACE_STRUCTURE: dict[str, dict[str, dict]] = {
+    "Cyborg": {"Steel Skin": {"expect": "You gain a +1 bonus to Armor Class.", "effects": [{"type": "ac", "value": 1}]}},
+    "Fishman / Fighting Fish": {"Thick-Skinned": {"expect": "You gain a +1 bonus to your Armor Class.", "effects": [{"type": "ac", "value": 1}]}},
+    "Dwarf / Automata": {"Iron Shell": {"expect": "grants you a +1 bonus to Armor Class", "effects": [{"type": "ac", "value": 1}]}},
+    "Dwarf / Tontatta Tribe": {
+        "Hard to Detect": {"expect": "gives you proficiency in the Stealth and Acrobatics skills", "effects": [{"type": "proficiency", "skill": "stealth"}, {"type": "proficiency", "skill": "acrobatics"}]},
+        "Glass Cannon": {"expect": "Your hit point maximum decreases by 2, and it decreases by 2 every time you gain a level", "effects": [{"type": "hp", "expr": "0 - 2 * level"}]},
+    },
+    "Buccaneer": {
+        "Sturdy Build": {"expect": "When not wearing armor, your AC is 13 + your Constitution modifier", "effects": [{"type": "acFormula", "expr": "13 + mod.con", "when": "noArmor"}]},
+        "Anchor Throw": {
+            "expect": "it deals 1d12 in bludgeoning damage, gaining a",
+            "rolls": [{"label": "Bludgeoning damage", "dice": "{level >= 17 ? 4 : level >= 11 ? 3 : level >= 5 ? 2 : 1}d12", "kind": "damage"}],
+        },
+    },
+    "Void Century Automaton": {"Constructed Resilience": {"expect": "your base Armor Class is 15 + your Wisdom modifier", "effects": [{"type": "acFormula", "expr": "15 + mod.wis", "when": "noArmor"}]}},
+    "Fishman / Shark": {"Bite": {"expect": "piercing damage equal to 1d6 + your Strength modifier", "rolls": [{"label": "Bite: piercing damage", "dice": "1d6 + {mod.str}", "kind": "damage"}]}},
+    "Fish-Man, Wotan": {"Wotan Vigor": {"expect": "regain hit points equal to 1d12 + your Constitution modifier", "rolls": [{"label": "Regain hit points", "dice": "1d12 + {mod.con}", "kind": "heal"}]}},
+    "Mink": {"Beast’s Slash": {"expect": "your unarmed strike damage dice becomes a minimum of 1d6", "rolls": [], "effects": [{"type": "unarmedDie", "expr": "'1d6'", "weapons": "unarmedOnly"}, {"type": "note", "label": "Climbing speed 20 feet"}]}},
+    "Yeti": {"Glacial Grasp": {"expect": "Constitution saving throw equal to 8 + your proficiency bonus + your Strength modifier", "effects": [{"type": "display", "label": "Save DC", "expr": "8 + prof + mod.str"}]}},
+}
+
+# A trait whose bold name the book prints without its full stop, so it reads as the end of the trait before it.
+RACE_TRAIT_SPLITS: dict[str, list[tuple[str, str]]] = {"Dwarf / Tontatta Tribe": [("Hard to Detect", "Glass Cannon")]}
+
+# A trait that is a list to choose from: the lines after its first are the options.
+RACE_CHOICES: dict[str, dict] = {
+    "Mink": {
+        "trait": ("Animal Characteristics", "Animal Characteristic"),
+        "id": "minkCharacteristics",
+        "group": "mink_animal_characteristics",
+        "count": [("You can pick two of the following", "", "2")],
+        "options": {
+            "Tough Hide": {"expect": "Your Armor Class increases by 1 while you are not wearing heavy armor", "effects": [{"type": "ac", "value": 1, "when": "!heavyArmor"}]},
+            "Fleet Footed": {"expect": "Your base walking speed increases by 10 feet", "effects": [{"type": "speed", "value": 10}]},
+            "Brute Strength": {"expect": "You gain proficiency in Athletics", "effects": [{"type": "proficiency", "skill": "athletics"}]},
+            "Opposable Thumbs": {"expect": "You gain proficiency in Sleight of Hand", "effects": [{"type": "proficiency", "skill": "sleight_of_hand"}]},
+            "Leap": {"expect": "Strength save DC equal to 8 + your Strength modifier + your proficiency bonus", "effects": [{"type": "display", "label": "Save DC", "expr": "8 + mod.str + prof"}]},
+        },
+    },
+    "Cyborg": {
+        "trait": ("Cyborg Upgrades",),
+        "id": "cyborgUpgrades",
+        "group": "cyborg_upgrades",
+        # How many upgrades a level gives, by the sentence that says so (the two handbooks differ).
+        "count": [
+            ("You install 2 weapon or tool features of your choice", "You can choose an additional upgrade at levels 4, 8, 12, 16, and 20th level", "2 + floor(level / 4)"),
+            ("You install a weapon or tool feature of your choice", "At 20th level, you can install and use a fifth upgrade feature", "1 + floor(level / 5)"),
+        ],
+        "options": {
+            "Propeller Body": {"expect": "You gain a swimming speed of 25 feet", "effects": [{"type": "note", "label": "Swimming speed 25 feet"}]},
+            "Larger Propellers": {"expect": "You now have a flying speed of 10 feet", "effects": [{"type": "note", "label": "Flying speed 10 feet"}]},
+            "Night Lens": {"expect": "You can see in dim light within 60 feet of you as if it were bright light", "effects": [{"type": "note", "label": "Darkvision 60 feet"}]},
+            "Centaur Form": {
+                "expect": "your speed increases by 10 feet for one minute. Additionally, you have advantage on all Strength checks",
+                "toggle": {"id": "centaur_form", "label": "Centaur Form", "effects": [{"type": "speed", "value": 10}, {"type": "note", "label": "Advantage on Strength checks"}]},
+            },
+        },
+    },
+}
+
+
+def apply_race_structure(version: str, who: str, trait: dict, problems: list[str]) -> None:
+    fields = RACE_STRUCTURE.get(who, {}).get(trait["name"])
+    if not fields:
+        return
+    if fields["expect"] not in trait["text"]:
+        problems.append(f"race {who} / {trait['name']} ({version}) is worded differently here, so its numbers were not applied")
+        return
+    if "rolls" in fields:
+        trait["rolls"] = fields["rolls"]
+        if not trait["rolls"]:
+            del trait["rolls"]
+            if "auto" in trait:
+                trait["auto"] = [a for a in trait["auto"] if a != "rolls"]
+                if not trait["auto"]:
+                    del trait["auto"]
+    if "effects" in fields:
+        trait["effects"] = trait.get("effects", []) + fields["effects"]
+
+
 def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
     fields = FEAT_STRUCTURE.get(feat["name"])
     if not fields:

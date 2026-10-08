@@ -8,6 +8,7 @@ import { abilityMod, maxHp, proficiencyBonus } from './core';
 import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
+import { raceChoices, type RaceChoice } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
 import { HAKI_PURIST_LEVELS, logiaCharges, parameciaCharges, zoanBeastForm, dreamPointsMax, hakiPuristPicks, hakiTier, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
@@ -189,6 +190,8 @@ export interface Sheet {
     purist: { earned: number; levels: number[]; picks: PuristPick[] };
     surges: { record: SurgeRecord; name: string; kind: string; rarity: string; page: number; book: string; feature?: string }[];
   };
+  /** Racial pick-lists (Cyborg Upgrades), with how many the level gives and what is picked. */
+  raceChoices: RaceChoice[];
   /** Devil Fruits the character holds, and ones they only know about. Empty unless private content was handed in. */
   fruits: SheetFruit[];
   knownFruits: SheetFruit[];
@@ -395,6 +398,31 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     }
   }
 
+  // The race's traits, and what was picked from its lists. They read the whole character's level and belong to no class.
+  const race = doc.race.id ? rules.get(doc.race.id) : undefined;
+  const subrace = doc.race.subraceId ? rules.get(doc.race.subraceId) : undefined;
+  if (doc.race.id && !race) warnings.push(`Race "${doc.race.id}" is not in the rules data.`);
+  const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
+  const racePicks = raceChoices(doc, rules);
+  {
+    const blank: ClassEntry = { id: 'race', kind: 'class', name: 'Race', versions: [doc.rulesVersion], source: { book: HANDBOOKS[doc.rulesVersion], page: 67 }, hitDie: 8, features: [] };
+    for (const { trait, entry } of racialTraits) {
+      // Descriptive traits stay in the Library; the sheet lists the ones a player uses.
+      if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) continue;
+      const from = entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name;
+      // A trait's skills are granted through "skills"; its pick-list is handled below, not as a class choice.
+      const def = { ...trait, level: 1, choices: undefined } as unknown as FeatureDef;
+      active.push({ def, source: { entry, cls: blank, classLevel: Math.max(1, level), label: entry.name }, from, key: `${entry.id}/${slug(trait.name)}` });
+    }
+    for (const choice of racePicks) {
+      for (const id of choice.picked) {
+        const option = choice.options.find((o) => o.id === id);
+        if (!option) { warnings.push(`"${id}" is not one of the ${choice.name}.`); continue; }
+        active.push({ def: option, source: { entry: choice.group, cls: blank, classLevel: Math.max(1, level), label: choice.from }, from: `${choice.from}: ${choice.name}`, key: `${choice.group.id}/${option.id}` });
+      }
+    }
+  }
+
   // Haki features unlocked by Spirit Surges. They read the whole character's level and belong to no class.
   const surgeRecords = doc.surges ?? [];
   const haki = hakiTaken(doc, rules);
@@ -493,10 +521,6 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   };
 
   // The character's race, background, crew role and feats, from the rules data.
-  const race = doc.race.id ? rules.get(doc.race.id) : undefined;
-  const subrace = doc.race.subraceId ? rules.get(doc.race.subraceId) : undefined;
-  if (doc.race.id && !race) warnings.push(`Race "${doc.race.id}" is not in the rules data.`);
-  const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
   const background = doc.background ? rules.get(doc.background.id) : undefined;
   const crewRoles: RuleEntry[] = [];
   for (const { id } of crewRolesOf(doc)) {
@@ -703,7 +727,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     } else {
       // A player's own feature keeps its counter by its id, so renaming it does not reset what is spent.
       const isHaki = a.key.startsWith('hakiFeature.');
-      const id = isHaki || a.key.startsWith('custom/') || a.key.startsWith('class.custom.') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
+      const id = isHaki || /^(race|subrace)\./.test(a.key) || racePicks.some((c) => a.key.startsWith(`${c.group.id}/`)) || a.key.startsWith('custom/') || a.key.startsWith('class.custom.') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
       featureResource.set(a.key, id);
       // Haki Purist, Train Stamina: one more charge for the Haki features it covers.
       const stamina = isHaki ? puristStamina(puristDoc, (a.def as { rarity?: unknown }).rarity) : 0;
@@ -887,11 +911,6 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   // Race traits, the background's and crew role's features, and feats: shown with the class features.
   const extra = (key: string, name: string, text: string, page: number, entry: RuleEntry, from: string, more: Partial<SheetFeature> = {}) =>
     features.push({ key, name, text, page, book: entry.source.book, from, rolls: [], displays: [], onUse: [], sections: [], tables: [], ...more });
-  for (const { trait, entry } of racialTraits) {
-    // Descriptive traits stay in the Library; the sheet lists the ones a player uses.
-    if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) continue;
-    extra(`${entry.id}/${slug(trait.name)}`, trait.name, trait.text, trait.page, entry, entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name, { tables: trait.tables ?? [] });
-  }
   for (const [granted, label] of [[background, 'Background'], ...crewRoles.map((role) => [role, 'Crew role'] as const)] as const) {
     for (const section of (granted?.sections ?? []) as SectionDef[]) {
       const m = /^(Feature|Pirate Prestige Ability): (.+)$/.exec(section.name);
@@ -1096,6 +1115,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       purist: { earned: hakiPuristPicks(level, heldFruits.length > 0, doc.rulesVersion), levels: HAKI_PURIST_LEVELS[doc.rulesVersion], picks: doc.hakiPurist ?? [] },
       surges: surgeLog,
     },
+    raceChoices: racePicks,
     fruits,
     knownFruits,
     fruitSaveDc,

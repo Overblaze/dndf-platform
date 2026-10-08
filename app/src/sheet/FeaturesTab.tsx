@@ -2,7 +2,9 @@ import { cite, type CustomFeature } from '@dndf/engine';
 import { useState } from 'react';
 import { RuleText } from '../components/RuleText';
 import type { LiveCharacter } from '../lib/useCharacter';
+import { Dialog } from '../components/Dialog';
 import { BorrowFeatureDialog, CustomFeatureDialog } from './CustomFeatures';
+import { RaceChoiceFields } from './RaceChoiceFields';
 
 /** "Warrior 5 · EH10 p.201", or just where a player's own feature comes from. */
 export const featureRef = (feature: { book: string; from: string; page: number }) => (feature.book === 'Custom' ? `${feature.from} · your own` : `${feature.from} · ${cite(feature.book, feature.page)}`);
@@ -11,6 +13,7 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
   const { doc, sheet } = live;
   const [editing, setEditing] = useState<CustomFeature | 'new' | null>(null);
   const [borrowing, setBorrowing] = useState(false);
+  const [choosing, setChoosing] = useState(false);
   const customs = doc.customFeatures ?? [];
   const saveCustom = (feature: CustomFeature) => {
     const exists = customs.some((c) => c.id === feature.id);
@@ -30,6 +33,17 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
       <h2>Features</h2>
       {sheet.warnings.map((warning) => (
         <p key={warning} className="notice">{warning}</p>
+      ))}
+      {sheet.raceChoices.map((choice) => (
+        <div key={choice.id} className="resource">
+          <div>
+            <div className="resource-name">{choice.name}</div>
+            <div className="page-ref">
+              {choice.picked.length} of {choice.allowed} picked{choice.picked.length < choice.allowed ? ': you have more to choose' : ''} · {choice.from} · {cite(choice.book, choice.page)}
+            </div>
+          </div>
+          <button className={choice.picked.length < choice.allowed ? 'btn btn-primary' : 'btn'} onClick={() => setChoosing(true)}>Choose</button>
+        </div>
       ))}
       <div className="row wrap">
         <button className="btn" onClick={() => setEditing('new')}>Add your own feature</button>
@@ -81,6 +95,24 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
         />
       )}
       {borrowing && <BorrowFeatureDialog live={live} onClose={() => setBorrowing(false)} />}
+      {choosing && (
+        <Dialog title="Racial choices" onClose={() => setChoosing(false)}>
+          <p className="page-ref">Changes are saved as you tick. You may swap one each time you level up; the sheet does not stop you swapping more.</p>
+          <RaceChoiceFields
+            choices={sheet.raceChoices}
+            picked={doc.choices}
+            withText
+            onChange={(id, next) => {
+              const choice = sheet.raceChoices.find((c) => c.id === id)!;
+              const name = (optionId: string) => choice.options.find((o) => o.id === optionId)?.name ?? optionId;
+              const added = next.filter((x) => !choice.picked.includes(x)).map(name);
+              const dropped = choice.picked.filter((x) => !next.includes(x)).map(name);
+              live.setDoc({ ...doc, choices: { ...doc.choices, [id]: next } }, `${choice.name}: ${[...added.map((n) => `added ${n}`), ...dropped.map((n) => `dropped ${n}`)].join(', ')}`);
+            }}
+          />
+          <button className="btn btn-primary" onClick={() => setChoosing(false)}>Done</button>
+        </Dialog>
+      )}
     </section>
   );
 }

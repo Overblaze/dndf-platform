@@ -55,3 +55,7 @@ Both open items were then closed on branch `save-conflicts`:
 - [ ] The bot does not see fruit charges yet: `/dawn` in Discord does not refill them (the website's Dawn does).
 - [x] `/sheet` in Discord never includes a fruit, revealed or not: the fruit is not in the saved character the PDF is drawn from.
 - [ ] Audit the private data (a few fruit type lines are garbled by extraction).
+
+## Racial traits (branch `race-choices`)
+Racial traits were text only. Now each is a feature with its uses, action and dice read from the wording, and the numbers above in `docs/FORMULAS.md` entered by hand. Cyborg Upgrades and the Mink's Animal Characteristics are lists to pick from, in the builder, on the Features tab and at level-up.
+Still the player's to apply: traits that say "of your choice" for a skill, tool, weapon or ability score (Human Variant, Octopus, Yokai Tribesman, Automata, Oni, Smelt-Whiting, Buccaneer); swimming, climbing and flying speeds other than the ones listed; spells a trait lets you cast.
