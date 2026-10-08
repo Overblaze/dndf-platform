@@ -351,6 +351,55 @@ FEAT_STRUCTURE = {
 }
 
 
+# Haki features (p222–240 of each handbook). Their dice come from the wording (see haki_rolls in
+# extract_chapters.py); what is here is the rest: armor formulas, bonuses and things switched on.
+RESIST_NONMAGICAL = "Resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks"
+HAKI_STRUCTURE: dict[str, dict] = {
+    "Focused Hit": {"expect": "increase each die by one size up to a maximum of d8", "rolls": [], "effects": [{"type": "weaponDieStep", "max": 8, "label": "once per turn"}]},
+    "Enhanced Strike": {"expect": "die by one size up to a maximum of d12", "rolls": [], "effects": [{"type": "weaponDieStep", "max": 12}]},
+    "Resolve Within": {"expect": "resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks", "toggle": {"id": "resolve_within", "label": "Resolve Within", "effects": [{"type": "note", "label": RESIST_NONMAGICAL}]}},
+    "Vessel of Resilience": {
+        "expect": "resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks, and you have advantage on Constitution saving throws",
+        "toggle": {"id": "vessel_of_resilience", "label": "Vessel of Resilience", "effects": [{"type": "note", "label": RESIST_NONMAGICAL}, {"type": "note", "label": "Advantage on Constitution saving throws"}]},
+    },
+    "Soul Armor": {
+        "expect": "making your AC equal to 10 + your proficiency bonus + half of your Willpower (rounded up), maximum of 20 AC, when you aren’t wearing armor",
+        "toggle": {"id": "soul_armor", "label": "Soul Armor", "effects": [{"type": "acFormula", "expr": "min(20, 10 + prof + ceil(willpower / 2))", "when": "noArmor"}]},
+    },
+    "Dark Armor": {
+        "expect": "your Armor Class can’t be less than 5 + your Willpower",
+        "toggle": {"id": "dark_armor", "label": "Dark Armor", "effects": [
+            {"type": "acMinimum", "expr": "5 + willpower"},
+            {"type": "note", "label": "Resistance to all types of damage except force"},
+            {"type": "note", "label": "Immune to being grappled or restrained"},
+        ]},
+    },
+    "Weapon Hardening": {"expect": "bonus to Attack rolls and Damage Rolls equal to a quarter of your Willpower (rounded up)", "effects": [{"type": "display", "label": "Attack and damage bonus with the coated weapon", "expr": "ceil(willpower / 4)"}]},
+    "Conqueror’s Coating": {"expect": "bonus to Attack rolls and Damage Rolls equal to a quarter of your Willpower (rounded up)", "effects": [{"type": "display", "label": "Attack and damage bonus with the coated weapon", "expr": "ceil(willpower / 4)"}]},
+    "Clairvoyant Strike": {"expect": "a bonus to your attack rolls equal to your Willpower score", "toggle": {"id": "clairvoyant_strike", "label": "Clairvoyant Strike", "effects": [{"type": "attack", "expr": "willpower"}]}},
+    "Instinctual Awareness": {"expect": "You gain a +2 bonus to your passive Wisdom (Perception)", "effects": [{"type": "passivePerception", "value": 2}]},
+    "Spirit Sense": {"expect": "You gain a +8 bonus to your passive Wisdom (Perception)", "effects": [{"type": "passivePerception", "value": 8}]},
+}
+
+
+def apply_haki_structure(version: str, item: dict, problems: list[str]) -> None:
+    fields = HAKI_STRUCTURE.get(item["name"])
+    if not fields:
+        return
+    if fields["expect"] not in item["text"]:
+        problems.append(f"haki {item['name']} ({version}) is worded differently here, so its numbers were not applied")
+        return
+    for key in ("toggle", "rolls"):
+        if key in fields:
+            item[key] = fields[key]
+    if "effects" in fields:
+        item["effects"] = item.get("effects", []) + fields["effects"]
+    if not item.get("rolls"):
+        item.pop("rolls", None)
+        if "auto" in item:
+            item["auto"] = [a for a in item["auto"] if a != "rolls"]
+
+
 def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
     fields = FEAT_STRUCTURE.get(feat["name"])
     if not fields:

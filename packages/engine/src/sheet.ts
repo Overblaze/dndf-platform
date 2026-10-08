@@ -9,7 +9,8 @@ import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
-import { dreamPointsMax, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
+import { HAKI_PURIST_LEVELS, dreamPointsMax, hakiPuristPicks, hakiTier, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
+import { HAKI_COLORS, hakiTaken, puristStamina, type HakiColor, type PuristPick, type SurgeRecord } from './surges';
 import {
   ABILITIES,
   ABILITY_NAMES,
@@ -180,6 +181,13 @@ export interface Sheet {
   takenOff: { key: string; name: string; from: string; page: number; book: string }[];
   /** Armor, weapons and tools the character is proficient with, each with where it comes from. */
   proficiencies: { armor: Proficiency[]; weapons: Proficiency[]; tools: Proficiency[] };
+  /** Haki by Color, with the tier reached in each, and every Spirit Surge advancement on the character. */
+  haki: {
+    colors: { id: HakiColor; name: string; count: Stat; tier: 0 | 1 | 2 | 3; features: string[] }[];
+    /** Haki Purist: picks the character's level has earned, the levels that give one, and the picks made. */
+    purist: { earned: number; levels: number[]; picks: PuristPick[] };
+    surges: { record: SurgeRecord; name: string; kind: string; rarity: string; page: number; book: string; feature?: string }[];
+  };
   warnings: string[];
 }
 
@@ -240,6 +248,28 @@ const left = (max: number, spent: number | undefined) => Math.min(max, Math.max(
 /** The dice a player typed, or null when they can't be read ("lots", "1d"). */
 const readDice = (dice: string): DiceSpec | null => { try { return parseDice(dice); } catch { return null; } };
 const averageOf = (dice: string) => (readDice(dice)?.terms ?? []).reduce((total, t) => total + (t.count * (t.sides + 1)) / 2, 0);
+/** Haki Purist, Train Quality: "Increase the amount of dice rolled from your haki features by 1." */
+function moreDice(rolls: SheetFeature['rolls'], extra: number): SheetFeature['rolls'] {
+  if (!extra) return rolls;
+  return rolls.map((roll) => {
+    const spec = readDice(roll.dice);
+    if (!spec?.terms[0]) return roll;
+    spec.terms[0].count += extra;
+    return { ...roll, dice: formatDice(spec) };
+  });
+}
+const DIE_SIZES = [4, 6, 8, 10, 12];
+/** A weapon's dice with each die one size larger, up to a largest size; null when nothing changes or it isn't dice. */
+function stepDice(dice: string, largest: number): string | null {
+  const spec = readDice(dice);
+  if (!spec) return null;
+  let changed = false;
+  for (const term of spec.terms) {
+    const next = DIE_SIZES[DIE_SIZES.indexOf(term.sides) + 1];
+    if (DIE_SIZES.includes(term.sides) && next && next <= largest) { term.sides = next; changed = true; }
+  }
+  return changed ? formatDice(spec) : null;
+}
 /** A feature's roll buttons, leaving out any whose dice can't be read rather than failing the whole sheet. */
 function rollButtons(rolls: RollDef[], scope: ExprScope): SheetFeature['rolls'] {
   return rolls.flatMap((r) => {
@@ -357,8 +387,36 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     }
   }
 
-  // 2. Ability scores, after features that raise them (The King).
+  // Haki features unlocked by Spirit Surges. They read the whole character's level and belong to no class.
+  const surgeRecords = doc.surges ?? [];
+  const haki = hakiTaken(doc, rules);
+  {
+    const blank: ClassEntry = { id: 'haki', kind: 'class', name: 'Haki', versions: [doc.rulesVersion], source: { book: HANDBOOKS[doc.rulesVersion], page: 221 }, hitDie: 8, features: [] };
+    for (const { entry, upgradedFrom } of haki) {
+      const color = HAKI_COLORS.find((c) => c.id === entry.color)?.name ?? 'Haki';
+      const def = { ...entry, level: 1, page: entry.source.page } as unknown as FeatureDef;
+      active.push({
+        def,
+        source: { entry, cls: blank, classLevel: Math.max(1, level), label: color },
+        from: `${color} · ${String(entry.rarity ?? '')}${upgradedFrom ? ` (was ${upgradedFrom.name})` : ''}`,
+        key: entry.id,
+      });
+    }
+  }
+  const advancements = surgeRecords.flatMap((record) => {
+    const entry = rules.get(record.entry);
+    if (entry?.kind === 'surgeAdvancement') return [{ record, entry }];
+    if (entry?.kind !== 'hakiFeature') warnings.push(`Spirit Surge advancement "${record.entry}" is not in the ${doc.rulesVersion} rules data.`);
+    return [];
+  });
+  const advancementsOf = (id: string) => advancements.filter((a) => a.entry.id === `surgeAdvancement.${id}`);
+
+  // 2. Ability scores, after features that raise them (The King) and Strengthen Self.
   const scores: AbilityScores = { ...doc.scores };
+  for (const { record } of advancementsOf('strengthen_self')) {
+    const ability = record.pick?.ability;
+    if (ability && ABILITIES.includes(ability) && !record.pick?.willpower) scores[ability] = Math.max(scores[ability], Math.min(scores[ability] + 2, 20));
+  }
   for (const { def } of active) {
     for (const effect of (def.effects ?? []) as EffectDef[]) {
       if (effect.type !== 'ability' || !effect.ability) continue;
@@ -379,6 +437,14 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     page: GENERAL_PAGES[doc.rulesVersion].proficiency,
   });
 
+  // Willpower, which Haki features read. Strengthen Self counts whether it was typed into the builder or taken as a surge.
+  const variant = doc.willpower.variantAdvancements;
+  const wp = stat(doc, 'willpower', 'Willpower', willpower({
+    level,
+    strengthenSelf: doc.willpower.strengthenSelf + (doc.rulesVersion === 'dndf-10' ? advancementsOf('strengthen_self').filter((a) => a.record.pick?.willpower).length : 0),
+    variant: typeof variant === 'number' ? { spiritualAdvancements: variant } : undefined,
+  }));
+
   // 3. What rules expressions can see.
   const toggleDefs = active.flatMap((a) => (a.def.toggle ? [{ def: a.def.toggle as ToggleDef, feature: a }] : []));
   const on: ExprScope = {};
@@ -391,6 +457,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   const scopeFor = (source: Source, extra: ExprScope = {}): ExprScope => ({
     level: source.classLevel,
     prof: prof.value,
+    willpower: wp.value,
     mod,
     col: classColumns(source.cls, source.classLevel),
     on,
@@ -410,7 +477,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
 
   // Features that don't come from a class (race, background, crew role, feats) see the whole character's level.
   const plainScope: ExprScope = {
-    level, prof: prof.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, wearingArmor: doc.armor !== null,
+    level, prof: prof.value, willpower: wp.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, wearingArmor: doc.armor !== null,
     heavyArmor: doc.armor?.dexCap === 0, bruiserWeapon: false, melee: false, ranged: false, twoHanded: false, weapon: '',
   };
 
@@ -483,6 +550,11 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   for (const e of ofType('armorProficiency')) if (typeof e.effect.armor === 'string') grantArmor(e.effect.armor, e.from);
   for (const e of ofType('weaponProficiency')) if (typeof e.effect.weapon === 'string') grant(proficiencies.weapons, e.effect.weapon, weaponGroupName(e.effect.weapon), e.from);
   for (const e of ofType('toolProficiency')) if (typeof e.effect.label === 'string') grant(proficiencies.tools, slug(e.effect.label), e.effect.label, e.from);
+  for (const { record } of advancementsOf('warriors_path')) {
+    const picked = record.pick?.proficiency;
+    if (picked?.kind === 'armor' && typeof picked.id === 'string') grantArmor(picked.id, 'Warriors Path');
+    if (picked?.kind === 'weapon' && typeof picked.id === 'string') grant(proficiencies.weapons, picked.id, weaponGroupName(picked.id), 'Warriors Path');
+  }
   // Armor worn or a shield carried without the proficiency: said plainly, never blocked.
   const armorKind = doc.armor ? (doc.armor.dexCap === 0 ? 'heavy' : doc.armor.dexCap == null ? 'light' : 'medium') : undefined;
   const unproficient = 'disadvantage on Strength and Dexterity checks, saves and attack rolls, and you can’t cast spells';
@@ -507,6 +579,13 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   const expertiseIn = new Set(doc.expertise);
   for (const e of ofType('expertise')) if (typeof e.effect.skill === 'string') expertiseIn.add(e.effect.skill);
   for (const e of ofType('saveProficiency')) if (e.effect.ability) saveProfs.add(e.effect.ability);
+  // Career Advancement: proficiency in the skill, or expertise when the character already has it.
+  for (const { record } of advancementsOf('career_advancement')) {
+    const skill = record.pick?.skill;
+    if (typeof skill !== 'string' || !SKILLS.some((s) => s.id === skill)) continue;
+    if (skillProfs.has(skill)) expertiseIn.add(skill);
+    else skillProfs.add(skill);
+  }
 
   const saves = {} as Sheet['saves'];
   for (const a of ABILITIES) {
@@ -527,8 +606,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   });
   const perception = skills.find((s) => s.id === 'perception')!;
   const passivePerception = stat(doc, 'passivePerception', 'Passive Perception', {
-    value: 10 + perception.value,
-    lines: [{ label: 'Base', value: 10 }, { label: 'Perception', value: perception.value }],
+    value: 10 + perception.value + sum(bonusLines('passivePerception')),
+    lines: [{ label: 'Base', value: 10 }, { label: 'Perception', value: perception.value }, ...bonusLines('passivePerception')],
   });
 
   // 5. Armor class: the best formula available, then shield and bonuses.
@@ -552,6 +631,11 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   if (bestAc.label !== 'Unarmored' && !doc.armor) acLines[0] = { label: `Base (${bestAc.label})`, value: acLines[0]!.value };
   if (doc.shield) acLines.push({ label: 'Shield', value: 2 });
   acLines.push(...bonusLines('ac'));
+  // Dark Armor: "your Armor Class can't be less than 5 + your Willpower".
+  for (const e of ofType('acMinimum')) {
+    const least = amount(e);
+    if (sum(acLines) < least) acLines.push({ label: `${e.from}: can’t be less than ${least}`, value: least - sum(acLines) });
+  }
   const ac = stat(doc, 'ac', 'Armor Class', { value: sum(acLines), lines: acLines, page: bestAc.page });
 
   // 6. Speed, initiative, hit points, carrying.
@@ -585,12 +669,6 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   const carry = stat(doc, 'carry', 'Carrying capacity', { value: sum(carryLines), lines: carryLines, page: 10 });
 
   // 7. Willpower and Haki.
-  const variant = doc.willpower.variantAdvancements;
-  const wp = stat(doc, 'willpower', 'Willpower', willpower({
-    level,
-    strengthenSelf: doc.willpower.strengthenSelf,
-    variant: typeof variant === 'number' ? { spiritualAdvancements: variant } : undefined,
-  }));
   const hakiDc = stat(doc, 'hakiSaveDc', 'Haki save DC', hakiSaveDc(wp.value));
   const hakiAttack = settings.hakiAttackRuling ? stat(doc, 'hakiAttack', 'Haki attack', hakiAttackBonus(wp.value)) : null;
 
@@ -613,9 +691,13 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       featureResource.set(a.key, uses.slice(4));
     } else {
       // A player's own feature keeps its counter by its id, so renaming it does not reset what is spent.
-      const id = a.key.startsWith('custom/') || a.key.startsWith('class.custom.') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
+      const isHaki = a.key.startsWith('hakiFeature.');
+      const id = isHaki || a.key.startsWith('custom/') || a.key.startsWith('class.custom.') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
       featureResource.set(a.key, id);
-      resourceDefs.push({ def: { id, name: a.def.name, max: uses.max, recharge: uses.recharge }, source: a.source, page: a.def.page });
+      // Haki Purist, Train Stamina: one more charge for the Haki features it covers.
+      const stamina = isHaki ? puristStamina(doc, (a.def as { rarity?: unknown }).rarity) : 0;
+      const max = stamina ? `(${uses.max}) + ${stamina}` : uses.max;
+      resourceDefs.push({ def: { id, name: a.def.name, max, recharge: uses.recharge }, source: a.source, page: a.def.page });
     }
   }
   // Multiclass spellcasters: the classes the handbook names pool their levels and read the
@@ -645,6 +727,11 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       }
     }
   }
+  // Muscle Memory: "Double the amount of uses of one class feature."
+  for (const { record } of advancementsOf('muscle_memory')) {
+    const doubled = record.pick?.resource ? merged.get(record.pick.resource) : undefined;
+    if (doubled) doubled.calculated *= 2;
+  }
   const resources: SheetResource[] = [...merged.values()].flatMap(({ def, calculated, page, book }) => {
     const max = stat(doc, `resource.${def.id}`, def.name, { value: calculated, lines: [] }).value;
     // Nothing to track yet (5th-level slots at level 3): leave it off the sheet.
@@ -661,7 +748,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     : [{ name: 'Deflect Projectile', text: '', page: 11 }, { name: 'Parry Blow', text: '', page: 11 }];
   const specialReactions: Sheet['specialReactions'] = reactionList.map((r) => {
     const id = slug(r.name).split('_')[0]!;
-    general(`sr.${id}`, r.name, specialReactionUses(prof.value));
+    general(`sr.${id}`, r.name, specialReactionUses(prof.value) + advancementsOf('improve_special_reactions').length);
     return { id, resource: `sr.${id}`, name: r.name, text: r.text, page: r.page, roll: /1d10 \+ their player level/.test(r.text) || !r.text ? reductionRoll : undefined };
   });
   general('healing_surge', 'Healing Surge', 1);
@@ -730,9 +817,13 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     hitLines.push(...bonusLines('attack', extra).filter((l) => l.value !== 0));
 
     const useStyle = style !== undefined && averageOf(style.dice) > averageOf(weapon.damage);
-    const dice = useStyle ? style.dice : weapon.damage;
+    // Enhanced Strike and Focused Hit: the weapon's own die one size larger, never a class feature's die.
+    const step = useStyle ? undefined : ofType('weaponDieStep', extra).reduce<ActiveEffect | undefined>((best, e) => (!best || (e.effect.max ?? 0) > (best.effect.max ?? 0) ? e : best), undefined);
+    const stepped = step ? stepDice(weapon.damage, step.effect.max ?? 12) : null;
+    if (step && stepped && step.effect.label) attackNotes.push(`${step.from}: the larger die ${String(step.effect.label)}; ${weapon.damage} otherwise`);
+    const dice = useStyle ? style.dice : stepped ?? weapon.damage;
     const damageLines: BreakdownLine[] = [
-      { label: useStyle ? `${style.from} die` : 'Weapon die', value: dice },
+      { label: useStyle ? `${style.from} die` : stepped ? `Weapon die ${weapon.damage}, one size larger (${step!.from})` : 'Weapon die', value: dice },
       { label: `${ABILITY_NAMES[ability]} modifier`, value: mod[ability]! },
     ];
     if (weapon.bonus) damageLines.push({ label: 'Item bonus', value: weapon.bonus });
@@ -755,6 +846,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   });
 
   // 11. Features, with their dice and display values worked out.
+  const purist = doc.hakiPurist ?? [];
   const features: SheetFeature[] = active.map((a) => {
     const scope = scopeFor(a.source);
     const def = a.def;
@@ -769,7 +861,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       cost: def.cost as Record<string, number> | undefined,
       resource: featureResource.get(a.key),
       toggle: (def.toggle as ToggleDef | undefined)?.id,
-      rolls: rollButtons((def.rolls ?? []) as RollDef[], scope),
+      rolls: a.key.startsWith('hakiFeature.') ? moreDice(rollButtons((def.rolls ?? []) as RollDef[], scope), purist.filter((p) => p === 'quality').length) : rollButtons((def.rolls ?? []) as RollDef[], scope),
       displays: ((def.effects ?? []) as EffectDef[])
         .filter((e) => e.type === 'display' && e.expr)
         .map((e) => ({ label: String(e.label ?? def.name), value: String(evaluate(e.expr!, scope)) })),
@@ -811,6 +903,38 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       tables: (feat.tables ?? []) as TableDef[],
     });
   }
+
+  // Standard Advancements, each time one was taken, with what was chosen.
+  for (const { record, entry } of advancements) {
+    const pick = record.pick ?? {};
+    const chose = [
+      pick.willpower ? 'Willpower +2' : pick.ability ? `${ABILITY_NAMES[pick.ability] ?? pick.ability} +2` : '',
+      pick.skill ? SKILLS.find((s) => s.id === pick.skill)?.name ?? '' : '',
+      pick.proficiency ? (pick.proficiency.kind === 'armor' ? (pick.proficiency.id === 'shields' ? 'Shields' : `${capital(pick.proficiency.id)} armor`) : weaponGroupName(pick.proficiency.id)) : '',
+      pick.resource ? resources.find((r) => r.id === pick.resource)?.name ?? '' : '',
+      pick.note ?? '',
+    ].filter(Boolean).join(', ');
+    extra(`surge/${record.id}`, entry.name, String(entry.text ?? ''), entry.source.page, entry, `Spirit Surge${chose ? `: ${chose}` : ''}`);
+  }
+
+  // Haki by Color. A count can be overridden, because Haki from a class or subclass counts toward tiers too.
+  const hakiColors: Sheet['haki']['colors'] = HAKI_COLORS.map((color) => {
+    const ofColor = haki.filter((h) => h.entry.color === color.id);
+    const counted = ofColor.filter((h) => h.entry.amateur !== true);
+    const count = stat(doc, `hakiCount.${color.id}`, `${color.name} features`, {
+      value: counted.length,
+      lines: counted.length ? counted.map((h) => ({ label: h.entry.name, value: 1 })) : [{ label: 'None yet', value: 0 }],
+      page: 221,
+    });
+    const tier = count.value >= 6 ? 3 : count.value >= 4 ? 2 : hakiTier(ofColor.map((h) => ({ rarity: String(h.entry.rarity ?? '') })));
+    return { id: color.id, name: color.name, count, tier, features: ofColor.map((h) => h.entry.id) };
+  });
+  const surgeLog: Sheet['haki']['surges'] = surgeRecords.flatMap((record) => {
+    const entry = rules.get(record.entry);
+    if (!entry) return [];
+    const shown = haki.find((h) => h.record === record);
+    return [{ record, name: entry.name, kind: entry.kind, rarity: String(entry.rarity ?? ''), page: entry.source.page, book: entry.source.book, feature: entry.kind === 'hakiFeature' ? shown?.entry.id : `surge/${record.id}` }];
+  });
 
   const formulas: Sheet['formulas'] = sources.flatMap((source) =>
     Object.entries((source.entry.formulas ?? {}) as Record<string, { label: string; expr: string; page?: number }>).map(([id, formula]) => ({
@@ -887,6 +1011,12 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     attacks,
     features,
     notes,
+    haki: {
+      colors: hakiColors,
+      // Every pick is lost on gaining a Devil Fruit; fruits are not on the sheet yet, so none is counted as held.
+      purist: { earned: hakiPuristPicks(level, false, doc.rulesVersion), levels: HAKI_PURIST_LEVELS[doc.rulesVersion], picks: purist },
+      surges: surgeLog,
+    },
     warnings,
   };
 }

@@ -31,6 +31,23 @@ The made-up characters in `packages/engine/src/testCharacters.ts` are checked ag
 | Haki attack (table ruling; custom/original-PHB features only) | 2 + ceil(Willpower / 2) | +6 | — |
 | Haki tier per color | T2 at 4 features of that color, T3 at 6; Amateur (Common) don't count | — | EH10 p.221 |
 | Haki Purist | picks at 4, 10, 16 (v8.8: 4, 8, 12, 16, 20); lost on gaining a Devil Fruit | — | EH10 p.221 |
+| Haki Purist: Train Quality | each pick: +1 die on every Haki roll button | Force of Will 5d10 → 6d10 | EH10 p.221 |
+| Haki Purist: Train Stamina | each pick: +1 use on Uncommon and Rare Haki features; v8.8 only: also Very Rare for a pick from 12th level on, and Legendary for the 20th-level pick (picks count in the order taken) | Force of Will 1 → 2 | EH10 p.221 · EH8.8 p.221 |
+| Haki feature count per Color | features of that Color, Amateur left out; overridable, because Haki from a class or subclass counts too | — | EH10 p.221 |
+| Amateur Haki | from character level 5 an Amateur feature is its Uncommon variant, and counts toward the tier | Fortitude → Aura of Life | EH10 p.221 |
+| Haki dice | "N dS + a number of dS equal to half / a quarter of your Willpower (rounded up)" → (N + ceil(Willpower ÷ 2 or 4)) dS; "equal to your Willpower" → Willpower dS | WP 8: Spirit Emission 6d10, Force of Will 3d10 | EH10 p.223–240 |
+| Aura of Life / Fortitude | 1d6 + ceil(Willpower / 2) + level temporary HP / 1d4 + level | WP 8, L8: 1d6 + 12 | EH10 p.223 |
+| Soul Armor (switch) | AC = min(20, 10 + prof + ceil(Willpower / 2)), without armor | WP 8: 17 | EH10 p.223 |
+| Dark Armor (switch) | AC is at least 5 + Willpower | WP 12: 17 | EH10 p.226 |
+| Clairvoyant Strike (switch) | + Willpower to attack rolls | — | EH10 p.229 |
+| Weapon Hardening, Conqueror’s Coating | shown: + ceil(Willpower / 4) to attack and damage with the coated weapon | WP 8: +2 | EH10 p.224 |
+| Enhanced Strike / Focused Hit | the weapon's own die one size larger, up to d12 / d8 (Focused Hit once per turn, noted on the attack); never a class feature's die | 1d8 → 1d10 | EH10 p.223 |
+| Instinctual Awareness / Spirit Sense | passive Perception +2 / +8 | — | EH10 p.227–228 |
+| Strengthen Self (surge) | +2 to one ability score, max 20; v10: or +2 Willpower | — | EH10 p.222 |
+| Career Advancement | proficiency in a skill, or expertise when already proficient | — | EH10 p.222 |
+| Muscle Memory | one feature's uses × 2 | — | EH10 p.222 |
+| Improve Special Reactions | +1 use of every Special Reaction, each time taken | — | EH10 p.222 |
+| Spirit Surge options | held back (greyed, never refused) when: rarer than the surge; taken and not repeatable; Tier 2 / 3 feature without that tier in its Color; a named prerequisite, level range, Qualities of a King or spellcasting is missing | — | EH10 p.221 |
 | Devil Fruit save DC | 10 + ceil(Willpower / 2) | 14 | EH10 p.242 |
 | Devil Fruit attack | 2 + ceil(Willpower / 2) | +6 | EH10 p.242 |
 | Paramecia charges | L1–2: 2, then = level (max 20); highest spell level ceil(level/2), max 9 | L7: 7, 4th | EDFE p.8 |

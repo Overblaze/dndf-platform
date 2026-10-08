@@ -46,3 +46,8 @@ Probes, a 1,400-character stress run and a browser pass with damaged saves and a
 Both open items were then closed on branch `save-conflicts`:
 - **Saves never overwrite a change made elsewhere.** The browser store and the account store write a character only if it is still as this page last read it; otherwise the sheet stops saving and offers "Load the saved version" or "Keep this page's version" (the replaced version goes into History). The bot does the same. If the stored time differs but the content does not, the write goes ahead, so a quirk in how a time is written can never block saving.
 - **Change logs older than 90 days are removed** once a day by the bot (`Db.pruneHistory`), and left out of the browser's own history. Only `character_history` is named; a character is never removed for its age, and a database test holds that.
+
+## Phase 6 — Haki, Spirit Surges, Devil Fruits
+- [x] Haki features and "+ Spirit Surge" on the sheet (branch `phase6-haki-surges`): rarity, tabs, prerequisites greyed out and never blocked, preview of changed numbers, log, remove. Haki roll buttons scale with Willpower; Haki Purist; Standard Advancements wired where they have a number.
+- [ ] Private content table, grants and loader (branch `phase6-secret-table`, PR #34).
+- [ ] DM grant screen, fruit on the sheet, Devil Fruit advancements tab, `/sheet` redaction.
