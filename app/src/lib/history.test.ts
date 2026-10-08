@@ -25,3 +25,14 @@ describe('history', () => {
     expect(canUndo({ ...entry(1), before: { schema: 1 } as never })).toBe(true);
   });
 });
+
+describe('keeping copies for undo', () => {
+  it('small changes within twenty seconds of the last copy share it; later ones keep their own', async () => {
+    const { SNAPSHOT_GAP_MS, shouldSnapshot } = await import('./history');
+    expect(SNAPSHOT_GAP_MS).toBe(20_000);
+    expect(shouldSnapshot(0, 1_700_000_000_000)).toBe(true); // the first change of a session
+    expect(shouldSnapshot(1_000_000, 1_000_000 + 5_000)).toBe(false);
+    expect(shouldSnapshot(1_000_000, 1_000_000 + 19_999)).toBe(false);
+    expect(shouldSnapshot(1_000_000, 1_000_000 + 20_000)).toBe(true);
+  });
+});

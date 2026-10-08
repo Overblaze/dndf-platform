@@ -12,6 +12,14 @@ export interface HistoryEntry {
   before?: CharacterDoc;
 }
 
+/**
+ * A copy of the whole character is a few kilobytes, and a fight can log hundreds of small changes.
+ * Small changes made within this long of the last kept copy share it; anything bigger (a level, an
+ * edit, a rest, an undo) always keeps its own.
+ */
+export const SNAPSHOT_GAP_MS = 20_000;
+export const shouldSnapshot = (lastAt: number, now: number): boolean => now - lastAt >= SNAPSHOT_GAP_MS;
+
 /** How many lines this browser keeps for a character. The account keeps them all. */
 export const LOCAL_HISTORY_CAP = 60;
 

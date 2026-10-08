@@ -19,6 +19,13 @@ const fromRow = (row: Row): BotCharacter | null => {
   return doc ? { id: row.id, doc, ownerId: row.owner_id, campaignId: row.campaign_id, updatedAt: row.updated_at } : null;
 };
 
+/** The character was changed by someone else between the bot reading it and writing it. */
+export class ChangedElsewhere extends Error {
+  constructor() {
+    super('The character changed while the command was running.');
+  }
+}
+
 export class Db {
   private readonly client: SupabaseClient;
   /** Discord user id → Supabase user id, for everyone who has signed in to the website with Discord. */
@@ -67,8 +74,12 @@ export class Db {
   async save(discordId: string, character: BotCharacter, next: CharacterDoc, log: string): Promise<void> {
     const owner = await this.accountOf(discordId);
     if (!owner || owner !== character.ownerId) throw new Error('That character is not yours to change.');
-    const { error } = await this.client.from('characters').update({ rules_version: next.rulesVersion, doc: next }).eq('id', character.id).eq('owner_id', owner);
+    // Only if nobody has changed it since it was read: the website or a second command may have,
+    // and writing this copy over theirs would lose their change.
+    const { data, error } = await this.client.from('characters').update({ rules_version: next.rulesVersion, doc: next })
+      .eq('id', character.id).eq('owner_id', owner).eq('updated_at', character.updatedAt).select('id');
     if (error) throw new Error(`Could not save: ${error.message}`);
+    if (!data || data.length === 0) throw new ChangedElsewhere();
     // History is a courtesy: a failure here must not undo the change the player was just told about.
     await this.client.from('character_history').insert({ character_id: character.id, actor_id: owner, change: { summary: log, before: character.doc } });
   }

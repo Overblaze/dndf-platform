@@ -26,7 +26,10 @@ export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharact
   const [increase, setIncrease] = useState(NONE);
   const [feat, setFeat] = useState('');
 
-  const plan = useMemo(() => levelUpPlan(doc, rules, classId), [doc, rules, classId]);
+  // A class that is not in this handbook (an old save, a deleted custom class) can't be levelled; offer the ones that can.
+  const known = (id: string) => classes.some((c) => c.id === id);
+  const usable = known(classId) ? classId : doc.classes.find((c) => known(c.id))?.id ?? classes[0]!.id;
+  const plan = useMemo(() => levelUpPlan(doc, rules, usable), [doc, rules, usable]);
   const pickClass = (id: string) => { setClassId(id); setRolled(null); setTyped(''); setSubclass(''); setPicks({}); setIncrease(NONE); setFeat(''); };
   const others = classes.filter((c) => !doc.classes.some((held) => held.id === c.id));
 
@@ -35,8 +38,8 @@ export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharact
   const added = ABILITIES.reduce((sum, a) => sum + increase[a], 0);
   const scoreIncrease = plan.improvement && improve === 'scores' && added > 0 ? increase : undefined;
   const preview = useMemo(
-    () => applyLevelUp(doc, rules, { classId, hpRoll, subclass: subclass || undefined, choices: picks, scoreIncrease, feat: plan.improvement && improve === 'feat' && feat ? feat : undefined }),
-    [doc, rules, classId, hpRoll, subclass, picks, scoreIncrease, plan.improvement, improve, feat],
+    () => applyLevelUp(doc, rules, { classId: usable, hpRoll, subclass: subclass || undefined, choices: picks, scoreIncrease, feat: plan.improvement && improve === 'feat' && feat ? feat : undefined }),
+    [doc, rules, usable, hpRoll, subclass, picks, scoreIncrease, plan.improvement, improve, feat],
   );
   const waiting = hpMode === 'roll' && rolled === null;
   const toDo = [
@@ -60,8 +63,8 @@ export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharact
     <Dialog title="Level up" onClose={onClose}>
       <label className="field">
         <span className="label">Take a level in</span>
-        <select value={classId} onChange={(e) => pickClass(e.target.value)}>
-          {doc.classes.map((held) => {
+        <select value={usable} onChange={(e) => pickClass(e.target.value)}>
+          {doc.classes.filter((held) => known(held.id)).map((held) => {
             const cls = classes.find((c) => c.id === held.id);
             return <option key={held.id} value={held.id}>{cls?.name ?? held.id} {held.level} → {held.level + 1}</option>;
           })}
@@ -72,6 +75,8 @@ export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharact
       </label>
       <p className="page-ref">Character level {plan.totalLevel - 1} → {plan.totalLevel}{plan.proficiency.to !== plan.proficiency.from ? ` · proficiency bonus ${signed(plan.proficiency.from)} → ${signed(plan.proficiency.to)}` : ''}</p>
       {plan.warnings.map((w) => <p key={w} className="notice">{w} It's your call.</p>)}
+      {plan.classLevel > 20 && <p className="notice">The {plan.className} table stops at level 20. You can go past it; numbers that grow with level stay at their level-20 values.</p>}
+      {doc.classes.some((held) => !known(held.id)) && <p className="notice">One of this character's classes is not in this handbook, so it isn't offered here.</p>}
 
       <fieldset>
         <legend className="label">Hit points · d{plan.hitDie}</legend>

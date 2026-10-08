@@ -1,5 +1,6 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AppShell } from './components/AppShell';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from './lib/auth';
 import { ComingSoon } from './pages/ComingSoon';
 import { DmPage } from './pages/DmPage';
@@ -14,7 +15,7 @@ export function App() {
       <HashRouter>
         <Routes>
           {/* The printable sheet stands alone: no menu, nothing but the paper. */}
-          <Route path="print/:id" element={<PrintPage />} />
+          <Route path="print/:id" element={<ErrorBoundary where="the printable sheet"><PrintPage /></ErrorBoundary>} />
           <Route element={<AppShell />}>
             <Route index element={<Navigate to="/sheet" replace />} />
             <Route path="sheet" element={<SheetPage />} />
@@ -27,8 +28,8 @@ export function App() {
                 </ComingSoon>
               }
             />
-            <Route path="library" element={<LibraryPage />} />
-            <Route path="library/:id" element={<LibraryPage />} />
+            <Route path="library" element={<ErrorBoundary where="the Library"><LibraryPage /></ErrorBoundary>} />
+            <Route path="library/:id" element={<ErrorBoundary where="the Library"><LibraryPage /></ErrorBoundary>} />
             <Route
               path="ship"
               element={

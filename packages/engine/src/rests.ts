@@ -78,16 +78,17 @@ export function longRest(doc: CharacterDoc, sheet: Sheet, options: RestOptions =
   const changes: string[] = [];
   let state = doc.state;
   const max = sheet.maxHp.value;
-  if (state.hp < max) changes.push(`HP ${state.hp} → ${max}`);
+  // Hit points above the maximum happen when the maximum has dropped (exhaustion, an edit): a rest settles them.
+  if (state.hp !== max) changes.push(`HP ${state.hp} → ${max}`);
   if (state.tempHp > 0) changes.push(`Temporary HP ${state.tempHp} → 0`);
   const back = settings.longRestHitDice === 'all' ? state.hitDiceSpent : Math.min(state.hitDiceSpent, Math.max(1, Math.floor(sheet.hitDice.total / 2)));
   if (back > 0) changes.push(`Hit dice ${sheet.hitDice.remaining} → ${sheet.hitDice.remaining + back} of ${sheet.hitDice.total}`);
   if (state.exhaustion > 0) changes.push(`Exhaustion ${state.exhaustion} → ${state.exhaustion - 1}`);
   state = {
     ...state,
-    hp: Math.max(state.hp, max),
+    hp: max,
     tempHp: 0,
-    hitDiceSpent: state.hitDiceSpent - back,
+    hitDiceSpent: Math.max(0, state.hitDiceSpent - back),
     exhaustion: Math.max(0, state.exhaustion - 1),
     deathSaves: { successes: 0, failures: 0 },
   };

@@ -30,3 +30,17 @@ Phase 4 is complete. Not built: the builder walking a higher-level character thr
 ## Phase 5 — Discord bot and printable sheet
 1. **Printable sheet** (branch `phase5-print`): `#/print/<character id>` lays the character out for paper or a PDF, with or without the text of each feature (`?text=0` opens on the short one). The bot will render this page to make its PDFs.
 2. **Discord bot** (branch `phase5-bot`, `bot/`): /roll, /hp, /rest, /dawn, /status, /sheet (PDF) and /party, on the shared engine. Secrets live in `~/dndf/secret/bot.env` on the mini PC; `bash bot/install-service.sh` runs it as a user service from `~/dndf/bot-live`. See `bot/README.md`.
+
+## Deep review of phases 1–5 (branch `deep-review`)
+Probes, a 1,400-character stress run and a browser pass with damaged saves and a full store. Fixed, each with a test:
+- a class level past 20 (or below 1) crashed the sheet and the Level up dialog in classes with a level table;
+- a weapon whose damage was not dice crashed the sheet, with no way back in; there was no crash screen anywhere;
+- characters kept in the browser were never put into shape on loading, and one bad one broke the whole list;
+- dice had no upper limit (`/roll 99999999d6` would stall the bot); a hit die roll could be 0, 99 or 2.5;
+- counters shared by name between a custom class feature and a handbook feature, or two custom features;
+- a feat listed twice counted twice; options stayed after the feature that held them was taken off;
+- pools, hit dice and hit points could sit outside their range after an odd save; a long rest left hit points above a lowered maximum;
+- a full browser store stopped saving silently; History kept a full copy of the character for every tap;
+- the bot could overwrite a change made on the website a moment before; the database tests timed out on a busy machine.
+
+Open, by decision: the website can still overwrite a bot change if its tab stays open and is edited without leaving it (the save path needs a signed-in test before it is changed); `character_history` is never pruned.
