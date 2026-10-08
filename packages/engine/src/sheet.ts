@@ -182,6 +182,9 @@ export interface Sheet {
 
 const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 
+/** The "book" of a feature the player wrote. */
+export const CUSTOM_BOOK = 'Custom';
+
 export interface Proficiency {
   /** "light", "shields", "martial", "martial_ranged", a weapon's name as a slug, or a tool's. */
   id: string;
@@ -280,6 +283,52 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
           else warnings.push(`"${id}" is not one of the ${group?.name ?? def.choices.from}.`);
         }
       }
+    }
+  }
+
+  // Features from outside the character's classes. Their expressions read the character's whole level,
+  // against the table of the class they come from (or the first class, for the player's own).
+  const home = sources[0];
+  const borrowedPools: ResourceDef[] = [];
+  for (const borrowed of doc.borrowedFeatures ?? []) {
+    const entry = rules.get(borrowed.entry);
+    const def = ((entry?.features ?? entry?.options ?? []) as (FeatureDef | OptionDef)[]).find((f) => f.name === borrowed.name);
+    // An option list is named after its class: optionGroup.martial_artist_… belongs to class.martial_artist.
+    const owner = entry?.kind === 'class' ? entry : entry?.kind === 'subclass' ? rules.get(String(entry.parent))
+      : entry ? [...rules.values()].find((e) => e.kind === 'class' && entry.id.startsWith(`optionGroup.${e.id.slice(6)}_`)) : undefined;
+    const cls = (owner?.kind === 'class' ? owner : home?.cls) as ClassEntry | undefined;
+    if (!entry || !def || !cls) {
+      warnings.push(`Borrowed feature "${borrowed.name}" is not in the rules data.`);
+      continue;
+    }
+    const key = `${entry.id}/${slug(def.name)}`;
+    if (active.some((a) => a.key === key)) continue; // already the character's own
+    active.push({ def, source: { entry, cls, classLevel: Math.min(20, level), label: entry.name }, from: `${entry.name} (borrowed)`, key });
+    // A borrowed feature that spends a pool the character does not have brings the pool with it.
+    for (const id of Object.keys((def.cost ?? {}) as Record<string, number>)) {
+      const pool = (cls.resources ?? []).find((r) => r.id === id);
+      if (pool && !sources.some((s) => s.cls === cls) && !borrowedPools.includes(pool)) borrowedPools.push(pool);
+    }
+  }
+  const borrowedSource = (pool: ResourceDef): Source | undefined => {
+    const cls = [...rules.values()].find((e): e is ClassEntry => e.kind === 'class' && ((e as ClassEntry).resources ?? []).includes(pool));
+    return cls ? { entry: cls, cls, classLevel: Math.min(20, level), label: cls.name } : undefined;
+  };
+  if (home) {
+    const own: RuleEntry = { id: 'custom', kind: 'rule', name: 'Custom', versions: [doc.rulesVersion], source: { book: CUSTOM_BOOK, page: 0 } };
+    for (const custom of doc.customFeatures ?? []) {
+      const effects: EffectDef[] = [
+        ...(custom.bonuses ?? []).filter((b) => b.value).map((b) => ({ type: b.type, value: b.value })),
+        ...(custom.note ? [{ type: 'note', label: custom.note }] : []),
+      ];
+      const def: FeatureDef = {
+        level: 1, name: custom.name || 'Custom feature', text: custom.text, page: 0,
+        ...(custom.action ? { action: custom.action } : {}),
+        ...(custom.uses && custom.uses.max > 0 ? { uses: custom.uses } : {}),
+        ...(custom.rolls?.length ? { rolls: custom.rolls } : {}),
+        ...(custom.switched && effects.length ? { toggle: { id: `custom.${custom.id}`, label: custom.name, effects } } : effects.length ? { effects } : {}),
+      };
+      active.push({ def, source: { entry: own, cls: home.cls, classLevel: level, label: 'Custom' }, from: custom.origin?.trim() || 'Custom', key: `custom/${custom.id}` });
     }
   }
 
@@ -527,6 +576,10 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
       if (source.classLevel >= (def.minLevel ?? 1)) resourceDefs.push({ def, source, page: source.entry.source.page });
     }
   }
+  for (const pool of borrowedPools) {
+    const source = borrowedSource(pool);
+    if (source) resourceDefs.push({ def: pool, source, page: source.entry.source.page });
+  }
   const featureResource = new Map<string, string>();
   for (const a of active) {
     const uses = a.def.uses as UsesDef | string | undefined;
@@ -534,7 +587,8 @@ export function deriveSheet(doc: CharacterDoc, rules: Map<string, RuleEntry>, se
     if (typeof uses === 'string') {
       featureResource.set(a.key, uses.slice(4));
     } else {
-      const id = `use.${slug(a.def.name)}`;
+      // A player's own feature keeps its counter by its id, so renaming it does not reset what is spent.
+      const id = a.key.startsWith('custom/') ? `use.${a.key}` : `use.${slug(a.def.name)}`;
       featureResource.set(a.key, id);
       resourceDefs.push({ def: { id, name: a.def.name, max: uses.max, recharge: uses.recharge }, source: a.source, page: a.def.page });
     }
