@@ -791,6 +791,7 @@ more("subclass.chemist.botany", {
 
 # --- Steamtech: Pressure Gauge Points and the device table -------------------------------
 ENTRY = "*entry*"
+ENTRY_88 = "*entry, v8.8 only*"
 
 
 def _device(name: str, cost: int, *sentences: str, action: str = "action") -> dict:
@@ -864,6 +865,80 @@ more("subclass.tinkerer.military_science", {
                     "rolls": [{"label": "Extra force damage", "dice": "{level}", "kind": "damage"}]},
 })
 
+# --- Companions: the numbers the sheet can work out for a beast, mech, robot or vessel -------
+# Each companion's own stat block (a beast from the Monster Manual, a Zoan form) stays outside the sheet;
+# what depends on the character is shown on the feature, and a hit point pool is kept where the book gives a formula.
+BEAST_CR = "level>=17 ? '8' : level>=13 ? '4' : level>=9 ? '2' : level>=5 ? '1' : '1/2'"
+BEAST_DICE = "level>=17 ? 4 : level>=13 ? 3 : level>=9 ? 2 : level>=5 ? 1 : 0"
+TAMER = {
+    "expect": "The beast’s hit points equal the beasts normal hit points + your marksman level x your proficiency bonus",
+    "effects": [
+        show("Beast: hit points added to its own", "level * prof"),
+        show("Beast: highest challenge rating", BEAST_CR),
+        show("Beast: extra damage dice", BEAST_DICE),
+        show("Beast: proficiency bonus", "prof"),
+        {**note("Beast: attacks count as magical (Willpower Strikes)"), "when": "level>=5"},
+        {**note("Beast: resistance to nonmagical bludgeoning, piercing and slashing (Resilience)"), "when": "level>=9"},
+        {**note("Beast: heals for the damage it deals (Battle Leech)"), "when": "level>=13"},
+    ],
+}
+more("subclass.marksman.beast_tamer", {
+    # Animal Handling: expertise in v10's wording, proficiency in v8.8's (entered above); both keep the beast's numbers.
+    "Bonded Companion": [
+        {"only": "dndf-10", **TAMER, "expect": "You gain expertise in Animal Handling",
+         "effects": [{"type": "proficiency", "skill": "animal_handling"}, {"type": "expertise", "skill": "animal_handling"}] + TAMER["effects"]},
+        {"only": "dndf-8.8", **TAMER, "effects": [{"type": "proficiency", "skill": "animal_handling"}] + TAMER["effects"]},
+    ],
+})
+more("subclass.devilforged.no_mi_trainer", {
+    ENTRY_88: {"feature": "Bloodline Beast Synthesis", "expect": "Your created bloodline beast cannot be killed",
+               "resources": [{"id": "bloodline_beast_hp", "name": "Bloodline Beast hit points", "max": "max(1, 2 * mod.cha + 5 * level)", "recharge": "long"}]},
+    ENTRY: {"only": "dndf-10", "feature": "No Mi Star Synthesis", "expect": "the beast uses the Bloodline Beast stat block",
+            "resources": [{"id": "bloodline_beast_hp", "name": "Bloodline Beast hit points", "max": "max(1, 2 * mod.int + 5 * level)", "recharge": "long"}]},
+    "No Mi Star Synthesis": {
+        "only": "dndf-10", "expect": "If the Bloodline Beast’s feature forces a creature to make a saving throw, it uses your Devilforged save DC",
+        "effects": [show("Beast: hit point maximum", "max(1, 2 * mod.int + 5 * level)"), show("Beast: hit dice (d8)", "level"),
+                    show("Beast: save DC", "8 + prof + mod.int"), show("Beast: proficiency bonus", "prof")],
+    },
+    "Bloodline Beast Synthesis": {
+        "only": "dndf-8.8", "expect": "If your bloodline beast’s feature calls for a creature to roll a saving throw, use your spell save DC",
+        "effects": [show("Beast: hit point maximum", "max(1, 2 * mod.cha + 5 * level)"), show("Beast: hit dice (d8)", "level"),
+                    show("Beast: save DC", "8 + prof + mod.cha"), show("Beast: proficiency bonus", "prof")],
+    },
+})
+MECH_HP = "(level>=17 ? 12 : level>=11 ? 10 : level>=5 ? 8 : 6) * level"
+more("subclass.devilforged.mechadevil", {
+    "Mechadevil Mark 1": [
+        {"only": "dndf-8.8", "expect": "Your Mech’s size and stats scale with your Devilforged level",
+         "effects": [show("Mech: Armor Class", "level>=17 ? 19 : level>=11 ? 18 : level>=5 ? 17 : 16"), show("Mech: hit point maximum", MECH_HP),
+                     show("Mech: speed (ft.)", "level>=17 ? 50 : level>=11 ? 40 : level>=5 ? 35 : 30"), note("Mech: its Strength score equals your Charisma score")]},
+        {"only": "dndf-10", "expect": "On a hit, the target takes damage equal to 1d10 + your intelligence modifier",
+         "action": "action",
+         "rolls": [{"label": "Elemental Blast", "dice": die((5, "2d10"), (11, "3d10"), (17, "4d10"), first="1d10") + " + {mod.int}", "kind": "damage"}],
+         "toggle": {"id": "mechadevil_armor", "label": "Wearing your Mechadevil Armor", "effects": [
+             note("Flying speed 30 ft. (60 ft. from Mark 3, 120 ft. from Mark 4)"),
+             note("Resistance to nonmagical bludgeoning, piercing and slashing; immune to poison and the poisoned condition"),
+             note("+2 to spell attack rolls made through the armor"),
+         ]}},
+    ],
+})
+more("subclass.devilforged.mechadevil", {
+    ENTRY_88: {"feature": "Mechadevil Mark 1", "expect": "Your Mech’s size and stats scale with your Devilforged level",
+               "resources": [{"id": "mech_hp", "name": "Mechadevil Suit hit points", "max": MECH_HP, "recharge": "long"}]},
+})
+more("subclass.devilforged.bestial_klabautermann", {
+    "Figurehead Form": {"expect": "Its AC equals your Devilforged save DC",
+                        "effects": [show("Figurehead: Armor Class", "8 + prof + mod.int"), show("Figurehead: hit points", "level * 2"), show("Figurehead: speed (ft.)", "30")]},
+})
+more("subclass.tinkerer.robotics", {
+    "Simple Robots": {"expect": "Its AC is equal to 8 + your Intelligence Modifier, and its HP is 1", "action": "action",
+                      "effects": [show("Robot: Armor Class", "8 + mod.int"), show("Robot: hit points", "1"), show("Robot: speed (ft.)", "30")]},
+})
+more("subclass.devilforged.firearm_smithing", {
+    "Hellfire Artillery": {"expect": "a number of times equal to your porficiency bonus", "uses": {"max": "prof", "recharge": "long"}, "action": "bonus",
+                           "rolls": [{"label": "Cannon shot (fire, cold or lightning)", "dice": die((10, "2d8"), first="1d8") + " + {mod.cha}", "kind": "damage"}]},
+})
+
 _seen_subclasses: set[str] = set()
 _missing: dict[tuple[str, str], list[str]] = {}
 _found: set[tuple[str, str]] = set()
@@ -889,7 +964,9 @@ def apply_subclass_structure(version: str, entry: dict, problems: list[str]) -> 
         repair(version, entry, problems)
     features = {f["name"]: f for f in entry["features"]}
     for name, wordings in patch.items():
-        if name == ENTRY:
+        if name in (ENTRY, ENTRY_88):
+            if (name == ENTRY_88 and version != "dndf-8.8") or wordings.get("only", version) != version:
+                continue
             # Pools and trackers the subclass itself owns, shown from the level its feature arrives.
             anchor = features.get(wordings["feature"])
             if anchor is None or squash(wordings["expect"]) not in squash(anchor["text"] + " " + " ".join(s["text"] for s in anchor.get("sections", []))):

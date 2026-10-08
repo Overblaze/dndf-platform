@@ -1204,14 +1204,9 @@
           "page": 120,
           "rolls": [
             {
-              "label": "1d8",
-              "dice": "1d8",
-              "kind": "other"
-            },
-            {
-              "label": "2d8",
-              "dice": "2d8",
-              "kind": "other"
+              "label": "Cannon shot (fire, cold or lightning)",
+              "dice": "{level>=10 ? '2d8' : '1d8'} + {mod.cha}",
+              "kind": "damage"
             }
           ],
           "effects": [
@@ -1221,7 +1216,6 @@
             }
           ],
           "auto": [
-            "rolls",
             "effects"
           ],
           "uses": {
@@ -1667,6 +1661,27 @@
                 }
               ]
             }
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Mech: Armor Class",
+              "expr": "level>=17 ? 19 : level>=11 ? 18 : level>=5 ? 17 : 16"
+            },
+            {
+              "type": "display",
+              "label": "Mech: hit point maximum",
+              "expr": "(level>=17 ? 12 : level>=11 ? 10 : level>=5 ? 8 : 6) * level"
+            },
+            {
+              "type": "display",
+              "label": "Mech: speed (ft.)",
+              "expr": "level>=17 ? 50 : level>=11 ? 40 : level>=5 ? 35 : 30"
+            },
+            {
+              "type": "note",
+              "label": "Mech: its Strength score equals your Charisma score"
+            }
           ]
         },
         {
@@ -1743,6 +1758,15 @@
           "auto": [
             "rolls"
           ]
+        }
+      ],
+      "resources": [
+        {
+          "id": "mech_hp",
+          "name": "Mechadevil Suit hit points",
+          "max": "(level>=17 ? 12 : level>=11 ? 10 : level>=5 ? 8 : 6) * level",
+          "recharge": "long",
+          "minLevel": 1
         }
       ]
     },
@@ -1931,6 +1955,28 @@
           ],
           "auto": [
             "rolls"
+          ],
+          "effects": [
+            {
+              "type": "display",
+              "label": "Beast: hit point maximum",
+              "expr": "max(1, 2 * mod.cha + 5 * level)"
+            },
+            {
+              "type": "display",
+              "label": "Beast: hit dice (d8)",
+              "expr": "level"
+            },
+            {
+              "type": "display",
+              "label": "Beast: save DC",
+              "expr": "8 + prof + mod.cha"
+            },
+            {
+              "type": "display",
+              "label": "Beast: proficiency bonus",
+              "expr": "prof"
+            }
           ]
         },
         {
@@ -1950,6 +1996,15 @@
           "name": "Supreme Combat Mastery",
           "text": "At 14th level, your beast reaches the pinnacle of its combat effectiveness, gaining Supreme Combat Mastery. This feature allows your beast to operate at peak performance, pushing its abilities beyond normal limits. Choose one of the following mastery upgrades for each beast:\nFrenzied Rampage: As a reaction, your beast can enter a frenzied state once per combat encounter, gaining advantage on all attack rolls and dealing critical hits on rolls of 19-20 for 1 minute. After the frenzy ends, the beast becoming stunned, regaining control of itself at the end of it’s next turn.\nElemental Overdrive: Grant the bloodline beast immunity to its own beast’s element’s resistance type or removes the vulnerability of its element.\nPerfected Guardian: Your beast’s presence on the battlefield inspires allies, granting all allies within 30 feet a +1 bonus to AC and saving throws while the beast is active. Additionally, the beast gains an extra 20 hit points.\nUnholy Infusion: Choose one additional beast’s element to infuse into your bloodline beast.",
           "page": 126
+        }
+      ],
+      "resources": [
+        {
+          "id": "bloodline_beast_hp",
+          "name": "Bloodline Beast hit points",
+          "max": "max(1, 2 * mod.cha + 5 * level)",
+          "recharge": "long",
+          "minLevel": 1
         }
       ]
     },

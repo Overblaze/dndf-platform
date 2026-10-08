@@ -498,6 +498,41 @@
             {
               "type": "expertise",
               "skill": "animal_handling"
+            },
+            {
+              "type": "display",
+              "label": "Beast: hit points added to its own",
+              "expr": "level * prof"
+            },
+            {
+              "type": "display",
+              "label": "Beast: highest challenge rating",
+              "expr": "level>=17 ? '8' : level>=13 ? '4' : level>=9 ? '2' : level>=5 ? '1' : '1/2'"
+            },
+            {
+              "type": "display",
+              "label": "Beast: extra damage dice",
+              "expr": "level>=17 ? 4 : level>=13 ? 3 : level>=9 ? 2 : level>=5 ? 1 : 0"
+            },
+            {
+              "type": "display",
+              "label": "Beast: proficiency bonus",
+              "expr": "prof"
+            },
+            {
+              "type": "note",
+              "label": "Beast: attacks count as magical (Willpower Strikes)",
+              "when": "level>=5"
+            },
+            {
+              "type": "note",
+              "label": "Beast: resistance to nonmagical bludgeoning, piercing and slashing (Resilience)",
+              "when": "level>=9"
+            },
+            {
+              "type": "note",
+              "label": "Beast: heals for the damage it deals (Battle Leech)",
+              "when": "level>=13"
             }
           ]
         },
