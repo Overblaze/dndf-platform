@@ -21,6 +21,7 @@ The made-up characters in `packages/engine/src/testCharacters.ts` are checked ag
 | Speed | race base + bonuses (+10 Offensive Defense) | 40 ft | EH10 p.67, 86 |
 | Max HP | L1: die max + Con; each later level: avg (die/2 + 1) or roll, + Con; Con changes are retroactive | 75 | EH10 p.85 |
 | Carry | Str × 15 lb; ×2 per "counts as one size larger"; ×2 Tireless Training | 270 | EH10 p.10 |
+| Weight carried | sum of count × weight of each item not stowed; more than carrying capacity is said under "In effect" and changes no number | 12 lb of 225 lb | EH10 p.10 |
 | Temp HP | don't stack (keep higher); damage hits temp first; HP clamps 0..max | — | — |
 
 ## DnDF

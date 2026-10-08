@@ -59,3 +59,9 @@ Both open items were then closed on branch `save-conflicts`:
 ## Racial traits (branch `race-choices`)
 Racial traits were text only. Now each is a feature with its uses, action and dice read from the wording, and the numbers above in `docs/FORMULAS.md` entered by hand. Cyborg Upgrades and the Mink's Animal Characteristics are lists to pick from, in the builder, on the Features tab and at level-up.
 Still the player's to apply: traits that say "of your choice" for a skill, tool, weapon or ability score (Human Variant, Octopus, Yokai Tribesman, Automata, Oni, Smelt-Whiting, Buccaneer); swimming, climbing and flying speeds other than the ones listed; spells a trait lets you cast.
+
+## Phase 7 — Inventory, gear, spells
+- [x] Personal inventory (branch `phase7-inventory`): a Gear tab with berries (gain, spend), everything carried with count and weight against carrying capacity, items from the armory (add, or buy with berries) or written by hand, "use it" for armory weapons, armor and shields, and stowing. Over capacity is said, never blocked.
+- [ ] Gear on the printed sheet and in the bot's `/status`.
+- [ ] Spells: the class spell lists as pick-lists, spell cards (SRD text only), slots already on the sheet.
+- [ ] Devilforged infusions, Emanations and Splices as usable things (still text).
