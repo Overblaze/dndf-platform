@@ -1,5 +1,6 @@
 import { cite, gainTempHp, setToggle, setTracker, spendResource, activateFeature, type SheetFeature, type SheetResource } from '@dndf/engine';
 import { Pips } from '../components/Pips';
+import { featureRef } from './FeaturesTab';
 import { RuleText } from '../components/RuleText';
 import { useRolls } from '../lib/rolls';
 import type { LiveCharacter } from '../lib/useCharacter';
@@ -61,7 +62,7 @@ function FeatureAction({ feature, live }: { feature: SheetFeature; live: LiveCha
         <div>
           <div className="resource-name">{feature.name}</div>
           <div className="page-ref">
-            {feature.from} · {cite(feature.book, feature.page)}
+            {featureRef(feature)}
             {costs.length > 0 && ` · costs ${costs.join(', ')}`}
           </div>
         </div>

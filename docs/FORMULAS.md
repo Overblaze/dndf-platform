@@ -293,6 +293,17 @@ Tested in `packages/engine/test/levelUp.test.ts`.
 
 A character levelled one level at a time from 1 to 20 has the same hit point maximum as one built at that level (checked for every class in both handbooks).
 
+## Custom and borrowed features
+Tested in `packages/engine/test/customFeatures.test.ts`.
+
+| Rule | How the sheet works it out |
+|---|---|
+| A player's own feature | its text is the player's words; its flat bonuses (AC, speed, initiative, hit point maximum, attack, damage) join the totals and are named in each breakdown; it can have a use counter (short or long rest), roll buttons, a standing note, and a switch |
+| A borrowed feature | any feature or option in the handbook, outside the character's classes; expressions that read a level use the whole character level against the table of the class it comes from |
+| What a borrowed feature brings | its own use counter, and the pool it spends (ki, for Stunning Strike) when the character has none, sized for the whole character level |
+
+A borrowed feature the character already has is not doubled. Trackers a borrowed feature reads (Hybrid Points, chords) are not brought along.
+
 ## Multiclassing (both versions)
 | Number | Formula | Sample | Page |
 |---|---|---|---|

@@ -30,6 +30,33 @@ export interface ArmorDef {
   proficient?: boolean;
 }
 
+export const CUSTOM_BONUS_TYPES = ['ac', 'speed', 'initiative', 'hp', 'attack', 'damage'] as const;
+export type CustomBonusType = (typeof CUSTOM_BONUS_TYPES)[number];
+
+export interface CustomFeature {
+  id: string;
+  name: string;
+  /** The player's own words; shown where book text would be. */
+  text: string;
+  /** Where it comes from, in the player's words ("DM boon, session 12"). */
+  origin?: string;
+  action?: 'action' | 'bonus' | 'reaction';
+  uses?: { max: number; recharge: 'short' | 'long' };
+  rolls?: { label: string; dice: string; kind: 'damage' | 'heal' | 'tempHp' | 'other' }[];
+  /** Numbers it adds to the sheet. */
+  bonuses?: { type: CustomBonusType; value: number }[];
+  /** A standing line for "In effect" (a resistance, an advantage). */
+  note?: string;
+  /** True when the bonuses and note only count while a switch on the sheet is on. */
+  switched?: boolean;
+}
+
+export interface BorrowedFeature {
+  /** The rules entry it comes from (a class, subclass or option list) and the feature's name there. */
+  entry: string;
+  name: string;
+}
+
 export interface CharacterClass {
   id: string;
   level: number;
@@ -90,6 +117,10 @@ export interface CharacterDoc {
   shield: boolean;
   weapons: WeaponDef[];
   willpower: { strengthenSelf: number; variantAdvancements?: number | null };
+  /** Features the player wrote: a boon from the DM, a house rule, something from a book the app does not hold. */
+  customFeatures?: CustomFeature[];
+  /** Features taken from anywhere in the rules data, outside the character's own classes. They bring their own uses. */
+  borrowedFeatures?: BorrowedFeature[];
   /** The player's own numbers, by stat key. The calculated value stays available. */
   overrides: Record<string, number>;
   state: CharacterState;
@@ -171,6 +202,8 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     classes: doc.classes,
     scores: doc.scores,
     scoreOrigin: doc.scoreOrigin,
+    customFeatures: Array.isArray(doc.customFeatures) ? doc.customFeatures : undefined,
+    borrowedFeatures: Array.isArray(doc.borrowedFeatures) ? doc.borrowedFeatures : undefined,
     skills: doc.skills ?? [],
     expertise: doc.expertise ?? [],
     extraSaves: doc.extraSaves,
