@@ -43,4 +43,6 @@ Probes, a 1,400-character stress run and a browser pass with damaged saves and a
 - a full browser store stopped saving silently; History kept a full copy of the character for every tap;
 - the bot could overwrite a change made on the website a moment before; the database tests timed out on a busy machine.
 
-Open, by decision: the website can still overwrite a bot change if its tab stays open and is edited without leaving it (the save path needs a signed-in test before it is changed); `character_history` is never pruned.
+Both open items were then closed on branch `save-conflicts`:
+- **Saves never overwrite a change made elsewhere.** The browser store and the account store write a character only if it is still as this page last read it; otherwise the sheet stops saving and offers "Load the saved version" or "Keep this page's version" (the replaced version goes into History). The bot does the same. If the stored time differs but the content does not, the write goes ahead, so a quirk in how a time is written can never block saving.
+- **Change logs older than 90 days are removed** once a day by the bot (`Db.pruneHistory`), and left out of the browser's own history. Only `character_history` is named; a character is never removed for its age, and a database test holds that.

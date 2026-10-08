@@ -2,12 +2,17 @@
 // security, so every function here takes the Discord user who asked and reaches only that
 // user's characters (or, for the party, the campaigns that user belongs to).
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { normalizeDoc, type CharacterDoc } from '@dndf/engine';
+import { normalizeDoc, sameDoc, type CharacterDoc } from '@dndf/engine';
 import type { Env } from './env';
+
+/** Change logs older than this are removed. Characters are never removed by the bot. */
+export const HISTORY_DAYS = 90;
 
 export interface BotCharacter {
   id: string;
   doc: CharacterDoc;
+  /** The document exactly as the database held it when it was read, for telling a real change from none. */
+  raw: unknown;
   ownerId: string;
   campaignId: string | null;
   updatedAt: string;
@@ -16,7 +21,7 @@ export interface BotCharacter {
 interface Row { id: string; doc: unknown; owner_id: string; campaign_id: string | null; updated_at: string }
 const fromRow = (row: Row): BotCharacter | null => {
   const doc = normalizeDoc(row.doc);
-  return doc ? { id: row.id, doc, ownerId: row.owner_id, campaignId: row.campaign_id, updatedAt: row.updated_at } : null;
+  return doc ? { id: row.id, doc, raw: row.doc, ownerId: row.owner_id, campaignId: row.campaign_id, updatedAt: row.updated_at } : null;
 };
 
 /** The character was changed by someone else between the bot reading it and writing it. */
@@ -79,9 +84,30 @@ export class Db {
     const { data, error } = await this.client.from('characters').update({ rules_version: next.rulesVersion, doc: next })
       .eq('id', character.id).eq('owner_id', owner).eq('updated_at', character.updatedAt).select('id');
     if (error) throw new Error(`Could not save: ${error.message}`);
-    if (!data || data.length === 0) throw new ChangedElsewhere();
+    if (!data || data.length === 0) {
+      // Nothing was written. Read it again: a real change means stop; the same content (only the
+      // time differs, or was written differently) means it is safe to write.
+      const { data: now, error: failed } = await this.client.from('characters').select('doc').eq('id', character.id).eq('owner_id', owner).maybeSingle();
+      if (failed) throw new Error(`Could not save: ${failed.message}`);
+      if (!now) throw new Error('That character no longer exists.');
+      if (!sameDoc((now as { doc: unknown }).doc, character.raw)) throw new ChangedElsewhere();
+      const { error: again } = await this.client.from('characters').update({ rules_version: next.rulesVersion, doc: next }).eq('id', character.id).eq('owner_id', owner);
+      if (again) throw new Error(`Could not save: ${again.message}`);
+    }
     // History is a courtesy: a failure here must not undo the change the player was just told about.
     await this.client.from('character_history').insert({ character_id: character.id, actor_id: owner, change: { summary: log, before: character.doc } });
+  }
+
+  /**
+   * Removes change logs older than HISTORY_DAYS. It names only the history table: a character is
+   * never touched, and the database removes history when a character goes, not the other way round.
+   * Returns how many lines were removed.
+   */
+  async pruneHistory(now = new Date()): Promise<number> {
+    const cutoff = new Date(now.getTime() - HISTORY_DAYS * 24 * 60 * 60 * 1000).toISOString();
+    const { count, error } = await this.client.from('character_history').delete({ count: 'exact' }).lt('at', cutoff);
+    if (error) throw new Error(`Could not tidy the history: ${error.message}`);
+    return count ?? 0;
   }
 
   /** Everyone's characters in the campaigns this Discord user belongs to, with their owners' names. */

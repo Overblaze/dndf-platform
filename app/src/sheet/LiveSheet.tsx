@@ -1,9 +1,9 @@
-import type { CharacterDoc, Stat } from '@dndf/engine';
+import { deriveSheet, type CharacterDoc, type Stat } from '@dndf/engine';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Dialog } from '../components/Dialog';
 import { RollsProvider } from '../lib/rolls';
-import { VERSION_NAMES } from '../lib/rules';
+import { ruleSet, VERSION_NAMES } from '../lib/rules';
 import type { CharacterStore } from '../lib/store';
 import { useCharacter } from '../lib/useCharacter';
 import { AppearanceDialog } from './AppearanceDialog';
@@ -29,7 +29,17 @@ const TABS = [
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
 
-const SAVE_TEXT = { saved: 'Saved', saving: 'Saving…', error: 'Not saved' };
+const SAVE_TEXT = { saved: 'Saved', saving: 'Saving…', error: 'Not saved', conflict: 'Not saved' };
+
+/** One line about a version of the character, for choosing between two. */
+function conflictSummary(other: CharacterDoc): string {
+  try {
+    const theirs = deriveSheet(other, ruleSet(other.rulesVersion).rules);
+    return `${theirs.summary.split(' · ').slice(1).join(' · ')}, ${other.state.hp} of ${theirs.maxHp.value} hit points`;
+  } catch {
+    return 'a version this page cannot summarise';
+  }
+}
 
 export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) {
   const { live, loadError, missing } = useCharacter(store, id);
@@ -67,7 +77,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           </p>
         </div>
         <div className="row wrap">
-          <span className={live.status === 'error' ? 'chip chip-damage' : 'chip'} role="status">
+          <span className={live.status === 'error' || live.status === 'conflict' ? 'chip chip-damage' : 'chip'} role="status">
             {store.local ? `${SAVE_TEXT[live.status]} on this device` : SAVE_TEXT[live.status]}
           </span>
           <button className="btn btn-primary" onClick={() => setDialog('rest')}>Rest</button>
@@ -84,6 +94,22 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
             <button className="btn" onClick={() => { live.setDoc(beforeLevel, 'Undid the level up'); setBeforeLevel(null); }}>Undo</button>
             <button className="btn" onClick={() => setBeforeLevel(null)} aria-label="Keep the new level and hide this">Keep</button>
           </p>
+        )}
+        {live.conflict && (
+          <div className="notice conflict-bar" role="alert">
+            <p>
+              <strong>This character was changed somewhere else</strong> since this page loaded it: the Discord bot, another tab, or another device.
+              Nothing from this page has been saved over it.
+            </p>
+            <p className="page-ref">
+              Saved elsewhere: {conflictSummary(live.conflict)} · On this page: {sheet.summary.split(' · ').slice(1).join(' · ')}, {doc.state.hp} of {sheet.maxHp.value} hit points
+            </p>
+            <div className="row wrap">
+              <button className="btn btn-primary" onClick={() => live.resolveConflict('theirs')}>Load the saved version</button>
+              <button className="btn" onClick={() => live.resolveConflict('mine')}>Keep this page’s version</button>
+            </div>
+            <p className="page-ref">Loading the saved version drops what you changed here since. Keeping this page’s writes it over the other; the other goes into History, so it can be brought back.</p>
+          </div>
         )}
         {live.saveError && <p className="notice" role="alert">{live.saveError}. Your changes are kept on screen and will be retried on the next change.</p>}
       </section>
