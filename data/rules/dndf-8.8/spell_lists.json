@@ -39,8 +39,7 @@
           "Hellish Rebuke",
           "Hex",
           "Illusory Script",
-          "Protection from Evil and",
-          "Good",
+          "Protection from Evil and Good",
           "Witch Bolt"
         ],
         "2": [
@@ -108,7 +107,7 @@
           "Weird"
         ]
       },
-      "text": "74 spells, by level."
+      "text": "73 spells, by level."
     },
     {
       "id": "spellList.skald",

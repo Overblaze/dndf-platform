@@ -1,4 +1,4 @@
-import { castSpell, cite, gainTempHp, ordinal, spellLevelName, spellLists, spendResource, type KnownSpell, type SheetSpell, type SpellChoice } from '@dndf/engine';
+import { SRD_BOOK, castSpell, cite, gainTempHp, ordinal, spellLevelName, spellLists, spendResource, type KnownSpell, type SheetSpell, type SpellChoice } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { RuleText } from '../components/RuleText';
@@ -39,7 +39,7 @@ function AddSpellsDialog({ live, onClose }: { live: LiveCharacter; onClose: () =
           {lists.map((l) => <option key={l.id} value={l.id}>{l.name}{l.own ? ' (your class)' : ''}</option>)}
         </select>
       </label>
-      {list && <p className="page-ref">{list.spells.length} spells · {cite(list.book, list.page)} · the handbook lists these by name; it prints the full text only of its own eleven.</p>}
+      {list && <p className="page-ref">{list.spells.length} spells · {cite(list.book, list.page)} · {list.spells.filter((x) => x.entry).length} with their text (the handbook’s own, and the ones in the free 5e rules); the rest are in other 5th Edition books and are listed by name.</p>}
       <div className="segmented surge-tabs" role="tablist" aria-label="Spell level">
         <button role="tab" aria-selected={level === null} className={level === null ? 'active' : ''} onClick={() => setLevel(null)}>All</button>
         {levels.map((l) => (
@@ -53,7 +53,7 @@ function AddSpellsDialog({ live, onClose }: { live: LiveCharacter; onClose: () =
       {shown.map((spell) => (
         <label key={`${spell.level}/${spell.name}`} className="check">
           <input type="checkbox" checked={has(spell)} onChange={() => toggle(spell)} />
-          <span>{spell.name} <span className="page-ref">{spell.level === 0 ? 'cantrip' : `${ordinal(spell.level)} level`}{spell.entry ? ' · full text in the handbook' : ''}</span></span>
+          <span>{spell.name} <span className="page-ref">{spell.level === 0 ? 'cantrip' : `${ordinal(spell.level)} level`}{spell.entry ? ' · with text' : ' · name only'}</span></span>
         </label>
       ))}
       {shown.length === 0 && <p className="soft">Nothing by that name at that level in this list.</p>}
@@ -102,7 +102,7 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
         <div>
           <div className="resource-name">{spell.name}</div>
           <div className="page-ref">
-            {[spell.school, spell.castingTime, spell.range, spell.duration, spell.page && spell.book ? cite(spell.book, spell.page) : ''].filter(Boolean).join(' · ') || (spell.level === 0 ? 'At will' : `${ordinal(spell.level)} level`)}
+            {[spell.school, spell.ritual ? 'ritual' : '', spell.castingTime, spell.range, spell.duration, spell.page && spell.book ? cite(spell.book, spell.page) : ''].filter(Boolean).join(' · ') || (spell.level === 0 ? 'At will' : `${ordinal(spell.level)} level`)}
           </div>
         </div>
         {spell.level > 0 && (
@@ -126,8 +126,9 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
       <details className="rule-text">
         <summary>{spell.text ? 'Rules text and notes' : 'Notes'}</summary>
         {spell.text
-          ? <RuleText text={[spell.components ? `Components: ${spell.components}` : '', spell.text].filter(Boolean).join('\n')} book={spell.book} />
-          : <p className="page-ref">The handbook gives this spell by name only; its text is in your 5th Edition books. Keep what you need to remember here.</p>}
+          ? <RuleText text={[spell.components ? `Components: ${spell.components}` : '', spell.text].filter(Boolean).join('\n')} tables={spell.tables} book={spell.book} />
+          : <p className="page-ref">This spell is from a 5th Edition book outside the free rules (the SRD), so its text cannot be shown here. Keep what you need to remember in the notes.</p>}
+        {spell.book === SRD_BOOK && <p className="page-ref">From the System Reference Document 5.1 by Wizards of the Coast LLC, CC-BY-4.0 ({cite(spell.book, spell.page ?? 0)}).</p>}
         <label className="field">
           <span className="label">Your notes</span>
           <textarea rows={3} value={notes} onChange={(e) => setNotes(e.target.value)} onBlur={() => notes !== (spell.notes ?? '') && change({ notes: notes || undefined }, `Notes on ${spell.name}`)} placeholder="Range, damage, what it does…" />

@@ -1082,6 +1082,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       text: words,
       school: field('school'), castingTime: field('castingTime'), range: field('range'), components: field('components'), duration: field('duration'),
       page: entry?.source.page, book: entry?.source.book,
+      tables: entry?.kind === 'spell' && Array.isArray(entry.tables) ? (entry.tables as TableDef[]) : undefined,
+      ritual: entry?.kind === 'spell' && entry.ritual === true ? true : undefined,
       rolls: words ? rollButtons(diceInText(words), plainScope) : [],
       castableWith: spell.level > 0 ? slots.filter((r) => Number(r.id.slice(5)) >= spell.level && r.remaining > 0).map((r) => Number(r.id.slice(5))) : [],
     };

@@ -109,3 +109,16 @@ Known and left as the book prints them: Marksman *Hawk-Eyed* and Eastern Dragon 
 counts only, so its output can be pasted anywhere. `--where` adds the book and page of each finding, never a name or
 any text. After changing `extract_secret.py`: run it, run the audit, then `npm run load-secret --workspace bot -- --prune`
 to load the files and remove rows that are no longer in them (a row a grant points at is always kept).
+
+## SRD spells
+
+`python3 tools/extract/extract_srd.py` reads the 319 spells of the System Reference Document 5.1 from the official
+`SRD_CC_v5.1.pdf` in `~/dndf/sources/srd` and writes `data/rules/dndf-10/srd_spells.json`. The SRD is CC-BY-4.0; the
+attribution it asks for is in the file, the README, the Library and under each spell.
+- Every word comes from the official document. Every sentence is compared with a second reading of the same pages.
+- `5e-SRD-Spells.json` (github.com/5e-bits/5e-database) is only a cross-check: that no spell was missed, that level,
+  casting time, range and ritual agree, and for the layout of the nine tables inside spells, each cell of which must be
+  found on the document's page. Its prose is **not** used: it is not always the document's wording.
+- Where the two disagree the document is kept (Revivify is necromancy; Mass Heal and Mass Cure Wounds are evocation).
+- A class list's "Melf’s Acid Arrow" finds the SRD's "Acid Arrow". A spell that is not in the SRD has no text, and none
+  is to be added from any other source: other 5th Edition books are not free to reproduce.

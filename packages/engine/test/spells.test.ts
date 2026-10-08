@@ -1,6 +1,6 @@
 // Spells: the class lists, what a character knows, and casting with slots.
 import { describe, expect, it } from 'vitest';
-import { castSpell, deriveSheet, longRest, newCharacter, normalizeDoc, spellLists, type AbilityScores, type CharacterDoc, type KnownSpell, type RulesVersion } from '../src';
+import { SRD_BOOK, castSpell, deriveSheet, longRest, newCharacter, normalizeDoc, spellEntryFor, spellLists, type AbilityScores, type CharacterDoc, type KnownSpell, type RulesVersion } from '../src';
 import { loadRules } from './load';
 
 const scores: AbilityScores = { str: 10, dex: 12, con: 14, int: 10, wis: 16, cha: 10 };
@@ -92,5 +92,70 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('spells (%s)', (version
     const saved = normalizeDoc({ ...doc, spells: [null, { name: '' }, { name: 'Bless', level: 1.4 }, { id: 'q', name: 'Odd', level: 99 }] })!;
     expect(saved.spells).toEqual([{ id: 'spell-1', name: 'Bless', level: 1 }, { id: 'q', name: 'Odd', level: 9 }]);
     expect(normalizeDoc({ ...doc, spells: undefined })!.spells).toBeUndefined();
+  });
+});
+
+describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('spell text from the 5e SRD (%s)', (version) => {
+  const rules = loadRules(version);
+  const doc = newCharacter({ name: 'T', rulesVersion: version, classId: 'class.priest', level: 9, scores }, rules);
+  const lists = spellLists(doc, rules).filter((l) => l.id !== 'custom');
+  const srd = [...rules.values()].filter((e) => e.kind === 'spell' && e.source.book === SRD_BOOK);
+
+  it('holds all 319 SRD spells, each with its page, level, school and the four lines every spell has', () => {
+    expect(srd).toHaveLength(319);
+    for (const spell of srd) {
+      expect(spell.source.page, spell.name).toBeGreaterThanOrEqual(114);
+      expect(spell.source.page, spell.name).toBeLessThanOrEqual(193);
+      expect(typeof spell.level === 'number' && spell.level >= 0 && spell.level <= 9, spell.name).toBe(true);
+      for (const key of ['school', 'castingTime', 'range', 'components', 'duration', 'text']) expect(String(spell[key] ?? '').length, `${spell.name} ${key}`).toBeGreaterThan(0);
+      expect(String(spell.text), spell.name).not.toMatch(/ |­|\s{2}|[#*|]/);
+    }
+  });
+
+  it('every class-list spell that is in the SRD is at the level the SRD gives it', () => {
+    let linked = 0;
+    const wrong: string[] = [];
+    for (const list of lists) {
+      for (const spell of list.spells) {
+        const entry = spell.entry ? rules.get(spell.entry) : undefined;
+        if (!entry) continue;
+        linked++;
+        if (entry.level !== spell.level) wrong.push(`${list.name}: ${spell.name} is listed at ${spell.level}, the SRD has it at ${String(entry.level)}`);
+      }
+    }
+    expect(wrong).toEqual([]);
+    expect(linked).toBeGreaterThan(400); // the same spell is on several lists
+  });
+
+  it('names the lists print with a wizard’s name find the SRD’s plain one; a spell from another book finds nothing', () => {
+    expect(spellEntryFor('Melf’s Acid Arrow', rules)?.name).toBe('Acid Arrow');
+    expect(spellEntryFor('Leomund’s Tiny Hut', rules)?.name).toBe('Tiny Hut');
+    expect(spellEntryFor('Otto’s Irresistible Dance', rules)?.name).toBe('Irresistible Dance');
+    expect(spellEntryFor('Feather Fall', rules)?.source.book).toBe(SRD_BOOK);
+    expect(spellEntryFor('Absorb Elements', rules)).toBeUndefined();
+    expect(spellEntryFor('Booming Blade', rules)).toBeUndefined();
+    expect(spellEntryFor('Slime Wave', rules)?.source.book).not.toBe(SRD_BOOK); // the handbook's own
+  });
+
+  it('a known SRD spell comes with its words, page, ritual mark, table and roll buttons', () => {
+    const sheet = deriveSheet({ ...doc, spells: [
+      { id: 'a', name: 'Fireball', level: 3, list: 'spellList.tinkerer', entry: 'spell.fireball' },
+      { id: 'b', name: 'Detect Magic', level: 1, entry: 'spell.detect_magic' },
+      { id: 'c', name: 'Teleport', level: 7, entry: 'spell.teleport' },
+    ] }, rules);
+    const of = (name: string) => sheet.spellbook.known.find((k) => k.name === name)!;
+    expect(of('Fireball')).toMatchObject({ school: 'evocation', castingTime: '1 action', range: '150 feet', duration: 'Instantaneous', book: SRD_BOOK, page: 144 });
+    expect(of('Fireball').text).toMatch(/^A bright streak flashes from your pointing finger/);
+    expect(of('Fireball').rolls.map((r) => r.dice)).toContain('8d6');
+    expect(of('Detect Magic').ritual).toBe(true);
+    expect(of('Teleport').tables![0]!.rows[0]).toEqual(['Familiarity', 'Mishap', 'Similar Area', 'Off Target', 'On Target']);
+  });
+
+  it('how much of the class lists now has text', () => {
+    const names = new Map<string, boolean>();
+    for (const list of lists) for (const spell of list.spells) names.set(spell.name.replace(/ \(ritual\)$/, ''), Boolean(spell.entry));
+    const withText = [...names.values()].filter(Boolean).length;
+    expect(names.size).toBe(version === 'dndf-10' ? 324 : 345);
+    expect(withText).toBe(version === 'dndf-10' ? 215 : 222);
   });
 });

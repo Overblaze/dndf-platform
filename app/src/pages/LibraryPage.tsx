@@ -1,4 +1,4 @@
-import { ABILITY_NAMES, cite, columnLabel, proficiencyBonus, signed, type Ability, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry, type SectionDef, type TableDef, type TraitDef } from '@dndf/engine';
+import { ABILITY_NAMES, SRD_BOOK, cite, columnLabel, proficiencyBonus, signed, spellEntryFor, type Ability, type ClassEntry, type FeatureDef, type OptionDef, type RuleEntry, type SectionDef, type TableDef, type TraitDef } from '@dndf/engine';
 import { createContext, Fragment, useContext, useMemo, useState, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { RuleText } from '../components/RuleText';
@@ -199,9 +199,18 @@ function EntryView({ entry }: { entry: RuleEntry }) {
         {entry.kind === 'spellList' && Object.entries(entry.levels as Record<string, string[]>).map(([level, names]) => (
           <div key={level} className="rule-section">
             <h3>{levelName(level)} <span className="page-ref">{names.length}</span></h3>
-            <p className="feature-text">{names.join(', ')}</p>
+            <p className="feature-text">
+              {names.map((name, i) => {
+                const held = spellEntryFor(name, rules);
+                return <Fragment key={name}>{i > 0 && ', '}{held ? <Link to={link(held.id)}>{name}</Link> : name}</Fragment>;
+              })}
+            </p>
           </div>
         ))}
+        {entry.kind === 'spellList' && <p className="page-ref">A linked name opens the spell’s text. The others are from 5th Edition books outside the free rules, so only their names are here.</p>}
+        {entry.kind === 'spell' && entry.source.book === SRD_BOOK && (
+          <p className="page-ref">From the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC, licensed under the Creative Commons Attribution 4.0 International License.</p>
+        )}
         {uses && typeof uses === 'object' && (
           <p className="page-ref">Tracked on the sheet: {uses.max === 'prof' ? 'proficiency bonus' : uses.max} use{uses.max === 1 ? '' : 's'} per {uses.recharge} rest</p>
         )}
@@ -359,10 +368,18 @@ function LibraryHome() {
           </Fragment>
         ))}
       </Shelf>
-      <Shelf title="Spell lists and custom spells" count={spellLists.length + spells.length}>
+      <Shelf title="Spell lists and spells" count={spellLists.length + spells.length}>
         <EntryLinks entries={spellLists} detail={(list) => `${Object.values(list.levels as Record<string, string[]>).reduce((n, names) => n + names.length, 0)} spells`} />
         <h3>Custom spells</h3>
-        <EntryLinks entries={spells} detail={(spell) => `${spell.level === 0 ? 'cantrip' : `${ordinal(Number(spell.level))} level`} ${String(spell.school ?? '')}`} />
+        <EntryLinks entries={spells.filter((spell) => spell.source.book !== SRD_BOOK)} detail={(spell) => `${spell.level === 0 ? 'cantrip' : `${ordinal(Number(spell.level))} level`} ${String(spell.school ?? '')}`} />
+        <h3>Spells from the free 5th Edition rules (SRD 5.1)</h3>
+        <p className="page-ref">
+          This work includes material taken from the System Reference Document 5.1 (“SRD 5.1”) by Wizards of the Coast LLC and available at{' '}
+          <a href="https://dnd.wizards.com/resources/systems-reference-document">https://dnd.wizards.com/resources/systems-reference-document</a>. The SRD 5.1 is licensed under the Creative Commons Attribution 4.0
+          International License available at <a href="https://creativecommons.org/licenses/by/4.0/legalcode">https://creativecommons.org/licenses/by/4.0/legalcode</a>.
+          Spells the class lists name from other 5th Edition books are listed by name only.
+        </p>
+        <EntryLinks entries={spells.filter((spell) => spell.source.book === SRD_BOOK)} detail={(spell) => `${spell.level === 0 ? 'cantrip' : `${ordinal(Number(spell.level))} level`} ${String(spell.school ?? '')}${spell.ritual === true ? ' (ritual)' : ''}`} />
       </Shelf>
       <Shelf title="Armory" count={items.length + armoryRules.length}>
         <EntryLinks entries={armoryRules} />
