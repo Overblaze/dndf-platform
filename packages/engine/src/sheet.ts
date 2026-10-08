@@ -9,7 +9,7 @@ import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { carriedWeight, type InventoryLine } from './inventory';
-import { CUSTOM_SPELL_BOOK, type SheetSpells } from './spells';
+import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
 import { raceChoices, type RaceChoice } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
@@ -1104,6 +1104,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       list: rules.has(`spellList.${cls.id.slice('class.'.length)}`) ? `spellList.${cls.id.slice('class.'.length)}` : undefined,
     }];
   });
+  // The names on each casting class's own list, to tell a spell the class was given by override.
+  const listNames = new Map(castingClasses.map((c) => [c.id, new Set(Object.values(((c.list ? rules.get(c.list)?.levels : undefined) ?? {}) as Record<string, string[]>).flat().map(spellKey))]));
   /** The class a spell counts for: the one chosen, else the one whose list it was picked from, else the only one there is. */
   const classOf = (spell: { cls?: string; list?: string }) =>
     castingClasses.find((c) => c.id === spell.cls) ?? castingClasses.find((c) => c.list !== undefined && c.list === spell.list) ?? (castingClasses.length === 1 ? castingClasses[0] : undefined);
@@ -1134,6 +1136,8 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       // A class that learns its spells always has them ready; one that prepares has only today's.
       ready: spell.level === 0 || of?.mode !== 'prepared' || spell.prepared === true,
       tooHigh: spell.level > 0 && of?.maxSpellLevel !== undefined && spell.level > of.maxSpellLevel,
+      // Any spell may be given to any class. One that is not on that class's list is marked, so everyone can see it is an override.
+      override: Boolean(of?.list) && !listNames.get(of!.id)!.has(spellKey(spell.name)),
     };
   }).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
   const casting: SheetSpells['casting'] = castingClasses.filter((c) => c.dc || c.attack).map((c) => ({ from: c.name, dc: c.dc, attack: c.attack }));

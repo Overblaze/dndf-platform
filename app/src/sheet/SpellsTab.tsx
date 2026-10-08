@@ -82,6 +82,13 @@ function AddSpellsDialog({ live, onClose }: { live: LiveCharacter; onClose: () =
           {libraryProblem && <p className="notice" role="alert">{libraryProblem}</p>}
         </>
       )}
+      {casters.length > 0 && !fromList && (
+        <p className="page-ref">
+          {casters.length === 1
+            ? `This is not the ${casters[0]!.name}’s own spell list. You can add anything from here: it counts as a ${casters[0]!.name} spell and is marked * as an override.`
+            : 'This is not one of your classes’ own spell lists. You can add anything from here: it counts for the class you choose below and is marked * as an override.'}
+        </p>
+      )}
       {casters.length > 1 && !fromList && (
         <label className="field">
           <span className="label">Spells added from this list count for</span>
@@ -146,7 +153,7 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
     <div className="action">
       <div className="action-head">
         <div>
-          <div className="resource-name">{spell.name}</div>
+          <div className="resource-name">{spell.name}{spell.override && <abbr className="override-mark" title={`Override: not on the ${spell.clsName} spell list`}> *</abbr>}</div>
           <div className="page-ref">
             {[spell.clsName ? `${spell.clsName}${spell.mode === 'prepared' ? '' : ' · known'}` : '', spell.school, spell.ritual ? 'ritual' : '', spell.castingTime, spell.range, spell.duration, spell.page && spell.book ? cite(spell.book, spell.page) : ''].filter(Boolean).join(' · ') || (spell.level === 0 ? 'At will' : `${ordinal(spell.level)} level`)}
           </div>
@@ -174,6 +181,7 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
           <button key={r.label} className="btn" onClick={() => roll(r)}>{r.label} <span className="num">{r.dice}</span></button>
         ))}
       </div>
+      {spell.override && <p className="page-ref">* Override: this spell is not on the {spell.clsName} list. It counts as a {spell.clsName} spell because you added it.</p>}
       {spell.tooHigh && <p className="page-ref held-why">Higher than {spell.clsName} can {spell.mode === 'prepared' ? 'prepare' : 'learn'} at its level. It stays on the sheet; that is your call.</p>}
       <details className="rule-text">
         <summary>{spell.text ? 'Rules text and notes' : 'Notes'}</summary>
@@ -261,6 +269,7 @@ export function SpellsTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
             {' '}<span className="page-ref">{cite(sheet.book, doc.rulesVersion === 'dndf-10' ? 210 : 209)}</span>
           </p>
         )}
+        {book.known.some((k) => k.override) && <p className="page-ref">* marks an override: a spell given to a class that does not have it on its own list.</p>}
         <p className="page-ref">
           On this sheet in all: {book.cantrips} cantrip{book.cantrips === 1 ? '' : 's'}, {book.leveled} of 1st level or higher. Going over a class’s number is your call; nothing is blocked.
         </p>

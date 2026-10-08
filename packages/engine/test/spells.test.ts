@@ -288,3 +288,38 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('the class lists hold e
     expect(at('spellList.marksman', 1)).toEqual(expect.arrayContaining(['Longstrider', 'Searing Smite', 'Snare', 'Zephyr Strike']));
   });
 });
+
+describe('giving a class a spell that is not on its list (an override)', () => {
+  const rules = loadRules('dndf-10');
+  const base = newCharacter({ name: 'T', rulesVersion: 'dndf-10', classId: 'class.priest', level: 5, scores }, rules);
+  const known = (spells: KnownSpell[], classes = base.classes) => deriveSheet({ ...base, classes, spells }, rules).spellbook.known;
+
+  it('is allowed, counts toward the class like any other, and is marked', () => {
+    const list = known([
+      { id: 'a', name: 'Bless', level: 1, list: 'spellList.priest' },
+      { id: 'b', name: 'Fireball', level: 3, list: 'spellList.tinkerer', entry: 'spell.fireball', prepared: true },
+      { id: 'c', name: 'Storm Lance', level: 2, own: { text: 'Mine.' } },
+      { id: 'd', name: 'Feign Death', level: 3 },
+    ]);
+    const of = (name: string) => list.find((k) => k.name === name)!;
+    expect(of('Bless')).toMatchObject({ cls: 'class.priest', override: false });
+    expect(of('Fireball')).toMatchObject({ cls: 'class.priest', override: true, ready: true, mode: 'prepared' }); // a Tinkerer spell, prepared as a Priest
+    expect(of('Storm Lance')).toMatchObject({ cls: 'class.priest', override: true }); // a spell of the player's own
+    expect(of('Feign Death').override).toBe(false); // on the list as "Feign Death (ritual)"
+    const sheet = deriveSheet({ ...base, spells: [{ id: 'b', name: 'Fireball', level: 3, list: 'spellList.tinkerer', prepared: true }] }, rules);
+    expect(sheet.spellbook.classes[0]).toMatchObject({ known: 1, prepared: 1 });
+  });
+
+  it('follows the class the spell counts for, and a spell with no class is not marked', () => {
+    const two = [...base.classes, { id: 'class.tinkerer', level: 3 }];
+    const list = known([
+      { id: 'a', name: 'Fireball', level: 3, list: 'spellList.tinkerer' },
+      { id: 'b', name: 'Fireball', level: 3, list: 'spellList.tinkerer', cls: 'class.priest' },
+      { id: 'c', name: 'Bless', level: 1, cls: 'class.tinkerer' },
+      { id: 'd', name: 'Homebrew', level: 1 },
+    ], two);
+    expect(list.map((k) => [k.name, k.clsName, k.override])).toEqual([['Bless', 'Tinkerer', true], ['Homebrew', undefined, false], ['Fireball', 'Tinkerer', false], ['Fireball', 'Priest', true]]);
+    // A class with no list of its own (none in this handbook) has nothing to override.
+    expect(known([{ id: 'a', name: 'Anything', level: 1 }], [{ id: 'class.warrior', level: 5 }])[0]).toMatchObject({ cls: undefined, override: false });
+  });
+});

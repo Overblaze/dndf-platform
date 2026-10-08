@@ -97,6 +97,8 @@ export interface SheetSpell extends KnownSpell {
   ready: boolean;
   /** Higher than that class can learn or prepare at its level. */
   tooHigh: boolean;
+  /** Counts for a class whose own spell list does not have it: the player's override, marked with an asterisk. */
+  override: boolean;
 }
 
 /** One class's spellcasting, worked out as if it were the character's only class (p210). */
@@ -143,6 +145,8 @@ const slugOf = (name: string) => name.toLowerCase().replace(/\s*\(ritual\)\s*/g,
 /** The SRD prints some spells without the wizard's name the class lists give them: "Melf’s Acid Arrow" is its "Acid Arrow". */
 const withoutOwner = (name: string) => name.replace(/^[A-Z][a-z]+[’']s\s+/, '');
 export const SRD_BOOK = '5e SRD 5.1';
+/** A spell's name as lists are compared: "Feign Death (ritual)" and "Melf’s Acid Arrow" match "Feign Death" and "Acid Arrow". */
+export const spellKey = (name: string) => slugOf(withoutOwner(name));
 
 /** The entry holding a spell's text, by the name a class list gives it; undefined when no text is held. */
 export function spellEntryFor(name: string, rules: Map<string, RuleEntry>): RuleEntry | undefined {

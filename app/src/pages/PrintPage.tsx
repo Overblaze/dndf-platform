@@ -126,10 +126,11 @@ function Paper({ doc, sheet, withText }: { doc: CharacterDoc; sheet: Sheet; with
           {spellLevels.map((level) => (
             <p key={level}>
               <b>{spellLevelName(level)}:</b>{' '}
-              {book.known.filter((k) => k.level === level).map((k) => `${level > 0 && k.mode === 'prepared' ? (k.prepared ? '● ' : '○ ') : ''}${k.name}${book.classes.length > 1 && k.clsName ? ` [${k.clsName}]` : ''}${k.notes ? ` (${k.notes})` : ''}`).join(' · ')}
+              {book.known.filter((k) => k.level === level).map((k) => `${level > 0 && k.mode === 'prepared' ? (k.prepared ? '● ' : '○ ') : ''}${k.name}${k.override ? '*' : ''}${book.classes.length > 1 && k.clsName ? ` [${k.clsName}]` : ''}${k.notes ? ` (${k.notes})` : ''}`).join(' · ')}
             </p>
           ))}
           {book.known.some((k) => k.level > 0 && k.mode === 'prepared') && <p className="print-small">● prepared · ○ not prepared today · unmarked spells are known and always ready</p>}
+          {book.known.some((k) => k.override) && <p className="print-small">* override: not on that class’s spell list</p>}
           {withText && book.known.filter((k) => k.text).map((k) => (
             <div key={k.id} className="print-feature">
               <p><b>{k.name}</b> <small>{[k.school, k.castingTime, k.range, k.components, k.duration, k.book && k.page ? cite(k.book, k.page) : ''].filter(Boolean).join(' · ')}</small></p>
