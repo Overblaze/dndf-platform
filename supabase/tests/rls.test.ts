@@ -446,6 +446,21 @@ describe('private content: Devil Fruits and the grants that open them', () => {
     expect(await names(ana)).toEqual([]);
     expect(await admin(`select count(*)::int as n from public.secret_entries`)).toEqual([{ n: 5 }]);
   });
+
+  it('a character taken out of the campaign keeps its fruit until the DM takes it away, which the DM still can', async () => {
+    const [made] = await as(ana, `insert into public.characters (campaign_id, rules_version, doc) values ($1, 'dndf-10', '{"name":"Leaver"}') returning id`, [campaign]);
+    const [given] = await as(matt, `insert into public.grants (campaign_id, entry_key, character_id, kind, note) values ($1, 'devilFruit.gamma@test', $2, 'owner', 'dm note') returning id`, [campaign, made!.id]);
+    // The note is not private from the character's player: the DM page says so.
+    expect(await as(ana, `select note from public.grants where id = $1`, [given!.id])).toEqual([{ note: 'dm note' }]);
+    await as(ana, `update public.characters set campaign_id = null where id = $1`, [made!.id]);
+    expect(await as(matt, `select id from public.characters where id = $1`, [made!.id])).toEqual([]); // the DM no longer sees the character
+    expect(await names(ana)).toContain('Gamma Fruit'); // its player still has the fruit
+    expect(await as(matt, `select id from public.grants where id = $1`, [given!.id])).toEqual([{ id: given!.id }]); // the DM still sees the grant
+    await expect(as(matt, `update public.grants set revealed = true where id = $1`, [given!.id])).rejects.toThrow(/row-level security/); // and cannot change it
+    expect(await as(matt, `delete from public.grants where id = $1 returning id`, [given!.id])).toEqual([{ id: given!.id }]); // but can take it away
+    expect(await names(ana)).not.toContain('Gamma Fruit');
+    await as(ana, `delete from public.characters where id = $1`, [made!.id]);
+  });
 });
 
 describe('signed-out visitors', () => {

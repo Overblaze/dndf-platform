@@ -949,16 +949,19 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
     const chose = [
       pick.willpower ? 'Willpower +2' : pick.ability ? `${ABILITY_NAMES[pick.ability] ?? pick.ability} +2` : '',
       pick.skill ? SKILLS.find((s) => s.id === pick.skill)?.name ?? '' : '',
-      pick.proficiency ? (pick.proficiency.kind === 'armor' ? (pick.proficiency.id === 'shields' ? 'Shields' : `${capital(pick.proficiency.id)} armor`) : weaponGroupName(pick.proficiency.id)) : '',
+      pick.proficiency && typeof pick.proficiency.id === 'string' ? (pick.proficiency.kind === 'armor' ? (pick.proficiency.id === 'shields' ? 'Shields' : `${capital(pick.proficiency.id)} armor`) : weaponGroupName(pick.proficiency.id)) : '',
       pick.resource ? resources.find((r) => r.id === pick.resource)?.name ?? '' : '',
-      pick.note ?? '',
+      typeof pick.note === 'string' ? pick.note.slice(0, 80) : '',
     ].filter(Boolean).join(', ');
     const uses = entry.kind === 'fruitAdvancement' ? (entry.uses as UsesDef | undefined) : undefined;
     let resource: string | undefined;
     if (uses && typeof uses === 'object') {
       resource = `use.surge/${record.id}`;
-      const max = evaluateNumber(uses.max, plainScope);
-      if (max > 0) resources.push({ id: resource, name: entry.name, max, remaining: left(max, doc.state.spent[resource]), recharge: uses.recharge, page: entry.source.page, book: entry.source.book });
+      // Private data is not checked by the public schema: a count that cannot be worked out leaves the counter off rather than breaking the sheet.
+      let max = 0;
+      try { max = evaluateNumber(uses.max, plainScope); } catch { max = 0; }
+      if (Number.isFinite(max) && max > 0) resources.push({ id: resource, name: entry.name, max, remaining: left(max, doc.state.spent[resource]), recharge: typeof uses.recharge === 'string' ? uses.recharge : 'long', page: entry.source.page, book: entry.source.book });
+      else resource = undefined;
     }
     extra(`surge/${record.id}`, entry.name, String(entry.text ?? ''), entry.source.page, entry, `${entry.kind === 'fruitAdvancement' ? 'Devil Fruit advancement' : 'Spirit Surge'}${chose ? `: ${chose}` : ''}`, {
       resource,
@@ -968,6 +971,7 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
 
   // Devil Fruits. A fruit held puts its features, charges and DC on the sheet; one only known about is there to read.
   // Counters are named by position, never by the fruit: the saved character must not say which fruit it is.
+  const words = (value: unknown) => (typeof value === 'string' ? value : '');
   const fruitOf = (granted: Secrets['granted'][number], held: boolean, nth = 0): SheetFruit => {
     const entry = granted.entry;
     const parts = fruitParts(entry);
@@ -1004,12 +1008,12 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       name: entry.name,
       book: entry.source.book,
       page: entry.source.page,
-      rarity: String(entry.rarity ?? ''),
-      type: String(entry.type ?? ''),
+      rarity: words(entry.rarity),
+      type: words(entry.type),
       category,
-      appearance: String(entry.appearance ?? ''),
-      description: String(entry.description ?? ''),
-      seaWeakness: String(entry.seaWeakness ?? ''),
+      appearance: words(entry.appearance),
+      description: words(entry.description),
+      seaWeakness: words(entry.seaWeakness),
       revealed: granted.revealed,
       features: keys,
       resources: pools,

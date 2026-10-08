@@ -84,7 +84,8 @@ export function spellLists(doc: Pick<CharacterDoc, 'classes'>, rules: Map<string
  */
 export function castSpell(state: CharacterState, sheet: Sheet, spell: Pick<KnownSpell, 'name' | 'level'>, slotLevel?: number): ActionResult {
   if (spell.level <= 0) return { state, summary: `Cast ${spell.name}` };
-  const level = Math.max(spell.level, Math.round(slotLevel ?? spell.level));
+  const asked = typeof slotLevel === 'number' && Number.isFinite(slotLevel) ? Math.round(slotLevel) : spell.level;
+  const level = Math.min(9, Math.max(spell.level, asked));
   const id = `slots${level}`;
   if (!sheet.resources.some((r) => r.id === id)) {
     return { state, summary: `Cast ${spell.name}`, warning: `You have no ${ordinal(level)}-level slots; nothing was spent.` };

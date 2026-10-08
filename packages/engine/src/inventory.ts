@@ -46,7 +46,8 @@ const round = (n: number) => Math.round(n * 100) / 100;
 export function carriedWeight(items: InventoryItem[] | undefined, capacity: number): { lines: InventoryLine[]; carried: number; capacity: number; over: boolean } {
   const lines = (items ?? []).map((item) => {
     const qty = Number.isFinite(item.qty) ? Math.max(0, item.qty) : 0;
-    return { ...item, qty, carried: item.carried !== false, total: round(qty * (item.weight ?? 0)) };
+    const each = typeof item.weight === 'number' && Number.isFinite(item.weight) ? Math.max(0, item.weight) : 0;
+    return { ...item, qty, carried: item.carried !== false, total: round(qty * each) };
   });
   const carried = round(lines.reduce((sum, line) => sum + (line.carried ? line.total : 0), 0));
   return { lines, carried, capacity, over: carried > capacity };

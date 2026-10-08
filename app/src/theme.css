@@ -1698,3 +1698,19 @@ a {
   flex: 1 0 25%;
   border-bottom: 1px solid var(--rule);
 }
+
+/* A name or note typed without spaces must wrap, never push the page wider than the screen. */
+.resource-name,
+.page-ref,
+.feature-text,
+.notes li,
+.chip {
+  overflow-wrap: anywhere;
+}
+
+.resource > div:first-child,
+.resource > .attack-name,
+.resource > .character-link,
+.action-head > div:first-child {
+  min-width: 0;
+}

@@ -56,7 +56,7 @@ function GrantDialog({ character, onGrant, search, onClose }: { character: Campa
             </select>
           </label>
           <label className="field">
-            <span className="label">Note for yourself (optional)</span>
+            <span className="label">Note (optional; the character’s player can read it)</span>
             <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Found in the wreck, session 9" />
           </label>
           <p className="page-ref">Only {character.name}’s player and the DMs can read it until you reveal it to the table.</p>
@@ -161,6 +161,15 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
             </div>
           );
         })}
+        {grants.filter((g) => !characters.some((c) => c.id === g.characterId)).map((g) => (
+          <div key={g.id} className="resource">
+            <div>
+              <div className="resource-name">{g.entry?.name ?? 'A fruit that is no longer loaded'}</div>
+              <div className="page-ref">Granted to a character that has since been taken out of this campaign. Its player can still read it until you take it away.</div>
+            </div>
+            <button className="btn btn-primary" onClick={() => act(api.removeGrant(g.id))}>Take away</button>
+          </div>
+        ))}
         <p className="page-ref">Until you reveal a fruit, the other players see only that the character has one. Taking a fruit away closes it to the player at once.</p>
       </section>
 
