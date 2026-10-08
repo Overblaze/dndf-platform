@@ -1005,7 +1005,14 @@ export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
       features: keys,
       resources: pools,
       parts: [...parts.features, ...parts.spells, ...parts.awakening],
-      statBlock: Array.isArray(entry.statBlockLines) ? entry.statBlockLines.filter((l): l is string => typeof l === 'string') : [],
+      // A beast's stat block, a line at a time: "Armor Class 12", "Bite. Melee Weapon Attack: …".
+      statBlock: (Array.isArray(entry.statBlockLines) ? entry.statBlockLines : []).flatMap((line: unknown) => {
+        if (typeof line === 'string') return [line];
+        const l = line as { name?: unknown; text?: unknown } | null;
+        const name = typeof l?.name === 'string' ? l.name : '';
+        const words = typeof l?.text === 'string' ? l.text : '';
+        return name || words ? [[name, words].filter(Boolean).join(/^(Armor Class|Hit Points|Speed|Skills|Senses|Languages|Challenge|Saving Throws|STR DEX|Damage|Condition)/.test(name) || !words ? ' ' : '. ')] : [];
+      }),
       highestSpellLevel: table?.highestSpellLevel,
     };
   };

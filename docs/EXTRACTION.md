@@ -102,3 +102,10 @@ What the audit led to in the reader (`pdfdoc.py`):
 v10 Hybrid *Power Immunity* stops mid-sentence in the v10 PDF because its box runs off the page. By Matt's ruling it is finished from the v8.8 handbook, which prints it whole (`COMPLETED_FROM_V88` in `extract_all.py`); the feature carries `completedFrom` and the sheet and Library say where the ending comes from. If a later v10 PDF prints it whole, the step does nothing.
 
 Known and left as the book prints them: Marksman *Hawk-Eyed* and Eastern Dragon *Dragon Emperor* end without a full stop; one row of the Paramecia Awakening table has an extra cell; a few misprints ("your your", "the the"). Tables whose rows are printed on two lines each (Virtuoso *Performing Chords*) are held as two rows per entry.
+
+## Auditing the private data
+
+`python3 tools/extract/audit_secret.py` does for `~/dndf/secret` what `audit.py` does for the public data, and prints
+counts only, so its output can be pasted anywhere. `--where` adds the book and page of each finding, never a name or
+any text. After changing `extract_secret.py`: run it, run the audit, then `npm run load-secret --workspace bot -- --prune`
+to load the files and remove rows that are no longer in them (a row a grant points at is always kept).

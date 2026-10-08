@@ -1,7 +1,7 @@
 // The same rules files the website bundles, read from the repository.
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { deriveSheet, indexRules, type CharacterDoc, type RuleEntry, type RulesFile, type RulesVersion, type Sheet } from '@dndf/engine';
+import { DEFAULT_SETTINGS, NO_SECRETS, deriveSheet, indexRules, type CharacterDoc, type Secrets, type RuleEntry, type RulesFile, type RulesVersion, type Sheet } from '@dndf/engine';
 
 const root = join(import.meta.dirname, '..', '..', 'data', 'rules');
 const files: RulesFile[] = (readdirSync(root, { recursive: true }) as string[])
@@ -17,4 +17,5 @@ export function rulesOf(version: RulesVersion): Map<string, RuleEntry> {
   return rules;
 }
 
-export const sheetOf = (doc: CharacterDoc): Sheet => deriveSheet(doc, rulesOf(doc.rulesVersion));
+/** The sheet from the saved character alone, or with the private content it has been granted. */
+export const sheetOf = (doc: CharacterDoc, secrets: Secrets = NO_SECRETS): Sheet => deriveSheet(doc, rulesOf(doc.rulesVersion), DEFAULT_SETTINGS, secrets);

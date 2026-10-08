@@ -3,9 +3,10 @@
 //
 //   npm run load-secret --workspace bot -- --dry     count what would be loaded, change nothing
 //   npm run load-secret --workspace bot              load (safe to run again: rows are replaced by key)
+//   npm run load-secret --workspace bot -- --prune   load, then remove rows that are no longer in the files and that no grant points at
 //
-// It prints counts only, never names or text. It never removes a row: an entry that has gone
-// from the files stays in the table, because removing it would remove the grants that point at it.
+// It prints counts only, never names or text. Without --prune it never removes a row. With it, a row
+// that has gone from the files is removed only when no grant points at it, so nothing granted is ever lost.
 import { readdirSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
@@ -15,6 +16,7 @@ import { secretRows } from './secret-rows';
 
 const dir = process.env.DNDF_SECRET_DIR ?? join(homedir(), 'dndf', 'secret');
 const dry = process.argv.includes('--dry');
+const prune = process.argv.includes('--prune');
 
 const files = readdirSync(dir).filter((name) => name.endsWith('.json')).sort().map((file) => {
   const parsed = JSON.parse(readFileSync(join(dir, file), 'utf8')) as { entries?: unknown } | unknown[];
@@ -52,5 +54,27 @@ if (dry) {
     done += batch.length;
   }
   const { count } = await db.from('secret_entries').select('key', { count: 'exact', head: true });
-  console.log(`Loaded ${done} rows. The table now holds ${count ?? '?'}.`);
+  if (prune) {
+    const wanted = new Set(rows.map((row) => row.key));
+    const held: string[] = [];
+    for (let from = 0; ; from += 1000) {
+      const { data, error } = await db.from('secret_entries').select('key').order('key').range(from, from + 999);
+      if (error) { console.error(`Could not list the table: ${error.message}`); process.exit(1); }
+      held.push(...(data ?? []).map((r) => r.key as string));
+      if ((data ?? []).length < 1000) break;
+    }
+    const stale = held.filter((key) => !wanted.has(key));
+    const { data: granted } = await db.from('grants').select('entry_key');
+    const inUse = new Set((granted ?? []).map((g) => g.entry_key as string));
+    const removable = stale.filter((key) => !inUse.has(key));
+    for (let i = 0; i < removable.length; i += 100) {
+      const { error } = await db.from('secret_entries').delete().in('key', removable.slice(i, i + 100));
+      if (error) { console.error(`Stopped while removing old rows: ${error.message}`); process.exit(1); }
+    }
+    console.log(`${stale.length} row(s) are no longer in the files: ${removable.length} removed, ${stale.length - removable.length} kept because a grant points at them.`);
+    const after = await db.from('secret_entries').select('key', { count: 'exact', head: true });
+    console.log(`Loaded ${done} rows. The table now holds ${after.count ?? '?'}.`);
+  } else {
+    console.log(`Loaded ${done} rows. The table now holds ${count ?? '?'}.`);
+  }
 }

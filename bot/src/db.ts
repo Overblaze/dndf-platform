@@ -2,7 +2,7 @@
 // security, so every function here takes the Discord user who asked and reaches only that
 // user's characters (or, for the party, the campaigns that user belongs to).
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { normalizeDoc, sameDoc, type CharacterDoc } from '@dndf/engine';
+import { NO_SECRETS, normalizeDoc, sameDoc, type CharacterDoc, type RuleEntry, type Secrets } from '@dndf/engine';
 import type { Env } from './env';
 
 /** Change logs older than this are removed. Characters are never removed by the bot. */
@@ -108,6 +108,29 @@ export class Db {
     const { count, error } = await this.client.from('character_history').delete({ count: 'exact' }).lt('at', cutoff);
     if (error) throw new Error(`Could not tidy the history: ${error.message}`);
     return count ?? 0;
+  }
+
+  /**
+   * The private content a character has been granted, for the sums (fruit charges that come back at dawn).
+   * `open` says whether all of it has been revealed to the table: when it has not, nothing of it may be
+   * shown in a message other players can read. With no grants, or before the tables exist, it is empty.
+   */
+  async secretsOf(characterId: string): Promise<{ secrets: Secrets; open: boolean }> {
+    const none = { secrets: NO_SECRETS, open: true };
+    const { data: grants, error } = await this.client.from('grants').select('entry_key, kind, revealed').eq('character_id', characterId);
+    if (error || !grants?.length) return none;
+    const keys = [...new Set(grants.map((g) => g.entry_key as string))];
+    const [{ data: entries }, { data: advancements }] = await Promise.all([
+      this.client.from('secret_entries').select('key, data').in('key', keys),
+      this.client.from('secret_entries').select('data').eq('kind', 'fruitAdvancement'),
+    ]);
+    const granted = grants.flatMap((g) => {
+      const entry = entries?.find((e) => e.key === g.entry_key)?.data as RuleEntry | undefined;
+      return entry && typeof entry.id === 'string' ? [{ key: g.entry_key as string, kind: g.kind === 'knowledge' ? 'knowledge' as const : 'owner' as const, revealed: g.revealed === true, entry }] : [];
+    });
+    const held = granted.filter((g) => g.kind === 'owner');
+    if (held.length === 0) return none;
+    return { secrets: { granted, advancements: (advancements ?? []).map((a) => a.data as RuleEntry).filter((e) => e && typeof e.id === 'string') }, open: held.every((g) => g.revealed) };
   }
 
   /** Everyone's characters in the campaigns this Discord user belongs to, with their owners' names. */
