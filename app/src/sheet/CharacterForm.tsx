@@ -1,12 +1,15 @@
-import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, type Ability, type AbilityScores, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { AbilityScoresField, originOf } from './AbilityScoresField';
 import { useState } from 'react';
+import { RuleText } from '../components/RuleText';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
 const BLANK_SCORES: AbilityScores = { str: 15, dex: 13, con: 14, int: 8, wis: 12, cha: 10 };
 const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, Math.floor(Number.isFinite(n) ? n : min)));
 
-/** Create a character of any class, or edit one. The full builder (the book's 12 steps) comes in phase 4. */
+type StepId = 'basics' | 'dm' | 'race' | 'class' | 'scores' | 'background' | 'crew' | 'equipment' | 'describe' | 'extras' | 'review';
+
+/** Create a character of any class, or edit one: step by step in the handbook's order, or everything on one page. */
 export function CharacterForm({ initial, onSave, onCancel }: { initial: CharacterDoc | null; onSave: (doc: CharacterDoc, log: string) => void; onCancel: () => void }) {
   const first = initial?.classes[0];
   // A character is pinned to one handbook; it is chosen when the character is made.
@@ -40,6 +43,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const [otherClasses, setOtherClasses] = useState<CharacterClass[]>(initial?.classes.slice(1) ?? []);
   const setOther = (i: number, patch: Partial<CharacterClass>) => setOtherClasses(otherClasses.map((c, j) => (j === i ? { ...c, ...patch } : c)));
   const [scores, setScores] = useState<AbilityScores>(initial?.scores ?? BLANK_SCORES);
+  const [notes, setNotes] = useState(initial?.notes ?? '');
+  // A new character is built step by step; an existing one opens with everything on one page.
+  const [guided, setGuided] = useState(!initial);
+  const [step, setStep] = useState<StepId>('basics');
   const [scoreOrigin, setScoreOrigin] = useState<ScoreOrigin>(originOf(initial?.scores ?? BLANK_SCORES, initial?.scoreOrigin));
   const [subclass, setSubclass] = useState(first?.subclass ?? '');
   const [skills, setSkills] = useState<string[]>(initial?.skills ?? []);
@@ -85,16 +92,17 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
   const toggle = (list: string[], id: string) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id]);
   const setWeapon = (i: number, patch: Partial<WeaponDef>) => setWeapons(weapons.map((w, j) => (j === i ? { ...w, ...patch } : w)));
 
-  const save = () => {
+  /** The character as the form stands: what Create or Save would write. */
+  const buildDoc = (): CharacterDoc => {
     const shared = {
       name: name.trim() || 'Unnamed', rulesVersion: version, classId: cls.id, level, scores, raceName: raceName.trim() || 'Human', speed, subclass: subclass || undefined, skills, choices: keptChoices,
       raceId: raceId || undefined, subraceId: subraceId || undefined, backgroundId: backgroundId || undefined, crewRoleIds, feats,
     };
     if (!initial) {
       const built = newCharacter(shared, rules);
-      const doc = { ...built, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
+      const doc: CharacterDoc = { ...built, notes, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
-      return onSave(doc, `Created ${doc.name}`);
+      return doc;
     }
     const oldMax = deriveSheet(initial, rules).maxHp.value;
     // Going up exactly one level is a level-up (Dream Points reset); anything else is a plain edit.
@@ -116,16 +124,115 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       armor,
       shield,
       weapons,
+      notes,
       willpower: { ...initial.willpower, strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 },
     };
     const newMax = deriveSheet(doc, rules).maxHp.value;
     // A character at full health stays at full health when the maximum changes.
     if (initial.state.hp === oldMax) doc.state = { ...doc.state, hp: newMax };
+    return doc;
+  };
+  const save = () => {
+    const doc = buildDoc();
+    if (!initial) return onSave(doc, `Created ${doc.name}`);
     onSave(doc, level !== first!.level ? `Level ${first!.level} → ${level}` : 'Character edited');
   };
 
+  // --- The book's steps (EH10 p.9–10), one screen each; or everything on one page. ---
+  const guide = ((rules.get('rule.character_creation_guide')?.sections ?? []) as SectionDef[]);
+  const bookStep = (n: number) => guide.find((s) => s.name.startsWith(`Step ${n}:`));
+  const STEPS: { id: StepId; title: string; book?: number[] }[] = [
+    { id: 'basics', title: 'Name, handbook and level' },
+    { id: 'dm', title: 'Your DM’s choices', book: [1, 2, 3, 4] },
+    { id: 'race', title: bookStep(5)?.name ?? 'Choose a race', book: [5] },
+    { id: 'class', title: bookStep(6)?.name ?? 'Choose a class', book: [6] },
+    { id: 'scores', title: bookStep(7)?.name ?? 'Determine ability scores', book: [7] },
+    { id: 'background', title: bookStep(8)?.name ?? 'Pick a background', book: [8] },
+    { id: 'crew', title: bookStep(9)?.name ?? 'Pick your crew role', book: [9] },
+    { id: 'equipment', title: bookStep(10)?.name ?? 'Choose equipment', book: [10] },
+    { id: 'describe', title: 'Describe your character, backstory and dream', book: [11, 12] },
+    { id: 'extras', title: 'Feats and Willpower' },
+    { id: 'review', title: 'Review' },
+  ];
+  const at = STEPS.findIndex((s) => s.id === step);
+  const show = (id: StepId) => !guided || step === id;
+  const current = STEPS[at]!;
+  const draft = buildDoc();
+  const draftSheet = deriveSheet(draft, rules);
+  const open = [
+    ...(name.trim() ? [] : ['No name yet']),
+    ...(level >= subclassLevel && styles.length > 0 && !subclass ? [`${cls.subclass?.label ?? 'Subclass'} not chosen`] : []),
+    ...picks.filter((f) => (choices[f.choices.id] ?? []).length < f.known).map((f) => `${f.name}: ${(choices[f.choices.id] ?? []).length} of ${f.known} picked`),
+    ...(scoreOrigin.method === 'array' || scoreOrigin.method === 'roll'
+      ? ABILITIES.filter((a) => (scoreOrigin.assignment ?? {})[a] == null).length > 0 ? ['Some ability scores have no number yet'] : [] : []),
+    ...(backgroundId ? [] : ['No background chosen']),
+    ...(crewRoleIds.length ? [] : ['No crew role chosen']),
+  ];
+  const bookText = (current.book ?? []).map(bookStep).filter((s): s is SectionDef => Boolean(s));
+  const stepHead = guided ? (
+    <div className="builder-head">
+      <div className="row wrap">
+        <span className="chip" aria-live="polite">Step {at + 1} of {STEPS.length}</span>
+        <select value={step} onChange={(e) => setStep(e.target.value as StepId)} aria-label="Go to step">
+          {STEPS.map((s, i) => <option key={s.id} value={s.id}>{i + 1}. {s.title.replace(/^Step \d+: /, '')}</option>)}
+        </select>
+        <button type="button" className="btn" onClick={() => setGuided(false)}>All on one page</button>
+      </div>
+      <h3 className="builder-title">{current.title.replace(/^Step \d+: /, '')}</h3>
+      {bookText.length > 0 && (
+        <details className="feature">
+          <summary>
+            <span className="resource-name">What the handbook says · step{current.book!.length > 1 ? 's' : ''} {current.book!.join(', ')}</span>
+            <span className="page-ref">{cite(HANDBOOKS[version], bookText[0]!.page)}</span>
+          </summary>
+          {bookText.map((s) => <RuleText key={s.name} text={bookText.length > 1 ? `${s.name}\n${s.text}` : s.text} tables={s.tables} book={HANDBOOKS[version]} />)}
+        </details>
+      )}
+    </div>
+  ) : (
+    <div className="row wrap">
+      <button type="button" className="btn" onClick={() => setGuided(true)}>Step by step</button>
+    </div>
+  );
+  const dmStep = guided && step === 'dm' ? (
+    <p className="notice">Your DM settles these four steps: your Devil Fruit or Haki, how the fruit scales, universal features and special reactions. Granting fruits and Haki arrives in a later phase of the app; nothing to fill in here yet.</p>
+  ) : null;
+  const describeStep = show('describe') ? (
+    <label className="field">
+      <span className="label">Description, backstory and dream (kept as the sheet’s notes)</span>
+      <textarea rows={8} value={notes} onChange={(e) => setNotes(e.target.value)} />
+    </label>
+  ) : null;
+  const reviewStep = guided && step === 'review' ? (
+    <div className="builder-review">
+      <p><strong>{draftSheet.name || 'Unnamed'}</strong> · {draftSheet.summary}</p>
+      <dl className="facts facts-plain">
+        <dt>Hit points</dt><dd>{draftSheet.maxHp.value}</dd>
+        <dt>Armor Class</dt><dd>{draftSheet.ac.value}</dd>
+        <dt>Speed</dt><dd>{draftSheet.speed.value} ft</dd>
+        <dt>Scores</dt><dd>{ABILITIES.map((a) => `${a.toUpperCase()} ${draftSheet.abilities[a].score}`).join(' · ')}</dd>
+        <dt>Skills</dt><dd>{draftSheet.skills.filter((k) => k.proficient).map((k) => k.label).join(', ') || 'None'}</dd>
+      </dl>
+      {draftSheet.warnings.map((w) => <p key={w} className="notice">{w}</p>)}
+      {open.length > 0
+        ? <p className="notice">Still open: {open.join('; ')}. You can {initial ? 'save' : 'create the character'} now and finish these later in Edit.</p>
+        : <p className="page-ref">Every step has an answer.</p>}
+    </div>
+  ) : null;
+  const stepFoot = (
+    <div className="row wrap dialog-actions builder-foot">
+      <button type="button" className="btn" onClick={onCancel}>Cancel</button>
+      {guided && at > 0 && <button type="button" className="btn" onClick={() => setStep(STEPS[at - 1]!.id)}>Back</button>}
+      {guided && at < STEPS.length - 1 && <button type="button" className="btn btn-primary" onClick={() => setStep(STEPS[at + 1]!.id)}>Next: {STEPS[at + 1]!.title.replace(/^Step \d+: /, '')}</button>}
+      {(!guided || at === STEPS.length - 1 || initial) && <button type="submit" className={guided && at < STEPS.length - 1 ? 'btn' : 'btn btn-primary'}>{initial ? 'Save changes' : 'Create character'}</button>}
+    </div>
+  );
+
   return (
     <form className="form" onSubmit={(e) => { e.preventDefault(); save(); }}>
+      {stepHead}
+      {show('basics') && (
+        <>
       <label className="field">
         <span className="label">Name</span>
         <input value={name} onChange={(e) => setName(e.target.value)} required maxLength={80} />
@@ -144,6 +251,11 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           </div>
         </div>
       )}
+        </>
+      )}
+      {dmStep}
+      {show('race') && (
+        <>
       <div className="grid-2">
         <label className="field">
           <span className="label">Race from the book</span>
@@ -172,6 +284,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           <input type="number" inputMode="numeric" value={speed} onChange={(e) => setSpeed(clamp(Number(e.target.value), 0, 200))} />
         </label>
       </div>
+        </>
+      )}
+      {show('class') && (
+        <>
       <div className="grid-2">
         <label className="field">
           <span className="label">Class · {cite(cls.source.book, cls.source.page)}</span>
@@ -221,7 +337,15 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         </button>
         {otherClasses.length > 0 && <p className="page-ref">Total level {level + otherClasses.reduce((n, c) => n + c.level, 0)}. The class above is the first class: it gives the saving throws and the full first hit die.</p>}
       </fieldset>
+        </>
+      )}
+      {show('scores') && (
+        <>
       <AbilityScoresField origin={scoreOrigin} book={HANDBOOKS[version]} onChange={(next, origin) => { setScores(next); setScoreOrigin(origin); }} />
+        </>
+      )}
+      {show('class') && (
+        <>
       {level >= subclassLevel && styles.length > 0 && (
         <label className="field">
           <span className="label">{cls.subclass?.label ?? 'Subclass'} · level {subclassLevel}</span>
@@ -247,6 +371,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           </fieldset>
         );
       })}
+        </>
+      )}
+      {show('background') && (
+        <>
       <div className="grid-2">
         <label className="field">
           <span className="label">Background</span>
@@ -256,6 +384,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           </select>
         </label>
       </div>
+        </>
+      )}
+      {show('crew') && (
+        <>
       <fieldset>
         <legend className="label">Crew roles: {crewRoleIds.length}</legend>
         <div className="chips">
@@ -270,6 +402,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           {crewRoles.filter((role) => !crewRoleIds.includes(role.id)).map((role) => <option key={role.id} value={role.id}>{role.name}</option>)}
         </select>
       </fieldset>
+        </>
+      )}
+      {show('extras') && (
+        <>
       <fieldset>
         <legend className="label">Feats: {feats.length}</legend>
         <div className="chips">
@@ -286,6 +422,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           ))}
         </select>
       </fieldset>
+        </>
+      )}
+      {show('class') && (
+        <>
       <fieldset>
         <legend className="label">Skill proficiencies you chose (class and others)</legend>
         {skillHint && <p className="page-ref">{skillHint}</p>}
@@ -314,6 +454,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         </select>
         <p className="page-ref">Expertise only counts for skills the character is proficient in.</p>
       </fieldset>
+        </>
+      )}
+      {show('equipment') && (
+        <>
       <fieldset>
         <legend className="label">Armor and shield</legend>
         <select
@@ -441,6 +585,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
           Add a custom weapon
         </button>
       </fieldset>
+        </>
+      )}
+      {show('extras') && (
+        <>
       {version === 'dndf-10' ? (
         <label className="field">
           <span className="label">Strengthen Self taken for Willpower (+2 each, total capped at 20) · {cite(HANDBOOKS[version], 222)}</span>
@@ -449,10 +597,11 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
       ) : (
         <p className="page-ref">In v8.8, Strengthen Self raises an ability score, not Willpower, so add it to the scores above · {cite(HANDBOOKS[version], 222)}</p>
       )}
-      <div className="row">
-        <button type="submit" className="btn btn-primary">{initial ? 'Save changes' : 'Create character'}</button>
-        <button type="button" className="btn" onClick={onCancel}>Cancel</button>
-      </div>
+        </>
+      )}
+      {describeStep}
+      {reviewStep}
+      {stepFoot}
     </form>
   );
 }

@@ -1298,3 +1298,30 @@ a {
 .dialog-actions .btn {
   min-height: 44px;
 }
+
+/* The step-by-step builder: where you are, the step's title, and the buttons to move on. */
+.builder-head {
+  display: grid;
+  gap: 8px;
+}
+
+.builder-head select {
+  flex: 1 1 10rem;
+  min-height: 44px;
+}
+
+.builder-title {
+  margin: 0;
+}
+
+.builder-foot {
+  position: sticky;
+  bottom: 0;
+  padding: 10px 0;
+  background: var(--card-solid, var(--card));
+}
+
+.builder-review {
+  display: grid;
+  gap: 8px;
+}
