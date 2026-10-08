@@ -49,7 +49,8 @@ describe.each(['dndf-10', 'dndf-8.8'] as const)('chapters 4, 5 and 7 for %s', (v
     const chemist = rules.get('spellList.chemist')!.levels as Record<string, string[]>;
     expect(chemist['0']).toContain('Guidance');
     expect(Object.keys(chemist)).toEqual(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
-    const spells = ofKind('spell');
+    // The handbook's own spells; the 319 from the free 5e rules sit beside them (spells.test.ts).
+    const spells = ofKind('spell').filter((s) => s.source.book !== '5e SRD 5.1');
     expect(spells).toHaveLength(11);
     expect(rules.get('spell.slime_wave')).toMatchObject({ level: 3, school: 'conjuration', castingTime: '1 action', range: '120 feet' });
     for (const spell of spells) expect(String(spell.text).length, spell.name).toBeGreaterThan(80);

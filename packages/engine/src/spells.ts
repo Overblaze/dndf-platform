@@ -4,7 +4,7 @@
 import { spendResource, type ActionResult } from './actions';
 import type { CharacterDoc, CharacterState } from './character';
 import type { Sheet, SheetFeature, SheetResource, Stat } from './sheet';
-import type { RuleEntry } from './types';
+import type { RuleEntry, TableDef } from './types';
 
 export interface KnownSpell {
   id: string;
@@ -21,8 +21,10 @@ export interface KnownSpell {
 }
 
 export interface SheetSpell extends KnownSpell {
-  /** The handbook's own words, when it prints the spell. */
+  /** The spell's words, when the handbook prints it or it is in the 5e SRD. */
   text?: string;
+  tables?: TableDef[];
+  ritual?: boolean;
   school?: string;
   castingTime?: string;
   range?: string;
@@ -49,15 +51,27 @@ export interface SheetSpells {
 
 export const ordinal = (n: number) => `${n}${n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'}`;
 export const spellLevelName = (level: number) => (level === 0 ? 'Cantrips' : `${ordinal(level)} level`);
-const slugOf = (name: string) => name.toLowerCase().replace(/\s*\(ritual\)\s*/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+const slugOf = (name: string) => name.toLowerCase().replace(/\s*\(ritual\)\s*/g, '').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+/** The SRD prints some spells without the wizard's name the class lists give them: "Melf’s Acid Arrow" is its "Acid Arrow". */
+const withoutOwner = (name: string) => name.replace(/^[A-Z][a-z]+[’']s\s+/, '');
+export const SRD_BOOK = '5e SRD 5.1';
+
+/** The entry holding a spell's text, by the name a class list gives it; undefined when no text is held. */
+export function spellEntryFor(name: string, rules: Map<string, RuleEntry>): RuleEntry | undefined {
+  for (const tried of [name, withoutOwner(name)]) {
+    const entry = rules.get(`spell.${slugOf(tried)}`);
+    if (entry?.kind === 'spell') return entry;
+  }
+  return undefined;
+}
 
 export interface SpellChoice { name: string; level: number; list: string; entry?: string }
 export interface SpellListView { id: string; name: string; page: number; book: string; own: boolean; spells: SpellChoice[] }
 
 /** Every spell list in the character's handbook, the lists of its own classes first, and the handbook's own spells last. */
 export function spellLists(doc: Pick<CharacterDoc, 'classes'>, rules: Map<string, RuleEntry>): SpellListView[] {
-  const custom = [...rules.values()].filter((e) => e.kind === 'spell');
-  const byName = new Map(custom.map((e) => [slugOf(e.name), e]));
+  // The handbook's own spells make a list of their own; SRD spells are only the text behind names in the class lists.
+  const custom = [...rules.values()].filter((e) => e.kind === 'spell' && e.source.book !== SRD_BOOK);
   const lists: SpellListView[] = [...rules.values()].filter((e) => e.kind === 'spellList').map((list) => ({
     id: list.id,
     name: list.name,
@@ -65,7 +79,7 @@ export function spellLists(doc: Pick<CharacterDoc, 'classes'>, rules: Map<string
     book: list.source.book,
     own: doc.classes.some((c) => c.id === `class.${list.id.slice('spellList.'.length)}`),
     spells: Object.entries((list.levels ?? {}) as Record<string, string[]>).flatMap(([level, names]) =>
-      names.map((name) => ({ name, level: Number(level), list: list.id, entry: byName.get(slugOf(name))?.id }))),
+      names.map((name) => ({ name, level: Number(level), list: list.id, entry: spellEntryFor(name, rules)?.id }))),
   }));
   lists.sort((a, b) => Number(b.own) - Number(a.own) || a.name.localeCompare(b.name));
   if (custom.length) {

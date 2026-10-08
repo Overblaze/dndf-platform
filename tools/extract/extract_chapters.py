@@ -515,7 +515,8 @@ def extract_spell_lists(version: str) -> list[dict]:
             elif item.family.startswith("ScalySans") and item.top > 150 and level is not None:
                 names = current["levels"].setdefault(str(level), [])
                 # "(ritual)" pushed onto its own line belongs to the name above it.
-                if item.text.strip().startswith("(") and names:
+                # … and so does the end of a name too long for its column ("Protection from Evil and" / "Good").
+                if names and (item.text.strip().startswith("(") or re.search(r" (?:and|or|of|from|the|to|with)$", names[-1])):
                     names[-1] = f"{names[-1]} {item.text.strip()}"
                 else:
                     names.append(item.text.strip())
