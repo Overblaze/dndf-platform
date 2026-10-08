@@ -55,7 +55,8 @@ Both open items were then closed on branch `save-conflicts`:
 - [x] The bot does its sums on the whole sheet, the granted fruit included: `/dawn` refills fruit charges and `/status` counts them. While a fruit is unrevealed, a reply other players can read is the one the sheet without the fruit gives; `private: true` shows everything.
 - [x] `/sheet` in Discord never includes a fruit, revealed or not: the fruit is not in the saved character the PDF is drawn from.
 - [x] `tools/extract/audit_secret.py` audits the private data and prints counts only (`--where` adds book and page, never names or text).
-- [ ] Fix what the audit found: Zoan fruits whose stat block is read into the middle of their features (both encyclopedias and the v8.8 handbook), and a beast's bold name read as a new feature in the original encyclopedia.
+- [x] Fixed what the audit found: a beast's stat block beside or under a fruit is read in column order and kept apart from the fruit's features (it had been read into the middle of them, and had swallowed 14 fruits whole in the v8.8 handbook); a beast's name set large inside a sentence is no longer a new feature; a fruit printed over numbered pages is one fruit. Features that stop mid-sentence: 311 → 5.
+- [ ] Left from the audit, all small: 8 appearance lines and 7 awakenings that stop mid-sentence, 8 features with no text, 4 fruits with no appearance. `python3 tools/extract/audit_secret.py --where` lists the pages.
 
 ## Racial traits (branch `race-choices`)
 Racial traits were text only. Now each is a feature with its uses, action and dice read from the wording, and the numbers above in `docs/FORMULAS.md` entered by hand. Cyborg Upgrades and the Mink's Animal Characteristics are lists to pick from, in the builder, on the Features tab and at level-up.

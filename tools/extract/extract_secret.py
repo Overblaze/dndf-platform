@@ -86,6 +86,37 @@ def lines_of(items: list[Item]) -> list[list[Item]]:
     return lines
 
 
+GUTTER = 459
+STAT_TITLE = ("MrEavesSCRemakeMedium", 26)
+
+
+def opens_columns(line: list[Item]) -> bool:
+    """A printed row that is really two columns: something starts at the right-hand column's edge and nothing runs across the gutter."""
+    if any(p.left < GUTTER - 4 and p.right > GUTTER + 16 for p in line):
+        return False
+    for k, piece in enumerate(line):
+        if 470 <= piece.left <= 490 and (k == 0 or piece.left - line[k - 1].right >= 12):
+            return True
+    return False
+
+
+def reading_lines(on_page: list[Item], always_two: bool, page: int, key: str) -> list[list[Item]]:
+    """A page's rows in reading order. A fruit's text runs across the page; a beast's stat block under or beside
+    it is set in two columns, so from the first row that shows a gutter the left column is read before the right."""
+    if always_two:
+        return lines_of([i for i in on_page if i.left < GUTTER]) + lines_of([i for i in on_page if i.left >= GUTTER])
+    rows = lines_of(on_page)
+    start = next((k for k, row in enumerate(rows) if opens_columns(row) and sum(opens_columns(r) for r in rows[k:k + 8]) >= 2), None)
+    if start is None:
+        return rows
+    top = rows[start][0].top - 4
+    above = [i for i in on_page if i.top < top]
+    below = [i for i in on_page if i.top >= top]
+    if any(i.left < GUTTER - 4 and i.right > GUTTER + 16 for i in below):
+        problems.append(f"{key} p{page}: text runs across the page below where two columns begin")
+    return lines_of(above) + lines_of([i for i in below if i.left < GUTTER]) + lines_of([i for i in below if i.left >= GUTTER])
+
+
 def join(pieces: list[Item]) -> str:
     text = ""
     for k, piece in enumerate(pieces):
@@ -107,21 +138,23 @@ def extract_fruits(key: str) -> list[dict]:
     current: dict | None = None
     paragraph: dict | None = None
 
+    stat: list[dict] | None = None  # the stat block being read, once its title has been met
     for page in range(first, last + 1):
         on_page = [i for i in items if i.page == page]
-        # The handbook sets its fruits in two columns; the encyclopedia runs them across the page.
-        two_columns = config.get("columns") == 2 or any((i.family, i.size) == name_font and i.left > 450 for i in on_page)
-        halves = [[i for i in on_page if i.left < 459], [i for i in on_page if i.left >= 459]] if two_columns else [on_page]
-        for line in (line for half in halves for line in lines_of(half)):
+        # The original encyclopedia and some handbook pages set their fruits in two columns throughout.
+        always_two = config.get("columns") == 2 or any((i.family, i.size) == name_font and i.left > 450 for i in on_page)
+        for line in reading_lines(on_page, always_two, page, key):
             head = line[0]
             text = join(line)
-            base = 478 if two_columns and head.left >= 459 else 81
+            base = 478 if head.left >= GUTTER else 81
             if lead_size:
                 # Lead-ins are a size larger than the text and indented; the pieces at that size are the lead.
-                is_lead = head.size == lead_size and head.left - base > 8 and len(line) > 1
-                lead_pieces = [p for p in line if p.size == lead_size][:1] if is_lead else []
+                # A beast's name set at that size in the middle of a sentence is not one: a lead-in ends in a full stop.
+                lead_pieces = [p for p in line if p.size == lead_size][:1]
+                is_lead = head.size == lead_size and head.left - base > 8 and len(line) > 1 and join(lead_pieces).rstrip().endswith((".", ":"))
+                lead_pieces = lead_pieces if is_lead else []
             else:
-                is_lead = head.bold and head.left - base > 14
+                is_lead = head.bold and (head.left - base > 14 or stat is not None)
                 lead_pieces = []
                 for piece in line if is_lead else []:
                     if not piece.bold:
@@ -129,15 +162,34 @@ def extract_fruits(key: str) -> list[dict]:
                     lead_pieces.append(piece)
             level = section_fonts.get((head.family, head.size))
             if level == 1:
-                section, current, paragraph = text, None, None
+                section, current, paragraph, stat = text, None, None, None
             elif level == 2:
-                group, current, paragraph = text, None, None
+                group, current, paragraph, stat = text, None, None, None
             elif (head.family, head.size) == name_font:
-                current = {"name": text, "section": section, "group": group, "page": page, "paragraphs": []}
+                current = {"name": text, "section": section, "group": group, "page": page, "paragraphs": [], "stat": []}
                 fruits.append(current)
-                paragraph = None
+                paragraph, stat = None, None
             elif current is None:
                 continue
+            elif (head.family, head.size) == STAT_TITLE and not lead_size:
+                # A beast's stat block. It belongs to the fruit on this page that names the beast, else to the
+                # first fruit on the page that has no block yet, else to the fruit above.
+                here = [f for f in fruits if f["page"] == page]
+                named = [f for f in here if text.lower() in " ".join(p["text"] for p in f["paragraphs"]).lower()]
+                owner = (named or [f for f in here if not f["stat"]] or [current])[0]
+                stat = owner["stat"]
+                paragraph = {"lead": text, "text": "", "page": page}
+                stat.append(paragraph)
+            elif stat is not None:
+                if is_lead:
+                    paragraph = {"lead": join(lead_pieces).rstrip("."), "text": join(line[len(lead_pieces):]), "page": page}
+                    stat.append(paragraph)
+                elif head.family == "MyFont":
+                    # "Actions", "Reactions": a heading inside the block.
+                    paragraph = {"lead": text, "text": "", "page": page}
+                    stat.append(paragraph)
+                else:
+                    paragraph["text"] = (paragraph["text"] + " " + text).strip()
             elif is_lead:
                 # A lead-in ("Sea Weakness.") opens each part of a fruit.
                 lead = join(lead_pieces)
@@ -152,6 +204,14 @@ def extract_fruits(key: str) -> list[dict]:
     # fruit above (a second form, a chart), not a new fruit.
     real: list[dict] = []
     for fruit in fruits:
+        # A fruit too long for one page is printed under its name with "Page 1", "Page 2" … after it: one fruit.
+        numbered = re.match(r"(.+\)) \w+ (\d)$", fruit["name"])
+        if numbered and numbered.group(2) != "1" and real and real[-1]["name"] == numbered.group(1):
+            real[-1]["paragraphs"].extend(fruit["paragraphs"])
+            real[-1]["stat"].extend(fruit["stat"])
+            continue
+        if numbered and numbered.group(2) == "1":
+            fruit["name"] = numbered.group(1)
         if "devil fruit" in fruit.get("typeLine", "").lower() or not real:
             real.append(fruit)
             continue
@@ -162,6 +222,7 @@ def extract_fruits(key: str) -> list[dict]:
             owner["paragraphs"].append({"lead": fruit["name"], "text": "", "page": fruit["page"]})
         for para in fruit["paragraphs"]:
             owner["paragraphs"].append({**para, "lead": f"{fruit['name']}: {para['lead']}"})
+        owner["stat"].extend(fruit["stat"])
     fruits = real
 
     out = []
@@ -181,7 +242,7 @@ def extract_fruits(key: str) -> list[dict]:
         else:
             problems.append(f"{key} p{fruit['page']}: a fruit has no rarity line")
         features = []
-        stat_lines = []
+        stat_lines = [{"name": p["lead"], "text": p["text"], "page": p["page"]} for p in fruit["stat"]]
         for para in fruit["paragraphs"]:
             lead = para["lead"]
             if STAT_LABEL.match(lead):

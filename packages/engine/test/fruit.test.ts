@@ -52,7 +52,8 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('a granted Devil Fruit 
     const morning = { ...spent, state: dawn(spent, sheetWith(secrets, spent)).state };
     expect(pool(sheetWith(secrets, morning), 'Devil Fruit charges')!.remaining).toBe(7);
     expect(pool(sheetWith(holding(fruit('Test Smoke', 'Gaseous Logia'))), 'Devil Fruit charges')!.max).toBe(5); // Logia at 7th: 5
-    const zoan = sheetWith(holding(fruit('Test Cat', 'Standard Zoan')));
+    const zoan = sheetWith(holding(fruit('Test Cat', 'Standard Zoan', { statBlockLines: [{ name: 'Test Cat', text: 'Small beast, unaligned', page: 12 }, { name: 'Armor Class', text: '12', page: 12 }, { name: 'Actions', text: '', page: 12 }, { name: 'Bite', text: 'Melee Weapon Attack: +4 to hit.', page: 12 }] as never })));
+    expect(zoan.fruits[0]!.statBlock).toEqual(['Test Cat. Small beast, unaligned', 'Armor Class 12', 'Actions', 'Bite. Melee Weapon Attack: +4 to hit.']);
     expect(pool(zoan, 'Beast Form')).toMatchObject({ max: 3, recharge: 'dawn' }); // proficiency bonus
     expect(pool(zoan, 'Devil Fruit charges')).toBeUndefined();
     expect(sheetWith(secrets, { ...doc, overrides: { [`resource.${id}`]: 9 } }).resources.find((r) => r.id === id)!.max).toBe(9);
