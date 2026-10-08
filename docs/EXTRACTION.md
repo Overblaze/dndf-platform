@@ -130,3 +130,13 @@ beside the list's title. The reader once skipped everything above a fixed height
 check written for it counted with the same rule and agreed. A check must count a different way from the thing it
 checks: the test now pins each list's size to the number of pieces in the list's type anywhere on the page, and the
 coverage audit's "in the book, not in the data" lines for these pages were the real signal all along.
+
+## The DM Guide's ship chapter
+
+`python3 tools/extract/extract_ships.py` reads Chapter 2 of the DnDF DM Guide (PDF pages 11–43) into
+`data/rules/dndf-10/ships.json`: 11 `shipType` entries (stat blocks with their components), 25 `shipUpgrade` entries and
+10 `rule` entries for the chapter's sections and tables. Matt ruled this chapter public on 2026-10-08; nothing else of
+the DM Guide is extracted. The book prints on its odd PDF pages only, and pages are cited as PDF pages. Two things are
+cut off in the book itself and so in the data: the Sails Upgrade stops after its Armor Class, at the foot of page 23.
+Tables there are centred and wrapped; the reader files a piece under the header it is centred nearest, keeps a table
+going under a repeated header on the next column or page, and every sentence is compared with a second reading.

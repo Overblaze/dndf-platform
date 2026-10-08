@@ -140,7 +140,7 @@ function ClassView({ cls }: { cls: ClassEntry }) {
 
 const KIND_LABEL: Record<string, string> = {
   race: 'Race', subrace: 'Subrace', background: 'Background', feat: 'Feat', crewRole: 'Crew role', rule: 'Rules', subclass: 'Subclass', optionGroup: 'Options', class: 'Class',
-  hakiFeature: 'Haki', surgeAdvancement: 'Standard advancement', spell: 'Spell', spellList: 'Spell list', item: 'Armory',
+  hakiFeature: 'Haki', surgeAdvancement: 'Standard advancement', spell: 'Spell', spellList: 'Spell list', item: 'Armory', shipType: 'Ship', shipUpgrade: 'Ship upgrade',
 };
 
 const FACTS: [string, string][] = [
@@ -193,9 +193,26 @@ function EntryView({ entry }: { entry: RuleEntry }) {
             ))}
           </dl>
         )}
+        {entry.kind === 'shipType' && (
+          <>
+            {entry.special === true && <p className="page-ref">A special vehicle: not sold by ordinary vendors.</p>}
+            {entry.abilities !== null && typeof entry.abilities === 'object' && (
+              <p className="feature-text">{Object.entries(entry.abilities as Record<string, number>).map(([a, score]) => `${a.toUpperCase()} ${score}${score ? ` (${signed(Math.floor((score - 10) / 2))})` : ''}`).join(' · ')}</p>
+            )}
+          </>
+        )}
         {typeof entry.flavor === 'string' && <p className="feature-text">{entry.flavor}</p>}
         {Boolean(text || entry.sections || entry.tables) && (
           <RuleText text={text} sections={(entry.sections ?? []) as SectionDef[]} tables={(entry.tables ?? []) as TableDef[]} book={entry.source.book} />
+        )}
+        {entry.kind === 'shipType' && Array.isArray(entry.components) && (entry.components as { name: string; text: string }[]).map((component) => (
+          <div key={component.name} className="rule-section">
+            <h3>{component.name}</h3>
+            <p className="feature-text">{component.text}</p>
+          </div>
+        ))}
+        {entry.kind === 'shipType' && typeof entry.actions === 'string' && entry.actions && (
+          <div className="rule-section"><h3>Actions</h3><p className="feature-text">{entry.actions}</p></div>
         )}
         {entry.kind === 'spellList' && Object.entries(entry.levels as Record<string, string[]>).map(([level, names]) => (
           <div key={level} className="rule-section">
@@ -306,7 +323,10 @@ function LibraryHome() {
   const { version, rules, classes, races, backgrounds, crewRoles, feats, generalRules, subclassesOf, subracesOf, hakiFeatures, surgeAdvancements, spellLists, spells } = useSet();
   const items = [...rules.values()].filter((e) => e.kind === 'item');
   const armoryRules = generalRules.filter((e) => e.id.startsWith('rule.armory_'));
-  const otherRules = generalRules.filter((e) => !e.id.startsWith('rule.armory_'));
+  const shipRules = generalRules.filter((e) => e.id.startsWith('rule.ships_'));
+  const shipTypes = [...rules.values()].filter((e) => e.kind === 'shipType');
+  const shipUpgrades = [...rules.values()].filter((e) => e.kind === 'shipUpgrade');
+  const otherRules = generalRules.filter((e) => !e.id.startsWith('rule.armory_') && !e.id.startsWith('rule.ships_'));
   const surgeDetail = (e: RuleEntry) => [String(e.rarity), e.amateur ? 'Amateur' : '', typeof e.tier === 'number' ? `Tier ${e.tier}` : ''].filter(Boolean).join(' · ');
   const link = useLink();
   const [, setParams] = useSearchParams();
@@ -384,6 +404,18 @@ function LibraryHome() {
       </Shelf>
       <Shelf title="Your spells" count="write your own">
         <HomebrewSpells />
+      </Shelf>
+      <Shelf title="Ships and sailing" count={shipRules.length + shipTypes.length + shipUpgrades.length}>
+        <p className="page-ref">From Chapter 2 of the DnDF DM Guide. Page numbers are the PDF’s.</p>
+        <EntryLinks entries={shipRules} />
+        <h3>Ships</h3>
+        <EntryLinks entries={shipTypes} detail={(ship) => [String(ship.size ?? ''), typeof ship.cost === 'number' ? berries(ship.cost) : '', typeof ship.crew === 'number' ? `crew ${ship.crew}` : '', typeof ship.upgradeSlots === 'number' ? `${ship.upgradeSlots} upgrade slots` : ''].filter(Boolean).join(' · ')} />
+        {[...new Set(shipUpgrades.map((u) => String(u.group ?? 'Upgrades')))].map((group) => (
+          <Fragment key={group}>
+            <h3>{group}</h3>
+            <EntryLinks entries={shipUpgrades.filter((u) => String(u.group ?? 'Upgrades') === group)} detail={(u) => [typeof u.slots === 'number' ? `${u.slots} slot${u.slots === 1 ? '' : 's'}` : '', String(u.costText ?? '')].filter(Boolean).join(' · ')} />
+          </Fragment>
+        ))}
       </Shelf>
       <Shelf title="Armory" count={items.length + armoryRules.length}>
         <EntryLinks entries={armoryRules} />
