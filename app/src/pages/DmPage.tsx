@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { TableBackgroundCard } from '../components/TableBackgroundCard';
 import { Dialog } from '../components/Dialog';
 import { useAuth } from '../lib/auth';
 import { formatBerries } from '@dndf/engine';
@@ -297,6 +298,7 @@ export function DmPage() {
           </div>
         )}
       </section>
+      {isDm && <TableBackgroundCard />}
       {current && userId && <CampaignTools key={current.id} campaign={current} userId={userId} onGone={() => { setOpen(null); void load(); }} />}
     </>
   );

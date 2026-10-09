@@ -75,5 +75,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') event.respondWith(font(request));
+  // The table's background picture is public and never changes under one address: kept like a font.
+  else if (url.pathname.includes('/storage/v1/object/public/app-background/')) event.respondWith(font(request));
   // Everything else (the database, sign-in) goes straight to the network, untouched.
 });

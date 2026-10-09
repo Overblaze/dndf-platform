@@ -266,6 +266,22 @@ code {
   background-size: 96px 96px;
 }
 
+/* The table's own picture, behind every page. A sheet's own background (.sheet-bg) comes later and covers it. */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--ink);
+  background-position: center;
+  background-size: cover;
+}
+
+@media print {
+  .app-bg {
+    display: none;
+  }
+}
+
 .sheet-bg-picture {
   background-position: center;
   background-size: cover;
@@ -2114,12 +2130,28 @@ a {
   align-items: center;
   gap: 8px 12px;
   margin: 24px 0 8px;
-  padding-top: 12px;
-  border-top: 1px solid var(--rule);
+  padding: 12px;
+  /* A box of its own, so its words can be read over the table's picture. */
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card-bg, var(--card));
 }
 
 @media print {
   .page-foot {
     display: none;
   }
+}
+
+/* The DM's preview of the table's background (components/TableBackgroundCard.tsx) */
+
+.table-bg-preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--ink);
+  background-position: center;
+  background-size: cover;
 }

@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { useAppBackground } from '../lib/appBackground';
 import { useAuth } from '../lib/auth';
+import { DEFAULT_CARD_COLOR, DEFAULT_CARD_OPACITY } from '../lib/backgrounds';
 import { sendWaiting, useWaiting } from '../lib/offline';
 import { useOnline } from '../lib/online';
 import { Compass } from './Compass';
@@ -55,8 +57,12 @@ export function AppShell() {
   const online = useOnline();
   const waiting = useWaiting();
   const clashes = waiting.filter((w) => w.clash);
+  const { url: tablePicture } = useAppBackground();
+  // Over the table's picture the boxes are a little see-through, as they are on a character sheet.
+  const shellStyle = tablePicture ? ({ '--card-bg': `color-mix(in srgb, ${DEFAULT_CARD_COLOR} ${DEFAULT_CARD_OPACITY}%, transparent)` } as CSSProperties) : undefined;
   return (
-    <div className="shell">
+    <div className="shell" style={shellStyle}>
+      {tablePicture && <div className="app-bg" style={{ backgroundImage: `url("${tablePicture}")` }} aria-hidden="true" />}
       <header className="topbar">
         <NavLink to="/" className="logo" aria-label="DnDF home">
           <Compass />

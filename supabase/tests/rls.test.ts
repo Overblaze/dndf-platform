@@ -859,3 +859,42 @@ describe('reports to the developer (0010)', () => {
     expect(await admin(`select user_id, reporter from public.reports where message = 'Seen while passing through.'`)).toEqual([{ user_id: null, reporter: 'Passing' }]);
   });
 });
+
+describe('the table’s background picture (0011)', () => {
+  const put = `insert into storage.objects (bucket_id, name) values ('app-background', $1)`;
+  const point = `update public.site_appearance set background_path = $1 returning background_path`;
+
+  it('starts with none, and anyone can read which one is current', async () => {
+    expect(await as(null, `select background_path from public.site_appearance`)).toEqual([{ background_path: null }]);
+    expect(await as(ana, `select background_path from public.site_appearance`)).toEqual([{ background_path: null }]);
+    expect((await admin(`select public, file_size_limit from storage.buckets where id = 'app-background'`))[0]).toEqual({ public: true, file_size_limit: 3145728 });
+  });
+
+  it('only a site DM can put a picture there and make it current', async () => {
+    await expect(as(ana, put, ['ana.jpg'])).rejects.toThrow(/row-level security/);
+    expect(await as(ana, point, ['ana.jpg'])).toEqual([]); // no row is hers to change
+    await expect(as(null, point, ['x.jpg'])).rejects.toThrow(/permission denied/);
+    await as(matt, put, ['sunny.jpg']);
+    expect(await as(matt, point, ['sunny.jpg'])).toEqual([{ background_path: 'sunny.jpg' }]);
+    expect(await as(null, `select background_path from public.site_appearance`)).toEqual([{ background_path: 'sunny.jpg' }]);
+    expect((await admin(`select updated_by from public.site_appearance`))[0]!.updated_by).toBe(matt);
+  });
+
+  it('a player cannot replace, remove or even list the files; the DM can', async () => {
+    expect(await as(ana, `select name from storage.objects where bucket_id = 'app-background'`)).toEqual([]);
+    expect(await as(ana, `delete from storage.objects where bucket_id = 'app-background' returning name`)).toEqual([]);
+    expect(await as(ana, `update storage.objects set name = 'mine.jpg' where bucket_id = 'app-background' returning name`)).toEqual([]);
+    expect(await as(matt, `select name from storage.objects where bucket_id = 'app-background'`)).toEqual([{ name: 'sunny.jpg' }]);
+    // A DM's own sheet backgrounds, and everyone's, are still closed to others: this bucket's rule opens nothing else.
+    await as(ana, `insert into storage.objects (bucket_id, name) values ('sheet-backgrounds', $1)`, [`${ana}/${anaChar}/bg.jpg`]);
+    expect(await as(ben, `select name from storage.objects where bucket_id = 'sheet-backgrounds'`)).toEqual([]);
+  });
+
+  it('there is one row, it cannot be added to or removed, and its path is a plain file name', async () => {
+    await expect(as(matt, `insert into public.site_appearance (id) values (false)`)).rejects.toThrow(/permission denied|check/);
+    await expect(as(matt, `delete from public.site_appearance`)).rejects.toThrow(/permission denied/);
+    await expect(as(matt, point, ['../elsewhere/secret.jpg'])).rejects.toThrow(/check/);
+    expect(await as(matt, point, [null])).toEqual([{ background_path: null }]);
+    expect(await as(matt, `delete from storage.objects where bucket_id = 'app-background' returning name`)).toEqual([{ name: 'sunny.jpg' }]);
+  });
+});

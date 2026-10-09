@@ -18,6 +18,33 @@ export const BACKGROUND_PRESETS: BackgroundPreset[] = [
   { id: 'night', label: 'Night watch', color: '#3B2A1A', grid: 'rgba(184, 155, 99, 0.22)' },
 ];
 
+/** What stands for the table's own picture among the swatches. */
+export const TABLE_BACKGROUND = 'table';
+
+/**
+ * Whether the table's picture is what shows behind a character's sheet: there is one, and the
+ * character has chosen no background of its own (a built-in one chosen on purpose, or a picture).
+ */
+export function showsTablePicture(background: { kind: string } | undefined, tableUrl: string | null): boolean {
+  return Boolean(tableUrl) && background === undefined;
+}
+
+/**
+ * What choosing a built-in background saves. With no table picture the plain sea chart is simply "nothing chosen";
+ * with one, nothing chosen means the table's picture, so the sea chart has to be chosen by name.
+ */
+export function presetChoice(presetId: string, tableUrl: string | null): { kind: 'preset'; id: string } | undefined {
+  if (presetId === TABLE_BACKGROUND) return undefined;
+  return presetId === DEFAULT_BACKGROUND && !tableUrl ? undefined : { kind: 'preset', id: presetId };
+}
+
+/** Which swatch is lit: the built-in one chosen, the table's picture, or none while a picture of the player's own is up. */
+export function selectedSwatch(background: { kind: string; id?: string } | undefined, tableUrl: string | null): string | null {
+  if (background?.kind === 'preset') return background.id ?? DEFAULT_BACKGROUND;
+  if (background) return null;
+  return tableUrl ? TABLE_BACKGROUND : DEFAULT_BACKGROUND;
+}
+
 export const DEFAULT_CARD_OPACITY = 88;
 export const MIN_CARD_OPACITY = 50;
 
