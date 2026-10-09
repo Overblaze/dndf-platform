@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TableBackgroundCard } from '../components/TableBackgroundCard';
 import { Dialog } from '../components/Dialog';
 import { useAuth } from '../lib/auth';
-import { formatBerries } from '@dndf/engine';
+import { OPTIONAL_RULES, campaignSettings, formatBerries, type CampaignSettings, type OptionalRule } from '@dndf/engine';
 import { Link } from 'react-router-dom';
 import { campaignApi, type Campaign, type CampaignCharacter, type Grant, type Member, type PartyMember, type Person, type SecretSummary } from '../lib/campaigns';
 import { supabase } from '../lib/supabase';
@@ -70,6 +70,47 @@ function GrantDialog({ character, onGrant, search, onClose }: { character: Campa
         </>
       )}
     </Dialog>
+  );
+}
+
+/** The optional rules this campaign plays with. Off until its DM switches them on; a switch takes effect on every sheet in the campaign. */
+function OptionalRulesCard({ campaign, api }: { campaign: Campaign; api: ReturnType<typeof campaignApi> }) {
+  const [settings, setSettings] = useState<CampaignSettings | null>(null);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [problem, setProblem] = useState<string | null>(null);
+  useEffect(() => {
+    let current = true;
+    api.settings(campaign.id).then((raw) => current && setSettings(campaignSettings(raw)), (e: Error) => current && setProblem(e.message));
+    return () => { current = false; };
+  }, [api, campaign.id]);
+  const flip = (rule: OptionalRule) => {
+    if (!settings) return;
+    const before = settings;
+    setBusy(rule);
+    setProblem(null);
+    // Shown as switched at once; put back if the campaign would not take it.
+    setSettings({ ...settings, [rule]: !settings[rule] });
+    api.changeSettings(campaign.id, { [rule]: !before[rule] }).then((raw) => setSettings(campaignSettings(raw)), (e: Error) => { setSettings(before); setProblem(e.message); }).finally(() => setBusy(null));
+  };
+  return (
+    <section className="card">
+      <h2>Optional rules</h2>
+      <p className="page-ref">
+        Off until you switch them on. A switch reaches every character in {campaign.name} the next time its sheet is opened or looked at again, and the Discord bot at once.
+        Switching one off deletes nothing: picks and points already on a character are kept and count again when it is back on. Characters in no campaign have none of these.
+      </p>
+      {problem && <p className="notice" role="alert">{problem}</p>}
+      {!settings && !problem && <p className="soft">Reading the campaign’s rules…</p>}
+      {settings && OPTIONAL_RULES.map((rule) => (
+        <label key={rule.id} className="check optional-rule">
+          <input type="checkbox" checked={settings[rule.id]} disabled={busy !== null} onChange={() => flip(rule.id)} />
+          <span>
+            <strong>{rule.name}</strong> <span className="page-ref">{settings[rule.id] ? 'on' : 'off'}{busy === rule.id ? ' · saving…' : ''}</span>
+            <span className="page-ref optional-rule-gives">{rule.gives}. <Link to={`/library/${encodeURIComponent(rule.rule)}`}>Read the rule</Link></span>
+          </span>
+        </label>
+      ))}
+    </section>
   );
 }
 
@@ -205,6 +246,8 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
         ))}
         <p className="page-ref">Until you reveal a fruit, the other players see only that the character has one. Taking a fruit away closes it to the player at once.</p>
       </section>
+
+      <OptionalRulesCard campaign={campaign} api={api} />
 
       <section className="card">
         <h2>This campaign</h2>

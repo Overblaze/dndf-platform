@@ -145,7 +145,7 @@ export function status(doc: CharacterDoc, sheet: Sheet): Outcome {
   const lines = [
     `**${sheet.name}** — ${sheet.summary}`,
     `❤️ ${hpLine(doc, sheet)} · 🛡️ AC ${sheet.ac.value} · 👟 ${speedLine(sheet)} · initiative ${signed(sheet.initiative.value)}`,
-    `Hit dice ${sheet.hitDice.remaining}/${sheet.hitDice.total} · Dream Points ${sheet.dreamPoints.remaining}/${sheet.dreamPoints.max} · Willpower ${sheet.willpower.value} · Haki DC ${sheet.hakiSaveDc.value}`,
+    `Hit dice ${sheet.hitDice.remaining}/${sheet.hitDice.total}${sheet.optionalRules.dreamPoints ? ` · Dream Points ${sheet.dreamPoints.remaining}/${sheet.dreamPoints.max}` : ''} · Willpower ${sheet.willpower.value} · Haki DC ${sheet.hakiSaveDc.value}`,
   ];
   if (pools.length) lines.push(pools.join(' · '));
   if (sheet.money !== 0 || sheet.gear.lines.length > 0) lines.push(`${exactBerries(sheet.money)} · carrying ${sheet.gear.carried} of ${sheet.gear.capacity} lb${sheet.gear.over ? ' (over)' : ''}`);

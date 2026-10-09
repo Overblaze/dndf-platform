@@ -1,4 +1,5 @@
-import { ABILITIES, ABILITY_NAMES, cite, deriveSheet, exactBerries, signed, spellLevelName, type CharacterDoc, type Sheet, speedLine } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, cite, deriveSheet, exactBerries, signed, spellLevelName, type CharacterDoc, type Sheet, speedLine, campaignSettings } from '@dndf/engine';
+import { useCampaignSettings } from '../lib/campaignRules';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
@@ -50,7 +51,7 @@ function Paper({ doc, sheet, withText }: { doc: CharacterDoc; sheet: Sheet; with
           </table>
           <h2>Hit dice and rests</h2>
           <p>{sheet.hitDice.pool.map((p) => `${p.count}d${p.die}`).join(' + ')} <Boxes count={sheet.hitDice.total} /></p>
-          <p>Dream Points <Boxes count={sheet.dreamPoints.max} /></p>
+          {sheet.optionalRules.dreamPoints && <p>Dream Points <Boxes count={sheet.dreamPoints.max} /></p>}
           <p>Death saves: successes <Boxes count={3} /> failures <Boxes count={3} /></p>
           <h2>Proficiencies</h2>
           {(['armor', 'weapons', 'tools'] as const).map((kind) => (
@@ -188,7 +189,12 @@ export function PrintPage() {
     return () => { current = false; };
   }, [store, id, loading]);
 
-  const sheet = useMemo(() => (doc ? deriveSheet(doc, ruleSet(doc.rulesVersion).rules) : null), [doc]);
+  // The campaign's optional rules. A character kept in the browser has no campaign; the bot, which prints
+  // from such a copy, says in the address which rules the character's campaign has on ("?rules=dreamPoints,…").
+  const asked = useCampaignSettings(store.local, id ?? '').settings;
+  const named = params.get('rules');
+  const settings = useMemo(() => (store.local && named !== null ? campaignSettings(Object.fromEntries(named.split(',').map((rule) => [rule, true]))) : asked), [store.local, named, asked]);
+  const sheet = useMemo(() => (doc ? deriveSheet(doc, ruleSet(doc.rulesVersion).rules, settings) : null), [doc, settings]);
   useEffect(() => { if (sheet) document.title = `${sheet.name} · character sheet`; }, [sheet]);
 
   if (problem) return <p className="notice" role="alert">{problem}</p>;

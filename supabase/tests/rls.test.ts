@@ -942,3 +942,31 @@ describe('a file with a report (0012)', () => {
     expect(await as(ana, `select name from storage.objects where bucket_id = 'report-files'`)).toEqual([]);
   });
 });
+
+describe('a campaign’s optional rules (campaigns.settings)', () => {
+  it('start with none of the optional rules switched on', async () => {
+    const fresh = (await as(matt, `insert into public.campaigns (name) values ('Fresh Seas') returning id, settings`))[0]!;
+    expect(fresh.settings).toEqual({});
+    await as(matt, `delete from public.campaigns where id = $1`, [fresh.id]);
+    const now = (await admin(`select settings from public.campaigns where id = $1`, [campaign]))[0]!.settings as Record<string, unknown>;
+    for (const rule of ['specialReactions', 'hakiPurist', 'dreamPoints', 'abandonDreams', 'healingSurge']) expect(now[rule], rule).toBeUndefined();
+  });
+
+  it('only a DM of the campaign can switch one; a player, an outsider and a signed-out visitor cannot', async () => {
+    const flip = `update public.campaigns set settings = settings || '{"dreamPoints": true}'::jsonb where id = $1 returning settings`;
+    expect(await as(ana, flip, [campaign])).toEqual([]);
+    expect(await as(zed, flip, [campaign])).toEqual([]);
+    await expect(as(null, flip, [campaign])).rejects.toThrow(/permission denied/);
+    expect(((await admin(`select settings from public.campaigns where id = $1`, [campaign]))[0]!.settings as Record<string, unknown>).dreamPoints).toBeUndefined();
+    expect(((await as(matt, flip, [campaign]))[0]!.settings as Record<string, unknown>).dreamPoints).toBe(true);
+  });
+
+  it('a player reads the rules of the campaign their character is in, through the character', async () => {
+    const mine = `select c.campaign_id, k.name, k.settings -> 'dreamPoints' as settings from public.characters c left join public.campaigns k on k.id = c.campaign_id where c.id = $1`;
+    expect(await as(ana, mine, [anaChar])).toEqual([{ campaign_id: campaign, name: 'Grand Line', settings: true }]);
+    // A character in no campaign has none to read; someone outside the campaign cannot read its rules at all.
+    expect(await as(zed, mine, [zedChar])).toEqual([{ campaign_id: null, name: null, settings: null }]);
+    expect(await as(zed, `select settings from public.campaigns where id = $1`, [campaign])).toEqual([]);
+    await admin(`update public.campaigns set settings = settings - 'dreamPoints' where id = $1`, [campaign]);
+  });
+});

@@ -1,7 +1,7 @@
 // Turns a saved character + the rules data into every number on the sheet, each with
 // its line-by-line breakdown. The website and the Discord bot both call this.
 import { CUSTOM_BOOK, customFeatureDef, rulesFor } from './customClass';
-import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type CharacterDoc, type WeaponDef } from './character';
+import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type CharacterDoc, type OptionalRule, type WeaponDef } from './character';
 import { GENERAL_PAGES, HANDBOOKS } from './citations';
 import { CONDITION_EFFECTS, defensesInText, type Defenses } from './conditions';
 import { classColumns } from './classes';
@@ -188,6 +188,8 @@ export interface Sheet {
   /** The character's handbook: the book every page on the sheet is in unless a feature names another. */
   book: string;
   dreamPoints: { max: number; remaining: number };
+  /** Which of the campaign's optional rules this character has: Special Reactions, Haki Purist, Dream Points, I Won't Abandon My Dreams, Healing Surge. */
+  optionalRules: Record<OptionalRule, boolean>;
   prestigeMax: number;
   healingSurgeDice: number;
   specialReactionReduction: string;
@@ -369,7 +371,9 @@ interface ActiveFeature {
 
 export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS, secrets: Secrets = NO_SECRETS): Sheet {
   // The saved character, with what the player's made items bring while they are in use.
-  const doc = withEquippedItems(saved);
+  // Haki Purist switched off for the campaign: the picks stay saved on the character and count for nothing.
+  const equipped = withEquippedItems(saved);
+  const doc = settings.hakiPurist ? equipped : { ...equipped, hakiPurist: undefined };
   // The handbook's rules, plus any classes the player wrote for this character and any private advancements it may see.
   const rules = withSecrets(rulesFor(doc, handbook), secrets, doc.rulesVersion);
   const heldFruits = secrets.granted.filter((g) => g.kind === 'owner' && g.entry.kind === 'devilFruit');
@@ -1000,12 +1004,12 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   const reactionList = reactionRules.length
     ? reactionRules.map((r) => ({ name: r.name, text: r.text, page: r.page }))
     : [{ name: 'Deflect Projectile', text: '', page: 11 }, { name: 'Parry Blow', text: '', page: 11 }];
-  const specialReactions: Sheet['specialReactions'] = reactionList.map((r) => {
+  const specialReactions: Sheet['specialReactions'] = (settings.specialReactions ? reactionList : []).map((r) => {
     const id = slug(r.name).split('_')[0]!;
     general(`sr.${id}`, r.name, specialReactionUses(prof.value) + advancementsOf('improve_special_reactions').length);
     return { id, resource: `sr.${id}`, name: r.name, text: r.text, page: r.page, roll: /1d10 \+ their player level/.test(r.text) || !r.text ? reductionRoll : undefined };
   });
-  general('healing_surge', 'Healing Surge', 1);
+  if (settings.healingSurge) general('healing_surge', 'Healing Surge', 1);
   const generalRules: Sheet['generalRules'] = {};
   for (const section of (rules.get('rule.universal_features')?.sections ?? []) as SectionDef[]) generalRules[section.name] = section;
 
@@ -1377,7 +1381,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   }));
 
   const hitDie = first?.cls.hitDie ?? 8;
-  const dreamMax = dreamPointsMax(level);
+  const dreamMax = settings.dreamPoints ? dreamPointsMax(level) : 0;
   // "Add together the Hit Dice granted by all your classes to form your pool of Hit Dice."
   const dice = new Map<number, number>();
   for (const picked of doc.classes) {
@@ -1420,8 +1424,9 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     hitDice: { die: hitDie, total: level, remaining: left(level, doc.state.hitDiceSpent), pool: hitDicePool },
     book: HANDBOOKS[doc.rulesVersion],
     dreamPoints: { max: dreamMax, remaining: Math.max(0, dreamMax - doc.state.dreamPointsSpent) },
+    optionalRules: { specialReactions: settings.specialReactions, hakiPurist: settings.hakiPurist, dreamPoints: settings.dreamPoints, abandonDreams: settings.abandonDreams, healingSurge: settings.healingSurge },
     prestigeMax: piratePrestigeMax(level),
-    healingSurgeDice: healingSurgeMaxDice(level, Math.max(0, level - doc.state.hitDiceSpent)),
+    healingSurgeDice: settings.healingSurge ? healingSurgeMaxDice(level, Math.max(0, level - doc.state.hitDiceSpent)) : 0,
     specialReactionReduction: specialReactionReduction(level).text,
     attacksPerAction: Math.max(1, ...ofType('attacksPerAction').map((e) => amount(e))),
     formulas,
@@ -1440,7 +1445,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     notes,
     haki: {
       colors: hakiColors,
-      purist: { earned: hakiPuristPicks(level, heldFruits.length > 0, doc.rulesVersion), levels: HAKI_PURIST_LEVELS[doc.rulesVersion], picks: doc.hakiPurist ?? [] },
+      purist: { earned: settings.hakiPurist ? hakiPuristPicks(level, heldFruits.length > 0, doc.rulesVersion) : 0, levels: HAKI_PURIST_LEVELS[doc.rulesVersion], picks: doc.hakiPurist ?? [] },
       surges: surgeLog,
     },
     gear: inventory,

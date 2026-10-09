@@ -5,7 +5,7 @@ import { existsSync, readdirSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { chromium, type Browser } from 'playwright-core';
-import type { CharacterDoc } from '@dndf/engine';
+import { OPTIONAL_RULES, type CampaignSettings, type CharacterDoc } from '@dndf/engine';
 
 /** Where the website is served. The live site by default; a local preview for testing. */
 export const SITE = (process.env.DNDF_SITE_URL ?? 'https://overblaze.github.io/dndf-platform/').replace(/\/?$/, '/');
@@ -31,7 +31,7 @@ async function getBrowser(): Promise<Browser> {
 export const closeBrowser = async () => { await browser?.close(); browser = null; };
 
 /** The character as an A4 PDF, with or without the text of each feature. */
-export async function sheetPdf(doc: CharacterDoc, withText: boolean): Promise<Buffer> {
+export async function sheetPdf(doc: CharacterDoc, withText: boolean, settings?: CampaignSettings): Promise<Buffer> {
   const context = await (await getBrowser()).newContext({ viewport: { width: 900, height: 1200 } });
   try {
     const id = 'local-discord';
@@ -39,7 +39,9 @@ export async function sheetPdf(doc: CharacterDoc, withText: boolean): Promise<Bu
     await context.addInitScript(([key, value]) => { try { localStorage.setItem(key!, value!); } catch { /* storage refused */ } },
       ['dndf.characters.v1', JSON.stringify({ [id]: { id, doc, updatedAt: new Date().toISOString() } })]);
     const page = await context.newPage();
-    await page.goto(`${SITE}#/print/${id}${withText ? '' : '?text=0'}`, { waitUntil: 'networkidle', timeout: 45_000 });
+    // The print page has no campaign to ask for this copy of the character: it is told which optional rules are on.
+    const on = OPTIONAL_RULES.filter((rule) => settings?.[rule.id]).map((rule) => rule.id).join(',');
+    await page.goto(`${SITE}#/print/${id}?rules=${on}${withText ? '' : '&text=0'}`, { waitUntil: 'networkidle', timeout: 45_000 });
     await page.waitForSelector('.paper', { timeout: 20_000 });
     await page.emulateMedia({ media: 'print' });
     return await page.pdf({ format: 'A4', printBackground: false });

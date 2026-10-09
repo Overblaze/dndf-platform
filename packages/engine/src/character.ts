@@ -184,9 +184,50 @@ export interface CampaignSettings {
   hakiAttackRuling: boolean;
   /** Hit dice returned by a long rest. */
   longRestHitDice: 'all' | 'half';
+  /** Optional rules a campaign's DM switches on. A character only has them in a campaign where they are on. */
+  specialReactions: boolean;
+  hakiPurist: boolean;
+  dreamPoints: boolean;
+  abandonDreams: boolean;
+  healingSurge: boolean;
 }
 
-export const DEFAULT_SETTINGS: CampaignSettings = { hakiAttackRuling: true, longRestHitDice: 'all' };
+export type OptionalRule = 'specialReactions' | 'hakiPurist' | 'dreamPoints' | 'abandonDreams' | 'healingSurge';
+
+/** The optional rules, with the rules entry (and the part of it) each is printed in. */
+export const OPTIONAL_RULES: { id: OptionalRule; name: string; rule: string; section?: string; gives: string }[] = [
+  { id: 'specialReactions', name: 'Special Reactions', rule: 'rule.special_reactions', gives: 'Deflect Projectile, Parry Blow and the other reactions every character can use' },
+  { id: 'hakiPurist', name: 'Haki Purist', rule: 'rule.haki_purist', gives: 'a Haki improvement at levels 4, 10 and 16 for characters without a Devil Fruit' },
+  { id: 'dreamPoints', name: 'Dream Points', rule: 'rule.universal_features', section: 'Dream Points', gives: 'a pool of points that add 1d6 to a roll or turn a failed death save' },
+  { id: 'abandonDreams', name: 'I Won’t Abandon My Dreams', rule: 'rule.universal_features', section: 'I Won’t Abandon My Dreams', gives: 'on dying, a d20 roll of 12 or more leaves the character at 1 hit point instead' },
+  { id: 'healingSurge', name: 'Healing Surge', rule: 'rule.universal_features', section: 'Healing Surge', gives: 'spending hit dice to heal as an action, once per rest' },
+];
+
+/**
+ * Every rule on: what the engine works with when it is not told otherwise (its own tests, a summary line).
+ * A character on the site or in the bot never gets this by default: see `campaignSettings`.
+ */
+export const DEFAULT_SETTINGS: CampaignSettings = { hakiAttackRuling: true, longRestHitDice: 'all', specialReactions: true, hakiPurist: true, dreamPoints: true, abandonDreams: true, healingSurge: true };
+
+/**
+ * A campaign's settings as its DM has left them. The optional rules are off until switched on.
+ * With nothing handed in (a character in no campaign) they are all off: there is no DM to have switched them on.
+ */
+export function campaignSettings(raw?: unknown): CampaignSettings {
+  const saved: Record<string, unknown> = raw && typeof raw === 'object' && !Array.isArray(raw) ? (raw as Record<string, unknown>) : {};
+  return {
+    hakiAttackRuling: saved.hakiAttackRuling !== false,
+    longRestHitDice: saved.longRestHitDice === 'half' ? 'half' : 'all',
+    specialReactions: saved.specialReactions === true,
+    hakiPurist: saved.hakiPurist === true,
+    dreamPoints: saved.dreamPoints === true,
+    abandonDreams: saved.abandonDreams === true,
+    healingSurge: saved.healingSurge === true,
+  };
+}
+
+/** A character in no campaign. */
+export const NO_CAMPAIGN_SETTINGS: CampaignSettings = campaignSettings();
 
 export function freshState(maxHp: number): CharacterState {
   return {
