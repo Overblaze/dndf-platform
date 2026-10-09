@@ -2,7 +2,7 @@
 import type { ScoreOrigin } from './abilityScores';
 import { cleanBounty, type BountyRecord } from './bounty';
 import type { CustomClass } from './customClass';
-import type { InventoryItem } from './inventory';
+import { cleanCustomItem, type InventoryItem } from './inventory';
 import { cleanSpellDetails, type KnownSpell } from './spells';
 import type { PuristPick, SurgePick, SurgeRecord } from './surges';
 import { ABILITIES, type Ability, type AbilityScores, type RulesVersion } from './types';
@@ -304,6 +304,8 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
       name: typeof item.name === 'string' ? item.name : 'Item',
       qty: Math.max(0, whole(item.qty, 1)),
       weight: typeof item.weight === 'number' && Number.isFinite(item.weight) && item.weight >= 0 ? item.weight : undefined,
+      custom: cleanCustomItem(item.custom),
+      equipped: item.equipped === true ? true : undefined,
     })),
     spells: !Array.isArray(doc.spells) ? undefined : uniqueIds((objects<KnownSpell>(doc.spells) ?? []).filter((spell) => typeof spell.name === 'string' && spell.name.trim()), 'spell').map((spell) => ({
       ...spell,

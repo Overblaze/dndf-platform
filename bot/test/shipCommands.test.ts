@@ -135,13 +135,17 @@ describe('/bounty', () => {
 describe('the commands as Discord is told them', () => {
   it('has /ship with its five parts and /bounty, within Discord’s limits', () => {
     const names = COMMANDS.map((c) => c.name);
-    expect(names).toEqual(['roll', 'hp', 'rest', 'dawn', 'status', 'sheet', 'party', 'bounty', 'ship']);
+    expect(names).toEqual(['roll', 'hp', 'rest', 'dawn', 'status', 'sheet', 'party', 'bounty', 'item', 'ship']);
     const ship = COMMANDS.find((c) => c.name === 'ship')!;
     expect(ship.options!.map((o) => o.name)).toEqual(['status', 'damage', 'repair', 'treasury', 'aboard']);
     const walk = (node: { name: string; description: string; options?: unknown[] }): void => {
       expect(node.name).toMatch(/^[a-z0-9_-]{1,32}$/);
       expect(node.description.length).toBeGreaterThan(0);
       expect(node.description.length).toBeLessThanOrEqual(100);
+      expect((node.options ?? []).length, `${node.name} options`).toBeLessThanOrEqual(25);
+      const names = ((node.options ?? []) as { name: string }[]).map((o) => o.name);
+      expect(new Set(names).size, `${node.name} option names`).toBe(names.length);
+      for (const option of (node.options ?? []) as { choices?: { name: string }[] }[]) expect((option.choices ?? []).length).toBeLessThanOrEqual(25);
       // Required options must come before optional ones, or Discord refuses the whole list.
       const required = ((node.options ?? []) as { required?: boolean; type: number }[]).filter((o) => o.type > 2).map((o) => Boolean(o.required));
       expect(required.join()).toBe([...required].sort((a, b) => Number(b) - Number(a)).join());

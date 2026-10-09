@@ -111,6 +111,7 @@ Known and left: a player who moves a character to a different campaign keeps a f
 ## Phase 9 — Polish
 
 - [x] Export and import (branch `export-import`): a character, a ship, or everything on a list page as one `.dndf.json` file; importing always adds new ones and never replaces. A file holds only the saved document, so a Devil Fruit is never in it; an uploaded sheet background and a ship's pictures are left behind. Every imported thing goes through the same checks as a save read from the database.
+- [x] Items of your own that work on the sheet (branch `custom-items`): a step-by-step maker on the Gear tab (weapon, armor, shield, something with powers, a consumable, plain gear; a weapon or armor can start from one in the book), a "Use it" switch, and `/item list | add | make | use | remove` in the bot. A made item in use adds its attack, Armor Class, bonuses, charges and dice through the same machinery as the player's own features; nothing else on the character is written.
 - [ ] Offline use (installable app that opens without a connection).
 - [ ] `/surge` in the bot.
 - [ ] Version-switch report (what changes for a character moved between v8.8 and v10).

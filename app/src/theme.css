@@ -668,6 +668,29 @@ a.btn {
   margin: 0;
 }
 
+/* A list of choices to pick one from (the item maker's first step) */
+.choice-list {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.btn.choice {
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+  height: auto;
+  padding: 10px 12px;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  white-space: normal;
+}
+
+.btn-primary.choice .page-ref {
+  color: inherit;
+}
+
 /* A ship's maps and artwork */
 .ship-cover {
   grid-column: 1 / -1;

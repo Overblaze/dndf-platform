@@ -1,7 +1,8 @@
-import { armorFromItem, cite, exactBerries, inventoryFromItem, weaponFromItem, type InventoryItem, type RuleEntry } from '@dndf/engine';
+import { armorFromItem, cite, exactBerries, inventoryFromItem, itemDoesSomething, itemInUse, itemSummary, weaponFromItem, type InventoryItem, type RuleEntry } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import type { LiveCharacter } from '../lib/useCharacter';
+import { ItemWizard } from './ItemWizard';
 import type { OpenStat } from './Vitals';
 
 const lb = (n: number) => `${Math.round(n * 100) / 100} lb`;
@@ -56,7 +57,7 @@ function ItemDialog({ initial, onSave, onClose }: { initial?: InventoryItem; onS
   const [item, setItem] = useState<InventoryItem>(initial ?? { id: crypto.randomUUID(), name: '', qty: 1 });
   const number = (value: string) => (value.trim() === '' || !Number.isFinite(Number(value)) ? undefined : Math.max(0, Number(value)));
   return (
-    <Dialog title={initial ? 'Change item' : 'Add your own item'} onClose={onClose}>
+    <Dialog title={initial ? 'Change item' : 'Quick add'} onClose={onClose}>
       <label className="field">
         <span className="label">Name</span>
         <input value={item.name} onChange={(e) => setItem({ ...item, name: e.target.value })} placeholder="Log Pose" maxLength={80} />
@@ -87,7 +88,8 @@ function ItemDialog({ initial, onSave, onClose }: { initial?: InventoryItem; onS
 export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenStat }) {
   const { doc, sheet, rules } = live;
   const [amount, setAmount] = useState('');
-  const [dialog, setDialog] = useState<'armory' | 'own' | InventoryItem | null>(null);
+  const [dialog, setDialog] = useState<'armory' | 'own' | 'make' | InventoryItem | null>(null);
+  const armory = useMemo(() => [...rules.values()].filter((e) => e.kind === 'item'), [rules]);
   const items = doc.inventory ?? [];
   const { gear } = sheet;
   const value = Math.round(Number(amount));
@@ -113,7 +115,10 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
     else if (armor) live.setDoc({ ...doc, armor }, `Put on ${entry.name}`);
     else if (entry.itemType === 'shield') live.setDoc({ ...doc, shield: true }, 'Took up a shield');
   };
+  /** A made item is put to use or put away with one switch; nothing else on the character is written. */
+  const wield = (item: InventoryItem, on: boolean) => change(item.id, { equipped: on || undefined }, `${on ? 'Using' : 'Put away'} ${item.name}`);
   const inUse = (item: InventoryItem) => {
+    if (item.custom) return null;
     const entry = item.item ? rules.get(item.item) : undefined;
     if (!entry) return null;
     if (entry.itemType === 'shield') return doc.shield ? 'in use' : 'use';
@@ -148,8 +153,10 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
         </div>
         <div className="row wrap">
           <button className="btn btn-primary" onClick={() => setDialog('armory')}>From the armory</button>
-          <button className="btn" onClick={() => setDialog('own')}>Add your own item</button>
+          <button className="btn" onClick={() => setDialog('make')}>Make an item</button>
+          <button className="btn" onClick={() => setDialog('own')}>Quick add</button>
         </div>
+        <p className="page-ref">“Make an item” walks you through a weapon, armor, a shield or something with powers of your own, so it works on the sheet. “Quick add” is just a name, a count and a weight.</p>
         {gear.lines.length === 0 && <p className="soft">Nothing yet. Armor you wear and weapons under Attacks only weigh something once they are in this list.</p>}
         {gear.lines.map((line) => {
           const item = items.find((i) => i.id === line.id)!;
@@ -160,7 +167,7 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
                 <button className="attack-name" onClick={() => setDialog(item)}>
                   <span className="resource-name">{line.name}{line.carried ? '' : ' (stowed)'}</span>
                   <span className="page-ref">
-                    {[line.weight !== undefined ? `${lb(line.weight)} each${line.qty !== 1 ? `, ${lb(line.total)} in all` : ''}` : 'no weight', line.notes].filter(Boolean).join(' · ')}
+                    {[item.custom ? itemSummary(item.custom) : '', line.weight !== undefined ? `${lb(line.weight)} each${line.qty !== 1 ? `, ${lb(line.total)} in all` : ''}` : 'no weight', line.notes].filter(Boolean).join(' · ')}
                   </span>
                 </button>
                 <span className="big num">{line.qty}</span>
@@ -172,18 +179,25 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
               <div className="row wrap">
                 {use === 'use' && <button className="btn" onClick={() => equip(item)}>Use it</button>}
                 {use === 'in use' && <span className="chip">In use</span>}
+                {item.custom && itemDoesSomething(item.custom) && (
+                  <button className={item.equipped ? 'btn btn-primary' : 'btn'} role="switch" aria-checked={item.equipped === true} aria-label={`${line.name} in use`} onClick={() => wield(item, !item.equipped)}>{item.equipped ? 'In use' : 'Use it'}</button>
+                )}
+                {item.custom && item.equipped && !itemInUse(item) && <span className="page-ref held-why">{line.qty <= 0 ? 'None left, so it does nothing now.' : 'Stowed, so it does nothing now.'}</span>}
                 <button className="btn" onClick={() => change(line.id, { carried: !line.carried }, `${line.name}: ${line.carried ? 'stowed' : 'carried'}`)}>{line.carried ? 'Stow' : 'Carry'}</button>
                 <button className="btn" onClick={() => remove(item)}>Remove</button>
               </div>
             </div>
           );
         })}
-        <p className="page-ref">Stowed things stay in the list but weigh nothing on you. To take off armor or put a weapon away, use Edit.</p>
+        <p className="page-ref">Stowed things stay in the list but weigh nothing on you. An item you made is switched on and off with “Use it”. For armor and weapons from the armory, use Edit to take them off or put them away.</p>
       </section>
 
       {dialog === 'armory' && <ArmoryDialog live={live} onClose={() => setDialog(null)} />}
       {dialog === 'own' && <ItemDialog onSave={save} onClose={() => setDialog(null)} />}
-      {dialog && typeof dialog === 'object' && <ItemDialog initial={dialog} onSave={save} onClose={() => setDialog(null)} />}
+      {dialog === 'make' && <ItemWizard armory={armory} onSave={(item) => save(item)} onClose={() => setDialog(null)} />}
+      {dialog && typeof dialog === 'object' && (dialog.custom
+        ? <ItemWizard initial={dialog} armory={armory} onSave={(item) => save(item)} onClose={() => setDialog(null)} />
+        : <ItemDialog initial={dialog} onSave={save} onClose={() => setDialog(null)} />)}
     </>
   );
 }
