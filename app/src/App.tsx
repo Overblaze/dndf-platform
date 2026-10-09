@@ -1,6 +1,7 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AppShell } from './components/AppShell';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { AppBackgroundProvider } from './lib/appBackground';
 import { AuthProvider } from './lib/auth';
 import { BuildPage } from './pages/BuildPage';
 import { ShipPage } from './ship/ShipPage';
@@ -15,6 +16,7 @@ import { SheetPage } from './pages/SheetPage';
 export function App() {
   return (
     <AuthProvider>
+      <AppBackgroundProvider>
       {/* Hash routes ("#/sheet") work on GitHub Pages without server rewrites. */}
       <HashRouter>
         <Routes>
@@ -38,6 +40,7 @@ export function App() {
           </Route>
         </Routes>
       </HashRouter>
+      </AppBackgroundProvider>
     </AuthProvider>
   );
 }

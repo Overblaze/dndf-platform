@@ -1,7 +1,8 @@
 import type { SheetAppearance } from '@dndf/engine';
 import { useRef, useState } from 'react';
 import { Dialog } from '../components/Dialog';
-import { BACKGROUND_PRESETS, CARD_COLORS, DEFAULT_BACKGROUND, DEFAULT_CARD_COLOR, MIN_CARD_OPACITY } from '../lib/backgrounds';
+import { useAppBackground } from '../lib/appBackground';
+import { BACKGROUND_PRESETS, CARD_COLORS, DEFAULT_CARD_COLOR, MIN_CARD_OPACITY, TABLE_BACKGROUND, presetChoice, selectedSwatch } from '../lib/backgrounds';
 import { sheetPalette } from '../lib/palette';
 import { prepareImage } from '../lib/image';
 import type { CharacterStore } from '../lib/store';
@@ -18,13 +19,14 @@ export function AppearanceDialog({ live, store, id, onClose }: { live: LiveChara
   const file = useRef<HTMLInputElement>(null);
 
   const set = (next: SheetAppearance, log?: string) => live.setDoc({ ...doc, appearance: next }, log);
+  const { url: tablePicture } = useAppBackground();
   const dropPicture = () => {
     if (background?.kind === 'image') void store.removeBackground(background.ref).catch(() => undefined);
   };
 
   const choosePreset = (presetId: string) => {
     dropPicture();
-    set({ ...appearance, background: presetId === DEFAULT_BACKGROUND ? undefined : { kind: 'preset', id: presetId } }, 'Sheet background changed');
+    set({ ...appearance, background: presetChoice(presetId, tablePicture) }, 'Sheet background changed');
   };
 
   const upload = async (chosen: File | undefined) => {
@@ -44,13 +46,19 @@ export function AppearanceDialog({ live, store, id, onClose }: { live: LiveChara
     }
   };
 
-  const selected = background?.kind === 'preset' ? background.id : background ? null : DEFAULT_BACKGROUND;
+  const selected = selectedSwatch(background, tablePicture);
 
   return (
     <Dialog title="Sheet appearance" onClose={onClose}>
       <fieldset>
         <legend className="label">Built-in backgrounds</legend>
         <div className="swatches">
+          {tablePicture && (
+            <button className={selected === TABLE_BACKGROUND ? 'swatch swatch-on' : 'swatch'} aria-pressed={selected === TABLE_BACKGROUND} onClick={() => choosePreset(TABLE_BACKGROUND)}>
+              <span className="swatch-color" style={{ backgroundImage: `url("${tablePicture}")`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+              <span>The table’s picture</span>
+            </button>
+          )}
           {BACKGROUND_PRESETS.map((preset) => (
             <button key={preset.id} className={selected === preset.id ? 'swatch swatch-on' : 'swatch'} aria-pressed={selected === preset.id} onClick={() => choosePreset(preset.id)}>
               <span
@@ -74,7 +82,7 @@ export function AppearanceDialog({ live, store, id, onClose }: { live: LiveChara
             {busy ? 'Uploading…' : background?.kind === 'image' ? 'Replace picture' : 'Upload a picture'}
           </button>
           {background?.kind === 'image' && (
-            <button className="btn" disabled={busy} onClick={() => choosePreset(DEFAULT_BACKGROUND)}>
+            <button className="btn" disabled={busy} onClick={() => choosePreset(TABLE_BACKGROUND)}>
               Remove picture
             </button>
           )}

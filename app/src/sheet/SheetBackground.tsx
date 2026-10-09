@@ -1,7 +1,8 @@
 import type { SheetAppearance } from '@dndf/engine';
 import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { BACKGROUND_PRESETS, DEFAULT_BACKGROUND, DEFAULT_CARD_COLOR, DEFAULT_CARD_OPACITY, MIN_CARD_OPACITY } from '../lib/backgrounds';
+import { useAppBackground } from '../lib/appBackground';
+import { BACKGROUND_PRESETS, DEFAULT_BACKGROUND, DEFAULT_CARD_COLOR, DEFAULT_CARD_OPACITY, MIN_CARD_OPACITY, showsTablePicture } from '../lib/backgrounds';
 import { paletteVars, sheetPalette } from '../lib/palette';
 import type { CharacterStore } from '../lib/store';
 
@@ -38,6 +39,9 @@ export function SheetBackground({ appearance, store }: { appearance: SheetAppear
     };
   }, [ref, store]);
 
+  // Nothing chosen for this character: the table's picture, painted by the app itself, is left to show.
+  const { url: tablePicture } = useAppBackground();
+  if (showsTablePicture(background, tablePicture)) return null;
   const presetId = background?.kind === 'preset' ? background.id : DEFAULT_BACKGROUND;
   const preset = BACKGROUND_PRESETS.find((p) => p.id === presetId) ?? BACKGROUND_PRESETS[0]!;
   const style = picture
