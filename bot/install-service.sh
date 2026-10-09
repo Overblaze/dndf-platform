@@ -55,7 +55,13 @@ WantedBy=default.target
 UNITFILE
 
 systemctl --user daemon-reload
-(cd "$LIVE/bot" && npx tsx src/register.ts)
+# If Discord refuses the command list, stop here and say so: restarting would run new code against the
+# old commands. The bot that is already running is left as it is.
+if ! (cd "$LIVE/bot" && npx tsx src/register.ts 2>"$LIVE/register-error.log"); then
+  echo "REGISTRATION FAILED: Discord refused the command list, so the bot was NOT restarted and is still running the version it had."
+  grep -m3 -E "DiscordAPIError|_TOO_|message:" "$LIVE/register-error.log" | sed 's/^ */  /' || true
+  exit 1
+fi
 systemctl --user enable --quiet dndf-bot.service
 systemctl --user restart dndf-bot.service
 # Give it time to sign in, then say plainly whether it did.

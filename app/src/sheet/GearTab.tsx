@@ -1,6 +1,7 @@
 import { armorFromItem, cite, exactBerries, inventoryFromItem, itemDoesSomething, itemInUse, itemNeedsAttunement, itemSummary, weaponFromItem, type InventoryItem, type RuleEntry } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
+import { QuantityInput } from '../components/QuantityInput';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { ItemWizard } from './ItemWizard';
 import type { OpenStat } from './Vitals';
@@ -180,7 +181,7 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
                     {[item.custom ? itemSummary(item.custom) : '', line.weight !== undefined ? `${lb(line.weight)} each${line.qty !== 1 ? `, ${lb(line.total)} in all` : ''}` : 'no weight', line.notes].filter(Boolean).join(' · ')}
                   </span>
                 </button>
-                <span className="big num">{line.qty}</span>
+                <QuantityInput value={line.qty} label={`How many ${line.name}`} onCommit={(qty) => change(line.id, { qty }, `${line.name}: ${line.qty} → ${qty}`)} />
                 <div className="row">
                   <button className="btn" onClick={() => change(line.id, { qty: Math.max(0, line.qty - 1) }, `${line.name}: ${line.qty} → ${Math.max(0, line.qty - 1)}`)} disabled={line.qty <= 0} aria-label={`One fewer ${line.name}`}>−</button>
                   <button className="btn" onClick={() => change(line.id, { qty: line.qty + 1 }, `${line.name}: ${line.qty} → ${line.qty + 1}`)} aria-label={`One more ${line.name}`}>+</button>
@@ -203,7 +204,7 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
             </div>
           );
         })}
-        <p className="page-ref">Stowed things stay in the list but weigh nothing on you. An item you made is switched on and off with “Use it”; one that requires attunement also has “Attune”, and works when both are on. For armor and weapons from the armory, use Edit to take them off or put them away.</p>
+        <p className="page-ref">Tap a count to type it: a new total, or a change like −20 or +50. Stowed things stay in the list but weigh nothing on you. An item you made is switched on and off with “Use it”; one that requires attunement also has “Attune”, and works when both are on. For armor and weapons from the armory, use Edit to take them off or put them away.</p>
       </section>
 
       {dialog === 'armory' && <ArmoryDialog live={live} onClose={() => setDialog(null)} />}

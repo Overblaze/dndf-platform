@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Backup, downloadExport } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
+import { QuantityInput } from '../components/QuantityInput';
 import { useAuth } from '../lib/auth';
 import { campaignApi, type Campaign } from '../lib/campaigns';
 import { ruleSet } from '../lib/rules';
@@ -99,17 +100,17 @@ function ShipList({ store, campaigns }: { store: ShipStore; campaigns: Campaign[
   );
 }
 
-function Counter({ label, value, sub, onChange }: { label: string; value: number; sub?: string; onChange: (next: number) => void }) {
+function Counter({ label, value, sub, max, onChange, onTyped }: { label: string; value: number; sub?: string; max?: number; onChange: (next: number) => void; /** A typed change, which is worth a line in the log; one step at a time is not. */ onTyped?: (next: number) => void }) {
   return (
     <div className="resource">
       <div>
         <div className="resource-name">{label}</div>
         {sub && <div className="page-ref">{sub}</div>}
       </div>
-      <span className="big num">{value}</span>
+      <QuantityInput value={value} label={label} max={max} onCommit={onTyped ?? onChange} />
       <div className="row">
         <button className="btn" onClick={() => onChange(Math.max(0, value - 1))} disabled={value <= 0} aria-label={`One fewer: ${label}`}>−</button>
-        <button className="btn" onClick={() => onChange(value + 1)} aria-label={`One more: ${label}`}>+</button>
+        <button className="btn" onClick={() => onChange(max === undefined ? value + 1 : Math.min(max, value + 1))} disabled={max !== undefined && value >= max} aria-label={`One more: ${label}`}>+</button>
       </div>
     </div>
   );
@@ -417,8 +418,8 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
         <h2>Aboard</h2>
         <Counter label="Crew working the ship" value={doc.crew} sub={`she needs ${doc.crewMax}; at ${Math.floor(doc.crewMax / 2)} or fewer she is short-handed`} onChange={(crew) => setDoc({ ...doc, crew })} />
         <Counter label="Passengers" value={doc.passengers} sub={`room for ${doc.passengerMax}`} onChange={(passengers) => setDoc({ ...doc, passengers })} />
-        <Counter label="Rations (one feeds one person for a day)" value={doc.rations} sub={sheet.rationDays === null ? 'nobody aboard to feed' : `${sheet.rationDays} days for everyone aboard`} onChange={(rations) => setDoc({ ...doc, rations })} />
-        <p className="page-ref">A Large creature counts as four crew, a Huge one as nine · {cite(BOOK, 11)}</p>
+        <Counter label="Rations (one feeds one person for a day)" value={doc.rations} sub={sheet.rationDays === null ? 'nobody aboard to feed' : `${sheet.rationDays} days for everyone aboard`} onChange={(rations) => setDoc({ ...doc, rations })} onTyped={(rations) => log({ ...doc, rations }, `Rations ${doc.rations} → ${rations}${rations < doc.rations ? ` (${doc.rations - rations} used)` : ` (${rations - doc.rations} taken on)`}`)} />
+        <p className="page-ref">Tap a number to type it: a new count, or a change with a sign in front, like −1500 to use up 1,500 rations or +200 to take on 200. A Large creature counts as four crew, a Huge one as nine · {cite(BOOK, 11)}</p>
       </section>
 
       <section className="card">
@@ -485,7 +486,7 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
               <div className="resource-name">{line.name}</div>
               <div className="page-ref">{line.tons !== undefined ? `${line.tons} t each${line.qty !== 1 ? `, ${line.total} t in all` : ''}` : 'no weight'}</div>
             </div>
-            <span className="big num">{line.qty}</span>
+            <QuantityInput value={line.qty} label={`How many ${line.name}`} onCommit={(qty) => log({ ...doc, hold: doc.hold.map((h) => (h.id === line.id ? { ...h, qty } : h)) }, `${qty > line.qty ? `Loaded ${qty - line.qty}` : `Unloaded ${line.qty - qty}`} × ${line.name}: ${line.qty} → ${qty}`)} />
             <div className="row">
               <button className="btn" onClick={() => (line.qty <= 1 ? log({ ...doc, hold: doc.hold.filter((h) => h.id !== line.id) }, `Unloaded the last ${line.name}`) : log({ ...doc, hold: doc.hold.map((h) => (h.id === line.id ? { ...h, qty: h.qty - 1 } : h)) }, `Unloaded 1 × ${line.name}`))} aria-label={`One fewer ${line.name}`}>−</button>
               <button className="btn" onClick={() => log({ ...doc, hold: doc.hold.map((h) => (h.id === line.id ? { ...h, qty: h.qty + 1 } : h)) }, `Loaded 1 × ${line.name}`)} aria-label={`One more ${line.name}`}>+</button>
@@ -498,6 +499,7 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
           <label className="field"><span className="label">Tons each (optional)</span><input type="number" inputMode="decimal" min={0} step="any" value={cargo.tons} onChange={(e) => setCargo({ ...cargo, tons: e.target.value })} /></label>
         </div>
         <button className="btn btn-primary" disabled={!cargo.name.trim()} onClick={addCargo}>Load it</button>
+        <p className="page-ref">Tap a count to type it: a new total, or a change like −1500 or +200. A count of 0 stays in the list until you unload the last with −.</p>
       </section>
 
       <section className="card">
@@ -511,7 +513,7 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
         )}
         <p className="page-ref">Days = miles ÷ (pace × 24) · {cite(BOOK, 31)}</p>
         <h3>Ship’s soul</h3>
-        <Counter label="Voyages the crew has bonded with her" value={sheet.soul.points} sub={sheet.soul.sentient ? 'She has a soul: she is sentient' : `at 3 she develops a soul · each voyage, a DC ${sheet.soul.dc} Charisma check by everyone; more than half must succeed`} onChange={(soul) => setDoc({ ...doc, soul: Math.min(3, soul) })} />
+        <Counter label="Voyages the crew has bonded with her" value={sheet.soul.points} sub={sheet.soul.sentient ? 'She has a soul: she is sentient' : `at 3 she develops a soul · each voyage, a DC ${sheet.soul.dc} Charisma check by everyone; more than half must succeed`} max={3} onChange={(soul) => setDoc({ ...doc, soul: Math.min(3, soul) })} />
         <p className="page-ref">{cite(BOOK, 11)}</p>
       </section>
 
