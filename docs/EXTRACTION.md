@@ -130,6 +130,16 @@ attribution it asks for is in the file, the README, the Library and under each s
 - A class list's "Melf’s Acid Arrow" finds the SRD's "Acid Arrow". A spell that is not in the SRD has no text, and none
   is to be added from any other source: other 5th Edition books are not free to reproduce.
 
+### Speeds and choices in racial traits
+
+`structure.py` has two helpers for what a trait's wording cannot give the sheet by itself: `move("swim", 25)` (or
+`move("climb", "walk")` for "equal to your walking speed", with an optional condition such as "Not while wearing medium
+or heavy armor") and `pick("skill", "skill", "Skill proficiency")` for a skill, tool or weapon "of your choice". They
+are entered under `RACE_STRUCTURE` (traits, including the descriptive "Speed" trait) and `RACE_CHOICES` (options), each
+guarded by the sentence it stands for. Run `extract_all.py`, not the single scripts, or entries shared by both
+handbooks are written twice. `packages/engine/test/races.test.ts` reads every racial trait and option for a speed or a
+"your choice" proficiency and fails if one has neither a `movement` effect nor `picks`.
+
 ## The 2024 rules (SRD 5.2.1)
 
 `python3 tools/extract/extract_srd52.py` reads the whole System Reference Document 5.2.1 (364 pages, CC-BY-4.0) from

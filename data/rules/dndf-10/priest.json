@@ -1413,8 +1413,9 @@
           "page": 170,
           "effects": [
             {
-              "type": "note",
-              "label": "Flying speed equal to double your walking speed"
+              "type": "movement",
+              "mode": "fly",
+              "expr": "walk * 2"
             }
           ]
         }

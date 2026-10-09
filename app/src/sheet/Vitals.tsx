@@ -1,4 +1,4 @@
-import { applyDamage, applyHealing, cite, gainTempHp, type Stat, DAMAGE_TYPES, damageAfterDefenses } from '@dndf/engine';
+import { applyDamage, applyHealing, cite, gainTempHp, type Stat, DAMAGE_TYPES, MOVEMENT_NAMES, damageAfterDefenses } from '@dndf/engine';
 import { useState } from 'react';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { formatStat, type StatKind } from './stats';
@@ -79,13 +79,15 @@ export function Vitals({ live, onOpen }: { live: LiveCharacter; onOpen: OpenStat
       <div className="tiles tiles-vitals">
         <Tile stat={sheet.ac} kind="plain" label="AC" onOpen={onOpen} />
         <Tile stat={sheet.initiative} kind="mod" label="Initiative" onOpen={onOpen} rollable />
-        <Tile stat={sheet.speed} kind="ft" onOpen={onOpen} sub={' '} />
+        <Tile stat={sheet.speed} kind="ft" label={sheet.speeds.length ? 'Walk' : undefined} onOpen={onOpen} sub={' '} />
+        {sheet.speeds.map((move) => <Tile key={move.mode} stat={move.stat} kind="ft" label={MOVEMENT_NAMES[move.mode]} onOpen={onOpen} sub={move.from} />)}
         <Tile stat={sheet.prof} kind="mod" label="Proficiency" onOpen={onOpen} />
         <Tile stat={sheet.willpower} kind="plain" onOpen={onOpen} />
         <Tile stat={sheet.hakiSaveDc} kind="plain" label="Haki DC" onOpen={onOpen} />
         {sheet.hakiAttack && <Tile stat={sheet.hakiAttack} kind="mod" label="Haki attack" sub="table ruling" onOpen={onOpen} />}
         <Tile stat={sheet.passivePerception} kind="plain" label="Passive Perc." onOpen={onOpen} sub={' '} />
       </div>
+      {sheet.speeds.filter((move) => move.note).map((move) => <p key={move.mode} className="page-ref">{MOVEMENT_NAMES[move.mode]} speed: {move.note!.charAt(0).toLowerCase() + move.note!.slice(1)} ({move.from}).</p>)}
     </section>
   );
 }

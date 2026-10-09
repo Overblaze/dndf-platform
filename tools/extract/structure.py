@@ -403,11 +403,44 @@ def apply_haki_structure(version: str, item: dict, problems: list[str]) -> None:
             item["auto"] = [a for a in item["auto"] if a != "rolls"]
 
 
+def move(mode: str, speed: int | str, condition: str | None = None) -> dict:
+    """A way of moving besides walking: swim, fly, climb or burrow, in feet or as an expression ("walk" is the walking speed)."""
+    return {"type": "movement", "mode": mode, **({"value": speed} if isinstance(speed, int) else {"expr": speed}), **({"note": condition} if condition else {})}
+
+
+def pick(ident: str, kind: str, label: str, count: int = 1, among: list[str] | None = None, or_tool: str | None = None) -> dict:
+    """A choice a trait leaves to the player: a skill, a tool or a weapon "of your choice"."""
+    return {"id": ident, "kind": kind, "count": count, "label": label, **({"from": among} if among else {}), **({"orTool": or_tool} if or_tool else {})}
+
+
+NO_ARMOR_FLIGHT = "Not while wearing medium or heavy armor"
+
 # Racial traits (p67–82). Uses, actions and plain dice come from the wording; these are the numbers that do not.
 RACE_STRUCTURE: dict[str, dict[str, dict]] = {
+    "Fishman": {"Speed": {"expect": "you have a Swimming speed of 35 feet", "effects": [move("swim", 35)]}},
+    "Fish-Man, Wotan": {
+        "Speed": {"expect": "you have a Swimming speed of 35 feet", "effects": [move("swim", 35)]},
+        "Wotan Vigor": {"expect": "regain hit points equal to 1d12 + your Constitution modifier", "rolls": [{"label": "Regain hit points", "dice": "1d12 + {mod.con}", "kind": "heal"}]},
+    },
+    "Fishman / Cookiecutter": {"Speed": {"expect": "a Swimming speed of 30 feet, and a burrow speed of 30", "effects": [move("swim", 30), move("burrow", 30)]}},
+    "Fishman / Manta Ray": {"Sea Glide": {"expect": "You have a Swimming speed of 40 feet", "effects": [move("swim", 40)]}},
+    "Fishman / Octopus": {"Deadly Precision": {"expect": "sleight of hand or an Artisan’s tool of your choice", "picks": [pick("proficiency", "skill", "Sleight of Hand, or an artisan’s tool", among=["sleight_of_hand"], or_tool="Artisan’s tool")]}},
+    "Fishman / Smelt-Whiting": {"Big-Mouthed": {"expect": "proficiency in the Deception or Persuasion skill (your choice)", "picks": [pick("skill", "skill", "Deception or Persuasion", among=["deception", "persuasion"])]}},
+    "Merfolk": {"Speed": {
+        "expect": "you have a Swimming speed of 50 feet. Once you reach level 5, your walking speed becomes 30 feet",
+        "effects": [move("swim", 50), {"type": "speed", "expr": "level >= 5 ? 20 : 0"}],
+    }},
+    "Sky Islander / Merveillians": {"Inherited Flight": {"expect": "you have a flying speed equal to your walking speed. You can’t use this flying speed if you’re wearing medium or heavy armor", "effects": [move("fly", "walk", NO_ARMOR_FLIGHT)]}},
+    "Lunarian": {"Flight": {"expect": "You have a flying speed of 50 feet. To use this speed, you can’t be wearing medium or heavy armor", "effects": [move("fly", 50, NO_ARMOR_FLIGHT)]}},
+    "Human / Variant": {"Skills": {"expect": "You gain proficiency in one skill of your choice", "picks": [pick("skill", "skill", "Skill proficiency")]}},
+    "Yokai Tribesman": {"Crafty": {"expect": "You gain proficiency in one tool or instrument of your choice", "picks": [pick("tool", "tool", "Tool or instrument")]}},
+    "Oni": {"Warrior’s Heritage": {"expect": "You have proficiency with two martial weapons of your choice and heavy armor", "picks": [pick("weapons", "weapon", "Martial weapons", count=2)]}},
     "Cyborg": {"Steel Skin": {"expect": "You gain a +1 bonus to Armor Class.", "effects": [{"type": "ac", "value": 1}]}},
     "Fishman / Fighting Fish": {"Thick-Skinned": {"expect": "You gain a +1 bonus to your Armor Class.", "effects": [{"type": "ac", "value": 1}]}},
-    "Dwarf / Automata": {"Iron Shell": {"expect": "grants you a +1 bonus to Armor Class", "effects": [{"type": "ac", "value": 1}]}},
+    "Dwarf / Automata": {
+        "Iron Shell": {"expect": "grants you a +1 bonus to Armor Class", "effects": [{"type": "ac", "value": 1}]},
+        "Militaristic Design": {"expect": "You gain one skill proficiency and one weapon proficiency of your choice", "picks": [pick("skill", "skill", "Skill proficiency"), pick("weapon", "weapon", "Weapon proficiency")]},
+    },
     "Dwarf / Tontatta Tribe": {
         "Hard to Detect": {"expect": "gives you proficiency in the Stealth and Acrobatics skills", "effects": [{"type": "proficiency", "skill": "stealth"}, {"type": "proficiency", "skill": "acrobatics"}]},
         "Glass Cannon": {"expect": "Your hit point maximum decreases by 2, and it decreases by 2 every time you gain a level", "effects": [{"type": "hp", "expr": "0 - 2 * level"}]},
@@ -421,8 +454,7 @@ RACE_STRUCTURE: dict[str, dict[str, dict]] = {
     },
     "Void Century Automaton": {"Constructed Resilience": {"expect": "your base Armor Class is 15 + your Wisdom modifier", "effects": [{"type": "acFormula", "expr": "15 + mod.wis", "when": "noArmor"}]}},
     "Fishman / Shark": {"Bite": {"expect": "piercing damage equal to 1d6 + your Strength modifier", "rolls": [{"label": "Bite: piercing damage", "dice": "1d6 + {mod.str}", "kind": "damage"}]}},
-    "Fish-Man, Wotan": {"Wotan Vigor": {"expect": "regain hit points equal to 1d12 + your Constitution modifier", "rolls": [{"label": "Regain hit points", "dice": "1d12 + {mod.con}", "kind": "heal"}]}},
-    "Mink": {"Beast’s Slash": {"expect": "your unarmed strike damage dice becomes a minimum of 1d6", "rolls": [], "effects": [{"type": "unarmedDie", "expr": "'1d6'", "weapons": "unarmedOnly"}, {"type": "note", "label": "Climbing speed 20 feet"}]}},
+    "Mink": {"Beast’s Slash": {"expect": "your unarmed strike damage dice becomes a minimum of 1d6", "rolls": [], "effects": [{"type": "unarmedDie", "expr": "'1d6'", "weapons": "unarmedOnly"}, move("climb", 20)]}},
     "Yeti": {"Glacial Grasp": {"expect": "Constitution saving throw equal to 8 + your proficiency bonus + your Strength modifier", "effects": [{"type": "display", "label": "Save DC", "expr": "8 + prof + mod.str"}]}},
 }
 
@@ -442,6 +474,8 @@ RACE_CHOICES: dict[str, dict] = {
             "Brute Strength": {"expect": "You gain proficiency in Athletics", "effects": [{"type": "proficiency", "skill": "athletics"}]},
             "Opposable Thumbs": {"expect": "You gain proficiency in Sleight of Hand", "effects": [{"type": "proficiency", "skill": "sleight_of_hand"}]},
             "Leap": {"expect": "Strength save DC equal to 8 + your Strength modifier + your proficiency bonus", "effects": [{"type": "display", "label": "Save DC", "expr": "8 + mod.str + prof"}]},
+            "Nimble Climber": {"expect": "You have a climbing speed equal to your walking speed", "effects": [move("climb", "walk")]},
+            "Good Swimmer": {"expect": "You have a swimming speed equal to your walking speed", "effects": [move("swim", "walk")]},
         },
     },
     "Cyborg": {
@@ -454,8 +488,10 @@ RACE_CHOICES: dict[str, dict] = {
             ("You install a weapon or tool feature of your choice", "At 20th level, you can install and use a fifth upgrade feature", "1 + floor(level / 5)"),
         ],
         "options": {
-            "Propeller Body": {"expect": "You gain a swimming speed of 25 feet", "effects": [{"type": "note", "label": "Swimming speed 25 feet"}]},
-            "Larger Propellers": {"expect": "You now have a flying speed of 10 feet", "effects": [{"type": "note", "label": "Flying speed 10 feet"}]},
+            "Propeller Body": {"expect": "You gain a swimming speed of 25 feet", "effects": [move("swim", 25)]},
+            "Larger Propellers": {"expect": "You now have a flying speed of 10 feet", "effects": [move("fly", 10)]},
+            "Shape-Memory Alloy Body": {"expect": "You gain one skill proficiency and one tool proficiency of your choice", "picks": [pick("skill", "skill", "Skill proficiency"), pick("tool", "tool", "Tool proficiency")]},
+            "Advanced Shape-Memory Alloy": {"expect": "You learn an additional Skill of your choice", "picks": [pick("skill", "skill", "Additional skill")]},
             "Night Lens": {"expect": "You can see in dim light within 60 feet of you as if it were bright light", "effects": [{"type": "note", "label": "Darkvision 60 feet"}]},
             "Centaur Form": {
                 "expect": "your speed increases by 10 feet for one minute. Additionally, you have advantage on all Strength checks",
@@ -483,6 +519,8 @@ def apply_race_structure(version: str, who: str, trait: dict, problems: list[str
                     del trait["auto"]
     if "effects" in fields:
         trait["effects"] = trait.get("effects", []) + fields["effects"]
+    if "picks" in fields:
+        trait["picks"] = fields["picks"]
 
 
 def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
@@ -794,14 +832,14 @@ more("subclass.priest.cherry_blossom", {
                                       "toggle": {"id": "blossom_joy", "label": "Blossom Joy (1 minute)", "effects": [note("+5 to Charisma (Persuasion) and Charisma (Performance) checks")]}},
 })
 more("subclass.priest.sky", {
-    "Dial Glide": {"expect": "you gain a flying speed equal to double your current walking speed", "effects": [note("Flying speed equal to double your walking speed")]},
+    "Dial Glide": {"expect": "you gain a flying speed equal to double your current walking speed", "effects": [move("fly", "walk * 2")]},
 })
 more("subclass.renegade.thief", {
     "Thievery Skills": {"expect": "you gain advantage on Dexterity (Sleight of Hand) checks", "effects": [note("Advantage on Sleight of Hand checks and on thieves’ tools checks to disarm a trap or open a lock")]},
     "Supreme Sneak": {"expect": "you have advantage on a Dexterity (Stealth) checks.", "effects": [note("Advantage on Dexterity (Stealth) checks")]},
 })
 more("subclass.renegade.circus_tricks", {
-    "Mountain Climb": {"expect": "you gain a climbing speed equal to your walking speed", "effects": [{**note("Climbing speed equal to your walking speed"), "when": "on.trick_rider"}]},
+    "Mountain Climb": {"expect": "you gain a climbing speed equal to your walking speed", "effects": [{**move("climb", "walk"), "when": "on.trick_rider"}]},
 })
 more("subclass.rogue.swashbuckler", {"Rakish Audacity": SWASHBUCKLER_88})
 more("subclass.tinkerer.meteorology", {
@@ -950,7 +988,7 @@ more("subclass.hybrid.germa", {
         "Poison Pink": {
             "expect": "You can use this ability a number of times equal to your proficiency bonus, regaining all expended uses after a long rest",
             "rolls": GERMA_STRIKE("1d6", "Acidic Touch (once per turn)"), "uses": {"max": "prof", "recharge": "long"},
-            "effects": [note("Immune to poison damage and the poisoned condition"), note("Flying speed 45 ft. while not wearing medium or heavy armor")],
+            "effects": [note("Immune to poison damage and the poisoned condition"), move("fly", 45, NO_ARMOR_FLIGHT)],
         },
         "Stealth Black": {
             "expect": "a number of times equal to your Dexterity modifier (minimum of once), regaining all uses after a long rest",

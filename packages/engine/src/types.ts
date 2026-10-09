@@ -148,6 +148,22 @@ export interface OptionDef {
   [key: string]: unknown;
 }
 
+/**
+ * A choice inside a trait or an option: "one skill proficiency and one tool proficiency of your choice".
+ * What is picked is kept in the character's `choices` under the owner's key and this id.
+ */
+export interface PickDef {
+  id: string;
+  kind: 'skill' | 'tool' | 'weapon';
+  count: number;
+  /** What the picker is headed with: "Skill proficiency". */
+  label: string;
+  /** Skill ids or names it is limited to; left out, anything of the kind. */
+  from?: string[];
+  /** A tool may be named instead ("Sleight of Hand or an Artisan’s tool of your choice"). */
+  orTool?: string;
+}
+
 export interface TrackerDef {
   id: string;
   name: string;
@@ -166,4 +182,5 @@ export interface TraitDef {
   text: string;
   page: number;
   tables?: TableDef[];
+  picks?: PickDef[];
 }

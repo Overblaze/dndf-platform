@@ -12,7 +12,7 @@ import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, w
 import { RARITY_LEVEL, bounty as bountyOf, type WantedPoster } from './bounty';
 import { carriedWeight, withEquippedItems, type InventoryLine } from './inventory';
 import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
-import { raceChoices, type RaceChoice } from './raceChoices';
+import { raceChoices, racePickLabel, racePicks as racePicks_, type RaceChoice, type RacePick } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
 import { HAKI_PURIST_LEVELS, logiaCharges, parameciaCharges, zoanBeastForm, dreamPointsMax, hakiPuristPicks, hakiTier, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
@@ -175,6 +175,8 @@ export interface Sheet {
   initiative: Stat;
   ac: Stat;
   speed: Stat;
+  /** Other ways of moving the character has: swimming, flying, climbing, burrowing. Empty for most. */
+  speeds: SheetMovement[];
   maxHp: Stat;
   carry: Stat;
   willpower: Stat;
@@ -227,6 +229,8 @@ export interface Sheet {
   spellbook: SheetSpells;
   /** Racial pick-lists (Cyborg Upgrades), with how many the level gives and what is picked. */
   raceChoices: RaceChoice[];
+  /** What a racial trait or a picked option leaves to choose (a skill, a tool, a weapon), with what is chosen. */
+  racePicks: RacePick[];
   /** Devil Fruits the character holds, and ones they only know about. Empty unless private content was handed in. */
   fruits: SheetFruit[];
   knownFruits: SheetFruit[];
@@ -257,6 +261,25 @@ function stat(doc: CharacterDoc, key: string, label: string, derived: Derived): 
   const overridden = typeof own === 'number' && Number.isFinite(own);
   const book = derived.page === undefined ? undefined : derived.book ?? HANDBOOKS[doc.rulesVersion];
   return { key, label, value: overridden ? own : derived.value, calculated: derived.value, overridden, lines: derived.lines, page: derived.page, book };
+}
+
+export const MOVEMENT_MODES = ['swim', 'fly', 'climb', 'burrow'] as const;
+export type MovementMode = (typeof MOVEMENT_MODES)[number];
+export const MOVEMENT_NAMES: Record<MovementMode, string> = { swim: 'Swim', fly: 'Fly', climb: 'Climb', burrow: 'Burrow' };
+
+/** "30 ft, swim 25 ft, fly 10 ft": every speed in one line, for a summary, a printed sheet or the bot. */
+export function speedLine(sheet: Pick<Sheet, 'speed' | 'speeds'>): string {
+  return [`${sheet.speed.value} ft`, ...sheet.speeds.map((s) => `${MOVEMENT_NAMES[s.mode].toLowerCase()} ${s.stat.value} ft`)].join(', ');
+}
+
+export interface SheetMovement {
+  mode: MovementMode;
+  /** Overridable as `speed.swim` and so on. */
+  stat: Stat;
+  /** What gives it. */
+  from: string;
+  /** A condition the rules put on it: "Not while wearing medium or heavy armor". */
+  note?: string;
 }
 
 const sum = (lines: BreakdownLine[]) => lines.reduce((total, l) => total + Number(l.value), 0);
@@ -441,11 +464,16 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   if (doc.race.id && !race) warnings.push(`Race "${doc.race.id}" is not in the rules data.`);
   const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
   const racePicks = raceChoices(doc, rules);
+  // Traits the sheet does not list (Speed) can still carry numbers: a Fishman's swimming speed.
+  const unlisted: { def: FeatureDef; from: string }[] = [];
   {
     const blank: ClassEntry = { id: 'race', kind: 'class', name: 'Race', versions: [doc.rulesVersion], source: { book: HANDBOOKS[doc.rulesVersion], page: 67 }, hitDie: 8, features: [] };
     for (const { trait, entry } of racialTraits) {
       // Descriptive traits stay in the Library; the sheet lists the ones a player uses.
-      if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) continue;
+      if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) {
+        if (((trait as unknown as FeatureDef).effects ?? []).length) unlisted.push({ def: { ...trait, level: 1 } as unknown as FeatureDef, from: entry.name });
+        continue;
+      }
       const from = entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name;
       // A trait's skills are granted through "skills"; its pick-list is handled below, not as a class choice.
       const def = { ...trait, level: 1, choices: undefined } as unknown as FeatureDef;
@@ -559,6 +587,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     wearingArmor: doc.armor !== null,
     // Heavy armor is the kind that adds no Dexterity.
     heavyArmor: doc.armor?.dexCap === 0,
+    mediumArmor: typeof doc.armor?.dexCap === 'number' && doc.armor.dexCap > 0,
     bruiserWeapon: false,
     melee: false,
     ranged: false,
@@ -570,7 +599,8 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   // Features that don't come from a class (race, background, crew role, feats) see the whole character's level.
   const plainScope: ExprScope = {
     level, prof: prof.value, willpower: wp.value, mod, on, tracker, noArmor: doc.armor === null, noShield: !doc.shield, wearingArmor: doc.armor !== null,
-    heavyArmor: doc.armor?.dexCap === 0, bruiserWeapon: false, melee: false, ranged: false, twoHanded: false, weapon: '',
+    heavyArmor: doc.armor?.dexCap === 0, mediumArmor: typeof doc.armor?.dexCap === 'number' && doc.armor.dexCap > 0,
+    bruiserWeapon: false, melee: false, ranged: false, twoHanded: false, weapon: '',
   };
 
   // The character's race, background, crew role and feats, from the rules data.
@@ -606,6 +636,21 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   }
   for (const feat of feats) {
     for (const effect of (feat.effects ?? []) as EffectDef[]) effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from: feat.name, page: feat.source.page });
+  }
+  for (const { def, from } of unlisted) {
+    for (const effect of (def.effects ?? []) as EffectDef[]) effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from, page: def.page });
+  }
+  // What was chosen where a racial trait or option says "of your choice": a proficiency like any other.
+  const chosen = racePicks_(doc, rules);
+  for (const pick of chosen) {
+    for (const value of pick.picked) {
+      const label = racePickLabel(pick, value).trim();
+      if (!label) continue;
+      const effect: EffectDef = value.startsWith('tool:') || pick.def.kind === 'tool' ? { type: 'toolProficiency', label }
+        : pick.def.kind === 'weapon' ? { type: 'weaponProficiency', weapon: slug(value) }
+        : { type: 'proficiency', skill: value };
+      effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from: pick.from, page: pick.page });
+    }
   }
   const applies = (e: ActiveEffect, extra?: ExprScope) => !e.effect.when || Boolean(evaluate(e.effect.when, e.scopeOf(extra)));
   const amount = (e: ActiveEffect, extra?: ExprScope) => (e.effect.expr ? evaluateNumber(e.effect.expr, e.scopeOf(extra)) : e.effect.value ?? 0);
@@ -806,6 +851,21 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   else if (exhaustion >= 5) speedLines.push({ label: `Exhaustion ${exhaustion}: speed 0`, value: -sum(speedLines) });
   else if (exhaustion >= 2) speedLines.push({ label: `Exhaustion ${exhaustion}: speed halved`, value: -Math.ceil(sum(speedLines) / 2) });
   const speed = stat(doc, 'speed', 'Speed', { value: sum(speedLines), lines: speedLines });
+  // Swimming, flying, climbing and burrowing. Two sources of one do not add up: the faster is used.
+  const speeds: SheetMovement[] = [];
+  for (const mode of MOVEMENT_MODES) {
+    const sources = ofType('movement', { walk: speed.value }).filter((e) => e.effect.mode === mode).map((e) => ({ e, value: amount(e, { walk: speed.value }) }));
+    const best = sources.reduce<(typeof sources)[number] | undefined>((top, s) => (!top || s.value > top.value ? s : top), undefined);
+    if (!best) continue;
+    const lines: BreakdownLine[] = [{ label: best.e.effect.expr === 'walk' ? `${best.e.from}: equal to walking speed` : best.e.from, value: best.value }];
+    if (held) lines.push({ label: `${held.name}: speed 0`, value: -best.value });
+    else if (exhaustion >= 5) lines.push({ label: `Exhaustion ${exhaustion}: speed 0`, value: -best.value });
+    else if (exhaustion >= 2) lines.push({ label: `Exhaustion ${exhaustion}: speed halved`, value: -Math.ceil(best.value / 2) });
+    speeds.push({
+      mode, from: best.e.from, ...(typeof best.e.effect.note === 'string' ? { note: best.e.effect.note } : {}),
+      stat: stat(doc, `speed.${mode}`, `${MOVEMENT_NAMES[mode]} speed`, { value: sum(lines), lines, page: best.e.page }),
+    });
+  }
 
   const initLines: BreakdownLine[] = [{ label: 'Dexterity modifier', value: mod.dex! }, ...bonusLines('initiative')];
   for (const e of halfProf) initLines.push({ label: `${e.from}: half proficiency, rounded down`, value: Math.floor(prof.value / 2) });
@@ -1322,6 +1382,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     ...(edgeOf('initiative', { ability: 'dex' }) ? { initiativeEdge: edgeOf('initiative', { ability: 'dex' }) } : {}),
     ac,
     speed,
+    speeds,
     maxHp: maxHpStat,
     carry,
     willpower: wp,
@@ -1361,6 +1422,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     conditions,
     protections: defenses,
     raceChoices: racePicks,
+    racePicks: chosen,
     fruits,
     knownFruits,
     fruitSaveDc,

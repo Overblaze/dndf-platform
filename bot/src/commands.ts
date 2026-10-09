@@ -3,8 +3,7 @@
 // The numbers all come from the shared engine, so the bot and the website can never disagree.
 import {
   ABILITIES, ABILITY_NAMES, CONDITIONS, CONDITION_EFFECTS, applyDamage, applyHealing, damageAfterDefenses, dawn, describeEdge, exactBerries, gainTempHp, longRest, nextHitDice, rollD20, rollDice, rollDie, rollModeWith, shortRest, signed,
-  type CharacterDoc, type RollEdge, type RollMode, type Rng, type Sheet,
-} from '@dndf/engine';
+  type CharacterDoc, type RollEdge, type RollMode, type Rng, type Sheet, speedLine } from '@dndf/engine';
 
 export interface Outcome {
   /** What the bot says, in Discord markdown. */
@@ -145,7 +144,7 @@ export function status(doc: CharacterDoc, sheet: Sheet): Outcome {
   const pools = sheet.resources.filter((r) => !r.id.startsWith('sr.') && r.max > 0).map((r) => `${r.name} ${r.remaining}/${r.max}`);
   const lines = [
     `**${sheet.name}** — ${sheet.summary}`,
-    `❤️ ${hpLine(doc, sheet)} · 🛡️ AC ${sheet.ac.value} · 👟 ${sheet.speed.value} ft · initiative ${signed(sheet.initiative.value)}`,
+    `❤️ ${hpLine(doc, sheet)} · 🛡️ AC ${sheet.ac.value} · 👟 ${speedLine(sheet)} · initiative ${signed(sheet.initiative.value)}`,
     `Hit dice ${sheet.hitDice.remaining}/${sheet.hitDice.total} · Dream Points ${sheet.dreamPoints.remaining}/${sheet.dreamPoints.max} · Willpower ${sheet.willpower.value} · Haki DC ${sheet.hakiSaveDc.value}`,
   ];
   if (pools.length) lines.push(pools.join(' · '));

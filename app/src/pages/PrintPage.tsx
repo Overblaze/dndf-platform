@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, cite, deriveSheet, exactBerries, signed, spellLevelName, type CharacterDoc, type Sheet } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, cite, deriveSheet, exactBerries, signed, spellLevelName, type CharacterDoc, type Sheet, speedLine } from '@dndf/engine';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
@@ -27,7 +27,7 @@ function Paper({ doc, sheet, withText }: { doc: CharacterDoc; sheet: Sheet; with
 
       <section className="print-vitals">
         {[
-          ['Armor Class', sheet.ac.value], ['Hit points', `____ / ${sheet.maxHp.value}`], ['Temp HP', '____'], ['Speed', `${sheet.speed.value} ft`],
+          ['Armor Class', sheet.ac.value], ['Hit points', `____ / ${sheet.maxHp.value}`], ['Temp HP', '____'], ['Speed', speedLine(sheet)],
           ['Initiative', signed(sheet.initiative.value)], ['Passive Perception', sheet.passivePerception.value], ['Willpower', sheet.willpower.value], ['Haki save DC', sheet.hakiSaveDc.value],
         ].map(([label, value]) => (
           <div key={label} className="print-box"><span>{label}</span><b>{value}</b></div>

@@ -38,7 +38,18 @@
         {
           "name": "Speed",
           "text": "Your base walking speed is 10 feet, and you have a Swimming speed of 50 feet. Once you reach level 5, your walking speed becomes 30 feet.",
-          "page": 71
+          "page": 71,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "value": 50
+            },
+            {
+              "type": "speed",
+              "expr": "level >= 5 ? 20 : 0"
+            }
+          ]
         },
         {
           "name": "Amphibious",
@@ -185,7 +196,15 @@
         {
           "name": "Inherited Flight",
           "text": "Due of your forearm wings, you have a flying speed equal to your walking speed. You can’t use this flying speed if you’re wearing medium or heavy armor.",
-          "page": 72
+          "page": 72,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "fly",
+              "expr": "walk",
+              "note": "Not while wearing medium or heavy armor"
+            }
+          ]
         }
       ]
     },
@@ -244,8 +263,9 @@
               "weapons": "unarmedOnly"
             },
             {
-              "type": "note",
-              "label": "Climbing speed 20 feet"
+              "type": "movement",
+              "mode": "climb",
+              "value": 20
             }
           ]
         },
@@ -330,7 +350,14 @@
           "id": "nimble_climber",
           "name": "Nimble Climber",
           "text": "You have a climbing speed equal to your walking speed.",
-          "page": 73
+          "page": 73,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "climb",
+              "expr": "walk"
+            }
+          ]
         },
         {
           "id": "sensitive_ears",
@@ -378,7 +405,14 @@
           "id": "good_swimmer",
           "name": "Good Swimmer",
           "text": "You have a swimming speed equal to your walking speed and can hold your breath for up to 15 minutes.",
-          "page": 73
+          "page": 73,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "expr": "walk"
+            }
+          ]
         },
         {
           "id": "hunter_prowess",
@@ -599,7 +633,15 @@
         {
           "name": "Flight",
           "text": "You have a flying speed of 50 feet. To use this speed, you can’t be wearing medium or heavy armor.",
-          "page": 78
+          "page": 78,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "fly",
+              "value": 50,
+              "note": "Not while wearing medium or heavy armor"
+            }
+          ]
         },
         {
           "name": "Fire Resistance",

@@ -89,8 +89,9 @@ describe('switches a subclass puts on the sheet', () => {
     expect(build(V10, 'class.renegade', 'subclass.renegade.circus_tricks', 13).speed.value).toBe(30);
     const riding = build(V10, 'class.renegade', 'subclass.renegade.circus_tricks', 13, {}, ['trick_rider']);
     expect(riding.speed.value).toBe(55);
-    expect(notes(riding)).toContain('Climbing speed equal to your walking speed');
-    expect(notes(build(V10, 'class.renegade', 'subclass.renegade.circus_tricks', 13))).not.toContain('Climbing speed equal to your walking speed');
+    // A climbing speed equal to the walking speed, prop and all, and only while riding.
+    expect(riding.speeds.map((s) => [s.mode, s.stat.value, s.from])).toEqual([['climb', 55, 'Mountain Climb']]);
+    expect(build(V10, 'class.renegade', 'subclass.renegade.circus_tricks', 13).speeds).toEqual([]);
   });
 
   it.each(BOTH)('Tinkerer, Military Science: Durable Tech +2 AC while concentrating (%s)', (version) => {

@@ -141,7 +141,15 @@
         {
           "name": "Skills",
           "text": "You gain proficiency in one skill of your choice.",
-          "page": 67
+          "page": 67,
+          "picks": [
+            {
+              "id": "skill",
+              "kind": "skill",
+              "count": 1,
+              "label": "Skill proficiency"
+            }
+          ]
         },
         {
           "name": "Feat",
@@ -440,7 +448,14 @@
         {
           "name": "Speed",
           "text": "Your base walking speed is 30 feet, and you have a Swimming speed of 35 feet.",
-          "page": 69
+          "page": 69,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "value": 35
+            }
+          ]
         },
         {
           "name": "Amphibious",
@@ -509,7 +524,19 @@
         {
           "name": "Speed",
           "text": "Your base walking speed is 30 feet, a Swimming speed of 30 feet, and a burrow speed of 30.",
-          "page": 69
+          "page": 69,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "value": 30
+            },
+            {
+              "type": "movement",
+              "mode": "burrow",
+              "value": 30
+            }
+          ]
         },
         {
           "name": "Tunneling Bite",
@@ -635,7 +662,14 @@
         {
           "name": "Sea Glide",
           "text": "You have a Swimming speed of 40 feet.",
-          "page": 69
+          "page": 69,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "value": 40
+            }
+          ]
         }
       ],
       "abilityIncrease": {
@@ -674,7 +708,19 @@
         {
           "name": "Deadly Precision",
           "text": "You gain proficiency in one of the following: sleight of hand or an Artisan’s tool of your choice.",
-          "page": 69
+          "page": 69,
+          "picks": [
+            {
+              "id": "proficiency",
+              "kind": "skill",
+              "count": 1,
+              "label": "Sleight of Hand, or an artisan’s tool",
+              "from": [
+                "sleight_of_hand"
+              ],
+              "orTool": "Artisan’s tool"
+            }
+          ]
         },
         {
           "name": "Multi-Armed",
@@ -775,7 +821,19 @@
         {
           "name": "Big-Mouthed",
           "text": "You gain proficiency in the Deception or Persuasion skill (your choice).",
-          "page": 70
+          "page": 70,
+          "picks": [
+            {
+              "id": "skill",
+              "kind": "skill",
+              "count": 1,
+              "label": "Deception or Persuasion",
+              "from": [
+                "deception",
+                "persuasion"
+              ]
+            }
+          ]
         },
         {
           "name": "Hydro Cannon",
@@ -833,7 +891,18 @@
         {
           "name": "Speed",
           "text": "Your base walking speed is 10 feet, and you have a Swimming speed of 50 feet. Once you reach level 5, your walking speed becomes 30 feet.",
-          "page": 71
+          "page": 71,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "value": 50
+            },
+            {
+              "type": "speed",
+              "expr": "level >= 5 ? 20 : 0"
+            }
+          ]
         },
         {
           "name": "Amphibious",
@@ -1229,7 +1298,15 @@
         {
           "name": "Inherited Flight",
           "text": "Due to your forearm wings, you have a flying speed equal to your walking speed. You can’t use this flying speed if you’re wearing medium or heavy armor.",
-          "page": 72
+          "page": 72,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "fly",
+              "expr": "walk",
+              "note": "Not while wearing medium or heavy armor"
+            }
+          ]
         }
       ]
     },
@@ -1288,8 +1365,9 @@
               "weapons": "unarmedOnly"
             },
             {
-              "type": "note",
-              "label": "Climbing speed 20 feet"
+              "type": "movement",
+              "mode": "climb",
+              "value": 20
             }
           ]
         },
@@ -1374,7 +1452,14 @@
           "id": "nimble_climber",
           "name": "Nimble Climber",
           "text": "You have a climbing speed equal to your walking speed.",
-          "page": 73
+          "page": 73,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "climb",
+              "expr": "walk"
+            }
+          ]
         },
         {
           "id": "enhanced_agility",
@@ -1416,7 +1501,14 @@
           "id": "good_swimmer",
           "name": "Good Swimmer",
           "text": "You have a swimming speed equal to your walking speed and can hold your breath for up to 15 minutes.",
-          "page": 73
+          "page": 73,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "expr": "walk"
+            }
+          ]
         },
         {
           "id": "hunter_prowess",
@@ -1548,7 +1640,15 @@
         {
           "name": "Crafty",
           "text": "You gain proficiency in one tool or instrument of your choice.",
-          "page": 74
+          "page": 74,
+          "picks": [
+            {
+              "id": "tool",
+              "kind": "tool",
+              "count": 1,
+              "label": "Tool or instrument"
+            }
+          ]
         }
       ],
       "abilityIncrease": {
@@ -1924,8 +2024,9 @@
           "page": 75,
           "effects": [
             {
-              "type": "note",
-              "label": "Swimming speed 25 feet"
+              "type": "movement",
+              "mode": "swim",
+              "value": 25
             }
           ]
         },
@@ -1960,7 +2061,21 @@
           "id": "shape_memory_alloy_body",
           "name": "Shape-Memory Alloy Body",
           "text": "You gain one skill proficiency and one tool proficiency of your choice, which you can choose to swap out each time you level up.",
-          "page": 75
+          "page": 75,
+          "picks": [
+            {
+              "id": "skill",
+              "kind": "skill",
+              "count": 1,
+              "label": "Skill proficiency"
+            },
+            {
+              "id": "tool",
+              "kind": "tool",
+              "count": 1,
+              "label": "Tool proficiency"
+            }
+          ]
         },
         {
           "id": "arsenal_infusion",
@@ -2043,8 +2158,9 @@
           "requires": "propeller_body",
           "effects": [
             {
-              "type": "note",
-              "label": "Flying speed 10 feet"
+              "type": "movement",
+              "mode": "fly",
+              "value": 10
             }
           ]
         },
@@ -2067,7 +2183,15 @@
           "auto": [
             "uses"
           ],
-          "requires": "shape_memory_alloy_body"
+          "requires": "shape_memory_alloy_body",
+          "picks": [
+            {
+              "id": "skill",
+              "kind": "skill",
+              "count": 1,
+              "label": "Additional skill"
+            }
+          ]
         },
         {
           "id": "grand_arsenal",
@@ -2266,7 +2390,21 @@
         {
           "name": "Militaristic Design",
           "text": "You gain one skill proficiency and one weapon proficiency of your choice.",
-          "page": 77
+          "page": 77,
+          "picks": [
+            {
+              "id": "skill",
+              "kind": "skill",
+              "count": 1,
+              "label": "Skill proficiency"
+            },
+            {
+              "id": "weapon",
+              "kind": "weapon",
+              "count": 1,
+              "label": "Weapon proficiency"
+            }
+          ]
         },
         {
           "name": "Electric-Powered",
@@ -2419,7 +2557,15 @@
         {
           "name": "Flight",
           "text": "You have a flying speed of 50 feet. To use this speed, you can’t be wearing medium or heavy armor.",
-          "page": 78
+          "page": 78,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "fly",
+              "value": 50,
+              "note": "Not while wearing medium or heavy armor"
+            }
+          ]
         },
         {
           "name": "Fire Resistance",
@@ -2489,7 +2635,14 @@
         {
           "name": "Speed",
           "text": "Your base walking speed is 30 feet, and you have a Swimming speed of 35 feet.",
-          "page": 78
+          "page": 78,
+          "effects": [
+            {
+              "type": "movement",
+              "mode": "swim",
+              "value": 35
+            }
+          ]
         },
         {
           "name": "Amphibious",
@@ -2732,6 +2885,14 @@
           ],
           "auto": [
             "effects"
+          ],
+          "picks": [
+            {
+              "id": "weapons",
+              "kind": "weapon",
+              "count": 2,
+              "label": "Martial weapons"
+            }
           ]
         }
       ],
