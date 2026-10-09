@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
+import { useOnline } from '../lib/online';
 import { Compass } from './Compass';
 import { PasswordDialog, SignInDialog } from './SignInDialog';
 
@@ -48,7 +49,8 @@ function Account() {
 }
 
 export function AppShell() {
-  const { error } = useAuth();
+  const { error, session } = useAuth();
+  const online = useOnline();
   return (
     <div className="shell">
       <header className="topbar">
@@ -66,6 +68,12 @@ export function AppShell() {
         <Account />
       </header>
       <main className="page">
+        {!online && (
+          <p className="notice" role="status">
+            You are offline. The Library, and characters and ships kept in this browser, work as usual.{' '}
+            {session ? 'Anything on your account (your characters, your crew’s ship, Devil Fruits, the DM page) needs a connection: what is already on screen stays, but changes are not saved until you are back online.' : 'Signing in needs a connection.'}
+          </p>
+        )}
         {error && (
           <p className="notice" role="alert">
             {error}
