@@ -1,4 +1,4 @@
-import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, raceChoices, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, customClassEntry, customClassId, isCustomClassId, rulesFor, type Ability, type AbilityScores, type CustomClass, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, otherVersion, raceChoices, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, customClassEntry, customClassId, isCustomClassId, rulesFor, type Ability, type AbilityScores, type CustomClass, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { AbilityScoresField, originOf } from './AbilityScoresField';
 import { useMemo, useState } from 'react';
 import { CustomClassDialog } from './CustomClassDialog';
@@ -12,7 +12,7 @@ const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(mi
 type StepId = 'basics' | 'dm' | 'race' | 'class' | 'scores' | 'background' | 'crew' | 'equipment' | 'describe' | 'extras' | 'review';
 
 /** Create a character of any class, or edit one: step by step in the handbook's order, or everything on one page. */
-export function CharacterForm({ initial, onSave, onCancel }: { initial: CharacterDoc | null; onSave: (doc: CharacterDoc, log: string) => void; onCancel: () => void }) {
+export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initial: CharacterDoc | null; onSave: (doc: CharacterDoc, log: string) => void; onCancel: () => void; /** Opens the report of what would change on the other handbook. */ onCompare?: () => void }) {
   const first = initial?.classes[0];
   // A character is pinned to one handbook; it is chosen when the character is made.
   const [version, setVersion] = useState<RulesVersion>(initial?.rulesVersion ?? 'dndf-10');
@@ -251,7 +251,10 @@ export function CharacterForm({ initial, onSave, onCancel }: { initial: Characte
         <input value={name} onChange={(e) => setName(e.target.value)} required maxLength={80} />
       </label>
       {initial ? (
-        <p className="page-ref">Built with {VERSION_NAMES[version]}. A character stays on the handbook it was made with.</p>
+        <p className="page-ref">
+          Built with {VERSION_NAMES[version]}. A character stays on the handbook it was made with.{' '}
+          {onCompare && <button type="button" className="btn" onClick={onCompare}>See what would change on {VERSION_NAMES[otherVersion(version)]}</button>}
+        </p>
       ) : (
         <div className="field">
           <span className="label">Handbook</span>

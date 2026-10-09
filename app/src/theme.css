@@ -668,6 +668,18 @@ a.btn {
   margin: 0;
 }
 
+.switch-table {
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.switch-table td,
+.switch-table th {
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+
 .ability-row {
   align-self: center;
 }

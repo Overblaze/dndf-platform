@@ -1,6 +1,6 @@
 import { deriveSheet, type CharacterDoc, type Stat } from '@dndf/engine';
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { downloadExport } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
 import { RollsProvider } from '../lib/rolls';
@@ -8,6 +8,7 @@ import { ruleSet, VERSION_NAMES } from '../lib/rules';
 import type { CharacterStore } from '../lib/store';
 import { useCharacter } from '../lib/useCharacter';
 import { AppearanceDialog } from './AppearanceDialog';
+import { VersionSwitchDialog } from './VersionSwitchDialog';
 import { CharacterForm } from './CharacterForm';
 import { CombatTab } from './CombatTab';
 import { FeaturesTab } from './FeaturesTab';
@@ -53,13 +54,14 @@ function conflictSummary(other: CharacterDoc): string {
 
 export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) {
   const { live, loadError, missing } = useCharacter(store, id);
+  const navigate = useNavigate();
   // The Build page links straight to a tab or a dialog: /sheet/<id>?do=level, ?tab=features.
   const [asked, setAsked] = useSearchParams();
   // Used once: a reload or the Back button should not open the same dialog again.
   useEffect(() => { if (asked.get('do') || asked.get('tab')) setAsked({}, { replace: true }); }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const [tab, setTab] = useState<TabId>(() => TABS.find((t) => t.id === asked.get('tab'))?.id ?? 'combat');
   const [open, setOpen] = useState<{ key: string; kind: StatKind; rollable: boolean } | null>(null);
-  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | 'surge' | null>(() => { const wanted = asked.get('do'); return wanted === 'level' || wanted === 'edit' || wanted === 'surge' || wanted === 'history' ? wanted : null; });
+  const [dialog, setDialog] = useState<'rest' | 'edit' | 'look' | 'level' | 'history' | 'surge' | 'switch' | null>(() => { const wanted = asked.get('do'); return wanted === 'level' || wanted === 'edit' || wanted === 'surge' || wanted === 'history' ? wanted : null; });
   // The character as it was before the last level-up, kept until it is undone or dismissed.
   const [beforeLevel, setBeforeLevel] = useState<CharacterDoc | null>(null);
 
@@ -159,8 +161,21 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {dialog === 'level' && <LevelUpDialog live={live} onClose={() => setDialog(null)} onLevelled={setBeforeLevel} />}
       {dialog === 'edit' && (
         <Dialog title="Edit character" onClose={() => setDialog(null)}>
-          <CharacterForm initial={doc} onCancel={() => setDialog(null)} onSave={(next, log) => { live.setDoc(next, log); setDialog(null); }} />
+          <CharacterForm initial={doc} onCancel={() => setDialog(null)} onSave={(next, log) => { live.setDoc(next, log); setDialog(null); }} onCompare={() => setDialog('switch')} />
         </Dialog>
+      )}
+      {dialog === 'switch' && (
+        <VersionSwitchDialog
+          doc={doc}
+          hasFruit={sheet.fruits.length > 0}
+          onClose={() => setDialog(null)}
+          onCopy={async (copy) => {
+            const made = await store.create(copy);
+            void store.log(made.id, `Copied from ${doc.name} (${VERSION_NAMES[doc.rulesVersion]}) onto ${VERSION_NAMES[copy.rulesVersion]}`);
+            setDialog(null);
+            navigate(`/sheet/${made.id}`);
+          }}
+        />
       )}
       </div>
     </RollsProvider>
