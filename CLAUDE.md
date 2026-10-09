@@ -29,6 +29,7 @@ A free, private D&D Beyond-style character platform for one Dungeons & Devil Fru
 - CI: `.github/workflows/ci.yml` runs typecheck, tests, schema validation and a build on every PR.
 
 ## Table rulings already decided (campaign settings, DM can change)
+- Special Reactions, Haki Purist, Dream Points and Healing Surge are optional rules: off until a campaign's DM switches them on, and never on for a character in no campaign. The engine's own default (`DEFAULT_SETTINGS`) has them on; the site and the bot always pass the campaign's settings (`campaignSettings`), which have them off unless switched.
 - Haki attack bonus = 2 + ceil(Willpower / 2). Only used by custom or original-PHB Haki features; v8.8/v10 Haki uses normal attacks + Haki save DC.
 - Long rest returns ALL spent hit dice.
 - Healing Surge: up to floor(total hit dice / 2), minimum 1, limited by dice remaining.

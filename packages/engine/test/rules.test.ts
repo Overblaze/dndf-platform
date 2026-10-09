@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import marlo from '../../../data/examples/marlo_devilforged5_v88.json';
 import bruiserFile from '../../../data/rules/dndf-10/bruiser.json';
 import {
+  campaignSettings,
   abilityMod,
   bestialSummon,
   bounty,
@@ -189,7 +190,7 @@ describe('Rests', () => {
 
   it('Long: a campaign can switch to the book\'s half hit dice', () => {
     const spent = at({ hitDiceSpent: 6 });
-    const result = longRest(spent.d, spent.s, {}, { hakiAttackRuling: true, longRestHitDice: 'half' });
+    const result = longRest(spent.d, spent.s, {}, campaignSettings({ longRestHitDice: 'half' }));
     expect(result.state.hitDiceSpent).toBe(3);
   });
 

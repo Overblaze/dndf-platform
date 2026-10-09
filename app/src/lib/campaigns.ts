@@ -75,6 +75,19 @@ export function campaignApi(db: SupabaseClient) {
       return made[0];
     },
     renameCampaign: (id: string, name: string) => done(db.from('campaigns').update({ name: name.trim() }).eq('id', id)),
+    /** The campaign's settings as saved (its optional rules and table rulings). */
+    async settings(id: string): Promise<Record<string, unknown>> {
+      const found = await rows<{ settings: unknown }>(db.from('campaigns').select('settings').eq('id', id));
+      const saved = found[0]?.settings;
+      return saved && typeof saved === 'object' && !Array.isArray(saved) ? (saved as Record<string, unknown>) : {};
+    },
+    /** Changes some settings and keeps the rest. Gives the settings as they now stand; only a DM of the campaign can. */
+    async changeSettings(id: string, change: Record<string, unknown>): Promise<Record<string, unknown>> {
+      const next = { ...(await this.settings(id)), ...change };
+      const saved = await rows<{ settings: Record<string, unknown> }>(db.from('campaigns').update({ settings: next }).eq('id', id).select('settings'));
+      if (!saved[0]) throw new Error('Only a DM of this campaign can change its rules.');
+      return saved[0].settings;
+    },
     deleteCampaign: (id: string) => done(db.from('campaigns').delete().eq('id', id)),
 
     async members(campaignId: string): Promise<Member[]> {

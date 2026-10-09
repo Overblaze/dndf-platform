@@ -241,7 +241,8 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
 
       {ACTION_GROUPS.map((group) => {
         const features = actionable.filter((f) => groupOf(f) === group.id);
-        const special = group.id === 'specialReaction';
+        // Special Reactions are an optional rule: off for the campaign, the group is not there.
+        const special = group.id === 'specialReaction' && sheet.optionalRules.specialReactions;
         if (features.length === 0 && !special) return null;
         return (
           <section key={group.id} className="card">

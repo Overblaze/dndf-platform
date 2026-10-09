@@ -1,5 +1,5 @@
 import {
-  ABILITIES, ABILITY_NAMES, DEFAULT_SETTINGS, RARITIES, SKILLS, SURGE_TABS, cite, deriveSheet, newSurgeId, sheetChanges, surgeAsks, surgeOptions,
+  ABILITIES, ABILITY_NAMES, RARITIES, SKILLS, SURGE_TABS, cite, deriveSheet, newSurgeId, sheetChanges, surgeAsks, surgeOptions,
   type Ability, type CharacterDoc, type Rarity, type SurgeOption, type SurgePick, type SurgeRecord, type SurgeTab,
 } from '@dndf/engine';
 import { useMemo, useState } from 'react';
@@ -37,7 +37,7 @@ export function SurgeDialog({ live, onClose }: { live: LiveCharacter; onClose: (
     ? { id: newSurgeId(doc.surges), entry: option.entry.id, rarity, reason: reason.trim() || undefined, session: session.trim() || undefined, at: new Date().toISOString().slice(0, 10), pick: Object.keys(pick).length ? pick : undefined }
     : null;
   const next: CharacterDoc | null = record ? { ...doc, surges: [...(doc.surges ?? []), record] } : null;
-  const changes = useMemo(() => (next ? sheetChanges(sheet, deriveSheet(next, rules, DEFAULT_SETTINGS, secrets)) : []), [next && JSON.stringify(next.surges), sheet, rules, secrets]); // eslint-disable-line react-hooks/exhaustive-deps
+  const changes = useMemo(() => (next ? sheetChanges(sheet, deriveSheet(next, rules, live.settings, secrets)) : []), [next && JSON.stringify(next.surges), sheet, rules, secrets]); // eslint-disable-line react-hooks/exhaustive-deps
   const add = () => {
     if (!next || !option) return;
     live.setDoc(next, `Spirit Surge (${rarity}): ${option.entry.name}${reason.trim() ? `, ${reason.trim()}` : ''}`);

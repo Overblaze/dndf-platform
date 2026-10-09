@@ -1,4 +1,4 @@
-import { cite, CONDITIONS, DREAM_POINT_DIE, healingSurge, iWontAbandonMyDreams, nextHitDice, rescueDeathSave, rollDie, spendResource, ABANDON_DREAMS_DC } from '@dndf/engine';
+import { cite, CONDITIONS, DREAM_POINT_DIE, OPTIONAL_RULES, healingSurge, iWontAbandonMyDreams, nextHitDice, rescueDeathSave, rollDie, spendResource, ABANDON_DREAMS_DC } from '@dndf/engine';
 import { useState } from 'react';
 import { Pips } from '../components/Pips';
 import { RuleText } from '../components/RuleText';
@@ -26,7 +26,10 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
   const { doc, sheet } = live;
   const state = doc.state;
   const { successes, failures } = state.deathSaves;
-  const surge = sheet.resources.find((r) => r.id === 'healing_surge')!;
+  // The campaign's optional rules: what is off is not on the sheet at all.
+  const on = sheet.optionalRules;
+  const off = OPTIONAL_RULES.filter((rule) => !on[rule.id]);
+  const surge = sheet.resources.find((r) => r.id === 'healing_surge');
   const [surgeDice, setSurgeDice] = useState(1);
   const dice = Math.min(surgeDice, sheet.healingSurgeDice);
 
@@ -71,8 +74,8 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
   return (
     <>
       <section className="card">
-        <h2>Dream Points</h2>
-        <div className="resource">
+        <h2>{on.dreamPoints ? 'Dream Points' : 'Pirate Prestige'}</h2>
+        {on.dreamPoints && <div className="resource">
           <div>
             <div className="resource-name">{sheet.dreamPoints.remaining} of {sheet.dreamPoints.max}</div>
             <div className="page-ref">+{DREAM_POINT_DIE} after an attack, check or save · reset on level-up · {cite(sheet.book, 11)}</div>
@@ -82,19 +85,20 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
             <button className="btn" onClick={() => dream(1)} disabled={sheet.dreamPoints.remaining === 0} aria-label="Spend a Dream Point">−</button>
             <button className="btn" onClick={() => dream(-1)} disabled={state.dreamPointsSpent === 0} aria-label="Regain a Dream Point">+</button>
           </div>
-        </div>
+        </div>}
         <p className="page-ref">Pirate Prestige maximum: {sheet.prestigeMax} · {cite(sheet.book, 12)}</p>
-        <BookText sheet={sheet} name="Dream Points" />
+        {on.dreamPoints && <BookText sheet={sheet} name="Dream Points" />}
       </section>
 
       <section className="card">
-        <h2>Hit dice and Healing Surge</h2>
+        <h2>{surge ? 'Hit dice and Healing Surge' : 'Hit dice'}</h2>
         <div className="resource">
           <div>
             <div className="resource-name">Hit dice: {sheet.hitDice.remaining} of {sheet.hitDice.pool.map((p) => `${p.count}d${p.die}`).join(' + ')}</div>
-            <div className="page-ref">spend them in a short rest, or with a Healing Surge</div>
+            <div className="page-ref">spend them in a short rest{surge ? ', or with a Healing Surge' : ''}</div>
           </div>
         </div>
+        {surge && <>
         <div className="resource">
           <div>
             <div className="resource-name">Healing Surge</div>
@@ -118,6 +122,7 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
         </div>
         {surge.remaining === 0 && <p className="notice">Already used since the last rest. You can still use it; this is only a reminder.</p>}
         <BookText sheet={sheet} name="Healing Surge" note="Table ruling: a long rest returns all spent hit dice, and a surge can spend up to half your hit dice." />
+        </>}
       </section>
 
       <section className="card">
@@ -132,9 +137,11 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
         </div>
         <div className="row wrap">
           <button className="btn btn-primary" onClick={deathSave}>Roll death save</button>
-          <button className="btn" disabled={failures === 0 || sheet.dreamPoints.remaining === 0} onClick={() => live.setState(rescueDeathSave(state, sheet.dreamPoints.max), 'Dream Point: a failed death save becomes a success')}>
-            Dream Point rescue
-          </button>
+          {on.dreamPoints && (
+            <button className="btn" disabled={failures === 0 || sheet.dreamPoints.remaining === 0} onClick={() => live.setState(rescueDeathSave(state, sheet.dreamPoints.max), 'Dream Point: a failed death save becomes a success')}>
+              Dream Point rescue
+            </button>
+          )}
           <button className="btn" onClick={abandon}>I Won't Abandon My Dreams (d20, {ABANDON_DREAMS_DC}+)</button>
           <button className="btn" disabled={successes + failures === 0} onClick={() => live.setState({ ...state, deathSaves: { successes: 0, failures: 0 } }, 'Death saves cleared')}>Clear</button>
         </div>
@@ -188,6 +195,18 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
       </section>
 
       <BountyCard live={live} onOpen={onOpen} />
+
+      {off.length > 0 && (
+        <section className="card">
+          <h2>Optional rules not in play</h2>
+          <p className="page-ref">
+            {off.map((rule) => rule.name).join(', ')}: {live.campaign
+              ? `switched off for ${live.campaign}. Its DM switches optional rules on and off on the DM page.`
+              : 'these are switched on by a campaign’s DM, and this character is not in a campaign.'}
+            {' '}Nothing is lost: picks and points already on the character are kept and count again when the rule is on.
+          </p>
+        </section>
+      )}
 
       <section className="card">
         <h2>Notes</h2>

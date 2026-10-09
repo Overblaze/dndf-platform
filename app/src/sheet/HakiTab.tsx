@@ -68,6 +68,7 @@ export function HakiTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
         );
       })}
 
+      {sheet.optionalRules.hakiPurist && (
       <section className="card">
         <h2>Haki Purist</h2>
         <p className="page-ref">
@@ -96,6 +97,7 @@ export function HakiTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
           </details>
         )}
       </section>
+      )}
 
       <section className="card">
         <h2>Spirit Surges</h2>

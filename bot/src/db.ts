@@ -2,7 +2,7 @@
 // security, so every function here takes the Discord user who asked and reaches only that
 // user's characters (or, for the party, the campaigns that user belongs to).
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { NO_SECRETS, normalizeDoc, normalizeShip, sameDoc, type CharacterDoc, type RuleEntry, type Secrets, type ShipDoc } from '@dndf/engine';
+import { NO_SECRETS, campaignSettings, normalizeDoc, normalizeShip, sameDoc, type CampaignSettings, type CharacterDoc, type RuleEntry, type Secrets, type ShipDoc } from '@dndf/engine';
 import type { Env } from './env';
 import type { Report, ReportKind } from './reports';
 
@@ -17,12 +17,15 @@ export interface BotCharacter {
   ownerId: string;
   campaignId: string | null;
   updatedAt: string;
+  /** The settings of the campaign it is in: which optional rules its DM has switched on. In no campaign, none are. */
+  settings: CampaignSettings;
 }
 
-interface Row { id: string; doc: unknown; owner_id: string; campaign_id: string | null; updated_at: string }
+interface Row { id: string; doc: unknown; owner_id: string; campaign_id: string | null; updated_at: string; campaigns?: { settings?: unknown } | { settings?: unknown }[] | null }
+const settingsOf = (row: Row) => campaignSettings((Array.isArray(row.campaigns) ? row.campaigns[0] : row.campaigns)?.settings);
 const fromRow = (row: Row): BotCharacter | null => {
   const doc = normalizeDoc(row.doc);
-  return doc ? { id: row.id, doc, raw: row.doc, ownerId: row.owner_id, campaignId: row.campaign_id, updatedAt: row.updated_at } : null;
+  return doc ? { id: row.id, doc, raw: row.doc, ownerId: row.owner_id, campaignId: row.campaign_id, updatedAt: row.updated_at, settings: settingsOf(row) } : null;
 };
 
 export interface BotShip { id: string; doc: ShipDoc; ownerId: string; campaignId: string | null; campaign: string | null; updatedAt: string }
@@ -73,7 +76,7 @@ export class Db {
   async charactersOf(discordId: string): Promise<BotCharacter[] | null> {
     const owner = await this.accountOf(discordId);
     if (!owner) return null;
-    const { data, error } = await this.client.from('characters').select('id, doc, owner_id, campaign_id, updated_at').eq('owner_id', owner).order('updated_at', { ascending: false });
+    const { data, error } = await this.client.from('characters').select('id, doc, owner_id, campaign_id, updated_at, campaigns(settings)').eq('owner_id', owner).order('updated_at', { ascending: false });
     if (error) throw new Error(`Could not read the characters: ${error.message}`);
     return (data as Row[]).flatMap((row) => fromRow(row) ?? []);
   }
@@ -251,7 +254,7 @@ export class Db {
     if (error) throw new Error(`Could not read the campaigns: ${error.message}`);
     const out = [];
     for (const m of (memberships ?? []) as unknown as { campaign_id: string; campaigns: { name: string } | null }[]) {
-      const { data: rows, error: failed } = await this.client.from('characters').select('id, doc, owner_id, campaign_id, updated_at, profiles(display_name, discord_username)').eq('campaign_id', m.campaign_id);
+      const { data: rows, error: failed } = await this.client.from('characters').select('id, doc, owner_id, campaign_id, updated_at, campaigns(settings), profiles(display_name, discord_username)').eq('campaign_id', m.campaign_id);
       if (failed) throw new Error(`Could not read the party: ${failed.message}`);
       const members = ((rows ?? []) as unknown as (Row & { profiles: { display_name: string | null; discord_username: string | null } | null })[]).flatMap((row) => {
         const character = fromRow(row);

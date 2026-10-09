@@ -75,7 +75,7 @@ async function autocomplete(interaction: AutocompleteInteraction) {
   if (interaction.commandName === 'surge' && focused.name === 'advancement') {
     const character = pick(characters, interaction.options.getString('character'));
     if (!character) return interaction.respond([]);
-    const sheet = sheetOf(character.doc);
+    const sheet = sheetOf(character.doc, undefined, character.settings);
     if (interaction.options.getSubcommand() === 'remove') {
       const names = [...new Set(sheet.haki.surges.filter((s) => s.kind !== 'fruitAdvancement' && s.name.toLowerCase().includes(typed)).map((s) => s.name))];
       return interaction.respond(names.slice(0, 25).map((name) => ({ name: name.slice(0, 100), value: name.slice(0, 100) })));
@@ -209,7 +209,7 @@ async function run(interaction: ChatInputCommandInteraction) {
     if (!parties) return interaction.editReply(NOT_LINKED);
     if (parties.length === 0) return interaction.editReply('You are not in a campaign yet. Your DM adds you on the website.');
     // Posters are read from the saved characters alone: a poster is public, and no Devil Fruit is in it.
-    const text = parties.map((p) => `__${p.campaign}__\n${crewPosters(p.members.map((m) => ({ doc: m.character.doc, sheet: sheetOf(m.character.doc), player: m.player })))}`).join('\n\n');
+    const text = parties.map((p) => `__${p.campaign}__\n${crewPosters(p.members.map((m) => ({ doc: m.character.doc, sheet: sheetOf(m.character.doc, undefined, m.character.settings), player: m.player })))}`).join('\n\n');
     return interaction.editReply(text.slice(0, 1990));
   }
 
@@ -217,7 +217,7 @@ async function run(interaction: ChatInputCommandInteraction) {
     const parties = await db.partyOf(interaction.user.id);
     if (!parties) return interaction.editReply(NOT_LINKED);
     if (parties.length === 0) return interaction.editReply('You are not in a campaign yet. Your DM adds you on the website.');
-    const text = parties.map((p) => `__${p.campaign}__\n${p.members.map((m) => partyLine(m.character.doc, sheetOf(m.character.doc), m.player)).join('\n') || 'No characters in this campaign yet.'}`).join('\n\n');
+    const text = parties.map((p) => `__${p.campaign}__\n${p.members.map((m) => partyLine(m.character.doc, sheetOf(m.character.doc, undefined, m.character.settings), m.player)).join('\n') || 'No characters in this campaign yet.'}`).join('\n\n');
     return interaction.editReply(text.slice(0, 1990));
   }
 
@@ -229,7 +229,7 @@ async function run(interaction: ChatInputCommandInteraction) {
   if (!character) return interaction.editReply(`You have no character called "${wanted}". Yours: ${characters.map((c) => c.doc.name).join(', ')}.`);
   const { doc } = character;
   // The sheet anyone may see: the saved character alone. A Devil Fruit is never in it.
-  const sheet = sheetOf(doc);
+  const sheet = sheetOf(doc, undefined, character.settings);
 
   if (name === 'bounty') return interaction.editReply(bountyReply(doc, sheet).slice(0, 1990));
 
@@ -238,7 +238,7 @@ async function run(interaction: ChatInputCommandInteraction) {
     // private content, so it is neither listed nor offered here.
     const o = interaction.options;
     const sub = o.getSubcommand();
-    const resheet = (next: typeof doc) => sheetOf(next);
+    const resheet = (next: typeof doc) => sheetOf(next, undefined, character.settings);
     const outcome: Outcome | null =
       sub === 'list' ? surgeList(sheet)
       : sub === 'add' ? surgeAdd(doc, sheet, rulesOf(doc.rulesVersion), { rarity: o.getString('rarity', true), advancement: o.getString('advancement', true), choice: o.getString('choice'), skill: o.getString('skill'), note: o.getString('note'), reason: o.getString('reason'), session: o.getString('session') }, new Date().toISOString().slice(0, 10), resheet)
@@ -255,7 +255,7 @@ async function run(interaction: ChatInputCommandInteraction) {
     const sub = o.getSubcommand();
     const making = name === 'make';
     const spells = [...rulesOf(doc.rulesVersion).values()].filter((e) => e.kind === 'spell');
-    const resheet = (next: typeof doc) => sheetOf(next);
+    const resheet = (next: typeof doc) => sheetOf(next, undefined, character.settings);
     const id = () => crypto.randomUUID();
     const armory = [...rulesOf(doc.rulesVersion).values()].filter((e) => e.kind === 'item');
     const outcome: Outcome | null =
@@ -278,7 +278,7 @@ async function run(interaction: ChatInputCommandInteraction) {
   }
 
   if (name === 'sheet') {
-    const pdf = await sheetPdf(doc, Boolean(interaction.options.getBoolean('full_text')));
+    const pdf = await sheetPdf(doc, Boolean(interaction.options.getBoolean('full_text')), character.settings);
     const file = new AttachmentBuilder(pdf, { name: `${doc.name.replace(/[^\w -]+/g, '').trim() || 'character'}.pdf` });
     return interaction.editReply({ content: `📜 **${sheet.name}** — ${sheet.summary}`, files: [file] });
   }
@@ -286,11 +286,11 @@ async function run(interaction: ChatInputCommandInteraction) {
   // The sums use the whole sheet, the granted Devil Fruit included. Its details are only in the reply
   // when the fruit has been revealed to the table, or the reply is one only this player can see.
   const { secrets, open } = await db.secretsOf(character.id);
-  const whole = sheetOf(doc, secrets);
+  const whole = sheetOf(doc, secrets, character.settings);
   const act = (one: Sheet, dice: typeof rng): Outcome | null => {
     if (name === 'roll') return roll(one, interaction.options.getString('what', true), (interaction.options.getString('with') ?? 'normal') as RollMode, dice);
     if (name === 'hp') return hp(doc, one, interaction.options.getString('change', true) as 'damage' | 'heal' | 'temp', interaction.options.getInteger('amount', true), interaction.options.getString('type'));
-    if (name === 'condition') return condition(doc, one, interaction.options.getString('change', true) as 'add' | 'remove' | 'list', interaction.options.getString('condition'), (next) => sheetOf(next, secrets));
+    if (name === 'condition') return condition(doc, one, interaction.options.getString('change', true) as 'add' | 'remove' | 'list', interaction.options.getString('condition'), (next) => sheetOf(next, secrets, character.settings));
     if (name === 'rest') return rest(doc, one, interaction.options.getString('kind', true) as 'short' | 'long', interaction.options.getInteger('hit_dice') ?? 0, dice);
     if (name === 'dawn') return dawnCommand(doc, one);
     if (name === 'status') return status(doc, one);

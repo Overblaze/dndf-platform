@@ -2155,3 +2155,19 @@ a {
   background-position: center;
   background-size: cover;
 }
+
+/* The DM's optional rules (pages/DmPage.tsx) */
+
+.optional-rule {
+  align-items: flex-start;
+  padding: 6px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.optional-rule input {
+  margin-top: 4px;
+}
+
+.optional-rule-gives {
+  display: block;
+}

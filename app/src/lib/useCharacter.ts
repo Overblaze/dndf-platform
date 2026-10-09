@@ -1,4 +1,5 @@
-import { DEFAULT_SETTINGS, NO_SECRETS, deriveSheet, withSecrets, type CharacterDoc, type CharacterState, type RuleEntry, type Secrets, type Sheet } from '@dndf/engine';
+import { NO_SECRETS, deriveSheet, withSecrets, type CampaignSettings, type CharacterDoc, type CharacterState, type RuleEntry, type Secrets, type Sheet } from '@dndf/engine';
+import { useCampaignSettings } from './campaignRules';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { shouldSnapshot } from './history';
 import { ruleSet } from './rules';
@@ -13,6 +14,9 @@ export interface LiveCharacter {
   sheet: Sheet;
   /** Private content this character has been granted (Devil Fruits). Empty for a character kept on this device. */
   secrets: Secrets;
+  /** The settings of the campaign the character is in (its DM's optional rules), and that campaign's name; none when it is in no campaign. */
+  settings: CampaignSettings;
+  campaign: string | null;
   /** The character's handbook, with any private advancements it may see. */
   rules: Map<string, RuleEntry>;
   status: SaveStatus;
@@ -176,12 +180,13 @@ export function useCharacter(store: CharacterStore, id: string) {
   );
 
   // Each character is pinned to one rules version and only ever sees that handbook.
-  const sheet = useMemo(() => (doc ? deriveSheet(doc, ruleSet(doc.rulesVersion).rules, DEFAULT_SETTINGS, secrets) : null), [doc, secrets]);
+  const { settings, campaign } = useCampaignSettings(store.local, id);
+  const sheet = useMemo(() => (doc ? deriveSheet(doc, ruleSet(doc.rulesVersion).rules, settings, secrets) : null), [doc, secrets, settings]);
   const rules = useMemo(() => (doc ? withSecrets(ruleSet(doc.rulesVersion).rules, secrets, doc.rulesVersion) : null), [doc?.rulesVersion, secrets]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const live: LiveCharacter | null =
     doc && sheet && rules
-      ? { doc, sheet, secrets, rules, status, saveError, conflict, resolveConflict, setDoc, setState: (state, log) => setDoc({ ...doc, state }, log, true) }
+      ? { doc, sheet, secrets, settings, campaign, rules, status, saveError, conflict, resolveConflict, setDoc, setState: (state, log) => setDoc({ ...doc, state }, log, true) }
       : null;
   return { live, loadError, missing };
 }

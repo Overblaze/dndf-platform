@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import bruiserFile from '../../../data/rules/dndf-10/bruiser.json';
 import {
+  campaignSettings,
   applyDamage,
   applyHealing,
   deriveSheet,
@@ -137,7 +138,7 @@ describe('the rest of the sheet', () => {
     expect(sheet.willpower.value).toBe(7);
     expect(sheet.hakiSaveDc.value).toBe(14);
     expect(sheet.hakiAttack?.value).toBe(6);
-    expect(deriveSheet(doc, rules, { hakiAttackRuling: false, longRestHitDice: 'all' }).hakiAttack).toBeNull();
+    expect(deriveSheet(doc, rules, campaignSettings({ hakiAttackRuling: false })).hakiAttack).toBeNull();
   });
 
   it('lists the general DnDF numbers: Dream Points 7, Prestige 4, Healing Surge 3, Special Reactions 3 each', () => {
