@@ -1,6 +1,7 @@
 import { deriveSheet, type CharacterDoc, type Stat } from '@dndf/engine';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { downloadExport } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
 import { RollsProvider } from '../lib/rolls';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
@@ -99,6 +100,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
           <button className="btn" onClick={() => setDialog('history')}>History</button>
           <Link className="btn" to={`/print/${id}`}>Print</Link>
+          <button className="btn" onClick={() => downloadExport({ characters: [live.doc] })}>Export</button>
           <button className="btn" onClick={() => setDialog('look')}>Appearance</button>
           <Link className="btn" to="/sheet">All characters</Link>
         </div>

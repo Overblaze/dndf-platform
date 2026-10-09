@@ -4,6 +4,7 @@ import {
 } from '@dndf/engine';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Backup, downloadExport } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
 import { useAuth } from '../lib/auth';
 import { campaignApi, type Campaign } from '../lib/campaigns';
@@ -41,7 +42,8 @@ function ShipList({ store, campaigns }: { store: ShipStore; campaigns: Campaign[
   const [type, setType] = useState('');
   const [name, setName] = useState('');
   const [campaign, setCampaign] = useState('');
-  useEffect(() => { store.list().then(setShips, (e: Error) => { setShips([]); setProblem(e.message); }); }, [store]);
+  const load = useCallback(() => { store.list().then(setShips, (e: Error) => { setShips([]); setProblem(e.message); }); }, [store]);
+  useEffect(load, [load]);
   const launch = () => {
     const entry = types.find((t) => t.id === type) ?? null;
     store.create(newShip(entry, name, () => crypto.randomUUID()), campaign || null).then((made) => navigate(`/ship/${made.id}`), (e: Error) => setProblem(e.message));
@@ -91,6 +93,8 @@ function ShipList({ store, campaigns }: { store: ShipStore; campaigns: Campaign[
         <button className="btn btn-primary" onClick={launch}>Launch</button>
         <p className="page-ref">Every number can be changed afterwards. The book’s ships and upgrades are in the <Link to="/library">Library</Link> under “Ships and sailing”.</p>
       </section>
+      {/* An imported ship starts as yours alone; share her with the crew from her Edit dialog. */}
+      <Backup kind="ships" mine={(ships ?? []).map((s) => s.doc)} add={(doc: ShipDoc) => store.create(doc, null)} onDone={load} />
     </>
   );
 }
@@ -348,6 +352,7 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
           <span className={status === 'error' ? 'chip chip-damage' : 'chip'} role="status">{status === 'saved' ? (store.local ? 'Saved on this device' : 'Saved') : status === 'saving' ? 'Saving…' : 'Not saved'}</span>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
           <Link className="btn" to={`/print/ship/${id}`}>Print</Link>
+          <button className="btn" onClick={() => downloadExport({ ships: [doc] })}>Export</button>
           <Link className="btn" to="/ship">All ships</Link>
         </div>
         {problem && <p className="notice" role="alert">{problem} <button className="btn" onClick={() => setProblem(null)}>OK</button></p>}
