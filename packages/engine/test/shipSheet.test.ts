@@ -1,6 +1,6 @@
 // The ship sheet (DM Guide chapter 2; docs/FORMULAS.md "Ships", whose sample is the Caravel).
 import { describe, expect, it } from 'vitest';
-import { damageComponent, deriveShip, newShip, normalizeShip, shipLog, upgradePrice, voyage, type RuleEntry, type ShipDoc } from '../src';
+import { UPGRADE_SOURCES, damageComponent, deriveShip, newShip, normalizeShip, shipLog, upgradePrice, upgradeWorth, voyage, type RuleEntry, type ShipDoc } from '../src';
 import { loadRules } from './load';
 
 const rules = loadRules('dndf-10');
@@ -83,7 +83,7 @@ describe('a ship from the book', () => {
     expect(price('cannon_upgrade')).toBe(20_000_000);
     expect(price('paddle_wheel_upgrade')).toBe(10_000_000 + 10_000_000); // + 20% of ฿50M
     expect(price('helm_upgrade')).toBe(2_500_000); // 5% of ฿50M
-    const fitted = deriveShip({ ...doc, upgrades: [{ id: 'a', name: 'Cannon Upgrade', slots: 1, how: 'bought' }, { id: 'b', name: 'Paddle-Wheel Upgrade', slots: 2, how: 'gift' }, { id: 'c', name: 'Figurehead', slots: 3, how: 'custom' }] });
+    const fitted = deriveShip({ ...doc, upgrades: [{ id: 'a', name: 'Cannon Upgrade', slots: 1, how: 'bought' }, { id: 'b', name: 'Paddle-Wheel Upgrade', slots: 2, how: 'gift' }, { id: 'c', name: 'Figurehead', slots: 3, how: 'other' }] });
     expect(fitted.slots).toEqual({ used: 6, total: 5, over: true });
     expect(fitted.notes).toContain('6 upgrade slots used of 5');
   });
@@ -118,5 +118,47 @@ describe('a ship from the book', () => {
     expect(deriveShip(newShip(null, '', id))).toMatchObject({ name: 'Our ship', speed: { value: 0, from: null }, components: [] });
     const round = normalizeShip(JSON.parse(JSON.stringify(caravel())))!;
     expect(normalizeShip(JSON.parse(JSON.stringify(round)))).toEqual(round);
+  });
+
+  it('a ship made the crew’s own: her worth is her own cost plus every upgrade, however it was come by, and can be typed over', () => {
+    const rule = (key: string) => rules.get(key);
+    const plain = caravel();
+    expect(deriveShip(plain, rule).worth).toEqual({ value: 50_000_000, calculated: 50_000_000, overridden: false, book: 50_000_000, lines: [{ label: 'Caravel herself', value: 50_000_000 }] });
+    // A modified Caravel: bought dearer than the book's, with upgrades that were bought, plundered, built and given.
+    const doc: ShipDoc = {
+      ...plain, typeName: 'Modified Caravel', cost: 60_000_000,
+      upgrades: [
+        { id: 'a', entry: 'shipUpgrade.cannon_upgrade', name: 'Cannon Upgrade', slots: 1, how: 'bought', paid: 15_000_000 }, // haggled under the book's ฿20M
+        { id: 'b', entry: 'shipUpgrade.paddle_wheel_upgrade', name: 'Paddle-Wheel Upgrade', slots: 2, how: 'plunder' }, // nothing paid: the book's price for this ship
+        { id: 'c', name: 'Sea-king bone ram', slots: 1, how: 'built', worth: 8_000_000 },
+        { id: 'd', name: 'Lucky figurehead', slots: 0, how: 'gift' }, // nobody has put a price on it
+        { id: 'e', entry: 'shipUpgrade.helm_upgrade', name: 'Helm Upgrade', slots: 1, how: 'reward', paid: 0, worth: 4_000_000 }, // the crew's figure beats what was paid
+      ],
+    };
+    const sheet = deriveShip(doc, rule);
+    expect(sheet.summary).toBe('Modified Caravel · Gargantuan vehicle (70 ft. by 20 ft.)');
+    expect(sheet.worth.lines).toEqual([
+      { label: 'Modified Caravel herself', value: 60_000_000 },
+      { label: 'Cannon Upgrade (what was paid)', value: 15_000_000 },
+      { label: 'Paddle-Wheel Upgrade (the book’s price)', value: 10_000_000 + 12_000_000 }, // + 20% of her own ฿60M
+      { label: 'Sea-king bone ram (as valued)', value: 8_000_000 },
+      { label: 'Helm Upgrade (as valued)', value: 4_000_000 },
+    ]);
+    expect(sheet.worth).toMatchObject({ value: 109_000_000, calculated: 109_000_000, overridden: false, book: 50_000_000 });
+    expect(sheet.worth.lines.reduce((sum, l) => sum + l.value, 0)).toBe(sheet.worth.calculated);
+    // The crew's own figure wins, and the worked-out one stays in sight.
+    expect(deriveShip({ ...doc, worth: 150_000_000 }, rule).worth).toMatchObject({ value: 150_000_000, calculated: 109_000_000, overridden: true });
+    expect(deriveShip({ ...doc, worth: 0 }, rule).worth).toMatchObject({ value: 0, overridden: true });
+    // Without the rules data to hand, an unpaid book upgrade adds nothing rather than a guess.
+    expect(deriveShip(doc).worth).toMatchObject({ calculated: 87_000_000, book: null });
+    expect(upgradeWorth(doc.upgrades[3]!, doc.cost)).toEqual({ value: 0, from: 'none' });
+    // Slots still count whatever the source, and going over is said, not stopped.
+    expect(sheet.slots).toEqual({ used: 5, total: 5, over: false });
+    // Every way of coming by an upgrade survives a save; an old save's "custom" becomes "another way".
+    for (const how of Object.keys(UPGRADE_SOURCES)) expect(normalizeShip({ ...doc, upgrades: [{ id: 'x', name: 'X', slots: 1, how }] })!.upgrades[0]!.how).toBe(how);
+    expect(normalizeShip({ ...doc, upgrades: [{ id: 'x', name: 'X', slots: 1, how: 'custom' }, { id: 'y', name: 'Y', slots: 1, how: 'toString' }, { id: 'z', name: 'Z', slots: 1 }] })!.upgrades.map((u) => u.how)).toEqual(['other', 'bought', 'bought']);
+    const saved = normalizeShip(JSON.parse(JSON.stringify({ ...doc, worth: 150_000_000, upgrades: [{ ...doc.upgrades[2], text: 'Ramming deals 4d10 more.', note: 'Carved at Water 7' }] })))!;
+    expect(saved).toMatchObject({ typeName: 'Modified Caravel', cost: 60_000_000, worth: 150_000_000, upgrades: [{ how: 'built', worth: 8_000_000, text: 'Ramming deals 4d10 more.', note: 'Carved at Water 7' }] });
+    expect(normalizeShip({ ...doc, worth: -5, typeName: '   ', dimensions: '' })).toMatchObject({ worth: 0, typeName: undefined, dimensions: undefined });
   });
 });

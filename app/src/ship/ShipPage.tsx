@@ -1,6 +1,6 @@
 import {
-  SHIP_ABILITIES, cite, damageComponent, deriveShip, exactBerries, formatBerries, newShip, shipLog, signed, upgradePrice, voyage,
-  type HoldItem, type RuleEntry, type ShipComponent, type ShipDoc, type ShipRole, type ShipUpgrade,
+  SHIP_ABILITIES, UPGRADE_SOURCES, cite, damageComponent, deriveShip, exactBerries, formatBerries, newShip, shipLog, signed, upgradePrice, upgradeWorth, voyage,
+  type HoldItem, type RuleEntry, type ShipComponent, type ShipDoc, type ShipRole, type ShipUpgrade, type UpgradeSource,
 } from '@dndf/engine';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -13,6 +13,10 @@ import { supabase } from '../lib/supabase';
 
 const BOOK = 'DnDF DM Guide';
 const ROLE_NAMES: Record<ShipRole, string> = { hull: 'Hull', control: 'Control', movement: 'Movement', weapon: 'Weapons', other: 'Other parts' };
+const SOURCES = Object.keys(UPGRADE_SOURCES) as UpgradeSource[];
+const SOURCE_NAMES: Record<UpgradeSource, string> = { bought: 'Bought', gift: 'A gift', plunder: 'Plundered or salvaged', built: 'Built by the crew', reward: 'A reward', other: 'Another way' };
+const rule = (id: string) => ruleSet('dndf-10').rules.get(id);
+const optional = (raw: string) => (raw.trim() === '' ? undefined : whole(raw));
 const today = () => new Date().toISOString().slice(0, 10);
 const whole = (raw: string, fallback = 0) => { const n = Math.round(Number(raw)); return raw.trim() !== '' && Number.isFinite(n) ? Math.max(0, n) : fallback; };
 const decimal = (raw: string) => { const n = Number(raw); return raw.trim() !== '' && Number.isFinite(n) && n >= 0 ? n : undefined; };
@@ -49,7 +53,7 @@ function ShipList({ store, campaigns }: { store: ShipStore; campaigns: Campaign[
         {!ships && !problem && <p>Scanning the harbour…</p>}
         {ships?.length === 0 && !problem && <p>No ships yet.</p>}
         {ships?.map((ship) => {
-          const sheet = deriveShip(ship.doc);
+          const sheet = deriveShip(ship.doc, rule);
           return (
             <div key={ship.id} className="resource">
               <Link className="character-link" to={`/ship/${ship.id}`}>
@@ -134,12 +138,15 @@ function ComponentDialog({ initial, onSave, onDelete, onClose }: { initial?: Shi
   );
 }
 
-/** Add an upgrade from the book (bought, or a gift from the DM) or one of your own. */
+/** Add an upgrade from the book or one of your own: bought from the treasury, or come by any other way. */
 function UpgradeDialog({ doc, onAdd, onClose }: { doc: ShipDoc; onAdd: (upgrade: ShipUpgrade, pay: number, component: ShipComponent | null) => void; onClose: () => void }) {
   const catalogue = useMemo(() => [...ruleSet('dndf-10').rules.values()].filter((e) => e.kind === 'shipUpgrade'), []);
-  const [own, setOwn] = useState({ name: '', slots: 1 });
+  const [own, setOwn] = useState({ name: '', slots: 1, text: '', worth: '' });
+  const [how, setHow] = useState<UpgradeSource>('gift');
+  const [note, setNote] = useState('');
   const groups = [...new Set(catalogue.map((u) => String(u.group ?? 'Upgrades')))];
-  const add = (entry: RuleEntry, how: 'bought' | 'gift') => {
+  const story = note.trim() || undefined;
+  const add = (entry: RuleEntry, source: UpgradeSource, pay: boolean) => {
     const price = upgradePrice(entry, doc.cost);
     // An upgrade with an Armor Class and hit points is a part of the ship that can be shot at.
     const role: ShipRole = /Movement/.test(String(entry.group)) ? 'movement' : /Control/.test(String(entry.group)) ? 'control' : /Weapon/.test(String(entry.group)) ? 'weapon' : 'other';
@@ -147,11 +154,20 @@ function UpgradeDialog({ doc, onAdd, onClose }: { doc: ShipDoc; onAdd: (upgrade:
     const component: ShipComponent | null = typeof entry.ac === 'number' && typeof entry.hp === 'number'
       ? { id: crypto.randomUUID(), name: entry.name.replace(/ Upgrade$/, ''), role, ac: entry.ac, maxHp: entry.hp, speed: role === 'movement' && speed ? Number(speed[1] ?? speed[2]) : undefined, text: String(entry.text ?? ''), damage: 0 }
       : null;
-    onAdd({ id: crypto.randomUUID(), entry: entry.id, name: entry.name, slots: Number(entry.slots) || 0, how, paid: how === 'bought' ? price : undefined }, how === 'bought' ? price : 0, component);
+    onAdd({ id: crypto.randomUUID(), entry: entry.id, name: entry.name, slots: Number(entry.slots) || 0, how: source, paid: pay ? price : undefined, note: story }, pay ? price : 0, component);
   };
   return (
     <Dialog title="Add an upgrade" onClose={onClose}>
       <p className="page-ref">Prices are for this ship: the flat price plus the share of her own cost ({exactBerries(doc.cost)}) the book gives · {cite(BOOK, 23)}. The treasury holds {exactBerries(doc.treasury)}.</p>
+      <div className="grid-2">
+        <label className="field">
+          <span className="label">If the treasury didn’t pay, how she came by it</span>
+          <select value={how} onChange={(e) => setHow(e.target.value as UpgradeSource)}>
+            {SOURCES.map((key) => <option key={key} value={key}>{key === 'bought' ? 'Bought, but not from the treasury' : SOURCE_NAMES[key]}</option>)}
+          </select>
+        </label>
+        <label className="field"><span className="label">The story (optional)</span><input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Taken off a Marine frigate" maxLength={200} /></label>
+      </div>
       {groups.map((group) => (
         <div key={group}>
           <h3>{group}</h3>
@@ -168,8 +184,8 @@ function UpgradeDialog({ doc, onAdd, onClose }: { doc: ShipDoc; onAdd: (upgrade:
                   </div>
                 </div>
                 <div className="row wrap">
-                  <button className="btn btn-primary" onClick={() => add(entry, 'bought')}>Buy</button>
-                  <button className="btn" onClick={() => add(entry, 'gift')}>Add as a gift</button>
+                  <button className="btn btn-primary" onClick={() => add(entry, 'bought', true)}>Buy</button>
+                  <button className="btn" onClick={() => add(entry, how, false)} aria-label={`Add ${entry.name} without paying: ${SOURCE_NAMES[how]}`}>Add without paying</button>
                   <Link className="btn" to={`/library/${entry.id}`}>Read it</Link>
                 </div>
               </div>
@@ -182,9 +198,49 @@ function UpgradeDialog({ doc, onAdd, onClose }: { doc: ShipDoc; onAdd: (upgrade:
         <div className="grid-2">
           <label className="field"><span className="label">Name</span><input value={own.name} onChange={(e) => setOwn({ ...own, name: e.target.value })} maxLength={80} /></label>
           <label className="field"><span className="label">Slots it takes</span><input type="number" inputMode="numeric" min={0} value={own.slots} onChange={(e) => setOwn({ ...own, slots: whole(e.target.value) })} /></label>
+          <label className="field"><span className="label">What it is worth (฿, optional)</span><input type="number" inputMode="numeric" min={0} value={own.worth} onChange={(e) => setOwn({ ...own, worth: e.target.value })} /></label>
         </div>
-        <button className="btn" disabled={!own.name.trim()} onClick={() => onAdd({ id: crypto.randomUUID(), name: own.name.trim(), slots: own.slots, how: 'custom' }, 0, null)}>Add it</button>
+        <label className="field"><span className="label">What it does (optional)</span><textarea rows={3} value={own.text} onChange={(e) => setOwn({ ...own, text: e.target.value })} maxLength={4000} /></label>
+        <button className="btn" disabled={!own.name.trim()} onClick={() => onAdd({ id: crypto.randomUUID(), name: own.name.trim(), slots: own.slots, how, worth: optional(own.worth), note: story, text: own.text.trim() || undefined }, 0, null)}>Add it</button>
+        <p className="page-ref">It is added the way chosen at the top ({SOURCE_NAMES[how].toLowerCase()}); nothing leaves the treasury. If it can be shot at, add it under “Add a component” too.</p>
       </fieldset>
+    </Dialog>
+  );
+}
+
+/** Change an upgrade that is already fitted: what it is called, how it was come by, what was paid and what it is worth. */
+function UpgradeEditDialog({ doc, initial, onSave, onRemove, onClose }: { doc: ShipDoc; initial: ShipUpgrade; onSave: (u: ShipUpgrade) => void; onRemove: () => void; onClose: () => void }) {
+  const [u, setU] = useState<ShipUpgrade>(initial);
+  const entry = u.entry ? rule(u.entry) : undefined;
+  const calculated = upgradeWorth({ ...u, worth: undefined }, doc.cost, entry);
+  return (
+    <Dialog title={`Change ${initial.name}`} onClose={onClose}>
+      <label className="field"><span className="label">Name</span><input value={u.name} onChange={(e) => setU({ ...u, name: e.target.value })} maxLength={80} /></label>
+      <div className="grid-2">
+        <label className="field"><span className="label">Slots it takes</span><input type="number" inputMode="numeric" min={0} value={u.slots} onChange={(e) => setU({ ...u, slots: whole(e.target.value) })} /></label>
+        <label className="field">
+          <span className="label">How she came by it</span>
+          <select value={u.how} onChange={(e) => setU({ ...u, how: e.target.value as UpgradeSource })}>
+            {SOURCES.map((key) => <option key={key} value={key}>{SOURCE_NAMES[key]}</option>)}
+          </select>
+        </label>
+        <label className="field"><span className="label">What was paid (฿)</span><input type="number" inputMode="numeric" min={0} value={u.paid ?? ''} onChange={(e) => setU({ ...u, paid: optional(e.target.value) })} /></label>
+        <label className="field"><span className="label">What it is worth (฿)</span><input type="number" inputMode="numeric" min={0} value={u.worth ?? ''} placeholder={String(calculated.value)} onChange={(e) => setU({ ...u, worth: optional(e.target.value) })} /></label>
+      </div>
+      <p className="page-ref">
+        Calculated worth: {exactBerries(calculated.value)} ({calculated.from === 'paid' ? 'what was paid' : calculated.from === 'book' ? `the book’s price for this ship · ${cite(BOOK, entry!.source.page)}` : 'nothing paid and no book price'}).{' '}
+        {u.worth !== undefined && <button className="btn" onClick={() => setU({ ...u, worth: undefined })}>Use calculated</button>}
+      </p>
+      <label className="field"><span className="label">The story</span><input value={u.note ?? ''} onChange={(e) => setU({ ...u, note: e.target.value || undefined })} placeholder="Taken off a Marine frigate" maxLength={200} /></label>
+      {entry
+        ? <p className="page-ref"><Link to={`/library/${entry.id}`}>Read {entry.name} in the Library</Link></p>
+        : <label className="field"><span className="label">What it does</span><textarea rows={4} value={u.text ?? ''} onChange={(e) => setU({ ...u, text: e.target.value || undefined })} maxLength={4000} /></label>}
+      <p className="page-ref">Changing what was paid here does not move berries in or out of the treasury.</p>
+      <div className="row wrap">
+        <button className="btn btn-primary" onClick={() => onSave({ ...u, name: u.name.trim() || initial.name })}>Save</button>
+        <button className="btn" onClick={onClose}>Cancel</button>
+        <button className="btn btn-damage" onClick={onRemove}>Remove it</button>
+      </div>
     </Dialog>
   );
 }
@@ -199,6 +255,7 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
   // Something to tell the player that is not a failure (a hit that did not get through): a save finishing must not wipe it.
   const [info, setInfo] = useState<string | null>(null);
   const [dialog, setDialog] = useState<'upgrade' | 'part' | 'edit' | 'delete' | ShipComponent | null>(null);
+  const [editing, setEditing] = useState<ShipUpgrade | null>(null);
   const [amount, setAmount] = useState<Record<string, string>>({});
   const [miles, setMiles] = useState('');
   const [cargo, setCargo] = useState({ name: '', qty: '1', tons: '' });
@@ -240,7 +297,7 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
   if (missing) return <section className="card"><h1>No such ship</h1><p>She may have been scuttled, or taken out of your campaign.</p><Link className="btn" to="/ship">All ships</Link></section>;
   if (!doc || !ship) return problem ? <p className="notice" role="alert">{problem}</p> : <p>Rowing out to her…</p>;
 
-  const sheet = deriveShip(doc);
+  const sheet = deriveShip(doc, rule);
   const log = (next: ShipDoc, line: string) => setDoc(shipLog(next, line, today()));
   const hit = (part: ShipComponent, sign: 1 | -1) => {
     const n = whole(amount[part.id] ?? '');
@@ -336,15 +393,41 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
         <h2>Upgrades · {sheet.slots.used} of {sheet.slots.total} slots</h2>
         {doc.upgrades.length === 0 && <p className="soft">None fitted.</p>}
         {doc.upgrades.map((u) => (
-          <div key={u.id} className="resource">
-            <div>
-              <div className="resource-name">{u.name}</div>
-              <div className="page-ref">{[`${u.slots} slot${u.slots === 1 ? '' : 's'}`, u.how === 'bought' ? `bought${u.paid ? ` for ${exactBerries(u.paid)}` : ''}` : u.how === 'gift' ? 'a gift' : 'your own', u.note].filter(Boolean).join(' · ')}</div>
+          <div key={u.id} className="tracker">
+            <div className="resource">
+              <button className="attack-name" onClick={() => setEditing(u)}>
+                <span className="resource-name">{u.name}{u.entry ? '' : ' (your own)'}</span>
+                <span className="page-ref">{[`${u.slots} slot${u.slots === 1 ? '' : 's'}`, `${UPGRADE_SOURCES[u.how]}${u.paid ? ` for ${exactBerries(u.paid)}` : ''}`, u.worth !== undefined ? `worth ${exactBerries(u.worth)}` : '', u.note].filter(Boolean).join(' · ')}</span>
+              </button>
+              <button className="btn" onClick={() => setEditing(u)} aria-label={`Change ${u.name}`}>Change</button>
             </div>
-            <button className="btn" onClick={() => log({ ...doc, upgrades: doc.upgrades.filter((x) => x.id !== u.id) }, `Removed ${u.name}`)}>Remove</button>
+            {u.text && <details className="rule-text"><summary>What it does</summary><p className="feature-text">{u.text}</p></details>}
           </div>
         ))}
         <button className="btn btn-primary" onClick={() => setDialog('upgrade')}>Add an upgrade</button>
+        <p className="page-ref">Tap an upgrade to change it: its name, slots, how she came by it, what was paid and what it is worth.</p>
+      </section>
+
+      <section className="card">
+        <h2>What she is worth</h2>
+        <p className={sheet.worth.overridden ? 'big num edited' : 'big num'}>{exactBerries(sheet.worth.value)}</p>
+        {sheet.worth.overridden && (
+          <p className="page-ref">Set by the crew. Calculated: {exactBerries(sheet.worth.calculated)}. <button className="btn" onClick={() => log({ ...doc, worth: undefined }, `Worth back to the calculated ${exactBerries(sheet.worth.calculated)}`)}>Use calculated</button></p>
+        )}
+        <details className="rule-text">
+          <summary>How that is worked out</summary>
+          <ul className="notes">
+            {sheet.worth.lines.map((l, i) => <li key={i}>{i ? '+ ' : ''}{exactBerries(l.value)} · {l.label}</li>)}
+            <li>= {exactBerries(sheet.worth.calculated)}</li>
+          </ul>
+        </details>
+        {sheet.worth.book !== null && (
+          <p className="page-ref">
+            The book’s {rule(doc.type!)?.name ?? 'ship'} costs {exactBerries(sheet.worth.book)} · {cite(BOOK, rule(doc.type!)!.source.page)}.
+            {doc.cost !== sheet.worth.book ? ` Hers is ${exactBerries(doc.cost)}, ${exactBerries(Math.abs(doc.cost - sheet.worth.book))} ${doc.cost > sheet.worth.book ? 'more' : 'less'}; upgrade prices that are a share of the ship’s cost use hers.` : ''}
+          </p>
+        )}
+        <p className="page-ref">Change her own cost or set her worth outright under Edit.</p>
       </section>
 
       <section className="card">
@@ -415,9 +498,18 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
           doc={doc}
           onClose={() => setDialog(null)}
           onAdd={(upgrade, cost, component) => {
-            log({ ...doc, upgrades: [...doc.upgrades, upgrade], components: component ? [...doc.components, component] : doc.components, treasury: doc.treasury - cost }, `${upgrade.how === 'bought' ? `Bought ${upgrade.name} for ${exactBerries(cost)}` : `Fitted ${upgrade.name}`}`);
+            log({ ...doc, upgrades: [...doc.upgrades, upgrade], components: component ? [...doc.components, component] : doc.components, treasury: doc.treasury - cost }, cost ? `Bought ${upgrade.name} for ${exactBerries(cost)}` : `Fitted ${upgrade.name} (${UPGRADE_SOURCES[upgrade.how]}${upgrade.note ? `: ${upgrade.note}` : ''})`);
             setDialog(null);
           }}
+        />
+      )}
+      {editing && (
+        <UpgradeEditDialog
+          doc={doc}
+          initial={editing}
+          onClose={() => setEditing(null)}
+          onSave={(next) => { setDoc({ ...doc, upgrades: doc.upgrades.map((x) => (x.id === next.id ? next : x)) }); setEditing(null); }}
+          onRemove={() => { log({ ...doc, upgrades: doc.upgrades.filter((x) => x.id !== editing.id) }, `Removed ${editing.name}`); setEditing(null); }}
         />
       )}
       {dialog === 'part' && <ComponentDialog onSave={saveComponent} onClose={() => setDialog(null)} />}
@@ -428,17 +520,24 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
         <Dialog title="Edit the ship" onClose={() => setDialog(null)}>
           <label className="field"><span className="label">Name</span><input value={doc.name} onChange={(e) => setDoc({ ...doc, name: e.target.value })} maxLength={80} /></label>
           <div className="grid-2">
+            <label className="field"><span className="label">What she is</span><input value={doc.typeName ?? ''} onChange={(e) => setDoc({ ...doc, typeName: e.target.value || undefined })} placeholder="Modified Caravel" maxLength={60} /></label>
             <label className="field"><span className="label">Size</span><input value={doc.size} onChange={(e) => setDoc({ ...doc, size: e.target.value })} maxLength={20} /></label>
+            <label className="field"><span className="label">Dimensions</span><input value={doc.dimensions ?? ''} onChange={(e) => setDoc({ ...doc, dimensions: e.target.value || undefined })} placeholder="70 ft. by 20 ft." maxLength={60} /></label>
             <label className="field"><span className="label">Her own cost (฿)</span><input type="number" inputMode="numeric" min={0} value={doc.cost} onChange={(e) => setDoc({ ...doc, cost: whole(e.target.value) })} /></label>
+            <label className="field"><span className="label">What she is worth (฿)</span><input type="number" inputMode="numeric" min={0} value={doc.worth ?? ''} placeholder={String(sheet.worth.calculated)} onChange={(e) => setDoc({ ...doc, worth: optional(e.target.value) })} /></label>
             <label className="field"><span className="label">Upgrade slots</span><input type="number" inputMode="numeric" min={0} value={doc.upgradeSlots} onChange={(e) => setDoc({ ...doc, upgradeSlots: whole(e.target.value) })} /></label>
             <label className="field"><span className="label">Crew she needs</span><input type="number" inputMode="numeric" min={0} value={doc.crewMax} onChange={(e) => setDoc({ ...doc, crewMax: whole(e.target.value) })} /></label>
             <label className="field"><span className="label">Passenger room</span><input type="number" inputMode="numeric" min={0} value={doc.passengerMax} onChange={(e) => setDoc({ ...doc, passengerMax: whole(e.target.value) })} /></label>
             <label className="field"><span className="label">Cargo (tons)</span><input type="number" inputMode="decimal" min={0} step="any" value={doc.cargoTons} onChange={(e) => setDoc({ ...doc, cargoTons: decimal(e.target.value) ?? 0 })} /></label>
-            <label className="field"><span className="label">Pace (mph)</span><input type="number" inputMode="decimal" min={0} step="any" value={doc.pace.mph} onChange={(e) => setDoc({ ...doc, pace: { ...doc.pace, mph: decimal(e.target.value) ?? 0 } })} /></label>
+            <label className="field"><span className="label">Pace (mph)</span><input type="number" inputMode="decimal" min={0} step="any" value={doc.pace.mph} onChange={(e) => { const mph = decimal(e.target.value) ?? 0; setDoc({ ...doc, pace: { mph, milesPerDay: Math.round(mph * 24 * 100) / 100 } }); }} /></label>
             {SHIP_ABILITIES.map((a) => (
               <label key={a} className="field"><span className="label">{a.toUpperCase()}</span><input type="number" inputMode="numeric" min={0} max={30} value={doc.abilities[a]} onChange={(e) => setDoc({ ...doc, abilities: { ...doc.abilities, [a]: Math.min(30, whole(e.target.value)) } })} /></label>
             ))}
           </div>
+          <p className="page-ref">
+            Her own cost is what upgrade prices take their share of{sheet.worth.book !== null ? ` (the book’s is ${exactBerries(sheet.worth.book)})` : ''}. Her worth is worked out from that and her upgrades ({exactBerries(sheet.worth.calculated)}) unless you type one in.{' '}
+            {doc.worth !== undefined && <button className="btn" onClick={() => setDoc({ ...doc, worth: undefined })}>Use calculated</button>}
+          </p>
           {!store.local && ship.mine && (
             <label className="field">
               <span className="label">Who sails her</span>

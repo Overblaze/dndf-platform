@@ -27,6 +27,17 @@ export interface ShipComponent {
   damage: number;
 }
 
+/** How a crew can come by an upgrade. Only 'bought' means berries changed hands. */
+export const UPGRADE_SOURCES = {
+  bought: 'bought',
+  gift: 'a gift',
+  plunder: 'plundered or salvaged',
+  built: 'built by the crew',
+  reward: 'a reward',
+  other: 'come by another way',
+} as const;
+export type UpgradeSource = keyof typeof UPGRADE_SOURCES;
+
 export interface ShipUpgrade {
   id: string;
   /** The upgrade's entry in the rules data, when it is one from the book. */
@@ -34,10 +45,14 @@ export interface ShipUpgrade {
   name: string;
   slots: number;
   /** How the crew came by it. */
-  how: 'bought' | 'gift' | 'custom';
+  how: UpgradeSource;
   /** What was paid, in berries. */
   paid?: number;
+  /** What it adds to the ship's worth, when that is not what was paid or the book's price. */
+  worth?: number;
   note?: string;
+  /** What it does, for an upgrade that is not the book's. */
+  text?: string;
 }
 
 export interface HoldItem { id: string; name: string; qty: number; /** Weight of one, in tons. */ tons?: number; notes?: string }
@@ -53,6 +68,8 @@ export interface ShipDoc {
   dimensions?: string;
   /** What the ship itself cost, which upgrade prices are a share of. */
   cost: number;
+  /** What she is worth, when the crew or the DM says it is not what the sheet works out. */
+  worth?: number;
   upgradeSlots: number;
   crewMax: number;
   passengerMax: number;
@@ -125,10 +142,11 @@ export function normalizeShip(raw: unknown): ShipDoc | null {
     schema: 1,
     name: text(r.name, 80).trim() || 'Our ship',
     type: typeof r.type === 'string' ? r.type : undefined,
-    typeName: typeof r.typeName === 'string' ? r.typeName : undefined,
+    typeName: typeof r.typeName === 'string' && r.typeName.trim() ? r.typeName.trim().slice(0, 60) : undefined,
     size: text(r.size, 20) || 'Gargantuan',
-    dimensions: typeof r.dimensions === 'string' ? r.dimensions.slice(0, 60) : undefined,
+    dimensions: typeof r.dimensions === 'string' && r.dimensions.trim() ? r.dimensions.trim().slice(0, 60) : undefined,
     cost: Math.max(0, num(r.cost, 0)),
+    worth: typeof r.worth === 'number' && Number.isFinite(r.worth) ? Math.max(0, Math.round(r.worth)) : undefined,
     upgradeSlots: count(r.upgradeSlots),
     crewMax: count(r.crewMax, 1),
     passengerMax: count(r.passengerMax),
@@ -148,8 +166,12 @@ export function normalizeShip(raw: unknown): ShipDoc | null {
     })),
     upgrades: list(r.upgrades).map((u, i) => ({
       id: id(u.id, 'upgrade', i), entry: typeof u.entry === 'string' ? u.entry : undefined, name: text(u.name, 80) || 'Upgrade', slots: count(u.slots),
-      how: u.how === 'gift' || u.how === 'custom' ? u.how : 'bought', paid: typeof u.paid === 'number' && Number.isFinite(u.paid) ? Math.max(0, Math.round(u.paid)) : undefined,
+      // 'custom' is how a ship saved before there were other ways marked an upgrade of the crew's own.
+      how: typeof u.how === 'string' && Object.hasOwn(UPGRADE_SOURCES, u.how) ? (u.how as UpgradeSource) : u.how === 'custom' ? 'other' : 'bought',
+      paid: typeof u.paid === 'number' && Number.isFinite(u.paid) ? Math.max(0, Math.round(u.paid)) : undefined,
+      worth: typeof u.worth === 'number' && Number.isFinite(u.worth) ? Math.max(0, Math.round(u.worth)) : undefined,
       note: typeof u.note === 'string' && u.note ? u.note.slice(0, 200) : undefined,
+      text: typeof u.text === 'string' && u.text ? u.text.slice(0, 4000) : undefined,
     })),
     crew: count(r.crew),
     passengers: count(r.passengers),
@@ -179,6 +201,12 @@ export interface ShipSheet {
   weapons: { total: number; working: number; usable: number };
   cargo: { tons: number; capacity: number; over: boolean; lines: (HoldItem & { total: number })[] };
   slots: { used: number; total: number; over: boolean };
+  /**
+   * What she is worth: her own cost plus each upgrade (what the crew says it is worth, else what was paid, else the
+   * book's price for this ship). `value` is the crew's own figure when they have set one; `book` is the price of the
+   * ship type she was started from.
+   */
+  worth: { value: number; calculated: number; overridden: boolean; book: number | null; lines: { label: string; value: number }[] };
   treasury: number;
   /** Days the rations last for everyone aboard; null with nobody aboard. */
   rationDays: number | null;
@@ -189,7 +217,16 @@ export interface ShipSheet {
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
 
-export function deriveShip(doc: ShipDoc): ShipSheet {
+/** What one upgrade adds to the ship's worth, and where that figure comes from. */
+export function upgradeWorth(upgrade: ShipUpgrade, shipCost: number, entry?: RuleEntry): { value: number; from: 'set' | 'paid' | 'book' | 'none' } {
+  if (upgrade.worth !== undefined) return { value: upgrade.worth, from: 'set' };
+  if (upgrade.paid !== undefined) return { value: upgrade.paid, from: 'paid' };
+  if (entry) return { value: upgradePrice(entry, shipCost), from: 'book' };
+  return { value: 0, from: 'none' };
+}
+
+/** `rule` looks an entry up in the rules data: the book's price for the ship type and for upgrades that were not paid for. */
+export function deriveShip(doc: ShipDoc, rule: (id: string) => RuleEntry | undefined = () => undefined): ShipSheet {
   const notes: string[] = [];
   const abilities = Object.fromEntries(SHIP_ABILITIES.map((a) => [a, { score: doc.abilities[a], mod: abilityMod(doc.abilities[a]), autoFail: doc.abilities[a] === 0 }])) as ShipSheet['abilities'];
   const components: SheetShipComponent[] = doc.components.map((c) => {
@@ -226,7 +263,14 @@ export function deriveShip(doc: ShipDoc): ShipSheet {
   }
 
   const used = doc.upgrades.reduce((sum, u) => sum + u.slots, 0);
-  if (used > doc.upgradeSlots) notes.push(`${used} upgrade slots used of ${doc.upgradeSlots}`);
+  if (used > doc.upgradeSlots) notes.push(`${used} upgrade slot${used === 1 ? '' : 's'} used of ${doc.upgradeSlots}`);
+  const worthLines: ShipSheet['worth']['lines'] = [{ label: doc.typeName ? `${doc.typeName} herself` : 'The ship herself', value: doc.cost }];
+  for (const u of doc.upgrades) {
+    const w = upgradeWorth(u, doc.cost, u.entry ? rule(u.entry) : undefined);
+    if (w.value) worthLines.push({ label: `${u.name} (${w.from === 'set' ? 'as valued' : w.from === 'paid' ? 'what was paid' : 'the book’s price'})`, value: w.value });
+  }
+  const calculated = worthLines.reduce((sum, l) => sum + l.value, 0);
+  const bookType = doc.type ? rule(doc.type) : undefined;
   const aboard = doc.crew + doc.passengers;
   const size = (['Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Gargantuan'].includes(doc.size) ? doc.size : 'Gargantuan') as ShipSize;
   return {
@@ -238,6 +282,7 @@ export function deriveShip(doc: ShipDoc): ShipSheet {
     weapons: { total: weapons.length, working, usable: short.usableWeapons },
     cargo: { tons, capacity: doc.cargoTons, over, lines },
     slots: { used, total: doc.upgradeSlots, over: used > doc.upgradeSlots },
+    worth: { value: doc.worth ?? calculated, calculated, overridden: doc.worth !== undefined, book: typeof bookType?.cost === 'number' ? bookType.cost : null, lines: worthLines },
     treasury: doc.treasury,
     rationDays: aboard > 0 ? round2(doc.rations / aboard) : null,
     soul: { points: doc.soul, dc: shipSoulDc(size), sentient: doc.soul >= 3 },
@@ -249,6 +294,7 @@ export function deriveShip(doc: ShipDoc): ShipSheet {
 export function damageComponent(doc: ShipDoc, id: string, amount: number): { doc: ShipDoc; summary: string } {
   const part = doc.components.find((c) => c.id === id);
   if (!part) return { doc, summary: '' };
+  if (!Number.isFinite(amount) || Math.round(amount) === 0) return { doc, summary: '' };
   const max = part.maxHp ?? Infinity;
   if (amount < 0) {
     const damage = Math.max(0, part.damage + Math.round(amount));
