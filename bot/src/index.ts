@@ -4,6 +4,7 @@ import type { RollMode, Sheet } from '@dndf/engine';
 import { dawnCommand, hp, partyLine, rest, roll, status, withPrivacy, type Outcome } from './commands';
 import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter, type BotShip } from './db';
 import { loadEnv } from './env';
+import { armoryMatches, itemAdd, itemList, itemMake, itemRemove, itemUse } from './itemCommands';
 import { closeBrowser, sheetPdf, SITE } from './pdf';
 import { rulesOf, sheetOf } from './rules';
 import { bountyReply, crewPosters, shipAboard, shipHit, shipStatus, shipTreasury, type ShipOutcome } from './shipCommands';
@@ -66,6 +67,14 @@ async function autocomplete(interaction: AutocompleteInteraction) {
   }
   const characters = (await db.charactersOf(interaction.user.id)) ?? [];
   const typed = interaction.options.getFocused().toLowerCase();
+  if (interaction.commandName === 'item' && focused.name !== 'character') {
+    const character = pick(characters, interaction.options.getString('character'));
+    if (focused.name === 'name') return interaction.respond(armoryMatches([...rulesOf(character?.doc.rulesVersion ?? 'dndf-10').values()].filter((e) => e.kind === 'item'), typed));
+    // "item": what this character carries; for /item use, only the things that can be switched on.
+    const using = interaction.options.getSubcommand() === 'use';
+    const carried = (character?.doc.inventory ?? []).filter((i) => i.name.toLowerCase().includes(typed) && (!using || i.custom));
+    return interaction.respond([...new Set(carried.map((i) => i.name))].slice(0, 25).map((name) => ({ name: name.slice(0, 100), value: name.slice(0, 100) })));
+  }
   await interaction.respond(characters.filter((c) => c.doc.name.toLowerCase().includes(typed)).slice(0, 25).map((c) => ({ name: c.doc.name.slice(0, 100), value: c.id })));
 }
 
@@ -104,6 +113,30 @@ async function run(interaction: ChatInputCommandInteraction) {
   const sheet = sheetOf(doc);
 
   if (name === 'bounty') return interaction.editReply(bountyReply(doc, sheet).slice(0, 1990));
+
+  if (name === 'item') {
+    // Gear is not secret, and the sums here are of the saved character alone, as on the Gear tab.
+    const o = interaction.options;
+    const sub = o.getSubcommand();
+    const resheet = (next: typeof doc) => sheetOf(next);
+    const id = () => crypto.randomUUID();
+    const armory = [...rulesOf(doc.rulesVersion).values()].filter((e) => e.kind === 'item');
+    const outcome: Outcome | null =
+      sub === 'list' ? itemList(doc, sheet)
+      : sub === 'add' ? itemAdd(doc, sheet, { name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), notes: o.getString('notes') }, armory, id, resheet)
+      : sub === 'make' ? itemMake(doc, sheet, {
+        kind: o.getString('kind', true), name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), rarity: o.getString('rarity'), description: o.getString('description'),
+        damage: o.getString('damage'), damageType: o.getString('damage_type'), martial: o.getBoolean('martial'), ranged: o.getBoolean('ranged'), finesse: o.getBoolean('finesse'), weaponBonus: o.getInteger('weapon_bonus'),
+        armorClass: o.getInteger('armor_class'), armorDex: o.getString('armor_dex'), acBonus: o.getInteger('ac_bonus'), speedBonus: o.getInteger('speed_bonus'), hpBonus: o.getInteger('hp_bonus'),
+        charges: o.getInteger('charges'), recharge: o.getString('recharge'), roll: o.getString('roll'), rollIs: o.getString('roll_is'), effect: o.getString('effect'), useNow: o.getBoolean('use_now'),
+      }, id, resheet)
+      : sub === 'use' ? itemUse(doc, sheet, o.getString('item', true), !o.getBoolean('put_away'), resheet)
+      : sub === 'remove' ? itemRemove(doc, sheet, o.getString('item', true), o.getInteger('quantity'), resheet)
+      : null;
+    if (!outcome) return interaction.editReply(`I don't know /item ${sub}.`);
+    if (outcome.doc && outcome.log) await db.save(interaction.user.id, character, outcome.doc, outcome.log);
+    return interaction.editReply(outcome.reply.slice(0, 1990));
+  }
 
   if (name === 'sheet') {
     const pdf = await sheetPdf(doc, Boolean(interaction.options.getBoolean('full_text')));

@@ -9,7 +9,7 @@ import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { RARITY_LEVEL, bounty as bountyOf, type WantedPoster } from './bounty';
-import { carriedWeight, type InventoryLine } from './inventory';
+import { carriedWeight, withEquippedItems, type InventoryLine } from './inventory';
 import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
 import { raceChoices, type RaceChoice } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
@@ -318,7 +318,9 @@ interface ActiveFeature {
   parent?: string;
 }
 
-export function deriveSheet(doc: CharacterDoc, handbook: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS, secrets: Secrets = NO_SECRETS): Sheet {
+export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry>, settings: CampaignSettings = DEFAULT_SETTINGS, secrets: Secrets = NO_SECRETS): Sheet {
+  // The saved character, with what the player's made items bring while they are in use.
+  const doc = withEquippedItems(saved);
   // The handbook's rules, plus any classes the player wrote for this character and any private advancements it may see.
   const rules = withSecrets(rulesFor(doc, handbook), secrets, doc.rulesVersion);
   const heldFruits = secrets.granted.filter((g) => g.kind === 'owner' && g.entry.kind === 'devilFruit');

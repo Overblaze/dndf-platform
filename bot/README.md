@@ -14,6 +14,11 @@ same rules data (`data/rules`) as the website, so its numbers cannot differ from
 | `/sheet` | The character sheet as a PDF (the website's print page). `full_text:` adds each feature's rules text. Private unless `public:` is set. |
 | `/party` | Everyone in your campaign: hit points and AC. |
 | `/bounty` | Your character's wanted poster as issued. `crew: true` lists every poster out in your campaign, highest first, with the total. |
+| `/item list` | Everything your character carries, marking what is in use. |
+| `/item add` | Something from the book's armory (names are offered as you type; it comes with its weight) or a plain item of your own. |
+| `/item make` | An item of your own that works on the sheet: a weapon (damage dice, +N), armor (base AC, Dexterity), a shield, or something with bonuses, charges and dice. The same thing the website's "Make an item" saves. |
+| `/item use` | Put an item you made to use, or away. Its numbers join or leave the sheet. |
+| `/item remove` | Remove an item, or some of it. |
 | `/ship status` | Your crew's ship at a glance: speed, crew, every part's hit points, treasury, what is wrong. |
 | `/ship damage` / `/ship repair` | One part of the ship, by name (`hull`, `sails`, `cannon 2`). Damage under the part's threshold does nothing. |
 | `/ship treasury` | Put berries into the crew's treasury or take them out, with what for. |
