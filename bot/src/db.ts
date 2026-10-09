@@ -149,6 +149,7 @@ export class Db {
       id: String(row.id), createdAt: String(row.created_at), reporter: String(row.reporter ?? ''), kind: row.kind as ReportKind, message: String(row.message ?? ''),
       page: String(row.page ?? ''), appVersion: String(row.app_version ?? ''), device: String(row.device ?? ''), source: row.source as Report['source'], signedIn: row.user_id != null,
       status: row.status as Report['status'], doneAt: (row.done_at as string | null) ?? null, doneBy: (row.done_by as string | null) ?? null,
+      fileName: (row.file_name as string | null) ?? null, fileSize: row.file_size == null ? null : Number(row.file_size), filePath: (row.file_path as string | null) ?? null, fileSaved: (row.file_saved as string | null) ?? null,
     };
   }
 
@@ -181,11 +182,28 @@ export class Db {
     return data ? Db.report(data) : null;
   }
 
-  /** A report sent with /report. It is tied to the sender's website account when there is one. */
-  async addReport(discordId: string, reporter: string, kind: ReportKind, message: string): Promise<void> {
+  /** A report sent with /report. It is tied to the sender's website account when there is one. A file sent with it is already in the bot's inbox. */
+  async addReport(discordId: string, reporter: string, kind: ReportKind, message: string, file?: { name: string; size: number; saved: string }): Promise<void> {
     const owner = await this.accountOf(discordId);
-    const { error } = await this.client.from('reports').insert({ user_id: owner, reporter: reporter.slice(0, 60), kind, message: message.slice(0, 2000), source: 'discord' });
+    const { error } = await this.client.from('reports').insert({
+      user_id: owner, reporter: reporter.slice(0, 60), kind, message: message.slice(0, 2000), source: 'discord',
+      ...(file ? { file_name: file.name.slice(0, 120), file_size: file.size, file_saved: file.saved.slice(0, 200) } : {}),
+    });
     if (error) throw new Error(`Could not save the report: ${error.message}`);
+  }
+
+  /** The file waiting in storage for a report sent from the website. */
+  async reportFile(path: string): Promise<Uint8Array> {
+    const { data, error } = await this.client.storage.from('report-files').download(path);
+    if (error || !data) throw new Error(`Could not fetch the report's file: ${error?.message ?? 'nothing came back'}`);
+    return new Uint8Array(await data.arrayBuffer());
+  }
+
+  /** The bot has taken a report's file (or refused it): note what became of it and clear it out of storage. */
+  async reportFileTaken(id: string, path: string, saved: string): Promise<void> {
+    const { error } = await this.client.from('reports').update({ file_saved: saved.slice(0, 200), file_path: null }).eq('id', id);
+    if (error) throw new Error(`Could not note the report's file: ${error.message}`);
+    await this.client.storage.from('report-files').remove([path]);
   }
 
   /**

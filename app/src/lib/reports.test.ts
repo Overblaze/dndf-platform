@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('./supabase', () => ({ supabase: null }));
-const { buildOf, deviceLine, draftProblem, keepDraft, readDraft, REPORT_MAX, sendReport } = await import('./reports');
+const { buildOf, deviceLine, draftProblem, fileProblem, keepDraft, megabytes, readDraft, REPORT_KINDS, REPORT_MAX, sendReport } = await import('./reports');
 
 const store = () => {
   const kept = new Map<string, string>();
@@ -45,6 +45,18 @@ describe('reports to the developer, on the site', () => {
     expect(storage.kept.size).toBe(0);
     expect(readDraft({ getItem: () => '{not json' })).toEqual({});
     expect(readDraft({ getItem: () => JSON.stringify({ kind: 'rant', message: 42 }) })).toEqual({ kind: undefined, message: undefined, reporter: undefined });
+  });
+
+  it('takes a PDF or a text file up to 50 MB, and says why not otherwise', () => {
+    expect(fileProblem({ name: 'Book One.pdf', size: 4_000_000 })).toBeNull();
+    expect(fileProblem({ name: 'house rules.TXT', size: 12 })).toBeNull();
+    expect(fileProblem({ name: 'class.md', size: 12 })).toBeNull();
+    expect(fileProblem({ name: 'map.png', size: 12 })).toBe('Only PDF and text files (.pdf, .txt, .md) can be sent.');
+    expect(fileProblem({ name: 'book.pdf.exe', size: 12 })).toMatch(/Only PDF and text/);
+    expect(fileProblem({ name: 'empty.pdf', size: 0 })).toBe('That file is empty.');
+    expect(fileProblem({ name: 'huge.pdf', size: 51 * 1024 * 1024 })).toBe('That file is 51.0 MB; 50 MB is the most.');
+    expect(megabytes(1536)).toBe('2 KB');
+    expect(REPORT_KINDS.map((k) => k.id)).toEqual(['bug', 'idea', 'source', 'other']);
   });
 
   it('says so plainly on a copy of the site with no database', async () => {

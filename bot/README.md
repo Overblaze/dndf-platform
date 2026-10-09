@@ -65,6 +65,14 @@ in one channel, with a **Mark completed** button that only someone who may manag
 press (the server's owner always may). Pressed, the message turns green, says who completed it and when, and the
 button becomes **Reopen**. `/report open` lists what is not completed yet.
 
+A report can carry a **file**: a PDF or a text file (.pdf, .txt, .md, up to 50 MB) of source material to add
+later (`0012_report_files.sql`). From the site only a signed-in member can attach one; it waits in a private
+storage bucket, in the sender's own folder. In Discord it is the `file` option of `/report send`. Either way the
+bot checks the file is what its name says, keeps a copy in `~/dndf/sources/inbox/` (named by day and report; set
+`DNDF_INBOX_DIR` to put it elsewhere), attaches it to the post in the report channel when it is within what the
+server allows (10 MB; 50 or 100 MB at boost levels 2 and 3), and clears it out of the bucket. A file too large to
+attach is still kept on the machine, and the post says so. Nothing from the inbox is ever committed.
+
 To switch it on, add one line to `~/dndf/secret/bot.env` and run `bash bot/install-service.sh`:
 
     DISCORD_REPORT_CHANNEL_ID=<the channel's id>

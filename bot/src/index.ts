@@ -6,7 +6,10 @@ import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter, type BotShip } f
 import { loadEnv } from './env';
 import { armoryMatches, itemAdd, itemList, itemMake, itemRemove, itemUse } from './itemCommands';
 import { closeBrowser, sheetPdf, SITE } from './pdf';
-import { KIND_LABEL, openSummary, reportButton, reportMessage, type ReportKind } from './reports';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+import { KIND_LABEL, REFUSED, attachLimit, fileProblem, inboxName, looksLike, openSummary, reportButton, reportMessage, safeFileName, type Report, type ReportKind } from './reports';
 import { rulesOf, sheetOf } from './rules';
 import { surgeAdd, surgeChoices, surgeList, surgeMatches, surgeRemove } from './surgeCommands';
 import { bountyReply, crewPosters, shipAboard, shipHit, shipStatus, shipTreasury, type ShipOutcome } from './shipCommands';
@@ -104,6 +107,28 @@ async function autocomplete(interaction: AutocompleteInteraction) {
 // website and one sent with /report take the same road, and none is lost while the bot is off.
 let posting = false;
 let complained = '';
+
+// Files sent with a report are kept here, on the bot's own machine, beside the other source material.
+const INBOX = process.env.DNDF_INBOX_DIR ?? join(homedir(), 'dndf', 'sources', 'inbox');
+
+/** Writes a report's file into the inbox and gives the name it was kept under; or says why it was refused. */
+function keepFile(reportId: string, name: string, bytes: Uint8Array, day: string): string {
+  const problem = fileProblem(name, bytes.length);
+  if (problem) return `${REFUSED}${problem}`;
+  if (!looksLike(name, bytes)) return `${REFUSED}it is not the kind of file its name says`;
+  mkdirSync(INBOX, { recursive: true, mode: 0o700 });
+  const kept = inboxName(reportId, name, day);
+  writeFileSync(join(INBOX, kept), bytes, { mode: 0o600 });
+  return kept;
+}
+
+/** A file from the website waits in storage: fetch it, keep it here, and clear it out of storage. */
+async function takeFile(report: Report): Promise<Report> {
+  if (!report.filePath || !report.fileName) return report;
+  const saved = keepFile(report.id, report.fileName, await db.reportFile(report.filePath), report.createdAt.slice(0, 10));
+  await db.reportFileTaken(report.id, report.filePath, saved);
+  return { ...report, filePath: null, fileSaved: saved };
+}
 async function postReports(): Promise<void> {
   const channelId = env.DISCORD_REPORT_CHANNEL_ID;
   if (!channelId || posting) return;
@@ -113,8 +138,12 @@ async function postReports(): Promise<void> {
     if (waiting.length === 0) return;
     const channel = await client.channels.fetch(channelId);
     if (!channel?.isSendable()) throw new Error('the report channel cannot be written to (check DISCORD_REPORT_CHANNEL_ID and that the bot may view and send there)');
-    for (const report of waiting) {
-      const sent = await channel.send(reportMessage({ ...report, status: 'posted' }));
+    const limit = attachLimit('guild' in channel && channel.guild ? channel.guild.premiumTier : 0);
+    for (const waitingReport of waiting) {
+      const report = await takeFile(waitingReport);
+      const kept = report.fileSaved && !report.fileSaved.startsWith(REFUSED) ? join(INBOX, report.fileSaved) : null;
+      const attach = Boolean(kept && existsSync(kept) && (report.fileSize ?? Infinity) <= limit);
+      const sent = await channel.send({ ...reportMessage({ ...report, status: 'posted' }, { attached: attach }), ...(attach ? { files: [{ attachment: kept!, name: safeFileName(report.fileName ?? 'file.txt') }] } : {}) });
       // Kept only if the report was still new: if something else posted it meanwhile, this copy is taken down.
       if (!(await db.reportPosted(report.id, sent.id))) await sent.delete().catch(() => {});
     }
@@ -140,9 +169,20 @@ async function reportCommand(interaction: ChatInputCommandInteraction) {
     const lines = open.slice(0, 15).map((r) => `• ${KIND_LABEL[r.kind]} · ${r.createdAt.slice(0, 10)} · ${r.reporter || 'no name'}: ${r.message.replace(/\s+/g, ' ').slice(0, 90)}`);
     return interaction.editReply([`**${openSummary(open)}**`, ...lines, open.length > 15 ? `…and ${open.length - 15} more.` : ''].filter(Boolean).join('\n').slice(0, 1990));
   }
-  const kind = (interaction.options.getString('kind') ?? 'bug') as ReportKind;
+  const attachment = interaction.options.getAttachment('file');
+  const kind = (interaction.options.getString('kind') ?? (attachment ? 'source' : 'bug')) as ReportKind;
   const who = interaction.member && 'displayName' in interaction.member ? interaction.member.displayName : interaction.user.displayName;
-  await db.addReport(interaction.user.id, who, kind, interaction.options.getString('message', true));
+  let file: { name: string; size: number; saved: string } | undefined;
+  if (attachment) {
+    const problem = fileProblem(attachment.name, attachment.size);
+    if (problem) return interaction.editReply(`${problem} Nothing was sent.`);
+    const fetched = await fetch(attachment.url);
+    if (!fetched.ok) return interaction.editReply('I could not fetch that file from Discord. Nothing was sent; try again.');
+    const saved = keepFile(crypto.randomUUID(), attachment.name, new Uint8Array(await fetched.arrayBuffer()), new Date().toISOString().slice(0, 10));
+    if (saved.startsWith(REFUSED)) return interaction.editReply(`That file was not taken: ${saved.slice(REFUSED.length)}. Nothing was sent.`);
+    file = { name: attachment.name, size: attachment.size, saved };
+  }
+  await db.addReport(interaction.user.id, who, kind, interaction.options.getString('message', true), file);
   void postReports();
   return interaction.editReply(env.DISCORD_REPORT_CHANNEL_ID ? 'Sent. Matt has it; thank you.' : 'Saved. Matt will see it once the report channel is set up; thank you.');
 }
@@ -152,7 +192,8 @@ async function reportPressed(interaction: ButtonInteraction, pressed: { id: stri
   const who = interaction.member && 'displayName' in interaction.member ? interaction.member.displayName : interaction.user.displayName;
   const report = await db.reportDone(pressed.id, pressed.done, who);
   if (!report) return interaction.reply({ content: 'That report is no longer in the database.', flags: MessageFlags.Ephemeral });
-  return interaction.update(reportMessage(report));
+  // Whether the file is attached is read off the message itself, which keeps its attachment through the change.
+  return interaction.update(reportMessage(report, { attached: interaction.message.attachments.size > 0 }));
 }
 
 async function run(interaction: ChatInputCommandInteraction) {
