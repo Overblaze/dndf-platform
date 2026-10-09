@@ -1,8 +1,8 @@
 // Making an item of your own, one question at a time, so that it works on the sheet: a weapon you
 // can attack with, armor that sets your Armor Class, or something with powers and charges.
 import {
-  CUSTOM_BONUS_TYPES, ITEM_KINDS, ITEM_RARITIES, armorFromItem, cleanCustomItem, exactBerries, itemSummary, parseDice, parseWeight, weaponFromItem,
-  type CustomBonusType, type CustomItem, type InventoryItem, type ItemKind, type RuleEntry,
+  ABILITIES, ABILITY_NAMES, CUSTOM_BONUS_TYPES, ITEM_KINDS, ITEM_RARITIES, SKILLS, armorFromItem, bookMagicItems, cite, cleanCustomItem, exactBerries, itemSummary, parseDice, parseWeight, weaponFromItem,
+  type Ability, type CustomBonusType, type CustomItem, type InventoryItem, type ItemKind, type RuleEntry,
 } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
@@ -26,11 +26,21 @@ const STEP_NAMES: Record<Step, string> = { kind: 'What is it?', basics: 'The bas
 const whole = (raw: string) => { const n = Math.round(Number(raw)); return raw.trim() !== '' && Number.isFinite(n) ? n : undefined; };
 const diceProblem = (dice: string): string | null => { try { parseDice(dice); return null; } catch { return `“${dice}” is not dice the app can roll. Write it like 2d6 + 3.`; } };
 
-export function ItemWizard({ initial, armory, onSave, onClose }: { initial?: InventoryItem; armory: RuleEntry[]; onSave: (item: InventoryItem, useNow: boolean) => void; onClose: () => void }) {
+export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
+  initial?: InventoryItem; armory: RuleEntry[]; rules: Map<string, RuleEntry>; purse: number;
+  /** `pay` is how many berries to take from the purse for it. */
+  onSave: (item: InventoryItem, pay: number) => void; onClose: () => void;
+}) {
   const [item, setItem] = useState<InventoryItem>(initial ?? { id: crypto.randomUUID(), name: '', qty: 1 });
   const [custom, setCustom] = useState<CustomItem>(initial?.custom ?? { kind: 'weapon' });
   const [step, setStep] = useState<Step>(initial ? 'review' : 'kind');
   const [from, setFrom] = useState('');
+  const [bookItem, setBookItem] = useState('');
+  const [spell, setSpell] = useState({ name: '', level: 1 });
+  const [pay, setPay] = useState(false);
+  const [one, setOne] = useState({ what: '', value: '' });
+  const magic = useMemo(() => bookMagicItems(rules), [rules]);
+  const spellEntries = useMemo(() => [...rules.values()].filter((e) => e.kind === 'spell').sort((a, b) => a.name.localeCompare(b.name)), [rules]);
   const kind = custom.kind;
   // Plain gear has nothing to fight with and no powers; everything else may have powers.
   const steps = STEPS.filter((s) => (s === 'stats' ? kind === 'weapon' || kind === 'armor' : s === 'powers' ? kind !== 'gear' : true));
@@ -46,6 +56,36 @@ export function ItemWizard({ initial, armory, onSave, onClose }: { initial?: Inv
   const pickKind = (next: ItemKind) => {
     setFrom('');
     setCustom({ ...custom, kind: next, weapon: next === 'weapon' ? weapon : undefined, armor: next === 'armor' ? armor : undefined });
+  };
+  /** One of the book's magic items as the start: its words and page, rarity, cost and attunement. The numbers are the player's to add. */
+  const startFromBook = (id: string) => {
+    setBookItem(id);
+    const found = magic.find((m) => m.id === id);
+    if (!found) return;
+    const base = found.kind === 'weapon' && found.base ? armory.find((e) => e.name.toLowerCase() === found.base!.toLowerCase()) : undefined;
+    const w = base ? weaponFromItem(base) : null;
+    setItem({ ...item, name: found.name, weight: (base ? parseWeight(base.weight) : undefined) ?? item.weight });
+    setCustom({
+      kind: found.kind, rarity: found.rarity, value: found.value, text: found.text, attune: found.attune || undefined, source: { book: found.book, page: found.page },
+      weapon: found.kind === 'weapon' ? (w ? { damage: w.damage, damageType: w.damageType, category: w.category, ranged: w.ranged, finesse: w.finesse, twoHanded: w.twoHanded, heavy: w.heavy } : weapon) : undefined,
+      armor: found.kind === 'armor' ? armor : undefined,
+    });
+  };
+  const abilityRows = custom.abilities ?? [];
+  const setAbility = (ability: Ability, patch: { set?: number; bonus?: number }) => {
+    const now = { ...(abilityRows.find((a) => a.ability === ability) ?? { ability }), ...patch };
+    setCustom({ ...custom, abilities: [...abilityRows.filter((a) => a.ability !== ability), ...(now.set !== undefined || now.bonus ? [now] : [])].sort((a, b) => ABILITIES.indexOf(a.ability) - ABILITIES.indexOf(b.ability)) });
+  };
+  const saveRows = custom.saves ?? [];
+  const setSave = (ability: Ability | undefined, value: number) => setCustom({ ...custom, saves: [...saveRows.filter((v) => v.ability !== ability), ...(value ? [{ ...(ability ? { ability } : {}), value }] : [])] });
+  const skillRows = custom.skills ?? [];
+  const setSkill = (skill: string | undefined, value: number) => setCustom({ ...custom, skills: [...skillRows.filter((v) => v.skill !== skill), ...(value ? [{ ...(skill ? { skill } : {}), value }] : [])] });
+  const addSpell = () => {
+    const name = spell.name.trim();
+    if (!name) return;
+    const entry = spellEntries.find((e) => e.name.toLowerCase() === name.toLowerCase());
+    setCustom({ ...custom, spells: [...(custom.spells ?? []), { name: entry?.name ?? name, level: entry && typeof entry.level === 'number' ? entry.level : spell.level, ...(entry ? { entry: entry.id } : {}) }] });
+    setSpell({ name: '', level: 1 });
   };
   const startFrom = (id: string) => {
     setFrom(id);
@@ -63,13 +103,27 @@ export function ItemWizard({ initial, armory, onSave, onClose }: { initial?: Inv
   // What will be saved: checked by the same rules as everything read back from a save.
   const built = cleanCustomItem({ ...custom, weapon: kind === 'weapon' ? weapon : undefined, armor: kind === 'armor' ? armor : undefined, rolls: rolls.filter((r) => r.dice.trim()) }) ?? { kind };
   const name = item.name.trim() || KINDS[kind].name.replace(/^An? /, '').replace(/^\w/, (c) => c.toUpperCase());
-  const finish = (useNow: boolean) => onSave({ ...item, name, custom: built, equipped: useNow ? true : item.equipped }, useNow);
+  const finish = (useNow: boolean) => onSave({ ...item, name, custom: built, equipped: useNow ? true : item.equipped }, pay && built.value ? built.value : 0);
   const usable = kind !== 'gear';
 
   return (
     <Dialog title={initial ? `Change ${initial.name}` : 'Make an item'} onClose={onClose}>
       <p className="page-ref" aria-live="polite">Step {at + 1} of {steps.length} · {STEP_NAMES[step]}</p>
 
+      {step === 'kind' && magic.length > 0 && !initial && (
+        <label className="field">
+          <span className="label">Start from a magic item in the book (optional)</span>
+          <select value={bookItem} onChange={(e) => startFromBook(e.target.value)}>
+            <option value="">No, something of my own</option>
+            {[...new Set(magic.map((m) => m.chapter))].map((chapter) => (
+              <optgroup key={chapter} label={chapter}>
+                {magic.filter((m) => m.chapter === chapter).map((m) => <option key={m.id} value={m.id}>{m.name} ({[m.rarity, m.attune ? 'attunement' : ''].filter(Boolean).join(', ')})</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+      )}
+      {step === 'kind' && bookItem && <p className="page-ref">The book’s words for it are filled in, with its rarity, cost and page. The book gives its powers as text, so add the numbers it should change on the next steps.</p>}
       {step === 'kind' && (
         <div className="choice-list" role="radiogroup" aria-label="What kind of item">
           {ITEM_KINDS.map((k) => (
@@ -96,7 +150,8 @@ export function ItemWizard({ initial, armory, onSave, onClose }: { initial?: Inv
             </label>
             <label className="field"><span className="label">Worth (฿, optional)</span><input type="number" inputMode="numeric" min={0} value={custom.value ?? ''} onChange={(e) => setCustom({ ...custom, value: whole(e.target.value) })} /></label>
           </div>
-          <label className="field"><span className="label">What it is and does, in your words</span><textarea rows={4} value={custom.text ?? ''} onChange={(e) => setCustom({ ...custom, text: e.target.value || undefined })} maxLength={6000} /></label>
+          <label className="field"><span className="label">{custom.source ? `What it is and does · ${cite(custom.source.book, custom.source.page)}` : 'What it is and does, in your words'}</span><textarea rows={custom.source ? 8 : 4} value={custom.text ?? ''} onChange={(e) => setCustom({ ...custom, text: e.target.value || undefined })} maxLength={6000} /></label>
+          {kind !== 'gear' && <label className="check"><input type="checkbox" checked={custom.attune === true} onChange={(e) => setCustom({ ...custom, attune: e.target.checked || undefined })} /> It requires attunement (it only works once you have attuned to it)</label>}
         </>
       )}
 
@@ -172,6 +227,64 @@ export function ItemWizard({ initial, armory, onSave, onClose }: { initial?: Inv
             {kind === 'shield' && <p className="page-ref">The shield’s own +2 is already counted. Put only what it adds beyond that.</p>}
           </fieldset>
           <fieldset>
+            <legend className="label">Ability scores it changes while you use it</legend>
+            {ABILITIES.map((a) => {
+              const row = abilityRows.find((r) => r.ability === a);
+              return (
+                <div key={a} className="grid-3">
+                  <span className="label ability-row">{ABILITY_NAMES[a]}</span>
+                  <label className="field"><span className="label">Becomes</span><input type="number" inputMode="numeric" min={1} max={30} value={row?.set ?? ''} placeholder="—" aria-label={`${ABILITY_NAMES[a]} becomes`} onChange={(e) => setAbility(a, { set: whole(e.target.value) })} /></label>
+                  <label className="field"><span className="label">Or goes up by</span><input type="number" inputMode="numeric" min={-20} max={20} value={row?.bonus || ''} placeholder="0" aria-label={`${ABILITY_NAMES[a]} goes up by`} onChange={(e) => setAbility(a, { bonus: whole(e.target.value) || undefined })} /></label>
+                </div>
+              );
+            })}
+            <p className="page-ref">“Becomes 19” does nothing for a score already 19 or higher, like a Headband of Intellect. “Goes up by” stops at 30.</p>
+          </fieldset>
+          <fieldset>
+            <legend className="label">Saving throws and skills</legend>
+            <div className="grid-2">
+              <label className="field"><span className="label">Every saving throw</span><input type="number" inputMode="numeric" value={saveRows.find((v) => !v.ability)?.value || ''} placeholder="0" onChange={(e) => setSave(undefined, whole(e.target.value) ?? 0)} /></label>
+              <label className="field"><span className="label">Every skill check</span><input type="number" inputMode="numeric" value={skillRows.find((v) => !v.skill)?.value || ''} placeholder="0" onChange={(e) => setSkill(undefined, whole(e.target.value) ?? 0)} /></label>
+            </div>
+            {saveRows.filter((v) => v.ability).map((v) => (
+              <div key={v.ability} className="row wrap"><span>{ABILITY_NAMES[v.ability!]} saves {v.value >= 0 ? '+' : ''}{v.value}</span><button className="btn" onClick={() => setSave(v.ability, 0)} aria-label={`Remove the ${ABILITY_NAMES[v.ability!]} save bonus`}>Remove</button></div>
+            ))}
+            {skillRows.filter((v) => v.skill).map((v) => (
+              <div key={v.skill} className="row wrap"><span>{SKILLS.find((k) => k.id === v.skill)?.name} {v.value >= 0 ? '+' : ''}{v.value}</span><button className="btn" onClick={() => setSkill(v.skill, 0)} aria-label={`Remove the ${SKILLS.find((k) => k.id === v.skill)?.name} bonus`}>Remove</button></div>
+            ))}
+            <div className="grid-2">
+              <label className="field">
+                <span className="label">One saving throw or skill</span>
+                <select value={one.what} onChange={(e) => setOne({ ...one, what: e.target.value })}>
+                  <option value="">Choose…</option>
+                  <optgroup label="Saving throws">{ABILITIES.map((a) => <option key={a} value={`save:${a}`}>{ABILITY_NAMES[a]} save</option>)}</optgroup>
+                  <optgroup label="Skills">{SKILLS.map((k) => <option key={k.id} value={`skill:${k.id}`}>{k.name}</option>)}</optgroup>
+                </select>
+              </label>
+              <label className="field"><span className="label">Bonus</span><input type="number" inputMode="numeric" value={one.value} onChange={(e) => setOne({ ...one, value: e.target.value })} placeholder="2" /></label>
+            </div>
+            <button className="btn" disabled={!one.what || !whole(one.value)} onClick={() => { const [what, id] = one.what.split(':'); if (what === 'save') setSave(id as Ability, whole(one.value) ?? 0); else setSkill(id, whole(one.value) ?? 0); setOne({ what: '', value: '' }); }}>Add that bonus</button>
+          </fieldset>
+          <fieldset>
+            <legend className="label">Spells it lets you cast</legend>
+            {(custom.spells ?? []).map((x, i) => (
+              <div key={i} className="row wrap"><span>{x.name} ({x.level === 0 ? 'cantrip' : `level ${x.level}`}){x.entry ? '' : ' · your own'}</span><button className="btn" onClick={() => setCustom({ ...custom, spells: custom.spells!.filter((_, j) => j !== i) })} aria-label={`Remove the spell ${x.name}`}>Remove</button></div>
+            ))}
+            <div className="grid-2">
+              <label className="field">
+                <span className="label">Spell</span>
+                <input value={spell.name} onChange={(e) => setSpell({ ...spell, name: e.target.value })} list="item-spells" placeholder="Fireball" maxLength={80} />
+                <datalist id="item-spells">{spellEntries.map((e) => <option key={e.id} value={e.name} />)}</datalist>
+              </label>
+              <label className="field">
+                <span className="label">Level (0 = cantrip)</span>
+                <input type="number" inputMode="numeric" min={0} max={9} value={spell.level} onChange={(e) => setSpell({ ...spell, level: Math.max(0, Math.min(9, whole(e.target.value) ?? 0)) })} />
+              </label>
+            </div>
+            <button className="btn" disabled={!spell.name.trim() || (custom.spells?.length ?? 0) >= 20} onClick={addSpell}>Add the spell</button>
+            <p className="page-ref">They show on the Spells tab while the item is in use, and count against no class. A spell in the Library brings its text and level; anything else is listed by name. If casting costs charges, spend them on the item’s tracker.</p>
+          </fieldset>
+          <fieldset>
             <legend className="label">Charges</legend>
             <div className="grid-2">
               <label className="field"><span className="label">How many (blank = none)</span><input type="number" inputMode="numeric" min={0} value={custom.uses?.max ?? ''} onChange={(e) => { const max = whole(e.target.value); setCustom({ ...custom, uses: max && max > 0 ? { max, recharge: custom.uses?.recharge ?? 'long' } : undefined }); }} /></label>
@@ -225,13 +338,22 @@ export function ItemWizard({ initial, armory, onSave, onClose }: { initial?: Inv
             {kind === 'weapon' && !built.weapon && <li className="held-why">Its damage dice can’t be read, so it will not show under Attacks. Go back and write them like 1d8.</li>}
             {built.armor && <li>In use, it sets your Armor Class (replacing other armor on the sheet while it is on).</li>}
             {kind === 'shield' && <li>In use, it adds 2 to your Armor Class{built.bonuses?.some((b) => b.type === 'ac') ? ', and its own bonus on top' : ''}.</li>}
-            {built.bonuses?.length ? <li>In use, its numbers are added to your totals, each with a line in the breakdown.</li> : null}
+            {built.attune && <li>It requires attunement: it does nothing until it is both in use and attuned. Attuning takes one of your attunement slots.</li>}
+            {built.abilities?.map((a) => <li key={a.ability}>In use, your {ABILITY_NAMES[a.ability]} {[a.bonus ? `goes up by ${a.bonus}` : '', a.set !== undefined ? `becomes ${a.set} if it is lower` : ''].filter(Boolean).join(', then ')}; the modifier, saves, skills and everything else that uses it follow.</li>)}
+            {built.bonuses?.length || built.saves?.length || built.skills?.length ? <li>In use, its numbers are added to your totals, each with a line in the breakdown.</li> : null}
+            {built.spells?.length ? <li>In use, {built.spells.map((x) => x.name).join(', ')} {built.spells.length === 1 ? 'is' : 'are'} on your Spells tab.</li> : null}
             {built.uses && <li>It gets a tracker of {built.uses.max} charge{built.uses.max === 1 ? '' : 's'} on the Features tab, back on a {built.uses.recharge} rest.</li>}
             {built.rolls?.length ? <li>It gets a roll button for each of its dice on the Features tab.</li> : null}
             {kind === 'consumable' && <li>When you use one up, tap − on the Gear tab to take it off the count.</li>}
             {!usable && <li>Plain gear: it is carried and weighed, and does nothing else.</li>}
-            {built.value ? <li>Worth {exactBerries(built.value)}. Adding it does not take berries from your purse.</li> : null}
+            {built.value && initial ? <li>Worth {exactBerries(built.value)}.</li> : null}
           </ul>
+          {built.source && <p className="page-ref">Started from {name} · {cite(built.source.book, built.source.page)}. The numbers above are yours.</p>}
+          {built.value && !initial ? (
+            <label className="check">
+              <input type="checkbox" checked={pay} onChange={(e) => setPay(e.target.checked)} /> Take its worth, {exactBerries(built.value)}, from my berries (I have {exactBerries(purse)}){pay && built.value > purse ? ' — more than you have; you can still do it' : ''}
+            </label>
+          ) : null}
         </>
       )}
 

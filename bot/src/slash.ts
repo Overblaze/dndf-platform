@@ -10,6 +10,41 @@ const whichShip = (b: SlashCommandSubcommandBuilder) =>
   b.addStringOption((o) => o.setName('ship').setDescription('Which ship (default: your campaign’s, or the one changed last)').setAutocomplete(true))
     .addBooleanOption((o) => o.setName('private').setDescription('Only you see it (default: everyone in the channel does)'));
 
+const ABILITY_CHOICES = [['Strength', 'str'], ['Dexterity', 'dex'], ['Constitution', 'con'], ['Intelligence', 'int'], ['Wisdom', 'wis'], ['Charisma', 'cha']].map(([name, value]) => ({ name: name!, value: value! }));
+/** The 18 skills, by the ids the engine uses. */
+const SKILL_CHOICES = ['Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception', 'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion', 'Sleight of Hand', 'Stealth', 'Survival']
+  .map((name) => ({ name, value: name.toLowerCase().replace(/ /g, '_') }));
+// /item make: what every kind of item has, then its powers. A subcommand holds 25 options at most, so a
+// weapon (which has seven of its own) leaves out the bonuses that a worn thing is more likely to have.
+const named = (b: SlashCommandSubcommandBuilder) => b
+  .addStringOption((o) => o.setName('name').setDescription('What it is called').setRequired(true).setMaxLength(80))
+  .addStringOption((o) => o.setName('description').setDescription('What it is and does, in your words').setMaxLength(1500));
+const powers = (b: SlashCommandSubcommandBuilder, armorClass: boolean) => {
+  if (armorClass) b.addIntegerOption((o) => o.setName('ac_bonus').setDescription('Armor Class it adds while in use (a shield’s own +2 is already counted)').setMinValue(-20).setMaxValue(20));
+  return b
+    .addStringOption((o) => o.setName('ability').setDescription('An ability score it changes').addChoices(...ABILITY_CHOICES))
+    .addIntegerOption((o) => o.setName('ability_becomes').setDescription('That score becomes this while in use, if it is lower (19 for a Circlet of Intellect)').setMinValue(1).setMaxValue(30))
+    .addIntegerOption((o) => o.setName('ability_bonus').setDescription('Or: that score goes up by this while in use').setMinValue(-20).setMaxValue(20))
+    .addIntegerOption((o) => o.setName('charges').setDescription('How many charges it has').setMinValue(1).setMaxValue(999))
+    .addStringOption((o) => o.setName('recharge').setDescription('When the charges come back (default: long rest)').addChoices({ name: 'long rest', value: 'long' }, { name: 'short rest', value: 'short' }))
+    .addStringOption((o) => o.setName('roll').setDescription('Dice it rolls, like 2d6+3').setMaxLength(30))
+    .addStringOption((o) => o.setName('roll_is').setDescription('What that roll is').addChoices({ name: 'damage', value: 'damage' }, { name: 'healing', value: 'heal' }, { name: 'temporary hit points', value: 'tempHp' }, { name: 'something else', value: 'other' }))
+    .addStringOption((o) => o.setName('effect').setDescription('A standing effect, like: Resistance to cold damage').setMaxLength(200));
+};
+const extras = (b: SlashCommandSubcommandBuilder) => b
+  .addIntegerOption((o) => o.setName('save_bonus').setDescription('Bonus to every saving throw while in use').setMinValue(-20).setMaxValue(20))
+  .addStringOption((o) => o.setName('skill').setDescription('A skill it helps (leave out for every skill)').addChoices(...SKILL_CHOICES))
+  .addIntegerOption((o) => o.setName('skill_bonus').setDescription('Bonus to that skill, or to every skill, while in use').setMinValue(-20).setMaxValue(20))
+  .addIntegerOption((o) => o.setName('speed_bonus').setDescription('Feet of speed it adds while in use').setMinValue(-100).setMaxValue(100))
+  .addIntegerOption((o) => o.setName('hp_bonus').setDescription('Hit point maximum it adds while in use').setMinValue(-100).setMaxValue(100))
+  .addStringOption((o) => o.setName('spells').setDescription('Spells it lets you cast, separated by commas').setMaxLength(300));
+const tail = (b: SlashCommandSubcommandBuilder) => b
+  .addBooleanOption((o) => o.setName('attunement').setDescription('It requires attunement'))
+  .addStringOption((o) => o.setName('rarity').setDescription('How rare it is').addChoices(...['Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary', 'Mythical'].map((r) => ({ name: r, value: r }))))
+  .addIntegerOption((o) => o.setName('quantity').setDescription('How many (default 1)').setMinValue(1).setMaxValue(9999))
+  .addNumberOption((o) => o.setName('weight').setDescription('Weight of one, in pounds').setMinValue(0).setMaxValue(99999))
+  .addBooleanOption((o) => o.setName('use_now').setDescription('Put it to use straight away (and attune to it, if it needs that)'));
+
 const whose = (b: SlashCommandSubcommandBuilder) =>
   b.addStringOption((o) => o.setName('character').setDescription('Which of your characters (default: the one you changed last)').setAutocomplete(true))
     .addBooleanOption((o) => o.setName('private').setDescription('Only you see it (default: everyone in the channel does)'));
@@ -40,35 +75,28 @@ export const COMMANDS = [
       .addIntegerOption((o) => o.setName('quantity').setDescription('How many (default 1)').setMinValue(1).setMaxValue(9999))
       .addNumberOption((o) => o.setName('weight').setDescription('Weight of one, in pounds').setMinValue(0).setMaxValue(99999))
       .addStringOption((o) => o.setName('notes').setDescription('A note to keep with it').setMaxLength(300))))
-    .addSubcommand((sub) => whose(sub.setName('make').setDescription('Make an item of your own that works on the sheet')
-      .addStringOption((o) => o.setName('kind').setDescription('What it is').setRequired(true).addChoices(
-        { name: 'weapon', value: 'weapon' }, { name: 'armor', value: 'armor' }, { name: 'shield', value: 'shield' },
-        { name: 'something with powers', value: 'wondrous' }, { name: 'something you use up', value: 'consumable' }, { name: 'plain gear', value: 'gear' }))
-      .addStringOption((o) => o.setName('name').setDescription('What it is called').setRequired(true).setMaxLength(80))
-      .addStringOption((o) => o.setName('description').setDescription('What it is and does, in your words').setMaxLength(1500))
-      .addStringOption((o) => o.setName('damage').setDescription('Weapon: damage dice, like 1d8').setMaxLength(8))
-      .addStringOption((o) => o.setName('damage_type').setDescription('Weapon: slashing, piercing, bludgeoning, fire…').setMaxLength(30))
-      .addBooleanOption((o) => o.setName('martial').setDescription('Weapon: a martial weapon (default: simple)'))
-      .addBooleanOption((o) => o.setName('ranged').setDescription('Weapon: ranged (uses Dexterity)'))
-      .addBooleanOption((o) => o.setName('finesse').setDescription('Weapon: finesse (Strength or Dexterity, whichever is better)'))
-      .addIntegerOption((o) => o.setName('weapon_bonus').setDescription('Weapon: its own bonus to hit and damage, like 1 for a +1 weapon').setMinValue(-10).setMaxValue(10))
-      .addIntegerOption((o) => o.setName('armor_class').setDescription('Armor: its base Armor Class').setMinValue(0).setMaxValue(40))
-      .addStringOption((o) => o.setName('armor_dex').setDescription('Armor: how much Dexterity is added (default: all of it)').addChoices({ name: 'all of it (light)', value: 'full' }, { name: 'up to +2 (medium)', value: 'max2' }, { name: 'none (heavy)', value: 'none' }))
-      .addIntegerOption((o) => o.setName('ac_bonus').setDescription('Armor Class it adds while in use (a shield’s own +2 is already counted)').setMinValue(-20).setMaxValue(20))
-      .addIntegerOption((o) => o.setName('speed_bonus').setDescription('Feet of speed it adds while in use').setMinValue(-100).setMaxValue(100))
-      .addIntegerOption((o) => o.setName('hp_bonus').setDescription('Hit point maximum it adds while in use').setMinValue(-100).setMaxValue(100))
-      .addIntegerOption((o) => o.setName('charges').setDescription('How many charges it has').setMinValue(1).setMaxValue(999))
-      .addStringOption((o) => o.setName('recharge').setDescription('When the charges come back (default: long rest)').addChoices({ name: 'long rest', value: 'long' }, { name: 'short rest', value: 'short' }))
-      .addStringOption((o) => o.setName('roll').setDescription('Dice it rolls, like 2d6+3').setMaxLength(30))
-      .addStringOption((o) => o.setName('roll_is').setDescription('What that roll is').addChoices({ name: 'damage', value: 'damage' }, { name: 'healing', value: 'heal' }, { name: 'temporary hit points', value: 'tempHp' }, { name: 'something else', value: 'other' }))
-      .addStringOption((o) => o.setName('effect').setDescription('A standing effect, like: Resistance to cold damage').setMaxLength(200))
-      .addStringOption((o) => o.setName('rarity').setDescription('How rare it is').addChoices(...['Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary', 'Mythical'].map((r) => ({ name: r, value: r }))))
-      .addIntegerOption((o) => o.setName('quantity').setDescription('How many (default 1)').setMinValue(1).setMaxValue(9999))
-      .addNumberOption((o) => o.setName('weight').setDescription('Weight of one, in pounds').setMinValue(0).setMaxValue(99999))
-      .addBooleanOption((o) => o.setName('use_now').setDescription('Put it to use straight away'))))
-    .addSubcommand((sub) => whose(sub.setName('use').setDescription('Put an item you made to use, or put it away')
+    .addSubcommandGroup((group) => group.setName('make').setDescription('Make an item of your own that works on the sheet')
+      .addSubcommand((sub) => whose(tail(powers(named(sub.setName('weapon').setDescription('A weapon: it shows under Attacks with its own to-hit and damage'))
+        .addStringOption((o) => o.setName('damage').setDescription('Damage dice, like 1d8').setMaxLength(8))
+        .addStringOption((o) => o.setName('damage_type').setDescription('slashing, piercing, bludgeoning, fire…').setMaxLength(30))
+        .addBooleanOption((o) => o.setName('martial').setDescription('A martial weapon (default: simple)'))
+        .addBooleanOption((o) => o.setName('ranged').setDescription('Ranged (uses Dexterity)'))
+        .addBooleanOption((o) => o.setName('finesse').setDescription('Finesse (Strength or Dexterity, whichever is better)'))
+        .addBooleanOption((o) => o.setName('two_handed').setDescription('Two-handed'))
+        .addIntegerOption((o) => o.setName('weapon_bonus').setDescription('Its own bonus to hit and damage, like 1 for a +1 weapon').setMinValue(-10).setMaxValue(10)), false))))
+      .addSubcommand((sub) => whose(tail(powers(named(sub.setName('armor').setDescription('Armor: it sets Armor Class while it is worn'))
+        .addIntegerOption((o) => o.setName('armor_class').setDescription('Its base Armor Class').setMinValue(0).setMaxValue(40))
+        .addStringOption((o) => o.setName('armor_dex').setDescription('How much Dexterity is added (default: all of it)').addChoices({ name: 'all of it (light)', value: 'full' }, { name: 'up to +2 (medium)', value: 'max2' }, { name: 'none (heavy)', value: 'none' })), true))))
+      .addSubcommand((sub) => whose(tail(extras(powers(named(sub.setName('shield').setDescription('A shield: +2 Armor Class while it is carried')), true)))))
+      .addSubcommand((sub) => whose(tail(extras(powers(named(sub.setName('wondrous').setDescription('Something with powers: a ring, a circlet, a Dial')), true)))))
+      .addSubcommand((sub) => whose(tail(extras(powers(named(sub.setName('consumable').setDescription('Something you use up: a potion, a Rumble Ball')), true)))))
+      .addSubcommand((sub) => whose(named(sub.setName('gear').setDescription('Plain gear: carried and weighed, nothing more'))
+        .addIntegerOption((o) => o.setName('quantity').setDescription('How many (default 1)').setMinValue(1).setMaxValue(9999))
+        .addNumberOption((o) => o.setName('weight').setDescription('Weight of one, in pounds').setMinValue(0).setMaxValue(99999)))))
+    .addSubcommand((sub) => whose(sub.setName('use').setDescription('Put an item to use or away, and attune to it')
       .addStringOption((o) => o.setName('item').setDescription('Which item').setRequired(true).setAutocomplete(true))
-      .addBooleanOption((o) => o.setName('put_away').setDescription('Put it away instead (default: put it to use)'))))
+      .addBooleanOption((o) => o.setName('put_away').setDescription('Put it away instead (default: put it to use)'))
+      .addStringOption((o) => o.setName('attune').setDescription('Attune to it, or end the attunement').addChoices({ name: 'attune to it', value: 'attune' }, { name: 'end the attunement', value: 'end' }))))
     .addSubcommand((sub) => whose(sub.setName('remove').setDescription('Remove an item, or some of it')
       .addStringOption((o) => o.setName('item').setDescription('Which item').setRequired(true).setAutocomplete(true))
       .addIntegerOption((o) => o.setName('quantity').setDescription('How many to remove (default: all of it)').setMinValue(1).setMaxValue(9999)))),

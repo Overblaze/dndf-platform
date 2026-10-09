@@ -31,10 +31,13 @@ export function SkillsTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
             <button key={a} className="tile tile-btn" onClick={() => rolls.d20(`${ABILITY_NAMES[a]} check`, sheet.abilities[a].mod)} aria-label={`Roll a ${ABILITY_NAMES[a]} check, ${signed(sheet.abilities[a].mod)}`}>
               <span className="label">{a}</span>
               <span className="big num">{signed(sheet.abilities[a].mod)}</span>
-              <span className="page-ref">score {sheet.abilities[a].score}</span>
+              <span className={sheet.abilities[a].changes ? 'page-ref edited' : 'page-ref'}>score {sheet.abilities[a].score}</span>
             </button>
           ))}
         </div>
+        {ABILITIES.filter((a) => sheet.abilities[a].changes).map((a) => (
+          <p key={a} className="page-ref">{ABILITY_NAMES[a]}: {live.doc.scores[a]} on the character → {sheet.abilities[a].changes!.map((c) => `${c.to} (${c.label})`).join(' → ')}</p>
+        ))}
       </section>
       <section className="card">
         <h2>Saving throws</h2>

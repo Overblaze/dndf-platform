@@ -1,6 +1,6 @@
 // Items a player makes themselves, and what each does on the sheet while it is in use.
 import { describe, expect, it } from 'vitest';
-import { activateFeature, cleanCustomItem, deriveSheet, exportFile, itemDoesSomething, itemSummary, longRest, newCharacter, normalizeDoc, readExport, withEquippedItems, type CharacterDoc, type InventoryItem } from '../src';
+import { ITEM_KINDS, activateFeature, bookMagicItems, cleanCustomItem, deriveSheet, exportFile, itemDoesSomething, itemNeedsAttunement, itemSummary, longRest, newCharacter, normalizeDoc, readExport, withEquippedItems, type CharacterDoc, type InventoryItem } from '../src';
 import { loadRules } from './load';
 
 const rules = loadRules('dndf-10');
@@ -114,5 +114,130 @@ describe('items a player makes', () => {
     const a = deriveSheet(doc, rules);
     const b = deriveSheet(back!, rules);
     expect([b.ac.value, b.speed.value, b.maxHp.value, b.attacks.map((x) => `${x.name} ${x.toHit.value} ${x.damage}`)]).toEqual([a.ac.value, a.speed.value, a.maxHp.value, a.attacks.map((x) => `${x.name} ${x.toHit.value} ${x.damage}`)]);
+  });
+});
+
+describe('items that change scores, saves and skills, grant spells, and need attunement', () => {
+  // Warrior 5: Int 10 (+0), Wis 12 (+1), proficiency +3.
+  const circlet: InventoryItem = { id: 'ci', name: 'Circlet of Intellect', qty: 1, custom: { kind: 'wondrous', rarity: 'Uncommon', attune: true, text: 'Your Intelligence score is 19 while you wear this circlet.', abilities: [{ ability: 'int', set: 19 }] } };
+  const skill = (sheet: ReturnType<typeof deriveSheet>, id: string) => sheet.skills.find((s) => s.id === id)!;
+
+  it('the Circlet of Intellect: nothing until it is both worn and attuned, then Intelligence 19 and everything that follows from it', () => {
+    expect(plain.abilities.int).toEqual({ score: 10, mod: 0 });
+    for (const state of [{}, { equipped: true }, { attuned: true }]) {
+      const sheet = deriveSheet(carrying({ ...circlet, ...state }), rules);
+      expect(sheet.abilities.int, JSON.stringify(state)).toEqual({ score: 10, mod: 0 });
+    }
+    const on = deriveSheet(carrying({ ...circlet, equipped: true, attuned: true }), rules);
+    expect(on.abilities.int).toEqual({ score: 19, mod: 4, changes: [{ label: 'Circlet of Intellect: set to 19', to: 19 }] });
+    expect(on.saves.int.value).toBe(plain.saves.int.value + 4);
+    expect(on.saves.int.lines[0]).toEqual({ label: 'Intelligence modifier', value: 4 });
+    for (const id of ['arcana', 'history', 'investigation', 'nature', 'religion']) expect(skill(on, id).value, id).toBe(skill(plain, id).value + 4);
+    expect(skill(on, 'athletics').value).toBe(skill(plain, 'athletics').value);
+    // The saved character still says 10: take the circlet off and it is 10 again.
+    expect(carrying({ ...circlet, equipped: true, attuned: true }).scores.int).toBe(10);
+    // It does nothing for someone already at 19 or more.
+    const clever = { ...carrying({ ...circlet, equipped: true, attuned: true }), scores: { ...base.scores, int: 20 } };
+    expect(deriveSheet(clever, rules).abilities.int).toEqual({ score: 20, mod: 5 });
+    expect(itemSummary(circlet.custom!)).toBe('Wondrous item · Int 19 · requires attunement · Uncommon');
+  });
+
+  it('a set score and a raise do not stack: the raise applies first, then the set if it is still higher', () => {
+    const belt: InventoryItem = { id: 'b', name: 'Belt', qty: 1, equipped: true, custom: { kind: 'wondrous', abilities: [{ ability: 'str', bonus: 2 }, { ability: 'con', set: 12 }, { ability: 'dex', bonus: 2, set: 15 }] } };
+    const sheet = deriveSheet(carrying(belt), rules);
+    expect(sheet.abilities.str).toEqual({ score: 18, mod: 4, changes: [{ label: 'Belt: +2', to: 18 }] }); // 16 + 2
+    expect(sheet.abilities.con).toEqual({ score: 14, mod: 2 }); // already higher than 12
+    expect(sheet.abilities.dex).toEqual({ score: 16, mod: 3, changes: [{ label: 'Belt: +2', to: 16 }] }); // 14 + 2 = 16, past the 15
+    // A raise stops at 30.
+    const mighty = deriveSheet({ ...carrying({ ...belt, custom: { kind: 'wondrous', abilities: [{ ability: 'str', bonus: 20 }] } }), scores: { ...base.scores, str: 20 } }, rules);
+    expect(mighty.abilities.str.score).toBe(30);
+    // Hit points follow Constitution: 16 Con instead of 14 is +1 a level.
+    const hardy = deriveSheet(carrying({ ...belt, custom: { kind: 'wondrous', abilities: [{ ability: 'con', set: 16 }] } }), rules);
+    expect(hardy.maxHp.value).toBe(plain.maxHp.value + 5);
+  });
+
+  it('bonuses to saves and skills: one of them, or all of them, each with its own line', () => {
+    const cloak: InventoryItem = { id: 'cl', name: 'Cloak of Protection', qty: 1, equipped: true, attuned: true, custom: { kind: 'wondrous', attune: true, bonuses: [{ type: 'ac', value: 1 }], saves: [{ value: 1 }], skills: [{ skill: 'stealth', value: 5 }] } };
+    const sheet = deriveSheet(carrying(cloak), rules);
+    for (const a of ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const) expect(sheet.saves[a].value, a).toBe(plain.saves[a].value + 1);
+    expect(sheet.saves.wis.lines.at(-1)).toEqual({ label: 'Cloak of Protection', value: 1 });
+    expect(skill(sheet, 'stealth').value).toBe(skill(plain, 'stealth').value + 5);
+    expect(skill(sheet, 'stealth').lines.at(-1)).toEqual({ label: 'Cloak of Protection', value: 5 });
+    expect(skill(sheet, 'perception').value).toBe(skill(plain, 'perception').value);
+    expect(sheet.ac.value).toBe(plain.ac.value + 1);
+    const stone: InventoryItem = { id: 'st', name: 'Luckstone', qty: 1, equipped: true, custom: { kind: 'wondrous', saves: [{ ability: 'dex', value: 2 }], skills: [{ value: 1 }] } };
+    const lucky = deriveSheet(carrying(stone), rules);
+    expect([lucky.saves.dex.value - plain.saves.dex.value, lucky.saves.str.value - plain.saves.str.value]).toEqual([2, 0]);
+    expect(lucky.skills.every((s, i) => s.value === plain.skills[i]!.value + 1)).toBe(true);
+    expect(lucky.passivePerception.value).toBe(plain.passivePerception.value + 1);
+    expect(itemSummary(cloak.custom!)).toBe('Wondrous item · +1 AC · +1 to all saves · +5 to Stealth · requires attunement');
+    expect(itemSummary(stone.custom!)).toBe('Wondrous item · +2 to Dex saves · +1 to all skills');
+  });
+
+  it('spells an item grants are on the spell list while it is in use, counted against no class', () => {
+    const fireball = [...rules.values()].find((e) => e.kind === 'spell' && e.name === 'Fireball');
+    const wand: InventoryItem = { id: 'w', name: 'Wand of Embers', qty: 1, equipped: true, custom: { kind: 'wondrous', uses: { max: 7, recharge: 'long' }, spells: [{ name: 'Fireball', level: 3, entry: fireball?.id }, { name: 'Ember Step', level: 0 }] } };
+    const sheet = deriveSheet(carrying(wand), rules);
+    expect(sheet.spellbook.known.map((k) => [k.name, k.level, k.item, k.ready, k.override, k.cls])).toEqual([['Ember Step', 0, 'Wand of Embers', true, false, undefined], ['Fireball', 3, 'Wand of Embers', true, false, undefined]]);
+    if (fireball) expect(sheet.spellbook.known[1]!.text).toContain('8d6');
+    expect(sheet.spellbook.classes.every((c) => c.known === 0 && c.cantrips === 0)).toBe(true);
+    expect(sheet.resources.find((r) => r.name === 'Wand of Embers')).toMatchObject({ max: 7 });
+    expect(deriveSheet(carrying({ ...wand, equipped: false }), rules).spellbook.known).toEqual([]);
+    expect(carrying(wand).spells).toBeUndefined(); // never written into the saved character
+    expect(itemSummary(wand.custom!)).toBe('Wondrous item · casts Fireball, Ember Step · 7 charges (long rest)');
+  });
+
+  it('attunement: three at a time by the rule, counted and said when over, never stopped; the number can be changed', () => {
+    expect(plain.attunement).toMatchObject({ used: 0, over: false, items: [], max: { value: 3, calculated: 3, overridden: false } });
+    expect(plain.attunement.max.lines[0]!.label).toContain('5e SRD 5.1 p. 206');
+    const ringOf = (i: number, attuned: boolean): InventoryItem => ({ id: `r${i}`, name: `Ring ${i}`, qty: 1, equipped: true, attuned: attuned || undefined, custom: { kind: 'wondrous', attune: true, bonuses: [{ type: 'hp', value: 1 }] } });
+    const three = deriveSheet(carrying(ringOf(1, true), ringOf(2, true), ringOf(3, true), ringOf(4, false)), rules);
+    expect(three.attunement).toMatchObject({ used: 3, over: false, items: ['Ring 1', 'Ring 2', 'Ring 3'] });
+    expect(three.maxHp.value).toBe(plain.maxHp.value + 3); // the fourth is worn but not attuned
+    const four = deriveSheet(carrying(ringOf(1, true), ringOf(2, true), ringOf(3, true), ringOf(4, true)), rules);
+    expect(four.attunement).toMatchObject({ used: 4, over: true });
+    expect(four.maxHp.value).toBe(plain.maxHp.value + 4); // the player has the final say: it still works
+    const more = deriveSheet({ ...carrying(ringOf(1, true), ringOf(2, true), ringOf(3, true), ringOf(4, true)), overrides: { attunement: 5 } }, rules);
+    expect(more.attunement).toMatchObject({ used: 4, over: false, max: { value: 5, calculated: 3, overridden: true } });
+    // Attunement stays while an item is stowed (it is a bond, not a place), and ends when it is gone.
+    expect(deriveSheet(carrying({ ...ringOf(1, true), carried: false }), rules).attunement.used).toBe(1);
+    expect(deriveSheet(carrying({ ...ringOf(1, true), qty: 0 }), rules).attunement.used).toBe(0);
+    // An armory item is attuned to when its text says it needs it.
+    // Any item can be attuned to (a plain one the DM says is magic); one whose book text says it needs it is known to.
+    expect(itemNeedsAttunement({ id: 'x', name: 'Longsword', qty: 1 }, [...rules.values()].find((e) => e.kind === 'item' && e.name === 'Longsword'))).toBe(false);
+    expect(itemNeedsAttunement({ id: 'x', name: 'Odd blade', qty: 1 }, { id: 'item.x', kind: 'item', name: 'Odd blade', versions: [], source: { book: 'B', page: 1 }, text: 'Weapon, Rare (requires attunement)' })).toBe(true);
+    expect(deriveSheet(carrying({ id: 'd', name: 'Plain but bonded', qty: 1, attuned: true }), rules).attunement.items).toEqual(['Plain but bonded']);
+  });
+
+  it('the book’s own magic items are offered as a start, with their words, page, rarity, cost and whether they need attunement', () => {
+    for (const version of ['dndf-10', 'dndf-8.8'] as const) {
+      const book = loadRules(version);
+      const items = bookMagicItems(book);
+      // Counted a second way: every section of an armory chapter whose first line reads "<something>, <a rarity>".
+      let headed = 0;
+      for (const e of book.values()) for (const s of ((e.kind === 'rule' && e.id.startsWith('rule.armory_') ? e.sections : undefined) ?? []) as { text: string }[]) if (/^[A-Z][A-Za-z ]+(?: \([^)]*\))?, (?:Common|Uncommon|Rare|Very Rare|Legendary|Mythical)\b/.test(s.text.split('\n')[0]!)) headed++;
+      expect(items.length, version).toBe(headed);
+      expect(items.length, version).toBeGreaterThan(50);
+      expect(new Set(items.map((i) => i.id)).size, version).toBe(items.length);
+      for (const i of items) { expect(i.page, i.name).toBeGreaterThan(0); expect(i.text.length, i.name).toBeGreaterThan(20); expect(ITEM_KINDS, i.name).toContain(i.kind); }
+    }
+    const axe = bookMagicItems(rules).find((i) => i.name === 'Axe Dial')!;
+    expect(axe).toMatchObject({ kind: 'wondrous', base: 'dial', rarity: 'Rare', attune: true, value: 5_000_000, chapter: expect.stringContaining('Dial') });
+    expect(axe.text.startsWith('Wondrous Item (dial), Rare (requires attunement by a creature proficient with dials)')).toBe(true);
+    expect(bookMagicItems(rules).some((i) => i.kind === 'weapon' && i.rarity === 'Legendary')).toBe(true);
+    // Kept on an item made from one, so its page can be cited.
+    expect(cleanCustomItem({ kind: 'wondrous', source: { book: axe.book, page: axe.page } })).toEqual({ kind: 'wondrous', source: { book: axe.book, page: axe.page } });
+    expect(cleanCustomItem({ kind: 'wondrous', source: { book: '', page: 3 } })).toEqual({ kind: 'wondrous' });
+  });
+
+  it('the new parts are checked like the rest: bad ones dropped, saved and read back the same', () => {
+    expect(cleanCustomItem({ kind: 'wondrous', attune: 'yes', abilities: [{ ability: 'int', set: 99 }, { ability: 'int', set: 5 }, { ability: 'luck', set: 19 }, { ability: 'str' }, { ability: 'wis', bonus: 2 }], saves: [{ value: 1 }, { value: 2 }, { ability: 'x', value: 1 }, { ability: 'dex', value: 0 }], skills: [{ skill: 'stealth', value: 3 }, { skill: 'juggling', value: 3 }, { value: 'x' }], spells: [{ name: ' Fireball ', level: 12 }, { level: 1 }, 'x'] }))
+      .toEqual({ kind: 'wondrous', abilities: [{ ability: 'int', set: 30 }, { ability: 'wis', bonus: 2 }], saves: [{ value: 1 }], skills: [{ skill: 'stealth', value: 3 }], spells: [{ name: 'Fireball', level: 9 }] });
+    const doc = carrying({ ...circlet, equipped: true, attuned: true });
+    const saved = normalizeDoc(JSON.parse(JSON.stringify(doc)))!;
+    expect(saved.inventory![0]).toMatchObject({ equipped: true, attuned: true, custom: circlet.custom });
+    expect(deriveSheet(saved, rules).abilities.int.score).toBe(19);
+    const [back] = readExport(JSON.stringify(exportFile({ characters: [doc] }, '2026-10-09T00:00:00Z'))).characters;
+    expect(deriveSheet(back!, rules).abilities.int.score).toBe(19);
   });
 });

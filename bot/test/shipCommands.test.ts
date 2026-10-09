@@ -1,6 +1,6 @@
 // /ship and /bounty, checked against the same engine and rules data as the website.
 import { describe, expect, it } from 'vitest';
-import { deriveSheet, newCharacter, newShip, type CharacterDoc, type ShipDoc } from '@dndf/engine';
+import { ABILITIES, ITEM_KINDS, SKILLS, deriveSheet, newCharacter, newShip, type CharacterDoc, type ShipDoc } from '@dndf/engine';
 import { loadRules } from '../../packages/engine/test/load';
 import { COMMANDS } from '../src/slash';
 import { bountyReply, crewPosters, findPart, shipAboard, shipHit, shipStatus, shipTreasury } from '../src/shipCommands';
@@ -152,5 +152,15 @@ describe('the commands as Discord is told them', () => {
       for (const child of (node.options ?? []) as never[]) walk(child);
     };
     for (const command of COMMANDS) walk(command as never);
+    // /item: plain subcommands and the "make" group, one subcommand for each kind of item the engine knows.
+    const item = COMMANDS.find((c) => c.name === 'item')!;
+    expect(item.options!.map((o) => o.name)).toEqual(['list', 'add', 'make', 'use', 'remove']);
+    const make = item.options!.find((o) => o.name === 'make') as unknown as { options: { name: string; options: { name: string; choices?: { value: string }[] }[] }[] };
+    expect(make.options.map((o) => o.name).sort()).toEqual([...ITEM_KINDS].sort());
+    // The choices offered are ones the engine understands.
+    const wondrous = make.options.find((o) => o.name === 'wondrous')!;
+    expect(wondrous.options.find((o) => o.name === 'skill')!.choices!.map((c) => c.value).sort()).toEqual(SKILLS.map((k) => k.id).sort());
+    expect(wondrous.options.find((o) => o.name === 'ability')!.choices!.map((c) => c.value)).toEqual([...ABILITIES]);
+    expect(make.options.find((o) => o.name === 'weapon')!.options.map((o) => o.name)).toContain('two_handed');
   });
 });

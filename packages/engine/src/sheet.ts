@@ -4,7 +4,7 @@ import { CUSTOM_BOOK, customFeatureDef, rulesFor } from './customClass';
 import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type CharacterDoc, type WeaponDef } from './character';
 import { GENERAL_PAGES, HANDBOOKS } from './citations';
 import { classColumns } from './classes';
-import { abilityMod, maxHp, proficiencyBonus } from './core';
+import { abilityMod, maxHp, proficiencyBonus, signed } from './core';
 import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
@@ -143,7 +143,10 @@ export interface Sheet {
   /** "Human (Standard) · Bruiser 7 (Black Fist Style)" */
   summary: string;
   level: number;
-  abilities: Record<Ability, { score: number; mod: number }>;
+  /** `changes` lists what moved a score from the one written on the character, in order, when anything did. */
+  abilities: Record<Ability, { score: number; mod: number; changes?: { label: string; to: number }[] }>;
+  /** Magic items attuned to, against how many a character can be (three, 5e SRD 5.1 p. 206). Going over is said, not stopped. */
+  attunement: { used: number; max: Stat; over: boolean; items: string[] };
   prof: Stat;
   saves: Record<Ability, Stat & { proficient: boolean }>;
   skills: SheetSkill[];
@@ -469,17 +472,33 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     const ability = record.pick?.ability;
     if (ability && ABILITIES.includes(ability) && !record.pick?.willpower) scores[ability] = Math.max(scores[ability], Math.min(scores[ability] + 2, 20));
   }
+  const scoreChanges: Partial<Record<Ability, { label: string; to: number }[]>> = {};
+  const moved = (ability: Ability, to: number, label: string) => {
+    if (to === scores[ability]) return;
+    scores[ability] = to;
+    (scoreChanges[ability] ??= []).push({ label, to });
+  };
   for (const { def } of active) {
     for (const effect of (def.effects ?? []) as EffectDef[]) {
-      if (effect.type !== 'ability' || !effect.ability) continue;
+      if (effect.type !== 'ability' || !effect.ability || !ABILITIES.includes(effect.ability)) continue;
       const raised = scores[effect.ability] + (effect.value ?? 0);
-      scores[effect.ability] = Math.max(scores[effect.ability], Math.min(raised, effect.max ?? raised));
+      const to = Math.max(scores[effect.ability], Math.min(raised, effect.max ?? raised));
+      // Only what the player's own features and items do is listed; the book's raises were never itemised.
+      if (def.page === 0) moved(effect.ability, to, `${def.name}: ${signed(effect.value ?? 0)}`); else scores[effect.ability] = to;
+    }
+  }
+  // "Your score is 19 while you wear this. It has no effect on you if your score is already 19 or higher."
+  // Applied after every raise, so it never stacks with one.
+  for (const { def } of active) {
+    for (const effect of (def.effects ?? []) as EffectDef[]) {
+      if (effect.type !== 'abilitySet' || !effect.ability || !ABILITIES.includes(effect.ability) || typeof effect.value !== 'number') continue;
+      if (effect.value > scores[effect.ability]) moved(effect.ability, effect.value, `${def.name}: set to ${effect.value}`);
     }
   }
   const abilities = {} as Sheet['abilities'];
   const mod: Record<string, number> = {};
   for (const a of ABILITIES) {
-    abilities[a] = { score: scores[a], mod: abilityMod(scores[a]) };
+    abilities[a] = { score: scores[a], mod: abilityMod(scores[a]), ...(scoreChanges[a] ? { changes: scoreChanges[a] } : {}) };
     mod[a] = abilities[a].mod;
   }
 
@@ -639,6 +658,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   for (const a of ABILITIES) {
     const lines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[a]} modifier`, value: mod[a]! }];
     if (saveProfs.has(a)) lines.push({ label: 'Proficiency bonus', value: prof.value });
+    for (const e of ofType('saveBonus')) if (!e.effect.ability || e.effect.ability === a) lines.push({ label: e.from, value: amount(e) });
     saves[a] = { ...stat(doc, `save.${a}`, `${ABILITY_NAMES[a]} save`, { value: sum(lines), lines }), proficient: saveProfs.has(a) };
   }
 
@@ -650,6 +670,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     const lines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[skill.ability]} modifier`, value: mod[skill.ability]! }];
     if (proficient) lines.push({ label: expertise ? 'Proficiency bonus × 2 (expertise)' : 'Proficiency bonus', value: prof.value * (expertise ? 2 : 1) });
     else for (const e of halfProf) lines.push({ label: `${e.from}: half proficiency, rounded down`, value: Math.floor(prof.value / 2) });
+    for (const e of ofType('skillBonus')) if (!e.effect.skill || e.effect.skill === skill.id) lines.push({ label: e.from, value: amount(e) });
     return { ...stat(doc, `skill.${skill.id}`, skill.name, { value: sum(lines), lines }), id: skill.id, ability: skill.ability, proficient, expertise };
   });
   const perception = skills.find((s) => s.id === 'perception')!;
@@ -1124,7 +1145,8 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
       const value = own ? own[key] : entry?.[key];
       return typeof value === 'string' && value ? value : undefined;
     };
-    const of = classOf(spell);
+    // A spell an item grants belongs to no class: it is not counted against what a class knows or prepares, and is always ready.
+    const of = spell.item ? undefined : classOf(spell);
     if (of) {
       if (spell.level === 0) of.cantrips += 1;
       else { of.known += 1; if (spell.prepared) of.prepared += 1; }
@@ -1151,6 +1173,9 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     ...classTable.filter((c) => /known$|^highestSpellLevel$/i.test(c.key)).map((c) => ({ label: c.label, value: String(c.value), from: c.from })),
     ...features.flatMap((f) => f.displays.filter((d) => /prepared/i.test(d.label)).map((d) => ({ label: d.label, value: d.value, from: f.from.replace(/ \d+$/, '') }))),
   ];
+  const attunedTo = (saved.inventory ?? []).filter((item) => item.attuned === true && item.qty > 0);
+  const attunementMax = stat(doc, 'attunement', 'Attunement slots', { value: 3, lines: [{ label: 'A creature can be attuned to no more than three magic items at a time (5e SRD 5.1 p. 206)', value: 3 }] });
+  const attunement: Sheet['attunement'] = { used: attunedTo.length, max: attunementMax, over: attunedTo.length > attunementMax.value, items: attunedTo.map((item) => item.name) };
   const spellbook: SheetSpells = {
     casting, slots, limits, known: knownSpells, classes: castingClasses, pooledSlots: pooled.length > 1,
     cantrips: knownSpells.filter((k) => k.level === 0).length,
@@ -1237,6 +1262,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     wanted: bountyStat,
     poster: doc.bounty?.posted ?? null,
     spellbook,
+    attunement,
     raceChoices: racePicks,
     fruits,
     knownFruits,

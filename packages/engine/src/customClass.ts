@@ -37,6 +37,13 @@ export function customFeatureDef(custom: CustomFeature, level: number, toggleId:
   const effects: EffectDef[] = [
     ...(custom.bonuses ?? []).filter((b) => b.value).map((b) => ({ type: b.type, value: b.value })),
     ...(custom.note ? [{ type: 'note', label: custom.note }] : []),
+    // "Your Intelligence score is 19 while you wear this" (no effect on a higher score), and plain increases up to 30.
+    ...(custom.abilities ?? []).flatMap((a) => [
+      ...(typeof a.set === 'number' ? [{ type: 'abilitySet', ability: a.ability, value: a.set }] : []),
+      ...(a.bonus ? [{ type: 'ability', ability: a.ability, value: a.bonus, max: 30 }] : []),
+    ]),
+    ...(custom.saves ?? []).filter((s) => s.value).map((s) => ({ type: 'saveBonus', ...(s.ability ? { ability: s.ability } : {}), value: s.value })),
+    ...(custom.skills ?? []).filter((s) => s.value).map((s) => ({ type: 'skillBonus', ...(s.skill ? { skill: s.skill } : {}), value: s.value })),
   ];
   return {
     level, name: custom.name || 'Custom feature', text: custom.text, page: 0,

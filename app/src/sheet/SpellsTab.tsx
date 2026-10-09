@@ -155,7 +155,7 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
         <div>
           <div className="resource-name">{spell.name}{spell.override && <abbr className="override-mark" title={`Override: not on the ${spell.clsName} spell list`}> *</abbr>}</div>
           <div className="page-ref">
-            {[spell.clsName ? `${spell.clsName}${spell.mode === 'prepared' ? '' : ' · known'}` : '', spell.school, spell.ritual ? 'ritual' : '', spell.castingTime, spell.range, spell.duration, spell.page && spell.book ? cite(spell.book, spell.page) : ''].filter(Boolean).join(' · ') || (spell.level === 0 ? 'At will' : `${ordinal(spell.level)} level`)}
+            {[spell.item ? `from ${spell.item}` : '', spell.clsName ? `${spell.clsName}${spell.mode === 'prepared' ? '' : ' · known'}` : '', spell.school, spell.ritual ? 'ritual' : '', spell.castingTime, spell.range, spell.duration, spell.page && spell.book ? cite(spell.book, spell.page) : ''].filter(Boolean).join(' · ') || (spell.level === 0 ? 'At will' : `${ordinal(spell.level)} level`)}
           </div>
         </div>
         {spell.level > 0 && spell.mode === 'prepared' && (
@@ -201,6 +201,8 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
             : <p className="page-ref">This spell is from a 5th Edition book outside the free rules (the SRD), so its text cannot be shown here. Keep what you need to remember in the notes, or write its details yourself.</p>}
         {spell.book === CUSTOM_SPELL_BOOK && <p className="page-ref">Your own spell.</p>}
         {spell.book === SRD_BOOK && <p className="page-ref">From the System Reference Document 5.1 by Wizards of the Coast LLC, CC-BY-4.0 ({cite(spell.book, spell.page ?? 0)}).</p>}
+        {spell.item ? <p className="page-ref">Granted by {spell.item} while it is in use. It counts against no class; put the item away and the spell goes with it.</p> : (
+          <>
         <label className="field">
           <span className="label">Your notes</span>
           <textarea rows={3} value={notes} onChange={(e) => setNotes(e.target.value)} onBlur={() => notes !== (spell.notes ?? '') && change({ notes: notes || undefined }, `Notes on ${spell.name}`)} placeholder="Range, damage, what it does…" />
@@ -209,6 +211,8 @@ function SpellRow({ spell, live }: { spell: SheetSpell; live: LiveCharacter }) {
           {(spell.own || !spell.text) && <button className="btn" onClick={() => setEditing(true)}>{spell.own ? 'Change this spell' : 'Write its details yourself'}</button>}
           <button className="btn" onClick={() => live.setDoc({ ...doc, spells: known.filter((k) => k.id !== spell.id) }, `Forgot ${spell.name}`)}>Forget this spell</button>
         </div>
+          </>
+        )}
       </details>
       {editing && (
         <SpellEditor

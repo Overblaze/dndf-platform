@@ -54,6 +54,12 @@ export interface CustomFeature {
   note?: string;
   /** True when the bonuses and note only count while a switch on the sheet is on. */
   switched?: boolean;
+  /** Ability scores it changes: set to a number (if the score is lower), or raised by one. */
+  abilities?: { ability: Ability; set?: number; bonus?: number }[];
+  /** A bonus to saving throws: to one ability's, or with no ability named, to all of them. */
+  saves?: { ability?: Ability; value: number }[];
+  /** A bonus to skill checks: to one skill's, or with no skill named, to all of them. */
+  skills?: { skill?: string; value: number }[];
 }
 
 export interface BorrowedFeature {
@@ -306,6 +312,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
       weight: typeof item.weight === 'number' && Number.isFinite(item.weight) && item.weight >= 0 ? item.weight : undefined,
       custom: cleanCustomItem(item.custom),
       equipped: item.equipped === true ? true : undefined,
+      attuned: item.attuned === true ? true : undefined,
     })),
     spells: !Array.isArray(doc.spells) ? undefined : uniqueIds((objects<KnownSpell>(doc.spells) ?? []).filter((spell) => typeof spell.name === 'string' && spell.name.trim()), 'spell').map((spell) => ({
       ...spell,
