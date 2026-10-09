@@ -57,6 +57,23 @@ a user can edit. Commands from any server other than the one in `bot.env` are ig
    with nvm), run the script again.
 3. `journalctl --user -u dndf-bot -f` shows its log. `bash bot/install-service.sh --remove` stops it.
 
+### Reports to the developer
+
+Anyone can send Matt a bug, an idea or a need: the "Report a problem or idea" button under every page of the
+site, or `/report send` in Discord. Each is saved in the `reports` table (`0010_reports.sql`) and the bot posts it
+in one channel, with a **Mark completed** button that only someone who may manage messages in that channel can
+press (the server's owner always may). Pressed, the message turns green, says who completed it and when, and the
+button becomes **Reopen**. `/report open` lists what is not completed yet.
+
+To switch it on, add one line to `~/dndf/secret/bot.env` and run `bash bot/install-service.sh`:
+
+    DISCORD_REPORT_CHANNEL_ID=<the channel's id>
+
+The id: in Discord, Settings → Advanced → Developer Mode on, then right-click the channel → Copy Channel ID. The
+bot needs View Channel, Send Messages and Embed Links there; make the channel private to you and the bot so
+reports stay out of the table's sight. Without the line, reports are still saved and are posted as soon as it is
+added: none is lost while the bot is off, either.
+
 Nothing secret is in this repository: no token, no key, no `bot.env`.
 
 ## Working on it

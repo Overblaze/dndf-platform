@@ -4,6 +4,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { NO_SECRETS, normalizeDoc, normalizeShip, sameDoc, type CharacterDoc, type RuleEntry, type Secrets, type ShipDoc } from '@dndf/engine';
 import type { Env } from './env';
+import type { Report, ReportKind } from './reports';
 
 /** Change logs older than this are removed. Characters are never removed by the bot. */
 export const HISTORY_DAYS = 90;
@@ -141,6 +142,50 @@ export class Db {
     if (!owner) return 'someone';
     const { data } = await this.client.from('profiles').select('display_name, discord_username').eq('id', owner).maybeSingle();
     return (data?.display_name as string | null)?.trim() || (data?.discord_username as string | null)?.trim() || 'someone';
+  }
+
+  private static report(row: Record<string, unknown>): Report {
+    return {
+      id: String(row.id), createdAt: String(row.created_at), reporter: String(row.reporter ?? ''), kind: row.kind as ReportKind, message: String(row.message ?? ''),
+      page: String(row.page ?? ''), appVersion: String(row.app_version ?? ''), device: String(row.device ?? ''), source: row.source as Report['source'], signedIn: row.user_id != null,
+      status: row.status as Report['status'], doneAt: (row.done_at as string | null) ?? null, doneBy: (row.done_by as string | null) ?? null,
+    };
+  }
+
+  /** Reports nobody has been shown yet, oldest first. */
+  async newReports(limit = 10): Promise<Report[]> {
+    const { data, error } = await this.client.from('reports').select('*').eq('status', 'new').order('created_at').limit(limit);
+    if (error) throw new Error(`Could not read the reports: ${error.message}`);
+    return (data ?? []).map((row) => Db.report(row));
+  }
+
+  /** Reports shown in the channel and not yet completed, oldest first. */
+  async openReports(): Promise<Report[]> {
+    const { data, error } = await this.client.from('reports').select('*').in('status', ['new', 'posted']).order('created_at').limit(200);
+    if (error) throw new Error(`Could not read the reports: ${error.message}`);
+    return (data ?? []).map((row) => Db.report(row));
+  }
+
+  /** A report is in the channel: remember which message it is. Only a report still new is taken, so two posts of one cannot both be kept. */
+  async reportPosted(id: string, messageId: string): Promise<boolean> {
+    const { data, error } = await this.client.from('reports').update({ status: 'posted', discord_message_id: messageId }).eq('id', id).eq('status', 'new').select('id');
+    if (error) throw new Error(`Could not mark the report as posted: ${error.message}`);
+    return (data ?? []).length === 1;
+  }
+
+  /** Completed, or open again. Gives the report as it now stands; null if there is no such report. */
+  async reportDone(id: string, done: boolean, by: string, now = new Date()): Promise<Report | null> {
+    const change = done ? { status: 'done', done_at: now.toISOString(), done_by: by.slice(0, 60) } : { status: 'posted', done_at: null, done_by: null };
+    const { data, error } = await this.client.from('reports').update(change).eq('id', id).select('*').maybeSingle();
+    if (error) throw new Error(`Could not change the report: ${error.message}`);
+    return data ? Db.report(data) : null;
+  }
+
+  /** A report sent with /report. It is tied to the sender's website account when there is one. */
+  async addReport(discordId: string, reporter: string, kind: ReportKind, message: string): Promise<void> {
+    const owner = await this.accountOf(discordId);
+    const { error } = await this.client.from('reports').insert({ user_id: owner, reporter: reporter.slice(0, 60), kind, message: message.slice(0, 2000), source: 'discord' });
+    if (error) throw new Error(`Could not save the report: ${error.message}`);
   }
 
   /**

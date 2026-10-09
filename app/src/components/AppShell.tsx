@@ -4,6 +4,7 @@ import { useAuth } from '../lib/auth';
 import { sendWaiting, useWaiting } from '../lib/offline';
 import { useOnline } from '../lib/online';
 import { Compass } from './Compass';
+import { ReportButton } from './ReportDialog';
 import { PasswordDialog, SignInDialog } from './SignInDialog';
 
 const NAV = [
@@ -91,6 +92,10 @@ export function AppShell() {
           </p>
         )}
         <Outlet />
+        <footer className="page-foot">
+          <ReportButton />
+          <span className="page-ref">Found a bug, or want something added? It goes straight to Matt.</span>
+        </footer>
       </main>
     </div>
   );

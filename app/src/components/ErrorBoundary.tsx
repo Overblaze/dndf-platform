@@ -1,4 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { ReportButton } from './ReportDialog';
 
 /**
  * Catches a crash anywhere below it and shows what happened instead of a blank page. Without this,
@@ -26,8 +27,9 @@ export class ErrorBoundary extends Component<{ children: ReactNode; where?: stri
         <div className="row wrap">
           <a className="btn btn-primary" href="#/sheet" onClick={() => this.setState({ error: null })}>Back to my characters</a>
           <button className="btn" onClick={() => window.location.reload()}>Reload the page</button>
+          <ReportButton label="Tell Matt about this" about={`${error.message || String(error)}${this.props.where ? ` (in ${this.props.where})` : ''}`} />
         </div>
-        <p className="page-ref">If it happens again on the same character, tell Matt what you were doing and the line above.</p>
+        <p className="page-ref">“Tell Matt about this” sends him the line above with what you were doing; it takes a few seconds and helps get it fixed.</p>
       </section>
     );
   }
