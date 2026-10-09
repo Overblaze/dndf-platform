@@ -853,11 +853,20 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   const speed = stat(doc, 'speed', 'Speed', { value: sum(speedLines), lines: speedLines });
   // Swimming, flying, climbing and burrowing. Two sources of one do not add up: the faster is used.
   const speeds: SheetMovement[] = [];
+  const everySpeed: BreakdownLine[] = ofType('speed').filter((e) => e.effect.walking !== true).map((e) => ({ label: e.from, value: amount(e) })).filter((line) => line.value !== 0);
   for (const mode of MOVEMENT_MODES) {
-    const sources = ofType('movement', { walk: speed.value }).filter((e) => e.effect.mode === mode).map((e) => ({ e, value: amount(e, { walk: speed.value }) }));
+    // What raises or lowers "your speed" raises or lowers every speed (Offensive Defense, Mobile); what names the
+    // walking speed (Fleet Footed, Trick Rider) does not. A speed "equal to your walking speed" has it all already.
+    const sources = ofType('movement', { walk: speed.value }).filter((e) => e.effect.mode === mode).map((e) => {
+        const base = amount(e, { walk: speed.value });
+        const follows = /\bwalk\b/.test(e.effect.expr ?? '');
+        const extra = follows ? [] : everySpeed;
+        return { e, base, extra, value: Math.max(0, base + sum(extra)) };
+      });
     const best = sources.reduce<(typeof sources)[number] | undefined>((top, s) => (!top || s.value > top.value ? s : top), undefined);
     if (!best) continue;
-    const lines: BreakdownLine[] = [{ label: best.e.effect.expr === 'walk' ? `${best.e.from}: equal to walking speed` : best.e.from, value: best.value }];
+    const lines: BreakdownLine[] = [{ label: best.e.effect.expr === 'walk' ? `${best.e.from}: equal to walking speed` : best.e.from, value: best.base }, ...best.extra];
+    if (sum(lines) < 0) lines.push({ label: 'A speed cannot be less than 0', value: -sum(lines) });
     if (held) lines.push({ label: `${held.name}: speed 0`, value: -best.value });
     else if (exhaustion >= 5) lines.push({ label: `Exhaustion ${exhaustion}: speed 0`, value: -best.value });
     else if (exhaustion >= 2) lines.push({ label: `Exhaustion ${exhaustion}: speed halved`, value: -Math.ceil(best.value / 2) });

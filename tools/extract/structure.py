@@ -428,7 +428,7 @@ RACE_STRUCTURE: dict[str, dict[str, dict]] = {
     "Fishman / Smelt-Whiting": {"Big-Mouthed": {"expect": "proficiency in the Deception or Persuasion skill (your choice)", "picks": [pick("skill", "skill", "Deception or Persuasion", among=["deception", "persuasion"])]}},
     "Merfolk": {"Speed": {
         "expect": "you have a Swimming speed of 50 feet. Once you reach level 5, your walking speed becomes 30 feet",
-        "effects": [move("swim", 50), {"type": "speed", "expr": "level >= 5 ? 20 : 0"}],
+        "effects": [move("swim", 50), {"type": "speed", "expr": "level >= 5 ? 20 : 0", "walking": True}],
     }},
     "Sky Islander / Merveillians": {"Inherited Flight": {"expect": "you have a flying speed equal to your walking speed. You can’t use this flying speed if you’re wearing medium or heavy armor", "effects": [move("fly", "walk", NO_ARMOR_FLIGHT)]}},
     "Lunarian": {"Flight": {"expect": "You have a flying speed of 50 feet. To use this speed, you can’t be wearing medium or heavy armor", "effects": [move("fly", 50, NO_ARMOR_FLIGHT)]}},
@@ -470,7 +470,7 @@ RACE_CHOICES: dict[str, dict] = {
         "count": [("You can pick two of the following", "", "2")],
         "options": {
             "Tough Hide": {"expect": "Your Armor Class increases by 1 while you are not wearing heavy armor", "effects": [{"type": "ac", "value": 1, "when": "!heavyArmor"}]},
-            "Fleet Footed": {"expect": "Your base walking speed increases by 10 feet", "effects": [{"type": "speed", "value": 10}]},
+            "Fleet Footed": {"expect": "Your base walking speed increases by 10 feet", "effects": [{"type": "speed", "value": 10, "walking": True}]},
             "Brute Strength": {"expect": "You gain proficiency in Athletics", "effects": [{"type": "proficiency", "skill": "athletics"}]},
             "Opposable Thumbs": {"expect": "You gain proficiency in Sleight of Hand", "effects": [{"type": "proficiency", "skill": "sleight_of_hand"}]},
             "Leap": {"expect": "Strength save DC equal to 8 + your Strength modifier + your proficiency bonus", "effects": [{"type": "display", "label": "Save DC", "expr": "8 + mod.str + prof"}]},
@@ -728,7 +728,7 @@ SUBCLASS_STRUCTURE: dict[str, dict[str, dict]] = {
     },
     "subclass.renegade.circus_tricks": {
         "Trick Rider": {"expect": "Your walking speed increases by 25 feet",
-                        "toggle": {"id": "trick_rider", "label": "Riding your prop", "effects": [{"type": "speed", "value": 25}]}},
+                        "toggle": {"id": "trick_rider", "label": "Riding your prop", "effects": [{"type": "speed", "value": 25, "walking": True}]}},
     },
     "subclass.conqueror.warmonger": {
         "Warmonger’s Rage": {"expect": "Your movement speed increases by 10 feet",
@@ -813,7 +813,7 @@ more("subclass.marksman.rope_master", {
     "Rope Dance": {"expect": "You gain advantage on checks and saving throws made to escape grapples or restraints", "effects": [note("Advantage on checks and saves to escape grapples or restraints")]},
 })
 more("subclass.martial_artist.black_leg_style", {
-    "Sky Step": {"expect": "your walking speed increases by an additional 10 feet", "effects": [{"type": "speed", "value": 10}]},
+    "Sky Step": {"expect": "your walking speed increases by an additional 10 feet", "effects": [{"type": "speed", "value": 10, "walking": True}]},
     "Black Leg Combatant": {"only": "dndf-8.8", "expect": "you gain a bonus to your AC equal to your proficiency bonus / 2 (rounded up)",
                             "toggle": {"id": "black_leg_guard", "label": "Not wielding a weapon or shield", "effects": [{"type": "ac", "expr": "ceil(prof / 2)"}]}},
 })
@@ -1003,7 +1003,7 @@ more("subclass.hybrid.germa", {
         },
         "Dengeki Blue": {
             "expect": "Your walking speed increases by an amount equal to 10 x your proficiency bonus",
-            "rolls": GERMA_STRIKE("1d6", "Lightning Strike (once per turn)"), "effects": [{"type": "speed", "expr": "10 * prof"}],
+            "rolls": GERMA_STRIKE("1d6", "Lightning Strike (once per turn)"), "effects": [{"type": "speed", "expr": "10 * prof", "walking": True}],
         },
         "Sparking Red": {"expect": "you deal an additional 1d6 radiant damage with the spell", "rolls": GERMA_STRIKE("1d6", "Flash Burst (once per turn)")},
     }}},

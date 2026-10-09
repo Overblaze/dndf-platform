@@ -860,7 +860,8 @@
           "effects": [
             {
               "type": "speed",
-              "expr": "10 * prof"
+              "expr": "10 * prof",
+              "walking": true
             }
           ]
         },

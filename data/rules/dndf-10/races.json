@@ -900,7 +900,8 @@
             },
             {
               "type": "speed",
-              "expr": "level >= 5 ? 20 : 0"
+              "expr": "level >= 5 ? 20 : 0",
+              "walking": true
             }
           ]
         },
@@ -1493,7 +1494,8 @@
           "effects": [
             {
               "type": "speed",
-              "value": 10
+              "value": 10,
+              "walking": true
             }
           ]
         },

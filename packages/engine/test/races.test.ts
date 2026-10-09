@@ -244,3 +244,69 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('racial speeds and choi
     expect(owners.filter((o) => speedWords.test(o.text)).length).toBeGreaterThanOrEqual(5);
   });
 });
+
+// "Your speed increases" is every speed; "your walking speed increases" is walking alone.
+describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('speed bonuses and the other speeds (%s)', (version) => {
+  const rules = loadRules(version);
+  const build = (classId: string, raceId: string, more: Partial<CharacterDoc> = {}, subraceId?: string) => {
+    const base = newCharacter({ name: 'T', rulesVersion: version, classId, level: 5, scores }, rules);
+    const doc: CharacterDoc = { ...base, race: { ...base.race, id: raceId, subraceId, name: rules.get(raceId)!.name, speed: Number(rules.get(raceId)!.speed ?? 30) }, ...more };
+    return deriveSheet(doc, rules);
+  };
+  const moves = (sheet: Sheet) => Object.fromEntries(sheet.speeds.map((s) => [s.mode, s.stat.value]));
+  const propeller = { choices: { cyborgUpgrades: ['propeller_body'] } };
+
+  it('Bruiser, Offensive Defense: +10 feet to a Cyborg’s Propeller Body swimming speed as well as to walking', () => {
+    const sheet = build('class.bruiser', 'race.cyborg', propeller);
+    expect(sheet.speed.value).toBe(40);
+    expect(moves(sheet)).toEqual({ swim: 35 });
+    expect(sheet.speeds[0]!.stat.lines).toEqual([{ label: 'Propeller Body', value: 25 }, { label: 'Offensive Defense', value: 10 }]);
+    expect(speedLine(sheet)).toBe('40 ft, swim 35 ft');
+    // In armor Offensive Defense gives nothing, to either.
+    const armored = build('class.bruiser', 'race.cyborg', { ...propeller, armor: { name: 'Leather', base: 11, dexCap: null } });
+    expect([armored.speed.value, moves(armored).swim]).toEqual([30, 25]);
+    // Another class has no such bonus.
+    expect(moves(build('class.warrior', 'race.cyborg', propeller))).toEqual({ swim: 25 });
+  });
+
+  it('the Mobile feat’s "your speed increases by 10 feet" reaches a Fishman’s swimming speed', () => {
+    const sheet = build('class.warrior', 'race.fishman', { feats: ['feat.mobile'] });
+    expect([sheet.speed.value, moves(sheet).swim]).toEqual([40, 45]);
+  });
+
+  it('a bonus to walking speed alone leaves the others be', () => {
+    // Fleet Footed: "Your base walking speed increases by 10 feet". Beast’s Slash's climbing speed stays 20.
+    const mink = build('class.warrior', 'race.mink', { choices: { minkCharacteristics: ['fleet_footed'] } });
+    expect([mink.speed.value, moves(mink).climb]).toEqual([40, 20]);
+  });
+
+  it('a speed equal to the walking speed is not raised twice', () => {
+    // Walking 30 + 10 (Offensive Defense) = 40; Nimble Climber is "equal to your walking speed": 40, not 50.
+    const sheet = build('class.bruiser', 'race.mink', { choices: { minkCharacteristics: ['nimble_climber'] } });
+    expect([sheet.speed.value, moves(sheet).climb]).toEqual([40, 40]);
+    expect(sheet.speeds[0]!.stat.lines).toEqual([{ label: 'Nimble Climber: equal to walking speed', value: 40 }]);
+  });
+
+  it('every speed bonus in the data is marked by what its own sentence says', () => {
+    // Read from the wording: a bonus is "walking" exactly when the sentence that gives it says "walking speed".
+    const found: { name: string; walking: boolean; sentence: string }[] = [];
+    const visit = (node: unknown, owner?: { name: string; text: string }) => {
+      if (Array.isArray(node)) return node.forEach((child) => visit(child, owner));
+      if (!node || typeof node !== 'object') return;
+      const record = node as Record<string, unknown>;
+      const own = typeof record.name === 'string' && typeof record.text === 'string' ? (record as { name: string; text: string }) : owner;
+      if (record.type === 'speed' && own) {
+        const sentence = own.text.split(/(?<=[.!?])\s+|\n/).filter((s) => /speed (increases|is reduced|becomes)/i.test(s)).join(' ');
+        found.push({ name: own.name, walking: record.walking === true, sentence });
+      }
+      for (const [key, value] of Object.entries(record)) if (key !== 'text') visit(value, own);
+    };
+    for (const entry of rules.values()) visit(entry, typeof entry.text === 'string' ? { name: entry.name, text: entry.text } : undefined);
+    expect(found.length).toBeGreaterThanOrEqual(8);
+    for (const bonus of found) {
+      expect(bonus.sentence, bonus.name).not.toBe('');
+      expect(bonus.walking, `${bonus.name}: ${bonus.sentence}`).toBe(/walking speed (increases|becomes)/i.test(bonus.sentence));
+    }
+    expect(found.filter((b) => !b.walking).map((b) => b.name)).toEqual(expect.arrayContaining(['Offensive Defense', 'Mobile', 'Unarmored Movement']));
+  });
+});
