@@ -629,6 +629,58 @@ describe('sheet background pictures', () => {
   });
 });
 
+describe('ship pictures', () => {
+  const put = `insert into storage.objects (bucket_id, name) values ('ship-pictures', $1) returning name`;
+  const seen = async (who: string | null) => (await as(who, `select name from storage.objects where bucket_id = 'ship-pictures' order by name`)).map((r) => r.name);
+  let shared: string;
+  let own: string;
+
+  it('whoever can change a ship can add a picture to it; nobody else can', async () => {
+    own = (await as(ana, `insert into public.ships (doc) values ($1) returning id`, [{ schema: 1, name: 'Ana’s Skiff' }]))[0]!.id;
+    shared = (await as(ana, `insert into public.ships (doc, campaign_id) values ($1, $2) returning id`, [{ schema: 1, name: 'Picture Test' }, campaign]))[0]!.id;
+    expect(await as(ana, put, [`${own}/deck.jpg`])).toHaveLength(1);
+    expect(await as(ana, put, [`${shared}/deck.jpg`])).toHaveLength(1);
+    expect(await as(ben, put, [`${shared}/art.jpg`])).toHaveLength(1); // a crewmate
+    await expect(as(ben, put, [`${own}/sneaky.jpg`])).rejects.toThrow(/row-level security/); // not shared with him
+    await expect(as(zed, put, [`${shared}/outsider.jpg`])).rejects.toThrow(/row-level security/);
+    await expect(as(null, put, [`${shared}/anon.jpg`])).rejects.toThrow(/row-level security/);
+    await expect(as(ana, put, [`00000000-0000-0000-0000-000000000000/ghost.jpg`])).rejects.toThrow(/row-level security/); // no such ship
+    await expect(as(ana, put, [`loose.jpg`])).rejects.toThrow(/row-level security/); // no folder
+  });
+
+  it('the crew sees the shared ship’s pictures; a private ship’s are its owner’s alone', async () => {
+    expect(await seen(ana)).toEqual([`${own}/deck.jpg`, `${shared}/art.jpg`, `${shared}/deck.jpg`].sort());
+    expect(await seen(ben)).toEqual([`${shared}/art.jpg`, `${shared}/deck.jpg`]);
+    expect(await seen(matt)).toEqual([`${shared}/art.jpg`, `${shared}/deck.jpg`]);
+    expect(await seen(zed)).toEqual([]);
+    expect(await seen(null)).toEqual([]);
+  });
+
+  it('a ship’s pictures are not reached through the other picture bucket’s rules, or the other way round', async () => {
+    await expect(as(ana, `insert into storage.objects (bucket_id, name) values ('sheet-backgrounds', $1)`, [`${shared}/deck.jpg`])).rejects.toThrow(/row-level security/);
+    await expect(as(ana, put, [`${ana}/${anaChar}/a.jpg`])).rejects.toThrow(/row-level security/);
+  });
+
+  it('the crew can take a picture down; an outsider cannot; and once the ship leaves the campaign the crew is shut out', async () => {
+    expect(await as(zed, `delete from storage.objects where name = $1 returning name`, [`${shared}/art.jpg`])).toEqual([]);
+    expect(await as(ben, `delete from storage.objects where name = $1 returning name`, [`${own}/deck.jpg`])).toEqual([]);
+    expect(await as(ben, `delete from storage.objects where name = $1 returning name`, [`${shared}/art.jpg`])).toHaveLength(1);
+    await as(ana, `update public.ships set campaign_id = null where id = $1`, [shared]);
+    expect(await seen(ben)).toEqual([]);
+    expect(await seen(matt)).toEqual([]);
+    await expect(as(ben, put, [`${shared}/late.jpg`])).rejects.toThrow(/row-level security/);
+    expect(await seen(ana)).toEqual([`${own}/deck.jpg`, `${shared}/deck.jpg`].sort());
+    await admin(`delete from storage.objects where bucket_id = 'ship-pictures'`);
+    await admin(`delete from public.ships where id = any($1)`, [[own, shared]]);
+  });
+
+  it('keeps the bucket private, limited to 4 MB images', async () => {
+    expect(await admin(`select public, file_size_limit, allowed_mime_types from storage.buckets where id = 'ship-pictures'`)).toEqual([
+      { public: false, file_size_limit: 4194304, allowed_mime_types: ['image/jpeg', 'image/png', 'image/webp'] },
+    ]);
+  });
+});
+
 describe('every table', () => {
   it('has row-level security switched on', async () => {
     const open = await admin(

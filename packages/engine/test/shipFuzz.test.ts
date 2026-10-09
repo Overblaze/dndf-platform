@@ -119,6 +119,8 @@ describe('ships under stress', () => {
       raw.upgrades = [{ id: 'u1', name: 'A', slots: 1, how: 'plunder', paid: 5, worth: 6 }, { id: 'u1', name: 'B', slots: 2, how: 'gift' }];
       raw.hold = [{ id: 'h1', name: 'Cola', qty: 3, tons: 0.5 }];
       raw.log = [{ at: '2026-10-08', text: 'x' }];
+      raw.pictures = [{ id: 'p1', ref: 's/a.jpg', kind: 'map', title: 'Deck', width: 100, height: 50 }, { id: 'p1', ref: 's/b.jpg', kind: 'art' }];
+      raw.cover = 'p1';
       for (let i = 1 + int(5); i > 0; i--) {
         const keys = Object.keys(raw).filter((k) => k !== 'schema');
         const key = keys[int(keys.length - 1)]!;
@@ -138,7 +140,9 @@ describe('ships under stress', () => {
       finite(doc, `seed ${seed} doc`);
       const sheet = deriveShip(doc!, rule);
       finite(sheet, `seed ${seed} sheet`);
-      const ids = [...doc!.components, ...doc!.upgrades, ...doc!.hold].map((x) => x.id);
+      const ids = [...doc!.components, ...doc!.upgrades, ...doc!.hold, ...doc!.pictures].map((x) => x.id);
+      for (const p of doc!.pictures) expect(typeof p.ref === 'string' && p.ref.length > 0, `seed ${seed} picture ref`).toBe(true);
+      if (doc!.cover !== undefined) expect(doc!.pictures.some((p) => p.id === doc!.cover), `seed ${seed} cover`).toBe(true);
       expect(new Set(ids).size, `seed ${seed} ids`).toBe(ids.length);
       for (const c of doc!.components) expect(() => damageComponent(doc!, c.id, 30), `seed ${seed}`).not.toThrow();
       expect(normalizeShip(JSON.parse(JSON.stringify(doc))), `seed ${seed}`).toEqual(JSON.parse(JSON.stringify(doc)));

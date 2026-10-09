@@ -161,4 +161,28 @@ describe('a ship from the book', () => {
     expect(saved).toMatchObject({ typeName: 'Modified Caravel', cost: 60_000_000, worth: 150_000_000, upgrades: [{ how: 'built', worth: 8_000_000, text: 'Ramming deals 4d10 more.', note: 'Carved at Water 7' }] });
     expect(normalizeShip({ ...doc, worth: -5, typeName: '   ', dimensions: '' })).toMatchObject({ worth: 0, typeName: undefined, dimensions: undefined });
   });
+
+  it('her maps and artwork: kept as a list of where each file is, with one chosen for the top of the sheet', () => {
+    const doc = caravel();
+    expect(doc.pictures).toEqual([]);
+    const pictured = normalizeShip({ ...doc, cover: 'b', pictures: [
+      { id: 'a', ref: 'ship-1/deck.jpg', kind: 'map', title: '  Main deck  ', width: 2400, height: 1600 },
+      { id: 'b', ref: 'ship-1/art.jpg', kind: 'art' },
+      { id: 'b', ref: 'ship-1/art2.jpg', kind: 'poster', width: -4, height: 'tall' }, // same id, unknown kind, bad sizes
+      { id: 'c', kind: 'map' }, { id: 'd', ref: '' }, { id: 'e', ref: 'x'.repeat(301) }, null, 'deck.jpg', // nothing to show
+    ] })!;
+    expect(pictured.pictures).toEqual([
+      { id: 'a', ref: 'ship-1/deck.jpg', kind: 'map', title: 'Main deck', width: 2400, height: 1600 },
+      { id: 'b', ref: 'ship-1/art.jpg', kind: 'art', title: undefined, width: undefined, height: undefined },
+      { id: 'b-3', ref: 'ship-1/art2.jpg', kind: 'art', title: undefined, width: undefined, height: undefined },
+    ]);
+    expect(pictured.cover).toBe('b');
+    // A cover that points at a picture no longer there is dropped, and a ship saved before pictures still opens.
+    expect(normalizeShip({ ...pictured, pictures: pictured.pictures.slice(0, 1) })!.cover).toBeUndefined();
+    const old = JSON.parse(JSON.stringify(doc)) as Record<string, unknown>; delete old.pictures;
+    expect(normalizeShip(old)).toMatchObject({ pictures: [], cover: undefined });
+    expect(normalizeShip({ ...doc, pictures: Array.from({ length: 40 }, (_, i) => ({ id: `p${i}`, ref: `s/${i}.jpg`, kind: 'art' })) })!.pictures).toHaveLength(24);
+    expect(normalizeShip(JSON.parse(JSON.stringify(pictured)))).toEqual(pictured);
+    expect(() => deriveShip(pictured)).not.toThrow();
+  });
 });
