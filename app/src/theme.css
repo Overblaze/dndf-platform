@@ -2105,3 +2105,21 @@ a {
 .card h3 {
   scroll-margin-top: 72px;
 }
+
+/* The way to reach the developer, under every page (components/ReportDialog.tsx) */
+
+.page-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 24px 0 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+
+@media print {
+  .page-foot {
+    display: none;
+  }
+}

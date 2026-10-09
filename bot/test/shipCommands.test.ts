@@ -135,7 +135,7 @@ describe('/bounty', () => {
 describe('the commands as Discord is told them', () => {
   it('has /ship with its five parts and /bounty, within Discord’s limits', () => {
     const names = COMMANDS.map((c) => c.name);
-    expect(names).toEqual(['roll', 'hp', 'condition', 'rest', 'dawn', 'status', 'sheet', 'party', 'bounty', 'item', 'make', 'surge', 'ship']);
+    expect(names).toEqual(['roll', 'hp', 'condition', 'rest', 'dawn', 'status', 'sheet', 'party', 'bounty', 'item', 'make', 'surge', 'ship', 'report']);
     const ship = COMMANDS.find((c) => c.name === 'ship')!;
     expect(ship.options!.map((o) => o.name)).toEqual(['status', 'damage', 'repair', 'treasury', 'aboard']);
     const walk = (node: { name: string; description: string; options?: unknown[] }): void => {

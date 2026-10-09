@@ -1,11 +1,12 @@
 // The DnDF Discord bot. Run with: npm start --workspace bot   (see bot/README.md)
-import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, type AutocompleteInteraction, type ChatInputCommandInteraction } from 'discord.js';
+import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, PermissionFlagsBits, type AutocompleteInteraction, type ButtonInteraction, type ChatInputCommandInteraction } from 'discord.js';
 import { CONDITIONS, SKILLS, type Rarity, type RollMode, type Sheet } from '@dndf/engine';
 import { condition, dawnCommand, hp, partyLine, rest, roll, status, withPrivacy, type Outcome } from './commands';
 import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter, type BotShip } from './db';
 import { loadEnv } from './env';
 import { armoryMatches, itemAdd, itemList, itemMake, itemRemove, itemUse } from './itemCommands';
 import { closeBrowser, sheetPdf, SITE } from './pdf';
+import { KIND_LABEL, openSummary, reportButton, reportMessage, type ReportKind } from './reports';
 import { rulesOf, sheetOf } from './rules';
 import { surgeAdd, surgeChoices, surgeList, surgeMatches, surgeRemove } from './surgeCommands';
 import { bountyReply, crewPosters, shipAboard, shipHit, shipStatus, shipTreasury, type ShipOutcome } from './shipCommands';
@@ -99,8 +100,64 @@ async function autocomplete(interaction: AutocompleteInteraction) {
   await interaction.respond(characters.filter((c) => c.doc.name.toLowerCase().includes(typed)).slice(0, 25).map((c) => ({ name: c.doc.name.slice(0, 100), value: c.id })));
 }
 
+// Reports to the developer. They are saved first and posted from the database, so one sent from the
+// website and one sent with /report take the same road, and none is lost while the bot is off.
+let posting = false;
+let complained = '';
+async function postReports(): Promise<void> {
+  const channelId = env.DISCORD_REPORT_CHANNEL_ID;
+  if (!channelId || posting) return;
+  posting = true;
+  try {
+    const waiting = await db.newReports();
+    if (waiting.length === 0) return;
+    const channel = await client.channels.fetch(channelId);
+    if (!channel?.isSendable()) throw new Error('the report channel cannot be written to (check DISCORD_REPORT_CHANNEL_ID and that the bot may view and send there)');
+    for (const report of waiting) {
+      const sent = await channel.send(reportMessage({ ...report, status: 'posted' }));
+      // Kept only if the report was still new: if something else posted it meanwhile, this copy is taken down.
+      if (!(await db.reportPosted(report.id, sent.id))) await sent.delete().catch(() => {});
+    }
+    complained = '';
+  } catch (error) {
+    // Said once, not every fifteen seconds; the reports stay in the database and go out when it is fixed.
+    const why = (error as Error).message;
+    if (why !== complained) console.error('Reports could not be posted:', why);
+    complained = why;
+  } finally {
+    posting = false;
+  }
+}
+
+/** Only someone who may manage messages in the report channel (the server's owner always may) marks reports. */
+const mayManage = (interaction: ButtonInteraction | ChatInputCommandInteraction) => Boolean(interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages));
+
+async function reportCommand(interaction: ChatInputCommandInteraction) {
+  await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+  if (interaction.options.getSubcommand() === 'open') {
+    if (!mayManage(interaction)) return interaction.editReply('That list is for whoever looks after the reports. To send one: /report send');
+    const open = await db.openReports();
+    const lines = open.slice(0, 15).map((r) => `• ${KIND_LABEL[r.kind]} · ${r.createdAt.slice(0, 10)} · ${r.reporter || 'no name'}: ${r.message.replace(/\s+/g, ' ').slice(0, 90)}`);
+    return interaction.editReply([`**${openSummary(open)}**`, ...lines, open.length > 15 ? `…and ${open.length - 15} more.` : ''].filter(Boolean).join('\n').slice(0, 1990));
+  }
+  const kind = (interaction.options.getString('kind') ?? 'bug') as ReportKind;
+  const who = interaction.member && 'displayName' in interaction.member ? interaction.member.displayName : interaction.user.displayName;
+  await db.addReport(interaction.user.id, who, kind, interaction.options.getString('message', true));
+  void postReports();
+  return interaction.editReply(env.DISCORD_REPORT_CHANNEL_ID ? 'Sent. Matt has it; thank you.' : 'Saved. Matt will see it once the report channel is set up; thank you.');
+}
+
+async function reportPressed(interaction: ButtonInteraction, pressed: { id: string; done: boolean }) {
+  if (!mayManage(interaction)) return interaction.reply({ content: 'Only whoever looks after the reports can mark them.', flags: MessageFlags.Ephemeral });
+  const who = interaction.member && 'displayName' in interaction.member ? interaction.member.displayName : interaction.user.displayName;
+  const report = await db.reportDone(pressed.id, pressed.done, who);
+  if (!report) return interaction.reply({ content: 'That report is no longer in the database.', flags: MessageFlags.Ephemeral });
+  return interaction.update(reportMessage(report));
+}
+
 async function run(interaction: ChatInputCommandInteraction) {
   const name = interaction.commandName;
+  if (name === 'report') return reportCommand(interaction);
   const hidden = name === 'sheet' ? !interaction.options.getBoolean('public') : Boolean(interaction.options.getBoolean('private'));
   // Reading the database and making a PDF can take longer than Discord's three seconds.
   await interaction.deferReply(hidden ? { flags: MessageFlags.Ephemeral } : {});
@@ -216,6 +273,9 @@ client.once(Events.ClientReady, (ready) => {
   );
   void tidy();
   setInterval(tidy, 24 * 60 * 60 * 1000).unref();
+  console.log(env.DISCORD_REPORT_CHANNEL_ID ? 'Reports to the developer are posted in the report channel.' : 'No DISCORD_REPORT_CHANNEL_ID in bot.env: reports are saved but not posted anywhere.');
+  void postReports();
+  setInterval(() => void postReports(), 15_000).unref();
 });
 client.on(Events.InteractionCreate, async (interaction) => {
   // One table, one server: commands from anywhere else are ignored.
@@ -223,6 +283,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
   try {
     if (interaction.isAutocomplete()) await autocomplete(interaction);
     else if (interaction.isChatInputCommand()) await run(interaction);
+    else if (interaction.isButton()) {
+      const pressed = reportButton(interaction.customId);
+      if (pressed) await reportPressed(interaction, pressed);
+    }
   } catch (error) {
     if (error instanceof ChangedElsewhere && interaction.isChatInputCommand()) {
       await interaction.editReply(`That ${interaction.commandName === 'ship' ? 'ship' : 'character'} was changed somewhere else a moment ago (the website, or another command). Nothing was changed here. Run the command again.`).catch(() => {});

@@ -802,3 +802,60 @@ describe('every table', () => {
     expect(open).toEqual([]);
   });
 });
+
+describe('reports to the developer (0010)', () => {
+  const send = `insert into public.reports (reporter, kind, message, page, app_version, device) values ($1, $2, $3, '#/sheet', 'v-test', 'a phone')`;
+
+  it('anyone can send one, signed in or not, and it arrives as new', async () => {
+    await as(null, send, ['A visitor', 'bug', 'The swim speed is missing.']);
+    await as(ana, send, ['Ana', 'idea', 'A dark theme, please.']);
+    const rows = await admin(`select reporter, kind, status, source, user_id from public.reports order by created_at`);
+    expect(rows).toEqual([
+      { reporter: 'A visitor', kind: 'bug', status: 'new', source: 'site', user_id: null },
+      { reporter: 'Ana', kind: 'idea', status: 'new', source: 'site', user_id: ana },
+    ]);
+  });
+
+  it('a signed-out visitor reads none; a player reads only their own', async () => {
+    await expect(as(null, `select * from public.reports`)).rejects.toThrow(/permission denied/);
+    expect((await as(ana, `select message from public.reports`)).map((r) => r.message)).toEqual(['A dark theme, please.']);
+    expect(await as(ben, `select message from public.reports`)).toEqual([]);
+    expect(await as(matt, `select message from public.reports`)).toEqual([]); // not even a DM, through the site
+  });
+
+  it('nobody can send as someone else, mark one done, or change or remove one', async () => {
+    await expect(as(ben, `insert into public.reports (message, user_id) values ('as Ana', $1)`, [ana])).rejects.toThrow(/permission denied/);
+    await expect(as(ben, `insert into public.reports (message, status) values ('already done', 'done')`)).rejects.toThrow(/permission denied/);
+    await expect(as(ben, `insert into public.reports (message, source) values ('from Discord, honest', 'discord')`)).rejects.toThrow(/permission denied/);
+    await expect(as(ana, `update public.reports set status = 'done'`)).rejects.toThrow(/permission denied/);
+    await expect(as(ana, `delete from public.reports`)).rejects.toThrow(/permission denied/);
+    await expect(as(null, `update public.reports set message = 'x'`)).rejects.toThrow(/permission denied/);
+  });
+
+  it('a report must say something, of a known kind, and not be endless', async () => {
+    await expect(as(ana, send, ['Ana', 'bug', '  '])).rejects.toThrow(/check/);
+    await expect(as(ana, send, ['Ana', 'rant', 'This is a rant.'])).rejects.toThrow(/check/);
+    await expect(as(ana, send, ['Ana', 'bug', 'x'.repeat(2001)])).rejects.toThrow(/check/);
+  });
+
+  it('the channel cannot be flooded: 5 in ten minutes an account, 20 an hour for the signed-out', async () => {
+    for (let i = 0; i < 5; i++) await as(ben, send, ['Ben', 'bug', `Report number ${i + 1}`]);
+    await expect(as(ben, send, ['Ben', 'bug', 'One too many'])).rejects.toThrow(/Too many reports just now/);
+    // Others are not held back by Ben, and Ben is free again once ten minutes have passed.
+    await as(zed, send, ['Zed', 'bug', 'Mine still goes through.']);
+    await admin(`update public.reports set created_at = now() - interval '11 minutes' where user_id = $1`, [ben]);
+    await as(ben, send, ['Ben', 'bug', 'Later on.']);
+    for (let i = 0; i < 19; i++) await as(null, send, ['', 'other', `Signed-out report ${i + 2}`]); // one was sent above
+    await expect(as(null, send, ['', 'other', 'The twenty-first'])).rejects.toThrow(/signed-out visitors/);
+    await as(ana, send, ['Ana', 'bug', 'Signed in, so still heard.']);
+    // What the bot writes (with the service key) is not counted against anyone.
+    await admin(`insert into public.reports (message, source, reporter) values ('From /report', 'discord', 'matt')`);
+  });
+
+  it('a removed account leaves its reports behind, with no account on them', async () => {
+    const gone = await signIn('passing_through');
+    await as(gone, send, ['Passing', 'bug', 'Seen while passing through.']);
+    await admin(`delete from auth.users where id = $1`, [gone]);
+    expect(await admin(`select user_id, reporter from public.reports where message = 'Seen while passing through.'`)).toEqual([{ user_id: null, reporter: 'Passing' }]);
+  });
+});
