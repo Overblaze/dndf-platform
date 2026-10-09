@@ -48,7 +48,15 @@
             "medicine",
             "religion"
           ]
-        }
+        },
+        "toolPicks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 2,
+            "label": "two types of artisan’s tools of your choice"
+          }
+        ]
       },
       "startingEquipment": [
         "(a) a Quarterstaff or (b) a Dagger",

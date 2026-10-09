@@ -1,6 +1,6 @@
 // Racial traits on the sheet: their numbers, uses, dice and pick-lists — p67–82 of each handbook.
 import { describe, expect, it } from 'vitest';
-import { applyLevelUp, deriveSheet, levelUpPlan, newCharacter, raceChoices, racePickLabel, racePickOptions, speedLine, type AbilityScores, type CharacterDoc, type RulesVersion, type OptionDef, type Sheet, type TraitDef } from '../src';
+import { applyLevelUp, deriveSheet, levelUpPlan, newCharacter, raceChoices, racePickLabel, racePickOptions, speedLine, toolSuggestions, type AbilityScores, type CharacterDoc, type RulesVersion, type OptionDef, type Sheet, type TraitDef } from '../src';
 import { loadRules } from './load';
 
 const scores: AbilityScores = { str: 16, dex: 14, con: 14, int: 10, wis: 12, cha: 10 };
@@ -308,5 +308,80 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('speed bonuses and the 
       expect(bonus.walking, `${bonus.name}: ${bonus.sentence}`).toBe(/walking speed (increases|becomes)/i.test(bonus.sentence));
     }
     expect(found.filter((b) => !b.walking).map((b) => b.name)).toEqual(expect.arrayContaining(['Offensive Defense', 'Mobile', 'Unarmored Movement']));
+  });
+});
+
+// Tool proficiencies from a class, a background and crew roles.
+describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('tool proficiencies (%s)', (version) => {
+  const rules = loadRules(version);
+  const build = (classId: string, more: Partial<CharacterDoc> = {}) => deriveSheet({ ...newCharacter({ name: 'T', rulesVersion: version, classId, level: 3, scores }, rules), ...more }, rules);
+  const tools = (sheet: Sheet) => sheet.proficiencies.tools.map((t) => `${t.name} <${t.from}>`);
+
+  it('a background’s named tools are on the sheet, and its "of your choice" ones are asked for', () => {
+    expect(tools(build('class.warrior'))).toEqual([]);
+    const pirate = build('class.warrior', { background: { id: 'background.pirate' } });
+    expect(tools(pirate)).toEqual(['Navigator’s tools <Pirate (background)>', 'Carpenter’s tools <Pirate (background)>']);
+    expect(pirate.racePicks).toEqual([]);
+    const sage = build('class.warrior', { background: { id: 'background.sage' } });
+    expect(tools(sage)).toEqual(['Cartographer’s Tools <Sage (background)>']);
+    expect(sage.racePicks.map((p) => [p.key, p.race, p.def.kind, p.def.count, p.def.label])).toEqual([['pick.background.sage.tool1', 'Sage background', 'tool', 1, 'one set of Artisan’s Tools of your choice']]);
+    const chosen = build('class.warrior', { background: { id: 'background.sage' }, choices: { 'pick.background.sage.tool1': ['Painter’s supplies'] } });
+    expect(tools(chosen)).toEqual(['Cartographer’s Tools <Sage (background)>', 'Painter’s supplies <Sage background>']);
+    // Two to choose, counted from the book's words.
+    expect(build('class.warrior', { background: { id: 'background.noble' } }).racePicks[0]!.def).toMatchObject({ count: 2, label: 'Two types of gaming sets' });
+  });
+
+  it('crew roles give their tools, every role held', () => {
+    const sheet = build('class.warrior', { crewRoles: [{ id: 'crewRole.navigator' }, { id: 'crewRole.shipwright' }, { id: 'crewRole.captain' }] });
+    expect(tools(sheet)).toEqual(['Cartographer’s tools <Navigator (crew role)>', 'Navigator’s tools <Navigator (crew role)>', 'Carpenter’s tools <Shipwright (crew role)>', 'Woodcarver’s tools <Shipwright (crew role)>']);
+    expect(tools(build('class.warrior', { crewRoles: [{ id: 'crewRole.doctor' }] }))).toEqual(['Herbalism kit <Doctor (crew role)>', 'Brewer’s supplies <Doctor (crew role)>', 'Alchemist’s supplies <Doctor (crew role)>']);
+    expect(tools(build('class.warrior', { crewRoles: [{ id: 'crewRole.helmsman' }] }))).toEqual(['Vehicles (water) <Helmsman (crew role)>']);
+  });
+
+  it('a class’s named tools are listed and its choices asked for, not shown as a sentence', () => {
+    const tinkerer = build('class.tinkerer');
+    expect(tools(tinkerer)).toEqual(['Thieves’ tools <Tinkerer>', 'Tinker’s tools <Tinkerer>']);
+    expect(tinkerer.racePicks.map((p) => [p.key, p.def.count])).toEqual([['pick.class.tinkerer.tool1', 2]]);
+    const chosen = build('class.tinkerer', { choices: { 'pick.class.tinkerer.tool1': ['Smith’s tools', 'Tinker’s tools'] } });
+    // One the class gives anyway is not listed twice.
+    expect(tools(chosen)).toEqual(['Thieves’ tools <Tinkerer>', 'Tinker’s tools <Tinkerer>', 'Smith’s tools <Tinkerer>']);
+    expect(tools(build('class.conqueror'))).toEqual([]);
+    expect(build('class.conqueror').racePicks.map((p) => p.def.label)).toEqual(['One tool of your choice']);
+  });
+
+  it('the same tool from two places is one proficiency, whatever its capitals', () => {
+    const sheet = build('class.warrior', { background: { id: 'background.pirate' }, crewRoles: [{ id: 'crewRole.navigator' }, { id: 'crewRole.shipwright' }] });
+    expect(sheet.proficiencies.tools.map((t) => t.name)).toEqual(['Navigator’s tools', 'Carpenter’s tools', 'Cartographer’s tools', 'Woodcarver’s tools']);
+  });
+
+  it('no class, background or crew role names a tool the sheet leaves out', () => {
+    // Counted from the book's own lines, not from the parsed lists.
+    const said = (text: string) => text.replace(/\.$/, '').split(/,\s*(?:and\s+)?|\s+and\s+|\.\s+/).map((part) => part.trim()).filter(Boolean);
+    let checked = 0;
+    for (const entry of rules.values()) {
+      const parsed = entry.kind === 'class' ? { fixed: ((entry.proficiencies as { tools?: string[]; toolPicks?: { label: string }[] }).tools ?? []).filter((t) => !(entry.proficiencies as { toolPicks?: { label: string }[] }).toolPicks?.some((p) => p.label === t)), picks: (entry.proficiencies as { toolPicks?: { label: string; count: number }[] }).toolPicks ?? [] }
+        : (entry.tools as { fixed?: string[]; picks?: { label: string; count: number }[] } | undefined);
+      const line = entry.kind === 'background' ? String(entry.toolProficiencies ?? '') : entry.kind === 'class' ? ((entry.proficiencies as { tools?: string[] }).tools ?? []).join(', ') : '';
+      if (entry.kind !== 'background' && entry.kind !== 'class') continue;
+      const parts = said(line);
+      expect((parsed?.fixed?.length ?? 0) + (parsed?.picks?.length ?? 0), `${entry.name}: ${line}`).toBe(parts.length);
+      for (const pick of parsed?.picks ?? []) expect(pick.count, `${entry.name}: ${pick.label}`).toBe(/\b(two)\b/i.test(pick.label) ? 2 : /\bthree\b/i.test(pick.label) ? 3 : 1);
+      checked += parts.length ? 1 : 0;
+    }
+    expect(checked).toBeGreaterThanOrEqual(35);
+    // Crew roles: every tool, kit or vehicle named in a role's proficiency sentence is granted.
+    for (const role of [...rules.values()].filter((e) => e.kind === 'crewRole')) {
+      const sentence = ((role.sections ?? []) as { name: string; text: string }[]).find((s) => s.name === 'Role Skill Proficiency')?.text ?? '';
+      const named = sentence.match(/[A-Z][\w’]+(?:’s)? (?:tools|supplies|utensils|kits?)|Vehicles \(\w+\)/g) ?? [];
+      expect(((role.tools as { fixed?: string[] } | undefined)?.fixed ?? []).length, `${role.name}: ${sentence}`).toBe(named.length);
+    }
+  });
+
+  it('suggests tools by what the choice says', () => {
+    expect(toolSuggestions('Two types of gaming sets')).toEqual(['Dice set', 'Playing card set']);
+    expect(toolSuggestions('One type of gaming set or Thieves’ Tools')).toEqual(['Dice set', 'Playing card set', 'Thieves’ tools']);
+    expect(toolSuggestions('one type of musical instrument')).toContain('Lute');
+    expect(toolSuggestions('One type of artisan’s tools or musical instrument')).toEqual(expect.arrayContaining(['Smith’s tools', 'Flute']));
+    expect(toolSuggestions('Two of your choice').length).toBeGreaterThan(30);
   });
 });

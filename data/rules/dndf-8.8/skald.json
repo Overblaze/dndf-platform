@@ -42,7 +42,15 @@
         "skills": {
           "choose": 3,
           "from": "any"
-        }
+        },
+        "toolPicks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 3,
+            "label": "Three Musical Instruments of your choice"
+          }
+        ]
       },
       "startingEquipment": [
         "(a) a pirate’s pack or (b) an entertainer’s pack",

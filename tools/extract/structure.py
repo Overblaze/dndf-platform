@@ -415,6 +415,29 @@ def pick(ident: str, kind: str, label: str, count: int = 1, among: list[str] | N
 
 NO_ARMOR_FLIGHT = "Not while wearing medium or heavy armor"
 
+COUNT_WORDS = {"a": 1, "an": 1, "one": 1, "two": 2, "three": 3, "four": 4}
+
+
+def tools_granted(text: str) -> dict:
+    """A list of tool proficiencies as the book prints it ("Cook’s Utensils, One type of artisan’s tools (of your
+    choice)"), parted into the tools it names outright and the ones it leaves to choose. A choice keeps the book's
+    words as its label; how many is read from them ("Two types of gaming sets")."""
+    text = re.sub(r"\.$", "", text.strip())
+    if text.lower() in ("", "none", "-"):
+        return {}
+    fixed: list[str] = []
+    picks: list[dict] = []
+    for part in (p.strip() for p in re.split(r",\s*(?:and\s+)?|\s+and\s+|\.\s+", text)):
+        if not part:
+            continue
+        chosen = re.search(r"\bchoice\b|^choose\b|\btypes? of\b|^(?:a|an|one|two|three|four)\b", part, re.I)
+        if chosen:
+            number = re.search(r"\b(a|an|one|two|three|four)\b", part, re.I)
+            picks.append(pick(f"tool{len(picks) + 1}", "tool", part, COUNT_WORDS[number.group(1).lower()] if number else 1))
+        else:
+            fixed.append(part)
+    return {**({"fixed": fixed} if fixed else {}), **({"picks": picks} if picks else {})}
+
 # Racial traits (p67–82). Uses, actions and plain dice come from the wording; these are the numbers that do not.
 RACE_STRUCTURE: dict[str, dict[str, dict]] = {
     "Fishman": {"Speed": {"expect": "you have a Swimming speed of 35 feet", "effects": [move("swim", 35)]}},

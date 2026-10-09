@@ -47,7 +47,15 @@
             "religion",
             "stealth"
           ]
-        }
+        },
+        "toolPicks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "Choose one type of artisan’s tools or one musical Instrument"
+          }
+        ]
       },
       "startingEquipment": [
         "(a) a shortsword or (b) any simple weapon",

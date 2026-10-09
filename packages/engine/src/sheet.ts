@@ -649,7 +649,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
       const effect: EffectDef = value.startsWith('tool:') || pick.def.kind === 'tool' ? { type: 'toolProficiency', label }
         : pick.def.kind === 'weapon' ? { type: 'weaponProficiency', weapon: slug(value) }
         : { type: 'proficiency', skill: value };
-      effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from: pick.from, page: pick.page });
+      effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from: pick.from === 'Tools' ? pick.race : pick.from, page: pick.page });
     }
   }
   const applies = (e: ActiveEffect, extra?: ExprScope) => !e.effect.when || Boolean(evaluate(e.effect.when, e.scopeOf(extra)));
@@ -675,10 +675,15 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   };
   for (const source of sources) {
     if (source.entry !== source.cls) continue;
-    const own = source.cls.proficiencies as { armor?: string[]; weapons?: string[]; tools?: string[] } | undefined;
+    const own = source.cls.proficiencies as { armor?: string[]; weapons?: string[]; tools?: string[]; toolPicks?: { label: string }[] } | undefined;
     for (const kind of own?.armor ?? []) grantArmor(kind, source.cls.name);
     for (const weapon of own?.weapons ?? []) grant(proficiencies.weapons, weapon, weaponGroupName(weapon), source.cls.name);
-    for (const tool of own?.tools ?? []) grant(proficiencies.tools, slug(tool), tool, source.cls.name);
+    // A line that is a choice ("One tool of your choice") is not a tool: what was chosen for it is added below.
+    for (const tool of own?.tools ?? []) if (!own?.toolPicks?.some((pick) => pick.label === tool)) grant(proficiencies.tools, slug(tool), capital(tool), source.cls.name);
+  }
+  // The tools a background or a crew role names outright.
+  for (const [giver, kind] of [[background, 'background'], ...crewRoles.map((role) => [role, 'crew role'] as const)] as const) {
+    for (const tool of ((giver?.tools as { fixed?: string[] } | undefined)?.fixed ?? [])) grant(proficiencies.tools, slug(tool), capital(tool), `${giver!.name} (${kind})`);
   }
   for (const e of ofType('armorProficiency')) if (typeof e.effect.armor === 'string') grantArmor(e.effect.armor, e.from);
   for (const e of ofType('weaponProficiency')) if (typeof e.effect.weapon === 'string') grant(proficiencies.weapons, e.effect.weapon, weaponGroupName(e.effect.weapon), e.from);

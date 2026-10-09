@@ -48,7 +48,15 @@
             "nature",
             "religion"
           ]
-        }
+        },
+        "toolPicks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one type of artisan tool of your choice"
+          }
+        ]
       },
       "startingEquipment": [
         "(a) a musket and 20 ammunition or (b) any simple weapon",

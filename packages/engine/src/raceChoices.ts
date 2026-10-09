@@ -45,7 +45,7 @@ export interface RacePick {
   key: string;
   /** The trait or option that gives it: "Shape-Memory Alloy Body". */
   from: string;
-  /** The race it belongs to. */
+  /** The race, class or background it belongs to. */
   race: string;
   def: PickDef;
   /** What is picked: skill ids, or names of tools and weapons. A tool picked where a skill could be is "tool:<name>". */
@@ -65,7 +65,7 @@ export function racePickKey(owner: string, pickId: string): string {
  * Every such choice the character has now: those of the race's and subrace's traits, and those of the options
  * picked from its lists (a Cyborg's Shape-Memory Alloy Body). One whose option is no longer picked is not listed.
  */
-export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'>, rules: Map<string, RuleEntry>): RacePick[] {
+export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'> & Partial<Pick<CharacterDoc, 'background'>>, rules: Map<string, RuleEntry>): RacePick[] {
   const found: RacePick[] = [];
   const add = (owner: string, from: string, race: string, picks: PickDef[] | undefined, page: number, book: string) => {
     for (const def of picks ?? []) {
@@ -82,6 +82,16 @@ export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'
       if (choice.picked.includes(option.id)) add(`${choice.id}.${option.id}`, option.name, choice.from, option.picks as PickDef[] | undefined, option.page, choice.book);
     }
   }
+  // The tools a class or a background leaves to choose ("two types of artisan’s tools of your choice").
+  const seen = new Set<string>();
+  for (const held of doc.classes) {
+    const cls = rules.get(held.id);
+    const picks = (cls?.proficiencies as { toolPicks?: PickDef[] } | undefined)?.toolPicks;
+    if (cls && picks && !seen.has(cls.id)) add(cls.id, 'Tools', cls.name, picks, cls.source.page, cls.source.book);
+    seen.add(held.id);
+  }
+  const background = doc.background ? rules.get(doc.background.id) : undefined;
+  if (background) add(background.id, 'Tools', `${background.name} background`, (background.tools as { picks?: PickDef[] } | undefined)?.picks, background.source.page, background.source.book);
   return found;
 }
 

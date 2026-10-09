@@ -593,6 +593,11 @@ def extract_class(version: str, key: str) -> dict:
         "tools": split_list(defs.get("tools", "")),
         "skills": parse_skills(defs.get("skills", "")),
     }
+    # The tools the book leaves to choose ("two types of artisan’s tools of your choice"); "tools" keeps the line as printed.
+    from structure import tools_granted
+    tool_picks = tools_granted(defs.get("tools", "")).get("picks")
+    if tool_picks:
+        entry["proficiencies"]["toolPicks"] = tool_picks
     entry["startingEquipment"] = parse_equipment(header.get("equipment", []))
     if columns:
         entry["progression"] = {"columns": columns}
