@@ -1,6 +1,7 @@
 import { deriveSheet, kaito, TEST_CHARACTERS, type CharacterDoc } from '@dndf/engine';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Backup } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 import type { CharacterStore, StoredCharacter } from '../lib/store';
@@ -79,6 +80,13 @@ export function CharacterList({ store }: { store: CharacterStore }) {
         </details>
         <p className="page-ref">Classes, races, backgrounds, crew roles and feats from both handbooks (v10 and v8.8) are available. “New character” opens the step-by-step builder; the Build page has it too, with level up and editing for the characters you have.</p>
       </section>
+
+      <Backup
+        kind="characters"
+        mine={(characters ?? []).map((c) => c.doc)}
+        add={async (doc: CharacterDoc) => { const stored = await store.create(doc); void store.log(stored.id, `Imported ${doc.name} from a file`); }}
+        onDone={load}
+      />
 
       {creating && (
         <Dialog title="New character" onClose={() => setCreating(false)}>

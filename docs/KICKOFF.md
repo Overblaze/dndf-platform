@@ -107,3 +107,10 @@ Known and left: a player who moves a character to a different campaign keeps a f
 - [x] Accounts for players without Discord (branch `password-accounts`, `0008_password_accounts.sql`): a username and password, made only with the table's join code (checked in the database); never the bootstrap DM; the DM resets a forgotten password with `npm run accounts -w bot`.
 - [x] Full sweep (branch `sweep-fixes`, `0009_profile_names.sql`): every browser walk-through rerun, a 30,000-character and 69,000-ship soak, and `npm run live-check -w bot`, an end-to-end check of the real Supabase project as two temporary players. Fixed: a new Discord player shown by their email name (0008), the join code staying on the account, a ship change lost when leaving the page within the save delay, and the sign-up form not using the database's own reason for a refusal.
 - [x] `/bounty` in the bot: the poster as issued, or the whole crew's.
+
+## Phase 9 — Polish
+
+- [x] Export and import (branch `export-import`): a character, a ship, or everything on a list page as one `.dndf.json` file; importing always adds new ones and never replaces. A file holds only the saved document, so a Devil Fruit is never in it; an uploaded sheet background and a ship's pictures are left behind. Every imported thing goes through the same checks as a save read from the database.
+- [ ] Offline use (installable app that opens without a connection).
+- [ ] `/surge` in the bot.
+- [ ] Version-switch report (what changes for a character moved between v8.8 and v10).
