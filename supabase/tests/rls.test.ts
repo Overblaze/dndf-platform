@@ -898,3 +898,47 @@ describe('the table’s background picture (0011)', () => {
     expect(await as(matt, `delete from storage.objects where bucket_id = 'app-background' returning name`)).toEqual([{ name: 'sunny.jpg' }]);
   });
 });
+
+describe('a file with a report (0012)', () => {
+  const put = `insert into storage.objects (bucket_id, name) values ('report-files', $1)`;
+  const send = `insert into public.reports (reporter, kind, message, file_path, file_name, file_size) values ('x', 'source', 'Source material', $1, $2, $3)`;
+
+  it('the bucket is private, takes PDFs and text up to 50 MB', async () => {
+    expect((await admin(`select public, file_size_limit, allowed_mime_types from storage.buckets where id = 'report-files'`))[0]).toEqual({ public: false, file_size_limit: 52428800, allowed_mime_types: ['application/pdf', 'text/plain', 'text/markdown'] });
+  });
+
+  it('a signed-in member can put a file in their own folder and send it with a report', async () => {
+    await admin(`delete from public.reports`); // start clear of the earlier tests' flood limits
+    await as(ana, put, [`${ana}/one-book.pdf`]);
+    await as(ana, send, [`${ana}/one-book.pdf`, 'Book One.pdf', 1234567]);
+    expect(await admin(`select kind, file_path, file_name, file_size::int as file_size, file_saved, user_id from public.reports`)).toEqual([{ kind: 'source', file_path: `${ana}/one-book.pdf`, file_name: 'Book One.pdf', file_size: 1234567, file_saved: null, user_id: ana }]);
+  });
+
+  it('nobody else can see, take or remove the waiting file', async () => {
+    expect(await as(ben, `select name from storage.objects where bucket_id = 'report-files'`)).toEqual([]);
+    expect(await as(matt, `select name from storage.objects where bucket_id = 'report-files'`)).toEqual([]); // not even a DM, through the site
+    expect(await as(ben, `delete from storage.objects where bucket_id = 'report-files' returning name`)).toEqual([]);
+    expect(await as(ana, `select name from storage.objects where bucket_id = 'report-files'`)).toEqual([{ name: `${ana}/one-book.pdf` }]);
+  });
+
+  it('a file cannot be sent signed out, into or from someone else’s folder, or with the bot’s note filled in', async () => {
+    await expect(as(null, put, ['anon/x.pdf'])).rejects.toThrow(/permission denied|row-level security/);
+    await expect(as(ben, put, [`${ana}/planted.pdf`])).rejects.toThrow(/row-level security/);
+    await expect(as(null, send, ['anon/x.pdf', 'x.pdf', 10])).rejects.toThrow(/permission denied/);
+    await expect(as(ben, send, [`${ana}/one-book.pdf`, 'Hers.pdf', 10])).rejects.toThrow(/row-level security/);
+    await expect(as(ben, send, [`${ben}/../${ana}/one-book.pdf`, 'Hers.pdf', 10])).rejects.toThrow(/row-level security/);
+    await expect(as(ben, send, [`${ben}/a.pdf`, null, 10])).rejects.toThrow(/row-level security/);
+    await expect(as(ben, send, [`${ben}/a.pdf`, 'a.pdf', 60 * 1024 * 1024])).rejects.toThrow(/check/);
+    await expect(as(ben, `insert into public.reports (message, file_saved) values ('note', 'inbox/x.pdf')`)).rejects.toThrow(/permission denied/);
+    // A report with no file still goes through as before, signed in or not.
+    await as(null, `insert into public.reports (message) values ('No file, signed out')`);
+    await as(ben, `insert into public.reports (message, kind) values ('A book I would like added', 'source')`);
+  });
+
+  it('the bot takes the file, notes where it kept it, and the sender sees that it arrived', async () => {
+    await admin(`update public.reports set status = 'posted', file_path = null, file_saved = '2026-10-09-abcd1234-Book-One.pdf' where file_name = 'Book One.pdf'`);
+    await admin(`delete from storage.objects where bucket_id = 'report-files'`);
+    expect(await as(ana, `select file_name, file_path, file_saved, status from public.reports where file_name is not null`)).toEqual([{ file_name: 'Book One.pdf', file_path: null, file_saved: '2026-10-09-abcd1234-Book-One.pdf', status: 'posted' }]);
+    expect(await as(ana, `select name from storage.objects where bucket_id = 'report-files'`)).toEqual([]);
+  });
+});

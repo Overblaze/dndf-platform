@@ -137,6 +137,7 @@ export const COMMANDS = [
   new SlashCommandBuilder().setName('report').setDescription('Tell Matt about a bug, an idea, or something you need from the site or the bot')
     .addSubcommand((sub) => sub.setName('send').setDescription('Send a report. Only you and Matt see it; it does not go in this channel')
       .addStringOption((o) => o.setName('message').setDescription('What happened, or what you would like').setRequired(true).setMinLength(3).setMaxLength(2000))
-      .addStringOption((o) => o.setName('kind').setDescription('What kind of report (default: a bug)').addChoices({ name: 'a bug', value: 'bug' }, { name: 'an idea', value: 'idea' }, { name: 'something else', value: 'other' })))
+      .addStringOption((o) => o.setName('kind').setDescription('What kind of report (default: a bug)').addChoices({ name: 'a bug', value: 'bug' }, { name: 'an idea', value: 'idea' }, { name: 'source material', value: 'source' }, { name: 'something else', value: 'other' }))
+      .addAttachmentOption((o) => o.setName('file').setDescription('A PDF or text file of source material (up to 50 MB) for Matt to add')))
     .addSubcommand((sub) => sub.setName('open').setDescription('For Matt: the reports not yet marked completed')),
 ].map((command) => command.toJSON());
