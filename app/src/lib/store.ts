@@ -3,12 +3,15 @@
 import { normalizeDoc, sameDoc, type CharacterDoc } from '@dndf/engine';
 import { LOCAL_HISTORY_CAP, pushHistory, withinHistory, type HistoryEntry } from './history';
 import { blobToDataUrl } from './image';
+import { drawer, isNetworkError, onReconnect, sendWaiting, watch } from './offline';
 import { supabase } from './supabase';
 
 export interface StoredCharacter {
   id: string;
   doc: CharacterDoc;
   updatedAt: string;
+  /** True when this is a change made with no connection that has not reached the account yet. */
+  unsent?: boolean;
 }
 
 export interface CharacterStore {
@@ -28,6 +31,8 @@ export interface CharacterStore {
   log(id: string, summary: string, before?: CharacterDoc): Promise<void>;
   /** The character's history, newest first. */
   history(id: string): Promise<HistoryEntry[]>;
+  /** Drops a change that is waiting to be sent, when the player has chosen the version saved elsewhere instead. */
+  discardUnsent?(id: string): void;
   /** Stores a sheet background picture and returns the reference to keep in the character. */
   uploadBackground(id: string, picture: Blob): Promise<string>;
   /** A URL the browser can show for a stored picture, or null if it is gone. */
@@ -347,6 +352,135 @@ function remoteStore(userId: string): CharacterStore {
   };
 }
 
+const OFFLINE = 'You are offline';
+
+/**
+ * The account's characters, usable with no connection. Every character read is also kept on this
+ * device. When the database cannot be reached, the kept copy is shown, and a change is kept beside it
+ * and sent once the database answers again. It is sent as any save is: only if the character is still
+ * as this device last knew it. If it was changed elsewhere meanwhile, nothing is overwritten; the
+ * character is marked, and opening it asks the player which version stays.
+ */
+function offlineStore(remote: CharacterStore, userId: string): CharacterStore {
+  const kept = drawer<CharacterDoc>('characters', userId);
+  watch('characters', kept);
+  const base = (id: string, doc: unknown, updatedAt: string, name: string) => {
+    const now = kept.get(id);
+    kept.put(id, { ...(now?.pending ? { pending: now.pending, clash: now.clash } : {}), doc, updatedAt, name });
+  };
+  const shown = (id: string): StoredCharacter | null => {
+    const now = kept.get(id);
+    if (!now) return null;
+    const doc = now.pending?.doc ?? normalizeDoc(now.doc);
+    return doc ? { id, doc, updatedAt: now.updatedAt, ...(now.pending ? { unsent: true } : {}) } : null;
+  };
+  /** What a later save must find unchanged on the account: the version this device last knew, not a newer one just read. */
+  const standOn = (id: string) => { const now = kept.get(id); if (now) known.set(id, { updatedAt: now.updatedAt, doc: now.doc }); };
+
+  /** Sends each waiting change. One that would overwrite a change made elsewhere is left, marked, for the player to settle. */
+  const send = async () => {
+    for (const { id } of kept.waiting()) {
+      const now = kept.get(id);
+      if (!now?.pending || now.clash) continue;
+      standOn(id);
+      try {
+        await remote.save(id, now.pending.doc, { force: now.pending.force });
+        const saved = known.get(id);
+        const after = kept.get(id);
+        // A newer change may have been kept while this one was on its way: only clear what was sent.
+        if (after) kept.put(id, { doc: saved?.doc ?? now.pending.doc, updatedAt: saved?.updatedAt ?? now.updatedAt, name: now.pending.doc.name, ...(after.pending && after.pending.at !== now.pending.at ? { pending: after.pending } : {}) });
+      } catch (error) {
+        if (error instanceof ChangedElsewhere) kept.put(id, { ...now, clash: true });
+        else if (isNetworkError(error)) return;
+        // Anything else (the character was deleted elsewhere) stays waiting and is said when it is opened.
+      }
+    }
+  };
+  onReconnect(send);
+  void sendWaiting();
+
+  return {
+    ...remote,
+    local: false,
+    async list() {
+      try {
+        const list = await remote.list();
+        for (const stored of list) {
+          const now = kept.get(stored.id);
+          // Keep the exact copy a full read gave, when this is still that version.
+          if (!now || now.updatedAt !== stored.updatedAt) base(stored.id, stored.doc, now?.pending ? now.updatedAt : stored.updatedAt, stored.doc.name);
+        }
+        kept.keepOnly(new Set(list.map((c) => c.id)));
+        return list.map((stored) => shown(stored.id) ?? stored);
+      } catch (error) {
+        if (!isNetworkError(error)) throw error;
+        return Object.keys(kept.all()).flatMap((id) => shown(id) ?? []).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+      }
+    },
+    async get(id) {
+      try {
+        const stored = await remote.get(id);
+        if (!stored) { if (!kept.get(id)?.pending) kept.remove(id); return null; }
+        const now = kept.get(id);
+        if (now?.pending) {
+          // A change is waiting: show it, and let the save that follows be judged against the version it was made from.
+          standOn(id);
+          return shown(id);
+        }
+        base(id, known.get(id)?.doc ?? stored.doc, stored.updatedAt, stored.doc.name);
+        return stored;
+      } catch (error) {
+        if (!isNetworkError(error)) throw error;
+        const here = shown(id);
+        if (!here) throw new Error(`${OFFLINE}, and this character has not been opened on this device before, so there is no copy of it here`);
+        standOn(id);
+        return here;
+      }
+    },
+    async create(doc) {
+      try {
+        const stored = await remote.create(doc);
+        base(stored.id, known.get(stored.id)?.doc ?? stored.doc, stored.updatedAt, stored.doc.name);
+        return stored;
+      } catch (error) {
+        if (isNetworkError(error)) throw new Error(`${OFFLINE}, so a new character cannot be added to your account yet. Make it when you are back online, or sign out to keep one in this browser`);
+        throw error;
+      }
+    },
+    async save(id, doc, options) {
+      try {
+        await remote.save(id, doc, options);
+        const saved = known.get(id);
+        kept.put(id, { doc: saved?.doc ?? doc, updatedAt: saved?.updatedAt ?? new Date().toISOString(), name: doc.name });
+      } catch (error) {
+        if (!isNetworkError(error)) throw error;
+        const now = kept.get(id);
+        if (!now) throw new Error(`${OFFLINE}, and this device has no copy of the character to keep the change beside. It will be saved when you are back online`);
+        // Kept beside the last known version; sent when the database answers. The clash mark goes: the player is deciding by changing it.
+        const ok = kept.put(id, { doc: now.doc, updatedAt: now.updatedAt, name: doc.name, pending: { doc, at: new Date().toISOString(), force: options?.force || now.pending?.force } });
+        if (!ok) throw new Error(`${OFFLINE}, and this browser has no room left to keep the change. It is still on screen: do not close the page until you are back online`);
+      }
+    },
+    async remove(id) {
+      try { await remote.remove(id); kept.remove(id); } catch (error) {
+        if (isNetworkError(error)) throw new Error(`${OFFLINE}, so the character cannot be deleted from your account yet`);
+        throw error;
+      }
+    },
+    discardUnsent(id) {
+      const now = kept.get(id);
+      if (now?.pending) kept.put(id, { doc: now.doc, updatedAt: now.updatedAt, name: now.name });
+    },
+    // History is a courtesy and lives on the account: with no connection there is none to add to or read.
+    async log(id, summary, before) { try { await remote.log(id, summary, before); } catch { /* never fails the change it describes */ } },
+    async history(id) { try { return await remote.history(id); } catch (error) { if (isNetworkError(error)) return []; throw error; } },
+  };
+}
+
+// One store for each signed-in player, however many pages ask: it listens for the connection coming back.
+let account: { userId: string; store: CharacterStore } | null = null;
 export function storeFor(userId: string | null): CharacterStore {
-  return userId && supabase ? remoteStore(userId) : localStore;
+  if (!userId || !supabase) return localStore;
+  if (account?.userId !== userId) account = { userId, store: offlineStore(remoteStore(userId), userId) };
+  return account.store;
 }

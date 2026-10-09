@@ -58,7 +58,7 @@ export function CharacterList({ store }: { store: CharacterStore }) {
                 <span className="resource-name">{sheet?.name ?? character.doc.name}</span>
                 <span className="page-ref">
                   {sheet
-                    ? `${sheet.summary} · ${VERSION_NAMES[character.doc.rulesVersion]} · HP ${character.doc.state.hp} / ${sheet.maxHp.value}`
+                    ? `${sheet.summary} · ${VERSION_NAMES[character.doc.rulesVersion]} · HP ${character.doc.state.hp} / ${sheet.maxHp.value}${character.unsent ? ' · changed on this device, not sent yet' : ''}`
                     : 'This character could not be worked out. Open it to see why, or delete it.'}
                 </span>
               </Link>

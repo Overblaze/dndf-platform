@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
+import { sendWaiting, useWaiting } from '../lib/offline';
 import { useOnline } from '../lib/online';
 import { Compass } from './Compass';
 import { PasswordDialog, SignInDialog } from './SignInDialog';
@@ -51,6 +52,8 @@ function Account() {
 export function AppShell() {
   const { error, session } = useAuth();
   const online = useOnline();
+  const waiting = useWaiting();
+  const clashes = waiting.filter((w) => w.clash);
   return (
     <div className="shell">
       <header className="topbar">
@@ -71,7 +74,15 @@ export function AppShell() {
         {!online && (
           <p className="notice" role="status">
             You are offline. The Library, and characters and ships kept in this browser, work as usual.{' '}
-            {session ? 'Anything on your account (your characters, your crew’s ship, Devil Fruits, the DM page) needs a connection: what is already on screen stays, but changes are not saved until you are back online.' : 'Signing in needs a connection.'}
+            {session ? 'Your account’s characters that have been opened on this device work too: changes are kept here and sent when you are back online. Your crew’s ship, Devil Fruits and the Crew and DM pages need a connection.' : 'Signing in needs a connection.'}
+          </p>
+        )}
+        {waiting.length > 0 && (
+          <p className="notice" role="status">
+            {waiting.length === 1 ? `A change to ${waiting[0]!.name} is` : `Changes to ${waiting.map((w) => w.name).join(', ')} are`} kept on this device and not on your account yet.{' '}
+            {clashes.length > 0
+              ? `${clashes.map((w) => w.name).join(', ')} ${clashes.length === 1 ? 'was' : 'were'} also changed somewhere else: open ${clashes.length === 1 ? 'it' : 'each'} to choose which version stays.`
+              : online ? <button className="btn" onClick={() => void sendWaiting()}>Send now</button> : 'They will be sent when you are back online.'}
           </p>
         )}
         {error && (

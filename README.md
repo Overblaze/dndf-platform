@@ -41,7 +41,12 @@ The built site is an installable web app. A service worker (`app/sw.template.js`
 with the list of built files) keeps the app's own files on the device, so the site opens with no connection: the
 Library, and characters and ships kept in the browser, all work. Opening the site asks the network first, so a new
 deploy is picked up on the next load with a connection. The service worker never keeps anything from the database;
-things on an account still need a connection. It is not registered by `npm run dev`.
+it is not registered by `npm run dev`.
+
+Characters on an account work offline too (`app/src/lib/offline.ts`, and the wrapper in `app/src/lib/store.ts`): each
+one read is kept in the browser's storage for that player; a change made with no connection is kept beside it and
+sent when the connection returns, only if the character is still as the device last knew it. Otherwise nothing is
+overwritten and the player chooses. Ships, Devil Fruits and the Crew and DM pages still need a connection.
 
 ## Docs
 

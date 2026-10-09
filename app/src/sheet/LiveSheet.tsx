@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { downloadExport } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
+import { useWaiting } from '../lib/offline';
 import { RollsProvider } from '../lib/rolls';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 import type { CharacterStore } from '../lib/store';
@@ -55,6 +56,7 @@ function conflictSummary(other: CharacterDoc): string {
 export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) {
   const { live, loadError, missing } = useCharacter(store, id);
   const navigate = useNavigate();
+  const unsent = useWaiting().some((w) => w.kind === 'characters' && w.id === id);
   // The Build page links straight to a tab or a dialog: /sheet/<id>?do=level, ?tab=features.
   const [asked, setAsked] = useSearchParams();
   // Used once: a reload or the Back button should not open the same dialog again.
@@ -94,7 +96,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
         </div>
         <div className="row wrap">
           <span className={live.status === 'error' || live.status === 'conflict' ? 'chip chip-damage' : 'chip'} role="status">
-            {store.local ? `${SAVE_TEXT[live.status]} on this device` : SAVE_TEXT[live.status]}
+            {store.local ? `${SAVE_TEXT[live.status]} on this device` : unsent && live.status === 'saved' ? 'Kept on this device, not sent yet' : SAVE_TEXT[live.status]}
           </span>
           <button className="btn btn-primary" onClick={() => setDialog('rest')}>Rest</button>
           <button className="btn" onClick={() => setDialog('level')}>Level up</button>
