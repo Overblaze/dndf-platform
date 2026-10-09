@@ -5,7 +5,7 @@ import { useRolls } from '../lib/rolls';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { Tile, type OpenStat } from './Vitals';
 
-function RollRow({ stat, name, mark, edge, onOpen }: { stat: Stat; name: string; mark: string; edge?: RollEdge; onOpen: OpenStat }) {
+function RollRow({ stat, name, mark, edge, fails, onOpen }: { stat: Stat; name: string; mark: string; edge?: RollEdge; /** The condition that makes this fail without a roll. */ fails?: string; onOpen: OpenStat }) {
   const rolls = useRolls();
   return (
     <div className="roll-row">
@@ -13,8 +13,9 @@ function RollRow({ stat, name, mark, edge, onOpen }: { stat: Stat; name: string;
         <span className="prof-mark" aria-hidden="true">{mark}</span>
         {name}
       </button>
-      {edge && <EdgeNote edge={edge} short />}
-      <button className={stat.overridden ? 'btn btn-roll edited' : 'btn btn-roll'} onClick={() => rolls.d20(stat.label, stat.value, undefined, edge)} aria-label={`Roll ${stat.label}, ${signed(stat.value)}${edge && edge.mode !== 'normal' ? `, with ${edge.mode}` : ''}`}>
+      {fails && <abbr className="edge edge-disadvantage" title={`${fails}: fails automatically`}>FAILS</abbr>}
+      {edge && !fails && <EdgeNote edge={edge} short />}
+      <button disabled={Boolean(fails)} title={fails ? `${fails}: this saving throw fails without a roll` : undefined} className={stat.overridden ? 'btn btn-roll edited' : 'btn btn-roll'} onClick={() => rolls.d20(stat.label, stat.value, undefined, edge)} aria-label={`Roll ${stat.label}, ${signed(stat.value)}${edge && edge.mode !== 'normal' ? `, with ${edge.mode}` : ''}`}>
         <span className="num">{signed(stat.value)}</span>
       </button>
     </div>
@@ -45,7 +46,7 @@ export function SkillsTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
         <h2>Saving throws</h2>
         <div className="roll-list">
           {ABILITIES.map((a) => (
-            <RollRow key={a} stat={sheet.saves[a]} edge={sheet.saves[a].edge} name={ABILITY_NAMES[a]} mark={sheet.saves[a].proficient ? '●' : '○'} onOpen={onOpen} />
+            <RollRow key={a} stat={sheet.saves[a]} edge={sheet.saves[a].edge} fails={sheet.saves[a].autoFail} name={ABILITY_NAMES[a]} mark={sheet.saves[a].proficient ? '●' : '○'} onOpen={onOpen} />
           ))}
         </div>
       </section>

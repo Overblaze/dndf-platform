@@ -49,6 +49,16 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
     const spent = Math.min(sheet.dreamPoints.max, Math.max(0, state.dreamPointsSpent + amount));
     live.setState({ ...state, dreamPointsSpent: spent }, `Dream Points ${sheet.dreamPoints.remaining} → ${sheet.dreamPoints.max - spent}`);
   };
+  const [own, setOwn] = useState('');
+  const addOwn = () => {
+    const name = own.trim().slice(0, 40);
+    // A condition the rules define is switched on by its own name, however it was typed.
+    const known = CONDITIONS.find((c) => c.toLowerCase() === name.toLowerCase());
+    if (name && !state.conditions.some((c) => c.toLowerCase() === name.toLowerCase())) live.setState({ ...state, conditions: [...state.conditions, known ?? name] }, `${known ?? name} added`);
+    setOwn('');
+  };
+  const SRD = '5e SRD 5.1';
+  const conditionText = ((live.rules.get('rule.srd_conditions')?.sections ?? []) as { name: string; text: string; page: number }[]);
   const toggleCondition = (name: string) => {
     const has = state.conditions.includes(name);
     live.setState({ ...state, conditions: has ? state.conditions.filter((c) => c !== name) : [...state.conditions, name] }, `${name} ${has ? 'removed' : 'added'}`);
@@ -142,13 +152,39 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
             <button className="btn" onClick={() => exhaust(1)} disabled={state.exhaustion === 6} aria-label="Raise exhaustion">+</button>
           </div>
         </div>
+        <p className="page-ref">Tap a condition to put it on or take it off. Its effects are applied for you: disadvantage on the rolls it names, speed 0, saves that fail.</p>
         <div className="chips">
           {CONDITIONS.map((name) => (
             <button key={name} className={state.conditions.includes(name) ? 'chip chip-btn chip-on' : 'chip chip-btn'} aria-pressed={state.conditions.includes(name)} onClick={() => toggleCondition(name)}>
               {name}
             </button>
           ))}
+          {state.conditions.filter((name) => !(CONDITIONS as readonly string[]).includes(name)).map((name) => (
+            <button key={name} className="chip chip-btn chip-on" aria-pressed onClick={() => toggleCondition(name)} aria-label={`${name}: remove`}>{name} ×</button>
+          ))}
         </div>
+        <div className="row wrap">
+          <input value={own} onChange={(e) => setOwn(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') addOwn(); }} placeholder="Something else: Soaked, Seasick…" aria-label="A condition of your own" maxLength={40} />
+          <button className="btn" disabled={!own.trim()} onClick={addOwn}>Note it</button>
+        </div>
+        <p className="page-ref">One you type in is kept as a note under “In effect” and changes nothing on the sheet.</p>
+        {sheet.conditions.map((c) => {
+          const book = conditionText.find((s) => s.name === c.name);
+          return (
+            <div key={c.name} className="tracker">
+              <div className="resource-name">{c.name}{c.immune ? ` — immune (${c.immune}), so it does nothing` : ''}</div>
+              {!c.immune && c.effects.length > 0 && <ul className="notes">{c.effects.map((line) => <li key={line}>{line}</li>)}</ul>}
+              {!c.known && <div className="page-ref">Your own note.</div>}
+              {book && (
+                <details className="rule-text">
+                  <summary>The rule · {cite(SRD, book.page)}</summary>
+                  <p className="feature-text">{book.text}</p>
+                  <p className="page-ref">From the System Reference Document 5.1 by Wizards of the Coast LLC, CC-BY-4.0.</p>
+                </details>
+              )}
+            </div>
+          );
+        })}
       </section>
 
       <BountyCard live={live} onOpen={onOpen} />

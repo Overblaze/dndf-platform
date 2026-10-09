@@ -1,7 +1,7 @@
 // The DnDF Discord bot. Run with: npm start --workspace bot   (see bot/README.md)
 import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, type AutocompleteInteraction, type ChatInputCommandInteraction } from 'discord.js';
-import { SKILLS, type Rarity, type RollMode, type Sheet } from '@dndf/engine';
-import { dawnCommand, hp, partyLine, rest, roll, status, withPrivacy, type Outcome } from './commands';
+import { CONDITIONS, SKILLS, type Rarity, type RollMode, type Sheet } from '@dndf/engine';
+import { condition, dawnCommand, hp, partyLine, rest, roll, status, withPrivacy, type Outcome } from './commands';
 import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter, type BotShip } from './db';
 import { loadEnv } from './env';
 import { armoryMatches, itemAdd, itemList, itemMake, itemRemove, itemUse } from './itemCommands';
@@ -79,6 +79,12 @@ async function autocomplete(interaction: AutocompleteInteraction) {
     // What a surge of the rarity already chosen opens; before one is chosen, everything a Legendary one would.
     const rarity = (interaction.options.getString('rarity') ?? 'Legendary') as Rarity;
     return interaction.respond(surgeMatches(surgeChoices(character.doc, sheet, rulesOf(character.doc.rulesVersion), rarity), typed));
+  }
+  if (interaction.commandName === 'condition' && focused.name === 'condition') {
+    const character = pick(characters, interaction.options.getString('character'));
+    // To take off: what they have. To put on: the conditions the rules define.
+    const names = interaction.options.getString('change') === 'remove' ? character?.doc.state.conditions ?? [] : [...CONDITIONS];
+    return interaction.respond(names.filter((c) => c.toLowerCase().includes(typed)).slice(0, 25).map((c) => ({ name: c, value: c })));
   }
   if (interaction.commandName === 'make' && focused.name === 'skill') {
     return interaction.respond(SKILLS.filter((k) => k.name.toLowerCase().includes(typed)).slice(0, 25).map((k) => ({ name: k.name, value: k.id })));
@@ -185,13 +191,14 @@ async function run(interaction: ChatInputCommandInteraction) {
   const whole = sheetOf(doc, secrets);
   const act = (one: Sheet, dice: typeof rng): Outcome | null => {
     if (name === 'roll') return roll(one, interaction.options.getString('what', true), (interaction.options.getString('with') ?? 'normal') as RollMode, dice);
-    if (name === 'hp') return hp(doc, one, interaction.options.getString('change', true) as 'damage' | 'heal' | 'temp', interaction.options.getInteger('amount', true));
+    if (name === 'hp') return hp(doc, one, interaction.options.getString('change', true) as 'damage' | 'heal' | 'temp', interaction.options.getInteger('amount', true), interaction.options.getString('type'));
+    if (name === 'condition') return condition(doc, one, interaction.options.getString('change', true) as 'add' | 'remove' | 'list', interaction.options.getString('condition'), (next) => sheetOf(next, secrets));
     if (name === 'rest') return rest(doc, one, interaction.options.getString('kind', true) as 'short' | 'long', interaction.options.getInteger('hit_dice') ?? 0, dice);
     if (name === 'dawn') return dawnCommand(doc, one);
     if (name === 'status') return status(doc, one);
     return null;
   };
-  if (!['roll', 'hp', 'rest', 'dawn', 'status'].includes(name)) return interaction.editReply(`I don't know /${name}.`);
+  if (!['roll', 'hp', 'rest', 'dawn', 'status', 'condition'].includes(name)) return interaction.editReply(`I don't know /${name}.`);
   const outcome = withPrivacy((one, dice) => act(one, dice)!, whole, sheet, hidden || open, rng);
 
   // Save first: the player is only told about a change that was really written.

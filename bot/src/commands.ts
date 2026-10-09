@@ -2,7 +2,7 @@
 // and the player's words in, the reply and (when something changed) the new character out.
 // The numbers all come from the shared engine, so the bot and the website can never disagree.
 import {
-  ABILITIES, ABILITY_NAMES, applyDamage, applyHealing, dawn, describeEdge, exactBerries, gainTempHp, longRest, nextHitDice, rollD20, rollDice, rollDie, rollModeWith, shortRest, signed,
+  ABILITIES, ABILITY_NAMES, CONDITIONS, CONDITION_EFFECTS, applyDamage, applyHealing, damageAfterDefenses, dawn, describeEdge, exactBerries, gainTempHp, longRest, nextHitDice, rollD20, rollDice, rollDie, rollModeWith, shortRest, signed,
   type CharacterDoc, type RollEdge, type RollMode, type Rng, type Sheet,
 } from '@dndf/engine';
 
@@ -32,11 +32,11 @@ const dieFaces = (values: number[]) => values.join(', ');
 const norm = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
 /** Everything on a sheet that a d20 can be rolled for, by the names a player might type. */
-export function rollables(sheet: Sheet): { name: string; bonus: number; kind: 'check' | 'save' | 'skill' | 'attack' | 'initiative'; damage?: string; /** Advantage or disadvantage the sheet gives this roll. */ edge?: RollEdge }[] {
+export function rollables(sheet: Sheet): { name: string; bonus: number; kind: 'check' | 'save' | 'skill' | 'attack' | 'initiative'; damage?: string; /** Advantage or disadvantage the sheet gives this roll. */ edge?: RollEdge; /** The condition that makes this save fail without a roll. */ fails?: string }[] {
   return [
     { name: 'Initiative', bonus: sheet.initiative.value, kind: 'initiative' as const, edge: sheet.initiativeEdge },
     ...sheet.skills.map((s) => ({ name: s.label, bonus: s.value, kind: 'skill' as const, edge: s.edge })),
-    ...ABILITIES.map((a) => ({ name: `${ABILITY_NAMES[a]} save`, bonus: sheet.saves[a].value, kind: 'save' as const, edge: sheet.saves[a].edge })),
+    ...ABILITIES.map((a) => ({ name: `${ABILITY_NAMES[a]} save`, bonus: sheet.saves[a].value, kind: 'save' as const, edge: sheet.saves[a].edge, fails: sheet.saves[a].autoFail })),
     ...ABILITIES.map((a) => ({ name: `${ABILITY_NAMES[a]} check`, bonus: sheet.abilities[a].mod, kind: 'check' as const, edge: sheet.abilities[a].edge })),
     ...sheet.attacks.map((a) => ({ name: a.name, bonus: a.toHit.value, kind: 'attack' as const, damage: `${a.damage} ${a.damageType}`, edge: a.edge })),
   ];
@@ -77,6 +77,8 @@ export function roll(sheet: Sheet, what: string, mode: RollMode, rng: Rng): Outc
   if (!found) {
     return { reply: close.length ? `"${text}" could be: ${close.join(', ')}. Which one?` : `Nothing on ${sheet.name}'s sheet is called "${text}". Try a skill, \`str save\`, \`initiative\`, an attack's name, or dice like \`2d6+3\`.` };
   }
+  // A saving throw a condition makes fail (paralyzed, stunned…) is not rolled.
+  if (found.fails) return { reply: `🎲 **${sheet.name}** · ${found.name}: **fails** without a roll (${found.fails}).` };
   // What the sheet gives this roll (heavy armor on Stealth, an item) is put together with what the player asked for: one of each is a straight roll.
   const rolledAs = rollModeWith(found.edge, mode);
   const d20 = rollD20(found.bonus, rng, rolledAs);
@@ -96,18 +98,20 @@ export function roll(sheet: Sheet, what: string, mode: RollMode, rng: Rng): Outc
 const hpLine = (doc: CharacterDoc, sheet: Sheet) => `${doc.state.hp} / ${sheet.maxHp.value}${doc.state.tempHp ? ` (+${doc.state.tempHp} temporary)` : ''}`;
 
 /** /hp: take damage, heal, or gain temporary hit points. */
-export function hp(doc: CharacterDoc, sheet: Sheet, kind: 'damage' | 'heal' | 'temp', amount: number): Outcome {
+export function hp(doc: CharacterDoc, sheet: Sheet, kind: 'damage' | 'heal' | 'temp', amount: number, type?: string | null): Outcome {
   const n = Math.max(0, Math.floor(amount));
   if (n === 0) return { reply: `Nothing to change: the amount was 0. ${sheet.name} is at ${hpLine(doc, sheet)}.` };
   const before = hpLine(doc, sheet);
-  const state = kind === 'damage' ? applyDamage(doc.state, n) : kind === 'heal' ? applyHealing(doc.state, n, sheet.maxHp.value) : gainTempHp(doc.state, n);
+  // With the kind of damage given, resistances, immunities and vulnerabilities are applied.
+  const taken = kind === 'damage' ? damageAfterDefenses(n, type ?? undefined, sheet.protections) : { amount: n, why: null };
+  const state = kind === 'damage' ? applyDamage(doc.state, taken.amount) : kind === 'heal' ? applyHealing(doc.state, n, sheet.maxHp.value) : gainTempHp(doc.state, n);
   const next = { ...doc, state };
-  const verb = kind === 'damage' ? `takes ${n} damage` : kind === 'heal' ? `heals ${n}` : `gains ${n} temporary hit points`;
+  const verb = kind === 'damage' ? `takes ${type ? `${n} ${type}` : n} damage${taken.why ? ` (${taken.why}: ${taken.amount} taken)` : ''}` : kind === 'heal' ? `heals ${n}` : `gains ${n} temporary hit points`;
   const down = kind === 'damage' && state.hp === 0 ? ' 💀 Down at 0 hit points.' : '';
   return {
     doc: next,
     reply: `${kind === 'damage' ? '💥' : '💚'} **${sheet.name}** ${verb}: ${before} → **${hpLine(next, sheet)}**.${down}`,
-    log: `${kind === 'damage' ? 'Damage' : kind === 'heal' ? 'Healing' : 'Temporary hit points'} ${n} (Discord): HP ${doc.state.hp} → ${state.hp}`,
+    log: `${kind === 'damage' ? 'Damage' : kind === 'heal' ? 'Healing' : 'Temporary hit points'} ${n}${kind === 'damage' && type ? ` ${type}${taken.why ? `, ${taken.amount} taken` : ''}` : ''} (Discord): HP ${doc.state.hp} → ${state.hp}`,
   };
 }
 
@@ -161,4 +165,28 @@ export function status(doc: CharacterDoc, sheet: Sheet): Outcome {
 export function partyLine(doc: CharacterDoc, sheet: Sheet, player?: string): string {
   const mark = doc.state.hp === 0 ? '💀' : doc.state.hp <= sheet.maxHp.value / 2 ? '🩸' : '❤️';
   return `${mark} **${sheet.name}**${player ? ` (${player})` : ''} — ${sheet.summary.split(' · ').slice(1).join(' · ') || sheet.summary} · HP ${hpLine(doc, sheet)} · AC ${sheet.ac.value}`;
+}
+
+/** /condition: put a condition on the character, take one off, or list them with what each is doing. */
+export function condition(doc: CharacterDoc, sheet: Sheet, action: 'add' | 'remove' | 'list', name: string | null, resheet: (next: CharacterDoc) => Sheet): Outcome {
+  const has = doc.state.conditions;
+  if (action === 'list' || !name?.trim()) {
+    if (sheet.conditions.length === 0 && !doc.state.exhaustion) return { reply: `**${sheet.name}** has no conditions.` };
+    const lines = sheet.conditions.map((c) => `• **${c.name}**${c.immune ? ` — immune (${c.immune}), so it does nothing` : c.effects.length ? ` — ${c.effects.join('; ')}` : c.known ? '' : ' — noted'}`);
+    if (doc.state.exhaustion) lines.push(`• **Exhaustion ${doc.state.exhaustion}**`);
+    return { reply: [`**${sheet.name}**`, ...lines].join('\n') };
+  }
+  const typed = name.trim().slice(0, 40);
+  const known = CONDITIONS.find((c) => c.toLowerCase() === typed.toLowerCase());
+  const label = known ?? typed;
+  const on = has.find((c) => c.toLowerCase() === label.toLowerCase());
+  if (action === 'add') {
+    if (on) return { reply: `**${sheet.name}** is already ${label.toLowerCase()}.` };
+    const next = { ...doc, state: { ...doc.state, conditions: [...has, label] } };
+    const after = resheet(next).conditions.find((c) => c.name === label);
+    const does = after?.immune ? `They are immune (${after.immune}), so it does nothing.` : known ? CONDITION_EFFECTS[known]!.notes.join('; ') + '.' : 'Noted; it changes nothing on the sheet.';
+    return { doc: next, reply: `⚠️ **${sheet.name}** is **${label.toLowerCase()}**. ${does}`, log: `${label} added (Discord)` };
+  }
+  if (!on) return { reply: `**${sheet.name}** is not ${label.toLowerCase()}.${has.length ? ` They are: ${has.join(', ')}.` : ''}` };
+  return { doc: { ...doc, state: { ...doc.state, conditions: has.filter((c) => c !== on) } }, reply: `✅ **${sheet.name}** is no longer ${on.toLowerCase()}.`, log: `${on} removed (Discord)` };
 }

@@ -1,6 +1,7 @@
 // What a character carries: items with a count and a weight, and berries. Weight is checked against
 // carrying capacity (Strength × 15 lb and what changes it) and said when it is over; nothing is blocked.
 import { CUSTOM_BONUS_TYPES, EDGE_TARGETS, GRANT_KINDS, SKILLS, type CharacterDoc, type CustomBonusType, type CustomFeature, type EdgeTarget, type GrantKind, type ProficiencyGrant, type RollEdgeDef, type WeaponDef } from './character';
+import { cleanDefenses } from './conditions';
 import { parseDice } from './dice';
 import { ABILITIES, type Ability, type RuleEntry } from './types';
 
@@ -45,6 +46,8 @@ export interface CustomItem {
   edges?: CustomFeature['edges'];
   /** Proficiencies it grants while in use. */
   grants?: CustomFeature['grants'];
+  /** Damage it gives resistance, immunity or vulnerability to, and conditions it makes its bearer immune to, while in use. */
+  defenses?: CustomFeature['defenses'];
   /** Where its text is from, when it was started from an item in the book. */
   source?: { book: string; page: number };
 }
@@ -228,6 +231,8 @@ export function cleanCustomItem(raw: unknown): CustomItem | undefined {
     }).slice(0, 20);
     if (grants.length) item.grants = grants;
   }
+  const defenses = cleanDefenses(raw.defenses);
+  if (defenses) item.defenses = defenses;
   if (isObject(raw.source) && typeof raw.source.book === 'string' && raw.source.book.trim()) {
     const page = within(raw.source.page, 0, 9999);
     if (page !== undefined) item.source = { book: raw.source.book.trim().slice(0, 80), page };
@@ -245,7 +250,7 @@ export function cleanCustomItem(raw: unknown): CustomItem | undefined {
 /** Whether a made item changes anything on the sheet when put to use (a plain crate of oranges does not). */
 export function itemDoesSomething(custom: CustomItem | undefined): boolean {
   return Boolean(custom && (custom.weapon || custom.armor || custom.kind === 'shield' || custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action
-    || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.spells?.length || custom.edges?.length || custom.grants?.length));
+    || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.spells?.length || custom.edges?.length || custom.grants?.length || custom.defenses));
 }
 
 const BONUS_WORDS: Record<CustomBonusType, string> = { ac: 'AC', speed: 'ft speed', initiative: 'initiative', hp: 'hit points', attack: 'to attacks', damage: 'damage' };
@@ -283,6 +288,10 @@ export function itemSummary(custom: CustomItem): string {
   for (const k of custom.skills ?? []) parts.push(`${plus(k.value)} to ${k.skill ? SKILLS.find((x) => x.id === k.skill)?.name ?? k.skill : 'all skills'}`);
   for (const e of custom.edges ?? []) parts.push(`${e.mode} on ${edgeTargetName(e)}`);
   for (const g of custom.grants ?? []) parts.push(grantName(g));
+  if (custom.defenses?.resist?.length) parts.push(`resistance to ${custom.defenses.resist.join(', ')}`);
+  if (custom.defenses?.immune?.length) parts.push(`immunity to ${custom.defenses.immune.join(', ')}`);
+  if (custom.defenses?.vulnerable?.length) parts.push(`vulnerability to ${custom.defenses.vulnerable.join(', ')}`);
+  if (custom.defenses?.conditions?.length) parts.push(`can’t be ${custom.defenses.conditions.join(', ')}`);
   if (custom.spells?.length) parts.push(`casts ${custom.spells.map((x) => x.name).join(', ')}`);
   if (custom.uses) parts.push(`${custom.uses.max} charge${custom.uses.max === 1 ? '' : 's'} (${custom.uses.recharge} rest)`);
   for (const r of custom.rolls ?? []) parts.push(`${r.label === r.dice ? '' : `${r.label} `}${r.dice}`);
@@ -327,13 +336,13 @@ export function withEquippedItems(doc: CharacterDoc): CharacterDoc {
     if (custom.armor && !worn) { armor = { name: item.name, base: custom.armor.base, dexCap: custom.armor.dexCap, stealthDisadvantage: custom.armor.stealthDisadvantage === true }; worn = true; }
     if (custom.kind === 'shield') shield = true;
     for (const [i, spell] of (custom.spells ?? []).entries()) spells.push({ id: `item-${item.id}-${i}`, name: spell.name, level: spell.level, ...(spell.entry ? { entry: spell.entry } : {}), item: item.name, notes: `From ${item.name}` });
-    if (custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action || custom.text || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.edges?.length || custom.grants?.length) {
+    if (custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action || custom.text || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.edges?.length || custom.grants?.length || custom.defenses) {
       features.push({
         id: `item-${item.id}`, name: item.name, text: custom.text ?? '', origin: custom.rarity ? `Item (${custom.rarity})` : 'Item',
         ...(custom.action ? { action: custom.action } : {}), ...(custom.uses ? { uses: custom.uses } : {}), ...(custom.rolls ? { rolls: custom.rolls } : {}),
         ...(custom.bonuses ? { bonuses: custom.bonuses } : {}), ...(custom.note ? { note: custom.note } : {}),
         ...(custom.abilities ? { abilities: custom.abilities } : {}), ...(custom.saves ? { saves: custom.saves } : {}), ...(custom.skills ? { skills: custom.skills } : {}),
-        ...(custom.edges ? { edges: custom.edges } : {}), ...(custom.grants ? { grants: custom.grants } : {}),
+        ...(custom.edges ? { edges: custom.edges } : {}), ...(custom.grants ? { grants: custom.grants } : {}), ...(custom.defenses ? { defenses: custom.defenses } : {}),
       });
     }
   }

@@ -112,6 +112,13 @@ to load the files and remove rows that are no longer in them (a row a grant poin
 
 ## SRD spells
 
+`python3 tools/extract/extract_srd_conditions.py` reads the fourteen conditions of the SRD's Appendix PH-A (pages
+358–359) into `data/rules/dndf-10/srd_conditions.json`, word for word, as the sections of one rule entry. The document's
+text layer breaks a line between every word (a tab, a line break, a no-break space), so a plain read gives one word a
+line: the first attempt took a lone "5" for a page number and glued the page footer onto a bullet. The reader joins
+those breaks first, counts its bullets against every bullet mark on the two pages, and checks each bullet's letters
+against the page.
+
 `python3 tools/extract/extract_srd.py` reads the 319 spells of the System Reference Document 5.1 from the official
 `SRD_CC_v5.1.pdf` in `~/dndf/sources/srd` and writes `data/rules/dndf-10/srd_spells.json`. The SRD is CC-BY-4.0; the
 attribution it asks for is in the file, the README, the Library and under each spell.
