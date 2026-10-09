@@ -2008,3 +2008,100 @@ a {
 .poster-small .poster-epithet { margin-top: 6px; font-size: 12px; }
 .poster-small .poster-name { font-size: 15px; }
 .poster-small .poster-price { margin-top: 6px; padding-top: 4px; font-size: 14px; }
+
+/* The 2024 rules shelf (pages/ReferencePage.tsx) */
+
+.ref-table {
+  margin: 10px 0;
+}
+
+.ref-table figcaption {
+  color: var(--muted);
+  font: 600 13px/1.3 var(--font-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ref-table .rule-table th {
+  white-space: normal;
+}
+
+.ref-stat-name {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 2px solid var(--rule);
+}
+
+.ref-stat-part {
+  margin: 12px 0 2px;
+  color: var(--muted);
+  font: 600 13px/1.3 var(--font-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ref-stat {
+  margin: 3px 0;
+}
+
+.ref-bullet {
+  position: relative;
+  margin: 2px 0;
+  padding-left: 18px;
+}
+
+.ref-bullet::before {
+  position: absolute;
+  left: 4px;
+  content: '•';
+}
+
+.ref-fact {
+  display: contents;
+}
+
+.ref-abilities td,
+.ref-abilities th {
+  padding: 4px 6px;
+}
+
+.ref-sidebar {
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: var(--card-inner);
+  border-left: 2px solid var(--rule);
+}
+
+.ref-sidebar h4 {
+  margin: 0 0 4px;
+}
+
+.ref-outline {
+  margin: 8px 0;
+}
+
+.ref-jump {
+  display: block;
+  width: 100%;
+  min-height: var(--touch);
+  margin: 4px 0;
+  text-align: left;
+}
+
+.ref-jump-in {
+  width: calc(100% - 16px);
+  margin-left: 16px;
+}
+
+.ref-snippet {
+  display: block;
+  flex-basis: 100%;
+  text-transform: none;
+}
+
+/* A heading jumped to stops below the bar at the top, not under it. */
+.card h2,
+.card h3 {
+  scroll-margin-top: 72px;
+}

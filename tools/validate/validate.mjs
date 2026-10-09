@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// Checks every JSON file under data/rules against data/schema/rules.schema.json,
+// Checks every JSON file under data/rules against data/schema/rules.schema.json
+// (and every one under data/reference against data/schema/reference.schema.json),
 // then checks the things a schema can't: unique ids, references, version folders
 // and feature pages. Run with `npm run validate`.
 import { readdirSync, readFileSync } from 'node:fs';
@@ -90,9 +91,46 @@ for (const { entry, report } of entries) {
   }
 }
 
+// Reference books (data/reference): kept for looking things up, never offered when building a character.
+const referenceDir = join(root, 'data', 'reference');
+const referenceSchema = JSON.parse(readFileSync(join(root, 'data', 'schema', 'reference.schema.json'), 'utf8'));
+const validateReference = new Ajv2020({ allErrors: true }).compile(referenceSchema);
+const referenceFiles = readdirSync(referenceDir, { recursive: true }).filter((name) => name.endsWith('.json')).map((name) => join(referenceDir, name)).sort();
+const referenceIds = new Set();
+let referenceEntries = 0;
+for (const path of referenceFiles) {
+  const shown = relative(root, path);
+  let file;
+  try {
+    file = JSON.parse(readFileSync(path, 'utf8'));
+  } catch (error) {
+    problems.push(`${shown}: not valid JSON (${error.message})`);
+    continue;
+  }
+  if (!validateReference(file)) {
+    for (const error of validateReference.errors.filter((e) => e.keyword !== 'oneOf').slice(0, 10)) problems.push(`${shown}: ${error.instancePath || '/'} ${error.message}`);
+    if (validateReference.errors.every((e) => e.keyword === 'oneOf')) problems.push(`${shown}: ${validateReference.errors[0].instancePath} is not a block this schema knows`);
+    continue;
+  }
+  if (!file.$note.includes('Creative Commons Attribution 4.0')) problems.push(`${shown}: the $note does not carry the licence attribution`);
+  for (const entry of file.entries) {
+    referenceEntries += 1;
+    if (referenceIds.has(entry.id)) problems.push(`${shown}: ${entry.id} is defined twice`);
+    referenceIds.add(entry.id);
+    if (seen.has(`dndf-10 ${entry.id}`) || seen.has(`dndf-8.8 ${entry.id}`)) problems.push(`${shown}: ${entry.id} is also a rules entry; reference books stay out of data/rules`);
+    for (const block of entry.blocks) {
+      if (block.page !== 0 && block.page < entry.page) problems.push(`${shown}: ${entry.id} has text from p.${block.page}, before it starts on p.${entry.page}`);
+      if (block.t === 'table' && new Set(block.rows.map((row) => row.length)).size !== 1) problems.push(`${shown}: ${entry.id} has a table (p.${block.page}) whose rows differ in length`);
+      for (const over of block.over ?? []) {
+        if (over.to < over.from || over.to >= block.rows[0].length) problems.push(`${shown}: ${entry.id} has a header set over columns its table does not have`);
+      }
+    }
+  }
+}
+
 if (problems.length > 0) {
   console.error(problems.join('\n'));
-  console.error(`\n${problems.length} problem(s) in ${files.length} rules file(s).`);
+  console.error(`\n${problems.length} problem(s) in ${files.length} rules file(s) and ${referenceFiles.length} reference file(s).`);
   process.exit(1);
 }
-console.log(`OK: ${entries.length} entries in ${files.length} rules file(s).`);
+console.log(`OK: ${entries.length} entries in ${files.length} rules file(s); ${referenceEntries} entries in ${referenceFiles.length} reference file(s).`);

@@ -8,6 +8,7 @@ import { CrewPage } from './pages/CrewPage';
 import { DmPage } from './pages/DmPage';
 import { LibraryPage } from './pages/LibraryPage';
 import { PrintPage } from './pages/PrintPage';
+import { ReferencePage } from './pages/ReferencePage';
 import { ShipPrintPage } from './pages/ShipPrintPage';
 import { SheetPage } from './pages/SheetPage';
 
@@ -26,6 +27,8 @@ export function App() {
             <Route path="sheet/:id" element={<SheetPage />} />
             <Route path="build" element={<ErrorBoundary where="the Build page"><BuildPage /></ErrorBoundary>} />
             <Route path="library" element={<ErrorBoundary where="the Library"><LibraryPage /></ErrorBoundary>} />
+            <Route path="library/srd52" element={<ErrorBoundary where="the 2024 rules"><ReferencePage /></ErrorBoundary>} />
+            <Route path="library/srd52/:id" element={<ErrorBoundary where="the 2024 rules"><ReferencePage /></ErrorBoundary>} />
             <Route path="library/:id" element={<ErrorBoundary where="the Library"><LibraryPage /></ErrorBoundary>} />
             <Route path="ship" element={<ErrorBoundary where="the Ship page"><ShipPage /></ErrorBoundary>} />
             <Route path="ship/:id" element={<ErrorBoundary where="the ship sheet"><ShipPage /></ErrorBoundary>} />
