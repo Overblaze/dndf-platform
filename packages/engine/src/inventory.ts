@@ -32,7 +32,9 @@ export function parseWeight(text: unknown): number | undefined {
 
 /** ฿1,250,000: every berry, for a purse (bounty.ts has the short form, ฿1.25M). */
 export function exactBerries(amount: number): string {
-  return `฿${Math.round(amount).toLocaleString('en-US')}`;
+  // A debt reads "-฿750,000", the sign before the berry mark.
+  const whole = Math.round(amount);
+  return `${whole < 0 ? '-' : ''}฿${Math.abs(whole).toLocaleString('en-US')}`;
 }
 
 /** An armory entry as something carried. */

@@ -50,9 +50,9 @@ export function bounty(input: BountyInput): Derived {
 export function formatBerries(amount: number): string {
   const units: [number, string][] = [[1e9, 'B'], [1e6, 'M'], [1e3, 'K']];
   for (const [size, suffix] of units) {
-    if (Math.abs(amount) >= size) return `฿${Number((amount / size).toFixed(2))}${suffix}`;
+    if (Math.abs(amount) >= size) return `${amount < 0 ? '-' : ''}฿${Number((Math.abs(amount) / size).toFixed(2))}${suffix}`;
   }
-  return `฿${amount}`;
+  return `${amount < 0 ? '-' : ''}฿${Math.abs(amount)}`;
 }
 
 /** The parts of the bounty formula a player counts up themselves. */

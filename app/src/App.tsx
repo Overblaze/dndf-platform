@@ -8,6 +8,7 @@ import { CrewPage } from './pages/CrewPage';
 import { DmPage } from './pages/DmPage';
 import { LibraryPage } from './pages/LibraryPage';
 import { PrintPage } from './pages/PrintPage';
+import { ShipPrintPage } from './pages/ShipPrintPage';
 import { SheetPage } from './pages/SheetPage';
 
 export function App() {
@@ -17,6 +18,7 @@ export function App() {
       <HashRouter>
         <Routes>
           {/* The printable sheet stands alone: no menu, nothing but the paper. */}
+          <Route path="print/ship/:id" element={<ErrorBoundary where="the printable ship sheet"><ShipPrintPage /></ErrorBoundary>} />
           <Route path="print/:id" element={<ErrorBoundary where="the printable sheet"><PrintPage /></ErrorBoundary>} />
           <Route element={<AppShell />}>
             <Route index element={<Navigate to="/sheet" replace />} />

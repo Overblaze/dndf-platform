@@ -13,6 +13,14 @@ same rules data (`data/rules`) as the website, so its numbers cannot differ from
 | `/status` | Hit points, AC, speed, pools, switches, conditions. |
 | `/sheet` | The character sheet as a PDF (the website's print page). `full_text:` adds each feature's rules text. Private unless `public:` is set. |
 | `/party` | Everyone in your campaign: hit points and AC. |
+| `/bounty` | Your character's wanted poster as issued. `crew: true` lists every poster out in your campaign, highest first, with the total. |
+| `/ship status` | Your crew's ship at a glance: speed, crew, every part's hit points, treasury, what is wrong. |
+| `/ship damage` / `/ship repair` | One part of the ship, by name (`hull`, `sails`, `cannon 2`). Damage under the part's threshold does nothing. |
+| `/ship treasury` | Put berries into the crew's treasury or take them out, with what for. |
+| `/ship aboard` | Set how many crew, passengers or rations are aboard. |
+
+Every `/ship` change is written in the ship's log with who made it, and is refused if the ship was changed on the
+website at the same moment. A player reaches their own ships and those shared with a campaign they are in.
 
 Every command takes `character:` (it suggests your characters as you type) and defaults to the one you
 changed most recently. A change made by the bot is written to the character's History with the
