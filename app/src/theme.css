@@ -668,6 +668,10 @@ a.btn {
   margin: 0;
 }
 
+.ability-row {
+  align-self: center;
+}
+
 /* A list of choices to pick one from (the item maker's first step) */
 .choice-list {
   display: grid;

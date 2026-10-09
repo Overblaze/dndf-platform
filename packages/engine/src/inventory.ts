@@ -1,8 +1,8 @@
 // What a character carries: items with a count and a weight, and berries. Weight is checked against
 // carrying capacity (Strength × 15 lb and what changes it) and said when it is over; nothing is blocked.
-import { CUSTOM_BONUS_TYPES, type CharacterDoc, type CustomBonusType, type CustomFeature, type WeaponDef } from './character';
+import { CUSTOM_BONUS_TYPES, SKILLS, type CharacterDoc, type CustomBonusType, type CustomFeature, type WeaponDef } from './character';
 import { parseDice } from './dice';
-import type { RuleEntry } from './types';
+import { ABILITIES, type Ability, type RuleEntry } from './types';
 
 export const ITEM_KINDS = ['weapon', 'armor', 'shield', 'wondrous', 'consumable', 'gear'] as const;
 export type ItemKind = (typeof ITEM_KINDS)[number];
@@ -31,6 +31,18 @@ export interface CustomItem {
   bonuses?: CustomFeature['bonuses'];
   /** A standing line for "In effect" (a resistance, an advantage). */
   note?: string;
+  /** True for an item that only works once its bearer has attuned to it. */
+  attune?: boolean;
+  /** Ability scores it changes: "set" makes the score that number if it is lower (a Headband of Intellect's 19); "bonus" raises it, to 30 at most. */
+  abilities?: CustomFeature['abilities'];
+  /** A bonus to saving throws: one ability's, or all of them when none is named. */
+  saves?: CustomFeature['saves'];
+  /** A bonus to skill checks: one skill's, or all of them when none is named. */
+  skills?: CustomFeature['skills'];
+  /** Spells it lets its bearer cast: by name, with the rules entry when the spell is one the library has. */
+  spells?: { name: string; level: number; entry?: string }[];
+  /** Where its text is from, when it was started from an item in the book. */
+  source?: { book: string; page: number };
 }
 
 
@@ -47,8 +59,10 @@ export interface InventoryItem {
   carried?: boolean;
   /** Set on an item the player made themselves: what it does on the sheet while it is in use. */
   custom?: CustomItem;
-  /** True while a made item is in use (wielded, worn, attuned). */
+  /** True while a made item is in use (wielded, worn). */
   equipped?: boolean;
+  /** True while the character is attuned to it. Counted against the three a character can be attuned to. */
+  attuned?: boolean;
 }
 
 export interface InventoryLine extends InventoryItem {
@@ -143,16 +157,65 @@ export function cleanCustomItem(raw: unknown): CustomItem | undefined {
   }
   const note = words(raw.note, 200);
   if (note) item.note = note;
+  if (raw.attune === true) item.attune = true;
+  const ability = (value: unknown): value is Ability => (ABILITIES as readonly unknown[]).includes(value);
+  if (Array.isArray(raw.abilities)) {
+    const seen = new Set<string>();
+    const abilities = raw.abilities.filter(isObject).flatMap((a) => {
+      const set = within(a.set, 1, 30);
+      const bonus = within(a.bonus, -20, 20);
+      if (!ability(a.ability) || seen.has(a.ability) || (set === undefined && !bonus)) return [];
+      seen.add(a.ability);
+      return [{ ability: a.ability, ...(set !== undefined ? { set } : {}), ...(bonus ? { bonus } : {}) }];
+    });
+    if (abilities.length) item.abilities = abilities;
+  }
+  if (Array.isArray(raw.saves)) {
+    const seen = new Set<string>();
+    const saves = raw.saves.filter(isObject).flatMap((s) => {
+      const value = within(s.value, -20, 20);
+      const key = ability(s.ability) ? s.ability : 'all';
+      if (!value || (s.ability !== undefined && s.ability !== null && s.ability !== '' && !ability(s.ability)) || seen.has(key)) return [];
+      seen.add(key);
+      return [{ ...(ability(s.ability) ? { ability: s.ability } : {}), value }];
+    });
+    if (saves.length) item.saves = saves;
+  }
+  if (Array.isArray(raw.skills)) {
+    const seen = new Set<string>();
+    const skills = raw.skills.filter(isObject).flatMap((s) => {
+      const value = within(s.value, -20, 20);
+      const known = typeof s.skill === 'string' && SKILLS.some((k) => k.id === s.skill);
+      const key = known ? (s.skill as string) : 'all';
+      if (!value || (s.skill !== undefined && s.skill !== null && s.skill !== '' && !known) || seen.has(key)) return [];
+      seen.add(key);
+      return [{ ...(known ? { skill: s.skill as string } : {}), value }];
+    });
+    if (skills.length) item.skills = skills;
+  }
+  if (isObject(raw.source) && typeof raw.source.book === 'string' && raw.source.book.trim()) {
+    const page = within(raw.source.page, 0, 9999);
+    if (page !== undefined) item.source = { book: raw.source.book.trim().slice(0, 80), page };
+  }
+  if (Array.isArray(raw.spells)) {
+    const spells = raw.spells.filter(isObject).flatMap((s) => {
+      const name = words(s.name, 80);
+      return name ? [{ name, level: within(s.level, 0, 9) ?? 0, ...(typeof s.entry === 'string' && s.entry.length <= 120 ? { entry: s.entry } : {}) }] : [];
+    }).slice(0, 20);
+    if (spells.length) item.spells = spells;
+  }
   return item;
 }
 
 /** Whether a made item changes anything on the sheet when put to use (a plain crate of oranges does not). */
 export function itemDoesSomething(custom: CustomItem | undefined): boolean {
-  return Boolean(custom && (custom.weapon || custom.armor || custom.kind === 'shield' || custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action));
+  return Boolean(custom && (custom.weapon || custom.armor || custom.kind === 'shield' || custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action
+    || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.spells?.length));
 }
 
 const BONUS_WORDS: Record<CustomBonusType, string> = { ac: 'AC', speed: 'ft speed', initiative: 'initiative', hp: 'hit points', attack: 'to attacks', damage: 'damage' };
 const plus = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
+const ABILITY_SHORT: Record<Ability, string> = { str: 'Str', dex: 'Dex', con: 'Con', int: 'Int', wis: 'Wis', cha: 'Cha' };
 
 /** One line saying what a made item is and does: "Weapon · 1d8 slashing, +1 · +1 AC · 3 charges (long rest) · Rare". */
 export function itemSummary(custom: CustomItem): string {
@@ -164,17 +227,32 @@ export function itemSummary(custom: CustomItem): string {
   }
   if (custom.armor) parts.push(`AC ${custom.armor.base}${custom.armor.dexCap === 0 ? '' : custom.armor.dexCap == null ? ' + Dex' : ` + Dex (max ${custom.armor.dexCap})`}`);
   if (custom.kind === 'shield') parts.push('+2 AC');
+  for (const a of custom.abilities ?? []) parts.push([a.set !== undefined ? `${ABILITY_SHORT[a.ability]} ${a.set}` : '', a.bonus ? `${plus(a.bonus)} ${ABILITY_SHORT[a.ability]}` : ''].filter(Boolean).join(', '));
   for (const b of custom.bonuses ?? []) parts.push(`${plus(b.value)} ${BONUS_WORDS[b.type]}`);
+  for (const v of custom.saves ?? []) parts.push(`${plus(v.value)} to ${v.ability ? `${ABILITY_SHORT[v.ability]} saves` : 'all saves'}`);
+  for (const k of custom.skills ?? []) parts.push(`${plus(k.value)} to ${k.skill ? SKILLS.find((x) => x.id === k.skill)?.name ?? k.skill : 'all skills'}`);
+  if (custom.spells?.length) parts.push(`casts ${custom.spells.map((x) => x.name).join(', ')}`);
   if (custom.uses) parts.push(`${custom.uses.max} charge${custom.uses.max === 1 ? '' : 's'} (${custom.uses.recharge} rest)`);
   for (const r of custom.rolls ?? []) parts.push(`${r.label === r.dice ? '' : `${r.label} `}${r.dice}`);
   if (custom.note) parts.push(custom.note);
+  if (custom.attune) parts.push('requires attunement');
   if (custom.rarity) parts.push(custom.rarity);
   if (custom.value) parts.push(exactBerries(custom.value));
   return parts.join(' · ');
 }
 
-/** Whether an item is one whose powers count right now: made by the player, in use, on their person, and not all used up. */
-export const itemInUse = (item: InventoryItem): boolean => Boolean(item.custom && item.equipped && item.carried !== false && item.qty > 0);
+/** Whether an item is one a character attunes to: one the player made that way, or one from the armory whose text says so. */
+export function itemNeedsAttunement(item: InventoryItem, entry?: RuleEntry): boolean {
+  if (item.custom) return item.custom.attune === true;
+  const text = [entry?.text, ...((entry?.features ?? []) as { text?: unknown }[]).map((f) => f.text)].filter((t) => typeof t === 'string').join(' ');
+  return /requires attunement/i.test(text);
+}
+
+/**
+ * Whether an item is one whose powers count right now: made by the player, in use, on their person, not
+ * all used up, and attuned to when it is one that needs that.
+ */
+export const itemInUse = (item: InventoryItem): boolean => Boolean(item.custom && item.equipped && item.carried !== false && item.qty > 0 && (!item.custom.attune || item.attuned === true));
 
 /**
  * The character as the sheet should work it out: the saved one, plus what the made items in use bring.
@@ -187,6 +265,7 @@ export function withEquippedItems(doc: CharacterDoc): CharacterDoc {
   if (used.length === 0) return doc;
   const weapons = [...doc.weapons];
   const features = [...(doc.customFeatures ?? [])];
+  const spells = [...(doc.spells ?? [])];
   let armor = doc.armor;
   let shield = doc.shield;
   let worn = false;
@@ -195,13 +274,63 @@ export function withEquippedItems(doc: CharacterDoc): CharacterDoc {
     if (custom.weapon) weapons.push({ id: `item:${item.id}`, name: item.name, ...custom.weapon });
     if (custom.armor && !worn) { armor = { name: item.name, base: custom.armor.base, dexCap: custom.armor.dexCap }; worn = true; }
     if (custom.kind === 'shield') shield = true;
-    if (custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action || custom.text) {
+    for (const [i, spell] of (custom.spells ?? []).entries()) spells.push({ id: `item-${item.id}-${i}`, name: spell.name, level: spell.level, ...(spell.entry ? { entry: spell.entry } : {}), item: item.name, notes: `From ${item.name}` });
+    if (custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action || custom.text || custom.abilities?.length || custom.saves?.length || custom.skills?.length) {
       features.push({
         id: `item-${item.id}`, name: item.name, text: custom.text ?? '', origin: custom.rarity ? `Item (${custom.rarity})` : 'Item',
         ...(custom.action ? { action: custom.action } : {}), ...(custom.uses ? { uses: custom.uses } : {}), ...(custom.rolls ? { rolls: custom.rolls } : {}),
         ...(custom.bonuses ? { bonuses: custom.bonuses } : {}), ...(custom.note ? { note: custom.note } : {}),
+        ...(custom.abilities ? { abilities: custom.abilities } : {}), ...(custom.saves ? { saves: custom.saves } : {}), ...(custom.skills ? { skills: custom.skills } : {}),
       });
     }
   }
-  return { ...doc, weapons, armor, shield, customFeatures: features };
+  return { ...doc, weapons, armor, shield, customFeatures: features, ...(spells.length ? { spells } : {}) };
+}
+
+/** A magic item as the handbook prints it: its words, and what its heading says about it. */
+export interface BookMagicItem {
+  id: string;
+  name: string;
+  /** Word for word, heading line included. */
+  text: string;
+  book: string;
+  page: number;
+  /** The rules entry it is printed under ("Dials & Dial Inventions"). */
+  chapter: string;
+  kind: ItemKind;
+  /** What the heading names in brackets: "scimitar", "dial". */
+  base?: string;
+  rarity?: string;
+  attune: boolean;
+  /** Its listed cost in berries, when the text gives one. */
+  value?: number;
+}
+
+const HEADING = /^(Weapon|Armor|Shield|Wondrous Item|Ammunition|Potion|Ring|Rod|Staff|Wand)(?: \(([^)]*)\))?, (Common|Uncommon|Rare|Very Rare|Legendary|Mythical)(?: \(([^)]*)\))?\s*$/i;
+const BOOK_KINDS: Record<string, ItemKind> = { weapon: 'weapon', armor: 'armor', shield: 'shield', ammunition: 'consumable', potion: 'consumable' };
+
+/**
+ * The magic items the handbook describes in its armory chapters (Dials, Meitos, gadgets). The book gives
+ * them as text, so the sheet cannot work them out by itself: they are offered as the start of an item of
+ * the player's own, with the book's words and page, for the player to add the numbers to.
+ */
+export function bookMagicItems(rules: Map<string, RuleEntry>): BookMagicItem[] {
+  const found: BookMagicItem[] = [];
+  for (const entry of rules.values()) {
+    if (entry.kind !== 'rule' || !Array.isArray(entry.sections)) continue;
+    for (const section of entry.sections as { name?: unknown; text?: unknown; page?: unknown }[]) {
+      if (typeof section.name !== 'string' || typeof section.text !== 'string') continue;
+      const heading = HEADING.exec(section.text.split('\n')[0]!.trim());
+      if (!heading) continue;
+      const cost = /Cost:\s*฿\s*([\d,]+)/.exec(section.text);
+      const rarity = heading[3]!.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+      found.push({
+        id: `${entry.id}#${section.name.toLowerCase().replace(/[^a-z0-9]+/g, '_')}`, name: section.name, text: section.text, book: entry.source.book,
+        page: typeof section.page === 'number' ? section.page : entry.source.page, chapter: entry.name,
+        kind: BOOK_KINDS[heading[1]!.toLowerCase()] ?? 'wondrous', base: heading[2]?.trim() || undefined, rarity,
+        attune: /requires attunement/i.test(heading[4] ?? ''), value: cost ? Number(cost[1]!.replace(/,/g, '')) : undefined,
+      });
+    }
+  }
+  return found.sort((a, b) => a.name.localeCompare(b.name));
 }

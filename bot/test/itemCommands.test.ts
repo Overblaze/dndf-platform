@@ -76,10 +76,10 @@ describe('/item make', () => {
     expect(shield.reply).toContain('Not in use yet. `/item use item: Shell buckler` puts it to use.');
     expect(resheet(shield.doc!).ac.value).toBe(15);
     const on = itemUse(shield.doc!, resheet(shield.doc!), 'buckler', true, resheet);
-    expect(on.reply).toBe('🗡️ **Zoro** puts **Shell buckler** to use: AC 15 → **18**');
+    expect(on.reply).toBe('🗡️ **Zoro** puts it to use: **Shell buckler** — AC 15 → **18**');
     const off = itemUse(on.doc!, resheet(on.doc!), 'shell', false, resheet);
-    expect(off.reply).toBe('📦 **Zoro** puts away **Shell buckler**: AC 18 → **15**');
-    expect(itemUse(off.doc!, resheet(off.doc!), 'shell', false, resheet)).toEqual({ reply: '**Shell buckler** is already put away.' });
+    expect(off.reply).toBe('📦 **Zoro** puts it away: **Shell buckler** — AC 18 → **15**');
+    expect(itemUse(off.doc!, resheet(off.doc!), 'shell', false, resheet)).toEqual({ reply: 'Nothing to change: **Shell buckler** is already put away.' });
   });
 
   it('something with powers: numbers, charges and a roll', () => {
@@ -128,13 +128,28 @@ describe('/item use, remove and list', () => {
     expect(findItem(doc, 'anchor')).toEqual({ close: [] });
   });
 
-  it('only a made item with something to switch on can be put to use from Discord', () => {
+  it('a weapon, armor or shield from the armory is readied or worn from Discord too, as the website does it', () => {
+    let { doc, sheet } = stocked();
+    const ready = itemUse(doc, sheet, 'longsword', true, resheet, { rules });
+    expect(ready.reply).toBe('🗡️ **Zoro** readies it: **Longsword** — attack **+6** to hit, 1d8 + 3 slashing');
+    expect(ready.doc!.weapons.map((w) => w.name)).toContain('Longsword');
+    expect(itemUse(ready.doc!, resheet(ready.doc!), 'longsword', true, resheet, { rules }).doc).toBeUndefined(); // already readied
+    const away = itemUse(ready.doc!, resheet(ready.doc!), 'longsword', false, resheet, { rules });
+    expect(away.reply).toBe('📦 **Zoro** puts it away: **Longsword** — it is no longer under Attacks');
+    expect(away.doc!.weapons.map((w) => w.name)).not.toContain('Longsword');
+    doc = itemAdd(doc, sheet, { name: 'Chain Mail' }, armory, id, resheet).doc!; sheet = resheet(doc);
+    const worn = itemUse(doc, sheet, 'chain', true, resheet, { rules });
+    expect(worn.reply).toMatch(/^🗡️ \*\*Zoro\*\* puts it on: \*\*Chain Mail\*\* — .*AC 12 → \*\*16\*\*/);
+    expect(itemUse(worn.doc!, resheet(worn.doc!), 'chain', false, resheet, { rules }).doc!.armor).toBeNull();
+    expect(itemUse(doc, sheet, 'rations', true, resheet, { rules }).reply).toMatch(/plain item with nothing to switch on/);
+  });
+
+  it('only what can be switched on is; the rest is said plainly', () => {
     const { doc, sheet } = stocked();
-    expect(itemUse(doc, sheet, 'longsword', true, resheet).reply).toMatch(/put to use on the website/);
     expect(itemUse(doc, sheet, 'ring', true, resheet).reply).toBe('"ring" could be: Ring of the Tides, Ring of Keys. Which one?');
     expect(itemUse(doc, sheet, 'anchor', true, resheet).reply).toMatch(/^\*\*Zoro\*\* carries nothing called "anchor"\. They have: Longsword, Rations, Ring of the Tides, Ring of Keys\.$/);
     const away = itemUse(doc, sheet, 'tides', false, resheet);
-    expect(away.reply).toBe(`📦 **Zoro** puts away **Ring of the Tides**: speed ${sheet.speed.value} → **${sheet.speed.value - 10} ft**`);
+    expect(away.reply).toBe(`📦 **Zoro** puts it away: **Ring of the Tides** — speed ${sheet.speed.value} → **${sheet.speed.value - 10} ft**`);
   });
 
   it('removes some, or all', () => {
@@ -159,5 +174,61 @@ describe('/item use, remove and list', () => {
     expect(lines).toContain('🗡️ **Ring of the Tides** — Wondrous item · +10 ft speed');
     expect(lines.at(-1)).toBe('Carrying 13 lb of 240 lb.');
     expect(itemList(base, resheet(base)).reply).toMatch(/carries nothing yet/);
+  });
+});
+
+describe('/item make with ability scores, saves, skills, spells and attunement', () => {
+  it('the Circlet of Intellect: Intelligence 10 → 19 once it is worn and attuned, and not before', () => {
+    const { doc, sheet } = start();
+    const made = itemMake(doc, sheet, { kind: 'wondrous', name: 'Circlet of Intellect', ability: 'int', abilityBecomes: 19, attunement: true, rarity: 'Uncommon' }, id, resheet);
+    expect(made.reply.split('\n').slice(0, 3)).toEqual([
+      '🛠️ **Zoro** has a new item: **Circlet of Intellect**',
+      'Wondrous item · Int 19 · requires attunement · Uncommon',
+      'Not in use yet. `/item use item: Circlet of Intellect` with `attune: attune` puts it to use.',
+    ]);
+    expect(resheet(made.doc!).abilities.int.score).toBe(10);
+    const worn = itemUse(made.doc!, resheet(made.doc!), 'circlet', true, resheet);
+    expect(worn.reply.split('\n')).toEqual(['🗡️ **Zoro** puts it to use: **Circlet of Intellect**.', 'It requires attunement, so it does nothing until they attune to it: add `attune: attune`.', 'Attuned to 0 of 3.']);
+    expect(resheet(worn.doc!).abilities.int.score).toBe(10);
+    const attuned = itemUse(worn.doc!, resheet(worn.doc!), 'circlet', true, resheet, { attune: 'attune' });
+    expect(attuned.reply.split('\n')).toEqual(['🗡️ **Zoro** attunes to it: **Circlet of Intellect** — Intelligence 10 → **19** (+4)', 'Attuned to 1 of 3.']);
+    expect(resheet(attuned.doc!).abilities.int).toMatchObject({ score: 19, mod: 4 });
+    expect(attuned.doc!.scores.int).toBe(10); // the character itself is unchanged
+    const ended = itemUse(attuned.doc!, resheet(attuned.doc!), 'circlet', true, resheet, { attune: 'end' });
+    expect(ended.reply.split('\n')[0]).toBe('🗡️ **Zoro** ends the attunement: **Circlet of Intellect** — Intelligence 19 → **10** (+0)');
+    // In one go.
+    const now = itemMake(doc, sheet, { kind: 'wondrous', name: 'Circlet of Intellect', ability: 'int', abilityBecomes: 19, attunement: true, useNow: true }, id, resheet);
+    expect(now.reply).toContain('In use and attuned now: Intelligence 10 → **19** (+4)');
+    expect(now.reply).toContain('Attuned to 1 of 3.');
+    expect(itemList(now.doc!, resheet(now.doc!)).reply.split('\n')).toEqual(['🎒 **Zoro**', '🗡️ **Circlet of Intellect** — Wondrous item · Int 19 · requires attunement · attuned', 'Carrying 0 lb of 240 lb.', 'Attuned to 1 of 3.']);
+  });
+
+  it('a fourth attunement is said to be over the limit and still happens', () => {
+    let { doc } = start();
+    for (const name of ['Ring A', 'Ring B', 'Ring C']) doc = itemMake(doc, resheet(doc), { kind: 'wondrous', name, saveBonus: 1, attunement: true, useNow: true }, id, resheet).doc!;
+    const fourth = itemMake(doc, resheet(doc), { kind: 'wondrous', name: 'Ring D', saveBonus: 1, attunement: true, useNow: true }, id, resheet);
+    expect(fourth.reply).toContain('Attuned to 4 of 3 — more than the rules allow; nothing is stopped.');
+    expect(resheet(fourth.doc!).saves.wis.value).toBe(resheet(base).saves.wis.value + 4);
+    // Any item can be attuned to, even a plain one the DM says is magic.
+    const plain = itemAdd(base, resheet(base), { name: 'Odd pebble' }, armory, id, resheet).doc!;
+    expect(itemUse(plain, resheet(plain), 'pebble', true, resheet, { attune: 'attune' }).reply.split('\n')).toEqual(['🗡️ **Zoro** attunes to it: **Odd pebble**.', 'Attuned to 1 of 3.']);
+  });
+
+  it('saves, a skill, a raise, and spells looked up in the rules by name', () => {
+    const { doc, sheet } = start();
+    const spells = [...rules.values()].filter((e) => e.kind === 'spell');
+    const named = (wanted: string) => spells.find((e) => e.name.toLowerCase() === wanted.toLowerCase());
+    const made = itemMake(doc, sheet, { kind: 'wondrous', name: 'Cloak', saveBonus: 1, skill: 'stealth', skillBonus: 5, ability: 'dex', abilityBonus: 2, spells: 'fireball, Mist Step ,', useNow: true }, id, resheet, named);
+    expect(made.reply).toContain('Wondrous item · +2 Dex · +1 to all saves · +5 to Stealth · casts Fireball, Mist Step');
+    expect(made.reply).toContain('Dexterity 14 → **16** (+3)');
+    expect(made.reply).toContain('Mist Step, Fireball on the spell list');
+    const custom = made.doc!.inventory![0]!.custom!;
+    expect(custom.spells).toEqual([{ name: 'Fireball', level: 3, entry: named('fireball')!.id }, { name: 'Mist Step', level: 1 }]);
+    const after = resheet(made.doc!);
+    expect(after.skills.find((k) => k.id === 'stealth')!.value).toBe(sheet.skills.find((k) => k.id === 'stealth')!.value + 5 + 1); // +5, and +1 from the higher Dexterity
+    // Said, not silently dropped.
+    const odd = itemMake(doc, sheet, { kind: 'wondrous', name: 'Odd', abilityBecomes: 19, skill: 'stealth' }, id, resheet);
+    expect(odd.reply).toContain('⚠️ No ability was chosen, so the ability score change was left off.');
+    expect(odd.reply).toContain('⚠️ A skill was chosen but no skill_bonus, so it was left off.');
   });
 });

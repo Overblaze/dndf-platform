@@ -71,6 +71,8 @@ export interface KnownSpell {
   /** For classes that prepare: whether it is prepared today. */
   prepared?: boolean;
   notes?: string;
+  /** Set by the sheet, never saved: the item in use that grants this spell. */
+  item?: string;
 }
 
 export interface SheetSpell extends KnownSpell {

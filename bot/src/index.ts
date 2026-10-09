@@ -70,9 +70,8 @@ async function autocomplete(interaction: AutocompleteInteraction) {
   if (interaction.commandName === 'item' && focused.name !== 'character') {
     const character = pick(characters, interaction.options.getString('character'));
     if (focused.name === 'name') return interaction.respond(armoryMatches([...rulesOf(character?.doc.rulesVersion ?? 'dndf-10').values()].filter((e) => e.kind === 'item'), typed));
-    // "item": what this character carries; for /item use, only the things that can be switched on.
-    const using = interaction.options.getSubcommand() === 'use';
-    const carried = (character?.doc.inventory ?? []).filter((i) => i.name.toLowerCase().includes(typed) && (!using || i.custom));
+    // "item": what this character carries.
+    const carried = (character?.doc.inventory ?? []).filter((i) => i.name.toLowerCase().includes(typed));
     return interaction.respond([...new Set(carried.map((i) => i.name))].slice(0, 25).map((name) => ({ name: name.slice(0, 100), value: name.slice(0, 100) })));
   }
   await interaction.respond(characters.filter((c) => c.doc.name.toLowerCase().includes(typed)).slice(0, 25).map((c) => ({ name: c.doc.name.slice(0, 100), value: c.id })));
@@ -118,19 +117,23 @@ async function run(interaction: ChatInputCommandInteraction) {
     // Gear is not secret, and the sums here are of the saved character alone, as on the Gear tab.
     const o = interaction.options;
     const sub = o.getSubcommand();
+    const group = o.getSubcommandGroup(false);
+    const spells = [...rulesOf(doc.rulesVersion).values()].filter((e) => e.kind === 'spell');
     const resheet = (next: typeof doc) => sheetOf(next);
     const id = () => crypto.randomUUID();
     const armory = [...rulesOf(doc.rulesVersion).values()].filter((e) => e.kind === 'item');
     const outcome: Outcome | null =
-      sub === 'list' ? itemList(doc, sheet)
+      group === null && sub === 'list' ? itemList(doc, sheet)
       : sub === 'add' ? itemAdd(doc, sheet, { name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), notes: o.getString('notes') }, armory, id, resheet)
-      : sub === 'make' ? itemMake(doc, sheet, {
-        kind: o.getString('kind', true), name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), rarity: o.getString('rarity'), description: o.getString('description'),
-        damage: o.getString('damage'), damageType: o.getString('damage_type'), martial: o.getBoolean('martial'), ranged: o.getBoolean('ranged'), finesse: o.getBoolean('finesse'), weaponBonus: o.getInteger('weapon_bonus'),
+      : group === 'make' ? itemMake(doc, sheet, {
+        kind: sub, name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), rarity: o.getString('rarity'), description: o.getString('description'),
+        damage: o.getString('damage'), damageType: o.getString('damage_type'), martial: o.getBoolean('martial'), ranged: o.getBoolean('ranged'), finesse: o.getBoolean('finesse'), twoHanded: o.getBoolean('two_handed'), weaponBonus: o.getInteger('weapon_bonus'),
         armorClass: o.getInteger('armor_class'), armorDex: o.getString('armor_dex'), acBonus: o.getInteger('ac_bonus'), speedBonus: o.getInteger('speed_bonus'), hpBonus: o.getInteger('hp_bonus'),
-        charges: o.getInteger('charges'), recharge: o.getString('recharge'), roll: o.getString('roll'), rollIs: o.getString('roll_is'), effect: o.getString('effect'), useNow: o.getBoolean('use_now'),
-      }, id, resheet)
-      : sub === 'use' ? itemUse(doc, sheet, o.getString('item', true), !o.getBoolean('put_away'), resheet)
+        charges: o.getInteger('charges'), recharge: o.getString('recharge'), roll: o.getString('roll'), rollIs: o.getString('roll_is'), effect: o.getString('effect'),
+        ability: o.getString('ability'), abilityBecomes: o.getInteger('ability_becomes'), abilityBonus: o.getInteger('ability_bonus'), saveBonus: o.getInteger('save_bonus'), skill: o.getString('skill'), skillBonus: o.getInteger('skill_bonus'),
+        spells: o.getString('spells'), attunement: o.getBoolean('attunement'), useNow: o.getBoolean('use_now'),
+      }, id, resheet, (wanted) => spells.find((e) => e.name.toLowerCase() === wanted.toLowerCase()))
+      : sub === 'use' ? itemUse(doc, sheet, o.getString('item', true), !o.getBoolean('put_away'), resheet, { attune: o.getString('attune') as 'attune' | 'end' | null, rules: rulesOf(doc.rulesVersion) })
       : sub === 'remove' ? itemRemove(doc, sheet, o.getString('item', true), o.getInteger('quantity'), resheet)
       : null;
     if (!outcome) return interaction.editReply(`I don't know /item ${sub}.`);

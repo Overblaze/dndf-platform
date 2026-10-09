@@ -1,4 +1,4 @@
-import { armorFromItem, cite, exactBerries, inventoryFromItem, itemDoesSomething, itemInUse, itemSummary, weaponFromItem, type InventoryItem, type RuleEntry } from '@dndf/engine';
+import { armorFromItem, cite, exactBerries, inventoryFromItem, itemDoesSomething, itemInUse, itemNeedsAttunement, itemSummary, weaponFromItem, type InventoryItem, type RuleEntry } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import type { LiveCharacter } from '../lib/useCharacter';
@@ -100,11 +100,16 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
   };
   const change = (id: string, patch: Partial<InventoryItem>, log: string) => live.setDoc({ ...doc, inventory: items.map((i) => (i.id === id ? { ...i, ...patch } : i)) }, log);
   const remove = (item: InventoryItem) => live.setDoc({ ...doc, inventory: items.filter((i) => i.id !== item.id) }, `Removed ${item.name}`);
-  const save = (item: InventoryItem) => {
+  const save = (item: InventoryItem, pay = 0) => {
     const exists = items.some((i) => i.id === item.id);
-    live.setDoc({ ...doc, inventory: exists ? items.map((i) => (i.id === item.id ? item : i)) : [...items, item] }, `${exists ? 'Changed' : 'Added'} ${item.name}`);
+    live.setDoc(
+      { ...doc, inventory: exists ? items.map((i) => (i.id === item.id ? item : i)) : [...items, item], ...(pay ? { money: (doc.money ?? 0) - pay } : {}) },
+      `${exists ? 'Changed' : 'Added'} ${item.name}${pay ? ` for ${exactBerries(pay)}: ${exactBerries(sheet.money)} → ${exactBerries(sheet.money - pay)}` : ''}`,
+    );
     setDialog(null);
   };
+  const attune = (item: InventoryItem, on: boolean) => change(item.id, { attuned: on || undefined }, `${on ? 'Attuned to' : 'Ended attunement to'} ${item.name}`);
+  const { attunement } = sheet;
   // An armory weapon or armor in the list can be put to use: it then shows under Attacks, or sets Armor Class.
   const equip = (item: InventoryItem) => {
     const entry = item.item ? rules.get(item.item) : undefined;
@@ -151,6 +156,11 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
         <div className="weight-bar" role="img" aria-label={`${Math.round(share)} percent of carrying capacity`}>
           <div className={gear.over ? 'weight-fill over' : 'weight-fill'} style={{ width: `${share}%` }} />
         </div>
+        <button className="link-row" onClick={() => onOpen(attunement.max, 'plain')}>
+          <span className={attunement.over ? 'page-ref held-why' : 'page-ref'}>
+            Attuned to {attunement.used} of {attunement.max.value} magic item{attunement.max.value === 1 ? '' : 's'}{attunement.over ? ': more than the rules allow; nothing is stopped' : ''}{attunement.items.length ? ` (${attunement.items.join(', ')})` : ''} · tap for the rule
+          </span>
+        </button>
         <div className="row wrap">
           <button className="btn btn-primary" onClick={() => setDialog('armory')}>From the armory</button>
           <button className="btn" onClick={() => setDialog('make')}>Make an item</button>
@@ -182,21 +192,25 @@ export function GearTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSta
                 {item.custom && itemDoesSomething(item.custom) && (
                   <button className={item.equipped ? 'btn btn-primary' : 'btn'} role="switch" aria-checked={item.equipped === true} aria-label={`${line.name} in use`} onClick={() => wield(item, !item.equipped)}>{item.equipped ? 'In use' : 'Use it'}</button>
                 )}
-                {item.custom && item.equipped && !itemInUse(item) && <span className="page-ref held-why">{line.qty <= 0 ? 'None left, so it does nothing now.' : 'Stowed, so it does nothing now.'}</span>}
+                {(item.attuned || itemNeedsAttunement(item, item.item ? rules.get(item.item) : undefined)) && (
+                  <button className={item.attuned ? 'btn btn-primary' : 'btn'} role="switch" aria-checked={item.attuned === true} aria-label={`Attuned to ${line.name}`} onClick={() => attune(item, !item.attuned)}>{item.attuned ? 'Attuned' : 'Attune'}</button>
+                )}
+                {item.custom && item.equipped && !itemInUse(item) && <span className="page-ref held-why">{line.qty <= 0 ? 'None left, so it does nothing now.' : line.carried === false ? 'Stowed, so it does nothing now.' : 'It needs attunement: attune to it for it to work.'}</span>}
+                {item.custom?.attune && item.attuned && !item.equipped && <span className="page-ref held-why">Attuned, but not in use: switch “Use it” on for it to work.</span>}
                 <button className="btn" onClick={() => change(line.id, { carried: !line.carried }, `${line.name}: ${line.carried ? 'stowed' : 'carried'}`)}>{line.carried ? 'Stow' : 'Carry'}</button>
                 <button className="btn" onClick={() => remove(item)}>Remove</button>
               </div>
             </div>
           );
         })}
-        <p className="page-ref">Stowed things stay in the list but weigh nothing on you. An item you made is switched on and off with “Use it”. For armor and weapons from the armory, use Edit to take them off or put them away.</p>
+        <p className="page-ref">Stowed things stay in the list but weigh nothing on you. An item you made is switched on and off with “Use it”; one that requires attunement also has “Attune”, and works when both are on. For armor and weapons from the armory, use Edit to take them off or put them away.</p>
       </section>
 
       {dialog === 'armory' && <ArmoryDialog live={live} onClose={() => setDialog(null)} />}
       {dialog === 'own' && <ItemDialog onSave={save} onClose={() => setDialog(null)} />}
-      {dialog === 'make' && <ItemWizard armory={armory} onSave={(item) => save(item)} onClose={() => setDialog(null)} />}
+      {dialog === 'make' && <ItemWizard armory={armory} rules={rules} purse={sheet.money} onSave={save} onClose={() => setDialog(null)} />}
       {dialog && typeof dialog === 'object' && (dialog.custom
-        ? <ItemWizard initial={dialog} armory={armory} onSave={(item) => save(item)} onClose={() => setDialog(null)} />
+        ? <ItemWizard initial={dialog} armory={armory} rules={rules} purse={sheet.money} onSave={save} onClose={() => setDialog(null)} />
         : <ItemDialog initial={dialog} onSave={save} onClose={() => setDialog(null)} />)}
     </>
   );
