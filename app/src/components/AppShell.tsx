@@ -74,7 +74,7 @@ export function AppShell() {
         {!online && (
           <p className="notice" role="status">
             You are offline. The Library, and characters and ships kept in this browser, work as usual.{' '}
-            {session ? 'Your account’s characters that have been opened on this device work too: changes are kept here and sent when you are back online. Your crew’s ship, Devil Fruits and the Crew and DM pages need a connection.' : 'Signing in needs a connection.'}
+            {session ? 'Your account’s characters and ships that have been opened on this device work too: changes are kept here and sent when you are back online. Pictures, Devil Fruits and the Crew and DM pages need a connection.' : 'Signing in needs a connection.'}
           </p>
         )}
         {waiting.length > 0 && (

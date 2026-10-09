@@ -79,6 +79,7 @@ function remoteStore(): ShipPictureStore {
       if (error) {
         if (/bucket not found/i.test(error.message)) throw new Error('Ship pictures need one more database file. Run supabase/migrations/0007_ship_pictures.sql in the Supabase SQL Editor.');
         if (/row-level security|unauthorized|not authorized/i.test(error.message)) throw new Error('The database refused the picture. If supabase/migrations/0007_ship_pictures.sql has been run, you may no longer be in this ship’s campaign.');
+        if (/failed to fetch|network|load failed/i.test(error.message)) throw new Error('You are offline: a picture can be added when you are back online.');
         throw new Error(`The picture could not be uploaded: ${error.message}`);
       }
       remember(ref, picture);

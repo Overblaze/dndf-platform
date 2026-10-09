@@ -9,6 +9,7 @@ import { Dialog } from '../components/Dialog';
 import { QuantityInput } from '../components/QuantityInput';
 import { useAuth } from '../lib/auth';
 import { campaignApi, type Campaign } from '../lib/campaigns';
+import { useWaiting } from '../lib/offline';
 import { ruleSet } from '../lib/rules';
 import { ShipChanged, shipStoreFor, type ShipStore, type StoredShip } from '../lib/ships';
 import { shipPicturesFor, type ShipPictureStore } from '../lib/shipPictures';
@@ -63,7 +64,7 @@ function ShipList({ store, campaigns }: { store: ShipStore; campaigns: Campaign[
             <div key={ship.id} className="resource">
               <Link className="character-link" to={`/ship/${ship.id}`}>
                 <span className="resource-name">{sheet.name}</span>
-                <span className="page-ref">{[sheet.summary, ship.campaignId ? `shared with ${campaigns.find((c) => c.id === ship.campaignId)?.name ?? 'your campaign'}` : store.local ? 'this browser' : 'only you', ship.mine ? '' : 'a crewmate’s'].filter(Boolean).join(' · ')}</span>
+                <span className="page-ref">{[sheet.summary, ship.campaignId ? `shared with ${campaigns.find((c) => c.id === ship.campaignId)?.name ?? 'your campaign'}` : store.local ? 'this browser' : 'only you', ship.mine ? '' : 'a crewmate’s', ship.unsent ? 'changed on this device, not sent yet' : ''].filter(Boolean).join(' · ')}</span>
               </Link>
             </div>
           );
@@ -264,6 +265,10 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
   const [dialog, setDialog] = useState<'upgrade' | 'part' | 'edit' | 'delete' | ShipComponent | null>(null);
   const [editing, setEditing] = useState<ShipUpgrade | null>(null);
   const [looking, setLooking] = useState<string | null>(null);
+  const [clash, setClash] = useState<{ mine: ShipDoc; theirs: StoredShip } | null>(null);
+  const mine = useWaiting().find((w) => w.kind === 'ships' && w.id === id);
+  const unsent = Boolean(mine);
+  const clashed = mine?.clash === true;
   // The ship as she is now, for work that finishes later (an upload) and must not put back an older her.
   const latest = useRef<ShipDoc | null>(null);
   const [amount, setAmount] = useState<Record<string, string>>({});
@@ -278,7 +283,13 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
   const adopt = useCallback((next: StoredShip) => { stored.current = next; setShip(next); setDocState(next.doc); }, []);
   useEffect(() => {
     let current = true;
-    store.get(id).then((found) => { if (!current) return; if (found) adopt(found); else setMissing(true); }, (e: Error) => current && setProblem(e.message));
+    store.get(id).then((found) => {
+      if (!current) return;
+      if (!found) { setMissing(true); return; }
+      adopt(found);
+      // A change made with no connection is still waiting: send it now, so that if the crew changed her meanwhile the choice is put to the player.
+      if (found.unsent && navigator.onLine !== false) { pending.current = found.doc; setStatus('saving'); flushNow.current(); }
+    }, (e: Error) => current && setProblem(e.message));
     // A crewmate may have changed her while this tab was in the background.
     const refresh = () => {
       // Leaving the tab: a change still waiting out its short delay is saved now, not lost.
@@ -297,7 +308,11 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
     store.save(stored.current, next).then(
       (saved) => { stored.current = saved; setShip(saved); if (!pending.current) setStatus('saved'); setProblem(null); },
       (e: Error) => {
-        if (e instanceof ShipChanged) {
+        if (e instanceof ShipChanged && e.unsent) {
+          // The change was made with no connection, and the crew changed her meanwhile. Nothing is overwritten or thrown away: the player chooses.
+          setClash({ mine: next, theirs: e.current });
+          setStatus('error');
+        } else if (e instanceof ShipChanged) {
           adopt(e.current);
           setStatus('saved');
           setProblem('A crewmate changed the ship at the same moment, so your last change was not saved. This is the ship as it is now; make the change again if it is still needed.');
@@ -306,6 +321,13 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
     );
   }, [store, adopt]);
   flushNow.current = flush;
+  // Sending a waiting change in the background found that the crew had changed her too. With her open on
+  // this page, ask now: the same save is tried from here, which brings up the choice.
+  useEffect(() => {
+    if (!clashed || clash || !latest.current || !stored.current) return;
+    pending.current ??= latest.current;
+    flush();
+  }, [clashed, clash, flush]);
   const setDoc = useCallback((next: ShipDoc) => {
     setDocState(next); pending.current = next; setStatus('saving');
     window.clearTimeout(timer.current); timer.current = window.setTimeout(flush, 600);
@@ -350,7 +372,7 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
           <p className="soft">{sheet.summary}</p>
         </div>
         <div className="row wrap">
-          <span className={status === 'error' ? 'chip chip-damage' : 'chip'} role="status">{status === 'saved' ? (store.local ? 'Saved on this device' : 'Saved') : status === 'saving' ? 'Saving…' : 'Not saved'}</span>
+          <span className={status === 'error' ? 'chip chip-damage' : 'chip'} role="status">{status === 'saved' ? (store.local ? 'Saved on this device' : unsent ? 'Kept on this device, not sent yet' : 'Saved') : status === 'saving' ? 'Saving…' : 'Not saved'}</span>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
           <Link className="btn" to={`/print/ship/${id}`}>Print</Link>
           <button className="btn" onClick={() => downloadExport({ ships: [doc] })}>Export</button>
@@ -601,6 +623,33 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
             <button className="btn btn-primary" onClick={() => setDialog(null)}>Done</button>
             {(ship.mine || store.local) && <button className="btn btn-damage" onClick={() => setDialog('delete')}>Scuttle her…</button>}
           </div>
+        </Dialog>
+      )}
+      {clash && (
+        <Dialog title="The crew changed her while you were offline" onClose={() => { /* a choice is needed; closing leaves both versions as they are */ setClash(null); }}>
+          <p>Your changes are still kept on this device, and the crew’s are on the account. Nothing has been overwritten. Which version stays?</p>
+          {([['The crew’s version', clash.theirs.doc], ['Yours, from this device', clash.mine]] as const).map(([title, version]) => {
+            const view = deriveShip(version, rule);
+            return (
+              <div key={title} className="tracker">
+                <div className="resource-name">{title}</div>
+                <div className="page-ref">
+                  Treasury {exactBerries(version.treasury)} · rations {version.rations} · crew {version.crew} · hold {view.cargo.tons} t in {version.hold.length} line{version.hold.length === 1 ? '' : 's'} · {view.components.filter((c) => c.damage > 0).length} part{view.components.filter((c) => c.damage > 0).length === 1 ? '' : 's'} damaged
+                </div>
+                {version.log[0] && <div className="page-ref">Last in her log: {version.log[0].text}</div>}
+              </div>
+            );
+          })}
+          <div className="row wrap">
+            <button className="btn btn-primary" onClick={() => { store.discardUnsent?.(id); pending.current = null; adopt(clash.theirs); setStatus('saved'); setProblem(null); setClash(null); }}>Use the crew’s version</button>
+            <button className="btn" onClick={() => {
+              // Mine goes on top of theirs, judged against theirs: if they change her again in this very moment, the question comes back.
+              store.discardUnsent?.(id);
+              stored.current = clash.theirs; setShip(clash.theirs); setDocState(clash.mine);
+              pending.current = shipLog(clash.mine, 'Kept this device’s offline changes over the crew’s', today()); setStatus('saving'); setClash(null); flushNow.current();
+            }}>Keep mine</button>
+          </div>
+          <p className="page-ref">Keeping yours replaces what the crew changed in the meantime. If you are not sure, use the crew’s version and make your changes again.</p>
         </Dialog>
       )}
       {dialog === 'delete' && (

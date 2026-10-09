@@ -2,12 +2,15 @@
 // Signed out: this browser. A save goes through only if the ship is still as this page last read it,
 // so two crewmates changing the hold at once cannot silently undo each other.
 import { normalizeShip, type ShipDoc } from '@dndf/engine';
+import { drawer, isNetworkError, onReconnect, sendWaiting, watch } from './offline';
 import { supabase } from './supabase';
 
-export interface StoredShip { id: string; doc: ShipDoc; campaignId: string | null; mine: boolean; updatedAt: string }
+export interface StoredShip { id: string; doc: ShipDoc; campaignId: string | null; mine: boolean; updatedAt: string; /** True when this is a change made with no connection that has not reached the account yet. */ unsent?: boolean }
 
 /** Thrown when someone else changed the ship first. `current` is the ship as it is now. */
 export class ShipChanged extends Error {
+  /** True when the change refused was one made with no connection: it is still kept, and the player chooses. */
+  unsent = false;
   constructor(public current: StoredShip) { super('The ship was changed by a crewmate.'); }
 }
 
@@ -19,6 +22,8 @@ export interface ShipStore {
   save(ship: StoredShip, doc: ShipDoc): Promise<StoredShip>;
   setCampaign(ship: StoredShip, campaignId: string | null): Promise<StoredShip>;
   remove(id: string): Promise<void>;
+  /** Drops a change that is waiting to be sent, when the player has chosen the crew's version instead. */
+  discardUnsent?(id: string): void;
 }
 
 const LOCAL_KEY = 'dndf.ships.v1';
@@ -110,6 +115,137 @@ function remoteStore(userId: string): ShipStore {
   };
 }
 
+const OFFLINE = 'You are offline';
+
+/**
+ * The account's ships, usable with no connection, in the same way as its characters: every ship read is
+ * kept on this device; with no connection the kept copy is shown, and a change is kept beside it and
+ * sent when the database answers again, only if she is still as this device last knew her. If the crew
+ * changed her meanwhile nothing is overwritten: she is marked, and opening her asks which version stays.
+ */
+function offlineShips(remote: ShipStore, userId: string): ShipStore {
+  const kept = drawer<ShipDoc>('ships', userId);
+  watch('ships', kept);
+  type Base = { doc: unknown; campaignId: string | null; mine: boolean };
+  const keep = (ship: StoredShip) => kept.put(ship.id, { doc: { doc: ship.doc, campaignId: ship.campaignId, mine: ship.mine } satisfies Base, updatedAt: ship.updatedAt, name: ship.doc.name });
+  const baseOf = (id: string): StoredShip | null => {
+    const now = kept.get(id);
+    const base = now?.doc as Base | undefined;
+    const doc = base ? normalizeShip(base.doc) : null;
+    return now && base && doc ? { id, doc, campaignId: base.campaignId, mine: base.mine, updatedAt: now.updatedAt } : null;
+  };
+  const shown = (id: string): StoredShip | null => {
+    const base = baseOf(id);
+    const pending = kept.get(id)?.pending;
+    return base && pending ? { ...base, doc: pending.doc, unsent: true } : base;
+  };
+  // A page holds the version it last saw. When this device itself sends a waiting change behind that page's
+  // back, the page's next save must be judged against the version that sending produced, not the one before.
+  const moved = new Map<string, string>();
+  const current = (ship: StoredShip): StoredShip => {
+    let at = ship.updatedAt;
+    for (let hop = 0; hop < 50 && moved.has(`${ship.id}|${at}`); hop++) at = moved.get(`${ship.id}|${at}`)!;
+    return at === ship.updatedAt ? ship : { ...ship, updatedAt: at };
+  };
+
+  const send = async () => {
+    for (const { id } of kept.waiting()) {
+      const now = kept.get(id);
+      const base = baseOf(id);
+      if (!now?.pending || now.clash || !base) continue;
+      try {
+        const saved = await remote.save(base, now.pending.doc);
+        moved.set(`${id}|${base.updatedAt}`, saved.updatedAt);
+        const after = kept.get(id);
+        keep(saved);
+        // A newer change may have been kept while this one was on its way: it stays waiting, on top of what was just sent.
+        if (after?.pending && after.pending.at !== now.pending.at) kept.put(id, { ...kept.get(id)!, pending: after.pending });
+      } catch (error) {
+        if (error instanceof ShipChanged) kept.put(id, { ...now, clash: true });
+        else if (isNetworkError(error)) return;
+      }
+    }
+  };
+  onReconnect(send);
+  void sendWaiting();
+
+  return {
+    local: false,
+    async list() {
+      try {
+        const list = await remote.list();
+        for (const ship of list) if (!kept.get(ship.id)?.pending) keep(ship);
+        kept.keepOnly(new Set(list.map((ship) => ship.id)));
+        return list.map((ship) => shown(ship.id) ?? ship);
+      } catch (error) {
+        if (!isNetworkError(error)) throw error;
+        return Object.keys(kept.all()).flatMap((id) => shown(id) ?? []).sort((a, b) => a.doc.name.localeCompare(b.doc.name));
+      }
+    },
+    async get(id) {
+      try {
+        const found = await remote.get(id);
+        if (!found) { if (!kept.get(id)?.pending) kept.remove(id); return null; }
+        // A change is waiting: show it, still standing on the version it was made from, so that sending it is judged fairly.
+        if (kept.get(id)?.pending) return shown(id);
+        keep(found);
+        return found;
+      } catch (error) {
+        if (!isNetworkError(error)) throw error;
+        const here = shown(id);
+        if (!here) throw new Error(`${OFFLINE}, and this ship has not been opened on this device before, so there is no copy of her here.`);
+        return here;
+      }
+    },
+    async create(doc, campaignId) {
+      try { const made = await remote.create(doc, campaignId); keep(made); return made; } catch (error) {
+        if (isNetworkError(error)) throw new Error(`${OFFLINE}, so a ship cannot be launched on your account yet. Launch her when you are back online.`);
+        throw error;
+      }
+    },
+    async save(asSeen, doc) {
+      const ship = current(asSeen);
+      try {
+        const saved = await remote.save(ship, doc);
+        keep(saved);
+        return saved;
+      } catch (error) {
+        if (error instanceof ShipChanged) {
+          const now = kept.get(ship.id);
+          if (now?.pending) { kept.put(ship.id, { ...now, pending: { ...now.pending, doc }, clash: true }); error.unsent = true; }
+          throw error;
+        }
+        if (!isNetworkError(error)) throw error;
+        const now = kept.get(ship.id);
+        const base: Base = (now?.doc as Base | undefined) ?? { doc: ship.doc, campaignId: ship.campaignId, mine: ship.mine };
+        const ok = kept.put(ship.id, { doc: base, updatedAt: now?.updatedAt ?? ship.updatedAt, name: doc.name, pending: { doc, at: new Date().toISOString() } });
+        if (!ok) throw new Error(`${OFFLINE}, and this browser has no room left to keep the change. It is still on screen: do not close the page until you are back online.`);
+        return { ...ship, doc, unsent: true };
+      }
+    },
+    async setCampaign(ship, campaignId) {
+      try { const moved = await remote.setCampaign(current(ship), campaignId); if (!kept.get(ship.id)?.pending) keep(moved); return moved; } catch (error) {
+        if (isNetworkError(error)) throw new Error(`${OFFLINE}, so who sails her cannot be changed yet.`);
+        throw error;
+      }
+    },
+    async remove(id) {
+      try { await remote.remove(id); kept.remove(id); } catch (error) {
+        if (isNetworkError(error)) throw new Error(`${OFFLINE}, so she cannot be scuttled yet.`);
+        throw error;
+      }
+    },
+    discardUnsent(id) {
+      const base = baseOf(id);
+      if (base) keep(base); else kept.remove(id);
+    },
+  };
+}
+
+// One store for each signed-in player, however many pages ask: it listens for the connection coming back.
+let account: { userId: string; store: ShipStore } | null = null;
 export function shipStoreFor(userId: string | null): ShipStore {
-  return userId && supabase ? remoteStore(userId) : localStore;
+  if (!userId || !supabase) return localStore;
+  if (account?.userId !== userId) account = { userId, store: offlineShips(remoteStore(userId), userId) };
+  return account.store;
 }
