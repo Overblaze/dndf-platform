@@ -41,7 +41,7 @@ export function CrewPage() {
     return (
       <section className="card">
         <h1>Crew</h1>
-        <p>Sign in with Discord to see your campaign and crewmates. Characters kept only on this device cannot join a campaign.</p>
+        <p>Sign in to see your campaign and crewmates. Characters kept only on this device cannot join a campaign.</p>
       </section>
     );
   }

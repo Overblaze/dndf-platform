@@ -50,7 +50,7 @@ function ShipList({ store, campaigns }: { store: ShipStore; campaigns: Campaign[
     <>
       <section className="card">
         <h1>Ship</h1>
-        {store.local && <p className="notice">You are not signed in, so ships here are kept only in this browser. Sign in with Discord to share a ship with your crew.</p>}
+        {store.local && <p className="notice">You are not signed in, so ships here are kept only in this browser. Sign in to share a ship with your crew.</p>}
         {problem && <p className="notice" role="alert">{problem}</p>}
         {!ships && !problem && <p>Scanning the harbour…</p>}
         {ships?.length === 0 && !problem && <p>No ships yet.</p>}

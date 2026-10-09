@@ -114,7 +114,7 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
           <div key={m.id} className="resource">
             <div>
               <div className="resource-name">{m.name}{m.id === userId ? ' (you)' : ''}</div>
-              <div className="page-ref">{m.role === 'dm' ? 'DM: sees every character and every secret in this campaign' : 'Player'}</div>
+              <div className="page-ref">{m.role === 'dm' ? 'DM: sees every character and every secret in this campaign' : 'Player'}{m.password ? ' · signs in with a username and password, not Discord' : ''}</div>
             </div>
             <div className="row wrap">
               {m.role === 'player' && <button className="btn" onClick={() => act(api.setRole(campaign.id, m.id, 'dm'))}>Make DM</button>}
@@ -126,7 +126,7 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
         <div className="row wrap">
           <select value={adding} onChange={(e) => setAdding(e.target.value)} aria-label="Person to add">
             <option value="">Add someone…</option>
-            {outside.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+            {outside.map((p) => <option key={p.id} value={p.id}>{p.name}{p.password ? ' (username and password)' : ''}</option>)}
           </select>
           <button className="btn btn-primary" disabled={!adding} onClick={() => { void act(api.addMember(campaign.id, adding)); setAdding(''); }}>Add as player</button>
         </div>
@@ -259,16 +259,17 @@ export function DmPage() {
   const current = campaigns?.find((c) => c.id === open);
   const runsAny = (campaigns?.length ?? 0) > 0;
 
-  if (!session) return <section className="card"><h1>DM</h1><p>Sign in with Discord to see whether you are a DM.</p></section>;
+  if (!session) return <section className="card"><h1>DM</h1><p>Sign in to see whether you are a DM.</p></section>;
   if (!profile) return <section className="card"><h1>DM</h1><p>Checking your profile…</p></section>;
   if (!isDm && !runsAny) {
     return (
       <section className="card">
         <h1>DM</h1>
         <p>
-          You are signed in as a player. DM tools are only for the table's DM. If that is you, the bootstrap Discord username
-          in the database does not match <strong>{profile.discord_username ?? 'your account'}</strong> yet; set it, then sign
-          out and in again.
+          You are signed in as a player. DM tools are only for the table's DM, or for someone a DM has made a DM of their
+          campaign. {profile.discord_username
+            ? <>If you are the table's DM, the bootstrap Discord username in the database does not match <strong>{profile.discord_username}</strong> yet; set it, then sign out and in again.</>
+            : 'The table’s DM is set by Discord name, so an account with a username and password can only be made a DM of a campaign by its DM.'}
         </p>
       </section>
     );

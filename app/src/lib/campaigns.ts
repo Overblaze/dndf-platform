@@ -5,7 +5,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { ruleSet } from './rules';
 
 export interface Campaign { id: string; name: string }
-export interface Person { id: string; name: string }
+export interface Person { id: string; name: string; /** Signed in with a username and password, not Discord. */ password?: boolean }
 export interface Member extends Person { role: 'player' | 'dm' }
 export interface CampaignCharacter { id: string; name: string; ownerId: string; campaignId: string | null; summary: string }
 export interface Grant {
@@ -81,12 +81,12 @@ export function campaignApi(db: SupabaseClient) {
       const list = await rows<{ user_id: string; role: 'player' | 'dm' }>(db.from('campaign_members').select('user_id, role').eq('campaign_id', campaignId));
       if (list.length === 0) return [];
       const people = await rows<{ id: string; discord_username: string | null; display_name: string | null }>(db.from('profiles').select('id, discord_username, display_name').in('id', list.map((m) => m.user_id)));
-      return list.map((m) => ({ id: m.user_id, role: m.role, name: nameOf(people.find((p) => p.id === m.user_id) ?? {}) })).sort((a, b) => a.name.localeCompare(b.name));
+      return list.map((m) => { const who = people.find((p) => p.id === m.user_id); return { id: m.user_id, role: m.role, name: nameOf(who ?? {}), password: who ? !who.discord_username : undefined }; }).sort((a, b) => a.name.localeCompare(b.name));
     },
     /** Everyone who has signed in. Only a DM gets the whole list; a player gets the people they share a campaign with. */
     async people(): Promise<Person[]> {
       const list = await rows<{ id: string; discord_username: string | null; display_name: string | null }>(db.from('profiles').select('id, discord_username, display_name'));
-      return list.map((p) => ({ id: p.id, name: nameOf(p) })).sort((a, b) => a.name.localeCompare(b.name));
+      return list.map((p) => ({ id: p.id, name: nameOf(p), password: !p.discord_username })).sort((a, b) => a.name.localeCompare(b.name));
     },
     addMember: (campaignId: string, userId: string) => done(db.from('campaign_members').insert({ campaign_id: campaignId, user_id: userId, role: 'player' })),
     setRole: (campaignId: string, userId: string, role: 'player' | 'dm') => done(db.from('campaign_members').update({ role }).eq('campaign_id', campaignId).eq('user_id', userId)),

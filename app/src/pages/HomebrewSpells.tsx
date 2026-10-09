@@ -41,7 +41,7 @@ export function HomebrewSpells() {
     <>
       <p className="page-ref">
         {library.local
-          ? 'Spells you write here are kept in this browser. Sign in with Discord to keep them on your account and share them with your campaign.'
+          ? 'Spells you write here are kept in this browser. Sign in to keep them on your account and share them with your campaign.'
           : 'Spells you write are yours. Share one with a campaign and everyone in it can read it and add it to their characters.'}
       </p>
       {problem && <p className="notice" role="alert">{problem}</p>}
