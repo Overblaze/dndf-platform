@@ -98,7 +98,8 @@ export function useCharacter(store: CharacterStore, id: string) {
         latest.current = theirs;
         setDocState(theirs);
         setStatus('saved');
-        // Read it again so this page knows the saved version it is now showing.
+        // The waiting change is let go, and the character read again so this page knows the saved version it is now showing.
+        store.discardUnsent?.(id);
         void store.get(id).catch(() => {});
         return;
       }
@@ -124,8 +125,13 @@ export function useCharacter(store: CharacterStore, id: string) {
     store.get(id).then(
       (stored) => {
         if (!current) return;
-        if (stored) { latest.current = stored.doc; setDocState(stored.doc); }
-        else setMissing(true);
+        if (stored) {
+          latest.current = stored.doc;
+          setDocState(stored.doc);
+          // A change made with no connection is still waiting: send it now, through the same door as any
+          // save, so that a change made elsewhere meanwhile is put to the player instead of being lost.
+          if (stored.unsent && navigator.onLine !== false) { pending.current = stored.doc; setStatus('saving'); flush(); }
+        } else setMissing(true);
       },
       (error: Error) => current && setLoadError(error.message),
     );

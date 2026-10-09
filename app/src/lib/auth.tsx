@@ -1,5 +1,6 @@
 import type { Session } from '@supabase/supabase-js';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { forgetKept, isNetworkError } from './offline';
 import { siteUrl, supabase } from './supabase';
 
 export interface Profile {
@@ -100,6 +101,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let current = true;
     supabase.rpc('sync_my_profile').then(({ data, error: rpcError }) => {
       if (!current) return;
+      // With no connection the profile cannot be refreshed; the player stays signed in on this device.
+      if (rpcError && isNetworkError(rpcError)) return;
       if (rpcError) {
         setError(`Signed in, but the database did not answer: ${rpcError.message}. Have the SQL migrations been run?`);
       } else {
@@ -164,6 +167,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = useCallback(async () => {
     if (!supabase) return;
     setError(null);
+    // The copies of this player's characters kept on the device go with them (a shared phone); a change not yet sent is kept until it can be.
+    const leaving = (await supabase.auth.getSession()).data.session?.user.id;
+    if (leaving) forgetKept(leaving);
     const { error: signOutError } = await supabase.auth.signOut();
     if (signOutError) setError(signOutError.message);
   }, []);
