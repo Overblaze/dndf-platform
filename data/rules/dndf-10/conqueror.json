@@ -15,6 +15,11 @@
       "flavor": "The Conqueror is a master of presence, strategy, and spirit. Unlike frontline brutes, the conqueror leads from the rear, controlling the flow of combat with clever positioning, tactical orders, and bursts of Haki-enhanced charisma. With a pool of Leadership Dice, they empower allies, disrupt enemies, and magnify the power of Supreme King Haki. Where others seek personal glory, the Conqueror seeks victory—no matter the cost.",
       "quote": "THERE IS NO “I .” I ’S CRAZY TO EVEN THINK ABOUT IT. THIS OUTCOME IS THE ONLY REALITY. YOU LOST. F T --- Tsuru",
       "hitDie": 10,
+      "hitPoints": {
+        "hitDice": "1d10 per Conqueror level",
+        "atFirstLevel": "10 + your Constitution modifier",
+        "atHigherLevels": "1d10 (or 6) + your Constitution modifier per Conqueror level after 1st"
+      },
       "savingThrows": [
         "wis",
         "cha"

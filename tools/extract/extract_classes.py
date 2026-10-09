@@ -582,6 +582,10 @@ def extract_class(version: str, key: str) -> dict:
     if quote:
         entry["quote"] = quote
     entry["hitDie"] = int(hit_die.group(1)) if hit_die else 8
+    # The book's own three lines, word for word: the die, level 1 (its maximum) and every level after (rolled, or the fixed number).
+    hit_points = {key: defs[said] for key, said in (("hitDice", "hit dice"), ("atFirstLevel", "hit points at 1st level"), ("atHigherLevels", "hit points at higher levels")) if defs.get(said)}
+    if hit_points:
+        entry["hitPoints"] = hit_points
     entry["savingThrows"] = saves
     entry["proficiencies"] = {
         "armor": [slug(a) for a in split_list(defs.get("armor", ""))],

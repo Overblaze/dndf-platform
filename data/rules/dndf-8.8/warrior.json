@@ -15,6 +15,11 @@
       "flavor": "The Warrior is a battle-hardened fighter, trained to excel in the heat of combat with a wide range of tactics and techniques. Whether mastering weapons, enduring the hardships of battle, or protecting their allies, Warriors are relentless in their pursuit of victory. They are the frontline champions, pushing their bodies and minds to the limit, driven by an unyielding will to survive and conquer.",
       "quote": "CONVEY MY WILL TO THIS BLADE… NOW LET’S SEE IF I AM ABLE TO CUT STEEL. --- Roronoa Zoro",
       "hitDie": 10,
+      "hitPoints": {
+        "hitDice": "1d10 per Warrior level",
+        "atFirstLevel": "10 + your Constitution modifier",
+        "atHigherLevels": "1d10 (or 6) + your Constitution modifier per Fighter level after 1st"
+      },
       "savingThrows": [
         "str",
         "con"

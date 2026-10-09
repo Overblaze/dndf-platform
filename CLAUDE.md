@@ -33,3 +33,4 @@ A free, private D&D Beyond-style character platform for one Dungeons & Devil Fru
 - Long rest returns ALL spent hit dice.
 - Healing Surge: up to floor(total hit dice / 2), minimum 1, limited by dice remaining.
 - Players may edit their own bounty freely; the DM Guide formula is shown as "calculated".
+- A Chemist's fixed hit points per level are 5, the d8's average. The handbooks print "1d8 (or 6)", which is a slip.

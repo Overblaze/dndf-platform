@@ -16,6 +16,11 @@
       "flavor": "The Oracle is a mysterious seer blessed with the power to glimpse the threads of fate, using their foresight to guide allies and alter the course of events. They stand as enigmatic figures on the battlefield, predicting future encounters and subtly bending reality to their will through divine insights and mystical visions. As masters of prophecy, Oracles wield the power of knowledge, shaping destiny in ways that few can comprehend, making them invaluable to any who seek to outmaneuver their foes and uncover hidden truths.",
       "quote": "THE HUMAN WITH THE STRAW HAT…!! THE BOY, STRAW HAT LUFFY… BY HIS HANDS… FISHMAN ISLAND WILL BE DESTROYED!!! --- Shyarly",
       "hitDie": 6,
+      "hitPoints": {
+        "hitDice": "1d6 per Oracle level",
+        "atFirstLevel": "6 + your Constitution modifier",
+        "atHigherLevels": "1d6 (or 4) + your Constitution modifier per oracle level after 1st"
+      },
       "savingThrows": [
         "wis",
         "cha"

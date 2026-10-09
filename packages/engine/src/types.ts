@@ -99,6 +99,8 @@ export interface RuleEntry {
 export interface ClassEntry extends RuleEntry {
   kind: 'class';
   hitDie: number;
+  /** The book's own lines: the die, level 1 (its maximum plus Constitution) and each level after (rolled, or the fixed number). */
+  hitPoints?: { hitDice?: string; atFirstLevel?: string; atHigherLevels?: string };
   savingThrows?: Ability[];
   features: FeatureDef[];
   /** The feature that grants the subclass, and the levels its features arrive. */

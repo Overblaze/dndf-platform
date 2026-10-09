@@ -15,6 +15,11 @@
       "flavor": "Renegades using Dueling Strikes to build combos before ending them with sudden, decisive Finishing Acts. Where others rely on perfect form, they thrive on aggressive combo techniques.",
       "quote": "EVERYONE’S WEAK WHEN THEY HESITATE. --- Nami",
       "hitDie": 8,
+      "hitPoints": {
+        "hitDice": "1d8 per renegade level",
+        "atFirstLevel": "8 + your Constitution modifier",
+        "atHigherLevels": "1d8 (or 5) + your Constitution modifier per renegade level after 1st"
+      },
       "savingThrows": [
         "dex",
         "int"

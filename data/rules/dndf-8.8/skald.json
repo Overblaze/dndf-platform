@@ -15,6 +15,11 @@
       "flavor": "The Skald is a master of powerful emotions and ancient tales, using their voice or music to inspire and influence the hearts of those around them. Drawing on the deep well of human experience, Skalds channel their spiritual energy into magic-like effects, weaving together stories and melodies that bolster allies or devastate foes. Skalds are more than mere performers—they are spiritual warriors, guiding their companions through both battle and hardship with the strength of their voice and the resonance of their soul.",
       "quote": "WHAT KEEPS ME ALIVE IN THIS WORLD IS NEITHER BODILY ORGANS, NOR MUSCLES - ’S MY SOUL! IT --- Brook",
       "hitDie": 8,
+      "hitPoints": {
+        "hitDice": "1d8 per skald level",
+        "atFirstLevel": "8 + your Constitution modifier",
+        "atHigherLevels": "1d8 (or 5) + your Constitution modifier per skald level after 1st"
+      },
       "savingThrows": [
         "dex",
         "cha"

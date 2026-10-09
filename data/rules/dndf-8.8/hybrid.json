@@ -15,6 +15,11 @@
       "flavor": "STARTING CLASS ONLY. THIS CLASS CANNOT BE MULTICLASSED INTO.\nThe Hybrid is a living embodiment of ancient experimentation or advanced genetic modification, carrying the unique power of interwoven bloodlines and cybernetic modifications. Hybrids are the result of advanced cloning science, built to adapting to any challenge they face.",
       "quote": "I CAN GIVE THE HUMAN BODY AN EXOSKELETON… ABNORMAL REGENERATION… GREAT PHYSICAL STRENGTH… --- Queen the Plague",
       "hitDie": 10,
+      "hitPoints": {
+        "hitDice": "1d10 per hybrid level",
+        "atFirstLevel": "10 + your Constitution modifier",
+        "atHigherLevels": "1d10 (or 6) + your Constitution modifier per hybrid level after 1st"
+      },
       "savingThrows": [
         "con",
         "cha"
