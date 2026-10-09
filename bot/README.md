@@ -19,6 +19,9 @@ same rules data (`data/rules`) as the website, so its numbers cannot differ from
 | `/item make <kind>` | An item of your own that works on the sheet. `weapon` (damage dice, +N, two-handed…), `armor` (base AC, Dexterity), `shield`, `wondrous`, `consumable` or `gear`. Powers: `ability` with `ability_becomes` (19 for a Circlet of Intellect) or `ability_bonus`, `save_bonus`, `skill` and `skill_bonus`, `ac_bonus`, `speed_bonus`, `hp_bonus`, `charges`, `roll`, `effect`, `spells`, `attunement`. The same thing the website's "Make an item" saves. |
 | `/item use` | Put an item to use or away: one you made is switched on, and a weapon, armor or shield from the armory is readied or worn. `attune: attune` attunes to it (an item that requires attunement works only when both worn and attuned); three attunements by the rule, and going over is said, not stopped. |
 | `/item remove` | Remove an item, or some of it. |
+| `/surge list` | Your Haki by Color with its tier, and every Spirit Surge advancement you have. |
+| `/surge add` | Record an advancement from a Spirit Surge: pick the `rarity`, then the `advancement` from the list offered as you type. Strengthen Self and Career Advancement ask for `choice` or `skill`. One the rules would hold back is added anyway, with the reason said. Devil Fruit advancements are private and are added on the website. |
+| `/surge remove` | Take the most recent advancement of that name off again. |
 | `/ship status` | Your crew's ship at a glance: speed, crew, every part's hit points, treasury, what is wrong. |
 | `/ship damage` / `/ship repair` | One part of the ship, by name (`hull`, `sails`, `cannon 2`). Damage under the part's threshold does nothing. |
 | `/ship treasury` | Put berries into the crew's treasury or take them out, with what for. |

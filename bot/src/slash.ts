@@ -100,6 +100,18 @@ export const COMMANDS = [
     .addSubcommand((sub) => whose(sub.setName('remove').setDescription('Remove an item, or some of it')
       .addStringOption((o) => o.setName('item').setDescription('Which item').setRequired(true).setAutocomplete(true))
       .addIntegerOption((o) => o.setName('quantity').setDescription('How many to remove (default: all of it)').setMinValue(1).setMaxValue(9999)))),
+  new SlashCommandBuilder().setName('surge').setDescription('Spirit Surges: your Haki and advancements')
+    .addSubcommand((sub) => whose(sub.setName('list').setDescription('Your Haki by Color and every Spirit Surge advancement you have')))
+    .addSubcommand((sub) => whose(sub.setName('add').setDescription('Record an advancement from a Spirit Surge')
+      .addStringOption((o) => o.setName('rarity').setDescription('How strong the Spirit Surge was').setRequired(true).addChoices(...['Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'].map((r) => ({ name: r, value: r }))))
+      .addStringOption((o) => o.setName('advancement').setDescription('The Haki feature or advancement (pick from the list as you type)').setRequired(true).setAutocomplete(true))
+      .addStringOption((o) => o.setName('choice').setDescription('Strengthen Self: what goes up by 2').addChoices(...ABILITY_CHOICES, { name: 'Willpower (v10)', value: 'willpower' }))
+      .addStringOption((o) => o.setName('skill').setDescription('Career Advancement: the skill').addChoices(...SKILL_CHOICES))
+      .addStringOption((o) => o.setName('note').setDescription('What was chosen, for an advancement that leaves it open (a technique, a spell…)').setMaxLength(300))
+      .addStringOption((o) => o.setName('reason').setDescription('What earned it, for the record').setMaxLength(200))
+      .addStringOption((o) => o.setName('session').setDescription('Which session').setMaxLength(60))))
+    .addSubcommand((sub) => whose(sub.setName('remove').setDescription('Take an advancement off again (the most recent one of that name)')
+      .addStringOption((o) => o.setName('advancement').setDescription('Which advancement').setRequired(true).setAutocomplete(true)))),
   new SlashCommandBuilder().setName('ship').setDescription('Your crew’s ship')
     .addSubcommand((sub) => whichShip(sub.setName('status').setDescription('The ship at a glance: speed, crew, every part’s hit points, treasury')))
     .addSubcommand((sub) => whichShip(sub.setName('damage').setDescription('A part of the ship takes damage (under its threshold, none gets through)')
