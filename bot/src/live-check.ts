@@ -103,13 +103,16 @@ async function main(): Promise<void> {
     if (error || !data.user) throw new Error(`Could not make the test account: ${error?.message}`);
     ids[who] = data.user.id;
     made.users.push(data.user.id);
-    check(`test player ${who} made with the code; the code is not kept on the account`, !('join_code' in (data.user.user_metadata ?? {})));
+    // Read back from the database: the answer to "create" only repeats what was sent.
+    const kept = await admin.auth.admin.getUserById(data.user.id);
+    check(`test player ${who} made with the code; the code is not kept on the account`, !kept.error && !('join_code' in (kept.data.user?.user_metadata ?? {})), short(kept.error));
   }
   const a = client();
   const b = client();
   const inA = await a.auth.signInWithPassword({ email: `${names.a}@players.dndf.invalid`, password: passwords.a });
   const inB = await b.auth.signInWithPassword({ email: `${names.b}@players.dndf.invalid`, password: passwords.b });
   check('both sign in with username and password', !inA.error && !inB.error, `${short(inA.error)}; ${short(inB.error)}`);
+  check('nor is it in what the player’s own session carries', !('join_code' in (inA.data.user?.user_metadata ?? {})) && !('join_code' in (inB.data.user?.user_metadata ?? {})));
   const badPw = await client().auth.signInWithPassword({ email: `${names.a}@players.dndf.invalid`, password: 'wrong-password-here' });
   check('a wrong password is refused', refused(badPw.error));
 
