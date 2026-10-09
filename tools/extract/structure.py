@@ -342,6 +342,7 @@ def weapon_feat(weapon: str, plural: str, kind: str = "attack") -> dict:
 # who types final ability scores; everything conditional on a choice or a situation stays text.
 FEAT_STRUCTURE = {
     "Alert": {"expect": "You gain a +5 bonus to initiative", "effects": [{"type": "initiative", "value": 5}]},
+    "Linguist (Pongelyphs)": {"expect": "You learn the language of the Poneglyphs", "effects": [{"type": "language", "label": "The language of the Poneglyphs"}]},
     "Mobile": {"expect": "Your speed increases by 10 feet", "effects": [{"type": "speed", "value": 10}]},
     "Tough": {"expect": "hit point maximum increases by an amount equal to twice your level", "effects": [{"type": "hp", "expr": "level * 2"}]},
     "Big Eater": {"expect": "you count as one size larger when determining your carrying capacity", "effects": [{"type": "carryMultiplier", "value": 2}]},
@@ -358,6 +359,10 @@ FEAT_STRUCTURE = {
 # extract_chapters.py); what is here is the rest: armor formulas, bonuses and things switched on.
 RESIST_NONMAGICAL = "Resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks"
 HAKI_STRUCTURE: dict[str, dict] = {
+    "The Voice of All Things": {
+        "expect": "You can read and understand all languages, written or verbal, including any writing on poneglyphs",
+        "effects": [{"type": "language", "label": "All languages, written or verbal, including the Poneglyphs (read and understand)"}],
+    },
     "Focused Hit": {"expect": "increase each die by one size up to a maximum of d8", "rolls": [], "effects": [{"type": "weaponDieStep", "max": 8, "label": "once per turn"}]},
     "Enhanced Strike": {"expect": "die by one size up to a maximum of d12", "rolls": [], "effects": [{"type": "weaponDieStep", "max": 12}]},
     "Resolve Within": {"expect": "resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks", "toggle": {"id": "resolve_within", "label": "Resolve Within", "effects": [{"type": "note", "label": RESIST_NONMAGICAL}]}},

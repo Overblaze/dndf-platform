@@ -46,6 +46,8 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
   const [backgroundId, setBackgroundId] = useState(initial?.background?.id ?? '');
   const [crewRoleIds, setCrewRoleIds] = useState<string[]>(initial ? crewRolesOf(initial).map((r) => r.id) : []);
   const [feats, setFeats] = useState<string[]>(initial?.feats ?? []);
+  const [languages, setLanguages] = useState<string[]>(initial?.languages ?? []);
+  const [newLanguage, setNewLanguage] = useState('');
   const [classId, setClassId] = useState(first?.id ?? 'class.bruiser');
   const [level, setLevel] = useState(first?.level ?? 1);
   // Levels in further classes (multiclassing).
@@ -120,7 +122,7 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
     };
     if (!initial) {
       const built = newCharacter(shared, rules);
-      const doc: CharacterDoc = { ...built, customClasses, notes, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
+      const doc: CharacterDoc = { ...built, languages: languages.length ? languages : undefined, customClasses, notes, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return doc;
     }
@@ -135,6 +137,7 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
       crewRoles: shared.crewRoleIds.map((id) => ({ id })),
       crewRole: undefined,
       feats,
+      languages: languages.length ? languages : undefined,
       classes: [{ ...base.classes[0]!, id: cls.id, level, subclass: level >= subclassLevel ? shared.subclass : undefined }, ...otherClasses],
       scores,
       scoreOrigin,
@@ -345,6 +348,10 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
       </div>
       <fieldset>
         <legend className="label">Multiclassing: levels in other classes · {cite(HANDBOOKS[version], version === 'dndf-10' ? 209 : 208)}</legend>
+        <p className="page-ref">
+          {version === 'dndf-10' ? '' : 'This handbook does not say what a second class gives; the v10 handbook’s rule (p.209) is used: '}
+          “When you gain your first level in a class other than your initial class, you gain all of new class’s starting armor, weapon, and tool proficiencies.” Not its saving throws, and not its skills: those come from your first class only.
+        </p>
         {otherClasses.map((other, i) => {
           const otherClass = classes.find((c) => c.id === other.id);
           const otherStyles = mainSubclasses(other.id);
@@ -486,6 +493,23 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
         <legend className="label">Tool proficiencies</legend>
         <p className="page-ref">{fixedTools.length ? `Added automatically: ${fixedTools.join(', ')}.` : 'Your background and crew roles name no tool outright.'} Your class’s own tools are added too.</p>
         <RacePickFields picks={nestedPicks.filter((p) => isToolPick(p.key))} weapons={handbook.weapons.map((w) => w.name)} onChange={(pick, next) => setChoices({ ...choices, [pick.key]: next })} />
+      </fieldset>
+      <fieldset>
+        <legend className="label">Languages: {draftSheet.spoken.length} · {cite(HANDBOOKS[version], 20)}</legend>
+        <p className="page-ref">
+          The One Piece world uses one universal language, so backgrounds give none. If your DM adds languages, the book lets you swap one of your tool proficiencies for one: add it here and leave that tool unchosen.
+        </p>
+        <div className="chips">
+          {draftSheet.spoken.filter((l) => l.from !== 'Added by you').map((l) => <span key={l.id} className="chip">{l.name}</span>)}
+          {languages.map((language) => (
+            <button type="button" key={language} className="chip chip-btn chip-on" onClick={() => setLanguages(languages.filter((l) => l !== language))} aria-label={`Remove ${language}`}>{language} ×</button>
+          ))}
+        </div>
+        <div className="row">
+          <input value={newLanguage} maxLength={60} onChange={(e) => setNewLanguage(e.target.value)} placeholder="A language your DM has added" aria-label="A language to add"
+            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); if (newLanguage.trim() && !languages.includes(newLanguage.trim())) setLanguages([...languages, newLanguage.trim()]); setNewLanguage(''); } }} />
+          <button type="button" className="btn" disabled={!newLanguage.trim()} onClick={() => { if (!languages.includes(newLanguage.trim())) setLanguages([...languages, newLanguage.trim()]); setNewLanguage(''); }}>Add</button>
+        </div>
       </fieldset>
       <fieldset>
         <legend className="label">Expertise (proficiency bonus doubled): {expertise.length}</legend>

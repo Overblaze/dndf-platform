@@ -172,6 +172,11 @@ def extract_crew_roles(version: str) -> list[dict]:
         if skills:
             role["skills"] = skills
             role["auto"] = ["skills"]
+        # "You have expertise with History and Religion skills" (the Record-Keeper): by the table's ruling, expertise
+        # in a skill the character is already proficient in, and otherwise proficiency.
+        expert = re.search(r"expertise (?:with|in) (?:the )?(.+?) skills?", proficiency["text"]) if proficiency else None
+        if expert and skills_in(expert.group(1)):
+            role["expertiseOrProficiency"] = skills_in(expert.group(1))
         # What the same sentence names after the skills: "…Nature and Survival skills, Cartographer’s tools, and Navigator’s tools."
         after = re.search(r"\bskills?,\s*(?:and\s+)?(.+?)\.?$", proficiency["text"]) if proficiency else None
         tools = tools_granted(re.sub(r"\bkits\b", "kit", after.group(1))) if after else {}

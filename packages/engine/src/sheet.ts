@@ -212,6 +212,8 @@ export interface Sheet {
   takenOff: { key: string; name: string; from: string; page: number; book: string }[];
   /** Armor, weapons and tools the character is proficient with, each with where it comes from. */
   proficiencies: { armor: Proficiency[]; weapons: Proficiency[]; tools: Proficiency[] };
+  /** Languages: the universal one everyone speaks, any a feat or Haki gives, and the player's own. */
+  spoken: Proficiency[];
   /** Haki by Color, with the tier reached in each, and every Spirit Surge advancement on the character. */
   haki: {
     colors: { id: HakiColor; name: string; count: Stat; tier: 0 | 1 | 2 | 3; features: string[] }[];
@@ -681,6 +683,11 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     // A line that is a choice ("One tool of your choice") is not a tool: what was chosen for it is added below.
     for (const tool of own?.tools ?? []) if (!own?.toolPicks?.some((pick) => pick.label === tool)) grant(proficiencies.tools, slug(tool), capital(tool), source.cls.name);
   }
+  // Languages. "The One Piece world uses one universal language" (Backgrounds), so everyone has that one.
+  const languages: Proficiency[] = [];
+  grant(languages, 'universal', 'The universal language', 'Everyone in this world');
+  for (const e of ofType('language')) if (typeof e.effect.label === 'string') grant(languages, slug(e.effect.label), e.effect.label, e.from);
+  for (const own of doc.languages ?? []) if (own.trim()) grant(languages, slug(own), own.trim(), 'Added by you');
   // The tools a background or a crew role names outright.
   for (const [giver, kind] of [[background, 'background'], ...crewRoles.map((role) => [role, 'crew role'] as const)] as const) {
     for (const tool of ((giver?.tools as { fixed?: string[] } | undefined)?.fixed ?? [])) grant(proficiencies.tools, slug(tool), capital(tool), `${giver!.name} (${kind})`);
@@ -787,6 +794,14 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   const expertiseIn = new Set(doc.expertise);
   for (const e of ofType('expertise')) if (typeof e.effect.skill === 'string') expertiseIn.add(e.effect.skill);
   for (const e of ofType('saveProficiency')) if (e.effect.ability) saveProfs.add(e.effect.ability);
+  // The Record-Keeper's "expertise with History and Religion": expertise where the character is proficient
+  // without it, and otherwise proficiency (the table's ruling).
+  for (const role of crewRoles) {
+    for (const skill of (role.expertiseOrProficiency ?? []) as string[]) {
+      if (skillProfs.has(skill)) expertiseIn.add(skill);
+      else skillProfs.add(skill);
+    }
+  }
   // Career Advancement: proficiency in the skill, or expertise when the character already has it.
   for (const { record } of advancementsOf('career_advancement')) {
     const skill = record.pick?.skill;
@@ -1418,6 +1433,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     trackers,
     takenOff: offSheet,
     proficiencies,
+    spoken: languages,
     counters,
     attacks,
     features,

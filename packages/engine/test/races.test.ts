@@ -1,6 +1,6 @@
 // Racial traits on the sheet: their numbers, uses, dice and pick-lists — p67–82 of each handbook.
 import { describe, expect, it } from 'vitest';
-import { applyLevelUp, deriveSheet, levelUpPlan, newCharacter, raceChoices, racePickLabel, racePickOptions, speedLine, toolSuggestions, type AbilityScores, type CharacterDoc, type RulesVersion, type OptionDef, type Sheet, type TraitDef } from '../src';
+import { applyLevelUp, deriveSheet, levelUpPlan, newCharacter, normalizeDoc, raceChoices, racePickLabel, racePickOptions, speedLine, toolSuggestions, type AbilityScores, type CharacterDoc, type ClassEntry, type RulesVersion, type OptionDef, type Sheet, type TraitDef } from '../src';
 import { loadRules } from './load';
 
 const scores: AbilityScores = { str: 16, dex: 14, con: 14, int: 10, wis: 12, cha: 10 };
@@ -383,5 +383,59 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('tool proficiencies (%s
     expect(toolSuggestions('one type of musical instrument')).toContain('Lute');
     expect(toolSuggestions('One type of artisan’s tools or musical instrument')).toEqual(expect.arrayContaining(['Smith’s tools', 'Flute']));
     expect(toolSuggestions('Two of your choice').length).toBeGreaterThan(30);
+  });
+});
+
+// Languages, what a second class gives, and the Record-Keeper's expertise.
+describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('languages, multiclass proficiencies and the Record-Keeper (%s)', (version) => {
+  const rules = loadRules(version);
+  const build = (classId: string, more: Partial<CharacterDoc> = {}) => deriveSheet({ ...newCharacter({ name: 'T', rulesVersion: version, classId, level: 3, scores }, rules), ...more }, rules);
+  const skill = (sheet: Sheet, id: string) => sheet.skills.find((k) => k.id === id)!;
+
+  it('everyone speaks the universal language; a feat, Haki and the player add more', () => {
+    expect(build('class.warrior').spoken).toEqual([{ id: 'universal', name: 'The universal language', from: 'Everyone in this world' }]);
+    const more = build('class.warrior', { feats: ['feat.linguist_pongelyphs'], languages: ['Fish-man signs', '  Sky tongue  ', 'Fish-man signs'] });
+    expect(more.spoken.map((l) => `${l.name} <${l.from}>`)).toEqual([
+      'The universal language <Everyone in this world>', 'The language of the Poneglyphs <Linguist (Pongelyphs)>', 'Fish-man signs <Added by you>', 'Sky tongue <Added by you>',
+    ]);
+    // A saved character with nonsense for languages still opens.
+    const odd = normalizeDoc({ ...newCharacter({ name: 'T', rulesVersion: version, classId: 'class.warrior', level: 1, scores }, rules), languages: ['Ok', 7, '', null] as never })!;
+    expect(odd.languages).toEqual(['Ok']);
+    const voice = [...rules.values()].find((e) => e.name === 'The Voice of All Things')!;
+    expect((voice.effects as { type: string; label: string }[]).find((e) => e.type === 'language')!.label).toMatch(/^All languages/);
+  });
+
+  it('a second class gives all its armor, weapons and tools, but not its saving throws', () => {
+    // Warrior first: Strength and Constitution saves. Tinkerer second: its tools and their choices, none of its saves.
+    const one = newCharacter({ name: 'T', rulesVersion: version, classId: 'class.warrior', level: 3, scores }, rules);
+    const tinkerer = rules.get('class.tinkerer') as ClassEntry;
+    const multi = deriveSheet({ ...one, classes: [...one.classes, { id: 'class.tinkerer', level: 1 }] }, rules);
+    expect(multi.proficiencies.tools.map((t) => `${t.name} <${t.from}>`)).toEqual(['Thieves’ tools <Tinkerer>', 'Tinker’s tools <Tinkerer>']);
+    expect(multi.racePicks.map((p) => p.key)).toEqual(['pick.class.tinkerer.tool1']);
+    const warriorSaves = (rules.get('class.warrior') as ClassEntry).savingThrows!;
+    for (const ability of ['str', 'dex', 'con', 'int', 'wis', 'cha'] as const) expect(multi.saves[ability].proficient, ability).toBe(warriorSaves.includes(ability));
+    expect(tinkerer.savingThrows!.some((a) => !warriorSaves.includes(a))).toBe(true); // so the line above means something
+    // The other way round, the Warrior's armor and weapons arrive with the second class.
+    const other = newCharacter({ name: 'T', rulesVersion: version, classId: 'class.tinkerer', level: 3, scores }, rules);
+    const armored = deriveSheet({ ...other, classes: [...other.classes, { id: 'class.warrior', level: 1 }] }, rules);
+    expect(armored.proficiencies.armor.map((a) => a.id)).toEqual(expect.arrayContaining(['heavy', 'shields']));
+    expect(armored.proficiencies.weapons.map((w) => w.id)).toContain('martial');
+    expect(deriveSheet(other, rules).proficiencies.armor.map((a) => a.id)).not.toContain('heavy');
+  });
+
+  it('Record-Keeper: expertise in History and Religion where already proficient, otherwise proficiency', () => {
+    const role = { crewRoles: [{ id: 'crewRole.record_keeper' }] };
+    const plain = build('class.warrior', role);
+    expect([skill(plain, 'history').proficient, skill(plain, 'history').expertise, skill(plain, 'religion').proficient, skill(plain, 'religion').expertise]).toEqual([true, false, true, false]);
+    // Proficient in History already (chosen as a class skill): expertise there, proficiency in Religion.
+    const historian = build('class.warrior', { ...role, skills: ['history'] });
+    expect([skill(historian, 'history').expertise, skill(historian, 'religion').proficient, skill(historian, 'religion').expertise]).toEqual([true, true, false]);
+    // From a background's skills too (the Sage's Arcana and History).
+    const sage = build('class.warrior', { ...role, background: { id: 'background.sage' } });
+    expect([skill(sage, 'history').expertise, skill(sage, 'religion').expertise]).toEqual([true, false]);
+    // Without the role, neither.
+    expect([skill(build('class.warrior'), 'history').proficient, skill(build('class.warrior', { skills: ['history'] }), 'history').expertise]).toEqual([false, false]);
+    // The modifier shows it: proficiency bonus once, then twice.
+    expect(skill(historian, 'history').value - skill(plain, 'history').value).toBe(plain.prof.value);
   });
 });

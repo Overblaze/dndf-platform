@@ -34,4 +34,5 @@ A free, private D&D Beyond-style character platform for one Dungeons & Devil Fru
 - Healing Surge: up to floor(total hit dice / 2), minimum 1, limited by dice remaining.
 - Players may edit their own bounty freely; the DM Guide formula is shown as "calculated".
 - A bonus or penalty to "your speed" or "movement speed" (Offensive Defense) applies to every speed: walking, swimming, flying, climbing, burrowing. One that names the walking speed applies to walking only.
+- The Record-Keeper's "expertise with History and Religion": expertise in each the character is already proficient in, otherwise proficiency.
 - A Chemist's fixed hit points per level are 5, the d8's average. The handbooks print "1d8 (or 6)", which is a slip.
