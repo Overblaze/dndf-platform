@@ -14,7 +14,11 @@ const AUTH_STUB = `
   create schema auth;
   create table auth.users (
     id uuid primary key default gen_random_uuid(),
+    email text unique,
+    encrypted_password text,
+    raw_app_meta_data jsonb,
     raw_user_meta_data jsonb,
+    is_anonymous boolean not null default false,
     last_sign_in_at timestamptz
   );
   create table auth.identities (
@@ -626,6 +630,92 @@ describe('sheet background pictures', () => {
     expect(await admin(`select public, file_size_limit, allowed_mime_types from storage.buckets where id = 'sheet-backgrounds'`)).toEqual([
       { public: false, file_size_limit: 2097152, allowed_mime_types: ['image/jpeg', 'image/png', 'image/webp'] },
     ]);
+  });
+});
+
+describe('password accounts: a username and a password, for players without Discord', () => {
+  /** What Supabase Auth does on an email-and-password sign-up: one user row, then an "email" identity, then the sign-in. */
+  const join = async (username: string, code: string | null, extra: Record<string, unknown> = {}) => {
+    const email = `${username}@players.dndf.invalid`;
+    const meta = JSON.stringify({ ...(code === null ? {} : { join_code: code }), ...extra });
+    const [user] = await admin(
+      `insert into auth.users (email, encrypted_password, raw_app_meta_data, raw_user_meta_data) values ($1, 'hash', '{"provider":"email","providers":["email"]}', $2) returning id, raw_user_meta_data`,
+      [email, meta],
+    );
+    await admin(`insert into auth.identities (user_id, provider, identity_data) values ($1, 'email', $2)`, [user!.id, JSON.stringify({ email, sub: user!.id })]);
+    await admin(`update auth.users set last_sign_in_at = now() where id = $1`, [user!.id]);
+    return user!;
+  };
+  const setCode = (code: string) => admin(`update public.app_settings set value = $1 where key = 'join_code'`, [code]);
+  let kai: string;
+
+  it('nobody can make one while the table has no join code', async () => {
+    expect(await admin(`select value from public.app_settings where key = 'join_code'`)).toEqual([{ value: '' }]);
+    await expect(join('kai', '')).rejects.toThrow(/not open/);
+    await expect(join('kai', 'anything')).rejects.toThrow(/not open/);
+    await expect(join('kai', null)).rejects.toThrow(/not open/);
+  });
+
+  it('with the code set, only the right code gets in', async () => {
+    await setCode('  Grand-Line-42 ');
+    await expect(join('kai', null)).rejects.toThrow(/wrong table code/);
+    await expect(join('kai', '')).rejects.toThrow(/wrong table code/);
+    await expect(join('kai', 'grand-line-41')).rejects.toThrow(/wrong table code/);
+    expect(await admin(`select count(*)::int as n from auth.users where email like '%@players.dndf.invalid'`)).toEqual([{ n: 0 }]);
+    const made = await join('kai', ' grand-line-42'); // capitals and stray spaces forgiven
+    kai = made.id;
+    expect(made.raw_user_meta_data).toEqual({}); // the code is not kept on the account
+  });
+
+  it('they get a profile under their username, as a player, never as a DM', async () => {
+    expect(await admin(`select discord_username, display_name, is_dm from public.profiles where id = $1`, [kai])).toEqual([{ discord_username: null, display_name: 'kai', is_dm: false }]);
+    expect(await as(kai, `select display_name, is_dm from public.sync_my_profile()`)).toEqual([{ display_name: 'kai', is_dm: false }]);
+  });
+
+  it('a password account cannot take the DM’s Discord name, or any Discord player’s, or become the DM by it', async () => {
+    await expect(join('matt_example', 'grand-line-42')).rejects.toThrow(/name is taken/);
+    await expect(join('Matt_Example', 'grand-line-42')).rejects.toThrow(/name is taken/);
+    await expect(join('ben', 'grand-line-42')).rejects.toThrow(/name is taken/);
+    await expect(join('', 'grand-line-42')).rejects.toThrow(/name is taken/);
+    // Even written straight into the table past the check, a password account named like the DM is not a DM.
+    await admin(`alter table auth.users disable trigger dndf_check_join_code`);
+    const [imp] = await admin(`insert into auth.users (email, encrypted_password, raw_app_meta_data, raw_user_meta_data) values ('matt_example@players.dndf.invalid', 'hash', '{"provider":"email"}', '{"full_name":"matt_example","name":"matt_example#0"}') returning id`);
+    await admin(`insert into auth.identities (user_id, provider, identity_data) values ($1, 'email', '{"full_name":"matt_example","name":"matt_example#0"}')`, [imp!.id]);
+    await admin(`update auth.users set last_sign_in_at = now() where id = $1`, [imp!.id]);
+    await admin(`alter table auth.users enable trigger dndf_check_join_code`);
+    expect(await as(imp!.id, `select discord_username, is_dm from public.sync_my_profile()`)).toEqual([{ discord_username: null, is_dm: false }]);
+    await admin(`delete from auth.users where id = $1`, [imp!.id]);
+  });
+
+  it('they cannot write themselves a Discord name or DM status afterwards', async () => {
+    await as(kai, `update public.profiles set discord_username = 'matt_example', is_dm = true where id = $1`, [kai]).catch(() => {});
+    await as(kai, `select public.sync_my_profile()`);
+    expect(await admin(`select discord_username, is_dm from public.profiles where id = $1`, [kai])).toEqual([{ discord_username: null, is_dm: false }]);
+  });
+
+  it('they are an ordinary player: their own characters, a campaign once the DM adds them, nothing else', async () => {
+    const [mine] = await as(kai, `insert into public.characters (rules_version, doc) values ('dndf-10', '{"name":"Kai’s Cook"}') returning id`);
+    expect(await as(kai, `select doc->>'name' as name from public.characters`)).toEqual([{ name: 'Kai’s Cook' }]);
+    expect(await as(kai, `select id from public.campaigns`)).toEqual([]);
+    expect(await as(kai, `select key from public.secret_entries`)).toEqual([]);
+    await expect(as(kai, `select value from public.app_settings`)).rejects.toThrow(/permission denied/);
+    await as(matt, `insert into public.campaign_members (campaign_id, user_id, role) values ($1, $2, 'player')`, [campaign, kai]);
+    expect(await as(kai, `select id from public.campaigns`)).toEqual([{ id: campaign }]);
+    await as(matt, `delete from public.campaign_members where campaign_id = $1 and user_id = $2`, [campaign, kai]);
+    await admin(`delete from public.characters where id = $1`, [mine!.id]);
+  });
+
+  it('Discord sign-ins are never asked for the code, and no other kind of sign-up slips past it', async () => {
+    const dana = await signIn('dana');
+    expect(await admin(`select discord_username from public.profiles where id = $1`, [dana])).toEqual([{ discord_username: 'dana' }]);
+    const [oauth] = await admin(`insert into auth.users (email, raw_app_meta_data) values ('eli@example.com', '{"provider":"discord","providers":["discord"]}') returning id`);
+    // A one-time-link sign-up, an anonymous one, and one through another provider all need the code.
+    await expect(admin(`insert into auth.users (email, raw_app_meta_data) values ('otp@example.com', '{"provider":"email"}')`)).rejects.toThrow(/wrong table code/);
+    await expect(admin(`insert into auth.users (is_anonymous) values (true)`)).rejects.toThrow(/wrong table code/);
+    await expect(admin(`insert into auth.users (email, raw_app_meta_data) values ('g@example.com', '{"provider":"google"}')`)).rejects.toThrow(/wrong table code/);
+    await expect(admin(`insert into auth.users (email, encrypted_password) values ('nopro@example.com', 'hash')`)).rejects.toThrow(/wrong table code/);
+    await admin(`delete from auth.users where id = any($1)`, [[dana, oauth!.id, kai]]);
+    await setCode('');
   });
 });
 

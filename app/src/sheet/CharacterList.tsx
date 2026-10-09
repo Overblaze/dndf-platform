@@ -43,7 +43,7 @@ export function CharacterList({ store }: { store: CharacterStore }) {
       <section className="card">
         <h1>My characters</h1>
         {store.local && (
-          <p className="notice">You are not signed in, so characters here are kept only in this browser. Sign in with Discord to keep them on your account.</p>
+          <p className="notice">You are not signed in, so characters here are kept only in this browser. Sign in to keep them on your account.</p>
         )}
         {error && <p className="notice" role="alert">{error}</p>}
         {!characters && !error && <p>Checking the crew list…</p>}

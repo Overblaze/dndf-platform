@@ -130,3 +130,46 @@ out can reach them, and take a ship out of its campaign and the crew loses its p
 
 The pictures themselves are never in this repository. Until this file is run, adding a picture says which file to
 run and everything else on the ship works; pictures added while signed out are kept in that browser only.
+
+## Accounts for players without Discord (`0008_password_accounts.sql`)
+
+A player with no Discord account can sign in with a **username and a password** instead. Do these three things, in
+this order.
+
+**1. Turn off "Confirm email" in the dashboard.** Authentication → Sign In / Providers → Email → switch off
+**Confirm email** → Save. (Leave the Email provider itself on.) These accounts have no real email address: Supabase
+only knows addresses, so the app signs a player up as `<username>@players.dndf.invalid`, which can never receive
+mail. With the switch left on, an account can be made but never used.
+
+**2. Run `0008_password_accounts.sql`** in the SQL Editor like the others. It adds no table. It adds a check on every
+new account: a Discord sign-in passes as before; **anything else needs the table's join code**, or it is refused.
+While no code is set, nobody can make a password account at all. This check is in the database, so it cannot be
+skipped by calling Supabase directly.
+
+**3. Set the join code** and tell it to your players (capital letters don't matter):
+
+```sql
+update public.app_settings set value = 'pick-a-code-here' where key = 'join_code';
+```
+
+Set it back to `''` to close sign-ups again; accounts already made keep working. Change it whenever you like.
+
+What a password account is and is not:
+
+- An ordinary player. A DM adds them to a campaign from the DM page like anyone else, and can make them a DM **of
+  that campaign**. They can never become the site DM through the bootstrap name: that is decided by a Discord
+  identity only, and a password account cannot take a name a Discord player already goes by.
+- Not known to the Discord bot, which finds people by their Discord account.
+- Without email, so **a forgotten password cannot be reset by the player**. The DM does it, on the machine that has
+  the bot's settings file:
+
+```
+npm run accounts -w bot                       # who has a password account; whether a join code is set
+npm run accounts -w bot -- reset <username>   # prints a new temporary password to hand over
+npm run accounts -w bot -- code <new code>    # set the join code ("" closes sign-ups)
+npm run accounts -w bot -- remove <username>  # delete the account and its characters
+```
+
+  A signed-in player changes their own password by tapping their name at the top of the site.
+- The dashboard's own "Add user" button is refused by the same check (it has no join code). Make accounts through
+  the site's sign-in dialog.

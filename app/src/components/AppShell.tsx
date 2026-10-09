@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
 import { Compass } from './Compass';
+import { PasswordDialog, SignInDialog } from './SignInDialog';
 
 const NAV = [
   { to: '/sheet', label: 'Sheet' },
@@ -12,20 +14,31 @@ const NAV = [
 ];
 
 function Account() {
-  const { configured, loading, session, name, isDm, signIn, signOut } = useAuth();
+  const { configured, loading, session, name, isDm, passwordAccount, signOut } = useAuth();
+  const [dialog, setDialog] = useState<'in' | 'account' | null>(null);
   if (!configured || loading) return null;
   if (!session) {
     return (
-      <button className="btn btn-primary" onClick={signIn}>
-        Sign in with Discord
-      </button>
+      <>
+        <button className="btn btn-primary" onClick={() => setDialog('in')}>
+          Sign in
+        </button>
+        {dialog === 'in' && <SignInDialog onClose={() => setDialog(null)} />}
+      </>
     );
   }
   return (
     <div className="account">
-      <span className="account-name" title="Signed in with Discord">
-        {name ?? 'Signed in'}
-      </span>
+      {passwordAccount ? (
+        <button className="btn account-name" onClick={() => setDialog('account')} aria-label={`Your account: ${name ?? 'signed in'}`}>
+          {name ?? 'Signed in'}
+        </button>
+      ) : (
+        <span className="account-name" title="Signed in with Discord">
+          {name ?? 'Signed in'}
+        </span>
+      )}
+      {dialog === 'account' && <PasswordDialog onClose={() => setDialog(null)} />}
       {isDm && <span className="badge">DM</span>}
       <button className="btn" onClick={signOut}>
         Sign out
