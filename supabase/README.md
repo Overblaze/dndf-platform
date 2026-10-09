@@ -119,3 +119,14 @@ Run `0006_ships.sql` in the SQL Editor like the others. It creates one table, `s
 | `ships` | a ship as one JSON `doc` (components, crew, upgrades, hold, treasury, log) | its owner always. Put in a campaign, everyone in that campaign opens **and changes** it (the hold and treasury are shared). Only the owner can take it out of the campaign; only the owner or the campaign's DMs can delete it; nobody can change who owns it |
 
 Until this file is run, the Ship page says which file to run, and ships made while signed out are kept in the browser.
+
+## A ship's map and artwork (`0007_ship_pictures.sql`)
+
+Run `0007_ship_pictures.sql` in the SQL Editor like the others, after `0006`. It adds no table: it creates a
+**private** storage bucket, `ship-pictures` (JPEG, PNG or WebP, 4 MB each), and three rules on it. Files are kept at
+`<ship id>/<file>`. Whoever can open a ship can see its pictures, and whoever can change it (its owner, or the whole
+crew once it is in a campaign) can add pictures and take them down. Nobody outside the campaign and nobody signed
+out can reach them, and take a ship out of its campaign and the crew loses its pictures with it.
+
+The pictures themselves are never in this repository. Until this file is run, adding a picture says which file to
+run and everything else on the ship works; pictures added while signed out are kept in that browser only.

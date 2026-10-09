@@ -56,6 +56,9 @@ export interface ShipUpgrade {
 }
 
 export interface HoldItem { id: string; name: string; qty: number; /** Weight of one, in tons. */ tons?: number; notes?: string }
+/** A map or a piece of artwork of the ship. The file itself is kept apart; this is where to find it and what it is. */
+export interface ShipPicture { id: string; /** Where the file is kept. */ ref: string; kind: 'map' | 'art'; title?: string; width?: number; height?: number }
+export const SHIP_PICTURES_MAX = 24;
 export interface ShipLogLine { at: string; text: string }
 
 export interface ShipDoc {
@@ -82,6 +85,10 @@ export interface ShipDoc {
   crew: number;
   passengers: number;
   hold: HoldItem[];
+  /** Her maps and artwork. */
+  pictures: ShipPicture[];
+  /** The picture shown at the top of her sheet. */
+  cover?: string;
   /** The crew's shared berries. */
   treasury: number;
   rations: number;
@@ -119,7 +126,7 @@ export function newShip(type: RuleEntry | null, name: string, makeId: () => stri
     cost: num(type?.cost, 0), upgradeSlots: num(type?.upgradeSlots, 0), crewMax: num(type?.crew, 1), passengerMax: num(type?.passengers, 0), cargoTons: num(type?.cargoTons, 0),
     pace: { mph: num(pace.mph, 3), milesPerDay: pace.milesPerDay },
     abilities: { str: num(abilities.str, 10), dex: num(abilities.dex, 10), con: num(abilities.con, 10), int: num(abilities.int, 0), wis: num(abilities.wis, 0), cha: num(abilities.cha, 0) },
-    components, upgrades: [], crew: 0, passengers: 0, hold: [], treasury: 0, rations: 0, soul: 0, notes: '', log: [],
+    components, upgrades: [], crew: 0, passengers: 0, hold: [], pictures: [], treasury: 0, rations: 0, soul: 0, notes: '', log: [],
   })!;
 }
 
@@ -138,6 +145,11 @@ export function normalizeShip(raw: unknown): ShipDoc | null {
   };
   const abilities = (r.abilities && typeof r.abilities === 'object' ? r.abilities : {}) as Record<string, unknown>;
   const pace = (r.pace && typeof r.pace === 'object' ? r.pace : {}) as Record<string, unknown>;
+  const side = (value: unknown) => (typeof value === 'number' && Number.isFinite(value) && value >= 1 ? Math.round(value) : undefined);
+  const pictures: ShipPicture[] = list(r.pictures).filter((p) => typeof p.ref === 'string' && p.ref !== '' && p.ref.length <= 300).slice(0, SHIP_PICTURES_MAX).map((p, i) => ({
+    id: id(p.id, 'picture', i), ref: p.ref as string, kind: p.kind === 'map' ? 'map' : 'art',
+    title: typeof p.title === 'string' && p.title.trim() ? p.title.trim().slice(0, 80) : undefined, width: side(p.width), height: side(p.height),
+  }));
   return {
     schema: 1,
     name: text(r.name, 80).trim() || 'Our ship',
@@ -179,6 +191,8 @@ export function normalizeShip(raw: unknown): ShipDoc | null {
       id: id(h.id, 'cargo', i), name: text(h.name, 80) || 'Cargo', qty: count(h.qty, 1),
       tons: typeof h.tons === 'number' && Number.isFinite(h.tons) && h.tons >= 0 ? h.tons : undefined, notes: typeof h.notes === 'string' && h.notes ? h.notes.slice(0, 300) : undefined,
     })),
+    pictures,
+    cover: typeof r.cover === 'string' && pictures.some((p) => p.id === r.cover) ? r.cover : undefined,
     treasury: Math.round(num(r.treasury, 0)),
     rations: count(r.rations),
     soul: Math.min(3, count(r.soul)),

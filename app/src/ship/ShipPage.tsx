@@ -1,6 +1,6 @@
 import {
   SHIP_ABILITIES, UPGRADE_SOURCES, cite, damageComponent, deriveShip, exactBerries, formatBerries, newShip, shipLog, signed, upgradePrice, upgradeWorth, voyage,
-  type HoldItem, type RuleEntry, type ShipComponent, type ShipDoc, type ShipRole, type ShipUpgrade, type UpgradeSource,
+  type HoldItem, type RuleEntry, type ShipPicture, type ShipComponent, type ShipDoc, type ShipRole, type ShipUpgrade, type UpgradeSource,
 } from '@dndf/engine';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -9,7 +9,9 @@ import { useAuth } from '../lib/auth';
 import { campaignApi, type Campaign } from '../lib/campaigns';
 import { ruleSet } from '../lib/rules';
 import { ShipChanged, shipStoreFor, type ShipStore, type StoredShip } from '../lib/ships';
+import { shipPicturesFor, type ShipPictureStore } from '../lib/shipPictures';
 import { supabase } from '../lib/supabase';
+import { PictureDialog, ShipCover, ShipPicturesCard } from './ShipPictures';
 
 const BOOK = 'DnDF DM Guide';
 const ROLE_NAMES: Record<ShipRole, string> = { hull: 'Hull', control: 'Control', movement: 'Movement', weapon: 'Weapons', other: 'Other parts' };
@@ -245,7 +247,7 @@ function UpgradeEditDialog({ doc, initial, onSave, onRemove, onClose }: { doc: S
   );
 }
 
-function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string; campaigns: Campaign[] }) {
+function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; pictures: ShipPictureStore; id: string; campaigns: Campaign[] }) {
   const navigate = useNavigate();
   const [ship, setShip] = useState<StoredShip | null>(null);
   const [doc, setDocState] = useState<ShipDoc | null>(null);
@@ -256,6 +258,9 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
   const [info, setInfo] = useState<string | null>(null);
   const [dialog, setDialog] = useState<'upgrade' | 'part' | 'edit' | 'delete' | ShipComponent | null>(null);
   const [editing, setEditing] = useState<ShipUpgrade | null>(null);
+  const [looking, setLooking] = useState<string | null>(null);
+  // The ship as she is now, for work that finishes later (an upload) and must not put back an older her.
+  const latest = useRef<ShipDoc | null>(null);
   const [amount, setAmount] = useState<Record<string, string>>({});
   const [miles, setMiles] = useState('');
   const [cargo, setCargo] = useState({ name: '', qty: '1', tons: '' });
@@ -297,7 +302,10 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
   if (missing) return <section className="card"><h1>No such ship</h1><p>She may have been scuttled, or taken out of your campaign.</p><Link className="btn" to="/ship">All ships</Link></section>;
   if (!doc || !ship) return problem ? <p className="notice" role="alert">{problem}</p> : <p>Rowing out to her…</p>;
 
+  latest.current = doc;
   const sheet = deriveShip(doc, rule);
+  const coverPicture = doc.pictures.find((p) => p.id === doc.cover);
+  const lookingAt = doc.pictures.find((p) => p.id === looking);
   const log = (next: ShipDoc, line: string) => setDoc(shipLog(next, line, today()));
   const hit = (part: ShipComponent, sign: 1 | -1) => {
     const n = whole(amount[part.id] ?? '');
@@ -324,6 +332,7 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
   return (
     <>
       <section className="card sheet-head">
+        {coverPicture && <ShipCover store={pictures} picture={coverPicture} onOpen={() => setLooking(coverPicture.id)} />}
         <div>
           <h1>{sheet.name}</h1>
           <p className="soft">{sheet.summary}</p>
@@ -351,6 +360,16 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
         {sheet.notes.length > 0 && <ul className="notes">{sheet.notes.map((note) => <li key={note}>{note}</li>)}</ul>}
         <p className="page-ref">A score of 0 fails every check and save that uses it · {cite(BOOK, 11)}</p>
       </section>
+
+      <ShipPicturesCard
+        store={pictures} shipId={id} pictures={doc.pictures} cover={doc.cover} shared={Boolean(ship.campaignId)}
+        onOpen={(picture) => setLooking(picture.id)}
+        onAdd={(added) => {
+          const now = latest.current ?? doc;
+          // The first picture of her goes to the top of the sheet; the crew can change that.
+          setDoc(shipLog({ ...now, pictures: [...now.pictures, ...added], cover: now.cover ?? added.find((p) => p.kind === 'art')?.id }, added.length === 1 ? `Added ${added[0]!.kind === 'map' ? 'a map' : 'artwork'}${added[0]!.title ? `: ${added[0]!.title}` : ''}` : `Added ${added.length} pictures`, today()));
+        }}
+      />
 
       {roles.map((role) => (
         <section key={role} className="card">
@@ -512,6 +531,22 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
           onRemove={() => { log({ ...doc, upgrades: doc.upgrades.filter((x) => x.id !== editing.id) }, `Removed ${editing.name}`); setEditing(null); }}
         />
       )}
+      {lookingAt && (
+        <PictureDialog
+          key={lookingAt.id}
+          store={pictures}
+          picture={lookingAt}
+          isCover={doc.cover === lookingAt.id}
+          onClose={() => setLooking(null)}
+          onSave={(next) => setDoc({ ...doc, pictures: doc.pictures.map((p) => (p.id === next.id ? next : p)) })}
+          onCover={(on) => setDoc({ ...doc, cover: on ? lookingAt.id : undefined })}
+          onRemove={() => {
+            setLooking(null);
+            log({ ...doc, pictures: doc.pictures.filter((p) => p.id !== lookingAt.id), cover: doc.cover === lookingAt.id ? undefined : doc.cover }, `Took down ${lookingAt.title ?? (lookingAt.kind === 'map' ? 'a map' : 'artwork')}`);
+            void pictures.remove([lookingAt.ref]).catch(() => {});
+          }}
+        />
+      )}
       {dialog === 'part' && <ComponentDialog onSave={saveComponent} onClose={() => setDialog(null)} />}
       {dialog && typeof dialog === 'object' && (
         <ComponentDialog initial={dialog} onSave={saveComponent} onClose={() => setDialog(null)} onDelete={() => { log({ ...doc, components: doc.components.filter((c) => c.id !== dialog.id) }, `Removed ${dialog.name}`); setDialog(null); }} />
@@ -555,9 +590,9 @@ function ShipSheetView({ store, id, campaigns }: { store: ShipStore; id: string;
       )}
       {dialog === 'delete' && (
         <Dialog title={`Scuttle ${doc.name}?`} onClose={() => setDialog(null)}>
-          <p>This removes the ship, her hold, her treasury and her log for good, for the whole crew.</p>
+          <p>This removes the ship, her hold, her treasury, her pictures and her log for good, for the whole crew.</p>
           <div className="row">
-            <button className="btn btn-damage" onClick={() => { window.clearTimeout(timer.current); pending.current = null; store.remove(id).then(() => navigate('/ship'), (e: Error) => { setProblem(e.message); setDialog(null); }); }}>Scuttle her</button>
+            <button className="btn btn-damage" onClick={() => { window.clearTimeout(timer.current); pending.current = null; const refs = doc.pictures.map((p: ShipPicture) => p.ref); (refs.length ? pictures.remove(refs).catch(() => {}) : Promise.resolve()).then(() => store.remove(id)).then(() => navigate('/ship'), (e: Error) => { setProblem(e.message); setDialog(null); }); }}>Scuttle her</button>
             <button className="btn" onClick={() => setDialog(null)}>Keep her</button>
           </div>
         </Dialog>
@@ -571,7 +606,8 @@ export function ShipPage() {
   const { loading, session } = useAuth();
   const userId = session?.user.id ?? null;
   const store = useMemo(() => shipStoreFor(userId), [userId]);
+  const pictures = useMemo(() => shipPicturesFor(userId), [userId]);
   const campaigns = useCampaigns(userId);
   if (loading) return <p>Checking who is aboard…</p>;
-  return id ? <ShipSheetView key={`${userId}/${id}`} store={store} id={id} campaigns={campaigns} /> : <ShipList key={userId} store={store} campaigns={campaigns} />;
+  return id ? <ShipSheetView key={`${userId}/${id}`} store={store} pictures={pictures} id={id} campaigns={campaigns} /> : <ShipList key={userId} store={store} campaigns={campaigns} />;
 }
