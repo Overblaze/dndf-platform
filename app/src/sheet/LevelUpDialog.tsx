@@ -82,7 +82,7 @@ export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharact
         <legend className="label">Hit points · d{plan.hitDie}</legend>
         {plan.hitPointsRule && <p className="page-ref">{plan.hitPointsRule}. Only a character’s very first level takes the die’s maximum.</p>}
         {plan.bookFixedHp !== undefined && (
-          <p className="notice">The book prints {plan.bookFixedHp} as this class’s fixed number, where a d{plan.hitDie}’s is {plan.averageHp}. “Average” here gives {plan.averageHp}; to take the book’s {plan.bookFixedHp}, choose to type the result and enter {plan.bookFixedHp}.</p>
+          <p className="notice">The book prints {plan.bookFixedHp} as this class’s fixed number, which is a slip: a d{plan.hitDie}’s is {plan.averageHp}, and this table uses {plan.averageHp} (Matt’s ruling).</p>
         )}
         <div className="segmented" role="radiogroup" aria-label="Hit points for this level">
           <button type="button" role="radio" aria-checked={hpMode === 'average'} className={hpMode === 'average' ? 'active' : ''} onClick={() => setHpMode('average')}>Average ({plan.averageHp})</button>

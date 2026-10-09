@@ -47,7 +47,7 @@ export interface LevelUpPlan {
   hitDie: number;
   /** The book's line for a level after the first: "1d10 (or 6) + your Constitution modifier per Warrior level after 1st". */
   hitPointsRule?: string;
-  /** The fixed number that line prints, when it is not the die's average (the Chemist's "1d8 (or 6)"). The sheet's average stays the die's. */
+  /** The fixed number that line prints, when it is not the die's average (the Chemist's "1d8 (or 6)"). The die's average is what counts (a table ruling). */
   bookFixedHp?: number;
   conMod: number;
   /** Hit points for the level if the die is not rolled: half the die, plus one. */
