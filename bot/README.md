@@ -17,6 +17,7 @@ same rules data (`data/rules`) as the website, so its numbers cannot differ from
 | `/item list` | Everything your character carries, marking what is in use. |
 | `/item add` | Something from the book's armory (names are offered as you type; it comes with its weight) or a plain item of your own. |
 | `/make <kind>` | An item of your own that works on the sheet. `weapon` (damage dice, +N, two-handed…), `armor` (base AC, Dexterity), `shield`, `wondrous`, `consumable` or `gear`. Powers: `ability` with `ability_becomes` (19 for a Circlet of Intellect) or `ability_bonus`, `save_bonus`, `skill` and `skill_bonus`, `ac_bonus`, `speed_bonus`, `hp_bonus`, `charges`, `roll`, `effect`, `spells`, `attunement`. The same thing the website's "Make an item" saves. |
+| `/roll` and advantage | A roll the sheet makes with advantage or disadvantage (Stealth in heavy armor, an item) is rolled that way without being asked, and the reply says why. Asking for the opposite cancels it to a straight roll. `/make armor` has `stealth_disadvantage`. |
 | `/item use` | Put an item to use or away: one you made is switched on, and a weapon, armor or shield from the armory is readied or worn. `attune: attune` attunes to it (an item that requires attunement works only when both worn and attuned); three attunements by the rule, and going over is said, not stopped. |
 | `/item remove` | Remove an item, or some of it. |
 | `/surge list` | Your Haki by Color with its tier, and every Spirit Surge advancement you have. |

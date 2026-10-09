@@ -668,6 +668,31 @@ a.btn {
   margin: 0;
 }
 
+/* Advantage and disadvantage the sheet gives a roll */
+.edge {
+  flex: none;
+  align-self: center;
+  padding: 2px 6px;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.edge-advantage {
+  color: var(--heal, #2f6b3a);
+}
+
+.edge-disadvantage {
+  color: var(--damage, #a9471f);
+}
+
+.edge-line {
+  display: block;
+}
+
 /* A count that can be typed: looks like the big number it replaces until it is tapped */
 .quantity {
   min-width: 3.2ch;

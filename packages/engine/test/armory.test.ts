@@ -62,7 +62,7 @@ describe.each(['dndf-10', 'dndf-8.8'] as const)('chapters 4, 5 and 7 for %s', (v
     expect(item('hide')).toMatchObject({ category: 'medium', ac: { base: 12, dex: 'max2' } });
     expect(item('thick_shirt')).toMatchObject({ category: 'light', ac: { base: 11, dex: 'full' }, stealthDisadvantage: false });
     expect(item('shield')).toMatchObject({ itemType: 'shield', ac: { bonus: 2 } });
-    expect(armorFromItem(item('chain_mail'))).toEqual({ name: 'Chain Mail', base: 16, dexCap: 0 });
+    expect(armorFromItem(item('chain_mail'))).toEqual({ name: 'Chain Mail', base: 16, dexCap: 0, stealthDisadvantage: true });
     expect(armorFromItem(item('hide'))).toEqual({ name: 'Hide', base: 12, dexCap: 2 });
     expect(armorFromItem(item('thick_shirt'))).toEqual({ name: 'Thick Shirt', base: 11, dexCap: null });
   });

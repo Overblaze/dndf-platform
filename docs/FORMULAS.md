@@ -394,6 +394,8 @@ A feat's "+1 to an ability score" is not applied: ability scores are entered as 
 | An item the player made, in use | a weapon is an attack by the usual weapon sums plus its own bonus; armor is base + Dex (to its limit); a shield +2; its bonuses add to AC, speed, initiative, hit points, attacks, damage; its charges are a pool | Warrior 5, Str 16: +1 finesse 1d8 → +7 to hit, 1d8 + 4; coat 13 + Dex (max 2) = 15, + shield +1 = 18 | your own |
 | An item that sets or raises an ability score | raises first (to 30 at most), then "becomes N" if the score is still lower; never stacked; everything that uses the score follows | Int 10 with a Circlet of Intellect worn and attuned → 19 (+4); Dex 14 with +2 and "becomes 15" → 16 | your own |
 | Attunement | a creature can be attuned to no more than three magic items at a time; an item that requires attunement works only when worn and attuned | 4 attuned of 3: said, not stopped | 5e SRD 5.1 p. 206 |
+| Advantage and disadvantage | a roll with any advantage and any disadvantage is a straight roll, however many of each; otherwise two d20s and the higher or lower | Stealth in Chain Mail: disadvantage; with a Cloak of Elvenkind too: straight | 5e SRD 5.1 p. 76 |
+| Armor and Stealth | armor marked in the armory table gives disadvantage on Dexterity (Stealth) checks | Chain Mail, Splint, Scale Mail: yes; Hide: no | EH10 p.257 |
 | Upgrade price | flat price + the book's percentage of the ship's own cost | Paddle-Wheel on a Caravel: ฿10M + 20% of ฿50M = ฿20M | DMG p.23–27 |
 | A component from the book with a count | "Cannon (2)" becomes two components, each with its own hit points | — | DMG p.15 |
 

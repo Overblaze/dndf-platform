@@ -1,4 +1,5 @@
 import { cite, gainTempHp, setToggle, setTracker, spendResource, activateFeature, type SheetFeature, type SheetResource } from '@dndf/engine';
+import { EdgeNote } from '../components/EdgeNote';
 import { Pips } from '../components/Pips';
 import { featureRef } from './FeaturesTab';
 import { RuleText } from '../components/RuleText';
@@ -151,10 +152,11 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
             <button className="attack-name" onClick={() => onOpen(attack.toHit, 'mod', true)}>
               <span className="resource-name">{attack.name}</span>
               <span className="page-ref">{[attack.damageType, ...attack.notes].join(' · ')}</span>
+              {attack.edge && <EdgeNote edge={attack.edge} />}
             </button>
             <button
               className={attack.toHit.overridden ? 'btn btn-roll edited' : 'btn btn-roll'}
-              onClick={() => rolls.d20(`${attack.name} attack`, attack.toHit.value, { title: `${attack.name} damage`, dice: attack.damage, type: attack.damageType })}
+              onClick={() => rolls.d20(`${attack.name} attack`, attack.toHit.value, { title: `${attack.name} damage`, dice: attack.damage, type: attack.damageType }, attack.edge)}
               aria-label={`Roll ${attack.name} attack, ${formatStat(attack.toHit.value, 'mod')}`}
             >
               <span className="label">Hit</span>

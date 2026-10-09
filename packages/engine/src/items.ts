@@ -22,5 +22,5 @@ export function weaponFromItem(item: RuleEntry, id: string = item.id): WeaponDef
 export function armorFromItem(item: RuleEntry): ArmorDef | null {
   const ac = item.ac as { base?: number; dex?: 'full' | 'max2' | 'none' } | undefined;
   if (item.itemType !== 'armor' || typeof ac?.base !== 'number') return null;
-  return { name: item.name, base: ac.base, dexCap: ac.dex === 'full' ? null : ac.dex === 'max2' ? 2 : 0 };
+  return { name: item.name, base: ac.base, dexCap: ac.dex === 'full' ? null : ac.dex === 'max2' ? 2 : 0, ...(item.stealthDisadvantage === true ? { stealthDisadvantage: true } : {}) };
 }
