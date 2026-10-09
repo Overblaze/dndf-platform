@@ -226,7 +226,7 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
     <div className="builder-review">
       <p><strong>{draftSheet.name || 'Unnamed'}</strong> · {draftSheet.summary}</p>
       <dl className="facts facts-plain">
-        <dt>Hit points</dt><dd>{draftSheet.maxHp.value}</dd>
+        <dt>Hit points</dt><dd>{draftSheet.maxHp.value} <span className="page-ref">({draftSheet.maxHp.lines.map((line) => `${line.label} ${Number(line.value) < 0 ? '−' : ''}${Math.abs(Number(line.value))}`).join(' · ')})</span></dd>
         <dt>Armor Class</dt><dd>{draftSheet.ac.value}</dd>
         <dt>Speed</dt><dd>{speedLine(draftSheet)}</dd>
         <dt>Scores</dt><dd>{ABILITIES.map((a) => `${a.toUpperCase()} ${draftSheet.abilities[a].score}`).join(' · ')}</dd>

@@ -97,7 +97,9 @@ function ClassView({ cls }: { cls: ClassEntry }) {
         {typeof cls.quote === 'string' && <p className="quote">{cls.quote}</p>}
         {typeof cls.flavor === 'string' && <p className="feature-text">{cls.flavor}</p>}
         <dl className="facts">
-          <dt>Hit die</dt><dd>d{cls.hitDie}</dd>
+          <dt>Hit die</dt><dd style={{ textTransform: 'none' }}>{cls.hitPoints?.hitDice ?? `d${cls.hitDie}`}</dd>
+          {cls.hitPoints?.atFirstLevel && <><dt>Hit points at 1st level</dt><dd style={{ textTransform: 'none' }}>{cls.hitPoints.atFirstLevel}</dd></>}
+          {cls.hitPoints?.atHigherLevels && <><dt>Hit points at higher levels</dt><dd style={{ textTransform: 'none' }}>{cls.hitPoints.atHigherLevels}</dd></>}
           <dt>Saving throws</dt><dd>{(cls.savingThrows ?? []).map((a: Ability) => ABILITY_NAMES[a]).join(', ')}</dd>
           <dt>Armor</dt><dd>{show(prof?.armor)}</dd>
           <dt>Weapons</dt><dd>{show(prof?.weapons)}</dd>

@@ -15,6 +15,11 @@
       "flavor": "The Bruiser is a warrior forged in the heat of countless battles, their body a living weapon honed through a life of relentless combat. Whether brawling in the gritty underbelly of cities or clashing with monstrous foes in the wilds, they channel their fury and instinct into every strike, turning raw strength into an art form. Clad in the scars of their victories, a Bruiser thrives in the chaos of battle, their spirit unbreakable as they charge headlong into the fray, knowing that each blow they land brings them closer to triumph.",
       "quote": "IT MAY NOT BE THE WAY OF THE TIMES ANYMORE… BUT DEATH IS WHAT TRULY COMPLETES A PERSON! --- Kaidou",
       "hitDie": 12,
+      "hitPoints": {
+        "hitDice": "1d12 per bruiser level",
+        "atFirstLevel": "12 + your Constitution modifier",
+        "atHigherLevels": "1d12 (or 7) + your Constitution modifier per bruiser level after 1st"
+      },
       "savingThrows": [
         "str",
         "con"

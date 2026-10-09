@@ -906,6 +906,25 @@
                     }
                   }
                 }
+              },
+              "hitPoints": {
+                "type": "object",
+                "description": "The book's lines on hit points, word for word.",
+                "additionalProperties": false,
+                "properties": {
+                  "hitDice": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "atFirstLevel": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "atHigherLevels": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
               }
             }
           }

@@ -31,6 +31,12 @@ export interface LevelUpChoice {
   book: string;
 }
 
+/** The fixed number a class's "Hit Points at Higher Levels" line prints: 6 in "1d10 (or 6) + …". */
+export function printedFixedHp(cls: Pick<ClassEntry, 'hitPoints'>): number | undefined {
+  const printed = /\(or (\d+)\)/.exec(cls.hitPoints?.atHigherLevels ?? '');
+  return printed ? Number(printed[1]) : undefined;
+}
+
 export interface LevelUpPlan {
   classId: string;
   className: string;
@@ -39,6 +45,10 @@ export interface LevelUpPlan {
   classLevel: number;
   totalLevel: number;
   hitDie: number;
+  /** The book's line for a level after the first: "1d10 (or 6) + your Constitution modifier per Warrior level after 1st". */
+  hitPointsRule?: string;
+  /** The fixed number that line prints, when it is not the die's average (the Chemist's "1d8 (or 6)"). The sheet's average stays the die's. */
+  bookFixedHp?: number;
   conMod: number;
   /** Hit points for the level if the die is not rolled: half the die, plus one. */
   averageHp: number;
@@ -114,7 +124,8 @@ export function levelUpPlan(doc: CharacterDoc, handbook: Map<string, RuleEntry>,
   const mainGroup = first[0]?.group;
   return {
     classId, className: cls.name, newClass: !held, classLevel, totalLevel: before + 1,
-    hitDie: cls.hitDie, conMod: abilityMod(doc.scores.con), averageHp: cls.hitDie / 2 + 1,
+    hitDie: cls.hitDie, ...(cls.hitPoints?.atHigherLevels ? { hitPointsRule: cls.hitPoints.atHigherLevels } : {}),
+    ...(printedFixedHp(cls) !== undefined && printedFixedHp(cls) !== cls.hitDie / 2 + 1 ? { bookFixedHp: printedFixedHp(cls) } : {}), conMod: abilityMod(doc.scores.con), averageHp: cls.hitDie / 2 + 1,
     proficiency: { from: proficiencyBonus(Math.max(1, before)), to: proficiencyBonus(before + 1) },
     features, columns, choices,
     subclass: wantsSubclass

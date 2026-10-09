@@ -15,6 +15,11 @@
       "flavor": "The Tinkerer is an ingenious inventor who blends advanced technology and magic to create powerful gadgets and mechanical wonders. By studying blueprints and mastering complex tools, they craft devices capable of extraordinary feats, from launching devastating attacks to providing essential support in battle. Tinkerers are the brilliant minds behind the fusion of science and arcane energy, always tinkering with their creations to push the boundaries of what is possible.",
       "quote": "MY NAME IS “CYBORG” FRANKY! YOUR ATTACKS ARE NOTHING TO MY STEEL BODY! --- Franky",
       "hitDie": 6,
+      "hitPoints": {
+        "hitDice": "1d6 per Tinkerer level",
+        "atFirstLevel": "6 + your Constitution modifier",
+        "atHigherLevels": "1d6 (or 4) + your Constitution modifier per Tinkerer level after 1st"
+      },
       "savingThrows": [
         "int",
         "wis"

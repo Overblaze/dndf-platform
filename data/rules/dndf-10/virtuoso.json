@@ -15,6 +15,11 @@
       "flavor": "The Virtuoso is a master of powerful emotions, using their music to inspire and influence the hearts of those around them. Drawing on human emotions, Virtuosos weaving together stories and melodies that aid allies or devastate foes.",
       "quote": "WHAT KEEPS ME ALIVE IN THIS WORLD IS NEITHER BODILY ORGANS, NOR MUSCLES - ’S MY SOUL! IT --- Brook",
       "hitDie": 8,
+      "hitPoints": {
+        "hitDice": "1d8 per virtuoso level",
+        "atFirstLevel": "8 + your Constitution modifier",
+        "atHigherLevels": "1d8 (or 5) + your Constitution modifier per virtuoso level after 1st"
+      },
       "savingThrows": [
         "dex",
         "cha"

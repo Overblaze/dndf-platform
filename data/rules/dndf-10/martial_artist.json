@@ -16,6 +16,11 @@
       "flavor": "The Martial Artist is a disciplined warrior who channels the flow of inner energy, known as ki, to achieve physical or spiritual mastery. Trained in a wide range of techniques, they combine precise strikes with extraordinary agility, mastering not only the art of combat but also their own body’s spirit.",
       "quote": "A MASTER OF THE S POWERS IS STRONG AS A HUNDRED MEN. IX --- Rob Lucci",
       "hitDie": 8,
+      "hitPoints": {
+        "hitDice": "1d8 per martial artist level",
+        "atFirstLevel": "8 + your Constitution modifier",
+        "atHigherLevels": "1d8 (or 5) + your Constitution modifier per martial artist level after 1st"
+      },
       "savingThrows": [
         "str",
         "dex"

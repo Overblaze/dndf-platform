@@ -15,6 +15,11 @@
       "flavor": "The Devilforged are weapon masters who harness the mysterious powers of Devil Fruits through infused items, wielding incredible abilities that bend the forces of nature and magic to their will. By synthesizing the lineage factors of these fruits into their gear, Devilforged enhance their weapons with explosive elemental power, shaping their combat style through relentless experimentation. Their bound equipment becomes an extension of their very being, capable of great destruction, but always tied to the unique essence of the Sea Devil’s curse.",
       "quote": "… SCIENCE WOULD NEVER PROGRESS IF YOU SPEND ALL DAYS WORRYING ABOUT STUFF LIKE THAT! --- Vegapunk Stella",
       "hitDie": 8,
+      "hitPoints": {
+        "hitDice": "1d8 per devilforged level",
+        "atFirstLevel": "8 + your Constitution modifier",
+        "atHigherLevels": "1d8 (or 5) + your Constitution modifier per devilforged level after 1st"
+      },
       "savingThrows": [
         "wis",
         "cha"

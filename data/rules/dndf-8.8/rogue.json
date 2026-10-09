@@ -15,6 +15,11 @@
       "flavor": "The Rogue is a master of stealth and precision, thriving in the shadows and striking when least expected. With quick reflexes and a sharp mind, they exploit every opportunity, turning their foes’ weaknesses into their own advantage. Rogues are cunning survivalists, slipping through danger with ease and outmaneuvering enemies with unmatched agility.",
       "quote": "EVERYONE’S WEAK WHEN THEY HESITATE. --- Nami",
       "hitDie": 8,
+      "hitPoints": {
+        "hitDice": "1d8 per rogue level",
+        "atFirstLevel": "8 + your Constitution modifier",
+        "atHigherLevels": "1d8 (or 5) + your Constitution modifier per rogue level after 1st"
+      },
       "savingThrows": [
         "dex",
         "int"

@@ -15,6 +15,11 @@
       "flavor": "The Priest is a conduit of divine power, drawing strength from their unwavering faith and connection to higher beings. Through prayer, devotion, and spiritual willpower, they channel holy energy to protect allies, banish evil, and invoke miracles that shape the battlefield. Priests are not just healers but defenders of will, wielding sacred powers to inspire hope in a world fraught with darkness.",
       "quote": "PROTECTING IS NOT THE SAME AS FIGHTING. --- Pell",
       "hitDie": 8,
+      "hitPoints": {
+        "hitDice": "1d8 per Priest level",
+        "atFirstLevel": "8 + your Constitution modifier",
+        "atHigherLevels": "1d8 (or 5) + your Constitution modifier per priest level after 1st"
+      },
       "savingThrows": [
         "wis",
         "cha"
