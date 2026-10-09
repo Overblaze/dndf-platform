@@ -58,9 +58,9 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
         return (
           <div key={pick.key} className="resource">
             <div>
-              <div className="resource-name">{pick.from}: {pick.def.label}</div>
+              <div className="resource-name">{pick.from === 'Tools' ? `${pick.race}: tools` : `${pick.from}: ${pick.def.label}`}</div>
               <div className="page-ref">
-                {made.length ? made.join(', ') : 'Nothing chosen yet'}{left > 0 ? ` · ${left} more to choose` : ''} · {pick.race} · {cite(pick.book, pick.page)}
+                {made.length ? made.join(', ') : 'Nothing chosen yet'}{left > 0 ? ` · ${left} more to choose` : ''} · {pick.from === 'Tools' ? pick.def.label : pick.race} · {cite(pick.book, pick.page)}
               </div>
             </div>
             <button className={left > 0 ? 'btn btn-primary' : 'btn'} onClick={() => setChoosing(true)}>Choose</button>
@@ -118,7 +118,7 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
       )}
       {borrowing && <BorrowFeatureDialog live={live} onClose={() => setBorrowing(false)} />}
       {choosing && (
-        <Dialog title="Racial choices" onClose={() => setChoosing(false)}>
+        <Dialog title="Choices" onClose={() => setChoosing(false)}>
           <p className="page-ref">Changes are saved as you tick. You may swap one each time you level up; the sheet does not stop you swapping more.</p>
           <RaceChoiceFields
             choices={sheet.raceChoices}

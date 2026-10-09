@@ -1,8 +1,8 @@
-import { cite, racePickOptions, type RacePick } from '@dndf/engine';
+import { cite, racePickOptions, toolSuggestions, type RacePick } from '@dndf/engine';
 import { useEffect, useState } from 'react';
 
 /** A name typed in: kept as it is typed, handed on when the box is left or Enter is pressed (one change, not one a letter). */
-function NameInput({ value, onCommit, placeholder }: { value: string; onCommit: (next: string) => void; placeholder: string }) {
+function NameInput({ value, onCommit, placeholder, list }: { value: string; onCommit: (next: string) => void; placeholder: string; list?: string }) {
   const [text, setText] = useState(value);
   useEffect(() => {
     setText(value);
@@ -10,7 +10,7 @@ function NameInput({ value, onCommit, placeholder }: { value: string; onCommit: 
   const commit = () => {
     if (text.trim() !== value) onCommit(text.trim());
   };
-  return <input value={text} onChange={(e) => setText(e.target.value)} onBlur={commit} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); commit(); } }} placeholder={placeholder} />;
+  return <input value={text} onChange={(e) => setText(e.target.value)} onBlur={commit} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); commit(); } }} placeholder={placeholder} list={list} />;
 }
 
 /**
@@ -28,15 +28,16 @@ export function RacePickFields({ picks, weapons, onChange }: { picks: RacePick[]
         const left = pick.def.count - pick.picked.filter((v) => v !== 'tool:').length;
         return (
           <fieldset key={pick.key} className="race-pick">
-            <legend className="label">{pick.from}: {pick.def.label}{left > 0 ? ` · ${left} to choose` : ''} · {cite(pick.book, pick.page)}</legend>
+            <legend className="label">{pick.from === 'Tools' ? pick.race : pick.from}: {pick.def.label}{left > 0 ? ` · ${left} to choose` : ''} · {cite(pick.book, pick.page)}</legend>
+            {pick.def.kind === 'tool' && <datalist id={`tools-${pick.key}`}>{toolSuggestions(pick.def.label).map((tool) => <option key={tool} value={tool} />)}</datalist>}
             {slots.map((value, i) => {
-              const name = `${pick.def.label}${slots.length > 1 ? ` ${i + 1}` : ''}`;
+              const name = pick.def.kind === 'tool' ? `Tool${slots.length > 1 ? ` ${i + 1}` : ''}` : `${pick.def.label}${slots.length > 1 ? ` ${i + 1}` : ''}`;
               const asTool = value.startsWith('tool:');
               if (pick.def.kind === 'tool') {
                 return (
                   <label key={i} className="field">
                     <span className="label">{name}</span>
-                    <NameInput value={value} onCommit={(next) => set(i, next)} placeholder="Carpenter’s tools, a flute, navigator’s tools…" />
+                    <NameInput value={value} onCommit={(next) => set(i, next)} placeholder="Pick from the list or type your own" list={`tools-${pick.key}`} />
                   </label>
                 );
               }

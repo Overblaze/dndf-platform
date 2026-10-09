@@ -47,7 +47,15 @@
             "perception",
             "athletics"
           ]
-        }
+        },
+        "toolPicks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One tool of your choice"
+          }
+        ]
       },
       "startingEquipment": [
         "A weapon of your choice",

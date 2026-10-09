@@ -1437,6 +1437,12 @@
       },
       "text": "You have studied ancient languages and codes, gaining the following benefits:\nIncrease your Intelligence score by 1, to a maximum of 20.\nYou learn the language of the Poneglyphs\nYou can ably create written ciphers. Others can’t decipher a code you create unless you teach them, they succeed on an Intelligence check (DC equal to your Intelligence score + your proficiency bonus), or they use an ability to decipher it.",
       "prerequisite": "Archaeologist, DM Permission",
+      "effects": [
+        {
+          "type": "language",
+          "label": "The language of the Poneglyphs"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

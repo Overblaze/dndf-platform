@@ -2451,7 +2451,13 @@
       "tier": 3,
       "repeatable": false,
       "text": "You have learned to use your rare natural talent to tune into the wavelengths of all forms of communication in the world.\nYou can read and understand all languages, written or verbal, including any writing on poneglyphs. You can also cast the Commune with Nature and Speak With Animals spells at will, without expending a spell slots or material components. When using this spell, you can communicate with all types of creatures in the same way you would be able to with a beast.\nAdditionally, you can speak telepathically with any creature within 1 mile of you whether they are in the same dimension as you or not.\nThis advancement can be chosen once.",
-      "prerequisite": "Qualities of a King"
+      "prerequisite": "Qualities of a King",
+      "effects": [
+        {
+          "type": "language",
+          "label": "All languages, written or verbal, including the Poneglyphs (read and understand)"
+        }
+      ]
     },
     {
       "id": "hakiFeature.unyielding_conquerors_wrath",

@@ -342,6 +342,7 @@ def weapon_feat(weapon: str, plural: str, kind: str = "attack") -> dict:
 # who types final ability scores; everything conditional on a choice or a situation stays text.
 FEAT_STRUCTURE = {
     "Alert": {"expect": "You gain a +5 bonus to initiative", "effects": [{"type": "initiative", "value": 5}]},
+    "Linguist (Pongelyphs)": {"expect": "You learn the language of the Poneglyphs", "effects": [{"type": "language", "label": "The language of the Poneglyphs"}]},
     "Mobile": {"expect": "Your speed increases by 10 feet", "effects": [{"type": "speed", "value": 10}]},
     "Tough": {"expect": "hit point maximum increases by an amount equal to twice your level", "effects": [{"type": "hp", "expr": "level * 2"}]},
     "Big Eater": {"expect": "you count as one size larger when determining your carrying capacity", "effects": [{"type": "carryMultiplier", "value": 2}]},
@@ -358,6 +359,10 @@ FEAT_STRUCTURE = {
 # extract_chapters.py); what is here is the rest: armor formulas, bonuses and things switched on.
 RESIST_NONMAGICAL = "Resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks"
 HAKI_STRUCTURE: dict[str, dict] = {
+    "The Voice of All Things": {
+        "expect": "You can read and understand all languages, written or verbal, including any writing on poneglyphs",
+        "effects": [{"type": "language", "label": "All languages, written or verbal, including the Poneglyphs (read and understand)"}],
+    },
     "Focused Hit": {"expect": "increase each die by one size up to a maximum of d8", "rolls": [], "effects": [{"type": "weaponDieStep", "max": 8, "label": "once per turn"}]},
     "Enhanced Strike": {"expect": "die by one size up to a maximum of d12", "rolls": [], "effects": [{"type": "weaponDieStep", "max": 12}]},
     "Resolve Within": {"expect": "resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks", "toggle": {"id": "resolve_within", "label": "Resolve Within", "effects": [{"type": "note", "label": RESIST_NONMAGICAL}]}},
@@ -414,6 +419,29 @@ def pick(ident: str, kind: str, label: str, count: int = 1, among: list[str] | N
 
 
 NO_ARMOR_FLIGHT = "Not while wearing medium or heavy armor"
+
+COUNT_WORDS = {"a": 1, "an": 1, "one": 1, "two": 2, "three": 3, "four": 4}
+
+
+def tools_granted(text: str) -> dict:
+    """A list of tool proficiencies as the book prints it ("Cook’s Utensils, One type of artisan’s tools (of your
+    choice)"), parted into the tools it names outright and the ones it leaves to choose. A choice keeps the book's
+    words as its label; how many is read from them ("Two types of gaming sets")."""
+    text = re.sub(r"\.$", "", text.strip())
+    if text.lower() in ("", "none", "-"):
+        return {}
+    fixed: list[str] = []
+    picks: list[dict] = []
+    for part in (p.strip() for p in re.split(r",\s*(?:and\s+)?|\s+and\s+|\.\s+", text)):
+        if not part:
+            continue
+        chosen = re.search(r"\bchoice\b|^choose\b|\btypes? of\b|^(?:a|an|one|two|three|four)\b", part, re.I)
+        if chosen:
+            number = re.search(r"\b(a|an|one|two|three|four)\b", part, re.I)
+            picks.append(pick(f"tool{len(picks) + 1}", "tool", part, COUNT_WORDS[number.group(1).lower()] if number else 1))
+        else:
+            fixed.append(part)
+    return {**({"fixed": fixed} if fixed else {}), **({"picks": picks} if picks else {})}
 
 # Racial traits (p67–82). Uses, actions and plain dice come from the wording; these are the numbers that do not.
 RACE_STRUCTURE: dict[str, dict[str, dict]] = {

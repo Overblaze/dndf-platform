@@ -56,7 +56,13 @@
       ],
       "auto": [
         "skills"
-      ]
+      ],
+      "tools": {
+        "fixed": [
+          "Cartographer’s tools",
+          "Navigator’s tools"
+        ]
+      }
     },
     {
       "id": "crewRole.musician",
@@ -123,6 +129,10 @@
           "text": "When you take the record-keeper role, you can often tap into your nearly infinite pool of knowledge and mentally archived data. By spending 1 pirate prestige point, you can discover one major clue, detail, or other piece of information about a puzzle, artifact, or form of writing. Your DM might give you a major hint or advantage on a roll to discover something vital.",
           "page": 16
         }
+      ],
+      "expertiseOrProficiency": [
+        "history",
+        "religion"
       ]
     }
   ],

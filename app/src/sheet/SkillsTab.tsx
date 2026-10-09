@@ -66,7 +66,7 @@ export function SkillsTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
       <section className="card">
         <h2>Proficiencies</h2>
         <dl className="facts facts-plain">
-          {([['Armor', sheet.proficiencies.armor], ['Weapons', sheet.proficiencies.weapons], ['Tools', sheet.proficiencies.tools]] as const).map(([title, list]) => (
+          {([['Armor', sheet.proficiencies.armor], ['Weapons', sheet.proficiencies.weapons], ['Tools', sheet.proficiencies.tools], ['Languages', sheet.spoken]] as const).map(([title, list]) => (
             <Fragment key={title}>
               <dt>{title}</dt>
               <dd>

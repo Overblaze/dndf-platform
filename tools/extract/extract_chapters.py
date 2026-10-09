@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from extract_classes import ABILITIES, BOOKS, ROOT, body_text, derive_structure, dice_in, make_feature, proficiencies_granted, skills_granted, slug, split_sections, table_rows  # noqa: E402
-from structure import RACE_CHOICES, RACE_TRAIT_SPLITS, apply_feat_structure, apply_haki_structure, apply_race_structure  # noqa: E402
+from structure import RACE_CHOICES, RACE_TRAIT_SPLITS, apply_feat_structure, apply_haki_structure, apply_race_structure, tools_granted  # noqa: E402
 from pdfdoc import Block, Heading, Para, Table, is_footer, load_items, read_blocks  # noqa: E402
 
 # Page ranges in the v10 handbook.
@@ -172,6 +172,16 @@ def extract_crew_roles(version: str) -> list[dict]:
         if skills:
             role["skills"] = skills
             role["auto"] = ["skills"]
+        # "You have expertise with History and Religion skills" (the Record-Keeper): by the table's ruling, expertise
+        # in a skill the character is already proficient in, and otherwise proficiency.
+        expert = re.search(r"expertise (?:with|in) (?:the )?(.+?) skills?", proficiency["text"]) if proficiency else None
+        if expert and skills_in(expert.group(1)):
+            role["expertiseOrProficiency"] = skills_in(expert.group(1))
+        # What the same sentence names after the skills: "…Nature and Survival skills, Cartographer’s tools, and Navigator’s tools."
+        after = re.search(r"\bskills?,\s*(?:and\s+)?(.+?)\.?$", proficiency["text"]) if proficiency else None
+        tools = tools_granted(re.sub(r"\bkits\b", "kit", after.group(1))) if after else {}
+        if tools:
+            role["tools"] = tools
         out.append(role)
     return out
 
@@ -212,6 +222,9 @@ def extract_backgrounds(version: str) -> list[dict]:
         if skills:
             bg["skills"] = skills
             bg["auto"] = ["skills"]
+        tools = tools_granted(defs.get("tool proficiencies", ""))
+        if tools:
+            bg["tools"] = tools
         bg["sections"] = made.get("sections", [])
         if not any(s["name"].startswith("Feature:") for s in bg["sections"]):
             problems.append(f"background {name}: no Feature section")

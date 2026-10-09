@@ -45,6 +45,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 2,
+            "label": "Two of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Multicultural",
@@ -272,6 +282,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Cartographer’s tools",
+          "navigator’s tools"
+        ]
+      },
       "sections": [
         {
           "name": "Excavator",
@@ -493,6 +509,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Carpenter’s tools"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one Artisan’s Tool of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: I’ll Patch It!",
@@ -700,6 +729,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of gaming set or Thieves’ Tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Tracker’s Network",
@@ -875,6 +914,11 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Cook’s Utensils"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Sweet Connections",
@@ -1049,6 +1093,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Disguise kit",
+          "Calligrapher’s Supplies"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Face of a Star",
@@ -1218,6 +1268,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Disguise kit"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one type of musical instrument"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: By Popular Demand",
@@ -1453,6 +1516,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Cook’s Utensils"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools (of your choice)"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Culinary Combatant",
@@ -1621,6 +1697,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "vehicles (land)"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Rustic Hospitality",
@@ -1812,6 +1901,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Toy Shell",
@@ -1986,6 +2085,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 2,
+            "label": "Two gaming sets of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Never Tell Me the Odds",
@@ -2160,6 +2269,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Smile-Blessed",
@@ -2329,6 +2448,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Smith’s Tools",
+          "Vehicles (land)"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Arena Master",
@@ -2555,6 +2680,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Herbalism kit"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one Artisan’s Tools of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Discovery",
@@ -2768,6 +2906,22 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "Your choice of a gaming set"
+          },
+          {
+            "id": "tool2",
+            "kind": "tool",
+            "count": 1,
+            "label": "one type of musical instrument"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Knightly Regard",
@@ -3011,6 +3165,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "vehicles (land)"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of gaming set"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Kuja Warrior",
@@ -3180,6 +3347,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Cartographer’s Tools",
+          "Vehicles (land)"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Marching Orders",
@@ -3393,6 +3566,11 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Calligrapher’s supplies"
+        ]
+      },
       "sections": [
         {
           "name": "Paper Mask",
@@ -3573,6 +3751,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Disguise Kit"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of gaming set"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Mercenary Contact",
@@ -3792,6 +3983,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 2,
+            "label": "Two types of artisan’s tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Supply Chain",
@@ -3967,6 +4168,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 2,
+            "label": "Two types of gaming sets"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Variant Noble: Celestial Dragon (Optional)",
@@ -4147,6 +4358,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Navigator’s tools",
+          "Carpenter’s tools"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Ship’s Passage",
@@ -4322,6 +4539,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Poisoner’s kit",
+          "Disguise Kit"
+        ]
+      },
       "sections": [
         {
           "name": "Variant Revolutionary: Secret Agent (Optional)",
@@ -4502,6 +4725,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools or musical instrument"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Branded",
@@ -4682,6 +4915,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Cartographer’s Tools"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one set of Artisan’s Tools of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Researcher",
@@ -4909,6 +5155,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Carpenter’s Tools",
+          "Cartographer’s Tools"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Ship Salvager",
@@ -5084,6 +5336,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Smith’s tools"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one type of musical instrument"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Variant Samurai: Ninja (Optional)",
@@ -5263,6 +5528,22 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of musical instrument"
+          },
+          {
+            "id": "tool2",
+            "kind": "tool",
+            "count": 1,
+            "label": "one set of Artisan’s tools of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Wanderer",
@@ -5432,6 +5713,11 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Calligrapher’s supplies"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Center of the Ring",
@@ -5606,6 +5892,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "thieves’ tools"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of gaming set"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Bribery",
@@ -5819,6 +6118,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 2,
+            "label": "Two Artisan’s Tools of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Shelter of the Faithful",

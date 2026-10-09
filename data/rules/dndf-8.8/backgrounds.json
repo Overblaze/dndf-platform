@@ -44,6 +44,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Cartographer’s tools",
+          "navigator’s tools"
+        ]
+      },
       "sections": [
         {
           "name": "Excavator",
@@ -265,6 +271,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Carpenter’s tools"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one Artisan’s Tool of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: I’ll Patch It!",
@@ -471,6 +490,12 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Disguise kit",
+          "Calligrapher’s Supplies"
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Face of a Star",
@@ -639,6 +664,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Cook’s Utensils"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools (of your choice)"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Culinary Combatant",
@@ -807,6 +845,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "vehicles (land)"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Rustic Hospitality",
@@ -998,6 +1049,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Toy Shell",
@@ -1171,6 +1232,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of artisan’s tools"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Smile-Blessed",
@@ -1339,6 +1410,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "Herbalism kit"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "one Artisan’s Tools of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Discovery",
@@ -1551,6 +1635,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "vehicles (land)"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of gaming set"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Kuja Warrior",
@@ -1719,6 +1816,22 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of musical instrument"
+          },
+          {
+            "id": "tool2",
+            "kind": "tool",
+            "count": 1,
+            "label": "one set of Artisan’s tools of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Wanderer",
@@ -1887,6 +2000,19 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "fixed": [
+          "thieves’ tools"
+        ],
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 1,
+            "label": "One type of gaming set"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Bribery",
@@ -2100,6 +2226,16 @@
       "auto": [
         "skills"
       ],
+      "tools": {
+        "picks": [
+          {
+            "id": "tool1",
+            "kind": "tool",
+            "count": 2,
+            "label": "Two Artisan’s Tools of your choice"
+          }
+        ]
+      },
       "sections": [
         {
           "name": "Feature: Shelter of the Faithful",

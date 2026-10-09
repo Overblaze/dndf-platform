@@ -132,6 +132,8 @@ export interface CharacterDoc {
   crewRole?: { id: string };
   /** Feat entry ids. */
   feats?: string[];
+  /** Languages the player has added. The world's one universal language, and any a feat or Haki gives, are on the sheet without it. */
+  languages?: string[];
   classes: CharacterClass[];
   scores: AbilityScores;
   /** How the starting scores were set (array, point buy, rolls), so the builder can show it again. `scores` is always what counts. */
@@ -310,6 +312,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     background: isObject(doc.background) && typeof doc.background.id === 'string' ? doc.background : undefined,
     crewRoles: crewRolesOf({ crewRoles: objects(doc.crewRoles), crewRole: isObject(doc.crewRole) ? doc.crewRole : undefined }),
     feats: Array.isArray(doc.feats) ? strings(doc.feats) : undefined,
+    languages: Array.isArray(doc.languages) ? [...new Set(strings(doc.languages).map((l) => l.trim().slice(0, 60)).filter(Boolean))].slice(0, 40) : undefined,
     classes: (objects<CharacterClass>(doc.classes) ?? []).filter((c) => typeof c.id === 'string').map((c) => ({ ...c, level: Math.max(0, whole(c.level, 1)) })),
     scores: cleanScores(doc.scores),
     scoreOrigin: isObject(doc.scoreOrigin) ? doc.scoreOrigin : undefined,

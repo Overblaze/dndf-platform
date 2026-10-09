@@ -130,6 +130,13 @@ attribution it asks for is in the file, the README, the Library and under each s
 - A class list's "Melf’s Acid Arrow" finds the SRD's "Acid Arrow". A spell that is not in the SRD has no text, and none
   is to be added from any other source: other 5th Edition books are not free to reproduce.
 
+### Tool proficiencies
+
+`structure.tools_granted` parts a book line of tools ("Cook’s Utensils, One type of artisan’s tools (of your choice)")
+into the tools it names and the ones it leaves to choose, reading how many from the words. A background gets
+`tools: {fixed, picks}` beside its `toolProficiencies` text, a crew role `tools.fixed` from the sentence that gives its
+skills, and a class `proficiencies.toolPicks` (its `tools` stays as printed, for the Library).
+
 ### Speeds and choices in racial traits
 
 `structure.py` has two helpers for what a trait's wording cannot give the sheet by itself: `move("swim", 25)` (or
