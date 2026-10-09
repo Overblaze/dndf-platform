@@ -35,6 +35,14 @@ Discord sign-in is covered in [supabase/README.md](supabase/README.md).
 
 Source PDFs, Devil Fruit data and anything secret stay outside this repository.
 
+## Offline and installing
+
+The built site is an installable web app. A service worker (`app/sw.template.js`, filled in by `app/vite.config.ts`
+with the list of built files) keeps the app's own files on the device, so the site opens with no connection: the
+Library, and characters and ships kept in the browser, all work. Opening the site asks the network first, so a new
+deploy is picked up on the next load with a connection. The service worker never keeps anything from the database;
+things on an account still need a connection. It is not registered by `npm run dev`.
+
 ## Docs
 
 Everything about what this is and how it should behave is in [docs/](docs/): the product spec
