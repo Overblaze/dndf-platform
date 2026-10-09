@@ -268,15 +268,21 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
   const stored = useRef<StoredShip | null>(null);
   const pending = useRef<ShipDoc | null>(null);
   const timer = useRef<number | undefined>(undefined);
+  const flushNow = useRef<() => void>(() => {});
 
   const adopt = useCallback((next: StoredShip) => { stored.current = next; setShip(next); setDocState(next.doc); }, []);
   useEffect(() => {
     let current = true;
     store.get(id).then((found) => { if (!current) return; if (found) adopt(found); else setMissing(true); }, (e: Error) => current && setProblem(e.message));
     // A crewmate may have changed her while this tab was in the background.
-    const refresh = () => { if (document.visibilityState === 'visible' && !pending.current) void store.get(id).then((found) => current && found && found.updatedAt !== stored.current?.updatedAt && adopt(found), () => {}); };
+    const refresh = () => {
+      // Leaving the tab: a change still waiting out its short delay is saved now, not lost.
+      if (document.visibilityState === 'hidden') { window.clearTimeout(timer.current); flushNow.current(); return; }
+      if (!pending.current) void store.get(id).then((found) => current && found && found.updatedAt !== stored.current?.updatedAt && adopt(found), () => {});
+    };
     document.addEventListener('visibilitychange', refresh);
-    return () => { current = false; document.removeEventListener('visibilitychange', refresh); window.clearTimeout(timer.current); };
+    // Leaving the page for another (All ships, the Library) saves it too.
+    return () => { current = false; document.removeEventListener('visibilitychange', refresh); window.clearTimeout(timer.current); flushNow.current(); };
   }, [store, id, adopt]);
 
   const flush = useCallback(() => {
@@ -294,12 +300,13 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
       },
     );
   }, [store, adopt]);
+  flushNow.current = flush;
   const setDoc = useCallback((next: ShipDoc) => {
     setDocState(next); pending.current = next; setStatus('saving');
     window.clearTimeout(timer.current); timer.current = window.setTimeout(flush, 600);
   }, [flush]);
 
-  if (missing) return <section className="card"><h1>No such ship</h1><p>She may have been scuttled, or taken out of your campaign.</p><Link className="btn" to="/ship">All ships</Link></section>;
+  if (missing) return <section className="card"><h1>No such ship</h1><p>{store.local ? 'She isn’t kept in this browser. If she is on your account, sign in to see her.' : 'She may have been scuttled, or taken out of your campaign.'}</p><Link className="btn" to="/ship">All ships</Link></section>;
   if (!doc || !ship) return problem ? <p className="notice" role="alert">{problem}</p> : <p>Rowing out to her…</p>;
 
   latest.current = doc;

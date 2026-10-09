@@ -62,8 +62,8 @@ async function signIn(username: string, globalName = username, existingId?: stri
   let id = existingId;
   if (!id) {
     const created = await db.query<{ id: string }>(
-      `insert into auth.users (raw_user_meta_data) values ($1) returning id`,
-      [identity],
+      `insert into auth.users (email, raw_app_meta_data, raw_user_meta_data) values ($2, '{"provider":"discord","providers":["discord"]}', $1) returning id`,
+      [identity, `${username}.private.mail@example.com`],
     );
     id = created.rows[0]!.id;
     await db.query(`insert into auth.identities (user_id, provider, identity_data) values ($1, 'discord', $2)`, [id, identity]);
@@ -665,6 +665,9 @@ describe('password accounts: a username and a password, for players without Disc
     const made = await join('kai', ' grand-line-42'); // capitals and stray spaces forgiven
     kai = made.id;
     expect(made.raw_user_meta_data).toEqual({}); // the code is not kept on the account
+    // Supabase Auth writes the account's details a second time just after making it; the code must not come back with them.
+    const [again] = await admin(`update auth.users set raw_user_meta_data = '{"join_code":"grand-line-42","email_verified":true}' where id = $1 returning raw_user_meta_data`, [kai]);
+    expect(again!.raw_user_meta_data).toEqual({ email_verified: true });
   });
 
   it('they get a profile under their username, as a player, never as a DM', async () => {
@@ -703,6 +706,25 @@ describe('password accounts: a username and a password, for players without Disc
     expect(await as(kai, `select id from public.campaigns`)).toEqual([{ id: campaign }]);
     await as(matt, `delete from public.campaign_members where campaign_id = $1 and user_id = $2`, [campaign, kai]);
     await admin(`delete from public.characters where id = $1`, [mine!.id]);
+  });
+
+  it('a Discord player is shown by their Discord name, never by the email address Discord hands over', async () => {
+    const fay = await signIn('fay', 'Fay the Navigator');
+    expect(await admin(`select discord_username, display_name from public.profiles where id = $1`, [fay])).toEqual([{ discord_username: 'fay', display_name: 'Fay the Navigator' }]);
+    expect(await admin(`select count(*)::int as n from public.profiles where display_name like '%private.mail%' or display_name like '%@%'`)).toEqual([{ n: 0 }]);
+    await admin(`delete from auth.users where id = $1`, [fay]);
+  });
+
+  it('0009 puts right a Discord player who was already shown by their email address', async () => {
+    const gus = await signIn('gus', 'Gus the Gunner');
+    await admin(`update public.profiles set display_name = 'gus.private.mail' where id = $1`, [gus]); // as 0008 alone left them
+    const fix = readFileSync(`${migrationsDir}/0009_profile_names.sql`, 'utf8');
+    await db.exec(fix.slice(fix.indexOf('update public.profiles p'), fix.indexOf('create function private.drop_join_code')));
+    expect(await admin(`select display_name from public.profiles where id = $1`, [gus])).toEqual([{ display_name: 'Gus the Gunner' }]);
+    // A name someone chose for themselves, and a password account's username, are left alone.
+    expect(await admin(`select display_name from public.profiles where id = $1`, [kai])).toEqual([{ display_name: 'kai' }]);
+    expect(await admin(`select display_name from public.profiles where id = $1`, [ana])).toEqual([{ display_name: 'Navigator Ana' }]);
+    await admin(`delete from auth.users where id = $1`, [gus]);
   });
 
   it('Discord sign-ins are never asked for the code, and no other kind of sign-up slips past it', async () => {

@@ -60,6 +60,19 @@ function usernameOf(session: Session | null): string | null {
   return email?.endsWith(`@${USERNAME_DOMAIN}`) ? email.slice(0, -USERNAME_DOMAIN.length - 1) : null;
 }
 
+/** Whether Supabase lets a new password account sign in straight away. If that can't be found out, the sign-up is tried anyway. */
+async function passwordAccountsReady(): Promise<boolean> {
+  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+  const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+  if (!url || !key) return true;
+  try {
+    const response = await fetch(`${url}/auth/v1/settings`, { headers: { apikey: key } });
+    if (!response.ok) return true;
+    const settings = (await response.json()) as { mailer_autoconfirm?: boolean };
+    return settings.mailer_autoconfirm !== false;
+  } catch { return true; }
+}
+
 const unreachable = (message: string) => (/failed to fetch|network/i.test(message) ? 'The sign-in service could not be reached. Check your connection and try again.' : null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -121,11 +134,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const join = useCallback(async (username: string, password: string, code: string) => {
     if (!supabase) return 'Signing in is not set up on this site.';
     setError(null);
+    // With "Confirm email" still on, an account would be made that can never be used (its address is made up),
+    // and Supabase would try to send mail to it. So that is checked before anything is created.
+    if (!(await passwordAccountsReady())) return 'Password accounts are not switched on yet. Your DM needs to turn off “Confirm email” in Supabase (Authentication → Sign In / Providers → Email).';
     const { data, error: failed } = await supabase.auth.signUp({ email: addressFor(username), password, options: { data: { join_code: code.trim() } } });
     if (failed) {
       if (/already registered|already been registered|user_already_exists/i.test(`${failed.message} ${failed.code ?? ''}`)) return 'That username is taken. If it is yours, sign in instead.';
-      // The database refuses the new account; Supabase passes on only that it did.
-      if (/database error/i.test(failed.message)) return 'The account was not made. Either the table code is not right, the name is one a Discord player already goes by, or your DM has not opened password accounts yet.';
+      // The database's own check (migration 0008) refuses the new account and says why.
+      if (/wrong table code/i.test(failed.message)) return 'That table code is not right. Check it with your DM; capital letters don’t matter.';
+      if (/name is taken/i.test(failed.message)) return 'That name is one a player at this table already goes by. Pick another username.';
+      if (/not open/i.test(failed.message)) return 'Your DM has not opened password accounts yet: there is no table code set.';
+      // Older Supabase versions pass on only that the database refused.
+      if (/database error/i.test(failed.message)) return 'The account was not made. Either the table code is not right, the name is one a player here already goes by, or your DM has not opened password accounts yet.';
       if (/signups? (are )?(not allowed|disabled)/i.test(failed.message)) return 'New accounts are switched off for this site. Ask your DM.';
       if (/password/i.test(failed.message)) return `Supabase would not take that password: ${failed.message}`;
       if (/email/i.test(failed.message)) return `Supabase would not take that username (${failed.message}). Tell your DM.`;
