@@ -1,5 +1,5 @@
 import { deriveSheet, type CharacterDoc, type Stat } from '@dndf/engine';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { downloadExport } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
@@ -56,7 +56,18 @@ function conflictSummary(other: CharacterDoc): string {
 export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) {
   const { live, loadError, missing } = useCharacter(store, id);
   const navigate = useNavigate();
-  const unsent = useWaiting().some((w) => w.kind === 'characters' && w.id === id);
+  const waitingHere = useWaiting().find((w) => w.kind === 'characters' && w.id === id);
+  const unsent = Boolean(waitingHere);
+  // Sending a waiting change in the background found the character changed elsewhere too. With it open on
+  // this page, ask now: saving it again from here brings up the choice between the two versions.
+  const clashed = waitingHere?.clash === true;
+  const clashAsked = useRef(false);
+  useEffect(() => {
+    if (!clashed) { clashAsked.current = false; return; }
+    if (clashAsked.current || !live || live.conflict) return;
+    clashAsked.current = true;
+    live.setDoc(live.doc);
+  }, [clashed, live]);
   // The Build page links straight to a tab or a dialog: /sheet/<id>?do=level, ?tab=features.
   const [asked, setAsked] = useSearchParams();
   // Used once: a reload or the Back button should not open the same dialog again.

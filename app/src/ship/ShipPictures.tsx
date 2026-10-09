@@ -24,7 +24,7 @@ const describe = (p: ShipPicture) => p.title ?? KIND_NAMES[p.kind];
 function Picture({ store, picture, className }: { store: ShipPictureStore; picture: ShipPicture; className?: string }) {
   const url = usePictureUrl(store, picture.ref);
   if (url === undefined) return <span className="picture-wait">Loading…</span>;
-  if (url === null) return <span className="picture-wait">This picture can’t be found. It may have been added in another browser while signed out.</span>;
+  if (url === null) return <span className="picture-wait">{navigator.onLine === false ? 'Pictures need a connection.' : 'This picture can’t be found. It may have been added in another browser while signed out.'}</span>;
   return <img className={className} src={url} alt={describe(picture)} width={picture.width} height={picture.height} loading="lazy" />;
 }
 

@@ -46,7 +46,8 @@ it is not registered by `npm run dev`.
 Characters on an account work offline too (`app/src/lib/offline.ts`, and the wrapper in `app/src/lib/store.ts`): each
 one read is kept in the browser's storage for that player; a change made with no connection is kept beside it and
 sent when the connection returns, only if the character is still as the device last knew it. Otherwise nothing is
-overwritten and the player chooses. Ships, Devil Fruits and the Crew and DM pages still need a connection.
+overwritten and the player chooses. Ships on an account work the same way (the wrapper in `app/src/lib/ships.ts`).
+Pictures, Devil Fruits and the Crew and DM pages still need a connection.
 
 ## Docs
 
