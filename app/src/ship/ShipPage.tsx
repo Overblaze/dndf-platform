@@ -347,6 +347,7 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
         <div className="row wrap">
           <span className={status === 'error' ? 'chip chip-damage' : 'chip'} role="status">{status === 'saved' ? (store.local ? 'Saved on this device' : 'Saved') : status === 'saving' ? 'Saving…' : 'Not saved'}</span>
           <button className="btn" onClick={() => setDialog('edit')}>Edit</button>
+          <Link className="btn" to={`/print/ship/${id}`}>Print</Link>
           <Link className="btn" to="/ship">All ships</Link>
         </div>
         {problem && <p className="notice" role="alert">{problem} <button className="btn" onClick={() => setProblem(null)}>OK</button></p>}

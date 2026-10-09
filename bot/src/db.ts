@@ -2,7 +2,7 @@
 // security, so every function here takes the Discord user who asked and reaches only that
 // user's characters (or, for the party, the campaigns that user belongs to).
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import { NO_SECRETS, normalizeDoc, sameDoc, type CharacterDoc, type RuleEntry, type Secrets } from '@dndf/engine';
+import { NO_SECRETS, normalizeDoc, normalizeShip, sameDoc, type CharacterDoc, type RuleEntry, type Secrets, type ShipDoc } from '@dndf/engine';
 import type { Env } from './env';
 
 /** Change logs older than this are removed. Characters are never removed by the bot. */
@@ -23,6 +23,8 @@ const fromRow = (row: Row): BotCharacter | null => {
   const doc = normalizeDoc(row.doc);
   return doc ? { id: row.id, doc, raw: row.doc, ownerId: row.owner_id, campaignId: row.campaign_id, updatedAt: row.updated_at } : null;
 };
+
+export interface BotShip { id: string; doc: ShipDoc; ownerId: string; campaignId: string | null; campaign: string | null; updatedAt: string }
 
 /** The character was changed by someone else between the bot reading it and writing it. */
 export class ChangedElsewhere extends Error {
@@ -131,6 +133,51 @@ export class Db {
     const held = granted.filter((g) => g.kind === 'owner');
     if (held.length === 0) return none;
     return { secrets: { granted, advancements: (advancements ?? []).map((a) => a.data as RuleEntry).filter((e) => e && typeof e.id === 'string') }, open: held.every((g) => g.revealed) };
+  }
+
+  /** The name a Discord user goes by on the website, for the ship's log. */
+  async nameOf(discordId: string): Promise<string> {
+    const owner = await this.accountOf(discordId);
+    if (!owner) return 'someone';
+    const { data } = await this.client.from('profiles').select('display_name, discord_username').eq('id', owner).maybeSingle();
+    return (data?.display_name as string | null)?.trim() || (data?.discord_username as string | null)?.trim() || 'someone';
+  }
+
+  /**
+   * The ships a Discord user may open: their own, and those put in a campaign they belong to. This is the
+   * same rule the database applies to the website; it is repeated here because the bot's key bypasses it.
+   * Ships shared with a campaign come first, then the most recently changed.
+   */
+  async shipsOf(discordId: string): Promise<BotShip[] | null> {
+    const owner = await this.accountOf(discordId);
+    if (!owner) return null;
+    const { data: memberships, error: failed } = await this.client.from('campaign_members').select('campaign_id, campaigns(name)').eq('user_id', owner);
+    if (failed) throw new Error(`Could not read the campaigns: ${failed.message}`);
+    const campaigns = new Map(((memberships ?? []) as unknown as { campaign_id: string; campaigns: { name: string } | null }[]).map((m) => [m.campaign_id, m.campaigns?.name ?? 'Campaign']));
+    const columns = 'id, doc, owner_id, campaign_id, updated_at';
+    type ShipRow = { id: string; doc: unknown; owner_id: string; campaign_id: string | null; updated_at: string };
+    const found = new Map<string, ShipRow>();
+    const mine = await this.client.from('ships').select(columns).eq('owner_id', owner);
+    if (mine.error) throw new Error(`Could not read the ships: ${mine.error.message}`);
+    for (const row of (mine.data ?? []) as ShipRow[]) found.set(row.id, row);
+    if (campaigns.size) {
+      const shared = await this.client.from('ships').select(columns).in('campaign_id', [...campaigns.keys()]);
+      if (shared.error) throw new Error(`Could not read the ships: ${shared.error.message}`);
+      for (const row of (shared.data ?? []) as ShipRow[]) found.set(row.id, row);
+    }
+    return [...found.values()].flatMap((row) => {
+      const doc = normalizeShip(row.doc);
+      return doc ? [{ id: row.id, doc, ownerId: row.owner_id, campaignId: row.campaign_id, campaign: row.campaign_id ? campaigns.get(row.campaign_id) ?? null : null, updatedAt: row.updated_at }] : [];
+    }).sort((a, b) => Number(Boolean(b.campaignId)) - Number(Boolean(a.campaignId)) || b.updatedAt.localeCompare(a.updatedAt));
+  }
+
+  /** Writes a ship the Discord user may change, only if nobody has changed her since she was read. */
+  async saveShip(discordId: string, ship: BotShip, next: ShipDoc): Promise<void> {
+    const allowed = (await this.shipsOf(discordId))?.some((s) => s.id === ship.id);
+    if (!allowed) throw new Error('That ship is not yours to change.');
+    const { data, error } = await this.client.from('ships').update({ doc: next }).eq('id', ship.id).eq('updated_at', ship.updatedAt).select('id');
+    if (error) throw new Error(`Could not save the ship: ${error.message}`);
+    if (!data || data.length === 0) throw new ChangedElsewhere();
   }
 
   /** Everyone's characters in the campaigns this Discord user belongs to, with their owners' names. */

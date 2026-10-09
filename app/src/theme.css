@@ -1624,6 +1624,26 @@ a {
   text-align: justify;
 }
 
+.print-picture {
+  margin: 12px 0 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.print-picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 245mm;
+  object-fit: contain;
+}
+
+.print-picture figcaption {
+  margin-top: 2px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
 .print-foot {
   margin-top: 12pt;
   padding-top: 3pt;

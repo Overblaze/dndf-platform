@@ -55,3 +55,15 @@ describe('inventory', () => {
     expect(deriveSheet(normalizeDoc(base)!, rules)).toMatchObject({ money: 0, gear: { lines: [], carried: 0 } });
   });
 });
+
+describe('berries written out', () => {
+  it('a debt has its sign before the berry mark', async () => {
+    const { exactBerries, formatBerries } = await import('../src');
+    expect(exactBerries(1_250_000)).toBe('฿1,250,000');
+    expect(exactBerries(-750_000)).toBe('-฿750,000');
+    expect(exactBerries(-0.4)).toBe('฿0');
+    expect(formatBerries(-2_500_000)).toBe('-฿2.5M');
+    expect(formatBerries(-40)).toBe('-฿40');
+    expect(formatBerries(50_000_000)).toBe('฿50M');
+  });
+});
