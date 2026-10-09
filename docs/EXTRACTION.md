@@ -130,6 +130,39 @@ attribution it asks for is in the file, the README, the Library and under each s
 - A class list's "Melf’s Acid Arrow" finds the SRD's "Acid Arrow". A spell that is not in the SRD has no text, and none
   is to be added from any other source: other 5th Edition books are not free to reproduce.
 
+## The 2024 rules (SRD 5.2.1)
+
+`python3 tools/extract/extract_srd52.py` reads the whole System Reference Document 5.2.1 (364 pages, CC-BY-4.0) from
+`~/dndf/sources/srd/SRD_CC_v5.2.1.pdf` and writes one file a chapter to `data/reference/srd-5.2/`: 1,261 entries
+(12 classes, 4 backgrounds, 9 species, 17 feats, 81 pieces of gear, 339 spells, 155 glossary terms, 258 magic items,
+330 stat blocks and 56 sections of rules). `--check` reports without writing. It is a **reference shelf**, kept out of
+`data/rules` on purpose: DnDF characters follow the handbooks, which are built on the 2014 rules, so nothing in it is
+offered on the Build page or read by the sheet. `npm run validate` checks it against `data/schema/reference.schema.json`.
+
+`srd52doc.py` is the reader. `pdftohtml -xml` gives every piece of text with its place and font, and in this document
+the font says what a piece is (heading sizes, the small-caps cut of spell names and stat-block labels, Gill Sans for
+tables, Optima for stat blocks, Cambria for body text). An entry is a list of blocks: heading, paragraph (with its
+opening words in bold kept as `lead`), stat-block line, table, facts ("Casting Time: Action"), ability scores, sidebar.
+
+- **Every word is checked against a second reading** (`pdftotext`, page by page, letters and digits only). The run
+  ends with "0 pieces of text not found on their page as read"; 98.1% of the document's letters are in the data, the
+  rest being the running foot and the "MOD SAVE" headers of 336 ability tables.
+- **That check cannot see a table read into the wrong columns**, because every word is still on the page. The first
+  version passed it with the class tables scrambled. Tables are therefore also checked by shape (`app/src/lib/srd52.test.ts`):
+  every table is rectangular, every class table has levels 1 to 20 once each, every ability modifier follows from its
+  score in all 336 stat blocks, and the 338 spells named in the class spell lists are exactly the spells described
+  (bar Phantasmal Force, which the document describes but puts on no list).
+- Columns are found from the rows under the header (cells that start together, or are centred on one another), and the
+  header is laid over them a word at a time, since the text layer often gives several header cells as one piece. A
+  table that runs across both page columns is known by a header row on both sides that does not repeat itself.
+- Things the document itself does oddly, kept as printed or handled by name: "1½" comes out of the text layer as
+  "11/2" (twice); Chill Touch and Instant Summons have their casting facts in the wrong face; the Adult White Dragon's
+  "Con" label is in plain bold; the Young White Dragon's Intelligence save is printed "2" beside a −2 modifier (kept).
+- A paragraph that a table or sidebar interrupts is put back together; a sidebar that runs on into the next column is
+  followed there.
+- Not kept: the bold and italics inside a sentence (only a paragraph's opening words), and the document's two pages of
+  legal text and contents.
+
 ### A lesson from the spell lists
 
 A list's four columns flow one into the next, so a column that continues a level starts at the very top of the page

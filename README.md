@@ -21,7 +21,7 @@ Discord sign-in is covered in [supabase/README.md](supabase/README.md).
 | Command | What it does |
 |---|---|
 | `npm test` | engine formula tests and database policy tests |
-| `npm run validate` | checks every file in `data/rules/` against the schema |
+| `npm run validate` | checks every file in `data/rules/` and `data/reference/` against its schema |
 | `npm run typecheck` | TypeScript check of every package |
 | `npm run build` | production build of the site into `app/dist` |
 
@@ -30,6 +30,7 @@ Discord sign-in is covered in [supabase/README.md](supabase/README.md).
 - `app/`: the website (Vite, React, TypeScript)
 - `packages/engine/`: the rules engine, one test per row of [docs/FORMULAS.md](docs/FORMULAS.md)
 - `data/rules/`: public rules data; `data/schema/` holds its JSON Schema
+- `data/reference/`: freely licensed rulebooks kept only for looking things up (the SRD 5.2.1); never offered when building a character
 - `supabase/migrations/`: the database, as numbered SQL files
 - `tools/`: the rules validator and the PDF extraction scripts
 
@@ -65,3 +66,14 @@ Commons Attribution 4.0 International License available at https://creativecommo
 That material is the 319 spells in `data/rules/dndf-10/srd_spells.json` and the fourteen conditions in
 `data/rules/dndf-10/srd_conditions.json`. Spells the class lists name from other 5th Edition books are held by name
 only; their text is not in this repository.
+
+## Licence notice for the 2024 rules
+
+This work includes material from the System Reference Document 5.2.1 (“SRD 5.2.1”) by Wizards of the Coast LLC,
+available at https://www.dndbeyond.com/srd. The SRD 5.2.1 is licensed under the Creative Commons Attribution 4.0
+International License, available at https://creativecommons.org/licenses/by/4.0/legalcode.
+
+That material is everything in `data/reference/srd-5.2/`: the whole document, read from the official
+`SRD_CC_v5.2.1.pdf`. It is shown in the Library under "Other rulebooks" for looking things up. It is not part of the
+DnDF rules data: no class, spell, feat or item in it can be picked for a character. Nothing from the 2014 or 2024
+Player's Handbook, or any other book that is not free to reproduce, is in this repository.

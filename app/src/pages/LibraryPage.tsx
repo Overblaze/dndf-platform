@@ -428,6 +428,13 @@ function LibraryHome() {
         <EntryLinks entries={otherRules} />
       </Shelf>
       <section className="card">
+        <h2>Other rulebooks</h2>
+        <Link className="resource character-link" to="/library/srd52">
+          <span className="resource-name">5th Edition rules, 2024 (SRD 5.2.1)</span>
+          <span className="page-ref">The free 2024 rules: classes, spells, feats, equipment, magic items, monsters and the rules glossary. For looking things up; it has its own search and changes no sheet.</span>
+        </Link>
+      </section>
+      <section className="card">
         <p className="page-ref">Not here: Devil Fruits and their advancements, which only the DM can hand out, and the medical log.</p>
       </section>
     </>

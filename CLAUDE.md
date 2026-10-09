@@ -22,6 +22,7 @@ A free, private D&D Beyond-style character platform for one Dungeons & Devil Fru
 - `app/` Vite + React + TypeScript, deployed to GitHub Pages by `.github/workflows/deploy.yml` (base path `/dndf-platform/`).
 - `packages/engine/` pure TypeScript rules engine + Vitest tests. No UI, no network.
 - `data/rules/` public rules JSON (DnDF homebrew text is freely published by its authors). Validated by a JSON schema in CI.
+- `data/reference/` freely licensed rulebooks for looking things up only (SRD 5.2.1, the 2024 rules). Never read by the engine or offered on the Build page; loaded lazily by the Library.
 - `supabase/migrations/` numbered SQL: profiles, campaigns, members (role player/dm), characters (JSON doc + history), ships, secret_entries (fruits, DM chapters, licensed stat blocks), grants. RLS on every table.
 - `bot/` (phase 5) Discord bot, discord.js, runs on Matt's Ubuntu mini PC as a systemd service; PDFs via Playwright rendering the app's print view.
 - `tools/extract/` Python scripts that read PDFs from `~/dndf/sources` and emit JSON (public) or `~/dndf/secret/*.json` (private).
