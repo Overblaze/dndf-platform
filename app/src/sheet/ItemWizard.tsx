@@ -1,8 +1,8 @@
 // Making an item of your own, one question at a time, so that it works on the sheet: a weapon you
 // can attack with, armor that sets your Armor Class, or something with powers and charges.
 import {
-  ABILITIES, ABILITY_NAMES, CUSTOM_BONUS_TYPES, ITEM_KINDS, ITEM_RARITIES, SKILLS, armorFromItem, bookMagicItems, cite, cleanCustomItem, exactBerries, itemSummary, parseDice, parseWeight, weaponFromItem,
-  type Ability, type CustomBonusType, type CustomItem, type InventoryItem, type ItemKind, type RuleEntry,
+  ABILITIES, ABILITY_NAMES, CUSTOM_BONUS_TYPES, ITEM_KINDS, ITEM_RARITIES, SKILLS, armorFromItem, bookMagicItems, cite, cleanCustomItem, edgeTargetName, exactBerries, grantName, itemSummary, parseDice, parseWeight, weaponFromItem,
+  type Ability, type CustomBonusType, type CustomItem, type GrantKind, type InventoryItem, type ItemKind, type ProficiencyGrant, type RollEdgeDef, type RuleEntry,
 } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
@@ -39,6 +39,20 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
   const [spell, setSpell] = useState({ name: '', level: 1 });
   const [pay, setPay] = useState(false);
   const [one, setOne] = useState({ what: '', value: '' });
+  const [edge, setEdge] = useState({ what: '', mode: 'advantage' as RollEdgeDef['mode'] });
+  const [grant, setGrant] = useState({ kind: 'skill' as GrantKind, id: '' });
+  const addEdge = () => {
+    const [on, id] = edge.what.split(':');
+    const next: RollEdgeDef = { mode: edge.mode, on: on as RollEdgeDef['on'], ...(on === 'skill' && id ? { skill: id } : {}), ...((on === 'save' || on === 'check') && id ? { ability: id as Ability } : {}) };
+    setCustom({ ...custom, edges: [...(custom.edges ?? []).filter((x) => edgeTargetName(x) !== edgeTargetName(next)), next] });
+    setEdge({ what: '', mode: edge.mode });
+  };
+  const addGrant = () => {
+    const next: ProficiencyGrant = { kind: grant.kind, id: grant.id.trim() };
+    if (!next.id) return;
+    setCustom({ ...custom, grants: [...(custom.grants ?? []).filter((x) => grantName(x) !== grantName(next)), next] });
+    setGrant({ kind: grant.kind, id: '' });
+  };
   const magic = useMemo(() => bookMagicItems(rules), [rules]);
   const spellEntries = useMemo(() => [...rules.values()].filter((e) => e.kind === 'spell').sort((a, b) => a.name.localeCompare(b.name)), [rules]);
   const kind = custom.kind;
@@ -95,7 +109,7 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
     const a = armorFromItem(entry);
     setItem({ ...item, name: item.name.trim() ? item.name : entry.name, weight: parseWeight(entry.weight) ?? item.weight });
     if (w) setCustom({ ...custom, weapon: { damage: w.damage, damageType: w.damageType, category: w.category, ranged: w.ranged, finesse: w.finesse, twoHanded: w.twoHanded, heavy: w.heavy, bonus: custom.weapon?.bonus } });
-    if (a) setCustom({ ...custom, armor: { base: a.base, dexCap: a.dexCap ?? null } });
+    if (a) setCustom({ ...custom, armor: { base: a.base, dexCap: a.dexCap ?? null, stealthDisadvantage: a.stealthDisadvantage || undefined } });
   };
 
   const damageBad = kind === 'weapon' && !/^\d*d\d+$/.test(weapon.damage.trim());
@@ -210,6 +224,7 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
               </select>
             </label>
           </div>
+          <label className="check"><input type="checkbox" checked={armor.stealthDisadvantage === true} onChange={(e) => setCustom({ ...custom, armor: { ...armor, stealthDisadvantage: e.target.checked || undefined } })} /> Disadvantage on Stealth checks while worn (as heavy armor has)</label>
           <p className="page-ref">A magic +1 goes on the next step, under “Armor Class”.</p>
         </>
       )}
@@ -264,6 +279,72 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
               <label className="field"><span className="label">Bonus</span><input type="number" inputMode="numeric" value={one.value} onChange={(e) => setOne({ ...one, value: e.target.value })} placeholder="2" /></label>
             </div>
             <button className="btn" disabled={!one.what || !whole(one.value)} onClick={() => { const [what, id] = one.what.split(':'); if (what === 'save') setSave(id as Ability, whole(one.value) ?? 0); else setSkill(id, whole(one.value) ?? 0); setOne({ what: '', value: '' }); }}>Add that bonus</button>
+          </fieldset>
+          <fieldset>
+            <legend className="label">Advantage and disadvantage</legend>
+            {(custom.edges ?? []).map((x, i) => (
+              <div key={i} className="row wrap"><span>{x.mode === 'advantage' ? 'Advantage' : 'Disadvantage'} on {edgeTargetName(x)}</span><button className="btn" onClick={() => setCustom({ ...custom, edges: custom.edges!.filter((_, j) => j !== i) })} aria-label={`Remove ${x.mode} on ${edgeTargetName(x)}`}>Remove</button></div>
+            ))}
+            <div className="grid-2">
+              <label className="field">
+                <span className="label">It gives</span>
+                <select value={edge.mode} onChange={(e) => setEdge({ ...edge, mode: e.target.value as RollEdgeDef['mode'] })}>
+                  <option value="advantage">Advantage</option>
+                  <option value="disadvantage">Disadvantage</option>
+                </select>
+              </label>
+              <label className="field">
+                <span className="label">On which roll</span>
+                <select value={edge.what} onChange={(e) => setEdge({ ...edge, what: e.target.value })}>
+                  <option value="">Choose…</option>
+                  <option value="attack">Attack rolls</option>
+                  <option value="initiative">Initiative</option>
+                  <option value="save">All saving throws</option>
+                  <option value="skill">All skill checks</option>
+                  <option value="check">All ability checks (skills and initiative too)</option>
+                  <optgroup label="One skill">{SKILLS.map((k) => <option key={k.id} value={`skill:${k.id}`}>{k.name}</option>)}</optgroup>
+                  <optgroup label="One saving throw">{ABILITIES.map((a) => <option key={a} value={`save:${a}`}>{ABILITY_NAMES[a]} saves</option>)}</optgroup>
+                  <optgroup label="One ability’s checks">{ABILITIES.map((a) => <option key={a} value={`check:${a}`}>{ABILITY_NAMES[a]} checks</option>)}</optgroup>
+                </select>
+              </label>
+            </div>
+            <button className="btn" disabled={!edge.what} onClick={addEdge}>Add that</button>
+            <p className="page-ref">The roll button then rolls two dice and keeps the right one. Advantage and disadvantage on the same roll cancel to a straight roll.</p>
+          </fieldset>
+          <fieldset>
+            <legend className="label">Proficiencies it gives</legend>
+            {(custom.grants ?? []).map((x, i) => (
+              <div key={i} className="row wrap"><span>{grantName(x).replace(/^\w/, (c) => c.toUpperCase())}</span><button className="btn" onClick={() => setCustom({ ...custom, grants: custom.grants!.filter((_, j) => j !== i) })} aria-label={`Remove ${grantName(x)}`}>Remove</button></div>
+            ))}
+            <div className="grid-2">
+              <label className="field">
+                <span className="label">Proficiency in</span>
+                <select value={grant.kind} onChange={(e) => setGrant({ kind: e.target.value as GrantKind, id: '' })}>
+                  <option value="skill">A skill</option>
+                  <option value="expertise">A skill, doubled (expertise)</option>
+                  <option value="save">A saving throw</option>
+                  <option value="armor">A kind of armor</option>
+                  <option value="weapon">A group of weapons</option>
+                  <option value="tool">A tool</option>
+                </select>
+              </label>
+              <label className="field">
+                <span className="label">Which</span>
+                {grant.kind === 'skill' || grant.kind === 'expertise' ? (
+                  <select value={grant.id} onChange={(e) => setGrant({ ...grant, id: e.target.value })}><option value="">Choose…</option>{SKILLS.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}</select>
+                ) : grant.kind === 'save' ? (
+                  <select value={grant.id} onChange={(e) => setGrant({ ...grant, id: e.target.value })}><option value="">Choose…</option>{ABILITIES.map((a) => <option key={a} value={a}>{ABILITY_NAMES[a]}</option>)}</select>
+                ) : grant.kind === 'armor' ? (
+                  <select value={grant.id} onChange={(e) => setGrant({ ...grant, id: e.target.value })}><option value="">Choose…</option><option value="light">Light armor</option><option value="medium">Medium armor</option><option value="heavy">Heavy armor</option><option value="shields">Shields</option></select>
+                ) : grant.kind === 'weapon' ? (
+                  <select value={grant.id} onChange={(e) => setGrant({ ...grant, id: e.target.value })}><option value="">Choose…</option><option value="simple">Simple weapons</option><option value="martial">Martial weapons</option><option value="firearms">Firearms</option></select>
+                ) : (
+                  <input value={grant.id} onChange={(e) => setGrant({ ...grant, id: e.target.value })} placeholder="Navigator’s tools" maxLength={60} />
+                )}
+              </label>
+            </div>
+            <button className="btn" disabled={!grant.id.trim()} onClick={addGrant}>Add that proficiency</button>
+            <p className="page-ref">Expertise doubles the proficiency bonus in a skill you are already proficient in.</p>
           </fieldset>
           <fieldset>
             <legend className="label">Spells it lets you cast</legend>
@@ -341,6 +422,9 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
             {built.attune && <li>It requires attunement: it does nothing until it is both in use and attuned. Attuning takes one of your attunement slots.</li>}
             {built.abilities?.map((a) => <li key={a.ability}>In use, your {ABILITY_NAMES[a.ability]} {[a.bonus ? `goes up by ${a.bonus}` : '', a.set !== undefined ? `becomes ${a.set} if it is lower` : ''].filter(Boolean).join(', then ')}; the modifier, saves, skills and everything else that uses it follow.</li>)}
             {built.bonuses?.length || built.saves?.length || built.skills?.length ? <li>In use, its numbers are added to your totals, each with a line in the breakdown.</li> : null}
+            {built.armor?.stealthDisadvantage && <li>While worn, Stealth checks are rolled with disadvantage.</li>}
+            {built.edges?.map((x) => <li key={edgeTargetName(x)}>In use, {edgeTargetName(x)} are rolled with {x.mode}: the roll button does it for you.</li>)}
+            {built.grants?.length ? <li>In use, you have {built.grants.map(grantName).join(', ')}.</li> : null}
             {built.spells?.length ? <li>In use, {built.spells.map((x) => x.name).join(', ')} {built.spells.length === 1 ? 'is' : 'are'} on your Spells tab.</li> : null}
             {built.uses && <li>It gets a tracker of {built.uses.max} charge{built.uses.max === 1 ? '' : 's'} on the Features tab, back on a {built.uses.recharge} rest.</li>}
             {built.rolls?.length ? <li>It gets a roll button for each of its dice on the Features tab.</li> : null}

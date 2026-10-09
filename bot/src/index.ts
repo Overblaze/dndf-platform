@@ -160,7 +160,7 @@ async function run(interaction: ChatInputCommandInteraction) {
       : making ? itemMake(doc, sheet, {
         kind: sub, name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), rarity: o.getString('rarity'), description: o.getString('description'),
         damage: o.getString('damage'), damageType: o.getString('damage_type'), martial: o.getBoolean('martial'), ranged: o.getBoolean('ranged'), finesse: o.getBoolean('finesse'), twoHanded: o.getBoolean('two_handed'), weaponBonus: o.getInteger('weapon_bonus'),
-        armorClass: o.getInteger('armor_class'), armorDex: o.getString('armor_dex'), acBonus: o.getInteger('ac_bonus'), speedBonus: o.getInteger('speed_bonus'), hpBonus: o.getInteger('hp_bonus'),
+        armorClass: o.getInteger('armor_class'), armorDex: o.getString('armor_dex'), stealthDisadvantage: o.getBoolean('stealth_disadvantage'), acBonus: o.getInteger('ac_bonus'), speedBonus: o.getInteger('speed_bonus'), hpBonus: o.getInteger('hp_bonus'),
         charges: o.getInteger('charges'), recharge: o.getString('recharge'), roll: o.getString('roll'), rollIs: o.getString('roll_is'), effect: o.getString('effect'),
         ability: o.getString('ability'), abilityBecomes: o.getInteger('ability_becomes'), abilityBonus: o.getInteger('ability_bonus'), saveBonus: o.getInteger('save_bonus'), skill: o.getString('skill'), skillBonus: o.getInteger('skill_bonus'),
         spells: o.getString('spells'), attunement: o.getBoolean('attunement'), useNow: o.getBoolean('use_now'),

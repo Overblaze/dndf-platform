@@ -1,4 +1,5 @@
-import { cite, type Stat } from '@dndf/engine';
+import { cite, edgeForStat, type Stat } from '@dndf/engine';
+import { EdgeNote } from '../components/EdgeNote';
 import { useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { useRolls } from '../lib/rolls';
@@ -7,6 +8,7 @@ import { formatStat, type StatKind } from './stats';
 
 /** How a number was worked out, with the player's own value on top if they set one. */
 export function StatDialog({ stat, kind, rollable, live, onClose }: { stat: Stat; kind: StatKind; rollable: boolean; live: LiveCharacter; onClose: () => void }) {
+  const edge = edgeForStat(live.sheet, stat.key);
   const rolls = useRolls();
   const [own, setOwn] = useState(stat.overridden ? String(stat.value) : '');
   const setOverride = (value: number | null) => {
@@ -58,8 +60,9 @@ export function StatDialog({ stat, kind, rollable, live, onClose }: { stat: Stat
           </button>
         </span>
       </label>
+      {edge && <p className="page-ref"><EdgeNote edge={edge} /> The tray’s Adv and Dis buttons are put together with this: one of each is a straight roll.</p>}
       {rollable && (
-        <button className="btn btn-primary wide" onClick={() => { rolls.d20(stat.label, stat.value); onClose(); }}>
+        <button className="btn btn-primary wide" onClick={() => { rolls.d20(stat.label, stat.value, undefined, edge); onClose(); }}>
           Roll d20 {formatStat(stat.value, 'mod')}
         </button>
       )}

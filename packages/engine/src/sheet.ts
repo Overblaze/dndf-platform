@@ -5,7 +5,7 @@ import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type Char
 import { GENERAL_PAGES, HANDBOOKS } from './citations';
 import { classColumns } from './classes';
 import { abilityMod, maxHp, proficiencyBonus, signed } from './core';
-import { fillTemplate, formatDice, parseDice, type DiceSpec } from './dice';
+import { fillTemplate, formatDice, parseDice, type DiceSpec, type RollMode } from './dice';
 import { COMBINED_CASTERS, multiclassSlots, multiclassWarnings } from './multiclass';
 import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, willpower } from './dndf';
 import { RARITY_LEVEL, bounty as bountyOf, type WantedPoster } from './bounty';
@@ -100,10 +100,21 @@ export interface SheetToggle {
   regain: { resource: string; value: number }[];
 }
 
+/**
+ * Whether a d20 roll is made with advantage or disadvantage, and why. Any advantage together with any
+ * disadvantage is a straight roll, however many of each there are.
+ */
+export interface RollEdge {
+  mode: 'normal' | 'advantage' | 'disadvantage';
+  reasons: { mode: 'advantage' | 'disadvantage'; from: string }[];
+}
+
 export interface SheetAttack {
   id: string;
   name: string;
   toHit: Stat;
+  /** Set when something gives this attack roll advantage or disadvantage. */
+  edge?: RollEdge;
   /** "1d6 + 4" */
   damage: string;
   damageType: string;
@@ -116,6 +127,8 @@ export interface SheetSkill extends Stat {
   ability: Ability;
   proficient: boolean;
   expertise: boolean;
+  /** Set when something gives this check advantage or disadvantage (heavy armor on Stealth). */
+  edge?: RollEdge;
 }
 
 export interface SheetTracker {
@@ -144,11 +157,13 @@ export interface Sheet {
   summary: string;
   level: number;
   /** `changes` lists what moved a score from the one written on the character, in order, when anything did. */
-  abilities: Record<Ability, { score: number; mod: number; changes?: { label: string; to: number }[] }>;
+  abilities: Record<Ability, { score: number; mod: number; changes?: { label: string; to: number }[]; /** For a plain check with this ability. */ edge?: RollEdge }>;
+  /** Set when something gives the initiative roll advantage or disadvantage. */
+  initiativeEdge?: RollEdge;
   /** Magic items attuned to, against how many a character can be (three, 5e SRD 5.1 p. 206). Going over is said, not stopped. */
   attunement: { used: number; max: Stat; over: boolean; items: string[] };
   prof: Stat;
-  saves: Record<Ability, Stat & { proficient: boolean }>;
+  saves: Record<Ability, Stat & { proficient: boolean; edge?: RollEdge }>;
   skills: SheetSkill[];
   passivePerception: Stat;
   initiative: Stat;
@@ -625,10 +640,48 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   // Armor worn or a shield carried without the proficiency: said plainly, never blocked.
   const armorKind = doc.armor ? (doc.armor.dexCap === 0 ? 'heavy' : doc.armor.dexCap == null ? 'light' : 'medium') : undefined;
   const unproficient = 'disadvantage on Strength and Dexterity checks, saves and attack rolls, and you can’t cast spells';
-  if (doc.armor && !(doc.armor.proficient ?? proficiencies.armor.some((p) => p.id === armorKind))) notes.push({ label: `Not proficient with ${armorKind} armor: ${unproficient}`, from: doc.armor.name });
-  if (doc.shield && !proficiencies.armor.some((p) => p.id === 'shields')) notes.push({ label: `Not proficient with shields: ${unproficient}`, from: 'Shield' });
+  const armorUnproficient = Boolean(doc.armor && !(doc.armor.proficient ?? proficiencies.armor.some((p) => p.id === armorKind)));
+  const shieldUnproficient = Boolean(doc.shield && !proficiencies.armor.some((p) => p.id === 'shields'));
+  if (doc.armor && armorUnproficient) notes.push({ label: `Not proficient with ${armorKind} armor: ${unproficient}`, from: doc.armor.name });
+  if (shieldUnproficient) notes.push({ label: `Not proficient with shields: ${unproficient}`, from: 'Shield' });
+  // Armor that hinders sneaking: as its own entry says, or for armor from the armory, as the armory says for that name.
+  const armorEntry = doc.armor ? [...rules.values()].find((e) => e.kind === 'item' && e.itemType === 'armor' && e.name === doc.armor!.name) : undefined;
+  const noisyArmor = Boolean(doc.armor && (doc.armor.stealthDisadvantage ?? armorEntry?.stealthDisadvantage === true));
+  if (doc.armor && noisyArmor) notes.push({ label: 'Disadvantage on Dexterity (Stealth) checks', from: doc.armor.name });
 
   const exhaustion = doc.state.exhaustion;
+  /**
+   * Advantage and disadvantage on one kind of d20 roll, from everything that gives either: features and
+   * items, armor that hinders Stealth, armor or a shield worn without proficiency, exhaustion.
+   * A skill check and initiative are ability checks, so what applies to an ability's checks applies to them.
+   */
+  const edgeOf = (on: 'skill' | 'save' | 'check' | 'attack' | 'initiative', target: { skill?: string; ability?: Ability } = {}): RollEdge | undefined => {
+    const reasons: RollEdge['reasons'] = [];
+    const isCheck = on === 'skill' || on === 'check' || on === 'initiative';
+    for (const e of ofType('rollMode')) {
+      const mode = e.effect.mode === 'advantage' ? 'advantage' : e.effect.mode === 'disadvantage' ? 'disadvantage' : null;
+      if (!mode) continue;
+      const wants = e.effect.on;
+      const hit = wants === on
+        ? (on !== 'skill' || !e.effect.skill || e.effect.skill === target.skill) && (!e.effect.ability || e.effect.ability === target.ability)
+        : wants === 'check' && isCheck && (!e.effect.ability || e.effect.ability === target.ability);
+      if (hit) reasons.push({ mode, from: e.from });
+    }
+    if (on === 'skill' && target.skill === 'stealth' && noisyArmor) reasons.push({ mode: 'disadvantage', from: doc.armor!.name });
+    const physical = target.ability === 'str' || target.ability === 'dex';
+    if (physical || on === 'attack') {
+      if (armorUnproficient) reasons.push({ mode: 'disadvantage', from: `Not proficient with ${armorKind} armor` });
+      if (shieldUnproficient) reasons.push({ mode: 'disadvantage', from: 'Not proficient with shields' });
+    }
+    if (exhaustion >= 1 && isCheck) reasons.push({ mode: 'disadvantage', from: `Exhaustion ${exhaustion}` });
+    if (exhaustion >= 3 && (on === 'attack' || on === 'save')) reasons.push({ mode: 'disadvantage', from: `Exhaustion ${exhaustion}` });
+    if (reasons.length === 0) return undefined;
+    const up = reasons.some((r) => r.mode === 'advantage');
+    const down = reasons.some((r) => r.mode === 'disadvantage');
+    return { mode: up && down ? 'normal' : up ? 'advantage' : 'disadvantage', reasons };
+  };
+  const withEdge = <T extends object>(thing: T, edge: RollEdge | undefined): T => (edge ? { ...thing, edge } : thing);
+  for (const a of ABILITIES) { const edge = edgeOf('check', { ability: a }); if (edge) abilities[a] = { ...abilities[a], edge }; }
   const exhaustionNote = (min: number, label: string) => exhaustion >= min && notes.push({ label, from: `Exhaustion ${exhaustion}` });
   exhaustionNote(1, 'Disadvantage on ability checks');
   exhaustionNote(3, 'Disadvantage on attack rolls and saving throws');
@@ -659,7 +712,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     const lines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[a]} modifier`, value: mod[a]! }];
     if (saveProfs.has(a)) lines.push({ label: 'Proficiency bonus', value: prof.value });
     for (const e of ofType('saveBonus')) if (!e.effect.ability || e.effect.ability === a) lines.push({ label: e.from, value: amount(e) });
-    saves[a] = { ...stat(doc, `save.${a}`, `${ABILITY_NAMES[a]} save`, { value: sum(lines), lines }), proficient: saveProfs.has(a) };
+    saves[a] = withEdge({ ...stat(doc, `save.${a}`, `${ABILITY_NAMES[a]} save`, { value: sum(lines), lines }), proficient: saveProfs.has(a) }, edgeOf('save', { ability: a }));
   }
 
   // Jack of All Trades: half proficiency on ability checks that don't already include it.
@@ -671,7 +724,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     if (proficient) lines.push({ label: expertise ? 'Proficiency bonus × 2 (expertise)' : 'Proficiency bonus', value: prof.value * (expertise ? 2 : 1) });
     else for (const e of halfProf) lines.push({ label: `${e.from}: half proficiency, rounded down`, value: Math.floor(prof.value / 2) });
     for (const e of ofType('skillBonus')) if (!e.effect.skill || e.effect.skill === skill.id) lines.push({ label: e.from, value: amount(e) });
-    return { ...stat(doc, `skill.${skill.id}`, skill.name, { value: sum(lines), lines }), id: skill.id, ability: skill.ability, proficient, expertise };
+    return withEdge({ ...stat(doc, `skill.${skill.id}`, skill.name, { value: sum(lines), lines }), id: skill.id, ability: skill.ability, proficient, expertise }, edgeOf('skill', { skill: skill.id, ability: skill.ability }));
   });
   const perception = skills.find((s) => s.id === 'perception')!;
   const passivePerception = stat(doc, 'passivePerception', 'Passive Perception', {
@@ -905,7 +958,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     if (spec) spec.bonus += flat;
     else attackNotes.push(`Can't read "${String(dice).slice(0, 20)}" as dice: fix the weapon's damage in Edit`);
 
-    return {
+    return withEdge({
       id: weapon.id,
       name: weapon.name,
       toHit: stat(doc, `attack.${weapon.id}`, `${weapon.name} attack`, { value: sum(hitLines), lines: hitLines }),
@@ -913,7 +966,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
       damageType: weapon.damageType,
       damageLines,
       notes: attackNotes,
-    };
+    }, edgeOf('attack', { ability }));
   });
 
   // 11. Features, with their dice and display values worked out.
@@ -1225,6 +1278,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     skills,
     passivePerception,
     initiative,
+    ...(edgeOf('initiative', { ability: 'dex' }) ? { initiativeEdge: edgeOf('initiative', { ability: 'dex' }) } : {}),
     ac,
     speed,
     maxHp: maxHpStat,
@@ -1270,4 +1324,30 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     fruitAttack,
     warnings,
   };
+}
+
+/**
+ * How a d20 is rolled once what the sheet says is put together with what the player chose for this roll.
+ * Advantage and disadvantage from any two sources cancel to a straight roll.
+ */
+export function rollModeWith(edge: RollEdge | undefined, chosen: RollMode = 'normal'): RollMode {
+  const up = chosen === 'advantage' || Boolean(edge?.reasons.some((r) => r.mode === 'advantage'));
+  const down = chosen === 'disadvantage' || Boolean(edge?.reasons.some((r) => r.mode === 'disadvantage'));
+  return up && down ? 'normal' : up ? 'advantage' : down ? 'disadvantage' : 'normal';
+}
+
+/** "disadvantage: Chain Mail" / "advantage: Cloak; disadvantage: Chain Mail, so a straight roll". */
+export function describeEdge(edge: RollEdge): string {
+  const list = (mode: 'advantage' | 'disadvantage') => [...new Set(edge.reasons.filter((r) => r.mode === mode).map((r) => r.from))].join(', ');
+  const parts = (['advantage', 'disadvantage'] as const).filter((mode) => list(mode)).map((mode) => `${mode}: ${list(mode)}`);
+  return edge.mode === 'normal' ? `${parts.join('; ')}, so a straight roll` : parts.join('; ');
+}
+
+/** The advantage or disadvantage that goes with one of the sheet's numbers, by its key ("skill.stealth", "save.wis", "initiative", "attack.<id>"). */
+export function edgeForStat(sheet: Sheet, key: string): RollEdge | undefined {
+  if (key === 'initiative') return sheet.initiativeEdge;
+  if (key.startsWith('skill.')) return sheet.skills.find((s) => s.key === key)?.edge;
+  if (key.startsWith('save.')) return Object.values(sheet.saves).find((s) => s.key === key)?.edge;
+  if (key.startsWith('attack.')) return sheet.attacks.find((a) => a.toHit.key === key)?.edge;
+  return undefined;
 }

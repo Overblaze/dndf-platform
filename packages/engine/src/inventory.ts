@@ -1,6 +1,6 @@
 // What a character carries: items with a count and a weight, and berries. Weight is checked against
 // carrying capacity (Strength × 15 lb and what changes it) and said when it is over; nothing is blocked.
-import { CUSTOM_BONUS_TYPES, SKILLS, type CharacterDoc, type CustomBonusType, type CustomFeature, type WeaponDef } from './character';
+import { CUSTOM_BONUS_TYPES, EDGE_TARGETS, GRANT_KINDS, SKILLS, type CharacterDoc, type CustomBonusType, type CustomFeature, type EdgeTarget, type GrantKind, type ProficiencyGrant, type RollEdgeDef, type WeaponDef } from './character';
 import { parseDice } from './dice';
 import { ABILITIES, type Ability, type RuleEntry } from './types';
 
@@ -23,7 +23,7 @@ export interface CustomItem {
   text?: string;
   weapon?: Pick<WeaponDef, 'damage' | 'damageType' | 'category' | 'ranged' | 'finesse' | 'twoHanded' | 'heavy' | 'bonus'>;
   /** Armor formula: base + Dexterity modifier, limited to dexCap when set (0 for heavy armor, null for light). */
-  armor?: { base: number; dexCap?: number | null };
+  armor?: { base: number; dexCap?: number | null; /** Disadvantage on Stealth checks while worn. */ stealthDisadvantage?: boolean };
   action?: CustomFeature['action'];
   /** Charges, and when they come back. */
   uses?: CustomFeature['uses'];
@@ -41,6 +41,10 @@ export interface CustomItem {
   skills?: CustomFeature['skills'];
   /** Spells it lets its bearer cast: by name, with the rules entry when the spell is one the library has. */
   spells?: { name: string; level: number; entry?: string }[];
+  /** Advantage or disadvantage it gives on a kind of d20 roll while in use. */
+  edges?: CustomFeature['edges'];
+  /** Proficiencies it grants while in use. */
+  grants?: CustomFeature['grants'];
   /** Where its text is from, when it was started from an item in the book. */
   source?: { book: string; page: number };
 }
@@ -131,7 +135,7 @@ export function cleanCustomItem(raw: unknown): CustomItem | undefined {
   }
   if (item.kind === 'armor' && isObject(raw.armor)) {
     const base = within(raw.armor.base, 0, 40);
-    if (base !== undefined) item.armor = { base, dexCap: raw.armor.dexCap === null || raw.armor.dexCap === undefined ? null : within(raw.armor.dexCap, 0, 10) ?? null };
+    if (base !== undefined) item.armor = { base, dexCap: raw.armor.dexCap === null || raw.armor.dexCap === undefined ? null : within(raw.armor.dexCap, 0, 10) ?? null, ...(raw.armor.stealthDisadvantage === true ? { stealthDisadvantage: true } : {}) };
   }
   if (raw.action === 'action' || raw.action === 'bonus' || raw.action === 'reaction') item.action = raw.action;
   if (isObject(raw.uses)) {
@@ -193,6 +197,37 @@ export function cleanCustomItem(raw: unknown): CustomItem | undefined {
     });
     if (skills.length) item.skills = skills;
   }
+  if (Array.isArray(raw.edges)) {
+    const seen = new Set<string>();
+    const edges = raw.edges.filter(isObject).flatMap((e) => {
+      const mode = e.mode === 'advantage' ? ('advantage' as const) : e.mode === 'disadvantage' ? ('disadvantage' as const) : null;
+      const on = (EDGE_TARGETS as readonly unknown[]).includes(e.on) ? (e.on as EdgeTarget) : null;
+      const skill = on === 'skill' && typeof e.skill === 'string' && SKILLS.some((k) => k.id === e.skill) ? e.skill : undefined;
+      const of = (on === 'save' || on === 'check') && ability(e.ability) ? e.ability : undefined;
+      // A skill or ability that is named but is not one is a mistake, not "all of them".
+      if (!mode || !on || (on === 'skill' && e.skill && !skill) || ((on === 'save' || on === 'check') && e.ability && !of)) return [];
+      const key = `${on}/${skill ?? of ?? ''}`;
+      if (seen.has(key)) return [];
+      seen.add(key);
+      return [{ mode, on, ...(skill ? { skill } : {}), ...(of ? { ability: of } : {}) }];
+    }).slice(0, 20);
+    if (edges.length) item.edges = edges;
+  }
+  if (Array.isArray(raw.grants)) {
+    const seen = new Set<string>();
+    const ARMOR = ['light', 'medium', 'heavy', 'shields'];
+    const grants = raw.grants.filter(isObject).flatMap((g) => {
+      const kind = (GRANT_KINDS as readonly unknown[]).includes(g.kind) ? (g.kind as GrantKind) : null;
+      const id = words(g.id, 60);
+      if (!kind || !id) return [];
+      const ok = kind === 'skill' || kind === 'expertise' ? SKILLS.some((k) => k.id === id) : kind === 'save' ? ability(id) : kind === 'armor' ? ARMOR.includes(id) : true;
+      const key = `${kind}/${id.toLowerCase()}`;
+      if (!ok || seen.has(key)) return [];
+      seen.add(key);
+      return [{ kind, id }];
+    }).slice(0, 20);
+    if (grants.length) item.grants = grants;
+  }
   if (isObject(raw.source) && typeof raw.source.book === 'string' && raw.source.book.trim()) {
     const page = within(raw.source.page, 0, 9999);
     if (page !== undefined) item.source = { book: raw.source.book.trim().slice(0, 80), page };
@@ -210,12 +245,27 @@ export function cleanCustomItem(raw: unknown): CustomItem | undefined {
 /** Whether a made item changes anything on the sheet when put to use (a plain crate of oranges does not). */
 export function itemDoesSomething(custom: CustomItem | undefined): boolean {
   return Boolean(custom && (custom.weapon || custom.armor || custom.kind === 'shield' || custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action
-    || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.spells?.length));
+    || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.spells?.length || custom.edges?.length || custom.grants?.length));
 }
 
 const BONUS_WORDS: Record<CustomBonusType, string> = { ac: 'AC', speed: 'ft speed', initiative: 'initiative', hp: 'hit points', attack: 'to attacks', damage: 'damage' };
 const plus = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 const ABILITY_SHORT: Record<Ability, string> = { str: 'Str', dex: 'Dex', con: 'Con', int: 'Int', wis: 'Wis', cha: 'Cha' };
+
+/** "Stealth checks", "all saving throws", "Strength checks", "attack rolls", "initiative". */
+export function edgeTargetName(edge: RollEdgeDef): string {
+  if (edge.on === 'skill') return edge.skill ? `${SKILLS.find((k) => k.id === edge.skill)?.name ?? edge.skill} checks` : 'all skill checks';
+  if (edge.on === 'save') return edge.ability ? `${ABILITY_SHORT[edge.ability]} saves` : 'all saving throws';
+  if (edge.on === 'check') return edge.ability ? `${ABILITY_SHORT[edge.ability]} checks` : 'all ability checks';
+  return edge.on === 'attack' ? 'attack rolls' : 'initiative';
+}
+/** "proficiency in Stealth", "expertise in Stealth", "proficiency in Wis saves", "proficiency with heavy armor". */
+export function grantName(grant: ProficiencyGrant): string {
+  if (grant.kind === 'skill' || grant.kind === 'expertise') return `${grant.kind === 'skill' ? 'proficiency' : 'expertise'} in ${SKILLS.find((k) => k.id === grant.id)?.name ?? grant.id}`;
+  if (grant.kind === 'save') return `proficiency in ${ABILITY_SHORT[grant.id as Ability] ?? grant.id} saves`;
+  if (grant.kind === 'armor') return `proficiency with ${grant.id === 'shields' ? 'shields' : `${grant.id} armor`}`;
+  return `proficiency with ${grant.id.replace(/_/g, ' ')}${grant.kind === 'weapon' && !/weapon/i.test(grant.id) ? ' weapons' : ''}`;
+}
 
 /** One line saying what a made item is and does: "Weapon · 1d8 slashing, +1 · +1 AC · 3 charges (long rest) · Rare". */
 export function itemSummary(custom: CustomItem): string {
@@ -225,12 +275,14 @@ export function itemSummary(custom: CustomItem): string {
     const tags = [w.category === 'martial' ? 'martial' : w.category === 'simple' ? 'simple' : 'improvised', w.ranged ? 'ranged' : '', w.finesse ? 'finesse' : '', w.twoHanded ? 'two-handed' : '', w.heavy ? 'heavy' : ''].filter(Boolean).join(', ');
     parts.push(`${w.damage}${w.damageType ? ` ${w.damageType}` : ''}${w.bonus ? `, ${plus(w.bonus)} to hit and damage` : ''} (${tags})`);
   }
-  if (custom.armor) parts.push(`AC ${custom.armor.base}${custom.armor.dexCap === 0 ? '' : custom.armor.dexCap == null ? ' + Dex' : ` + Dex (max ${custom.armor.dexCap})`}`);
+  if (custom.armor) parts.push(`AC ${custom.armor.base}${custom.armor.dexCap === 0 ? '' : custom.armor.dexCap == null ? ' + Dex' : ` + Dex (max ${custom.armor.dexCap})`}${custom.armor.stealthDisadvantage ? ', disadvantage on Stealth' : ''}`);
   if (custom.kind === 'shield') parts.push('+2 AC');
   for (const a of custom.abilities ?? []) parts.push([a.set !== undefined ? `${ABILITY_SHORT[a.ability]} ${a.set}` : '', a.bonus ? `${plus(a.bonus)} ${ABILITY_SHORT[a.ability]}` : ''].filter(Boolean).join(', '));
   for (const b of custom.bonuses ?? []) parts.push(`${plus(b.value)} ${BONUS_WORDS[b.type]}`);
   for (const v of custom.saves ?? []) parts.push(`${plus(v.value)} to ${v.ability ? `${ABILITY_SHORT[v.ability]} saves` : 'all saves'}`);
   for (const k of custom.skills ?? []) parts.push(`${plus(k.value)} to ${k.skill ? SKILLS.find((x) => x.id === k.skill)?.name ?? k.skill : 'all skills'}`);
+  for (const e of custom.edges ?? []) parts.push(`${e.mode} on ${edgeTargetName(e)}`);
+  for (const g of custom.grants ?? []) parts.push(grantName(g));
   if (custom.spells?.length) parts.push(`casts ${custom.spells.map((x) => x.name).join(', ')}`);
   if (custom.uses) parts.push(`${custom.uses.max} charge${custom.uses.max === 1 ? '' : 's'} (${custom.uses.recharge} rest)`);
   for (const r of custom.rolls ?? []) parts.push(`${r.label === r.dice ? '' : `${r.label} `}${r.dice}`);
@@ -272,15 +324,16 @@ export function withEquippedItems(doc: CharacterDoc): CharacterDoc {
   for (const item of used) {
     const custom = item.custom!;
     if (custom.weapon) weapons.push({ id: `item:${item.id}`, name: item.name, ...custom.weapon });
-    if (custom.armor && !worn) { armor = { name: item.name, base: custom.armor.base, dexCap: custom.armor.dexCap }; worn = true; }
+    if (custom.armor && !worn) { armor = { name: item.name, base: custom.armor.base, dexCap: custom.armor.dexCap, stealthDisadvantage: custom.armor.stealthDisadvantage === true }; worn = true; }
     if (custom.kind === 'shield') shield = true;
     for (const [i, spell] of (custom.spells ?? []).entries()) spells.push({ id: `item-${item.id}-${i}`, name: spell.name, level: spell.level, ...(spell.entry ? { entry: spell.entry } : {}), item: item.name, notes: `From ${item.name}` });
-    if (custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action || custom.text || custom.abilities?.length || custom.saves?.length || custom.skills?.length) {
+    if (custom.uses || custom.rolls?.length || custom.bonuses?.length || custom.note || custom.action || custom.text || custom.abilities?.length || custom.saves?.length || custom.skills?.length || custom.edges?.length || custom.grants?.length) {
       features.push({
         id: `item-${item.id}`, name: item.name, text: custom.text ?? '', origin: custom.rarity ? `Item (${custom.rarity})` : 'Item',
         ...(custom.action ? { action: custom.action } : {}), ...(custom.uses ? { uses: custom.uses } : {}), ...(custom.rolls ? { rolls: custom.rolls } : {}),
         ...(custom.bonuses ? { bonuses: custom.bonuses } : {}), ...(custom.note ? { note: custom.note } : {}),
         ...(custom.abilities ? { abilities: custom.abilities } : {}), ...(custom.saves ? { saves: custom.saves } : {}), ...(custom.skills ? { skills: custom.skills } : {}),
+        ...(custom.edges ? { edges: custom.edges } : {}), ...(custom.grants ? { grants: custom.grants } : {}),
       });
     }
   }

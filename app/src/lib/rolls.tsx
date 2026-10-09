@@ -1,4 +1,4 @@
-import { rollD20, rollDice, type D20Result, type DiceResult, type RollMode } from '@dndf/engine';
+import { describeEdge, rollD20, rollDice, rollModeWith, type D20Result, type DiceResult, type RollEdge, type RollMode } from '@dndf/engine';
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { rng } from './rules';
 
@@ -19,7 +19,8 @@ interface Rolls {
   entries: RollEntry[];
   mode: RollMode;
   setMode: (mode: RollMode) => void;
-  d20: (title: string, bonus: number, followUp?: RollEntry['followUp']) => D20Result;
+  /** `edge` is the advantage or disadvantage the sheet gives this roll; it is put together with the mode chosen in the tray. */
+  d20: (title: string, bonus: number, followUp?: RollEntry['followUp'], edge?: RollEdge) => D20Result;
   dice: (title: string, dice: string, options?: { crit?: boolean }) => DiceResult;
   addTo: (id: number, label: string, amount: number) => void;
   clear: () => void;
@@ -41,9 +42,12 @@ export function RollsProvider({ children }: { children: ReactNode }) {
       entries,
       mode,
       setMode,
-      d20(title, bonus, followUp) {
-        const result = rollD20(bonus, rng, mode);
-        const shown = result.dice.length > 1 ? `${result.die} (${result.dice.join(', ')}; ${mode})` : `${result.die}`;
+      d20(title, bonus, followUp, edge) {
+        const how = rollModeWith(edge, mode);
+        const result = rollD20(bonus, rng, how);
+        // Why it was rolled this way: what the sheet gave, and what the player chose on top.
+        const why = [edge ? describeEdge(edge) : '', mode !== 'normal' ? `you chose ${mode}` : ''].filter(Boolean).join('; ');
+        const shown = result.dice.length > 1 ? `${result.die} (${result.dice.join(', ')}; ${why || how})` : why && how === 'normal' ? `${result.die} (${why}${/straight roll/.test(why) ? '' : ', so a straight roll'})` : `${result.die}`;
         push({
           title,
           detail: `${shown}${signedPart(bonus)}`,

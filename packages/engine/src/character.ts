@@ -33,6 +33,8 @@ export interface ArmorDef {
   dexCap?: number | null;
   /** Set to force proficiency on or off; otherwise it comes from the classes, subclasses and feats. */
   proficient?: boolean;
+  /** Whether it gives disadvantage on Stealth checks. Unset: as the armory says for armor of this name. */
+  stealthDisadvantage?: boolean;
 }
 
 export const CUSTOM_BONUS_TYPES = ['ac', 'speed', 'initiative', 'hp', 'attack', 'damage'] as const;
@@ -60,7 +62,19 @@ export interface CustomFeature {
   saves?: { ability?: Ability; value: number }[];
   /** A bonus to skill checks: to one skill's, or with no skill named, to all of them. */
   skills?: { skill?: string; value: number }[];
+  /** Advantage or disadvantage it gives on a kind of d20 roll: one skill or every skill, one ability's saves or checks or all of them, attack rolls, initiative. */
+  edges?: RollEdgeDef[];
+  /** Proficiencies it grants: a skill (or expertise in it), a saving throw, a kind of armor, a group of weapons, a tool. */
+  grants?: ProficiencyGrant[];
 }
+
+export const EDGE_TARGETS = ['skill', 'save', 'check', 'attack', 'initiative'] as const;
+export type EdgeTarget = (typeof EDGE_TARGETS)[number];
+export interface RollEdgeDef { mode: 'advantage' | 'disadvantage'; on: EdgeTarget; skill?: string; ability?: Ability }
+export const GRANT_KINDS = ['skill', 'expertise', 'save', 'armor', 'weapon', 'tool'] as const;
+export type GrantKind = (typeof GRANT_KINDS)[number];
+/** `id` is a skill id, an ability, "light" / "medium" / "heavy" / "shields", "simple" / "martial", or a tool's name. */
+export interface ProficiencyGrant { kind: GrantKind; id: string }
 
 export interface BorrowedFeature {
   /** The rules entry it comes from (a class, subclass or option list) and the feature's name there. */

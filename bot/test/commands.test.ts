@@ -1,6 +1,6 @@
 // The bot's commands, checked against the same engine and rules data as the website.
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_SETTINGS, deriveSheet, newCharacter, spendResource, type CharacterDoc, type Rng, type RuleEntry, type Secrets } from '@dndf/engine';
+import { DEFAULT_SETTINGS, armorFromItem, deriveSheet, newCharacter, spendResource, type CharacterDoc, type Rng, type RuleEntry, type Secrets } from '@dndf/engine';
 import { loadRules } from '../../packages/engine/test/load';
 import { dawnCommand, findRollable, hp, partyLine, rest, roll, status, withPrivacy } from '../src/commands';
 
@@ -164,5 +164,28 @@ describe('/status with gear and spells', () => {
     const reply = status(doc, sheet).reply;
     expect(reply).toContain('฿1,250,000 · carrying 300 of 240 lb (over)');
     expect(reply).toContain('Prepared: Bless');
+  });
+});
+
+describe('/roll with what the sheet says about advantage', () => {
+  const chain = rules.get('item.chain_mail')!;
+  const armored = () => make({ armor: armorFromItem(chain) });
+
+  it('Stealth in heavy armor is rolled with disadvantage without being asked: 17 and 4 keep the 4', () => {
+    const { sheet } = armored();
+    const stealth = sheet.skills.find((s) => s.id === 'stealth')!;
+    const out = roll(sheet, 'stealth', 'normal', faces(20, 17, 4)).reply;
+    expect(out).toBe(`🎲 **Zoro** · Stealth: **${4 + stealth.value}**  (17, 4 → 4, disadvantage: Chain Mail ${stealth.value >= 0 ? '+' : ''}${stealth.value})`);
+    // Other skills are untouched.
+    expect(roll(sheet, 'athletics', 'normal', faces(20, 17, 4)).reply).toMatch(/\(17 \+\d+\)$/);
+  });
+
+  it('asking for advantage on top cancels it to a straight roll, and says why', () => {
+    const { sheet } = armored();
+    const stealth = sheet.skills.find((s) => s.id === 'stealth')!;
+    const out = roll(sheet, 'stealth', 'advantage', faces(20, 17, 4)).reply;
+    expect(out).toBe(`🎲 **Zoro** · Stealth: **${17 + stealth.value}**  (17, disadvantage: Chain Mail; asked for advantage, so a straight roll ${stealth.value >= 0 ? '+' : ''}${stealth.value})`);
+    // Asking for disadvantage as well changes nothing: it is still one disadvantage.
+    expect(roll(sheet, 'stealth', 'disadvantage', faces(20, 17, 4)).reply).toContain('17, 4 → 4');
   });
 });

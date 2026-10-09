@@ -54,7 +54,7 @@ export interface MakeInput extends AddInput {
   kind: string;
   rarity?: string | null; worth?: number | null; description?: string | null;
   damage?: string | null; damageType?: string | null; martial?: boolean | null; ranged?: boolean | null; finesse?: boolean | null; twoHanded?: boolean | null; weaponBonus?: number | null;
-  armorClass?: number | null; armorDex?: string | null;
+  armorClass?: number | null; armorDex?: string | null; stealthDisadvantage?: boolean | null;
   acBonus?: number | null; speedBonus?: number | null; hpBonus?: number | null;
   charges?: number | null; recharge?: string | null; roll?: string | null; rollIs?: string | null; rollName?: string | null; effect?: string | null;
   /** One ability score it changes: to a number (if lower), or up by one. */
@@ -96,7 +96,7 @@ export function itemMake(doc: CharacterDoc, sheet: Sheet, input: MakeInput, make
   const raw = {
     kind: input.kind, rarity: input.rarity ?? undefined, value: input.worth ?? undefined, text: input.description ?? undefined,
     weapon: input.kind === 'weapon' ? { damage: (input.damage ?? '').replace(/\s+/g, ''), damageType: input.damageType ?? '', category: input.martial ? 'martial' : 'simple', ranged: input.ranged === true, finesse: input.finesse === true, twoHanded: input.twoHanded === true, bonus: input.weaponBonus ?? undefined } : undefined,
-    armor: input.kind === 'armor' && typeof input.armorClass === 'number' ? { base: input.armorClass, dexCap: input.armorDex === 'none' ? 0 : input.armorDex === 'max2' ? 2 : null } : undefined,
+    armor: input.kind === 'armor' && typeof input.armorClass === 'number' ? { base: input.armorClass, dexCap: input.armorDex === 'none' ? 0 : input.armorDex === 'max2' ? 2 : null, stealthDisadvantage: input.stealthDisadvantage === true } : undefined,
     bonuses,
     uses: input.charges ? { max: input.charges, recharge: input.recharge === 'short' ? 'short' : 'long' } : undefined,
     rolls: input.roll ? [{ label: input.rollName ?? '', dice: input.roll, kind: input.rollIs ?? (input.kind === 'consumable' ? 'heal' : 'damage') }] : undefined,

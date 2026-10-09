@@ -2,8 +2,8 @@
 // and the player's words in, the reply and (when something changed) the new character out.
 // The numbers all come from the shared engine, so the bot and the website can never disagree.
 import {
-  ABILITIES, ABILITY_NAMES, applyDamage, applyHealing, dawn, exactBerries, gainTempHp, longRest, nextHitDice, rollD20, rollDice, rollDie, shortRest, signed,
-  type CharacterDoc, type RollMode, type Rng, type Sheet,
+  ABILITIES, ABILITY_NAMES, applyDamage, applyHealing, dawn, describeEdge, exactBerries, gainTempHp, longRest, nextHitDice, rollD20, rollDice, rollDie, rollModeWith, shortRest, signed,
+  type CharacterDoc, type RollEdge, type RollMode, type Rng, type Sheet,
 } from '@dndf/engine';
 
 export interface Outcome {
@@ -32,13 +32,13 @@ const dieFaces = (values: number[]) => values.join(', ');
 const norm = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
 /** Everything on a sheet that a d20 can be rolled for, by the names a player might type. */
-export function rollables(sheet: Sheet): { name: string; bonus: number; kind: 'check' | 'save' | 'skill' | 'attack' | 'initiative'; damage?: string }[] {
+export function rollables(sheet: Sheet): { name: string; bonus: number; kind: 'check' | 'save' | 'skill' | 'attack' | 'initiative'; damage?: string; /** Advantage or disadvantage the sheet gives this roll. */ edge?: RollEdge }[] {
   return [
-    { name: 'Initiative', bonus: sheet.initiative.value, kind: 'initiative' as const },
-    ...sheet.skills.map((s) => ({ name: s.label, bonus: s.value, kind: 'skill' as const })),
-    ...ABILITIES.map((a) => ({ name: `${ABILITY_NAMES[a]} save`, bonus: sheet.saves[a].value, kind: 'save' as const })),
-    ...ABILITIES.map((a) => ({ name: `${ABILITY_NAMES[a]} check`, bonus: sheet.abilities[a].mod, kind: 'check' as const })),
-    ...sheet.attacks.map((a) => ({ name: a.name, bonus: a.toHit.value, kind: 'attack' as const, damage: `${a.damage} ${a.damageType}` })),
+    { name: 'Initiative', bonus: sheet.initiative.value, kind: 'initiative' as const, edge: sheet.initiativeEdge },
+    ...sheet.skills.map((s) => ({ name: s.label, bonus: s.value, kind: 'skill' as const, edge: s.edge })),
+    ...ABILITIES.map((a) => ({ name: `${ABILITY_NAMES[a]} save`, bonus: sheet.saves[a].value, kind: 'save' as const, edge: sheet.saves[a].edge })),
+    ...ABILITIES.map((a) => ({ name: `${ABILITY_NAMES[a]} check`, bonus: sheet.abilities[a].mod, kind: 'check' as const, edge: sheet.abilities[a].edge })),
+    ...sheet.attacks.map((a) => ({ name: a.name, bonus: a.toHit.value, kind: 'attack' as const, damage: `${a.damage} ${a.damageType}`, edge: a.edge })),
   ];
 }
 
@@ -77,8 +77,11 @@ export function roll(sheet: Sheet, what: string, mode: RollMode, rng: Rng): Outc
   if (!found) {
     return { reply: close.length ? `"${text}" could be: ${close.join(', ')}. Which one?` : `Nothing on ${sheet.name}'s sheet is called "${text}". Try a skill, \`str save\`, \`initiative\`, an attack's name, or dice like \`2d6+3\`.` };
   }
-  const d20 = rollD20(found.bonus, rng, mode);
-  const how = mode === 'normal' ? `${d20.die}` : `${dieFaces(d20.dice)} → ${d20.die}, ${mode}`;
+  // What the sheet gives this roll (heavy armor on Stealth, an item) is put together with what the player asked for: one of each is a straight roll.
+  const rolledAs = rollModeWith(found.edge, mode);
+  const d20 = rollD20(found.bonus, rng, rolledAs);
+  const why = [found.edge ? describeEdge(found.edge) : '', mode !== 'normal' ? `asked for ${mode}` : ''].filter(Boolean).join('; ');
+  const how = rolledAs === 'normal' ? `${d20.die}${found.edge ? `, ${why}${/straight roll/.test(why) ? '' : ', so a straight roll'}` : ''}` : `${dieFaces(d20.dice)} → ${d20.die}, ${found.edge ? why : rolledAs}`;
   const flair = d20.natural20 ? ' — natural 20!' : d20.natural1 ? ' — natural 1.' : '';
   const lines = [`🎲 **${sheet.name}** · ${found.name}: **${d20.total}**  (${how} ${signed(found.bonus)})${flair}`];
   if (found.kind === 'attack' && found.damage) {

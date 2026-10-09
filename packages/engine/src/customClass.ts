@@ -44,6 +44,15 @@ export function customFeatureDef(custom: CustomFeature, level: number, toggleId:
     ]),
     ...(custom.saves ?? []).filter((s) => s.value).map((s) => ({ type: 'saveBonus', ...(s.ability ? { ability: s.ability } : {}), value: s.value })),
     ...(custom.skills ?? []).filter((s) => s.value).map((s) => ({ type: 'skillBonus', ...(s.skill ? { skill: s.skill } : {}), value: s.value })),
+    ...(custom.edges ?? []).map((e) => ({ type: 'rollMode', mode: e.mode, on: e.on, ...(e.skill ? { skill: e.skill } : {}), ...(e.ability ? { ability: e.ability } : {}) })),
+    ...(custom.grants ?? []).map((g): EffectDef => (
+      g.kind === 'skill' ? { type: 'proficiency', skill: g.id }
+        : g.kind === 'expertise' ? { type: 'expertise', skill: g.id }
+          : g.kind === 'save' ? { type: 'saveProficiency', ability: g.id as Ability }
+            : g.kind === 'armor' ? { type: 'armorProficiency', armor: g.id }
+              : g.kind === 'weapon' ? { type: 'weaponProficiency', weapon: g.id }
+                : { type: 'toolProficiency', label: g.id }
+    )),
   ];
   return {
     level, name: custom.name || 'Custom feature', text: custom.text, page: 0,
