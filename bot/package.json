@@ -8,6 +8,7 @@
     "register": "tsx src/register.ts",
     "load-secret": "tsx src/load-secret.ts",
     "accounts": "tsx src/accounts.ts",
+    "live-check": "tsx src/live-check.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {

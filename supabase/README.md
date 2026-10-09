@@ -141,7 +141,7 @@ this order.
 only knows addresses, so the app signs a player up as `<username>@players.dndf.invalid`, which can never receive
 mail. With the switch left on, an account can be made but never used.
 
-**2. Run `0008_password_accounts.sql`** in the SQL Editor like the others. It adds no table. It adds a check on every
+**2. Run `0008_password_accounts.sql`, then `0009_profile_names.sql`,** in the SQL Editor like the others. It adds no table. It adds a check on every
 new account: a Discord sign-in passes as before; **anything else needs the table's join code**, or it is refused.
 While no code is set, nobody can make a password account at all. This check is in the database, so it cannot be
 skipped by calling Supabase directly.
@@ -173,3 +173,17 @@ npm run accounts -w bot -- remove <username>  # delete the account and its chara
   A signed-in player changes their own password by tapping their name at the top of the site.
 - The dashboard's own "Add user" button is refused by the same check (it has no join code). Make accounts through
   the site's sign-in dialog.
+
+`0009_profile_names.sql` is two fixes to 0008, found by checking the real project: a brand-new Discord player was
+shown under the first part of the email address Discord hands over instead of their Discord name, and the join code
+stayed on a new account's details. Run it straight after 0008.
+
+## Checking the real project (`npm run live-check -w bot`)
+
+The tests in `supabase/tests` run the migrations against a stand-in for Supabase, which can only be as right as the
+stand-in is. `npm run live-check -w bot`, run on the machine that has the bot's settings file, checks the real thing:
+it makes two temporary password players and a temporary campaign, signs in as each through the same public door the
+website uses, and tries what a player may and may not do (profiles and DM status, characters, campaigns, Devil Fruit
+secrecy, homebrew, ships and their pictures, passwords). It removes everything it made and checks the row counts are
+back where they started. It prints counts only: never a secret, the join code, or the name of a private entry. Run
+it after every new migration. It needs a join code to be set.
