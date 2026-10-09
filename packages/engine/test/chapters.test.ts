@@ -69,7 +69,10 @@ describe('chapters 1 and 2 data', () => {
     const secret = (page: number) => (page >= 237 && page <= 240) || (page >= 250 && page <= 254) || page >= 305;
     const pages = (value: unknown): number[] =>
       Array.isArray(value) ? value.flatMap(pages) : value && typeof value === 'object' ? Object.entries(value).flatMap(([k, v]) => (k === 'sources' ? [] : k === 'page' && typeof v === 'number' ? [v] : pages(v))) : [];
-    for (const entry of all) expect(pages(entry).filter(secret), entry.id).toEqual([]);
+    // The page ranges are the v10 handbook's. Text from the System Reference Document has that document's own page numbers.
+    for (const entry of all.filter((e: RuleEntry) => e.source.book !== '5e SRD 5.1')) expect(pages(entry).filter(secret), entry.id).toEqual([]);
+    // And nothing from the SRD is filed under the handbook's name, which would slip past the line above.
+    expect(all.filter((e: RuleEntry) => e.source.book === '5e SRD 5.1').every((e: RuleEntry) => e.kind === 'spell' || e.id === 'rule.srd_conditions')).toBe(true);
   });
 });
 

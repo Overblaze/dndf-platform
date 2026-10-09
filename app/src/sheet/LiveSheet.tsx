@@ -104,6 +104,14 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
           <p className="soft">
             {sheet.summary} <span className="chip">{VERSION_NAMES[doc.rulesVersion]}</span>
           </p>
+          {(sheet.conditions.length > 0 || doc.state.exhaustion > 0) && (
+            <div className="chips" aria-label="Conditions">
+              {doc.state.exhaustion > 0 && <button className="chip chip-btn chip-damage" onClick={() => setTab('status')}>Exhaustion {doc.state.exhaustion}</button>}
+              {sheet.conditions.map((c) => (
+                <button key={c.name} className={c.immune || !c.known ? 'chip chip-btn' : 'chip chip-btn chip-damage'} onClick={() => setTab('status')} title={c.immune ? `Immune (${c.immune})` : c.effects.join('; ') || 'Your own note'}>{c.name}{c.immune ? ' (immune)' : ''}</button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="row wrap">
           <span className={live.status === 'error' || live.status === 'conflict' ? 'chip chip-damage' : 'chip'} role="status">

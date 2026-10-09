@@ -3,6 +3,7 @@
 import { CUSTOM_BOOK, customFeatureDef, rulesFor } from './customClass';
 import { DEFAULT_SETTINGS, SKILLS, crewRolesOf, type CampaignSettings, type CharacterDoc, type WeaponDef } from './character';
 import { GENERAL_PAGES, HANDBOOKS } from './citations';
+import { CONDITION_EFFECTS, defensesInText, type Defenses } from './conditions';
 import { classColumns } from './classes';
 import { abilityMod, maxHp, proficiencyBonus, signed } from './core';
 import { fillTemplate, formatDice, parseDice, type DiceSpec, type RollMode } from './dice';
@@ -163,7 +164,12 @@ export interface Sheet {
   /** Magic items attuned to, against how many a character can be (three, 5e SRD 5.1 p. 206). Going over is said, not stopped. */
   attunement: { used: number; max: Stat; over: boolean; items: string[] };
   prof: Stat;
-  saves: Record<Ability, Stat & { proficient: boolean; edge?: RollEdge }>;
+  /** `autoFail` names the condition that makes this save fail without a roll (paralyzed, stunned…). */
+  saves: Record<Ability, Stat & { proficient: boolean; edge?: RollEdge; autoFail?: string }>;
+  /** The conditions on the character now, with what each is doing to the sheet. One the character is immune to does nothing. */
+  conditions: { name: string; known: boolean; immune?: string; effects: string[] }[];
+  /** Damage the character resists, is immune to or is vulnerable to, and conditions it cannot be given, each with its source. */
+  protections: Defenses;
   skills: SheetSkill[];
   passivePerception: Stat;
   initiative: Stat;
@@ -650,6 +656,32 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   if (doc.armor && noisyArmor) notes.push({ label: 'Disadvantage on Dexterity (Stealth) checks', from: doc.armor.name });
 
   const exhaustion = doc.state.exhaustion;
+  // Resistances, immunities and vulnerabilities: the player's own, what features and items give, and what a
+  // feature's standing note plainly says ("Resistance to cold damage").
+  const defenses: Defenses = { resist: [], immune: [], vulnerable: [], conditions: [] };
+  const defend = (kind: keyof Defenses, what: string, from: string) => {
+    const tidy = what.trim().toLowerCase();
+    if (tidy && !defenses[kind].some((d) => d.what === tidy && d.from === from)) defenses[kind].push({ what: tidy, from });
+  };
+  for (const kind of ['resist', 'immune', 'vulnerable', 'conditions'] as const) for (const what of doc.defenses?.[kind] ?? []) defend(kind, what, 'Your own');
+  for (const e of ofType('defense')) if (typeof e.effect.what === 'string' && ['resist', 'immune', 'vulnerable', 'conditions'].includes(String(e.effect.kind))) defend(e.effect.kind as keyof Defenses, e.effect.what, e.from);
+  for (const note of notes) for (const found of defensesInText(note.label)) defend(found.kind, found.what, note.from);
+  // Conditions: the fourteen the rules define act on the sheet; one typed in by the player is a note.
+  const conditions: Sheet['conditions'] = [...new Set(doc.state.conditions.map((c) => c.trim().slice(0, 40)).filter(Boolean))].map((name) => {
+    const known = CONDITION_EFFECTS[name];
+    const immune = defenses.conditions.find((d) => d.what === name.toLowerCase())?.from;
+    return { name, known: Boolean(known), ...(immune ? { immune } : {}), effects: immune ? [] : known?.notes ?? [] };
+  });
+  const acting = conditions.filter((c) => c.known && !c.immune).map((c) => ({ name: c.name, does: CONDITION_EFFECTS[c.name]! }));
+  for (const c of conditions) {
+    if (c.immune) notes.push({ label: `${c.name}: immune (${c.immune}), so it does nothing`, from: c.name });
+    else if (!c.known) notes.push({ label: c.name, from: 'Condition' });
+    else for (const label of c.effects) notes.push({ label, from: c.name });
+  }
+  for (const { name, does } of acting) {
+    for (const what of does.resist ?? []) defend('resist', what, name);
+    for (const what of does.immune ?? []) defend('immune', what, name);
+  }
   /**
    * Advantage and disadvantage on one kind of d20 roll, from everything that gives either: features and
    * items, armor that hinders Stealth, armor or a shield worn without proficiency, exhaustion.
@@ -666,6 +698,12 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
         ? (on !== 'skill' || !e.effect.skill || e.effect.skill === target.skill) && (!e.effect.ability || e.effect.ability === target.ability)
         : wants === 'check' && isCheck && (!e.effect.ability || e.effect.ability === target.ability);
       if (hit) reasons.push({ mode, from: e.from });
+    }
+    for (const { name, does } of acting) {
+      for (const e of does.edges ?? []) {
+        const hit = e.on === 'attack' ? on === 'attack' : e.on === 'check' ? isCheck : on === 'save' && (!e.ability || e.ability === target.ability);
+        if (hit) reasons.push({ mode: e.mode, from: name });
+      }
     }
     if (on === 'skill' && target.skill === 'stealth' && noisyArmor) reasons.push({ mode: 'disadvantage', from: doc.armor!.name });
     const physical = target.ability === 'str' || target.ability === 'dex';
@@ -712,7 +750,8 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     const lines: BreakdownLine[] = [{ label: `${ABILITY_NAMES[a]} modifier`, value: mod[a]! }];
     if (saveProfs.has(a)) lines.push({ label: 'Proficiency bonus', value: prof.value });
     for (const e of ofType('saveBonus')) if (!e.effect.ability || e.effect.ability === a) lines.push({ label: e.from, value: amount(e) });
-    saves[a] = withEdge({ ...stat(doc, `save.${a}`, `${ABILITY_NAMES[a]} save`, { value: sum(lines), lines }), proficient: saveProfs.has(a) }, edgeOf('save', { ability: a }));
+    const fails = acting.find((c) => c.does.autoFailSaves?.includes(a))?.name;
+    saves[a] = withEdge({ ...stat(doc, `save.${a}`, `${ABILITY_NAMES[a]} save`, { value: sum(lines), lines }), proficient: saveProfs.has(a), ...(fails ? { autoFail: fails } : {}) }, edgeOf('save', { ability: a }));
   }
 
   // Jack of All Trades: half proficiency on ability checks that don't already include it.
@@ -762,7 +801,9 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
 
   // 6. Speed, initiative, hit points, carrying.
   const speedLines: BreakdownLine[] = [{ label: doc.race.name, value: doc.race.speed }, ...bonusLines('speed')];
-  if (exhaustion >= 5) speedLines.push({ label: `Exhaustion ${exhaustion}: speed 0`, value: -sum(speedLines) });
+  const held = acting.find((c) => c.does.speedZero);
+  if (held) speedLines.push({ label: `${held.name}: speed 0`, value: -sum(speedLines) });
+  else if (exhaustion >= 5) speedLines.push({ label: `Exhaustion ${exhaustion}: speed 0`, value: -sum(speedLines) });
   else if (exhaustion >= 2) speedLines.push({ label: `Exhaustion ${exhaustion}: speed halved`, value: -Math.ceil(sum(speedLines) / 2) });
   const speed = stat(doc, 'speed', 'Speed', { value: sum(speedLines), lines: speedLines });
 
@@ -1317,6 +1358,8 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     poster: doc.bounty?.posted ?? null,
     spellbook,
     attunement,
+    conditions,
+    protections: defenses,
     raceChoices: racePicks,
     fruits,
     knownFruits,

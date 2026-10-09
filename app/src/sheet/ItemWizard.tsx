@@ -1,8 +1,8 @@
 // Making an item of your own, one question at a time, so that it works on the sheet: a weapon you
 // can attack with, armor that sets your Armor Class, or something with powers and charges.
 import {
-  ABILITIES, ABILITY_NAMES, CUSTOM_BONUS_TYPES, ITEM_KINDS, ITEM_RARITIES, SKILLS, armorFromItem, bookMagicItems, cite, cleanCustomItem, edgeTargetName, exactBerries, grantName, itemSummary, parseDice, parseWeight, weaponFromItem,
-  type Ability, type CustomBonusType, type CustomItem, type GrantKind, type InventoryItem, type ItemKind, type ProficiencyGrant, type RollEdgeDef, type RuleEntry,
+  ABILITIES, ABILITY_NAMES, CONDITIONS, CUSTOM_BONUS_TYPES, DAMAGE_TYPES, ITEM_KINDS, ITEM_RARITIES, SKILLS, armorFromItem, bookMagicItems, cite, cleanCustomItem, edgeTargetName, exactBerries, grantName, itemSummary, parseDice, parseWeight, weaponFromItem,
+  type Ability, type CustomBonusType, type CustomItem, type DefenseKind, type GrantKind, type InventoryItem, type ItemKind, type ProficiencyGrant, type RollEdgeDef, type RuleEntry,
 } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
@@ -17,7 +17,6 @@ const KINDS: Record<ItemKind, { name: string; what: string }> = {
 };
 const BONUS_LABELS: Record<CustomBonusType, string> = { ac: 'Armor Class', speed: 'Speed (ft.)', initiative: 'Initiative', hp: 'Hit point maximum', attack: 'Every attack roll', damage: 'Every damage roll' };
 const ROLL_KINDS = [['damage', 'Damage'], ['heal', 'Healing'], ['tempHp', 'Temporary hit points'], ['other', 'Something else']] as const;
-const DAMAGE_TYPES = ['slashing', 'piercing', 'bludgeoning', 'fire', 'cold', 'lightning', 'thunder', 'acid', 'poison', 'necrotic', 'radiant', 'psychic', 'force'];
 type Roll = NonNullable<CustomItem['rolls']>[number];
 const STEPS = ['kind', 'basics', 'stats', 'powers', 'review'] as const;
 type Step = (typeof STEPS)[number];
@@ -41,6 +40,20 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
   const [one, setOne] = useState({ what: '', value: '' });
   const [edge, setEdge] = useState({ what: '', mode: 'advantage' as RollEdgeDef['mode'] });
   const [grant, setGrant] = useState({ kind: 'skill' as GrantKind, id: '' });
+  const [guard, setGuard] = useState({ kind: 'resist' as DefenseKind, what: '' });
+  const GUARD_WORDS: Record<DefenseKind, string> = { resist: 'Resistance to', immune: 'Immunity to', vulnerable: 'Vulnerability to', conditions: 'Can’t be' };
+  const guards = (['resist', 'immune', 'vulnerable', 'conditions'] as const).flatMap((k) => (custom.defenses?.[k] ?? []).map((what) => ({ kind: k, what })));
+  const setGuards = (kind: DefenseKind, list: string[]) => {
+    const next = { ...(custom.defenses ?? {}), [kind]: list };
+    const tidy = Object.fromEntries(Object.entries(next).filter(([, l]) => l && l.length));
+    setCustom({ ...custom, defenses: Object.keys(tidy).length ? tidy : undefined });
+  };
+  const addGuard = () => {
+    const what = guard.what.trim().toLowerCase();
+    if (!what) return;
+    setGuards(guard.kind, [...new Set([...(custom.defenses?.[guard.kind] ?? []), what])]);
+    setGuard({ kind: guard.kind, what: '' });
+  };
   const addEdge = () => {
     const [on, id] = edge.what.split(':');
     const next: RollEdgeDef = { mode: edge.mode, on: on as RollEdgeDef['on'], ...(on === 'skill' && id ? { skill: id } : {}), ...((on === 'save' || on === 'check') && id ? { ability: id as Ability } : {}) };
@@ -347,6 +360,30 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
             <p className="page-ref">Expertise doubles the proficiency bonus in a skill you are already proficient in.</p>
           </fieldset>
           <fieldset>
+            <legend className="label">Resistances and immunities</legend>
+            {guards.map((g) => (
+              <div key={`${g.kind}/${g.what}`} className="row wrap"><span>{GUARD_WORDS[g.kind]} {g.what === 'all' ? 'all damage' : g.what}</span><button className="btn" onClick={() => setGuards(g.kind, (custom.defenses?.[g.kind] ?? []).filter((x) => x !== g.what))} aria-label={`Remove ${GUARD_WORDS[g.kind].toLowerCase()} ${g.what}`}>Remove</button></div>
+            ))}
+            <div className="grid-2">
+              <label className="field">
+                <span className="label">It makes you</span>
+                <select value={guard.kind} onChange={(e) => setGuard({ kind: e.target.value as DefenseKind, what: '' })}>
+                  <option value="resist">Resistant to (half damage)</option>
+                  <option value="immune">Immune to (no damage)</option>
+                  <option value="vulnerable">Vulnerable to (double damage)</option>
+                  <option value="conditions">Immune to a condition</option>
+                </select>
+              </label>
+              <label className="field">
+                <span className="label">{guard.kind === 'conditions' ? 'The condition' : 'The damage'}</span>
+                <input value={guard.what} onChange={(e) => setGuard({ ...guard, what: e.target.value })} list="item-guards" placeholder={guard.kind === 'conditions' ? 'frightened' : 'cold'} maxLength={40} autoCapitalize="none" />
+                <datalist id="item-guards">{(guard.kind === 'conditions' ? CONDITIONS.map((c) => c.toLowerCase()) : ['all', ...DAMAGE_TYPES]).map((c) => <option key={c} value={c} />)}</datalist>
+              </label>
+            </div>
+            <button className="btn" disabled={!guard.what.trim()} onClick={addGuard}>Add that protection</button>
+            <p className="page-ref">Applied for you when you take damage and choose its kind; a condition it makes you immune to does nothing while the item is in use.</p>
+          </fieldset>
+          <fieldset>
             <legend className="label">Spells it lets you cast</legend>
             {(custom.spells ?? []).map((x, i) => (
               <div key={i} className="row wrap"><span>{x.name} ({x.level === 0 ? 'cantrip' : `level ${x.level}`}){x.entry ? '' : ' · your own'}</span><button className="btn" onClick={() => setCustom({ ...custom, spells: custom.spells!.filter((_, j) => j !== i) })} aria-label={`Remove the spell ${x.name}`}>Remove</button></div>
@@ -424,6 +461,7 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
             {built.bonuses?.length || built.saves?.length || built.skills?.length ? <li>In use, its numbers are added to your totals, each with a line in the breakdown.</li> : null}
             {built.armor?.stealthDisadvantage && <li>While worn, Stealth checks are rolled with disadvantage.</li>}
             {built.edges?.map((x) => <li key={edgeTargetName(x)}>In use, {edgeTargetName(x)} are rolled with {x.mode}: the roll button does it for you.</li>)}
+            {built.defenses ? <li>In use: {[built.defenses.resist?.length ? `resistance to ${built.defenses.resist.join(', ')}` : '', built.defenses.immune?.length ? `immunity to ${built.defenses.immune.join(', ')}` : '', built.defenses.vulnerable?.length ? `vulnerability to ${built.defenses.vulnerable.join(', ')}` : '', built.defenses.conditions?.length ? `you can’t be ${built.defenses.conditions.join(', ')}` : ''].filter(Boolean).join('; ')}. Listed on the Combat tab and applied when you take damage of that kind.</li> : null}
             {built.grants?.length ? <li>In use, you have {built.grants.map(grantName).join(', ')}.</li> : null}
             {built.spells?.length ? <li>In use, {built.spells.map((x) => x.name).join(', ')} {built.spells.length === 1 ? 'is' : 'are'} on your Spells tab.</li> : null}
             {built.uses && <li>It gets a tracker of {built.uses.max} charge{built.uses.max === 1 ? '' : 's'} on the Features tab, back on a {built.uses.recharge} rest.</li>}

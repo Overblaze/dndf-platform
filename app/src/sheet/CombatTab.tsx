@@ -1,5 +1,6 @@
 import { cite, gainTempHp, setToggle, setTracker, spendResource, activateFeature, type SheetFeature, type SheetResource } from '@dndf/engine';
 import { EdgeNote } from '../components/EdgeNote';
+import { ProtectionsCard } from './Protections';
 import { Pips } from '../components/Pips';
 import { featureRef } from './FeaturesTab';
 import { RuleText } from '../components/RuleText';
@@ -110,6 +111,7 @@ export function CombatTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
 
   return (
     <>
+      <ProtectionsCard live={live} />
       {(sheet.toggles.length > 0 || sheet.notes.length > 0) && (
         <section className="card">
           <h2>{sheet.toggles.length > 0 ? 'Toggles' : 'In effect'}</h2>

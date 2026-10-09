@@ -55,7 +55,11 @@ export const COMMANDS = [
     .addStringOption((o) => o.setName('with').setDescription('Advantage or disadvantage').addChoices({ name: 'advantage', value: 'advantage' }, { name: 'disadvantage', value: 'disadvantage' }))), 'the roll'),
   shown(character(new SlashCommandBuilder().setName('hp').setDescription('Take damage, heal, or gain temporary hit points')
     .addStringOption((o) => o.setName('change').setDescription('What happened').setRequired(true).addChoices({ name: 'damage', value: 'damage' }, { name: 'heal', value: 'heal' }, { name: 'temporary hit points', value: 'temp' }))
-    .addIntegerOption((o) => o.setName('amount').setDescription('How many').setRequired(true).setMinValue(0).setMaxValue(9999))), 'the change'),
+    .addIntegerOption((o) => o.setName('amount').setDescription('How many').setRequired(true).setMinValue(0).setMaxValue(9999))
+    .addStringOption((o) => o.setName('type').setDescription('Damage: its kind, so resistances and immunities are applied').addChoices(...['acid', 'bludgeoning', 'cold', 'fire', 'force', 'lightning', 'necrotic', 'piercing', 'poison', 'psychic', 'radiant', 'slashing', 'thunder'].map((t) => ({ name: t, value: t }))))), 'the change'),
+  shown(character(new SlashCommandBuilder().setName('condition').setDescription('Put a condition on your character, take one off, or list them')
+    .addStringOption((o) => o.setName('change').setDescription('What to do').setRequired(true).addChoices({ name: 'add', value: 'add' }, { name: 'remove', value: 'remove' }, { name: 'list', value: 'list' }))
+    .addStringOption((o) => o.setName('condition').setDescription('Poisoned, Prone, Paralyzed… or a note of your own').setAutocomplete(true).setMaxLength(40))), 'it'),
   shown(character(new SlashCommandBuilder().setName('rest').setDescription('Take a short or long rest')
     .addStringOption((o) => o.setName('kind').setDescription('Short or long').setRequired(true).addChoices({ name: 'short', value: 'short' }, { name: 'long', value: 'long' }))
     .addIntegerOption((o) => o.setName('hit_dice').setDescription('Short rest: how many hit dice to spend (the bot rolls them)').setMinValue(0).setMaxValue(20))), 'the rest'),

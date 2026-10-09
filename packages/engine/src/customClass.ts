@@ -45,6 +45,7 @@ export function customFeatureDef(custom: CustomFeature, level: number, toggleId:
     ...(custom.saves ?? []).filter((s) => s.value).map((s) => ({ type: 'saveBonus', ...(s.ability ? { ability: s.ability } : {}), value: s.value })),
     ...(custom.skills ?? []).filter((s) => s.value).map((s) => ({ type: 'skillBonus', ...(s.skill ? { skill: s.skill } : {}), value: s.value })),
     ...(custom.edges ?? []).map((e) => ({ type: 'rollMode', mode: e.mode, on: e.on, ...(e.skill ? { skill: e.skill } : {}), ...(e.ability ? { ability: e.ability } : {}) })),
+    ...(['resist', 'immune', 'vulnerable', 'conditions'] as const).flatMap((kind) => (custom.defenses?.[kind] ?? []).map((what) => ({ type: 'defense', kind, what }))),
     ...(custom.grants ?? []).map((g): EffectDef => (
       g.kind === 'skill' ? { type: 'proficiency', skill: g.id }
         : g.kind === 'expertise' ? { type: 'expertise', skill: g.id }

@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { DEFAULT_SETTINGS, armorFromItem, deriveSheet, newCharacter, spendResource, type CharacterDoc, type Rng, type RuleEntry, type Secrets } from '@dndf/engine';
 import { loadRules } from '../../packages/engine/test/load';
-import { dawnCommand, findRollable, hp, partyLine, rest, roll, status, withPrivacy } from '../src/commands';
+import { condition, dawnCommand, findRollable, hp, partyLine, rest, roll, status, withPrivacy } from '../src/commands';
 
 const rules = loadRules('dndf-10');
 const scores = { str: 16, dex: 14, con: 14, int: 10, wis: 12, cha: 8 };
@@ -187,5 +187,50 @@ describe('/roll with what the sheet says about advantage', () => {
     expect(out).toBe(`🎲 **Zoro** · Stealth: **${17 + stealth.value}**  (17, disadvantage: Chain Mail; asked for advantage, so a straight roll ${stealth.value >= 0 ? '+' : ''}${stealth.value})`);
     // Asking for disadvantage as well changes nothing: it is still one disadvantage.
     expect(roll(sheet, 'stealth', 'disadvantage', faces(20, 17, 4)).reply).toContain('17, 4 → 4');
+  });
+});
+
+describe('/condition, and what conditions do to /roll and /hp', () => {
+  const resheet = (doc: CharacterDoc) => deriveSheet(doc, rules);
+
+  it('adds, lists and removes; a condition the rules define says what it does, one typed in is a note', () => {
+    const { doc, sheet } = make();
+    const poisoned = condition(doc, sheet, 'add', 'poisoned', resheet);
+    expect(poisoned.reply).toBe('⚠️ **Zoro** is **poisoned**. Disadvantage on attack rolls and ability checks.');
+    expect(poisoned.doc!.state.conditions).toEqual(['Poisoned']);
+    expect(condition(poisoned.doc!, resheet(poisoned.doc!), 'add', 'Poisoned', resheet)).toEqual({ reply: '**Zoro** is already poisoned.' });
+    const soaked = condition(poisoned.doc!, resheet(poisoned.doc!), 'add', 'Soaked', resheet);
+    expect(soaked.reply).toBe('⚠️ **Zoro** is **soaked**. Noted; it changes nothing on the sheet.');
+    expect(condition(soaked.doc!, resheet(soaked.doc!), 'list', null, resheet).reply.split('\n')).toEqual(['**Zoro**', '• **Poisoned** — Disadvantage on attack rolls and ability checks', '• **Soaked** — noted']);
+    const cured = condition(soaked.doc!, resheet(soaked.doc!), 'remove', 'POISONED', resheet);
+    expect(cured.reply).toBe('✅ **Zoro** is no longer poisoned.');
+    expect(cured.doc!.state.conditions).toEqual(['Soaked']);
+    expect(condition(doc, sheet, 'remove', 'prone', resheet)).toEqual({ reply: '**Zoro** is not prone.' });
+    expect(condition(doc, sheet, 'list', null, resheet)).toEqual({ reply: '**Zoro** has no conditions.' });
+    // Someone immune is told so.
+    const hardy = make({ defenses: { conditions: ['poisoned'] } });
+    expect(condition(hardy.doc, hardy.sheet, 'add', 'Poisoned', resheet).reply).toBe('⚠️ **Zoro** is **poisoned**. They are immune (Your own), so it does nothing.');
+  });
+
+  it('poisoned: an attack is rolled with disadvantage without being asked; paralyzed: a Strength save fails without a roll', () => {
+    const sick = make({ state: { ...make().doc.state, conditions: ['Poisoned'] } });
+    const attack = sick.sheet.attacks[0]!;
+    expect(roll(sick.sheet, attack.name, 'normal', faces(20, 15, 6, 3)).reply.split('\n')[0]).toContain('15, 6 → 6, disadvantage: Poisoned');
+    expect(roll(sick.sheet, 'wis save', 'normal', faces(20, 15, 6)).reply).toMatch(/\(15 [+-]\d+\)$|\(15\)$/); // saves are untouched by poison
+    const held = make({ state: { ...make().doc.state, conditions: ['Paralyzed'] } });
+    expect(roll(held.sheet, 'str save', 'normal', faces(20, 20)).reply).toBe('🎲 **Zoro** · Strength save: **fails** without a roll (Paralyzed).');
+    expect(roll(held.sheet, 'wis save', 'normal', faces(20, 12)).reply).toContain('Wisdom save');
+  });
+
+  it('/hp with the kind of damage: resistance halves it, immunity takes none, and the reply says so', () => {
+    const { doc, sheet } = make({ defenses: { resist: ['fire'], immune: ['poison'] } });
+    const burned = hp(doc, sheet, 'damage', 15, 'fire');
+    expect(burned.doc!.state.hp).toBe(doc.state.hp - 7);
+    expect(burned.reply).toContain('takes 15 fire damage (resistance to fire (Your own): halved: 7 taken)');
+    expect(burned.log).toBe(`Damage 15 fire, 7 taken (Discord): HP ${doc.state.hp} → ${doc.state.hp - 7}`);
+    expect(hp(doc, sheet, 'damage', 15, 'poison').doc!.state.hp).toBe(doc.state.hp);
+    expect(hp(doc, sheet, 'damage', 15, 'cold').doc!.state.hp).toBe(doc.state.hp - 15);
+    expect(hp(doc, sheet, 'damage', 15).doc!.state.hp).toBe(doc.state.hp - 15); // no kind given: taken as it is
+    expect(hp(doc, sheet, 'damage', 15, null).reply).toContain('takes 15 damage:');
   });
 });

@@ -10,6 +10,7 @@ same rules data (`data/rules`) as the website, so its numbers cannot differ from
 | `/hp change: amount:` | Take damage, heal, or gain temporary hit points. Saved to the character. |
 | `/rest kind:` | A short or long rest. `hit_dice:` on a short rest spends that many; the bot rolls them. |
 | `/dawn` | What comes back at dawn. |
+| `/condition` | `add`, `remove` or `list`. A condition the rules define says what it does and is applied to the sheet and to `/roll` (a paralyzed character's Strength save fails without a roll); anything else is kept as a note. |
 | `/status` | Hit points, AC, speed, pools, switches, conditions. |
 | `/sheet` | The character sheet as a PDF (the website's print page). `full_text:` adds each feature's rules text. Private unless `public:` is set. |
 | `/party` | Everyone in your campaign: hit points and AC. |

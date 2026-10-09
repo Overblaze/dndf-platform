@@ -1,4 +1,4 @@
-import { applyDamage, applyHealing, cite, gainTempHp, type Stat } from '@dndf/engine';
+import { applyDamage, applyHealing, cite, gainTempHp, type Stat, DAMAGE_TYPES, damageAfterDefenses } from '@dndf/engine';
 import { useState } from 'react';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { formatStat, type StatKind } from './stats';
@@ -20,18 +20,26 @@ export function Vitals({ live, onOpen }: { live: LiveCharacter; onOpen: OpenStat
   const { hp, tempHp } = doc.state;
   const max = sheet.maxHp.value;
   const [amount, setAmount] = useState('');
+  // The kind of damage, when the player says: resistances, immunities and vulnerabilities are then applied.
+  const [type, setType] = useState('');
   const n = Math.max(0, Math.floor(Number(amount)));
   const ready = amount.trim() !== '' && Number.isFinite(n) && n > 0;
 
+  const taken = damageAfterDefenses(n, type, sheet.protections);
+  const [said, setSaid] = useState<string | null>(null);
   const act = (what: 'damage' | 'heal' | 'temp') => {
-    const state = what === 'damage' ? applyDamage(doc.state, n) : what === 'heal' ? applyHealing(doc.state, n, max) : gainTempHp(doc.state, n);
+    const dealt = what === 'damage' ? taken.amount : n;
+    const state = what === 'damage' ? applyDamage(doc.state, dealt) : what === 'heal' ? applyHealing(doc.state, n, max) : gainTempHp(doc.state, n);
+    const how = what === 'damage' && type ? `${n} ${type} damage${taken.why ? `, ${taken.why}: ${dealt} taken` : ''}` : `${n} ${what === 'damage' ? 'damage' : 'healing'}`;
     const log =
       what === 'temp'
         ? `Temporary HP ${tempHp} → ${state.tempHp}`
-        : `${n} ${what === 'damage' ? 'damage' : 'healing'}: HP ${hp} → ${state.hp}${tempHp !== state.tempHp ? `, temporary HP ${tempHp} → ${state.tempHp}` : ''}`;
+        : `${how}: HP ${hp} → ${state.hp}${tempHp !== state.tempHp ? `, temporary HP ${tempHp} → ${state.tempHp}` : ''}`;
     live.setState(state, log);
+    setSaid(what === 'damage' && taken.why ? `${n} ${type} damage: ${taken.why}. ${dealt} taken.` : null);
     setAmount('');
   };
+  const anyProtection = sheet.protections.resist.length + sheet.protections.immune.length + sheet.protections.vulnerable.length > 0;
 
   return (
     <section className="card vitals">
@@ -56,6 +64,17 @@ export function Vitals({ live, onOpen }: { live: LiveCharacter; onOpen: OpenStat
           <button className="btn btn-heal" disabled={!ready} onClick={() => act('heal')}>Heal</button>
           <button className="btn" disabled={!ready} onClick={() => act('temp')}>Temp</button>
         </div>
+        {anyProtection && (
+          <label className="field damage-type">
+            <span className="label">Kind of damage (for resistances and immunities)</span>
+            <select value={type} onChange={(e) => setType(e.target.value)}>
+              <option value="">Not said: taken as it is</option>
+              {DAMAGE_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </label>
+        )}
+        {anyProtection && ready && type && taken.why && <p className="page-ref">{n} {type}: {taken.why}. {taken.amount} would be taken.</p>}
+        {said && <p className="page-ref" role="status">{said}</p>}
       </div>
       <div className="tiles tiles-vitals">
         <Tile stat={sheet.ac} kind="plain" label="AC" onOpen={onOpen} />

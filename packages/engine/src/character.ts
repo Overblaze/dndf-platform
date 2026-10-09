@@ -2,6 +2,7 @@
 import type { ScoreOrigin } from './abilityScores';
 import { cleanBounty, type BountyRecord } from './bounty';
 import type { CustomClass } from './customClass';
+import { cleanDefenses, type OwnDefenses } from './conditions';
 import { cleanCustomItem, type InventoryItem } from './inventory';
 import { cleanSpellDetails, type KnownSpell } from './spells';
 import type { PuristPick, SurgePick, SurgeRecord } from './surges';
@@ -66,6 +67,8 @@ export interface CustomFeature {
   edges?: RollEdgeDef[];
   /** Proficiencies it grants: a skill (or expertise in it), a saving throw, a kind of armor, a group of weapons, a tool. */
   grants?: ProficiencyGrant[];
+  /** Damage it gives resistance, immunity or vulnerability to, and conditions it makes its bearer immune to. */
+  defenses?: OwnDefenses;
 }
 
 export const EDGE_TARGETS = ['skill', 'save', 'check', 'attack', 'initiative'] as const;
@@ -166,6 +169,8 @@ export interface CharacterDoc {
   borrowedFeatures?: BorrowedFeature[];
   /** The player's own numbers, by stat key. The calculated value stays available. */
   overrides: Record<string, number>;
+  /** Resistances, immunities and vulnerabilities the player has written down themselves (a boon, a curse, a ruling). */
+  defenses?: OwnDefenses;
   state: CharacterState;
   notes: string;
   appearance?: SheetAppearance;
@@ -343,6 +348,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     qualitiesOfAKing: doc.qualitiesOfAKing === true ? true : undefined,
     hakiPurist: Array.isArray(doc.hakiPurist) ? doc.hakiPurist.filter((p): p is PuristPick => p === 'quality' || p === 'quantity' || p === 'stamina') : undefined,
     overrides: isObject(doc.overrides) ? Object.fromEntries(Object.entries(doc.overrides).filter(([, v]) => typeof v === 'number' && Number.isFinite(v))) as Record<string, number> : {},
+    defenses: cleanDefenses(doc.defenses),
     state: {
       ...fresh,
       ...state,
