@@ -142,11 +142,11 @@ export function StatusTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenS
               Dream Point rescue
             </button>
           )}
-          <button className="btn" onClick={abandon}>I Won't Abandon My Dreams (d20, {ABANDON_DREAMS_DC}+)</button>
+          {on.abandonDreams && <button className="btn" onClick={abandon}>I Won't Abandon My Dreams (d20, {ABANDON_DREAMS_DC}+)</button>}
           <button className="btn" disabled={successes + failures === 0} onClick={() => live.setState({ ...state, deathSaves: { successes: 0, failures: 0 } }, 'Death saves cleared')}>Clear</button>
         </div>
         <p className="page-ref">A Dream Point turns a failed death save into a success. On death, a d20 of {ABANDON_DREAMS_DC} or more leaves you at 1 HP · {cite(sheet.book, 11)}</p>
-        <BookText sheet={sheet} name="I Won’t Abandon My Dreams" />
+        {on.abandonDreams && <BookText sheet={sheet} name="I Won’t Abandon My Dreams" />}
       </section>
 
       <section className="card">

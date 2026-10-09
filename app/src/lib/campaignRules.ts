@@ -1,4 +1,5 @@
-// The optional rules a character has: Special Reactions, Haki Purist, Dream Points and Healing Surge are
+// The optional rules a character has: Special Reactions, Haki Purist, Dream Points, I Won't Abandon My
+// Dreams and Healing Surge are
 // switched on by a campaign's DM. A character gets them only in a campaign where they are on; one in no
 // campaign (or kept only in this browser) has none.
 import { NO_CAMPAIGN_SETTINGS, campaignSettings, type CampaignSettings } from '@dndf/engine';

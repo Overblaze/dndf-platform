@@ -944,12 +944,12 @@ describe('a file with a report (0012)', () => {
 });
 
 describe('a campaign’s optional rules (campaigns.settings)', () => {
-  it('start with none of the four switched on', async () => {
+  it('start with none of the optional rules switched on', async () => {
     const fresh = (await as(matt, `insert into public.campaigns (name) values ('Fresh Seas') returning id, settings`))[0]!;
     expect(fresh.settings).toEqual({});
     await as(matt, `delete from public.campaigns where id = $1`, [fresh.id]);
     const now = (await admin(`select settings from public.campaigns where id = $1`, [campaign]))[0]!.settings as Record<string, unknown>;
-    for (const rule of ['specialReactions', 'hakiPurist', 'dreamPoints', 'healingSurge']) expect(now[rule], rule).toBeUndefined();
+    for (const rule of ['specialReactions', 'hakiPurist', 'dreamPoints', 'abandonDreams', 'healingSurge']) expect(now[rule], rule).toBeUndefined();
   });
 
   it('only a DM of the campaign can switch one; a player, an outsider and a signed-out visitor cannot', async () => {

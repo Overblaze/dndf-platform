@@ -6,8 +6,8 @@ import { loadRules } from './load';
 const scores = { str: 14, dex: 12, con: 14, int: 10, wis: 12, cha: 10 };
 
 describe('campaign settings as saved', () => {
-  it('the four optional rules are off until switched on; a character in no campaign has none', () => {
-    expect(campaignSettings({})).toEqual({ hakiAttackRuling: true, longRestHitDice: 'all', specialReactions: false, hakiPurist: false, dreamPoints: false, healingSurge: false });
+  it('the optional rules are off until switched on; a character in no campaign has none', () => {
+    expect(campaignSettings({})).toEqual({ hakiAttackRuling: true, longRestHitDice: 'all', specialReactions: false, hakiPurist: false, dreamPoints: false, abandonDreams: false, healingSurge: false });
     expect(NO_CAMPAIGN_SETTINGS).toEqual(campaignSettings({}));
     expect(campaignSettings()).toEqual(campaignSettings({}));
     expect(campaignSettings({ dreamPoints: true, healingSurge: true })).toMatchObject({ dreamPoints: true, healingSurge: true, specialReactions: false, hakiPurist: false });
@@ -20,7 +20,7 @@ describe('campaign settings as saved', () => {
   });
 
   it('names each rule, where it is printed and what it gives', () => {
-    expect(OPTIONAL_RULES.map((r) => r.id)).toEqual(['specialReactions', 'hakiPurist', 'dreamPoints', 'healingSurge']);
+    expect(OPTIONAL_RULES.map((r) => r.id)).toEqual(['specialReactions', 'hakiPurist', 'dreamPoints', 'abandonDreams', 'healingSurge']);
     for (const version of ['dndf-10', 'dndf-8.8'] as RulesVersion[]) {
       const rules = loadRules(version);
       for (const rule of OPTIONAL_RULES) {
@@ -41,7 +41,7 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('a sheet under the camp
   const pools = (sheet: typeof all) => sheet.resources.map((r) => r.id);
 
   it('with everything on, all four are there', () => {
-    expect(all.optionalRules).toEqual({ specialReactions: true, hakiPurist: true, dreamPoints: true, healingSurge: true });
+    expect(all.optionalRules).toEqual({ specialReactions: true, hakiPurist: true, dreamPoints: true, abandonDreams: true, healingSurge: true });
     expect(all.specialReactions.length).toBeGreaterThanOrEqual(2);
     expect(all.dreamPoints.max).toBeGreaterThan(0);
     expect(all.healingSurgeDice).toBeGreaterThan(0);
@@ -50,7 +50,7 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('a sheet under the camp
   });
 
   it('in no campaign, none of the four is on the sheet', () => {
-    expect(none.optionalRules).toEqual({ specialReactions: false, hakiPurist: false, dreamPoints: false, healingSurge: false });
+    expect(none.optionalRules).toEqual({ specialReactions: false, hakiPurist: false, dreamPoints: false, abandonDreams: false, healingSurge: false });
     expect(none.specialReactions).toEqual([]);
     expect(pools(none).filter((id) => id.startsWith('sr.') || id === 'healing_surge')).toEqual([]);
     expect(none.dreamPoints).toEqual({ max: 0, remaining: 0 });
@@ -72,6 +72,12 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('a sheet under the camp
     const surge = deriveSheet(doc, rules, only('healingSurge'));
     expect([surge.healingSurgeDice, pools(surge).includes('healing_surge')]).toEqual([all.healingSurgeDice, true]);
     expect([surge.dreamPoints.max, surge.specialReactions.length]).toEqual([0, 0]);
+
+    // I Won't Abandon My Dreams is a switch of its own: it does not come with Dream Points, nor they with it.
+    expect(dreams.optionalRules.abandonDreams).toBe(false);
+    const abandon = deriveSheet(doc, rules, only('abandonDreams'));
+    expect(abandon.optionalRules).toEqual({ specialReactions: false, hakiPurist: false, dreamPoints: false, abandonDreams: true, healingSurge: false });
+    expect(abandon.dreamPoints.max).toBe(0);
 
     const purist = deriveSheet(doc, rules, only('hakiPurist'));
     expect(purist.haki.purist).toEqual(all.haki.purist);

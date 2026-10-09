@@ -188,7 +188,7 @@ export interface Sheet {
   /** The character's handbook: the book every page on the sheet is in unless a feature names another. */
   book: string;
   dreamPoints: { max: number; remaining: number };
-  /** Which of the campaign's optional rules this character has: Special Reactions, Haki Purist, Dream Points, Healing Surge. */
+  /** Which of the campaign's optional rules this character has: Special Reactions, Haki Purist, Dream Points, I Won't Abandon My Dreams, Healing Surge. */
   optionalRules: Record<OptionalRule, boolean>;
   prestigeMax: number;
   healingSurgeDice: number;
@@ -1424,7 +1424,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     hitDice: { die: hitDie, total: level, remaining: left(level, doc.state.hitDiceSpent), pool: hitDicePool },
     book: HANDBOOKS[doc.rulesVersion],
     dreamPoints: { max: dreamMax, remaining: Math.max(0, dreamMax - doc.state.dreamPointsSpent) },
-    optionalRules: { specialReactions: settings.specialReactions, hakiPurist: settings.hakiPurist, dreamPoints: settings.dreamPoints, healingSurge: settings.healingSurge },
+    optionalRules: { specialReactions: settings.specialReactions, hakiPurist: settings.hakiPurist, dreamPoints: settings.dreamPoints, abandonDreams: settings.abandonDreams, healingSurge: settings.healingSurge },
     prestigeMax: piratePrestigeMax(level),
     healingSurgeDice: settings.healingSurge ? healingSurgeMaxDice(level, Math.max(0, level - doc.state.hitDiceSpent)) : 0,
     specialReactionReduction: specialReactionReduction(level).text,

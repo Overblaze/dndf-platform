@@ -10,9 +10,9 @@ const store = () => {
 };
 
 describe('a character’s campaign rules, remembered on the device', () => {
-  it('nothing known is a character in no campaign: all four optional rules off', () => {
+  it('nothing known is a character in no campaign: every optional rule off', () => {
     expect(keptSettings('c1', store())).toEqual(NO_CAMPAIGN_SETTINGS);
-    expect(NO_CAMPAIGN_SETTINGS).toMatchObject({ specialReactions: false, hakiPurist: false, dreamPoints: false, healingSurge: false });
+    expect(NO_CAMPAIGN_SETTINGS).toMatchObject({ specialReactions: false, hakiPurist: false, dreamPoints: false, abandonDreams: false, healingSurge: false });
   });
 
   it('keeps what the campaign had on, per character, for the next visit and for no connection', () => {
