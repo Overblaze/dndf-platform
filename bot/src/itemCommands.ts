@@ -1,7 +1,7 @@
 // What /item says and does, with no Discord and no database in it. An item added here is the same
 // thing the website's Gear tab and item maker save, checked by the same engine.
 import {
-  ABILITY_NAMES, armorFromItem, cleanCustomItem, inventoryFromItem, itemDoesSomething, itemInUse, itemNeedsAttunement, itemSummary, parseWeight, weaponFromItem,
+  ABILITY_NAMES, SKILLS, armorFromItem, cleanCustomItem, inventoryFromItem, itemDoesSomething, itemInUse, itemNeedsAttunement, itemSummary, parseWeight, weaponFromItem,
   type Ability, type CharacterDoc, type CustomItem, type InventoryItem, type RuleEntry, type Sheet,
 } from '@dndf/engine';
 import type { Outcome } from './commands';
@@ -83,12 +83,16 @@ function sheetChanges(before: Sheet, after: Sheet): string[] {
 }
 const attunementLine = (sheet: Sheet) => `Attuned to ${sheet.attunement.used} of ${sheet.attunement.max.value}${sheet.attunement.over ? ' — more than the rules allow; nothing is stopped' : ''}.`;
 
-/** /item make: an item of the player's own that works on the sheet, from what was typed into the command. */
+/** /make: an item of the player's own that works on the sheet, from what was typed into the command. */
 export function itemMake(doc: CharacterDoc, sheet: Sheet, input: MakeInput, makeId: () => string, resheet: (next: CharacterDoc) => Sheet, spellNamed: (name: string) => RuleEntry | undefined = () => undefined): Outcome {
   const name = input.name.trim().slice(0, 80);
   if (!name) return { reply: 'Give the item a name.' };
   const dropped: string[] = [];
   const bonuses = [['ac', input.acBonus], ['speed', input.speedBonus], ['hp', input.hpBonus]].filter(([, v]) => typeof v === 'number' && v !== 0).map(([type, value]) => ({ type, value }));
+  // A skill may arrive as its id (picked from the suggestions) or as its name, typed.
+  const typedSkill = input.skill?.trim().toLowerCase();
+  const skillId = typedSkill ? SKILLS.find((k) => k.id === typedSkill || k.name.toLowerCase() === typedSkill)?.id ?? null : undefined;
+  if (skillId === null) dropped.push(`"${input.skill}" is not a skill, so the skill bonus was left off`);
   const raw = {
     kind: input.kind, rarity: input.rarity ?? undefined, value: input.worth ?? undefined, text: input.description ?? undefined,
     weapon: input.kind === 'weapon' ? { damage: (input.damage ?? '').replace(/\s+/g, ''), damageType: input.damageType ?? '', category: input.martial ? 'martial' : 'simple', ranged: input.ranged === true, finesse: input.finesse === true, twoHanded: input.twoHanded === true, bonus: input.weaponBonus ?? undefined } : undefined,
@@ -100,7 +104,7 @@ export function itemMake(doc: CharacterDoc, sheet: Sheet, input: MakeInput, make
     attune: input.attunement === true,
     abilities: input.ability ? [{ ability: input.ability, set: input.abilityBecomes ?? undefined, bonus: input.abilityBonus ?? undefined }] : undefined,
     saves: input.saveBonus ? [{ value: input.saveBonus }] : undefined,
-    skills: input.skillBonus ? [{ skill: input.skill ?? undefined, value: input.skillBonus }] : undefined,
+    skills: input.skillBonus && skillId !== null ? [{ skill: skillId ?? undefined, value: input.skillBonus }] : undefined,
     spells: (input.spells ?? '').split(',').map((name) => name.trim()).filter(Boolean).map((name) => { const entry = spellNamed(name); return { name: entry?.name ?? name, level: typeof entry?.level === 'number' ? entry.level : 1, entry: entry?.id }; }),
   };
   const custom: CustomItem | undefined = cleanCustomItem(raw);
@@ -111,7 +115,7 @@ export function itemMake(doc: CharacterDoc, sheet: Sheet, input: MakeInput, make
   if (input.kind !== 'weapon' && (input.damage || typeof input.weaponBonus === 'number')) dropped.push('damage and the weapon’s own bonus only apply to a weapon');
   if (!input.ability && (typeof input.abilityBecomes === 'number' || typeof input.abilityBonus === 'number')) dropped.push('no ability was chosen, so the ability score change was left off');
   if (input.ability && !custom.abilities?.length) dropped.push('an ability was chosen but no number to set it to or raise it by, so it was left off');
-  if (input.skill && !input.skillBonus) dropped.push('a skill was chosen but no skill_bonus, so it was left off');
+  if (skillId && !input.skillBonus) dropped.push('a skill was chosen but no skill_bonus, so it was left off');
   if (input.kind !== 'armor' && typeof input.armorClass === 'number') dropped.push('the armor_class option only applies to armor (use ac_bonus for a bonus)');
   const qty = Math.max(1, Math.floor(input.quantity ?? 1));
   const use = input.useNow === true && itemDoesSomething(custom);
@@ -161,7 +165,7 @@ export function itemUse(doc: CharacterDoc, sheet: Sheet, what: string, on: boole
       if (on && !doc.shield) { next = { ...next, shield: true }; said.push('takes it up'); }
       if (!on && doc.shield) { next = { ...next, shield: false }; said.push('puts it down'); }
     } else if (attuneTo === undefined) return { reply: `**${found.name}** is not something that is wielded or worn. It is carried, and that is all.` };
-  } else if (attuneTo === undefined) return { reply: `**${found.name}** is a plain item with nothing to switch on. \`/item make\` makes one that does something; any item can be attuned to with \`attune: attune\`.` };
+  } else if (attuneTo === undefined) return { reply: `**${found.name}** is a plain item with nothing to switch on. \`/make\` makes one that does something; any item can be attuned to with \`attune: attune\`.` };
 
   if (attuneTo !== undefined && (found.attuned === true) !== attuneTo) { patch({ attuned: attuneTo || undefined }); said.push(attuneTo ? 'attunes to it' : 'ends the attunement'); }
   if (said.length === 0) return { reply: `Nothing to change: **${found.name}** is already ${on ? 'in use' : 'put away'}${attuneTo === undefined ? '' : attuneTo ? ' and attuned' : ' and not attuned'}.` };
@@ -195,7 +199,7 @@ export function itemRemove(doc: CharacterDoc, sheet: Sheet, what: string, quanti
 /** /item list: everything carried. */
 export function itemList(doc: CharacterDoc, sheet: Sheet): Outcome {
   const items = doc.inventory ?? [];
-  if (items.length === 0) return { reply: `**${sheet.name}** carries nothing yet. \`/item add\` or \`/item make\` to change that.` };
+  if (items.length === 0) return { reply: `**${sheet.name}** carries nothing yet. \`/item add\` or \`/make\` to change that.` };
   const lines = items.slice(0, 40).map((i) => {
     const mark = itemInUse(i) ? '🗡️' : i.carried === false ? '📦' : '▫️';
     const facts = [i.custom ? itemSummary(i.custom) : '', i.attuned ? 'attuned' : '', i.custom?.attune && i.equipped && !i.attuned ? 'worn but not attuned' : '', i.weight !== undefined ? `${lb(i.weight)} each` : '', i.carried === false ? 'stowed' : '', i.notes ?? ''].filter(Boolean).join(' · ');

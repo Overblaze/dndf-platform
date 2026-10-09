@@ -135,7 +135,7 @@ describe('/bounty', () => {
 describe('the commands as Discord is told them', () => {
   it('has /ship with its five parts and /bounty, within Discord’s limits', () => {
     const names = COMMANDS.map((c) => c.name);
-    expect(names).toEqual(['roll', 'hp', 'rest', 'dawn', 'status', 'sheet', 'party', 'bounty', 'item', 'surge', 'ship']);
+    expect(names).toEqual(['roll', 'hp', 'rest', 'dawn', 'status', 'sheet', 'party', 'bounty', 'item', 'make', 'surge', 'ship']);
     const ship = COMMANDS.find((c) => c.name === 'ship')!;
     expect(ship.options!.map((o) => o.name)).toEqual(['status', 'damage', 'repair', 'treasury', 'aboard']);
     const walk = (node: { name: string; description: string; options?: unknown[] }): void => {
@@ -152,14 +152,22 @@ describe('the commands as Discord is told them', () => {
       for (const child of (node.options ?? []) as never[]) walk(child);
     };
     for (const command of COMMANDS) walk(command as never);
-    // /item: plain subcommands and the "make" group, one subcommand for each kind of item the engine knows.
+    // Discord refuses the whole list if any one command's names, descriptions and choices come to more than
+    // 8,000 characters. (It did: /item with "make" inside it was 9,502, and nothing after it was registered.)
+    const size = (node: { name?: string; description?: string; choices?: { name: string; value: unknown }[]; options?: unknown[] }): number =>
+      (node.name?.length ?? 0) + (node.description?.length ?? 0) + (node.choices ?? []).reduce((t, c) => t + c.name.length + String(c.value).length, 0) + ((node.options ?? []) as never[]).reduce((t: number, o) => t + size(o), 0);
+    for (const command of COMMANDS) expect(size(command as never), `/${command.name} is ${size(command as never)} characters`).toBeLessThanOrEqual(7200);
+    expect(COMMANDS.length).toBeLessThanOrEqual(100);
+    // /item, and /make with one subcommand for each kind of item the engine knows.
     const item = COMMANDS.find((c) => c.name === 'item')!;
-    expect(item.options!.map((o) => o.name)).toEqual(['list', 'add', 'make', 'use', 'remove']);
-    const make = item.options!.find((o) => o.name === 'make') as unknown as { options: { name: string; options: { name: string; choices?: { value: string }[] }[] }[] };
+    expect(item.options!.map((o) => o.name)).toEqual(['list', 'add', 'use', 'remove']);
+    const make = COMMANDS.find((c) => c.name === 'make') as unknown as { options: { name: string; options: { name: string; autocomplete?: boolean; choices?: { value: string }[] }[] }[] };
     expect(make.options.map((o) => o.name).sort()).toEqual([...ITEM_KINDS].sort());
     // The choices offered are ones the engine understands.
     const wondrous = make.options.find((o) => o.name === 'wondrous')!;
-    expect(wondrous.options.find((o) => o.name === 'skill')!.choices!.map((c) => c.value).sort()).toEqual(SKILLS.map((k) => k.id).sort());
+    expect(wondrous.options.find((o) => o.name === 'skill')!.autocomplete).toBe(true); // typed, with the engine's skills suggested
+    const surgeSkill = (COMMANDS.find((c) => c.name === 'surge')!.options!.find((o) => o.name === 'add') as unknown as { options: { name: string; choices: { value: string }[] }[] }).options.find((o) => o.name === 'skill')!;
+    expect(surgeSkill.choices.map((c) => c.value).sort()).toEqual(SKILLS.map((k) => k.id).sort());
     expect(wondrous.options.find((o) => o.name === 'ability')!.choices!.map((c) => c.value)).toEqual([...ABILITIES]);
     expect(make.options.find((o) => o.name === 'weapon')!.options.map((o) => o.name)).toContain('two_handed');
   });

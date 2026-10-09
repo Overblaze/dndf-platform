@@ -1,6 +1,6 @@
 // The DnDF Discord bot. Run with: npm start --workspace bot   (see bot/README.md)
 import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, type AutocompleteInteraction, type ChatInputCommandInteraction } from 'discord.js';
-import type { Rarity, RollMode, Sheet } from '@dndf/engine';
+import { SKILLS, type Rarity, type RollMode, type Sheet } from '@dndf/engine';
 import { dawnCommand, hp, partyLine, rest, roll, status, withPrivacy, type Outcome } from './commands';
 import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter, type BotShip } from './db';
 import { loadEnv } from './env';
@@ -80,6 +80,9 @@ async function autocomplete(interaction: AutocompleteInteraction) {
     const rarity = (interaction.options.getString('rarity') ?? 'Legendary') as Rarity;
     return interaction.respond(surgeMatches(surgeChoices(character.doc, sheet, rulesOf(character.doc.rulesVersion), rarity), typed));
   }
+  if (interaction.commandName === 'make' && focused.name === 'skill') {
+    return interaction.respond(SKILLS.filter((k) => k.name.toLowerCase().includes(typed)).slice(0, 25).map((k) => ({ name: k.name, value: k.id })));
+  }
   if (interaction.commandName === 'item' && focused.name !== 'character') {
     const character = pick(characters, interaction.options.getString('character'));
     if (focused.name === 'name') return interaction.respond(armoryMatches([...rulesOf(character?.doc.rulesVersion ?? 'dndf-10').values()].filter((e) => e.kind === 'item'), typed));
@@ -142,19 +145,19 @@ async function run(interaction: ChatInputCommandInteraction) {
     return interaction.editReply(outcome.reply.slice(0, 1990));
   }
 
-  if (name === 'item') {
+  if (name === 'item' || name === 'make') {
     // Gear is not secret, and the sums here are of the saved character alone, as on the Gear tab.
     const o = interaction.options;
     const sub = o.getSubcommand();
-    const group = o.getSubcommandGroup(false);
+    const making = name === 'make';
     const spells = [...rulesOf(doc.rulesVersion).values()].filter((e) => e.kind === 'spell');
     const resheet = (next: typeof doc) => sheetOf(next);
     const id = () => crypto.randomUUID();
     const armory = [...rulesOf(doc.rulesVersion).values()].filter((e) => e.kind === 'item');
     const outcome: Outcome | null =
-      group === null && sub === 'list' ? itemList(doc, sheet)
+      !making && sub === 'list' ? itemList(doc, sheet)
       : sub === 'add' ? itemAdd(doc, sheet, { name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), notes: o.getString('notes') }, armory, id, resheet)
-      : group === 'make' ? itemMake(doc, sheet, {
+      : making ? itemMake(doc, sheet, {
         kind: sub, name: o.getString('name', true), quantity: o.getInteger('quantity'), weight: o.getNumber('weight'), rarity: o.getString('rarity'), description: o.getString('description'),
         damage: o.getString('damage'), damageType: o.getString('damage_type'), martial: o.getBoolean('martial'), ranged: o.getBoolean('ranged'), finesse: o.getBoolean('finesse'), twoHanded: o.getBoolean('two_handed'), weaponBonus: o.getInteger('weapon_bonus'),
         armorClass: o.getInteger('armor_class'), armorDex: o.getString('armor_dex'), acBonus: o.getInteger('ac_bonus'), speedBonus: o.getInteger('speed_bonus'), hpBonus: o.getInteger('hp_bonus'),
@@ -162,10 +165,10 @@ async function run(interaction: ChatInputCommandInteraction) {
         ability: o.getString('ability'), abilityBecomes: o.getInteger('ability_becomes'), abilityBonus: o.getInteger('ability_bonus'), saveBonus: o.getInteger('save_bonus'), skill: o.getString('skill'), skillBonus: o.getInteger('skill_bonus'),
         spells: o.getString('spells'), attunement: o.getBoolean('attunement'), useNow: o.getBoolean('use_now'),
       }, id, resheet, (wanted) => spells.find((e) => e.name.toLowerCase() === wanted.toLowerCase()))
-      : sub === 'use' ? itemUse(doc, sheet, o.getString('item', true), !o.getBoolean('put_away'), resheet, { attune: o.getString('attune') as 'attune' | 'end' | null, rules: rulesOf(doc.rulesVersion) })
+      : !making && sub === 'use' ? itemUse(doc, sheet, o.getString('item', true), !o.getBoolean('put_away'), resheet, { attune: o.getString('attune') as 'attune' | 'end' | null, rules: rulesOf(doc.rulesVersion) })
       : sub === 'remove' ? itemRemove(doc, sheet, o.getString('item', true), o.getInteger('quantity'), resheet)
       : null;
-    if (!outcome) return interaction.editReply(`I don't know /item ${sub}.`);
+    if (!outcome) return interaction.editReply(`I don't know /${name} ${sub}.`);
     if (outcome.doc && outcome.log) await db.save(interaction.user.id, character, outcome.doc, outcome.log);
     return interaction.editReply(outcome.reply.slice(0, 1990));
   }

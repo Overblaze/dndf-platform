@@ -48,7 +48,7 @@ describe('/item add', () => {
   });
 });
 
-describe('/item make', () => {
+describe('/make', () => {
   it('a +1 finesse weapon, put to use at once: Str +3, proficiency +3, +1 → +7 to hit', () => {
     const { doc, sheet } = start();
     const made = itemMake(doc, sheet, { kind: 'weapon', name: 'Wado Ichimonji', damage: '1d8', damageType: 'slashing', martial: true, finesse: true, weaponBonus: 1, rarity: 'Rare', description: 'A blade that cannot be broken.', weight: 3, useNow: true }, id, resheet);
@@ -177,7 +177,7 @@ describe('/item use, remove and list', () => {
   });
 });
 
-describe('/item make with ability scores, saves, skills, spells and attunement', () => {
+describe('/make with ability scores, saves, skills, spells and attunement', () => {
   it('the Circlet of Intellect: Intelligence 10 → 19 once it is worn and attuned, and not before', () => {
     const { doc, sheet } = start();
     const made = itemMake(doc, sheet, { kind: 'wondrous', name: 'Circlet of Intellect', ability: 'int', abilityBecomes: 19, attunement: true, rarity: 'Uncommon' }, id, resheet);
@@ -230,5 +230,10 @@ describe('/item make with ability scores, saves, skills, spells and attunement',
     const odd = itemMake(doc, sheet, { kind: 'wondrous', name: 'Odd', abilityBecomes: 19, skill: 'stealth' }, id, resheet);
     expect(odd.reply).toContain('⚠️ No ability was chosen, so the ability score change was left off.');
     expect(odd.reply).toContain('⚠️ A skill was chosen but no skill_bonus, so it was left off.');
+    // A skill typed by name works; one that is not a skill is said.
+    expect(itemMake(doc, sheet, { kind: 'wondrous', name: 'Boots', skill: 'Sleight of Hand', skillBonus: 2 }, id, resheet).doc!.inventory![0]!.custom!.skills).toEqual([{ skill: 'sleight_of_hand', value: 2 }]);
+    const bad = itemMake(doc, sheet, { kind: 'wondrous', name: 'Boots', skill: 'juggling', skillBonus: 2 }, id, resheet);
+    expect(bad.reply).toContain('⚠️ "juggling" is not a skill, so the skill bonus was left off.');
+    expect(bad.doc!.inventory![0]!.custom!.skills).toBeUndefined();
   });
 });
