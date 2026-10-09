@@ -1,12 +1,13 @@
 // The DnDF Discord bot. Run with: npm start --workspace bot   (see bot/README.md)
 import { AttachmentBuilder, Client, Events, GatewayIntentBits, MessageFlags, type AutocompleteInteraction, type ChatInputCommandInteraction } from 'discord.js';
-import type { RollMode, Sheet } from '@dndf/engine';
+import type { Rarity, RollMode, Sheet } from '@dndf/engine';
 import { dawnCommand, hp, partyLine, rest, roll, status, withPrivacy, type Outcome } from './commands';
 import { ChangedElsewhere, Db, HISTORY_DAYS, type BotCharacter, type BotShip } from './db';
 import { loadEnv } from './env';
 import { armoryMatches, itemAdd, itemList, itemMake, itemRemove, itemUse } from './itemCommands';
 import { closeBrowser, sheetPdf, SITE } from './pdf';
 import { rulesOf, sheetOf } from './rules';
+import { surgeAdd, surgeChoices, surgeList, surgeMatches, surgeRemove } from './surgeCommands';
 import { bountyReply, crewPosters, shipAboard, shipHit, shipStatus, shipTreasury, type ShipOutcome } from './shipCommands';
 
 const env = loadEnv();
@@ -67,6 +68,18 @@ async function autocomplete(interaction: AutocompleteInteraction) {
   }
   const characters = (await db.charactersOf(interaction.user.id)) ?? [];
   const typed = interaction.options.getFocused().toLowerCase();
+  if (interaction.commandName === 'surge' && focused.name === 'advancement') {
+    const character = pick(characters, interaction.options.getString('character'));
+    if (!character) return interaction.respond([]);
+    const sheet = sheetOf(character.doc);
+    if (interaction.options.getSubcommand() === 'remove') {
+      const names = [...new Set(sheet.haki.surges.filter((s) => s.kind !== 'fruitAdvancement' && s.name.toLowerCase().includes(typed)).map((s) => s.name))];
+      return interaction.respond(names.slice(0, 25).map((name) => ({ name: name.slice(0, 100), value: name.slice(0, 100) })));
+    }
+    // What a surge of the rarity already chosen opens; before one is chosen, everything a Legendary one would.
+    const rarity = (interaction.options.getString('rarity') ?? 'Legendary') as Rarity;
+    return interaction.respond(surgeMatches(surgeChoices(character.doc, sheet, rulesOf(character.doc.rulesVersion), rarity), typed));
+  }
   if (interaction.commandName === 'item' && focused.name !== 'character') {
     const character = pick(characters, interaction.options.getString('character'));
     if (focused.name === 'name') return interaction.respond(armoryMatches([...rulesOf(character?.doc.rulesVersion ?? 'dndf-10').values()].filter((e) => e.kind === 'item'), typed));
@@ -112,6 +125,22 @@ async function run(interaction: ChatInputCommandInteraction) {
   const sheet = sheetOf(doc);
 
   if (name === 'bounty') return interaction.editReply(bountyReply(doc, sheet).slice(0, 1990));
+
+  if (name === 'surge') {
+    // Worked out from the saved character alone, as a sheet anyone may see: a Devil Fruit advancement is
+    // private content, so it is neither listed nor offered here.
+    const o = interaction.options;
+    const sub = o.getSubcommand();
+    const resheet = (next: typeof doc) => sheetOf(next);
+    const outcome: Outcome | null =
+      sub === 'list' ? surgeList(sheet)
+      : sub === 'add' ? surgeAdd(doc, sheet, rulesOf(doc.rulesVersion), { rarity: o.getString('rarity', true), advancement: o.getString('advancement', true), choice: o.getString('choice'), skill: o.getString('skill'), note: o.getString('note'), reason: o.getString('reason'), session: o.getString('session') }, new Date().toISOString().slice(0, 10), resheet)
+      : sub === 'remove' ? surgeRemove(doc, sheet, o.getString('advancement', true), resheet)
+      : null;
+    if (!outcome) return interaction.editReply(`I don't know /surge ${sub}.`);
+    if (outcome.doc && outcome.log) await db.save(interaction.user.id, character, outcome.doc, outcome.log);
+    return interaction.editReply(outcome.reply.slice(0, 1990));
+  }
 
   if (name === 'item') {
     // Gear is not secret, and the sums here are of the saved character alone, as on the Gear tab.
