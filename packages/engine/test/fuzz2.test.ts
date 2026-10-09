@@ -109,5 +109,5 @@ describe('random characters with races, Haki, fruits, gear and spells', () => {
     const report = [...problems].sort((a, b) => b[1] - a[1]).map(([what, count]) => `${count} × ${what}`);
     expect(report).toEqual([]);
     expect(sheets).toBeGreaterThan(550);
-  });
+  }, 120_000); // about 13 s alone; the default 30 s is missed when the whole suite shares a busy machine
 });
