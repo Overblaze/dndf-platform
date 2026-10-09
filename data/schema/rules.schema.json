@@ -543,6 +543,13 @@
           "description": "The id of the option in the same group this one upgrades and needs.",
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9_]*$"
+        },
+        "picks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/pick"
+          }
         }
       }
     },
@@ -1190,6 +1197,56 @@
             ]
           },
           "uniqueItems": true
+        },
+        "picks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/pick"
+          }
+        }
+      }
+    },
+    "pick": {
+      "type": "object",
+      "description": "A choice inside a trait or an option: a skill, a tool or a weapon \"of your choice\". What is picked is kept on the character.",
+      "required": [
+        "id",
+        "kind",
+        "count",
+        "label"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z0-9_]*$"
+        },
+        "kind": {
+          "enum": [
+            "skill",
+            "tool",
+            "weapon"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "orTool": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

@@ -1,10 +1,11 @@
 import { cite, type RaceChoice } from '@dndf/engine';
+import type { ReactNode } from 'react';
 
 /**
  * The pick-lists of a race (Cyborg Upgrades, a Mink's Animal Characteristics): tick what the character has.
  * More than the level gives is allowed and said; an upgrade without the one it builds on is said too.
  */
-export function RaceChoiceFields({ choices, picked, onChange, withText }: { choices: RaceChoice[]; picked: Record<string, string[]>; onChange: (id: string, next: string[]) => void; withText?: boolean }) {
+export function RaceChoiceFields({ choices, picked, onChange, withText, under }: { choices: RaceChoice[]; picked: Record<string, string[]>; onChange: (id: string, next: string[]) => void; withText?: boolean; /** What a ticked option leaves to choose, shown right under it. */ under?: (choiceId: string, optionId: string) => ReactNode }) {
   return (
     <>
       {choices.map((choice) => {
@@ -25,6 +26,7 @@ export function RaceChoiceFields({ choices, picked, onChange, withText }: { choi
                   <span>{option.name}{option.requires ? <span className="page-ref"> · upgrades {choice.options.find((x) => x.id === option.requires)?.name}</span> : null}</span>
                 </label>
                 {withText && <p className="page-ref option-text">{option.text}</p>}
+                {have.includes(option.id) && under?.(choice.id, option.id)}
               </div>
             ))}
           </fieldset>

@@ -333,6 +333,8 @@ DESCRIPTIVE_TRAITS = {"age", "alignment", "size", "speed", "ability score increa
 def structure_trait(version: str, who: str, trait: dict) -> None:
     """Uses, action and dice a trait's wording names, then the numbers entered by hand. Skills stay under "skills"."""
     if trait["name"].lower() in DESCRIPTIVE_TRAITS:
+        # Nothing is read from their wording, but a number entered by hand still applies (a swimming speed under "Speed").
+        apply_race_structure(version, who, trait, problems)
         return
     # A trait's later paragraphs can grant skills too.
     granted = skills_granted(trait["text"])
@@ -377,6 +379,8 @@ def race_choices(version: str, race: dict) -> dict | None:
                     option[key] = fields[key]
             if "effects" in fields:
                 option["effects"] = option.get("effects", []) + fields["effects"]
+            if "picks" in fields:
+                option["picks"] = fields["picks"]
         elif fields:
             problems.append(f"race {race['name']} / {option['name']} ({version}) is worded differently here, so its numbers were not applied")
         options.append(option)

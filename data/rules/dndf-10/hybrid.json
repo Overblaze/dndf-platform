@@ -785,8 +785,10 @@
               "label": "Immune to poison damage and the poisoned condition"
             },
             {
-              "type": "note",
-              "label": "Flying speed 45 ft. while not wearing medium or heavy armor"
+              "type": "movement",
+              "mode": "fly",
+              "value": 45,
+              "note": "Not while wearing medium or heavy armor"
             }
           ]
         },

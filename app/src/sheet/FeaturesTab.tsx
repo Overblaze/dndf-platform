@@ -1,10 +1,12 @@
-import { cite, type CustomFeature } from '@dndf/engine';
+import { cite, racePickLabel, type CustomFeature, type RacePick } from '@dndf/engine';
 import { useState } from 'react';
 import { RuleText } from '../components/RuleText';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { Dialog } from '../components/Dialog';
 import { BorrowFeatureDialog, CustomFeatureDialog } from './CustomFeatures';
 import { RaceChoiceFields } from './RaceChoiceFields';
+import { RacePickFields } from './RacePickFields';
+import { ruleSet } from '../lib/rules';
 
 /** "Warrior 5 · EH10 p.201", or just where a player's own feature comes from. */
 export const featureRef = (feature: { book: string; from: string; page: number }) => (feature.book === 'Custom' ? `${feature.from} · your own` : `${feature.from} · ${cite(feature.book, feature.page)}`);
@@ -15,6 +17,11 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
   const [borrowing, setBorrowing] = useState(false);
   const [choosing, setChoosing] = useState(false);
   const customs = doc.customFeatures ?? [];
+  const weapons = ruleSet(doc.rulesVersion).weapons.map((w) => w.name);
+  const choosePick = (pick: RacePick, next: string[]) => {
+    const said = next.map((value) => racePickLabel(pick, value)).filter(Boolean).join(', ') || 'nothing chosen';
+    live.setDoc({ ...doc, choices: { ...doc.choices, [pick.key]: next } }, `${pick.from}, ${pick.def.label.toLowerCase()}: ${said}`);
+  };
   const saveCustom = (feature: CustomFeature) => {
     const exists = customs.some((c) => c.id === feature.id);
     live.setDoc({ ...doc, customFeatures: exists ? customs.map((c) => (c.id === feature.id ? feature : c)) : [...customs, feature] }, `${exists ? 'Changed' : 'Added'} ${feature.name}`);
@@ -45,6 +52,21 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
           <button className={choice.picked.length < choice.allowed ? 'btn btn-primary' : 'btn'} onClick={() => setChoosing(true)}>Choose</button>
         </div>
       ))}
+      {sheet.racePicks.map((pick) => {
+        const made = pick.picked.map((value) => racePickLabel(pick, value)).filter(Boolean);
+        const left = pick.def.count - made.length;
+        return (
+          <div key={pick.key} className="resource">
+            <div>
+              <div className="resource-name">{pick.from}: {pick.def.label}</div>
+              <div className="page-ref">
+                {made.length ? made.join(', ') : 'Nothing chosen yet'}{left > 0 ? ` · ${left} more to choose` : ''} · {pick.race} · {cite(pick.book, pick.page)}
+              </div>
+            </div>
+            <button className={left > 0 ? 'btn btn-primary' : 'btn'} onClick={() => setChoosing(true)}>Choose</button>
+          </div>
+        );
+      })}
       <div className="row wrap">
         <button className="btn" onClick={() => setEditing('new')}>Add your own feature</button>
         <button className="btn" onClick={() => setBorrowing(true)}>Borrow a feature</button>
@@ -102,6 +124,7 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
             choices={sheet.raceChoices}
             picked={doc.choices}
             withText
+            under={(choiceId, optionId) => <RacePickFields picks={sheet.racePicks.filter((p) => p.key.startsWith(`pick.${choiceId}.${optionId}.`))} weapons={weapons} onChange={choosePick} />}
             onChange={(id, next) => {
               const choice = sheet.raceChoices.find((c) => c.id === id)!;
               const name = (optionId: string) => choice.options.find((o) => o.id === optionId)?.name ?? optionId;
@@ -110,6 +133,7 @@ export function FeaturesTab({ live }: { live: LiveCharacter }) {
               live.setDoc({ ...doc, choices: { ...doc.choices, [id]: next } }, `${choice.name}: ${[...added.map((n) => `added ${n}`), ...dropped.map((n) => `dropped ${n}`)].join(', ')}`);
             }}
           />
+          <RacePickFields picks={sheet.racePicks.filter((p) => !sheet.raceChoices.some((c) => p.key.startsWith(`pick.${c.id}.`)))} weapons={weapons} onChange={choosePick} />
           <button className="btn btn-primary" onClick={() => setChoosing(false)}>Done</button>
         </Dialog>
       )}

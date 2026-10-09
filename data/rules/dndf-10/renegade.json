@@ -528,8 +528,9 @@
           "page": 177,
           "effects": [
             {
-              "type": "note",
-              "label": "Climbing speed equal to your walking speed",
+              "type": "movement",
+              "mode": "climb",
+              "expr": "walk",
               "when": "on.trick_rider"
             }
           ]

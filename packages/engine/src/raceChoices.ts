@@ -1,7 +1,8 @@
 // Racial traits that are a list to pick from (Cyborg Upgrades, a Mink's Animal Characteristics).
 import type { CharacterDoc } from './character';
 import { evaluateNumber } from './expr';
-import type { OptionDef, RuleEntry, TraitDef } from './types';
+import { SKILLS } from './character';
+import type { OptionDef, PickDef, RuleEntry, TraitDef } from './types';
 
 export interface RaceChoice {
   /** The key in `doc.choices`. */
@@ -36,4 +37,63 @@ export function raceChoices(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choice
     }
   }
   return found;
+}
+
+/** A choice a racial trait or a picked option leaves to the player: which skill, which tool, which weapon. */
+export interface RacePick {
+  /** The key in `doc.choices`. */
+  key: string;
+  /** The trait or option that gives it: "Shape-Memory Alloy Body". */
+  from: string;
+  /** The race it belongs to. */
+  race: string;
+  def: PickDef;
+  /** What is picked: skill ids, or names of tools and weapons. A tool picked where a skill could be is "tool:<name>". */
+  picked: string[];
+  page: number;
+  book: string;
+}
+
+const slugOf = (text: string) => text.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+
+/** The key a pick's values are kept under. */
+export function racePickKey(owner: string, pickId: string): string {
+  return `pick.${owner}.${pickId}`;
+}
+
+/**
+ * Every such choice the character has now: those of the race's and subrace's traits, and those of the options
+ * picked from its lists (a Cyborg's Shape-Memory Alloy Body). One whose option is no longer picked is not listed.
+ */
+export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'>, rules: Map<string, RuleEntry>): RacePick[] {
+  const found: RacePick[] = [];
+  const add = (owner: string, from: string, race: string, picks: PickDef[] | undefined, page: number, book: string) => {
+    for (const def of picks ?? []) {
+      const key = racePickKey(owner, def.id);
+      found.push({ key, from, race, def, picked: (doc.choices?.[key] ?? []).filter((v) => typeof v === 'string' && v.trim() !== ''), page, book });
+    }
+  };
+  for (const id of [doc.race.id, doc.race.subraceId]) {
+    const entry = id ? rules.get(id) : undefined;
+    for (const trait of (entry?.traits ?? []) as TraitDef[]) add(`${entry!.id}.${slugOf(trait.name)}`, trait.name, entry!.name, trait.picks, trait.page, entry!.source.book);
+  }
+  for (const choice of raceChoices(doc, rules)) {
+    for (const option of choice.options) {
+      if (choice.picked.includes(option.id)) add(`${choice.id}.${option.id}`, option.name, choice.from, option.picks as PickDef[] | undefined, option.page, choice.book);
+    }
+  }
+  return found;
+}
+
+/** What a pick's value is called on the sheet: "Stealth", "Thieves’ Tools". */
+export function racePickLabel(pick: RacePick, value: string): string {
+  if (value.startsWith('tool:')) return value.slice(5);
+  return pick.def.kind === 'skill' ? SKILLS.find((k) => k.id === value)?.name ?? value : value;
+}
+
+/** What the player may pick from, when the trait limits it; undefined for anything of the kind. */
+export function racePickOptions(pick: RacePick): { id: string; name: string }[] | undefined {
+  if (pick.def.kind !== 'skill') return pick.def.from?.map((name) => ({ id: name, name }));
+  const ids = pick.def.from ?? SKILLS.map((k) => k.id);
+  return ids.map((id) => ({ id, name: SKILLS.find((k) => k.id === id)?.name ?? id }));
 }

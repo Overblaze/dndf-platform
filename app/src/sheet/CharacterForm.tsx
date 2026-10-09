@@ -1,8 +1,9 @@
-import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, otherVersion, raceChoices, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, customClassEntry, customClassId, isCustomClassId, rulesFor, type Ability, type AbilityScores, type CustomClass, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, HANDBOOKS, SKILLS, cite, crewRolesOf, otherVersion, raceChoices, racePicks as racePicksOf, speedLine, armorFromItem, classScope, deriveSheet, evaluateNumber, levelUp, newCharacter, weaponFromItem, customClassEntry, customClassId, isCustomClassId, rulesFor, type Ability, type AbilityScores, type CustomClass, type SectionDef, type ScoreOrigin, type CharacterClass, type CharacterDoc, type RulesVersion, type WeaponDef } from '@dndf/engine';
 import { AbilityScoresField, originOf } from './AbilityScoresField';
 import { useMemo, useState } from 'react';
 import { CustomClassDialog } from './CustomClassDialog';
 import { RaceChoiceFields } from './RaceChoiceFields';
+import { RacePickFields } from './RacePickFields';
 import { RuleText } from '../components/RuleText';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 
@@ -98,7 +99,13 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
     : classSkills?.skills?.text ?? '';
   // The race's own pick-lists (Cyborg Upgrades), at the character's whole level.
   const racePicks = raceChoices({ race: { id: raceId || undefined, subraceId: subraceId || undefined, name: '', speed: 30 }, classes: [{ id: cls.id, level }, ...otherClasses], choices }, rules);
-  const keptChoices = Object.fromEntries([...picks.map((f) => [f.choices.id, choices[f.choices.id] ?? []] as const), ...racePicks.filter((c) => (choices[c.id] ?? []).length > 0).map((c) => [c.id, choices[c.id]!] as const)]);
+  // What those traits and upgrades leave to choose (a skill, a tool, a weapon). One whose upgrade is unticked is dropped on saving.
+  const nestedPicks = racePicksOf({ race: { id: raceId || undefined, subraceId: subraceId || undefined, name: '', speed: 30 }, classes: [{ id: cls.id, level }, ...otherClasses], choices }, rules);
+  const keptChoices = Object.fromEntries([
+    ...picks.map((f) => [f.choices.id, choices[f.choices.id] ?? []] as const),
+    ...racePicks.filter((c) => (choices[c.id] ?? []).length > 0).map((c) => [c.id, choices[c.id]!] as const),
+    ...nestedPicks.filter((p) => p.picked.length > 0).map((p) => [p.key, p.picked] as const),
+  ]);
   const toggle = (list: string[], id: string) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id]);
   const setWeapon = (i: number, patch: Partial<WeaponDef>) => setWeapons(weapons.map((w, j) => (j === i ? { ...w, ...patch } : w)));
 
@@ -221,7 +228,7 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
       <dl className="facts facts-plain">
         <dt>Hit points</dt><dd>{draftSheet.maxHp.value}</dd>
         <dt>Armor Class</dt><dd>{draftSheet.ac.value}</dd>
-        <dt>Speed</dt><dd>{draftSheet.speed.value} ft</dd>
+        <dt>Speed</dt><dd>{speedLine(draftSheet)}</dd>
         <dt>Scores</dt><dd>{ABILITIES.map((a) => `${a.toUpperCase()} ${draftSheet.abilities[a].score}`).join(' · ')}</dd>
         <dt>Skills</dt><dd>{draftSheet.skills.filter((k) => k.proficient).map((k) => k.label).join(', ') || 'None'}</dd>
       </dl>
@@ -290,7 +297,11 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
           </label>
         )}
       </div>
-      <RaceChoiceFields choices={racePicks} picked={choices} onChange={(id, next) => setChoices({ ...choices, [id]: next })} withText />
+      <RaceChoiceFields
+        choices={racePicks} picked={choices} onChange={(id, next) => setChoices({ ...choices, [id]: next })} withText
+        under={(choiceId, optionId) => <RacePickFields picks={nestedPicks.filter((p) => p.key.startsWith(`pick.${choiceId}.${optionId}.`))} weapons={handbook.weapons.map((w) => w.name)} onChange={(pick, next) => setChoices({ ...choices, [pick.key]: next })} />}
+      />
+      <RacePickFields picks={nestedPicks.filter((p) => !racePicks.some((c) => p.key.startsWith(`pick.${c.id}.`)))} weapons={handbook.weapons.map((w) => w.name)} onChange={(pick, next) => setChoices({ ...choices, [pick.key]: next })} />
       <div className="grid-2">
         <label className="field">
           <span className="label">Race shown on the sheet</span>
