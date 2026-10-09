@@ -541,7 +541,8 @@
           "effects": [
             {
               "type": "speed",
-              "value": 10
+              "value": 10,
+              "walking": true
             }
           ]
         },
