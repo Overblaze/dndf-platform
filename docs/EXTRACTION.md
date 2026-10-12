@@ -110,6 +110,22 @@ counts only, so its output can be pasted anywhere. `--where` adds the book and p
 any text. After changing `extract_secret.py`: run it, run the audit, then `npm run load-secret --workspace bot -- --prune`
 to load the files and remove rows that are no longer in them (a row a grant points at is always kept).
 
+### Beasts a Zoan fruit names from another book
+
+97 fruits print their beast's stat block; most Zoans instead say "transform into a … from Volo's Guide to Monsters"
+(14 fruits, 8 creatures) or the Monster Manual. Those books are not free to reproduce, so their stat blocks are never
+in this repository. The ones the table needs are kept in `~/dndf/secret/licensed/*.json` (a subfolder, so
+`load-secret` does not take the file for entries), transcribed by hand from the page: Volo's text layer is OCR with
+the two columns interleaved ("Armor dass 11-", "ld6"), which no reader should be trusted with for numbers.
+
+`python3 tools/extract/attach_stat_blocks.py` checks each block against itself, a different way from how it was typed
+(hit points are the average of their dice; the bonus is Constitution × hit dice; each modifier follows from its
+score; an attack bonus is proficiency for the Challenge + Strength or Dexterity; damage is the average of its dice),
+then copies it onto every fruit that names the creature, as `statBlockLines` with `statBlockSource`. A "cow (ox)" is
+the ox; a creature "reflavored as" something is the creature. It prints counts only, and `--check` writes nothing.
+`extract_secret.py` runs it at its end, since it rewrites the fruit files. Then `npm run load-secret --workspace bot`.
+The Monster Manual is not among the sources; fruits naming its beasts are entered by the player on the sheet.
+
 ## SRD spells
 
 `python3 tools/extract/extract_srd_conditions.py` reads the fourteen conditions of the SRD's Appendix PH-A (pages
