@@ -1,6 +1,7 @@
 // A Devil Fruit infused into a weapon instead of eaten: the Devilforged's "Infuse Devil Fruit"
 // (v8.8 p114–115 at 3rd level; v10 p114–116 at 1st). The weapon gains what the book gives for the
 // fruit's type, read from the class's own sections, so each handbook's wording decides.
+import type { CustomBeast } from './beast';
 import type { ClassEntry, FeatureDef, RuleEntry, SectionDef } from './types';
 
 /** The player's choice, kept on the character. It names the grant, never the fruit, so a saved or exported character gives nothing away. */
@@ -15,6 +16,8 @@ export interface FruitInfusion {
   as?: string;
   /** The kind of elemental damage chosen, where the book adds some. */
   element?: string;
+  /** The Zoan beast the weapon turns into, typed in by the player: for a fruit that names a beast from another book, or to use numbers of their own. */
+  beast?: CustomBeast;
 }
 
 export const INFUSE_FEATURE = 'Infuse Devil Fruit';
@@ -74,6 +77,8 @@ export interface InfusionNumbers {
   spells: boolean;
   /** The benefit that hands the weapon one of the fruit's own features, by its name in the book. */
   effectBenefit: string | null;
+  /** The weapon can turn into the fruit's beast, which then acts for itself (Infused Animal Form). */
+  companion: boolean;
 }
 
 /**
@@ -91,6 +96,7 @@ export function infusionNumbers(section: SectionDef, rarity: string): InfusionNu
     reach: Number(/range can increase by up to (\d+) ?ft/i.exec(words)?.[1] ?? 0),
     splash: /dealing (\d+d\d+) damage to creatures within 5 feet/i.exec(words)?.[1] ?? null,
     spells: /cast a spell from the devil fruits? spell list using the Devil Fruit Infusion Charges table/i.test(words),
+    companion: /weapon morphs into its devil fruit beast form/i.test(words),
     effectBenefit: benefits.find((b) => /gains one (feature|of it’s non-awakening [\w ]+features?) from the fruit’s stat sheet/i.test(b.text))?.name ?? null,
   };
 }

@@ -10,6 +10,7 @@ export * from './general';
 export * from './surges';
 export * from './raceChoices';
 export * from './infusion';
+export * from './beast';
 export * from './tools';
 export * from './fruit';
 export * from './bounty';

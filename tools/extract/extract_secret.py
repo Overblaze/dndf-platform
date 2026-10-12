@@ -310,6 +310,11 @@ def main() -> int:
             e["versions"] = ["dndf-8.8", "dndf-10"]
         write(f"encyclopedia_{name}", entries, "SECRET. From the Expanded Devil Fruit Encyclopedia. Never commit.")
 
+    # The fruit files were written afresh: put back the stat blocks of beasts they name from other books.
+    import attach_stat_blocks
+    print()
+    attach_stat_blocks.main()
+
     if problems or chapters.problems:
         print(f"\n{len(problems) + len(chapters.problems)} thing(s) to check (pages only, no names):")
         for p in (problems + chapters.problems)[:60]:
