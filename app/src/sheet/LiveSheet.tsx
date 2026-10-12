@@ -156,7 +156,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       <Vitals live={live} onOpen={onOpen} />
 
       <div className="segmented sheet-tabs" role="tablist" aria-label="Sheet sections">
-        {TABS.filter((t) => t.id !== 'fruit' || sheet.fruits.length + sheet.knownFruits.length > 0).map((t) => (
+        {TABS.filter((t) => t.id !== 'fruit' || sheet.fruits.length + sheet.infused.length + sheet.knownFruits.length > 0).map((t) => (
           <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'active' : ''} onClick={() => setTab(t.id)}>
             {t.label}
           </button>
@@ -188,7 +188,7 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       {dialog === 'switch' && (
         <VersionSwitchDialog
           doc={doc}
-          hasFruit={sheet.fruits.length > 0}
+          hasFruit={sheet.fruits.length + sheet.infused.length > 0}
           onClose={() => setDialog(null)}
           onCopy={async (copy) => {
             const made = await store.create(copy);

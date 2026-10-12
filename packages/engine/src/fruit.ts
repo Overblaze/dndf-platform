@@ -5,6 +5,8 @@ import { parseDice, formatDice } from './dice';
 import type { RollDef, RuleEntry } from './types';
 
 export interface GrantedSecret {
+  /** The grant's own id (the row the DM made). A character names an infused fruit by this, never by the fruit. */
+  id?: string;
   /** The entry's key in the private table ("<id>@<book>"). */
   key: string;
   /** 'owner': the character has the fruit. 'knowledge': they can read it, nothing goes on the sheet. */
@@ -28,6 +30,8 @@ interface Part { name: string; text: string; page: number }
 
 export interface SheetFruit {
   key: string;
+  /** The grant's id, for a fruit the character has: what an infusion is recorded by. */
+  grant?: string;
   name: string;
   book: string;
   page: number;

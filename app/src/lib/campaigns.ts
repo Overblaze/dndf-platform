@@ -7,7 +7,7 @@ import { ruleSet } from './rules';
 export interface Campaign { id: string; name: string }
 export interface Person { id: string; name: string; /** Signed in with a username and password, not Discord. */ password?: boolean }
 export interface Member extends Person { role: 'player' | 'dm' }
-export interface CampaignCharacter { id: string; name: string; ownerId: string; campaignId: string | null; summary: string }
+export interface CampaignCharacter { id: string; name: string; ownerId: string; campaignId: string | null; summary: string; /** Has Devilforged levels, so can infuse a fruit into a weapon instead of eating it. */ devilforged: boolean; /** The grants (by id) its player has infused into a weapon. */ infused: string[] }
 export interface Grant {
   id: string;
   campaignId: string;
@@ -39,13 +39,14 @@ export function explain(error: Failure): Error {
 const nameOf = (p: { discord_username?: string | null; display_name?: string | null }) => p.display_name?.trim() || p.discord_username?.trim() || 'Someone';
 
 /** "Human (Standard) · Warrior 8", or a plain word when the saved character cannot be read. */
-function summaryOf(raw: unknown): { name: string; summary: string } {
+function summaryOf(raw: unknown): { name: string; summary: string; devilforged: boolean; infused: string[] } {
   const doc = normalizeDoc(raw);
-  if (!doc) return { name: 'Unreadable character', summary: '' };
+  if (!doc) return { name: 'Unreadable character', summary: '', devilforged: false, infused: [] };
+  const more = { devilforged: doc.classes.some((c) => c.id === 'class.devilforged'), infused: (doc.infusions ?? []).map((i) => i.grant) };
   try {
-    return { name: doc.name, summary: deriveSheet(doc, ruleSet(doc.rulesVersion).rules).summary };
+    return { name: doc.name, summary: deriveSheet(doc, ruleSet(doc.rulesVersion).rules).summary, ...more };
   } catch {
-    return { name: doc.name, summary: '' };
+    return { name: doc.name, summary: '', ...more };
   }
 }
 

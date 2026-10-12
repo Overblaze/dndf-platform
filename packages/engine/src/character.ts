@@ -1,4 +1,5 @@
 // The saved character document (the `doc` column of the characters table).
+import type { FruitInfusion } from './infusion';
 import type { ScoreOrigin } from './abilityScores';
 import { cleanBounty, type BountyRecord } from './bounty';
 import type { CustomClass } from './customClass';
@@ -159,6 +160,8 @@ export interface CharacterDoc {
   surges?: SurgeRecord[];
   /** Whether the DM (or the d20) says this character can awaken the Color of the Supreme King. */
   qualitiesOfAKing?: boolean;
+  /** Devil Fruits the character has infused into a weapon instead of eating (a Devilforged). Each names its grant, never the fruit. */
+  infusions?: FruitInfusion[];
   /** Haki Purist improvements, in the order they were taken. */
   hakiPurist?: PuristPick[];
   /** Classes the player wrote for this character. A class in `classes` with id `class.custom.<id>` is one of these. */
@@ -390,6 +393,15 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
       : { strengthenSelf: 0 },
     surges: !Array.isArray(doc.surges) ? undefined : uniqueIds((objects<SurgeRecord>(doc.surges) ?? []).filter((r) => typeof r.entry === 'string'), 'surge').map((r) => ({ ...r, pick: cleanPick(r.pick) })),
     qualitiesOfAKing: doc.qualitiesOfAKing === true ? true : undefined,
+    infusions: Array.isArray(doc.infusions)
+      ? doc.infusions.flatMap((raw: unknown): FruitInfusion[] => {
+        const i = raw as Record<string, unknown> | null;
+        const word = (value: unknown, max: number) => (typeof value === 'string' && value.trim() ? value.trim().slice(0, max) : undefined);
+        return i && typeof i === 'object' && typeof i.grant === 'string' && /^[\w-]{1,64}$/.test(i.grant)
+          ? [{ grant: i.grant, ...(word(i.weaponId, 80) ? { weaponId: word(i.weaponId, 80) } : {}), ...(word(i.effect, 120) ? { effect: word(i.effect, 120) } : {}), ...(word(i.as, 60) ? { as: word(i.as, 60) } : {}), ...(word(i.element, 30) ? { element: word(i.element, 30) } : {}) }]
+          : [];
+      }).filter((i, n, all) => all.findIndex((o) => o.grant === i.grant) === n).slice(0, 20)
+      : undefined,
     hakiPurist: Array.isArray(doc.hakiPurist) ? doc.hakiPurist.filter((p): p is PuristPick => p === 'quality' || p === 'quantity' || p === 'stamina') : undefined,
     overrides: isObject(doc.overrides) ? Object.fromEntries(Object.entries(doc.overrides).filter(([, v]) => typeof v === 'number' && Number.isFinite(v))) as Record<string, number> : {},
     defenses: cleanDefenses(doc.defenses),
