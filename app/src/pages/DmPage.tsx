@@ -62,6 +62,12 @@ function GrantDialog({ character, onGrant, search, onClose }: { character: Campa
             <span className="label">Note (optional; the character’s player can read it)</span>
             <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Found in the wreck, session 9" />
           </label>
+          {kind === 'owner' && character.devilforged && (
+            <p className="notice">
+              {character.name} is a Devilforged. Once granted, their player chooses on the sheet’s Fruit tab whether the fruit is eaten or <strong>infused into a weapon</strong> (Infuse Devil Fruit).
+              Infused, the weapon gains what the class gives for the fruit’s type, and the fruit’s own features stay off the sheet.
+            </p>
+          )}
           <p className="page-ref">Only {character.name}’s player and the DMs can read it until you reveal it to the table.</p>
           <div className="row wrap">
             <button className="btn btn-primary" onClick={give}>Grant</button>
@@ -222,7 +228,7 @@ function CampaignTools({ campaign, userId, onGone }: { campaign: Campaign; userI
                 <div key={g.id} className="resource">
                   <div>
                     <div className="resource-name">{g.entry?.name ?? 'A fruit that is no longer loaded'}</div>
-                    <div className="page-ref">{[g.kind === 'owner' ? 'Has the fruit' : 'Knows about it', g.entry?.book, g.note, g.revealed ? 'the table knows' : 'secret'].filter(Boolean).join(' · ')}</div>
+                    <div className="page-ref">{[g.kind === 'owner' ? (c.infused.includes(g.id) ? 'Infused into a weapon' : c.devilforged ? 'Has the fruit (eaten; a Devilforged can infuse it instead)' : 'Has the fruit') : 'Knows about it', g.entry?.book, g.note, g.revealed ? 'the table knows' : 'secret'].filter(Boolean).join(' · ')}</div>
                   </div>
                   <div className="row wrap">
                     <button className={g.revealed ? 'btn btn-primary' : 'btn'} role="switch" aria-checked={g.revealed} aria-label={`${g.entry?.name ?? 'Fruit'} revealed to the table`} onClick={() => act(api.setRevealed(g.id, !g.revealed))}>

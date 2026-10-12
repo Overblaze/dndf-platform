@@ -123,7 +123,7 @@ export class Db {
    */
   async secretsOf(characterId: string): Promise<{ secrets: Secrets; open: boolean }> {
     const none = { secrets: NO_SECRETS, open: true };
-    const { data: grants, error } = await this.client.from('grants').select('entry_key, kind, revealed').eq('character_id', characterId);
+    const { data: grants, error } = await this.client.from('grants').select('id, entry_key, kind, revealed').eq('character_id', characterId);
     if (error || !grants?.length) return none;
     const keys = [...new Set(grants.map((g) => g.entry_key as string))];
     const [{ data: entries }, { data: advancements }] = await Promise.all([
@@ -132,7 +132,7 @@ export class Db {
     ]);
     const granted = grants.flatMap((g) => {
       const entry = entries?.find((e) => e.key === g.entry_key)?.data as RuleEntry | undefined;
-      return entry && typeof entry.id === 'string' ? [{ key: g.entry_key as string, kind: g.kind === 'knowledge' ? 'knowledge' as const : 'owner' as const, revealed: g.revealed === true, entry }] : [];
+      return entry && typeof entry.id === 'string' ? [{ id: typeof g.id === 'string' ? g.id : undefined, key: g.entry_key as string, kind: g.kind === 'knowledge' ? 'knowledge' as const : 'owner' as const, revealed: g.revealed === true, entry }] : [];
     });
     const held = granted.filter((g) => g.kind === 'owner');
     if (held.length === 0) return none;

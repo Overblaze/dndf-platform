@@ -12,6 +12,7 @@ import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, w
 import { RARITY_LEVEL, bounty as bountyOf, type WantedPoster } from './bounty';
 import { carriedWeight, withEquippedItems, type InventoryLine } from './inventory';
 import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
+import { biggerDie, infusionBenefits, infusionCharges, infusionFeature, infusionNumbers, infusionSection, infusionTypeOf, infusionTypes, type InfusionNumbers } from './infusion';
 import { raceChoices, racePickLabel, racePicks as racePicks_, type RaceChoice, type RacePick } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
@@ -238,6 +239,10 @@ export interface Sheet {
   /** Devil Fruits the character holds, and ones they only know about. Empty unless private content was handed in. */
   fruits: SheetFruit[];
   knownFruits: SheetFruit[];
+  /** Devil Fruits infused into a weapon instead of eaten, with what each weapon has gained. Empty unless private content was handed in. */
+  infused: SheetInfusion[];
+  /** Set for a Devilforged: the "Infuse Devil Fruit" feature, the level it arrives at, and whether the character has reached it. */
+  infuser: { level: number; from: number; ready: boolean; page: number; book: string; text: string } | null;
   /** Devil Fruit save DC and attack bonus; null without a fruit. */
   fruitSaveDc: Stat | null;
   fruitAttack: Stat | null;
@@ -274,6 +279,30 @@ export const MOVEMENT_NAMES: Record<MovementMode, string> = { swim: 'Swim', fly:
 /** "30 ft, swim 25 ft, fly 10 ft": every speed in one line, for a summary, a printed sheet or the bot. */
 export function speedLine(sheet: Pick<Sheet, 'speed' | 'speeds'>): string {
   return [`${sheet.speed.value} ft`, ...sheet.speeds.map((s) => `${MOVEMENT_NAMES[s.mode].toLowerCase()} ${s.stat.value} ft`)].join(', ');
+}
+
+export interface SheetInfusion {
+  /** The grant this is (what the character's own record names). */
+  grant: string;
+  /** The fruit, to read. None of its features are on the sheet: the weapon has only what the infusion gives. */
+  fruit: SheetFruit;
+  weaponId: string | null;
+  weapon: string | null;
+  /** The infusion type in play ("Zoan", "Solid Logia"), what the fruit's own type line calls for, and every type this handbook prints. */
+  type: string | null;
+  typeRead: string | null;
+  types: string[];
+  /** The book's section for that type, word for word. */
+  rule: { name: string; text: string; page: number; book: string } | null;
+  benefits: { name: string; text: string }[];
+  numbers: InfusionNumbers | null;
+  /** The feature of the fruit the weapon has gained, where the book gives one, and the ones to choose from. */
+  effect: { name: string; text: string; page: number } | null;
+  effectOptions: string[];
+  element: string | null;
+  /** Its Devil Fruit Infusion charges on the sheet, when it can cast the fruit's spells. */
+  resource: string | null;
+  rolls: SheetFeature['rolls'];
 }
 
 export interface SheetMovement {
@@ -376,7 +405,24 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   const doc = settings.hakiPurist ? equipped : { ...equipped, hakiPurist: undefined };
   // The handbook's rules, plus any classes the player wrote for this character and any private advancements it may see.
   const rules = withSecrets(rulesFor(doc, handbook), secrets, doc.rulesVersion);
-  const heldFruits = secrets.granted.filter((g) => g.kind === 'owner' && g.entry.kind === 'devilFruit');
+  // A fruit the character has is eaten, unless they have infused it into a weapon (a Devilforged): then it is
+  // the weapon that has it, and the character is no fruit user for it.
+  const infusedBy = new Map((doc.infusions ?? []).map((i) => [i.grant, i]));
+  const ownedFruits = secrets.granted.filter((g) => g.kind === 'owner' && g.entry.kind === 'devilFruit');
+  const infusedFruits = ownedFruits.filter((g) => g.id !== undefined && infusedBy.has(g.id));
+  const heldFruits = ownedFruits.filter((g) => !(g.id !== undefined && infusedBy.has(g.id)));
+  const infuse = infusionFeature(rules);
+  const infusionPlans = infusedFruits.map((g) => {
+    const chosen = infusedBy.get(g.id!)!;
+    const types = infuse ? infusionTypes(infuse.feature) : [];
+    const read = infusionTypeOf(typeof g.entry.type === 'string' ? g.entry.type : '', types);
+    const type = chosen.as && types.includes(chosen.as) ? chosen.as : read;
+    const section = infuse && type ? infusionSection(infuse.feature, type) : undefined;
+    // The numbers are worked out for v8.8, whose sections these rules were read from and checked against. v10 words its
+    // infusions differently (properties, calibrations): there the book's text is shown and the numbers are the player's.
+    const numbers: InfusionNumbers | null = section && doc.rulesVersion === 'dndf-8.8' ? infusionNumbers(section, typeof g.entry.rarity === 'string' ? g.entry.rarity : '') : null;
+    return { granted: g, chosen, types, type, typeRead: read, section, numbers, weapon: doc.weapons.find((w) => w.id === chosen.weaponId) };
+  });
   const warnings: string[] = [];
   const level = doc.classes.reduce((total, c) => total + c.level, 0);
 
@@ -1072,19 +1118,31 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     if (proficient) hitLines.push({ label: 'Proficiency bonus', value: prof.value });
     else attackNotes.push('Not proficient');
     if (weapon.bonus) hitLines.push({ label: 'Item bonus', value: weapon.bonus });
+    // A Devil Fruit infused into this weapon: what the book gives for the fruit's type. The fruit is not named here.
+    const infused = infusionPlans.filter((p) => p.weapon?.id === weapon.id && p.numbers).map((p) => p.numbers!);
+    const strikes = Math.max(0, ...infused.map((n) => n.strikes));
+    if (strikes) hitLines.push({ label: 'Infused Devil Fruit: Enhanced Strikes', value: strikes });
+    const boosted = infused.some((n) => n.dieStep) && biggerDie(weapon.damage) !== weapon.damage;
+    const ownDie = boosted ? biggerDie(weapon.damage) : weapon.damage;
+    for (const n of infused) {
+      if (n.elemental) attackNotes.push(`Infused Devil Fruit: +${n.elemental} elemental damage on a hit; ignores resistance to non-magical damage`);
+      if (n.reach) attackNotes.push(`Infused Devil Fruit: reach can grow by up to ${n.reach} ft`);
+      if (n.splash) attackNotes.push(`Infused Devil Fruit: on a hit, ${n.splash} damage to creatures within 5 ft of the target`);
+    }
     hitLines.push(...bonusLines('attack', extra).filter((l) => l.value !== 0));
 
-    const useStyle = style !== undefined && averageOf(style.dice) > averageOf(weapon.damage);
+    const useStyle = style !== undefined && averageOf(style.dice) > averageOf(ownDie);
     // Enhanced Strike and Focused Hit: the weapon's own die one size larger, never a class feature's die.
     const step = useStyle ? undefined : ofType('weaponDieStep', extra).reduce<ActiveEffect | undefined>((best, e) => (!best || (e.effect.max ?? 0) > (best.effect.max ?? 0) ? e : best), undefined);
-    const stepped = step ? stepDice(weapon.damage, step.effect.max ?? 12) : null;
-    if (step && stepped && step.effect.label) attackNotes.push(`${step.from}: the larger die ${String(step.effect.label)}; ${weapon.damage} otherwise`);
-    const dice = useStyle ? style.dice : stepped ?? weapon.damage;
+    const stepped = step ? stepDice(ownDie, step.effect.max ?? 12) : null;
+    if (step && stepped && step.effect.label) attackNotes.push(`${step.from}: the larger die ${String(step.effect.label)}; ${ownDie} otherwise`);
+    const dice = useStyle ? style.dice : stepped ?? ownDie;
     const damageLines: BreakdownLine[] = [
-      { label: useStyle ? `${style.from} die` : stepped ? `Weapon die ${weapon.damage}, one size larger (${step!.from})` : 'Weapon die', value: dice },
+      { label: useStyle ? `${style.from} die` : stepped ? `Weapon die ${ownDie}, one size larger (${step!.from})` : boosted ? `Weapon die ${weapon.damage}, one size larger (Infused Devil Fruit: Damage Boost)` : 'Weapon die', value: dice },
       { label: `${ABILITY_NAMES[ability]} modifier`, value: mod[ability]! },
     ];
     if (weapon.bonus) damageLines.push({ label: 'Item bonus', value: weapon.bonus });
+    if (strikes) damageLines.push({ label: 'Infused Devil Fruit: Enhanced Strikes', value: strikes });
     damageLines.push(...bonusLines('damage', extra).filter((l) => l.value !== 0));
     // Damage typed by hand may not be dice at all. Show it as typed and say so; the attack still rolls to hit.
     const spec = readDice(dice);
@@ -1219,6 +1277,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     }
     return {
       key: granted.key,
+      ...(granted.id ? { grant: granted.id } : {}),
       name: entry.name,
       book: entry.source.book,
       page: entry.source.page,
@@ -1244,6 +1303,41 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     };
   };
   const fruits = heldFruits.map((g, i) => fruitOf(g, true, i));
+  // Fruits infused into a weapon: what the weapon has gained, the book's words for it, and its charges.
+  const infuserLevel = doc.classes.filter((c) => c.id === 'class.devilforged').reduce((total, c) => total + c.level, 0);
+  const infusions: SheetInfusion[] = infusionPlans.map((plan) => {
+    const fruit = fruitOf(plan.granted, false);
+    const id = `infusion.${plan.granted.id}`;
+    const charges = infuse && plan.numbers?.spells ? infusionCharges(infuse.feature, level, fruit.category) : 0;
+    const pool = charges > 0 ? stat(doc, `resource.${id}`, 'Devil Fruit Infusion charges', { value: charges, lines: [] }).value : 0;
+    if (pool > 0) resources.push({ id, name: 'Devil Fruit Infusion charges', max: pool, remaining: left(pool, doc.state.spent[id]), recharge: 'short', page: infuse!.feature.page, book: infuse!.cls.source.book });
+    const fruitFeatures = fruitParts(plan.granted.entry).features;
+    const effect = plan.numbers?.effectBenefit ? fruitFeatures.find((p) => p.name === plan.chosen.effect) : undefined;
+    const rolls: RollDef[] = [];
+    if (plan.numbers?.elemental) rolls.push({ label: `Elemental damage${plan.chosen.element ? ` (${plan.chosen.element})` : ''}`, dice: plan.numbers.elemental, kind: 'damage' });
+    if (plan.numbers?.splash) rolls.push({ label: 'Shattering Impact: creatures within 5 ft', dice: plan.numbers.splash, kind: 'damage' });
+    if (effect) rolls.push(...diceInText(effect.text));
+    return {
+      grant: plan.granted.id!,
+      fruit,
+      weaponId: plan.weapon?.id ?? null,
+      weapon: plan.weapon?.name ?? null,
+      type: plan.type,
+      typeRead: plan.typeRead,
+      types: plan.types,
+      rule: plan.section ? { name: plan.section.name, text: plan.section.text, page: plan.section.page, book: infuse!.cls.source.book } : null,
+      benefits: plan.section ? infusionBenefits(plan.section) : [],
+      numbers: plan.numbers,
+      effect: effect ?? null,
+      effectOptions: plan.numbers?.effectBenefit ? fruitFeatures.map((p) => p.name) : [],
+      element: plan.chosen.element ?? null,
+      resource: pool > 0 ? id : null,
+      rolls: rollButtons(rolls, plainScope),
+    };
+  });
+  const infuser: Sheet['infuser'] = infuse && infuserLevel > 0
+    ? { level: infuserLevel, from: infuse.feature.level, ready: infuserLevel >= infuse.feature.level, page: infuse.feature.page, book: infuse.cls.source.book, text: infuse.feature.text }
+    : null;
   const knownFruits = secrets.granted
     .filter((g) => g.kind === 'knowledge' && g.entry.kind === 'devilFruit' && !heldFruits.some((h) => h.key === g.key))
     .map((g) => fruitOf(g, false));
@@ -1460,6 +1554,8 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     racePicks: chosen,
     fruits,
     knownFruits,
+    infused: infusions,
+    infuser,
     fruitSaveDc,
     fruitAttack,
     warnings,
