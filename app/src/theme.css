@@ -2171,3 +2171,17 @@ a {
 .optional-rule-gives {
   display: block;
 }
+
+/* An infused Zoan weapon's beast (sheet/BeastCard.tsx) */
+
+.beast {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card-inner);
+}
+
+.beast h3 {
+  margin-top: 0;
+}

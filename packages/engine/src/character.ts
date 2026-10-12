@@ -1,4 +1,5 @@
 // The saved character document (the `doc` column of the characters table).
+import { cleanBeast } from './beast';
 import type { FruitInfusion } from './infusion';
 import type { ScoreOrigin } from './abilityScores';
 import { cleanBounty, type BountyRecord } from './bounty';
@@ -398,7 +399,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
         const i = raw as Record<string, unknown> | null;
         const word = (value: unknown, max: number) => (typeof value === 'string' && value.trim() ? value.trim().slice(0, max) : undefined);
         return i && typeof i === 'object' && typeof i.grant === 'string' && /^[\w-]{1,64}$/.test(i.grant)
-          ? [{ grant: i.grant, ...(word(i.weaponId, 80) ? { weaponId: word(i.weaponId, 80) } : {}), ...(word(i.effect, 120) ? { effect: word(i.effect, 120) } : {}), ...(word(i.as, 60) ? { as: word(i.as, 60) } : {}), ...(word(i.element, 30) ? { element: word(i.element, 30) } : {}) }]
+          ? [{ grant: i.grant, ...(word(i.weaponId, 80) ? { weaponId: word(i.weaponId, 80) } : {}), ...(word(i.effect, 120) ? { effect: word(i.effect, 120) } : {}), ...(word(i.as, 60) ? { as: word(i.as, 60) } : {}), ...(word(i.element, 30) ? { element: word(i.element, 30) } : {}), ...(cleanBeast(i.beast) ? { beast: cleanBeast(i.beast)! } : {}) }]
           : [];
       }).filter((i, n, all) => all.findIndex((o) => o.grant === i.grant) === n).slice(0, 20)
       : undefined,

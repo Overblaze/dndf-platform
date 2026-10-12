@@ -1,6 +1,7 @@
 import { cite, spendResource, type FruitInfusion, type SheetFruit, type SheetInfusion } from '@dndf/engine';
 import { useRolls } from '../lib/rolls';
 import { RuleText } from '../components/RuleText';
+import { BeastCard } from './BeastCard';
 import type { LiveCharacter } from '../lib/useCharacter';
 import { Tile, type OpenStat } from './Vitals';
 
@@ -121,6 +122,7 @@ export function FruitTab({ live, onOpen }: { live: LiveCharacter; onOpen: OpenSt
                 {infusion.weapon && infusion.numbers && (infusion.numbers.dieStep || infusion.numbers.strikes > 0) && <p className="page-ref">Already in {infusion.weapon}’s attack on the Combat tab: {[infusion.numbers.dieStep ? 'the larger damage die' : '', infusion.numbers.strikes ? `+${infusion.numbers.strikes} to attack and damage` : ''].filter(Boolean).join(' and ')}.</p>}
               </details>
             ) : <p className="notice">This handbook prints no infusion for a {fruit.type || 'fruit of this type'}. Choose the closest kind above with your DM; until then nothing is applied to the weapon.</p>}
+            {infusion.companion && <BeastCard live={live} infusion={infusion} onBeast={(beast, log) => change(infusion, { beast }, log)} />}
             {infusion.effect && (
               <details className="feature" open>
                 <summary>

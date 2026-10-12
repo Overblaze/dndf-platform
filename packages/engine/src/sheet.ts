@@ -12,6 +12,7 @@ import { devilFruitAttackBonus, devilFruitSaveDc, hakiAttackBonus, hakiSaveDc, w
 import { RARITY_LEVEL, bounty as bountyOf, type WantedPoster } from './bounty';
 import { carriedWeight, withEquippedItems, type InventoryLine } from './inventory';
 import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
+import { beastMod, parseBeast, withWeaponDamage, type BeastAttack } from './beast';
 import { biggerDie, infusionBenefits, infusionCharges, infusionFeature, infusionNumbers, infusionSection, infusionTypeOf, infusionTypes, type InfusionNumbers } from './infusion';
 import { raceChoices, racePickLabel, racePicks as racePicks_, type RaceChoice, type RacePick } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
@@ -303,6 +304,31 @@ export interface SheetInfusion {
   /** Its Devil Fruit Infusion charges on the sheet, when it can cast the fruit's spells. */
   resource: string | null;
   rolls: SheetFeature['rolls'];
+  /** A Zoan: the weapon can turn into the fruit's beast, which then acts for itself. */
+  companion: boolean;
+  /** That beast, when its numbers are known: from the fruit's own stat block, or typed in by the player. */
+  beast: SheetBeast | null;
+}
+
+export interface SheetBeast {
+  /** The key its damage taken (`state.counters`) and whether it is out (`state.toggles`) are kept under. */
+  id: string;
+  name: string;
+  /** True when these are the player's own numbers, not the fruit's stat block. */
+  typed: boolean;
+  ac: number | null;
+  hpMax: number;
+  hp: number;
+  hpDice: string | null;
+  speed: string;
+  abilities: Record<Ability, number> | null;
+  facts: { name: string; text: string }[];
+  traits: { name: string; text: string }[];
+  /** Its own attacks (physical damage in the infused weapon's damage type), then the weapon's attack it has gained. */
+  attacks: BeastAttack[];
+  /** Whether the weapon is out as the beast now. */
+  out: boolean;
+  damageType: string | null;
 }
 
 export interface SheetMovement {
@@ -1305,6 +1331,41 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   const fruits = heldFruits.map((g, i) => fruitOf(g, true, i));
   // Fruits infused into a weapon: what the weapon has gained, the book's words for it, and its charges.
   const infuserLevel = doc.classes.filter((c) => c.id === 'class.devilforged').reduce((total, c) => total + c.level, 0);
+  // The beast an infused Zoan weapon turns into: the player's own numbers if they typed any, else the fruit's stat block.
+  const beastOf = (plan: (typeof infusionPlans)[number]): SheetBeast | null => {
+    const typed = plan.chosen.beast;
+    const read = typed ? null : parseBeast(Array.isArray(plan.granted.entry.statBlockLines) ? (plan.granted.entry.statBlockLines as { name?: unknown; text?: unknown }[]) : []);
+    if (!typed && !read) return null;
+    const id = `beast.${plan.granted.id}`;
+    const hpMax = stat(doc, `beast.hp.${plan.granted.id}`, 'Beast hit points', { value: typed ? typed.hp : read!.hp ?? 0, lines: [] }).value;
+    const own: BeastAttack[] = typed
+      ? typed.attacks.map((a) => ({ name: a.name, text: '', toHit: a.toHit, damage: a.damage ? [{ dice: a.damage, type: a.type }] : [] }))
+      : read!.attacks;
+    const attacks = withWeaponDamage(own, plan.weapon?.damageType);
+    // "The beast gains the weapon attack from the infused weapon": the weapon's die with the beast's own best attack
+    // bonus and Strength or Dexterity, since the book gives no other.
+    const best = attacks.reduce<number | null>((top, a) => (a.toHit !== null && (top === null || a.toHit > top) ? a.toHit : top), null);
+    const mod = read?.abilities ? Math.max(beastMod(read.abilities.str), beastMod(read.abilities.dex)) : 0;
+    const weaponAttack: BeastAttack | null = plan.weapon
+      ? { name: `${plan.weapon.name} (the infused weapon’s own attack)`, text: '', toHit: best, damage: [{ dice: mod ? `${plan.weapon.damage} ${mod < 0 ? '-' : '+'} ${Math.abs(mod)}` : plan.weapon.damage, type: plan.weapon.damageType }] }
+      : null;
+    return {
+      id,
+      name: (typed ? typed.name : read!.name) || 'Beast',
+      typed: Boolean(typed),
+      ac: typed ? typed.ac : read!.ac,
+      hpMax,
+      hp: Math.max(0, hpMax - Math.max(0, doc.state.counters[id] ?? 0)),
+      hpDice: read?.hpDice ?? null,
+      speed: typed ? typed.speed : read!.speed,
+      abilities: read?.abilities ?? null,
+      facts: read?.facts ?? [],
+      traits: typed ? (typed.notes ? [{ name: 'Notes', text: typed.notes }] : []) : read!.traits,
+      attacks: [...attacks, ...(weaponAttack ? [weaponAttack] : [])],
+      out: doc.state.toggles[id] === true,
+      damageType: plan.weapon?.damageType ?? null,
+    };
+  };
   const infusions: SheetInfusion[] = infusionPlans.map((plan) => {
     const fruit = fruitOf(plan.granted, false);
     const id = `infusion.${plan.granted.id}`;
@@ -1333,6 +1394,8 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
       element: plan.chosen.element ?? null,
       resource: pool > 0 ? id : null,
       rolls: rollButtons(rolls, plainScope),
+      beast: plan.numbers?.companion ? beastOf(plan) : null,
+      companion: plan.numbers?.companion === true,
     };
   });
   const infuser: Sheet['infuser'] = infuse && infuserLevel > 0
