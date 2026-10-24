@@ -14,7 +14,7 @@ import { carriedWeight, withEquippedItems, type InventoryLine } from './inventor
 import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
 import { beastMod, parseBeast, withWeaponDamage, type BeastAttack } from './beast';
 import { biggerDie, infusionBenefits, infusionCharges, infusionFeature, infusionNumbers, infusionSection, infusionTypeOf, infusionTypes, type InfusionNumbers } from './infusion';
-import { raceChoices, racePickLabel, racePicks as racePicks_, type RaceChoice, type RacePick } from './raceChoices';
+import { featEffects, raceChoices, racePickLabel, racePicks as racePicks_, type RaceChoice, type RacePick } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
 import { HAKI_PURIST_LEVELS, logiaCharges, parameciaCharges, zoanBeastForm, dreamPointsMax, hakiPuristPicks, hakiTier, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
@@ -614,6 +614,17 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
       if (def.page === 0) moved(effect.ability, to, `${def.name}: ${signed(effect.value ?? 0)}`); else scores[effect.ability] = to;
     }
   }
+  // A feat's +1: the one it names (Durable), or the one picked (Resilient, Athlete). Listed, so a +1 also
+  // typed into the scores by hand, as the sheet once asked, is easy to see.
+  for (const id of new Set(doc.feats ?? [])) {
+    const feat = rules.get(id);
+    if (feat?.kind !== 'feat') continue;
+    for (const effect of featEffects(feat, doc.choices)) {
+      if (effect.type !== 'ability' || !effect.ability || !ABILITIES.includes(effect.ability)) continue;
+      const raised = scores[effect.ability] + (effect.value ?? 0);
+      moved(effect.ability, Math.max(scores[effect.ability], Math.min(raised, effect.max ?? raised)), `${feat.name}: ${signed(effect.value ?? 0)}`);
+    }
+  }
   // "Your score is 19 while you wear this. It has no effect on you if your score is already 19 or higher."
   // Applied after every raise, so it never stacks with one.
   for (const { def } of active) {
@@ -713,14 +724,15 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     for (const effect of def.effects ?? []) effects.push({ effect, scopeOf: (x) => scopeFor(feature.source, x), from: feature.def.name, page: feature.def.page });
   }
   for (const feat of feats) {
-    for (const effect of (feat.effects ?? []) as EffectDef[]) effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from: feat.name, page: feat.source.page });
+    for (const effect of featEffects(feat, doc.choices)) effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from: feat.name, page: feat.source.page });
   }
   for (const { def, from } of unlisted) {
     for (const effect of (def.effects ?? []) as EffectDef[]) effects.push({ effect, scopeOf: (x) => ({ ...plainScope, ...x }), from, page: def.page });
   }
   // What was chosen where a racial trait or option says "of your choice": a proficiency like any other.
   const chosen = racePicks_(doc, rules);
-  for (const pick of chosen) {
+  // An ability picked for a feat is no proficiency: the feat's own effects read it.
+  for (const pick of chosen.filter((p) => p.def.kind !== 'ability')) {
     for (const value of pick.picked) {
       const label = racePickLabel(pick, value).trim();
       if (!label) continue;

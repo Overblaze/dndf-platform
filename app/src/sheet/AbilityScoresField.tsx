@@ -121,7 +121,7 @@ export function AbilityScoresField({ origin, book, onChange }: { origin: ScoreOr
           </div>
         ))}
       </div>
-      {origin.method !== 'manual' && <p className="page-ref">The “+” column is for what your race, ability score improvements and feats add. The last column is the score the sheet uses.</p>}
+      {origin.method !== 'manual' && <p className="page-ref">The “+” column is for what your race and ability score improvements add. A feat’s increase is added by the sheet, so leave it out here. The last column is the score the sheet uses before feats.</p>}
       {origin.method === 'manual' && <p className="page-ref">These are final scores, after race and improvements.</p>}
     </fieldset>
   );

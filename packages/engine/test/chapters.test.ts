@@ -1,7 +1,7 @@
 // Chapters 1 and 2 of the v10 handbook: general rules, crew roles, backgrounds, feats and races,
 // and what the sheet does with them.
 import { describe, expect, it } from 'vitest';
-import { deriveSheet, newCharacter, spendResource, type RuleEntry, type SectionDef, type TraitDef } from '../src';
+import { deriveSheet, newCharacter, racePickKey, racePickOptions, spendResource, type RuleEntry, type SectionDef, type TraitDef } from '../src';
 import { loadRules } from './load';
 
 const rules = loadRules('dndf-10');
@@ -121,6 +121,35 @@ describe('the sheet with a race, background, crew role and feats', () => {
     expect(resource.max).toBeGreaterThan(0);
     const spent = spendResource(doc.state, sheet, resource.id, 1).state;
     expect(deriveSheet({ ...doc, state: spent }, rules).resources.find((r) => r.name === limited.name)!.remaining).toBe(resource.max - 1);
+  });
+
+  it('Resilient: the ability is picked on the sheet, raised by 1 and proficient in its saving throws', () => {
+    const before = deriveSheet(kaito({ feats: ['feat.resilient'] }), rules);
+    expect(before.abilities.wis.score).toBe(12);
+    expect(before.saves.wis.proficient).toBe(false);
+    const pick = before.racePicks.find((p) => p.key === racePickKey('feat.resilient', 'ability'))!;
+    expect(pick).toMatchObject({ from: 'Resilient', race: 'Feat', page: 61, picked: [] });
+    expect(racePickOptions(pick)!.map((o) => o.name)).toEqual(['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma']);
+
+    const doc = kaito({ feats: ['feat.resilient'] });
+    const sheet = deriveSheet({ ...doc, choices: { ...doc.choices, [pick.key]: ['wis'] } }, rules);
+    expect(sheet.abilities.wis).toMatchObject({ score: 13, mod: 1, changes: [{ label: 'Resilient: +1', to: 13 }] });
+    expect(sheet.saves.wis.proficient).toBe(true);
+    expect(sheet.saves.wis.value).toBe(1 + 3);
+    expect(sheet.racePicks.find((p) => p.key === pick.key)!.picked).toEqual(['wis']);
+    // The ability is no skill: picking it grants no proficiency of its own.
+    expect(sheet.skills.filter((s) => s.proficient).map((s) => s.id).sort()).toEqual(before.skills.filter((s) => s.proficient).map((s) => s.id).sort());
+  });
+
+  it('a feat that names its ability raises it to 20 at most; one that offers two asks which', () => {
+    expect(deriveSheet(kaito({ feats: ['feat.durable'] }), rules).abilities.con.score).toBe(17);
+    expect(deriveSheet(kaito({ feats: ['feat.durable'], scores: { ...scores, con: 20 } }), rules).abilities.con.score).toBe(20);
+    const athlete = deriveSheet(kaito({ feats: ['feat.athlete'] }), rules);
+    const pick = athlete.racePicks.find((p) => p.from === 'Athlete')!;
+    expect(racePickOptions(pick)!.map((o) => o.id)).toEqual(['str', 'dex']);
+    expect(athlete.abilities.dex.score).toBe(14);
+    const doc = kaito({ feats: ['feat.athlete'] });
+    expect(deriveSheet({ ...doc, choices: { ...doc.choices, [pick.key]: ['dex'] } }, rules).abilities.dex.score).toBe(15);
   });
 
   it('warns about a race, background, crew role or feat it cannot find, and still makes the sheet', () => {

@@ -1,7 +1,8 @@
-import { ABILITIES, ABILITY_NAMES, abilityMod, applyLevelUp, customClassEntry, cite, columnLabel, levelUpPlan, rollDie, signed, type Ability, type CharacterDoc } from '@dndf/engine';
+import { ABILITIES, ABILITY_NAMES, abilityMod, applyLevelUp, customClassEntry, cite, columnLabel, levelUpPlan, racePicks, rollDie, signed, type Ability, type CharacterDoc } from '@dndf/engine';
 import { useMemo, useState } from 'react';
 import { Dialog } from '../components/Dialog';
 import { RuleText } from '../components/RuleText';
+import { RacePickFields } from './RacePickFields';
 import { rng, ruleSet } from '../lib/rules';
 import type { LiveCharacter } from '../lib/useCharacter';
 
@@ -41,12 +42,22 @@ export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharact
     () => applyLevelUp(doc, rules, { classId: usable, hpRoll, subclass: subclass || undefined, choices: picks, scoreIncrease, feat: plan.improvement && improve === 'feat' && feat ? feat : undefined }),
     [doc, rules, usable, hpRoll, subclass, picks, scoreIncrease, plan.improvement, improve, feat],
   );
+  // What the feat taken leaves to choose (Resilient's ability), kept with the other picks of this level.
+  const featPicks = useMemo(
+    () => (plan.improvement && improve === 'feat' && feat ? racePicks({ ...doc, feats: [feat], choices: { ...doc.choices, ...picks } }, rules).filter((p) => p.key.startsWith(`pick.${feat}.`)) : []),
+    [doc, rules, plan.improvement, improve, feat, picks],
+  );
+  const chooseFeat = (id: string) => {
+    setFeat(id);
+    setPicks(Object.fromEntries(Object.entries(picks).filter(([key]) => !key.startsWith('pick.feat.'))));
+  };
   const waiting = hpMode === 'roll' && rolled === null;
   const toDo = [
     ...(plan.subclass && !subclass ? [`${plan.subclass.label} not chosen`] : []),
     ...plan.choices.filter((c) => (picks[c.id] ?? c.have).length < c.allowed).map((c) => `${c.name}: ${(picks[c.id] ?? c.have).length} of ${c.allowed} picked`),
     ...(plan.improvement && improve === 'scores' && added !== 2 ? [`Ability Score Improvement: ${added} of 2 points placed`] : []),
     ...(plan.improvement && improve === 'feat' && !feat ? ['No feat chosen'] : []),
+    ...featPicks.filter((p) => p.picked.length < p.def.count).map((p) => `${p.from}: ${p.def.label} not chosen`),
   ];
 
   const confirm = () => {
@@ -179,15 +190,18 @@ export function LevelUpDialog({ live, onClose, onLevelled }: { live: LiveCharact
             </>
           )}
           {improve === 'feat' && (
-            <label className="field">
-              <span className="label">Feat</span>
-              <select value={feat} onChange={(e) => setFeat(e.target.value)}>
-                <option value="">Not chosen yet</option>
-                {feats.filter((f) => !(doc.feats ?? []).includes(f.id)).map((f) => (
-                  <option key={f.id} value={f.id}>{f.name}{f.prerequisite ? ` (needs ${f.prerequisite})` : ''}</option>
-                ))}
-              </select>
-            </label>
+            <>
+              <label className="field">
+                <span className="label">Feat</span>
+                <select value={feat} onChange={(e) => chooseFeat(e.target.value)}>
+                  <option value="">Not chosen yet</option>
+                  {feats.filter((f) => !(doc.feats ?? []).includes(f.id)).map((f) => (
+                    <option key={f.id} value={f.id}>{f.name}{f.prerequisite ? ` (needs ${f.prerequisite})` : ''}</option>
+                  ))}
+                </select>
+              </label>
+              <RacePickFields picks={featPicks} weapons={[]} onChange={(pick, next) => setPicks({ ...picks, [pick.key]: next })} />
+            </>
           )}
         </fieldset>
       )}
