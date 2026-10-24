@@ -213,7 +213,8 @@ export interface ShipSheet {
   speed: { value: number; lines: { label: string; value: number }[]; from: string | null };
   crew: { aboard: number; max: number; passengers: number; passengerMax: number; shortHanded: boolean; cramped: boolean };
   weapons: { total: number; working: number; usable: number };
-  cargo: { tons: number; capacity: number; over: boolean; lines: (HoldItem & { total: number })[] };
+  /** The hold. Its first line is the rations, when there are any: counted by `rations`, weighed here. */
+  cargo: { tons: number; capacity: number; over: boolean; lines: (HoldItem & { total: number; rations?: true })[] };
   slots: { used: number; total: number; over: boolean };
   /**
    * What she is worth: her own cost plus each upgrade (what the crew says it is worth, else what was paid, else the
@@ -230,6 +231,11 @@ export interface ShipSheet {
 }
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
+
+/** "Rations (1 day) … 2 lb" (EH10 p.260), in tons of 2,000 lb: 1,000 rations to the ton. */
+export const RATION_TONS = 2 / 2000;
+/** The id of the hold's rations line, which is the Rations counter, not a line of its own. */
+export const RATIONS_LINE = 'rations';
 
 /** What one upgrade adds to the ship's worth, and where that figure comes from. */
 export function upgradeWorth(upgrade: ShipUpgrade, shipCost: number, entry?: RuleEntry): { value: number; from: 'set' | 'paid' | 'book' | 'none' } {
@@ -258,7 +264,13 @@ export function deriveShip(doc: ShipDoc, rule: (id: string) => RuleEntry | undef
   if (short.shortHanded) notes.push(`Short-handed (${doc.crew} of ${doc.crewMax} crew): half speed, and only ${short.usableWeapons} of ${working} weapon${working === 1 ? '' : 's'} can be used`);
   if (cramped) notes.push(`Cramped (${doc.crew + doc.passengers} aboard, room for ${doc.crewMax + doc.passengerMax}): all movement on the ship is halved`);
 
-  const lines = doc.hold.map((h) => ({ ...h, total: round2(h.qty * (h.tons ?? 0)) }));
+  // The rations are counted once, by the Rations counter; the hold weighs them from it.
+  const rations = doc.rations > 0 ? [{ id: RATIONS_LINE, name: 'Rations', qty: doc.rations, tons: RATION_TONS, total: round2(doc.rations * RATION_TONS), rations: true as const }] : [];
+  const lines = [...rations, ...doc.hold.map((h) => ({ ...h, total: round2(h.qty * (h.tons ?? 0)) }))];
+  // A line loaded by hand before the hold weighed the rations may be the same food, now counted twice.
+  for (const h of doc.hold) {
+    if (/\bration/i.test(h.name) && doc.rations > 0) notes.push(`"${h.name}" in the hold may be the same food as the Rations count, which the hold now weighs by itself: unload it if so`);
+  }
   const tons = round2(lines.reduce((sum, l) => sum + l.total, 0));
   const over = isOverCargo(tons, doc.cargoTons);
   if (over) notes.push(`Over cargo capacity (${tons} of ${doc.cargoTons} tons): half speed, disadvantage on rolls to maneuver, and the ship may capsize`);

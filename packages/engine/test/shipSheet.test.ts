@@ -1,6 +1,6 @@
 // The ship sheet (DM Guide chapter 2; docs/FORMULAS.md "Ships", whose sample is the Caravel).
 import { describe, expect, it } from 'vitest';
-import { UPGRADE_SOURCES, damageComponent, deriveShip, newShip, normalizeShip, shipLog, upgradePrice, upgradeWorth, voyage, type RuleEntry, type ShipDoc } from '../src';
+import { RATIONS_LINE, RATION_TONS, UPGRADE_SOURCES, damageComponent, deriveShip, newShip, normalizeShip, shipLog, upgradePrice, upgradeWorth, voyage, type RuleEntry, type ShipDoc } from '../src';
 import { loadRules } from './load';
 
 const rules = loadRules('dndf-10');
@@ -75,6 +75,21 @@ describe('a ship from the book', () => {
     expect(loaded.cargo).toMatchObject({ tons: 11, capacity: 10, over: true });
     expect(loaded.speed.value).toBe(17);
     expect(loaded.notes).toEqual(['Over cargo capacity (11 of 10 tons): half speed, disadvantage on rolls to maneuver, and the ship may capsize']);
+  });
+
+  it('the rations are counted once and weighed in the hold: 2 lb each, 1,000 to a ton', () => {
+    const doc = { ...caravel(), crew: 8 };
+    expect(deriveShip(doc).cargo.lines).toEqual([]);
+    const fed = deriveShip({ ...doc, rations: 1500, hold: [{ id: 'a', name: 'Cola', qty: 20, tons: 0.25 }] });
+    expect(fed.cargo.lines[0]).toEqual({ id: RATIONS_LINE, name: 'Rations', qty: 1500, tons: RATION_TONS, total: 1.5, rations: true });
+    expect(fed.cargo.tons).toBe(6.5);
+    expect(fed.notes).toEqual([]);
+    // 9,000 rations and the cola: 14 tons, over the Caravel's 10.
+    expect(deriveShip({ ...doc, rations: 9000, hold: [{ id: 'a', name: 'Cola', qty: 20, tons: 0.25 }] }).cargo).toMatchObject({ tons: 14, over: true });
+    // A rations line loaded by hand before is pointed out, not dropped.
+    const twice = deriveShip({ ...doc, rations: 100, hold: [{ id: 'b', name: 'Rations', qty: 100, tons: 0.001 }] });
+    expect(twice.cargo.lines.map((l) => l.name)).toEqual(['Rations', 'Rations']);
+    expect(twice.notes).toEqual(['"Rations" in the hold may be the same food as the Rations count, which the hold now weighs by itself: unload it if so']);
   });
 
   it('upgrades: slots used against the ship’s, and a price that is a flat part plus a share of the ship’s cost', () => {
