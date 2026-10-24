@@ -196,6 +196,8 @@ export interface CampaignSettings {
   dreamPoints: boolean;
   abandonDreams: boolean;
   healingSurge: boolean;
+  /** A ship rule: her crew bonding with her over voyages until she has a soul. */
+  shipSoul: boolean;
 }
 
 export type OptionalRule = 'specialReactions' | 'hakiPurist' | 'dreamPoints' | 'abandonDreams' | 'healingSurge';
@@ -209,11 +211,18 @@ export const OPTIONAL_RULES: { id: OptionalRule; name: string; rule: string; sec
   { id: 'healingSurge', name: 'Healing Surge', rule: 'rule.universal_features', section: 'Healing Surge', gives: 'spending hit dice to heal as an action, once per rest' },
 ];
 
+export type ShipOptionalRule = 'shipSoul';
+
+/** The optional rules for a campaign's ships, switched like the characters' ones. */
+export const SHIP_OPTIONAL_RULES: { id: ShipOptionalRule; name: string; rule: string; section?: string; gives: string }[] = [
+  { id: 'shipSoul', name: 'Ship’s Soul', rule: 'rule.ships_ship_stat_blocks', section: 'Sentience', gives: 'a Charisma check by the crew at the end of each voyage; after 3 successes the ship develops a soul and becomes sentient' },
+];
+
 /**
  * Every rule on: what the engine works with when it is not told otherwise (its own tests, a summary line).
  * A character on the site or in the bot never gets this by default: see `campaignSettings`.
  */
-export const DEFAULT_SETTINGS: CampaignSettings = { hakiAttackRuling: true, longRestHitDice: 'all', specialReactions: true, hakiPurist: true, dreamPoints: true, abandonDreams: true, healingSurge: true };
+export const DEFAULT_SETTINGS: CampaignSettings = { hakiAttackRuling: true, longRestHitDice: 'all', specialReactions: true, hakiPurist: true, dreamPoints: true, abandonDreams: true, healingSurge: true, shipSoul: true };
 
 /**
  * A campaign's settings as its DM has left them. The optional rules are off until switched on.
@@ -229,6 +238,7 @@ export function campaignSettings(raw?: unknown): CampaignSettings {
     dreamPoints: saved.dreamPoints === true,
     abandonDreams: saved.abandonDreams === true,
     healingSurge: saved.healingSurge === true,
+    shipSoul: saved.shipSoul === true,
   };
 }
 
