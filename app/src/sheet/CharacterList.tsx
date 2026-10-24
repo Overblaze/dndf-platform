@@ -1,8 +1,9 @@
 import { deriveSheet, kaito, TEST_CHARACTERS, type CharacterDoc } from '@dndf/engine';
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Backup } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
+import { ObjectCard, ObjectGrid } from '../components/ObjectCard';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 import type { CharacterStore, StoredCharacter } from '../lib/store';
 import { CharacterForm } from './CharacterForm';
@@ -49,23 +50,31 @@ export function CharacterList({ store }: { store: CharacterStore }) {
         {error && <p className="notice" role="alert">{error}</p>}
         {!characters && !error && <p>Checking the crew list…</p>}
         {characters?.length === 0 && <p>No characters yet. Create one, or add the sample character to look around.</p>}
-        {characters?.map((character) => {
-          // A character whose numbers can't be worked out still gets its row, so it can be opened or deleted.
-          const sheet = (() => { try { return deriveSheet(character.doc, ruleSet(character.doc.rulesVersion).rules); } catch { return null; } })();
-          return (
-            <div key={character.id} className="resource">
-              <Link className="character-link" to={`/sheet/${character.id}`}>
-                <span className="resource-name">{sheet?.name ?? character.doc.name}</span>
-                <span className="page-ref">
-                  {sheet
-                    ? `${sheet.summary} · ${VERSION_NAMES[character.doc.rulesVersion]} · HP ${character.doc.state.hp} / ${sheet.maxHp.value}${character.unsent ? ' · changed on this device, not sent yet' : ''}`
-                    : 'This character could not be worked out. Open it to see why, or delete it.'}
-                </span>
-              </Link>
-              <button className="btn" onClick={() => setDeleting(character)}>Delete</button>
-            </div>
-          );
-        })}
+        {characters && characters.length > 0 && (
+          <ObjectGrid>
+            {characters.map((character) => {
+              // A character whose numbers can't be worked out still gets its tile, so it can be opened or deleted.
+              const sheet = (() => { try { return deriveSheet(character.doc, ruleSet(character.doc.rulesVersion).rules); } catch { return null; } })();
+              return (
+                <ObjectCard
+                  key={character.id}
+                  kind="character"
+                  to={`/sheet/${character.id}`}
+                  name={sheet?.name ?? character.doc.name}
+                  summary={sheet ? sheet.summary : 'This character could not be worked out. Open it to see why, or delete it.'}
+                  meter={sheet ? { label: 'Hit points', now: character.doc.state.hp, max: sheet.maxHp.value } : undefined}
+                  chips={[
+                    { label: VERSION_NAMES[character.doc.rulesVersion] },
+                    ...(sheet && character.doc.state.hp <= 0 ? [{ label: 'Down', tone: 'damage' as const }] : []),
+                    ...(character.unsent ? [{ label: 'Changed on this device, not sent yet', tone: 'warn' as const }] : []),
+                  ]}
+                >
+                  <button className="btn" onClick={() => setDeleting(character)}>Delete</button>
+                </ObjectCard>
+              );
+            })}
+          </ObjectGrid>
+        )}
         <div className="row wrap">
           <button className="btn btn-primary" onClick={() => setCreating(true)}>New character</button>
           <button className="btn" onClick={() => create(kaito(ruleSet('dndf-10').rules))}>Add the sample: Kaito, Bruiser 7</button>

@@ -1025,6 +1025,132 @@ a.btn {
   flex: 1;
 }
 
+/* A character or a ship in a list: a tile, so it reads as a thing already made, not a line of text. */
+.object-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+
+.object-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: 8px;
+  background: var(--card-inner);
+  box-shadow: 0 1px 0 var(--rule);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.object-card-ship {
+  border-left-color: var(--heal);
+}
+
+.object-card:hover {
+  border-color: var(--accent);
+  background: var(--raised);
+}
+
+.object-card-ship:hover {
+  border-color: var(--heal);
+}
+
+.object-card:has(.object-card-main:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.object-card-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--touch);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.object-card-main:focus-visible {
+  outline: none;
+}
+
+/* The whole tile opens it, the hit point bar included; its buttons stay above. */
+.object-card-main::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.object-actions {
+  position: relative;
+  z-index: 2;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule);
+}
+
+.object-badge {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent-tint);
+  color: var(--accent-ink);
+  font: 26px/1 var(--font-heading);
+}
+
+.object-card-ship .object-badge {
+  border-color: var(--heal);
+  background: var(--heal-tint);
+  color: var(--heal-ink);
+}
+
+.object-text {
+  min-width: 0;
+}
+
+.object-name {
+  display: block;
+  color: var(--accent-ink);
+  font: 21px/1.15 var(--font-heading);
+  overflow-wrap: anywhere;
+}
+
+.object-card-ship .object-name {
+  color: var(--heal-ink);
+}
+
+.object-summary {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.object-meter {
+  display: grid;
+  gap: 4px;
+}
+
+.object-meter .hp-bar {
+  height: 8px;
+}
+
+.object-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .roll-name {
   flex-direction: row;
   align-items: center;

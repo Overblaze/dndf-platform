@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Backup, downloadExport } from '../components/Backup';
 import { Dialog } from '../components/Dialog';
+import { ObjectCard, ObjectGrid } from '../components/ObjectCard';
 import { QuantityInput } from '../components/QuantityInput';
 import { useAuth } from '../lib/auth';
 import { campaignApi, type Campaign } from '../lib/campaigns';
@@ -59,17 +60,32 @@ function ShipList({ store, campaigns }: { store: ShipStore; campaigns: Campaign[
         {problem && <p className="notice" role="alert">{problem}</p>}
         {!ships && !problem && <p>Scanning the harbour…</p>}
         {ships?.length === 0 && !problem && <p>No ships yet.</p>}
-        {ships?.map((ship) => {
-          const sheet = deriveShip(ship.doc, rule);
-          return (
-            <div key={ship.id} className="resource">
-              <Link className="character-link" to={`/ship/${ship.id}`}>
-                <span className="resource-name">{sheet.name}</span>
-                <span className="page-ref">{[sheet.summary, ship.campaignId ? `shared with ${campaigns.find((c) => c.id === ship.campaignId)?.name ?? 'your campaign'}` : store.local ? 'this browser' : 'only you', ship.mine ? '' : 'a crewmate’s', ship.unsent ? 'changed on this device, not sent yet' : ''].filter(Boolean).join(' · ')}</span>
-              </Link>
-            </div>
-          );
-        })}
+        {ships && ships.length > 0 && (
+          <ObjectGrid>
+            {ships.map((ship) => {
+              const sheet = deriveShip(ship.doc, rule);
+              const damaged = sheet.components.filter((c) => c.damage > 0).length;
+              return (
+                <ObjectCard
+                  key={ship.id}
+                  kind="ship"
+                  to={`/ship/${ship.id}`}
+                  name={sheet.name}
+                  summary={sheet.summary}
+                  chips={[
+                    { label: `${sheet.speed.value} ft` },
+                    { label: `Crew ${sheet.crew.aboard} / ${sheet.crew.max}`, ...(sheet.crew.shortHanded ? { tone: 'warn' as const } : {}) },
+                    { label: `Cargo ${sheet.cargo.tons} / ${sheet.cargo.capacity} t`, ...(sheet.cargo.over ? { tone: 'damage' as const } : {}) },
+                    ...(damaged ? [{ label: `${damaged} part${damaged === 1 ? '' : 's'} damaged`, tone: 'damage' as const }] : []),
+                    { label: ship.campaignId ? `Shared with ${campaigns.find((c) => c.id === ship.campaignId)?.name ?? 'your campaign'}` : store.local ? 'This browser' : 'Only you', tone: 'heal' as const },
+                    ...(ship.mine ? [] : [{ label: 'A crewmate’s' }]),
+                    ...(ship.unsent ? [{ label: 'Changed on this device, not sent yet', tone: 'warn' as const }] : []),
+                  ]}
+                />
+              );
+            })}
+          </ObjectGrid>
+        )}
       </section>
       <section className="card">
         <h2>Launch a ship</h2>

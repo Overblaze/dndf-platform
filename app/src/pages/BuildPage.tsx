@@ -1,6 +1,7 @@
 import { deriveSheet, type CharacterDoc } from '@dndf/engine';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ObjectCard, ObjectGrid } from '../components/ObjectCard';
 import { useAuth } from '../lib/auth';
 import { ruleSet, VERSION_NAMES } from '../lib/rules';
 import { storeFor, type StoredCharacter } from '../lib/store';
@@ -59,27 +60,30 @@ export function BuildPage() {
         <h2>Change a character you have</h2>
         {!characters && !error && <p>Checking the crew list…</p>}
         {characters?.length === 0 && <p className="soft">None yet.</p>}
-        {characters?.map((character) => {
-          const sheet = (() => { try { return deriveSheet(character.doc, ruleSet(character.doc.rulesVersion).rules); } catch { return null; } })();
-          const to = (what: string) => `/sheet/${character.id}?${what}`;
-          return (
-            <div key={character.id} className="tracker">
-              <div className="resource">
-                <Link className="character-link" to={`/sheet/${character.id}`}>
-                  <span className="resource-name">{sheet?.name ?? character.doc.name}</span>
-                  <span className="page-ref">{sheet ? `${sheet.summary} · ${VERSION_NAMES[character.doc.rulesVersion]}` : 'This character could not be worked out. Open it to see why.'}</span>
-                </Link>
-              </div>
-              <div className="row wrap">
-                <Link className="btn btn-primary" to={to('do=level')}>Level up</Link>
-                <Link className="btn" to={to('do=edit')}>Edit build</Link>
-                <Link className="btn" to={to('do=surge')}>+ Spirit Surge</Link>
-                <Link className="btn" to={to('tab=features')}>Features</Link>
-                <Link className="btn" to={to('do=history')}>History</Link>
-              </div>
-            </div>
-          );
-        })}
+        {characters && characters.length > 0 && (
+          <ObjectGrid>
+            {characters.map((character) => {
+              const sheet = (() => { try { return deriveSheet(character.doc, ruleSet(character.doc.rulesVersion).rules); } catch { return null; } })();
+              const to = (what: string) => `/sheet/${character.id}?${what}`;
+              return (
+                <ObjectCard
+                  key={character.id}
+                  kind="character"
+                  to={`/sheet/${character.id}`}
+                  name={sheet?.name ?? character.doc.name}
+                  summary={sheet ? sheet.summary : 'This character could not be worked out. Open it to see why.'}
+                  chips={[{ label: VERSION_NAMES[character.doc.rulesVersion] }]}
+                >
+                  <Link className="btn btn-primary" to={to('do=level')}>Level up</Link>
+                  <Link className="btn" to={to('do=edit')}>Edit build</Link>
+                  <Link className="btn" to={to('do=surge')}>+ Spirit Surge</Link>
+                  <Link className="btn" to={to('tab=features')}>Features</Link>
+                  <Link className="btn" to={to('do=history')}>History</Link>
+                </ObjectCard>
+              );
+            })}
+          </ObjectGrid>
+        )}
         <p className="page-ref">
           <strong>Level up</strong> adds a level in a class you have or a new one. <strong>Edit build</strong> changes race, class, scores, skills, gear and your own classes.{' '}
           <strong>Features</strong> is where you add a feature of your own, borrow one from another class, take one off, and pick racial options. <strong>History</strong> brings back an earlier version.
