@@ -143,7 +143,7 @@ function Paper({ doc, sheet, withText }: { doc: CharacterDoc; sheet: Sheet; with
 
       {(sheet.gear.lines.length > 0 || sheet.money !== 0) && (
         <section>
-          <h2>Gear</h2>
+          <h2>Inventory</h2>
           <p><b>Berries:</b> {exactBerries(sheet.money)} · <b>Carried:</b> {sheet.gear.carried} lb of {sheet.gear.capacity} lb</p>
           <table className="print-table">
             <thead><tr><th>Item</th><th>Count</th><th>Weight</th><th>Notes</th></tr></thead>

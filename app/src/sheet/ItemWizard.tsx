@@ -466,7 +466,7 @@ export function ItemWizard({ initial, armory, rules, purse, onSave, onClose }: {
             {built.spells?.length ? <li>In use, {built.spells.map((x) => x.name).join(', ')} {built.spells.length === 1 ? 'is' : 'are'} on your Spells tab.</li> : null}
             {built.uses && <li>It gets a tracker of {built.uses.max} charge{built.uses.max === 1 ? '' : 's'} on the Features tab, back on a {built.uses.recharge} rest.</li>}
             {built.rolls?.length ? <li>It gets a roll button for each of its dice on the Features tab.</li> : null}
-            {kind === 'consumable' && <li>When you use one up, tap − on the Gear tab to take it off the count.</li>}
+            {kind === 'consumable' && <li>When you use one up, tap − on the Inventory tab to take it off the count.</li>}
             {!usable && <li>Plain gear: it is carried and weighed, and does nothing else.</li>}
             {built.value && initial ? <li>Worth {exactBerries(built.value)}.</li> : null}
           </ul>
