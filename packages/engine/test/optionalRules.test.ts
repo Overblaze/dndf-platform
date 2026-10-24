@@ -1,13 +1,14 @@
-// The optional rules a campaign's DM switches on: Special Reactions, Haki Purist, Dream Points, Healing Surge.
+// The optional rules a campaign's DM switches on: Special Reactions, Haki Purist, Dream Points, Healing Surge,
+// and for ships, Ship's Soul.
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_SETTINGS, NO_CAMPAIGN_SETTINGS, OPTIONAL_RULES, campaignSettings, deriveSheet, healingSurge, newCharacter, shortRest, type CampaignSettings, type CharacterDoc, type OptionalRule, type RulesVersion } from '../src';
+import { DEFAULT_SETTINGS, NO_CAMPAIGN_SETTINGS, OPTIONAL_RULES, SHIP_OPTIONAL_RULES, campaignSettings, deriveSheet, healingSurge, newCharacter, shortRest, type CampaignSettings, type CharacterDoc, type OptionalRule, type RulesVersion } from '../src';
 import { loadRules } from './load';
 
 const scores = { str: 14, dex: 12, con: 14, int: 10, wis: 12, cha: 10 };
 
 describe('campaign settings as saved', () => {
   it('the optional rules are off until switched on; a character in no campaign has none', () => {
-    expect(campaignSettings({})).toEqual({ hakiAttackRuling: true, longRestHitDice: 'all', specialReactions: false, hakiPurist: false, dreamPoints: false, abandonDreams: false, healingSurge: false });
+    expect(campaignSettings({})).toEqual({ hakiAttackRuling: true, longRestHitDice: 'all', specialReactions: false, hakiPurist: false, dreamPoints: false, abandonDreams: false, healingSurge: false, shipSoul: false });
     expect(NO_CAMPAIGN_SETTINGS).toEqual(campaignSettings({}));
     expect(campaignSettings()).toEqual(campaignSettings({}));
     expect(campaignSettings({ dreamPoints: true, healingSurge: true })).toMatchObject({ dreamPoints: true, healingSurge: true, specialReactions: false, hakiPurist: false });
@@ -17,13 +18,17 @@ describe('campaign settings as saved', () => {
     for (const bad of [null, 'yes', 7, [], [{ dreamPoints: true }], { dreamPoints: 'true' }, { dreamPoints: 1 }]) expect(campaignSettings(bad).dreamPoints, JSON.stringify(bad)).toBe(false);
     expect(campaignSettings({ hakiAttackRuling: false, longRestHitDice: 'half' })).toMatchObject({ hakiAttackRuling: false, longRestHitDice: 'half' });
     expect(campaignSettings({ longRestHitDice: 'none' }).longRestHitDice).toBe('all');
+    expect(campaignSettings({ shipSoul: true }).shipSoul).toBe(true);
+    expect(campaignSettings({ shipSoul: 'true' }).shipSoul).toBe(false);
   });
 
   it('names each rule, where it is printed and what it gives', () => {
     expect(OPTIONAL_RULES.map((r) => r.id)).toEqual(['specialReactions', 'hakiPurist', 'dreamPoints', 'abandonDreams', 'healingSurge']);
+    // The ships' own, kept apart so a character's sheet never lists them.
+    expect(SHIP_OPTIONAL_RULES.map((r) => r.id)).toEqual(['shipSoul']);
     for (const version of ['dndf-10', 'dndf-8.8'] as RulesVersion[]) {
       const rules = loadRules(version);
-      for (const rule of OPTIONAL_RULES) {
+      for (const rule of [...OPTIONAL_RULES, ...SHIP_OPTIONAL_RULES]) {
         const entry = rules.get(rule.rule);
         expect(entry, `${version} ${rule.rule}`).toBeTruthy();
         if (rule.section) expect(((entry!.sections ?? []) as { name: string }[]).some((s) => s.name === rule.section), `${version} ${rule.section}`).toBe(true);

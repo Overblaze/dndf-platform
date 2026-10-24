@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TableBackgroundCard } from '../components/TableBackgroundCard';
 import { Dialog } from '../components/Dialog';
 import { useAuth } from '../lib/auth';
-import { OPTIONAL_RULES, campaignSettings, formatBerries, type CampaignSettings, type OptionalRule } from '@dndf/engine';
+import { OPTIONAL_RULES, SHIP_OPTIONAL_RULES, campaignSettings, formatBerries, type CampaignSettings, type OptionalRule, type ShipOptionalRule } from '@dndf/engine';
 import { Link } from 'react-router-dom';
 import { campaignApi, type Campaign, type CampaignCharacter, type Grant, type Member, type PartyMember, type Person, type SecretSummary } from '../lib/campaigns';
 import { supabase } from '../lib/supabase';
@@ -80,6 +80,18 @@ function GrantDialog({ character, onGrant, search, onClose }: { character: Campa
 }
 
 /** The optional rules this campaign plays with. Off until its DM switches them on; a switch takes effect on every sheet in the campaign. */
+function RuleSwitch({ rule, on, busy, onFlip }: { rule: { id: string; name: string; rule: string; gives: string }; on: boolean; busy: string | null; onFlip: () => void }) {
+  return (
+    <label className="check optional-rule">
+      <input type="checkbox" checked={on} disabled={busy !== null} onChange={onFlip} />
+      <span>
+        <strong>{rule.name}</strong> <span className="page-ref">{on ? 'on' : 'off'}{busy === rule.id ? ' · saving…' : ''}</span>
+        <span className="page-ref optional-rule-gives">{rule.gives}. <Link to={`/library/${encodeURIComponent(rule.rule)}`}>Read the rule</Link></span>
+      </span>
+    </label>
+  );
+}
+
 function OptionalRulesCard({ campaign, api }: { campaign: Campaign; api: ReturnType<typeof campaignApi> }) {
   const [settings, setSettings] = useState<CampaignSettings | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -89,7 +101,7 @@ function OptionalRulesCard({ campaign, api }: { campaign: Campaign; api: ReturnT
     api.settings(campaign.id).then((raw) => current && setSettings(campaignSettings(raw)), (e: Error) => current && setProblem(e.message));
     return () => { current = false; };
   }, [api, campaign.id]);
-  const flip = (rule: OptionalRule) => {
+  const flip = (rule: OptionalRule | ShipOptionalRule) => {
     if (!settings) return;
     const before = settings;
     setBusy(rule);
@@ -107,15 +119,14 @@ function OptionalRulesCard({ campaign, api }: { campaign: Campaign; api: ReturnT
       </p>
       {problem && <p className="notice" role="alert">{problem}</p>}
       {!settings && !problem && <p className="soft">Reading the campaign’s rules…</p>}
-      {settings && OPTIONAL_RULES.map((rule) => (
-        <label key={rule.id} className="check optional-rule">
-          <input type="checkbox" checked={settings[rule.id]} disabled={busy !== null} onChange={() => flip(rule.id)} />
-          <span>
-            <strong>{rule.name}</strong> <span className="page-ref">{settings[rule.id] ? 'on' : 'off'}{busy === rule.id ? ' · saving…' : ''}</span>
-            <span className="page-ref optional-rule-gives">{rule.gives}. <Link to={`/library/${encodeURIComponent(rule.rule)}`}>Read the rule</Link></span>
-          </span>
-        </label>
-      ))}
+      {settings && OPTIONAL_RULES.map((rule) => <RuleSwitch key={rule.id} rule={rule} on={settings[rule.id]} busy={busy} onFlip={() => flip(rule.id)} />)}
+      {settings && (
+        <>
+          <h3>Ships</h3>
+          <p className="page-ref">For the ships sailing in {campaign.name}. Switching one off keeps what a ship has: her soul points come back with it.</p>
+          {SHIP_OPTIONAL_RULES.map((rule) => <RuleSwitch key={rule.id} rule={rule} on={settings[rule.id]} busy={busy} onFlip={() => flip(rule.id)} />)}
+        </>
+      )}
     </section>
   );
 }

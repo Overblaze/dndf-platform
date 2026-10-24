@@ -2,6 +2,7 @@ import { SHIP_ABILITIES, UPGRADE_SOURCES, cite, deriveShip, exactBerries, signed
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
+import { useShipSettings } from '../lib/campaignRules';
 import { ruleSet } from '../lib/rules';
 import { shipPicturesFor, type ShipPictureStore } from '../lib/shipPictures';
 import { shipStoreFor } from '../lib/ships';
@@ -26,7 +27,8 @@ function PrintedPicture({ store, picture }: { store: ShipPictureStore; picture: 
   );
 }
 
-function Paper({ doc, sheet, pictures, withPictures }: { doc: ShipDoc; sheet: ShipSheet; pictures: ShipPictureStore; withPictures: boolean }) {
+/** `soul`: whether her campaign's DM has Ship's Soul switched on. */
+function Paper({ doc, sheet, pictures, withPictures, soul }: { doc: ShipDoc; sheet: ShipSheet; pictures: ShipPictureStore; withPictures: boolean; soul: boolean }) {
   const ordered = [...doc.pictures.filter((p) => p.kind === 'map'), ...doc.pictures.filter((p) => p.kind === 'art')];
   return (
     <article className="paper">
@@ -41,7 +43,7 @@ function Paper({ doc, sheet, pictures, withPictures }: { doc: ShipDoc; sheet: Sh
       <section className="print-vitals">
         {[
           ['Speed', `${sheet.speed.value} ft`], ['Pace', `${doc.pace.mph} mph`], ['Crew', `____ / ${sheet.crew.max}`], ['Passengers', `____ / ${sheet.crew.passengerMax}`],
-          ['Cargo', `____ / ${sheet.cargo.capacity} t`], ['Rations', '____'], ['Treasury', '฿ ________'], ['Soul', `${sheet.soul.points} / 3`],
+          ['Cargo', `____ / ${sheet.cargo.capacity} t`], ['Rations', '____'], ['Treasury', '฿ ________'], ...(soul ? [['Soul', `${sheet.soul.points} / 3`]] : []),
         ].map(([label, value]) => (
           <div key={label} className="print-box"><span>{label}</span><b>{value}</b></div>
         ))}
@@ -136,6 +138,8 @@ export function ShipPrintPage() {
   const store = useMemo(() => shipStoreFor(userId), [userId]);
   const pictures = useMemo(() => shipPicturesFor(userId), [userId]);
   const [doc, setDoc] = useState<ShipDoc | null>(null);
+  const [campaignId, setCampaignId] = useState<string | null>(null);
+  const settings = useShipSettings(campaignId);
   const [problem, setProblem] = useState<string | null>(null);
   const [withPictures, setWithPictures] = useState(true);
 
@@ -143,7 +147,12 @@ export function ShipPrintPage() {
     if (loading || !id) return;
     let current = true;
     store.get(id).then(
-      (stored) => current && (stored ? setDoc(stored.doc) : setProblem('No such ship. She may have been scuttled, or she belongs to another crew.')),
+      (stored) => {
+        if (!current) return;
+        if (!stored) return setProblem('No such ship. She may have been scuttled, or she belongs to another crew.');
+        setDoc(stored.doc);
+        setCampaignId(stored.campaignId);
+      },
       (error: Error) => current && setProblem(error.message),
     );
     return () => { current = false; };
@@ -166,7 +175,7 @@ export function ShipPrintPage() {
         )}
         <button className="btn btn-primary" onClick={() => window.print()}>Print or save as PDF</button>
       </div>
-      <Paper doc={doc} sheet={sheet} pictures={pictures} withPictures={withPictures} />
+      <Paper soul={settings.shipSoul} doc={doc} sheet={sheet} pictures={pictures} withPictures={withPictures} />
     </div>
   );
 }

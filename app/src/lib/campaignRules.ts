@@ -1,6 +1,6 @@
 // The optional rules a character has: Special Reactions, Haki Purist, Dream Points, I Won't Abandon My
 // Dreams and Healing Surge are
-// switched on by a campaign's DM. A character gets them only in a campaign where they are on; one in no
+// switched on by a campaign's DM; so is a ship's (Ship's Soul). A character gets them only in a campaign where they are on; one in no
 // campaign (or kept only in this browser) has none.
 import { NO_CAMPAIGN_SETTINGS, campaignSettings, type CampaignSettings } from '@dndf/engine';
 import { useEffect, useState } from 'react';
@@ -69,4 +69,39 @@ export function useCampaignSettings(local: boolean, characterId: string): { sett
     };
   }, [local, characterId]);
   return state;
+}
+
+/**
+ * The settings of the campaign a ship sails in, for its optional rules (Ship's Soul). A ship in no
+ * campaign, or kept only in this browser, has none of them. Read again each time the tab comes back.
+ */
+export function useShipSettings(campaignId: string | null): CampaignSettings {
+  const key = campaignId ? `campaign.${campaignId}` : '';
+  const [settings, setSettings] = useState<CampaignSettings>(() => (key ? keptSettings(key) : NO_CAMPAIGN_SETTINGS));
+  useEffect(() => {
+    if (!campaignId || !supabase) {
+      setSettings(NO_CAMPAIGN_SETTINGS);
+      return;
+    }
+    setSettings(keptSettings(key));
+    const db = supabase;
+    let current = true;
+    const read = () => {
+      if (document.visibilityState !== 'visible') return;
+      void db.from('campaigns').select('settings').eq('id', campaignId).maybeSingle().then(({ data, error }) => {
+        // No answer (offline): what was known stays.
+        if (!current || error || !data) return;
+        keepSettings(key, data.settings);
+        const next = campaignSettings(data.settings);
+        setSettings((now) => (JSON.stringify(now) === JSON.stringify(next) ? now : next));
+      });
+    };
+    read();
+    document.addEventListener('visibilitychange', read);
+    return () => {
+      current = false;
+      document.removeEventListener('visibilitychange', read);
+    };
+  }, [campaignId, key]);
+  return settings;
 }

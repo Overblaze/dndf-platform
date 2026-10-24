@@ -9,6 +9,7 @@ import { Dialog } from '../components/Dialog';
 import { QuantityInput } from '../components/QuantityInput';
 import { useAuth } from '../lib/auth';
 import { campaignApi, type Campaign } from '../lib/campaigns';
+import { useShipSettings } from '../lib/campaignRules';
 import { useWaiting } from '../lib/offline';
 import { ruleSet } from '../lib/rules';
 import { ShipChanged, shipStoreFor, type ShipStore, type StoredShip } from '../lib/ships';
@@ -273,6 +274,8 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
   const latest = useRef<ShipDoc | null>(null);
   const [amount, setAmount] = useState<Record<string, string>>({});
   const [miles, setMiles] = useState('');
+  // The campaign's optional rules: Ship's Soul is not on her sheet unless its DM switched it on.
+  const settings = useShipSettings(ship?.campaignId ?? null);
   const [cargo, setCargo] = useState({ name: '', qty: '1', tons: '' });
   const [purse, setPurse] = useState({ amount: '', why: '' });
   const stored = useRef<StoredShip | null>(null);
@@ -534,9 +537,13 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
           </p>
         )}
         <p className="page-ref">Days = miles ÷ (pace × 24) · {cite(BOOK, 31)}</p>
-        <h3>Ship’s soul</h3>
-        <Counter label="Voyages the crew has bonded with her" value={sheet.soul.points} sub={sheet.soul.sentient ? 'She has a soul: she is sentient' : `at 3 she develops a soul · each voyage, a DC ${sheet.soul.dc} Charisma check by everyone; more than half must succeed`} max={3} onChange={(soul) => setDoc({ ...doc, soul: Math.min(3, soul) })} />
-        <p className="page-ref">{cite(BOOK, 11)}</p>
+        {settings.shipSoul && (
+          <>
+            <h3>Ship’s soul</h3>
+            <Counter label="Voyages the crew has bonded with her" value={sheet.soul.points} sub={sheet.soul.sentient ? 'She has a soul: she is sentient' : `at 3 she develops a soul · each voyage, a DC ${sheet.soul.dc} Charisma check by everyone; more than half must succeed`} max={3} onChange={(soul) => setDoc({ ...doc, soul: Math.min(3, soul) })} />
+            <p className="page-ref">{cite(BOOK, 11)}</p>
+          </>
+        )}
       </section>
 
       <section className="card">
