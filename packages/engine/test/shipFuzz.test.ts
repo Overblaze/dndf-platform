@@ -1,7 +1,7 @@
 // A thousand ships nobody would build: whatever is saved, the sheet opens, every number is a number,
 // and saving twice changes nothing. Checks are worked out a second way here, not read back from the sheet's own sums.
 import { describe, expect, it } from 'vitest';
-import { SHIP_ABILITIES, UPGRADE_SOURCES, damageComponent, deriveShip, newShip, normalizeShip, shipLog, voyage, type ShipDoc } from '../src';
+import { RATION_TONS, SHIP_ABILITIES, UPGRADE_SOURCES, damageComponent, deriveShip, newShip, normalizeShip, shipLog, voyage, type ShipDoc } from '../src';
 import { loadRules } from './load';
 
 const rules = loadRules('dndf-10');
@@ -68,7 +68,8 @@ describe('ships under stress', () => {
       let slots = 0; for (const u of doc.upgrades) slots += u.slots;
       expect(sheet.slots.used, `seed ${seed}`).toBe(slots);
       expect(sheet.slots.over, `seed ${seed}`).toBe(slots > doc.upgradeSlots);
-      let tons = 0; for (const h of doc.hold) tons += h.qty * (h.tons ?? 0);
+      // The rations weigh 2 lb each, shown to the hundredth of a ton like any line.
+      let tons = Math.round(doc.rations * RATION_TONS * 100) / 100; for (const h of doc.hold) tons += h.qty * (h.tons ?? 0);
       expect(sheet.cargo.tons, `seed ${seed}`).toBeCloseTo(tons, 6);
       let worth = doc.cost;
       for (const u of doc.upgrades) {

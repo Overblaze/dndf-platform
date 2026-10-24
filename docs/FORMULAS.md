@@ -400,6 +400,7 @@ A feat's "+1 to an ability score" is not applied: ability scores are entered as 
 | Upgrade slots | sum of installed slots ≤ ship slots (warn, don't block) | 3 / 5 | DMG p.18–30 |
 | Travel | days = miles ÷ (pace × 24) | 240 ÷ 96 = 2.5 | DMG p.15 |
 | Rations | days = rations ÷ people aboard | 120 ÷ 8 = 15 | — |
+| Rations in the hold | the Rations count, weighed as one hold line: 2 lb a ration, 2,000 lb to the ton (1,000 rations = 1 t), to the hundredth; counts toward cargo capacity. A hold line with "ration" in its name is pointed out as maybe the same food | 1,500 rations + 20 × 0.25 t cola = 6.5 t | EH10 p.260 |
 | Ship's soul | per voyage, crew roll (DC 10 Large/Huge, 15 Gargantuan); > half succeed = 1; 3 = sentient | 1/3 | DMG p.11 |
 | Ship speed on the sheet | the fastest movement component that still works, less its own damage loss; then halved (rounded down) if short-handed, and halved again if over cargo capacity | Caravel 35 → 25 after 60 damage to the sails | DMG p.11, 15 |
 | Ship's worth | her own cost + each upgrade (the crew's figure for it, else what was paid, else the book's price for this ship); the crew can type a worth over it | Modified Caravel ฿60M + 15M paid + 22M book price + 8M + 4M as valued = ฿109M | DMG p.15, 23 |

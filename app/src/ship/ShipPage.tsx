@@ -1,5 +1,5 @@
 import {
-  SHIP_ABILITIES, UPGRADE_SOURCES, cite, damageComponent, deriveShip, exactBerries, formatBerries, newShip, shipLog, signed, upgradePrice, upgradeWorth, voyage,
+  HANDBOOKS, SHIP_ABILITIES, UPGRADE_SOURCES, cite, damageComponent, deriveShip, exactBerries, formatBerries, newShip, shipLog, signed, upgradePrice, upgradeWorth, voyage,
   type HoldItem, type RuleEntry, type ShipPicture, type ShipComponent, type ShipDoc, type ShipRole, type ShipUpgrade, type UpgradeSource,
 } from '@dndf/engine';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -349,6 +349,11 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
     if (result.doc !== doc) { setInfo(null); log(result.doc, result.summary); } else setInfo(result.summary);
   };
   const saveComponent = (c: ShipComponent) => { setDoc({ ...doc, components: doc.components.some((x) => x.id === c.id) ? doc.components.map((x) => (x.id === c.id ? c : x)) : [...doc.components, c] }); setDialog(null); };
+  // The Rations counter and the hold's rations line are the one count.
+  const setRations = (to: number) => {
+    const rations = Math.max(0, Math.round(to));
+    if (rations !== doc.rations) log({ ...doc, rations }, `Rations ${doc.rations} → ${rations}${rations < doc.rations ? ` (${doc.rations - rations} used)` : ` (${rations - doc.rations} taken on)`}`);
+  };
   const addCargo = () => {
     const item: HoldItem = { id: crypto.randomUUID(), name: cargo.name.trim() || 'Cargo', qty: whole(cargo.qty, 1), tons: decimal(cargo.tons) };
     log({ ...doc, hold: [...doc.hold, item] }, `Loaded ${item.qty} × ${item.name}`);
@@ -440,7 +445,7 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
         <h2>Aboard</h2>
         <Counter label="Crew working the ship" value={doc.crew} sub={`she needs ${doc.crewMax}; at ${Math.floor(doc.crewMax / 2)} or fewer she is short-handed`} onChange={(crew) => setDoc({ ...doc, crew })} />
         <Counter label="Passengers" value={doc.passengers} sub={`room for ${doc.passengerMax}`} onChange={(passengers) => setDoc({ ...doc, passengers })} />
-        <Counter label="Rations (one feeds one person for a day)" value={doc.rations} sub={sheet.rationDays === null ? 'nobody aboard to feed' : `${sheet.rationDays} days for everyone aboard`} onChange={(rations) => setDoc({ ...doc, rations })} onTyped={(rations) => log({ ...doc, rations }, `Rations ${doc.rations} → ${rations}${rations < doc.rations ? ` (${doc.rations - rations} used)` : ` (${rations - doc.rations} taken on)`}`)} />
+        <Counter label="Rations (one feeds one person for a day)" value={doc.rations} sub={`${sheet.rationDays === null ? 'nobody aboard to feed' : `${sheet.rationDays} days for everyone aboard`}${doc.rations > 0 ? ` · ${sheet.cargo.lines[0]!.total} t in the hold` : ''}`} onChange={(rations) => setDoc({ ...doc, rations })} onTyped={setRations} />
         <p className="page-ref">Tap a number to type it: a new count, or a change with a sign in front, like −1500 to use up 1,500 rations or +200 to take on 200. A Large creature counts as four crew, a Huge one as nine · {cite(BOOK, 11)}</p>
       </section>
 
@@ -502,7 +507,19 @@ function ShipSheetView({ store, pictures, id, campaigns }: { store: ShipStore; p
       <section className="card">
         <h2>Hold · {sheet.cargo.tons} of {sheet.cargo.capacity} tons</h2>
         {sheet.cargo.lines.length === 0 && <p className="soft">Empty.</p>}
-        {sheet.cargo.lines.map((line) => (
+        {sheet.cargo.lines.map((line) => line.rations ? (
+          <div key={line.id} className="resource">
+            <div>
+              <div className="resource-name">Rations</div>
+              <div className="page-ref">2 lb each, 1,000 to a ton: {line.total} t in all · the Rations count above · {cite(HANDBOOKS['dndf-10'], 260)}</div>
+            </div>
+            <QuantityInput value={line.qty} label="How many rations" onCommit={setRations} />
+            <div className="row">
+              <button className="btn" onClick={() => setDoc({ ...doc, rations: Math.max(0, doc.rations - 1) })} disabled={doc.rations <= 0} aria-label="One fewer ration">−</button>
+              <button className="btn" onClick={() => setDoc({ ...doc, rations: doc.rations + 1 })} aria-label="One more ration">+</button>
+            </div>
+          </div>
+        ) : (
           <div key={line.id} className="resource">
             <div>
               <div className="resource-name">{line.name}</div>

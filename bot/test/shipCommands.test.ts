@@ -15,7 +15,7 @@ describe('/ship status', () => {
   it('shows speed, crew, every part’s hit points, the treasury and what is wrong', () => {
     const fine = shipStatus(caravel({ treasury: 1_250_000, rations: 120 }), rule).reply.split('\n');
     expect(fine[0]).toBe('⛵ **Going Test** — Caravel · Gargantuan vehicle (70 ft. by 20 ft.)');
-    expect(fine[1]).toBe('Speed 35 ft · crew 8/8 · passengers 0/10 · cargo 0/10 t · 4 mph');
+    expect(fine[1]).toBe('Speed 35 ft · crew 8/8 · passengers 0/10 · cargo 0.12/10 t · 4 mph'); // 120 rations at 2 lb
     expect(fine).toContain('▫️ Hull: **150** / 150  (AC 15, threshold 10)');
     expect(fine).toContain('▫️ Movement: Sails: **100** / 100  (AC 12, 35 ft)');
     expect(fine).toContain('Weapons: 2 of 2 can be used');
