@@ -35,7 +35,8 @@ const TABS = [
   { id: 'features', label: 'Features' },
   { id: 'haki', label: 'Haki' },
   { id: 'fruit', label: 'Fruit' },
-  { id: 'gear', label: 'Gear' },
+  // Still 'gear' in links (?tab=gear), so ones already shared keep working.
+  { id: 'gear', label: 'Inventory' },
   { id: 'spells', label: 'Spells' },
   { id: 'status', label: 'Status' },
 ] as const;
@@ -98,6 +99,14 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
     <RollsProvider>
       <div className="sheet-theme" style={sheetThemeVars(doc.appearance)}>
       <SheetBackground appearance={doc.appearance} store={store} />
+      {/* The sections first, pinned under the top bar, so they are always in reach. */}
+      <div className="segmented sheet-tabs" role="tablist" aria-label="Sheet sections">
+        {TABS.filter((t) => t.id !== 'fruit' || sheet.fruits.length + sheet.infused.length + sheet.knownFruits.length > 0).map((t) => (
+          <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'active' : ''} onClick={() => setTab(t.id)}>
+            {t.label}
+          </button>
+        ))}
+      </div>
       <section className="card sheet-head">
         <div>
           <h1>{sheet.name}</h1>
@@ -163,14 +172,6 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
       </section>
 
       <Vitals live={live} onOpen={onOpen} />
-
-      <div className="segmented sheet-tabs" role="tablist" aria-label="Sheet sections">
-        {TABS.filter((t) => t.id !== 'fruit' || sheet.fruits.length + sheet.infused.length + sheet.knownFruits.length > 0).map((t) => (
-          <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'active' : ''} onClick={() => setTab(t.id)}>
-            {t.label}
-          </button>
-        ))}
-      </div>
 
       {tab === 'combat' && <CombatTab live={live} onOpen={onOpen} />}
       {tab === 'skills' && <SkillsTab live={live} onOpen={onOpen} />}
