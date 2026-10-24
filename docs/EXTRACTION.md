@@ -29,7 +29,7 @@ Run `python3 tools/extract/pdfdoc.py V10_D_DF_EH.pdf 85 87` to see any pages as 
 - **General rules** (kind `rule`): each top-level heading becomes an entry, with its smaller headings as sections.
 - **Crew roles**: every role must have exactly one "Feature: …" and one "Pirate Prestige Ability: …" section; the role's skills are read from "Role Skill Proficiency".
 - **Backgrounds**: the bold-led lines (Skill Proficiencies, Tool Proficiencies, Equipment) become fields. A name ending in `*` is unchanged from the original Player's Handbook (`unchangedFromPhb`).
-- **Feats**: a first line starting "Prerequisite:" is kept apart from the text. A prerequisite line that fills the column runs into the text and is parted at the first sentence.
+- **Feats**: a first line starting "Prerequisite:" is kept apart from the text. A prerequisite line that fills the column runs into the text and is parted at the first sentence. "Increase your X (or Y) score by 1, to a maximum of 20" becomes an `ability` effect, and a choice of abilities a `picks` entry the effect names (`pick`); Resilient's "the chosen ability" also gives a `saveProficiency` for the pick (`feat_ability_increase` in `structure.py`).
 - **Races**: paragraphs led by a bold name ("Darkvision.") are traits; bullets and plain paragraphs after one belong to it. Walking speed, size and fixed ability increases are read from the wording and listed under `auto`. "X Subraces" sections become `subrace` entries.
 
 ## Chapters 4, 5, 6 and 7 (also in `extract_chapters.py`)

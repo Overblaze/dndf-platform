@@ -156,11 +156,11 @@ export interface OptionDef {
  */
 export interface PickDef {
   id: string;
-  kind: 'skill' | 'tool' | 'weapon';
+  kind: 'skill' | 'tool' | 'weapon' | 'ability';
   count: number;
   /** What the picker is headed with: "Skill proficiency". */
   label: string;
-  /** Skill ids or names it is limited to; left out, anything of the kind. */
+  /** Skill ids, ability ids or names it is limited to; left out, anything of the kind. */
   from?: string[];
   /** A tool may be named instead ("Sleight of Hand or an Artisan’s tool of your choice"). */
   orTool?: string;

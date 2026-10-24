@@ -2,7 +2,7 @@
 import type { CharacterDoc } from './character';
 import { evaluateNumber } from './expr';
 import { SKILLS } from './character';
-import type { OptionDef, PickDef, RuleEntry, TraitDef } from './types';
+import { ABILITIES, ABILITY_NAMES, type Ability, type EffectDef, type OptionDef, type PickDef, type RuleEntry, type TraitDef } from './types';
 
 export interface RaceChoice {
   /** The key in `doc.choices`. */
@@ -45,10 +45,10 @@ export interface RacePick {
   key: string;
   /** The trait or option that gives it: "Shape-Memory Alloy Body". */
   from: string;
-  /** The race, class or background it belongs to. */
+  /** The race, class, background or feat it belongs to. */
   race: string;
   def: PickDef;
-  /** What is picked: skill ids, or names of tools and weapons. A tool picked where a skill could be is "tool:<name>". */
+  /** What is picked: skill or ability ids, or names of tools and weapons. A tool picked where a skill could be is "tool:<name>". */
   picked: string[];
   page: number;
   book: string;
@@ -65,7 +65,7 @@ export function racePickKey(owner: string, pickId: string): string {
  * Every such choice the character has now: those of the race's and subrace's traits, and those of the options
  * picked from its lists (a Cyborg's Shape-Memory Alloy Body). One whose option is no longer picked is not listed.
  */
-export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'> & Partial<Pick<CharacterDoc, 'background'>>, rules: Map<string, RuleEntry>): RacePick[] {
+export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'> & Partial<Pick<CharacterDoc, 'background' | 'feats'>>, rules: Map<string, RuleEntry>): RacePick[] {
   const found: RacePick[] = [];
   const add = (owner: string, from: string, race: string, picks: PickDef[] | undefined, page: number, book: string) => {
     for (const def of picks ?? []) {
@@ -92,17 +92,36 @@ export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'
   }
   const background = doc.background ? rules.get(doc.background.id) : undefined;
   if (background) add(background.id, 'Tools', `${background.name} background`, (background.tools as { picks?: PickDef[] } | undefined)?.picks, background.source.page, background.source.book);
+  // What a feat leaves to choose: Resilient's ability score, Athlete's Strength or Dexterity.
+  for (const id of new Set(doc.feats ?? [])) {
+    const feat = rules.get(id);
+    if (feat?.kind === 'feat') add(feat.id, feat.name, 'Feat', feat.picks as PickDef[] | undefined, feat.source.page, feat.source.book);
+  }
   return found;
+}
+
+/**
+ * A feat's effects with the ability it was picked for filled in: one effect for each ability picked,
+ * none while nothing is picked. Effects that name no pick are kept as they are.
+ */
+export function featEffects(feat: RuleEntry, choices: CharacterDoc['choices'] | undefined): EffectDef[] {
+  return ((feat.effects ?? []) as EffectDef[]).flatMap((effect) => {
+    if (typeof effect.pick !== 'string') return [effect];
+    const picked = (choices?.[racePickKey(feat.id, effect.pick)] ?? []).filter((v): v is Ability => ABILITIES.includes(v as Ability));
+    return picked.map((ability) => ({ ...effect, ability }));
+  });
 }
 
 /** What a pick's value is called on the sheet: "Stealth", "Thieves’ Tools". */
 export function racePickLabel(pick: RacePick, value: string): string {
   if (value.startsWith('tool:')) return value.slice(5);
+  if (pick.def.kind === 'ability') return ABILITY_NAMES[value as Ability] ?? value;
   return pick.def.kind === 'skill' ? SKILLS.find((k) => k.id === value)?.name ?? value : value;
 }
 
 /** What the player may pick from, when the trait limits it; undefined for anything of the kind. */
 export function racePickOptions(pick: RacePick): { id: string; name: string }[] | undefined {
+  if (pick.def.kind === 'ability') return (pick.def.from ?? ABILITIES).map((id) => ({ id, name: ABILITY_NAMES[id as Ability] ?? id }));
   if (pick.def.kind !== 'skill') return pick.def.from?.map((name) => ({ id: name, name }));
   const ids = pick.def.from ?? SKILLS.map((k) => k.id);
   return ids.map((id) => ({ id, name: SKILLS.find((k) => k.id === id)?.name ?? id }));

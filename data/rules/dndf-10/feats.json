@@ -196,6 +196,26 @@
         "page": 52
       },
       "text": "You have undergone extensive physical training to gain the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nWhen you are prone, standing up uses only 5 feet of your movement.\nClimbing doesn’t halve your speed.\nYou can make a running long jump or a running high jump after moving only 5 feet on foot, rather than 10 feet.",
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "pick": "ability"
+        }
+      ],
+      "picks": [
+        {
+          "id": "ability",
+          "kind": "ability",
+          "count": 1,
+          "label": "Ability score",
+          "from": [
+            "str",
+            "dex"
+          ]
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -271,6 +291,12 @@
         {
           "type": "carryMultiplier",
           "value": 2
+        },
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "con"
         }
       ],
       "sources": {
@@ -337,6 +363,12 @@
         "effects"
       ],
       "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "dex"
+        },
         {
           "type": "toolProficiency",
           "label": "Thieves’ tools"
@@ -642,6 +674,12 @@
       ],
       "effects": [
         {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "int"
+        },
+        {
           "type": "toolProficiency",
           "label": "Dials"
         }
@@ -712,6 +750,14 @@
         "page": 55
       },
       "text": "Hardy and resilient, you gain the following benefits:\nIncrease your Constitution score by 1, to a maximum of 20.\nWhen you roll a Hit Die to regain hit points, the minimum number of hit points you regain from the roll equals twice your Constitution modifier (minimum of 2).",
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "con"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1253,6 +1299,12 @@
       ],
       "effects": [
         {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "str"
+        },
+        {
           "type": "armorProficiency",
           "armor": "heavy"
         }
@@ -1278,6 +1330,14 @@
       },
       "text": "You can use your armor to deflect strikes that would kill others. You gain the following benefits:\nIncrease your Strength score by 1, to a maximum of 20.\nWhile you are wearing heavy armor, bludgeoning, piercing, and slashing damage that you take are reduced by 3.",
       "prerequisite": "Proficiency with heavy armor",
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "str"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -1391,8 +1451,26 @@
       ],
       "effects": [
         {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "pick": "ability"
+        },
+        {
           "type": "armorProficiency",
           "armor": "light"
+        }
+      ],
+      "picks": [
+        {
+          "id": "ability",
+          "kind": "ability",
+          "count": 1,
+          "label": "Ability score",
+          "from": [
+            "str",
+            "dex"
+          ]
         }
       ],
       "sources": {
@@ -1441,6 +1519,12 @@
         {
           "type": "language",
           "label": "The language of the Poneglyphs"
+        },
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "int"
         }
       ],
       "sources": {
@@ -1528,6 +1612,12 @@
       ],
       "effects": [
         {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "cha"
+        },
+        {
           "type": "toolProficiency",
           "label": "Disguise kit"
         }
@@ -1604,12 +1694,30 @@
       ],
       "effects": [
         {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "pick": "ability"
+        },
+        {
           "type": "armorProficiency",
           "armor": "medium"
         },
         {
           "type": "armorProficiency",
           "armor": "shields"
+        }
+      ],
+      "picks": [
+        {
+          "id": "ability",
+          "kind": "ability",
+          "count": 1,
+          "label": "Ability score",
+          "from": [
+            "str",
+            "dex"
+          ]
         }
       ]
     },
@@ -1878,6 +1986,26 @@
         "page": 61
       },
       "text": "Choose one ability score. You gain the following benefits:\nIncrease the chosen ability score by 1, to a maximum of 20.\nYou gain proficiency in saving throws using the chosen ability.",
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "pick": "ability"
+        },
+        {
+          "type": "saveProficiency",
+          "pick": "ability"
+        }
+      ],
+      "picks": [
+        {
+          "id": "ability",
+          "kind": "ability",
+          "count": 1,
+          "label": "Ability score"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -2038,6 +2166,14 @@
         "page": 62
       },
       "text": "You have a quick hand and keen eye when employing firearms, granting you the following benefits:\nIncrease your Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with all firearms.\nYou ignore the loading property of firearms.\nBeing within 5 feet of a hostile creature doesn’t impose disadvantage on your ranged attack rolls.",
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "dex"
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -2072,6 +2208,14 @@
       ],
       "skills": [
         "intimidation"
+      ],
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "ability": "con"
+        }
       ],
       "sources": {
         "dndf-8.8": {
@@ -2432,6 +2576,26 @@
         "page": 64
       },
       "text": "Accustomed to rough-and-tumble fighting using whatever weapons happen to be at hand, you gain the following benefits:\nIncrease your Strength or Constitution score by 1, to a maximum of 20.\nYou are proficient with improvised weapons and unarmed strikes.\nYour unarmed strike uses a d4 for damage.\nWhen you hit a creature with an unarmed strike or an improvised weapon on your turn, you can use a bonus action to attempt to grapple the target.",
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "pick": "ability"
+        }
+      ],
+      "picks": [
+        {
+          "id": "ability",
+          "kind": "ability",
+          "count": 1,
+          "label": "Ability score",
+          "from": [
+            "str",
+            "con"
+          ]
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",
@@ -2654,6 +2818,26 @@
         "page": 65
       },
       "text": "You have practiced extensively with a variety of weapons, gaining the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with four weapons of your choice.",
+      "effects": [
+        {
+          "type": "ability",
+          "value": 1,
+          "max": 20,
+          "pick": "ability"
+        }
+      ],
+      "picks": [
+        {
+          "id": "ability",
+          "kind": "ability",
+          "count": 1,
+          "label": "Ability score",
+          "from": [
+            "str",
+            "dex"
+          ]
+        }
+      ],
       "sources": {
         "dndf-8.8": {
           "book": "DnDF Expanded Handbook v8.8",

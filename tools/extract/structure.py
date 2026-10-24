@@ -338,8 +338,8 @@ def weapon_feat(weapon: str, plural: str, kind: str = "attack") -> dict:
     return {"expect": f"+1 bonus to {'attack' if kind == 'attack' else 'damage'} rolls with {plural}", "effects": [{"type": kind, "value": 1, "when": f"weapon == '{weapon}'"}]}
 
 
-# Feats whose numbers the sheet can apply. A feat's "+1 to an ability score" is left to the player,
-# who types final ability scores; everything conditional on a choice or a situation stays text.
+# Feats whose numbers the sheet can apply. Everything conditional on a situation stays text; a feat's
+# "+1 to an ability score" is read from its wording by feat_ability_increase below.
 FEAT_STRUCTURE = {
     "Alert": {"expect": "You gain a +5 bonus to initiative", "effects": [{"type": "initiative", "value": 5}]},
     "Linguist (Pongelyphs)": {"expect": "You learn the language of the Poneglyphs", "effects": [{"type": "language", "label": "The language of the Poneglyphs"}]},
@@ -551,14 +551,46 @@ def apply_race_structure(version: str, who: str, trait: dict, problems: list[str
         trait["picks"] = fields["picks"]
 
 
+ABILITY_IDS = {"Strength": "str", "Dexterity": "dex", "Constitution": "con", "Intelligence": "int", "Wisdom": "wis", "Charisma": "cha"}
+ABILITY_WORD = "|".join(ABILITY_IDS)
+# "Increase your Strength or Dexterity score by 1, to a maximum of 20." / "... by 1, up to a maximum of 20."
+ONE_OR_TWO = re.compile(rf"Increase your ({ABILITY_WORD})(?: or ({ABILITY_WORD}))? score by 1, (?:up )?to a maximum of 20")
+# Resilient: "Choose one ability score. ... Increase the chosen ability score by 1, to a maximum of 20.
+# You gain proficiency in saving throws using the chosen ability."
+ANY_ONE = "Increase the chosen ability score by 1, to a maximum of 20"
+CHOSEN_SAVE = "You gain proficiency in saving throws using the chosen ability"
+
+
+def feat_ability_increase(text: str) -> tuple[list[dict], list[dict]]:
+    """The effects and the pick for a feat's +1 to an ability score: one named ability is applied as it
+    stands; a choice ("Strength or Dexterity", "one ability score") is left to a pick on the sheet."""
+    raise_one = {"type": "ability", "value": 1, "max": 20}
+    pick = {"id": "ability", "kind": "ability", "count": 1, "label": "Ability score"}
+    if ANY_ONE in text:
+        effects = [{**raise_one, "pick": "ability"}]
+        if CHOSEN_SAVE in text:
+            effects.append({"type": "saveProficiency", "pick": "ability"})
+        return effects, [pick]
+    found = ONE_OR_TWO.search(text)
+    if not found:
+        return [], []
+    first, second = found.group(1), found.group(2)
+    if not second:
+        return [{**raise_one, "ability": ABILITY_IDS[first]}], []
+    return [{**raise_one, "pick": "ability"}], [{**pick, "from": [ABILITY_IDS[first], ABILITY_IDS[second]]}]
+
+
 def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
     fields = FEAT_STRUCTURE.get(feat["name"])
-    if not fields:
-        return
-    if fields["expect"] not in feat["text"]:
+    if fields and fields["expect"] not in feat["text"]:
         problems.append(f"feat {feat['name']} ({version}) is worded differently here, so its numbers were not applied")
-        return
-    feat["effects"] = fields["effects"]
+    elif fields:
+        feat["effects"] = fields["effects"]
+    raises, picks = feat_ability_increase(feat["text"])
+    if raises:
+        feat["effects"] = feat.get("effects", []) + raises
+    if picks:
+        feat["picks"] = picks
 
 
 def more_class(key: str, features: dict[str, dict], versions: tuple[str, ...] = ("dndf-10", "dndf-8.8")) -> None:

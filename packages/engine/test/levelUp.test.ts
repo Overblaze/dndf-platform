@@ -1,6 +1,6 @@
 // Gaining a level: the plan read from the class table, and the character after taking it.
 import { describe, expect, it } from 'vitest';
-import { applyLevelUp, deriveSheet, levelUpPlan, newCharacter, type AbilityScores, type CharacterDoc, type RulesVersion } from '../src';
+import { applyLevelUp, deriveSheet, levelUpPlan, newCharacter, racePickKey, type AbilityScores, type CharacterDoc, type RulesVersion } from '../src';
 import { loadRules } from './load';
 
 const V10 = 'dndf-10' as RulesVersion;
@@ -114,6 +114,16 @@ describe('taking the level', () => {
     const picked = applyLevelUp(bruiser.doc, bruiser.rules, { classId: 'class.bruiser', hpRoll: null, choices: { furyFeatures: ['keep_going'] } }).doc;
     expect(picked.choices.furyFeatures).toEqual(['keep_going']);
     expect(deriveSheet(picked, bruiser.rules).warnings).toEqual([]);
+  });
+
+  it('Resilient taken at a level with its ability picked: Constitution 15, its save proficient, the hit points it adds gained now', () => {
+    const { doc, rules } = make('class.warrior', 3, { con: 15 });
+    const taken = applyLevelUp(doc, rules, { classId: 'class.warrior', hpRoll: null, feat: 'feat.resilient', choices: { [racePickKey('feat.resilient', 'ability')]: ['con'] } });
+    expect(taken.doc.scores.con).toBe(15); // the score on the character is untouched: the sheet adds the feat's +1
+    const sheet = deriveSheet(taken.doc, rules);
+    expect(sheet.abilities.con.score).toBe(16);
+    expect(sheet.saves.con.proficient).toBe(true);
+    expect(taken.hpGained).toBe(6 + 3 + 3); // the d10's average and Con 3 for this level, and Con 2 → 3 over the three before
   });
 
   it('a first level in a second class: its die averaged, no first-level maximum; hit dice pool gains the die', () => {

@@ -402,13 +402,14 @@ export const TEST_CHARACTERS: TestCharacter[] = [
     id: 'feats',
     name: 'Jesus Burgess',
     version: 'dndf-10',
-    checks: 'Feats that change numbers: Alert, Mobile, Tough, Big Eater, a weapon feat, and a feat that grants a skill.',
+    checks: 'Feats that change numbers: Alert, Mobile, Tough, Big Eater, a weapon feat, a feat that grants a skill, and two that raise Constitution.',
     build: make({ name: 'Jesus Burgess', classId: 'class.warrior', level: 4, scores: scores(16, 14, 14, 10, 10, 10), feats: ['feat.alert', 'feat.mobile', 'feat.tough', 'feat.big_eater', 'feat.armor_breaker', 'feat.sharkskin'] },
       (_d, r) => ({ weapons: [weapon(r, 'mace'), weapon(r, 'club')] })),
     expected: {
       initiative: 7, // Dex 2 + Alert 5 — EH10 p.52
       speed: 40, // 30 + Mobile 10 — EH10 p.59
-      maxHp: 44, // 10 + 3 × 6 + Con 2 × 4 + Tough 2 × 4 — EH10 p.64
+      'score.con': 16, // 14 + Big Eater 1 + Sharkskin 1 — EH10 p.53, p.62
+      maxHp: 48, // 10 + 3 × 6 + Con 3 × 4 + Tough 2 × 4 — EH10 p.64
       carry: 480, // Str 16 × 15 × 2 Big Eater — EH10 p.53
       'attack.Mace.hit': 6, // Str 3 + prof 2 + Armor Breaker 1 — EH10 p.52
       'attack.Mace.damage': '1d6 + 3',

@@ -14,8 +14,9 @@ function NameInput({ value, onCommit, placeholder, list }: { value: string; onCo
 }
 
 /**
- * What a racial trait or a picked upgrade leaves to choose: "one skill proficiency and one tool proficiency of
- * your choice". A skill or a weapon is picked from a list, a tool is typed. Nothing has to be picked.
+ * What a racial trait, a picked upgrade or a feat leaves to choose: "one skill proficiency and one tool proficiency of
+ * your choice", Resilient's ability score. A skill, a weapon or an ability is picked from a list, a tool is typed.
+ * Nothing has to be picked.
  */
 export function RacePickFields({ picks, weapons, onChange }: { picks: RacePick[]; weapons: string[]; onChange: (pick: RacePick, next: string[]) => void }) {
   if (picks.length === 0) return null;

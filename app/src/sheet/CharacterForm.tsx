@@ -102,9 +102,11 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
   // The race's own pick-lists (Cyborg Upgrades), at the character's whole level.
   const racePicks = raceChoices({ race: { id: raceId || undefined, subraceId: subraceId || undefined, name: '', speed: 30 }, classes: [{ id: cls.id, level }, ...otherClasses], choices }, rules);
   // What those traits and upgrades leave to choose (a skill, a tool, a weapon). One whose upgrade is unticked is dropped on saving.
-  const nestedPicks = racePicksOf({ race: { id: raceId || undefined, subraceId: subraceId || undefined, name: '', speed: 30 }, classes: [{ id: cls.id, level }, ...otherClasses], choices, background: backgroundId ? { id: backgroundId } : undefined }, rules);
+  const nestedPicks = racePicksOf({ race: { id: raceId || undefined, subraceId: subraceId || undefined, name: '', speed: 30 }, classes: [{ id: cls.id, level }, ...otherClasses], choices, background: backgroundId ? { id: backgroundId } : undefined, feats }, rules);
   // Tools a class or a background leaves to choose stand with the proficiencies, further down; the race's own stand with the race.
   const isToolPick = (key: string) => /^pick\.(class|background)\./.test(key);
+  // A feat's own picks (Resilient's ability) stand with the feats.
+  const isFeatPick = (key: string) => key.startsWith('pick.feat.');
   const fixedTools = [rules.get(backgroundId), ...crewRoleIds.map((id) => rules.get(id))].flatMap((e) => (((e?.tools as { fixed?: string[] } | undefined)?.fixed) ?? []).map((tool) => `${tool} (${e!.name})`));
   const keptChoices = Object.fromEntries([
     ...picks.map((f) => [f.choices.id, choices[f.choices.id] ?? []] as const),
@@ -307,7 +309,7 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
         choices={racePicks} picked={choices} onChange={(id, next) => setChoices({ ...choices, [id]: next })} withText
         under={(choiceId, optionId) => <RacePickFields picks={nestedPicks.filter((p) => p.key.startsWith(`pick.${choiceId}.${optionId}.`))} weapons={handbook.weapons.map((w) => w.name)} onChange={(pick, next) => setChoices({ ...choices, [pick.key]: next })} />}
       />
-      <RacePickFields picks={nestedPicks.filter((p) => !isToolPick(p.key) && !racePicks.some((c) => p.key.startsWith(`pick.${c.id}.`)))} weapons={handbook.weapons.map((w) => w.name)} onChange={(pick, next) => setChoices({ ...choices, [pick.key]: next })} />
+      <RacePickFields picks={nestedPicks.filter((p) => !isToolPick(p.key) && !isFeatPick(p.key) && !racePicks.some((c) => p.key.startsWith(`pick.${c.id}.`)))} weapons={handbook.weapons.map((w) => w.name)} onChange={(pick, next) => setChoices({ ...choices, [pick.key]: next })} />
       <div className="grid-2">
         <label className="field">
           <span className="label">Race shown on the sheet</span>
@@ -471,6 +473,7 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
             <option key={feat.id} value={feat.id}>{feat.name}{feat.prerequisite ? ` (needs ${feat.prerequisite})` : ''}</option>
           ))}
         </select>
+        <RacePickFields picks={nestedPicks.filter((p) => isFeatPick(p.key))} weapons={[]} onChange={(pick, next) => setChoices({ ...choices, [pick.key]: next })} />
       </fieldset>
         </>
       )}
