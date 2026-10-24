@@ -1279,6 +1279,11 @@
         "orTool": {
           "type": "string",
           "minLength": 1
+        },
+        "maxEach": {
+          "description": "Ability picks: how many slots may name the same ability (\"up to 2 points in each score\"). More is warned about, never blocked.",
+          "type": "integer",
+          "minimum": 1
         }
       }
     }

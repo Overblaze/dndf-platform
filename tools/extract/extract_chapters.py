@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from extract_classes import ABILITIES, BOOKS, ROOT, body_text, derive_structure, dice_in, make_feature, proficiencies_granted, skills_granted, slug, split_sections, table_rows  # noqa: E402
-from structure import RACE_CHOICES, RACE_TRAIT_SPLITS, apply_feat_structure, apply_haki_structure, apply_race_structure, tools_granted  # noqa: E402
+from structure import RACE_CHOICES, RACE_TRAIT_SPLITS, apply_feat_structure, apply_haki_structure, apply_race_structure, race_ability_increase, tools_granted  # noqa: E402
 from pdfdoc import Block, Heading, Para, Table, is_footer, load_items, read_blocks  # noqa: E402
 
 # Page ranges in the v10 handbook.
@@ -345,8 +345,16 @@ DESCRIPTIVE_TRAITS = {"age", "alignment", "size", "speed", "ability score increa
 
 def structure_trait(version: str, who: str, trait: dict) -> None:
     """Uses, action and dice a trait's wording names, then the numbers entered by hand. Skills stay under "skills"."""
+    if trait["name"].lower() == "ability score increase":
+        raises, picks = race_ability_increase(trait["text"])
+        if raises:
+            trait["effects"] = trait.get("effects", []) + raises
+        else:
+            problems.append(f"race {who}: Ability Score Increase is worded in a way the sheet can't read: '{trait['text'][:80]}'")
+        if picks:
+            trait["picks"] = picks
     if trait["name"].lower() in DESCRIPTIVE_TRAITS:
-        # Nothing is read from their wording, but a number entered by hand still applies (a swimming speed under "Speed").
+        # Nothing else is read from their wording, but a number entered by hand still applies (a swimming speed under "Speed").
         apply_race_structure(version, who, trait, problems)
         return
     # A trait's later paragraphs can grant skills too.

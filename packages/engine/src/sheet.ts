@@ -14,7 +14,7 @@ import { carriedWeight, withEquippedItems, type InventoryLine } from './inventor
 import { CUSTOM_SPELL_BOOK, spellKey, type SheetSpells } from './spells';
 import { beastMod, parseBeast, withWeaponDamage, type BeastAttack } from './beast';
 import { biggerDie, infusionBenefits, infusionCharges, infusionFeature, infusionNumbers, infusionSection, infusionTypeOf, infusionTypes, type InfusionNumbers } from './infusion';
-import { featEffects, raceChoices, racePickLabel, racePicks as racePicks_, type RaceChoice, type RacePick } from './raceChoices';
+import { featEffects, pickedEffects, raceChoices, racePickLabel, racePicks as racePicks_, racialTraitOwner, type RaceChoice, type RacePick } from './raceChoices';
 import { NO_SECRETS, diceInText, fruitCategory, fruitParts, withSecrets, type Secrets, type SheetFruit } from './fruit';
 import { evaluate, evaluateNumber, explain, type ExprScope } from './expr';
 import { HAKI_PURIST_LEVELS, logiaCharges, parameciaCharges, zoanBeastForm, dreamPointsMax, hakiPuristPicks, hakiTier, healingSurgeMaxDice, piratePrestigeMax, specialReactionReduction, specialReactionUses } from './general';
@@ -237,6 +237,8 @@ export interface Sheet {
   raceChoices: RaceChoice[];
   /** What a racial trait or a picked option leaves to choose (a skill, a tool, a weapon), with what is chosen. */
   racePicks: RacePick[];
+  /** What the sheet adds to the scores from the race and feats ("Cyborg: Constitution +2"), once typed in by hand. */
+  addedIncreases: string[];
   /** Devil Fruits the character holds, and ones they only know about. Empty unless private content was handed in. */
   fruits: SheetFruit[];
   knownFruits: SheetFruit[];
@@ -543,13 +545,16 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   const racialTraits = [race, subrace].flatMap((r) => ((r?.traits ?? []) as TraitDef[]).map((trait) => ({ trait, entry: r! })));
   const racePicks = raceChoices(doc, rules);
   // Traits the sheet does not list (Speed) can still carry numbers: a Fishman's swimming speed.
-  const unlisted: { def: FeatureDef; from: string }[] = [];
+  const unlisted: { def: FeatureDef; from: string; label: string }[] = [];
   {
     const blank: ClassEntry = { id: 'race', kind: 'class', name: 'Race', versions: [doc.rulesVersion], source: { book: HANDBOOKS[doc.rulesVersion], page: 67 }, hitDie: 8, features: [] };
     for (const { trait, entry } of racialTraits) {
       // Descriptive traits stay in the Library; the sheet lists the ones a player uses.
       if (/^(age|alignment|size|speed|ability score increase|subrace)$/i.test(trait.name)) {
-        if (((trait as unknown as FeatureDef).effects ?? []).length) unlisted.push({ def: { ...trait, level: 1 } as unknown as FeatureDef, from: entry.name });
+        // An Ability Score Increase's "of your choice" is read from what was picked.
+        const effects = pickedEffects(racialTraitOwner(entry.id, trait.name), ((trait as unknown as FeatureDef).effects ?? []) as EffectDef[], doc.choices);
+        const label = entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name;
+        if (effects.length) unlisted.push({ def: { ...trait, level: 1, effects } as unknown as FeatureDef, from: entry.name, label });
         continue;
       }
       const from = entry.kind === 'subrace' ? `${race?.name ?? ''} (${entry.name})` : entry.name;
@@ -593,18 +598,32 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   // "You immediately lose access to all of these improvements when your character gains Devil Fruit powers."
   const puristDoc = heldFruits.length ? { ...doc, hakiPurist: [] } : doc;
 
-  // 2. Ability scores, after features that raise them (The King) and Strengthen Self.
+  // 2. Ability scores: the race's increases, then Strengthen Self, features that raise them (The King) and feats.
   const scores: AbilityScores = { ...doc.scores };
-  for (const { record } of advancementsOf('strengthen_self')) {
-    const ability = record.pick?.ability;
-    if (ability && ABILITIES.includes(ability) && !record.pick?.willpower) scores[ability] = Math.max(scores[ability], Math.min(scores[ability] + 2, 20));
-  }
   const scoreChanges: Partial<Record<Ability, { label: string; to: number }[]>> = {};
   const moved = (ability: Ability, to: number, label: string) => {
     if (to === scores[ability]) return;
     scores[ability] = to;
     (scoreChanges[ability] ??= []).push({ label, to });
   };
+  const addedIncreases: string[] = [];
+  // The race's Ability Score Increase, decreases included (Wotan): applied as printed, with no maximum.
+  // Listed, like a feat's below, so an increase also typed into the scores by hand is easy to see.
+  for (const { def, label } of unlisted) {
+    const total: Partial<Record<Ability, number>> = {};
+    for (const effect of (def.effects ?? []) as EffectDef[]) {
+      if (effect.type === 'ability' && effect.ability && ABILITIES.includes(effect.ability)) total[effect.ability] = (total[effect.ability] ?? 0) + (effect.value ?? 0);
+    }
+    for (const a of ABILITIES) {
+      if (!total[a]) continue;
+      moved(a, scores[a] + total[a]!, `${label}: ${signed(total[a]!)}`);
+      addedIncreases.push(`${label}: ${ABILITY_NAMES[a]} ${signed(total[a]!)}`);
+    }
+  }
+  for (const { record } of advancementsOf('strengthen_self')) {
+    const ability = record.pick?.ability;
+    if (ability && ABILITIES.includes(ability) && !record.pick?.willpower) scores[ability] = Math.max(scores[ability], Math.min(scores[ability] + 2, 20));
+  }
   for (const { def } of active) {
     for (const effect of (def.effects ?? []) as EffectDef[]) {
       if (effect.type !== 'ability' || !effect.ability || !ABILITIES.includes(effect.ability)) continue;
@@ -623,6 +642,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
       if (effect.type !== 'ability' || !effect.ability || !ABILITIES.includes(effect.ability)) continue;
       const raised = scores[effect.ability] + (effect.value ?? 0);
       moved(effect.ability, Math.max(scores[effect.ability], Math.min(raised, effect.max ?? raised)), `${feat.name}: ${signed(effect.value ?? 0)}`);
+      addedIncreases.push(`${feat.name}: ${ABILITY_NAMES[effect.ability]} ${signed(effect.value ?? 0)}`);
     }
   }
   // "Your score is 19 while you wear this. It has no effect on you if your score is already 19 or higher."
@@ -731,7 +751,15 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
   }
   // What was chosen where a racial trait or option says "of your choice": a proficiency like any other.
   const chosen = racePicks_(doc, rules);
-  // An ability picked for a feat is no proficiency: the feat's own effects read it.
+  // "You may only put up to 2 points in each score": more is the player's call, said once.
+  for (const pick of chosen) {
+    if (pick.def.kind !== 'ability' || !pick.def.maxEach) continue;
+    for (const a of ABILITIES) {
+      const times = pick.picked.filter((v) => v === a).length;
+      if (times > pick.def.maxEach) warnings.push(`${pick.race}, ${pick.from}: ${times} points in ${ABILITY_NAMES[a]}, more than the ${pick.def.maxEach} the book allows in one score.`);
+    }
+  }
+  // An ability picked for a feat or a race is no proficiency: the feat's or trait's own effects read it.
   for (const pick of chosen.filter((p) => p.def.kind !== 'ability')) {
     for (const value of pick.picked) {
       const label = racePickLabel(pick, value).trim();
@@ -1627,6 +1655,7 @@ export function deriveSheet(saved: CharacterDoc, handbook: Map<string, RuleEntry
     protections: defenses,
     raceChoices: racePicks,
     racePicks: chosen,
+    addedIncreases,
     fruits,
     knownFruits,
     infused: infusions,

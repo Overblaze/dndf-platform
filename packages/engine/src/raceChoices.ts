@@ -75,7 +75,7 @@ export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'
   };
   for (const id of [doc.race.id, doc.race.subraceId]) {
     const entry = id ? rules.get(id) : undefined;
-    for (const trait of (entry?.traits ?? []) as TraitDef[]) add(`${entry!.id}.${slugOf(trait.name)}`, trait.name, entry!.name, trait.picks, trait.page, entry!.source.book);
+    for (const trait of (entry?.traits ?? []) as TraitDef[]) add(racialTraitOwner(entry!.id, trait.name), trait.name, entry!.name, trait.picks, trait.page, entry!.source.book);
   }
   for (const choice of raceChoices(doc, rules)) {
     for (const option of choice.options) {
@@ -105,11 +105,21 @@ export function racePicks(doc: Pick<CharacterDoc, 'race' | 'classes' | 'choices'
  * none while nothing is picked. Effects that name no pick are kept as they are.
  */
 export function featEffects(feat: RuleEntry, choices: CharacterDoc['choices'] | undefined): EffectDef[] {
-  return ((feat.effects ?? []) as EffectDef[]).flatMap((effect) => {
+  return pickedEffects(feat.id, (feat.effects ?? []) as EffectDef[], choices);
+}
+
+/** The same for any owner of picks: a feat by its id, a racial trait by `racialTraitOwner`. A slot picked twice counts twice. */
+export function pickedEffects(owner: string, effects: EffectDef[], choices: CharacterDoc['choices'] | undefined): EffectDef[] {
+  return effects.flatMap((effect) => {
     if (typeof effect.pick !== 'string') return [effect];
-    const picked = (choices?.[racePickKey(feat.id, effect.pick)] ?? []).filter((v): v is Ability => ABILITIES.includes(v as Ability));
+    const picked = (choices?.[racePickKey(owner, effect.pick)] ?? []).filter((v): v is Ability => ABILITIES.includes(v as Ability));
     return picked.map((ability) => ({ ...effect, ability }));
   });
+}
+
+/** What a racial trait's picks are kept under: "race.cyborg.ability_score_increase". */
+export function racialTraitOwner(entryId: string, traitName: string): string {
+  return `${entryId}.${slugOf(traitName)}`;
 }
 
 /** What a pick's value is called on the sheet: "Stealth", "Thieves’ Tools". */

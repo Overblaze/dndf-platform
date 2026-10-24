@@ -164,6 +164,8 @@ export interface PickDef {
   from?: string[];
   /** A tool may be named instead ("Sleight of Hand or an Artisan’s tool of your choice"). */
   orTool?: string;
+  /** Ability picks: how many slots may name the same ability ("up to 2 points in each score"). */
+  maxEach?: number;
 }
 
 export interface TrackerDef {

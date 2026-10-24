@@ -1,11 +1,13 @@
 // Racial traits on the sheet: their numbers, uses, dice and pick-lists — p67–82 of each handbook.
 import { describe, expect, it } from 'vitest';
-import { applyLevelUp, deriveSheet, levelUpPlan, newCharacter, normalizeDoc, raceChoices, racePickLabel, racePickOptions, speedLine, toolSuggestions, type AbilityScores, type CharacterDoc, type ClassEntry, type RulesVersion, type OptionDef, type Sheet, type TraitDef } from '../src';
+import { ABILITIES, applyLevelUp, deriveSheet, levelUpPlan, newCharacter, normalizeDoc, raceChoices, racePickKey, racePickLabel, racePickOptions, speedLine, toolSuggestions, type AbilityScores, type CharacterDoc, type ClassEntry, type RulesVersion, type OptionDef, type Sheet, type TraitDef } from '../src';
 import { loadRules } from './load';
 
 const scores: AbilityScores = { str: 16, dex: 14, con: 14, int: 10, wis: 12, cha: 10 };
 const feature = (sheet: Sheet, name: string) => sheet.features.find((f) => f.name === name);
 const pool = (sheet: Sheet, name: string) => sheet.resources.find((r) => r.name === name);
+// The skill, tool and weapon picks, leaving out an Ability Score Increase's pick of abilities.
+const notAbility = (p: { def: { kind: string } }) => p.def.kind !== 'ability';
 
 describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('racial traits (%s)', (version) => {
   const rules = loadRules(version);
@@ -85,7 +87,7 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('racial traits (%s)', (
 
   it('Buccaneer: Sturdy Build is 13 + Constitution without armor, and Anchor Throw grows at 5, 11 and 17', () => {
     const { sheet } = make('race.buccaneer', 11);
-    expect(sheet.ac.value).toBe(13 + 2);
+    expect(sheet.ac.value).toBe(13 + 3); // Con 14 + 3 (Ability Score Increase) = 17
     expect(feature(sheet, 'Anchor Throw')!.rolls[0]).toMatchObject({ dice: '3d12' });
     expect(pool(sheet, 'Anchor Throw')).toMatchObject({ max: 1, recharge: 'short' });
     expect(feature(make('race.buccaneer', 4).sheet, 'Anchor Throw')!.rolls[0]!.dice).toBe('1d12');
@@ -110,10 +112,10 @@ describe('racial traits only in v10', () => {
     const shark = make('race.fishman', 'subrace.fishman.shark');
     expect(shark.features.find((f) => f.name === 'Bite')!.rolls[0]).toMatchObject({ dice: '1d6 + 3', kind: 'damage' });
     const wotan = make('race.fish_man_wotan', undefined);
-    expect(wotan.features.find((f) => f.name === 'Wotan Vigor')!.rolls[0]).toMatchObject({ dice: '1d12 + 2', kind: 'heal' });
+    expect(wotan.features.find((f) => f.name === 'Wotan Vigor')!.rolls[0]).toMatchObject({ dice: '1d12 + 3', kind: 'heal' }); // Con 14 + 3 (Ability Score Increase)
     expect(wotan.resources.find((r) => r.name === 'Wotan Vigor')).toMatchObject({ max: 1, recharge: 'long' });
     const yeti = make('race.yeti', undefined);
-    expect(yeti.features.find((f) => f.name === 'Glacial Grasp')!.displays).toEqual([{ label: 'Save DC', value: '14' }]);
+    expect(yeti.features.find((f) => f.name === 'Glacial Grasp')!.displays).toEqual([{ label: 'Save DC', value: '15' }]); // 8 + prof 3 + Str (16 + 2 Ability Score Increase) 4
     expect(yeti.resources.find((r) => r.name === 'Glacial Grasp')!.max).toBe(3);
   });
 });
@@ -180,40 +182,40 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('racial speeds and choi
   });
 
   it('Cyborg: Shape-Memory Alloy Body asks for a skill and a tool, and what is chosen is a proficiency', () => {
-    expect(make('race.cyborg', 5).sheet.racePicks).toEqual([]);
+    expect(make('race.cyborg', 5).sheet.racePicks.filter(notAbility)).toEqual([]);
     const bare = make('race.cyborg', 5, { choices: { cyborgUpgrades: ['shape_memory_alloy_body'] } }).sheet;
-    expect(bare.racePicks.map((p) => [p.key, p.from, p.def.kind, p.def.count, p.picked])).toEqual([
+    expect(bare.racePicks.filter(notAbility).map((p) => [p.key, p.from, p.def.kind, p.def.count, p.picked])).toEqual([
       ['pick.cyborgUpgrades.shape_memory_alloy_body.skill', 'Shape-Memory Alloy Body', 'skill', 1, []],
       ['pick.cyborgUpgrades.shape_memory_alloy_body.tool', 'Shape-Memory Alloy Body', 'tool', 1, []],
     ]);
-    expect(racePickOptions(bare.racePicks[0]!)).toHaveLength(18);
+    expect(racePickOptions(bare.racePicks.filter(notAbility)[0]!)).toHaveLength(18);
     expect(skilled(bare, 'stealth')).toBe(false);
     const choices = { cyborgUpgrades: ['shape_memory_alloy_body'], 'pick.cyborgUpgrades.shape_memory_alloy_body.skill': ['stealth'], 'pick.cyborgUpgrades.shape_memory_alloy_body.tool': ['Navigator’s tools'] };
     const chosen = make('race.cyborg', 5, { choices }).sheet;
     expect(skilled(chosen, 'stealth')).toBe(true);
     expect(chosen.proficiencies.tools).toContainEqual(expect.objectContaining({ name: 'Navigator’s tools', from: 'Shape-Memory Alloy Body' }));
-    expect(chosen.racePicks[0]!.picked).toEqual(['stealth']);
-    expect(racePickLabel(chosen.racePicks[0]!, 'stealth')).toBe('Stealth');
+    expect(chosen.racePicks.filter(notAbility)[0]!.picked).toEqual(['stealth']);
+    expect(racePickLabel(chosen.racePicks.filter(notAbility)[0]!, 'stealth')).toBe('Stealth');
     expect(chosen.warnings).toEqual([]);
     // The upgrade swapped out: what it gave goes with it, and comes back if it is taken again.
     const swapped = make('race.cyborg', 5, { choices: { ...choices, cyborgUpgrades: ['night_lens'] } }).sheet;
-    expect(swapped.racePicks).toEqual([]);
+    expect(swapped.racePicks.filter(notAbility)).toEqual([]);
     expect(skilled(swapped, 'stealth')).toBe(false);
     expect(swapped.proficiencies.tools.some((t) => t.name === 'Navigator’s tools')).toBe(false);
     // The upgrade of the upgrade gives one skill more.
     const advanced = make('race.cyborg', 5, { choices: { ...choices, cyborgUpgrades: ['shape_memory_alloy_body', 'advanced_shape_memory_alloy'], 'pick.cyborgUpgrades.advanced_shape_memory_alloy.skill': ['arcana'] } }).sheet;
-    expect(advanced.racePicks).toHaveLength(3);
+    expect(advanced.racePicks.filter(notAbility)).toHaveLength(3);
     expect(skilled(advanced, 'arcana') && skilled(advanced, 'stealth')).toBe(true);
   });
 
   it('the other races’ choices: a skill from two, a skill or a tool, tools, weapons', () => {
     const variant = make('race.human', 1, { choices: { 'pick.subrace.human.variant.skills.skill': ['insight'] } }, 'subrace.human.variant').sheet;
-    expect(variant.racePicks.map((p) => p.from)).toEqual(['Skills']);
+    expect(variant.racePicks.filter(notAbility).map((p) => p.from)).toEqual(['Skills']);
     expect(skilled(variant, 'insight')).toBe(true);
-    const smelt = make('race.fishman', 1, {}, 'subrace.fishman.smelt_whiting').sheet.racePicks[0]!;
+    const smelt = make('race.fishman', 1, {}, 'subrace.fishman.smelt_whiting').sheet.racePicks.filter(notAbility)[0]!;
     expect(racePickOptions(smelt)).toEqual([{ id: 'deception', name: 'Deception' }, { id: 'persuasion', name: 'Persuasion' }]);
     const octopus = make('race.fishman', 1, { choices: { 'pick.subrace.fishman.octopus.deadly_precision.proficiency': ['tool:Weaver’s tools'] } }, 'subrace.fishman.octopus').sheet;
-    expect(octopus.racePicks[0]!.def).toMatchObject({ from: ['sleight_of_hand'], orTool: 'Artisan’s tool' });
+    expect(octopus.racePicks.filter(notAbility)[0]!.def).toMatchObject({ from: ['sleight_of_hand'], orTool: 'Artisan’s tool' });
     expect(octopus.proficiencies.tools).toContainEqual(expect.objectContaining({ name: 'Weaver’s tools', from: 'Deadly Precision' }));
     expect(skilled(octopus, 'sleight_of_hand')).toBe(false);
     // "A tool instead", with the tool not yet named, is nothing chosen.
@@ -221,10 +223,10 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('racial speeds and choi
     const yokai = make('race.yokai_tribesman', 1, { choices: { 'pick.race.yokai_tribesman.crafty.tool': ['Shamisen'] } }).sheet;
     expect(yokai.proficiencies.tools).toContainEqual(expect.objectContaining({ name: 'Shamisen', from: 'Crafty' }));
     const oni = make('race.oni', 1, { choices: { 'pick.race.oni.warriors_heritage.weapons': ['Kanabo', 'Longsword'] } }).sheet;
-    expect(oni.racePicks[0]!.def).toMatchObject({ kind: 'weapon', count: 2 });
+    expect(oni.racePicks.filter(notAbility)[0]!.def).toMatchObject({ kind: 'weapon', count: 2 });
     expect(oni.proficiencies.weapons.filter((w) => w.from === 'Warrior’s Heritage').map((w) => w.id)).toEqual(['kanabo', 'longsword']);
     const automata = make('race.dwarf', 1, {}, 'subrace.dwarf.automata').sheet;
-    expect(automata.racePicks.map((p) => p.def.kind)).toEqual(['skill', 'weapon']);
+    expect(automata.racePicks.filter(notAbility).map((p) => p.def.kind)).toEqual(['skill', 'weapon']);
   });
 
   it('no racial trait or option names a speed or a proficiency “of your choice” that the sheet does not take up', () => {
@@ -437,5 +439,55 @@ describe.each(['dndf-10', 'dndf-8.8'] as RulesVersion[])('languages, multiclass 
     expect([skill(build('class.warrior'), 'history').proficient, skill(build('class.warrior', { skills: ['history'] }), 'history').expertise]).toEqual([false, false]);
     // The modifier shows it: proficiency bonus once, then twice.
     expect(skill(historian, 'history').value - skill(plain, 'history').value).toBe(plain.prof.value);
+  });
+});
+
+describe('racial Ability Score Increases (p67–82)', () => {
+  const rules = loadRules('dndf-10');
+  const make = (raceId: string, subraceId?: string, choices: Record<string, string[]> = {}) => {
+    const base = newCharacter({ name: 'T', classId: 'class.warrior', level: 1, scores }, rules);
+    const doc: CharacterDoc = { ...base, race: { ...base.race, id: raceId, subraceId, name: rules.get(raceId)!.name }, choices: { ...base.choices, ...choices } };
+    return { doc, sheet: deriveSheet(doc, rules) };
+  };
+  const key = (owner: string) => racePickKey(owner, 'ability');
+
+  it('Cyborg: Constitution +2 as it stands, and one other ability of the player’s choice +1', () => {
+    const { sheet } = make('race.cyborg');
+    expect(sheet.abilities.con).toMatchObject({ score: 16, changes: [{ label: 'Cyborg: +2', to: 16 }] });
+    const pick = sheet.racePicks.find((p) => p.key === key('race.cyborg.ability_score_increase'))!;
+    expect(racePickOptions(pick)!.map((o) => o.id)).toEqual(['str', 'dex', 'int', 'wis', 'cha']);
+    const picked = make('race.cyborg', undefined, { [pick.key]: ['dex'] }).sheet;
+    expect([picked.abilities.dex.score, picked.abilities.con.score]).toEqual([15, 16]);
+    expect(picked.addedIncreases).toEqual(['Cyborg: Dexterity +1', 'Cyborg: Constitution +2']);
+    // Picking an ability is not a skill proficiency.
+    expect(picked.skills.filter((s) => s.proficient).length).toBe(sheet.skills.filter((s) => s.proficient).length);
+  });
+
+  it('decreases are applied as printed, and a subrace adds to its race (Number: Constitution +2 more)', () => {
+    const wotan = make('race.fish_man_wotan').sheet.abilities;
+    expect([wotan.str.score, wotan.con.score, wotan.dex.score, wotan.int.score]).toEqual([19, 17, 13, 9]);
+    const number = make('race.punk_experiment', 'subrace.punk_experiment.number').sheet.abilities;
+    expect([number.con.score, number.str.score, number.dex.score, number.int.score]).toEqual([18, 18, 12, 7]);
+    expect(number.con.changes!.map((c) => c.label)).toEqual(['Punk Experiment: +2', 'Punk Experiment (Number): +2']);
+    const human = make('race.human', 'subrace.human.standard').sheet.abilities;
+    expect(ABILITIES.map((a) => human[a].score - scores[a])).toEqual([1, 1, 1, 1, 1, 1]);
+  });
+
+  it('points to spend are one +1 a slot; more in one score than the book allows is warned about, not blocked', () => {
+    const k = key('subrace.fishman.shark.ability_score_increase');
+    const shark = make('race.fishman', 'subrace.fishman.shark').sheet.racePicks.find((p) => p.key === k)!;
+    expect(shark.def).toMatchObject({ kind: 'ability', count: 3, maxEach: 2 });
+    const two = make('race.fishman', 'subrace.fishman.shark', { [k]: ['str', 'str', 'con'] }).sheet;
+    expect([two.abilities.str.score, two.abilities.con.score]).toEqual([18, 15]);
+    expect(two.warnings).toEqual([]);
+    const three = make('race.fishman', 'subrace.fishman.shark', { [k]: ['str', 'str', 'str'] }).sheet;
+    expect(three.abilities.str.score).toBe(19);
+    expect(three.warnings).toEqual(['Shark, Ability Score Increase: 3 points in Strength, more than the 2 the book allows in one score.']);
+  });
+
+  it('keeps the player’s "checked" mark on the character, and nothing else', () => {
+    const { doc } = make('race.cyborg');
+    expect(normalizeDoc({ ...doc, abilityIncreasesChecked: true })!.abilityIncreasesChecked).toBe(true);
+    expect(normalizeDoc({ ...doc, abilityIncreasesChecked: 'yes' as unknown as boolean })!.abilityIncreasesChecked).toBeUndefined();
   });
 });
