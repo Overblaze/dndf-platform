@@ -143,6 +143,8 @@ export interface CharacterDoc {
   skills: string[];
   expertise: string[];
   extraSaves?: Ability[];
+  /** Set once the player has seen that the sheet adds racial and feat ability increases itself; before that they were typed in. */
+  abilityIncreasesChecked?: boolean;
   /** Picks made from option groups, by choice id (furyFeatures → option ids). */
   choices: Record<string, string[]>;
   armor: ArmorDef | null;
@@ -368,6 +370,7 @@ export function normalizeDoc(raw: unknown): CharacterDoc | null {
     skills: strings(doc.skills),
     expertise: strings(doc.expertise),
     extraSaves: Array.isArray(doc.extraSaves) ? (strings(doc.extraSaves) as Ability[]) : undefined,
+    abilityIncreasesChecked: doc.abilityIncreasesChecked === true ? true : undefined,
     choices: isObject(doc.choices) ? Object.fromEntries(Object.entries(doc.choices).map(([id, picks]) => [id, strings(picks)])) : {},
     armor: isObject(doc.armor) && typeof doc.armor.base === 'number' ? doc.armor : null,
     shield: doc.shield === true,

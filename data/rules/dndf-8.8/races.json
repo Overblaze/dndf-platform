@@ -18,7 +18,23 @@
         {
           "name": "Ability Score Increase",
           "text": "You have 3 points to spend on ability scores. You may only put up to 1 point in each score.",
-          "page": 71
+          "page": 71,
+          "effects": [
+            {
+              "type": "ability",
+              "pick": "ability",
+              "value": 1
+            }
+          ],
+          "picks": [
+            {
+              "id": "ability",
+              "kind": "ability",
+              "count": 3,
+              "label": "Ability score points (+1 each, up to 1 in one score)",
+              "maxEach": 1
+            }
+          ]
         },
         {
           "name": "Age",
@@ -117,7 +133,23 @@
         {
           "name": "Ability Score Increase",
           "text": "You have 3 points to spend on ability scores. You may only put up to 2 points in each score.",
-          "page": 72
+          "page": 72,
+          "effects": [
+            {
+              "type": "ability",
+              "pick": "ability",
+              "value": 1
+            }
+          ],
+          "picks": [
+            {
+              "id": "ability",
+              "kind": "ability",
+              "count": 3,
+              "label": "Ability score points (+1 each, up to 2 in one score)",
+              "maxEach": 2
+            }
+          ]
         },
         {
           "name": "Age",
@@ -226,7 +258,23 @@
         {
           "name": "Ability Score Increase",
           "text": "You have 3 points to spend on ability scores. You may only put up to 1 point in each score.",
-          "page": 73
+          "page": 73,
+          "effects": [
+            {
+              "type": "ability",
+              "pick": "ability",
+              "value": 1
+            }
+          ],
+          "picks": [
+            {
+              "id": "ability",
+              "kind": "ability",
+              "count": 3,
+              "label": "Ability score points (+1 each, up to 1 in one score)",
+              "maxEach": 1
+            }
+          ]
         },
         {
           "name": "Age",
@@ -521,7 +569,34 @@
         {
           "name": "Ability Score Increase",
           "text": "Your Constitution score increases by 2, and one other ability score of your choice increases by 1.",
-          "page": 75
+          "page": 75,
+          "effects": [
+            {
+              "type": "ability",
+              "ability": "con",
+              "value": 2
+            },
+            {
+              "type": "ability",
+              "pick": "ability",
+              "value": 1
+            }
+          ],
+          "picks": [
+            {
+              "id": "ability",
+              "kind": "ability",
+              "count": 1,
+              "label": "Ability score (+1)",
+              "from": [
+                "str",
+                "dex",
+                "int",
+                "wis",
+                "cha"
+              ]
+            }
+          ]
         },
         {
           "name": "Age",
@@ -610,7 +685,19 @@
         {
           "name": "Ability Score Increase",
           "text": "Your Dexterity score increases by 3, and your Constitution score increases by 3.",
-          "page": 78
+          "page": 78,
+          "effects": [
+            {
+              "type": "ability",
+              "ability": "dex",
+              "value": 3
+            },
+            {
+              "type": "ability",
+              "ability": "con",
+              "value": 3
+            }
+          ]
         },
         {
           "name": "Age",
@@ -692,7 +779,19 @@
         {
           "name": "Ability Score Increase",
           "text": "Your Strength score increases by 2 and your Constitution score increases by 3.",
-          "page": 79
+          "page": 79,
+          "effects": [
+            {
+              "type": "ability",
+              "ability": "str",
+              "value": 2
+            },
+            {
+              "type": "ability",
+              "ability": "con",
+              "value": 3
+            }
+          ]
         },
         {
           "name": "Age",
@@ -795,7 +894,14 @@
         {
           "name": "Ability Score Increase",
           "text": "Your Strength score increases by 1.",
-          "page": 81
+          "page": 81,
+          "effects": [
+            {
+              "type": "ability",
+              "ability": "str",
+              "value": 1
+            }
+          ]
         },
         {
           "name": "Size",

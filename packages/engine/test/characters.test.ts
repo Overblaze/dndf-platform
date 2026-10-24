@@ -206,7 +206,7 @@ describe('every feat, race, background and crew role can be put on a character',
       for (const sub of subs.length ? subs : [undefined]) {
         const sheet = deriveSheet(newCharacter({ name: 'x', rulesVersion: version, classId: 'class.warrior', level: 5, scores, raceId: race.id, subraceId: sub?.id }, rules), rules);
         expect(sheet.warnings, `${race.name} ${sub?.name ?? ''}`).toEqual([]);
-        expect(sheet.carry.calculated % 210, `${race.name} ${sub?.name ?? ''}: carrying is Str 14 × 15, doubled per size step`).toBe(0);
+        expect(sheet.carry.calculated % (sheet.abilities.str.score * 15), `${race.name} ${sub?.name ?? ''}: carrying is Str (with the race's increase) × 15, doubled per size step`).toBe(0);
       }
     }
     for (const background of all.filter((e) => e.kind === 'background')) {

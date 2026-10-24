@@ -150,6 +150,15 @@ export function LiveSheet({ store, id }: { store: CharacterStore; id: string }) 
             <p className="page-ref">Loading the saved version drops what you changed here since. Keeping this page’s writes it over the other; the other goes into History, so it can be brought back.</p>
           </div>
         )}
+        {!doc.abilityIncreasesChecked && sheet.addedIncreases.length > 0 && (
+          <div className="notice" role="status">
+            <p>
+              <strong>The sheet now adds your race’s and feats’ ability increases itself:</strong> {sheet.addedIncreases.join(', ')}.
+              If you typed any of these into your ability scores, take them out in Edit, or they count twice.
+            </p>
+            <button className="btn" onClick={() => live.setDoc({ ...doc, abilityIncreasesChecked: true }, 'Ability increases checked')}>Got it</button>
+          </div>
+        )}
         {live.saveError && <p className="notice" role="alert">{live.saveError}. Your changes are kept on screen and will be retried on the next change.</p>}
       </section>
 

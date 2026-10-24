@@ -580,6 +580,39 @@ def feat_ability_increase(text: str) -> tuple[list[dict], list[dict]]:
     return [{**raise_one, "pick": "ability"}], [{**pick, "from": [ABILITY_IDS[first], ABILITY_IDS[second]]}]
 
 
+# A race's Ability Score Increase. Increases and decreases it names are applied as they stand (no maximum:
+# the book gives none, and "your maximum for those scores is now 24" only matters to later raises); what
+# it leaves to choose is a pick of abilities, one +1 per slot, so 3 points to spend are 3 slots.
+SCORE_CHANGE = re.compile(rf"[Yy]our ((?:{ABILITY_WORD})(?: and (?:{ABILITY_WORD}))?) scores? (increase|decrease)s? by (?:an additional )?(\d+)")
+EVERY_SCORE = "Your ability scores each increase by 1"
+ONE_OTHER = "one other ability score of your choice increases by 1"
+TWO_DIFFERENT = "Two different ability scores of your choice increase by 1"
+POINTS = re.compile(r"You have (\d+) points to spend on ability scores\.(?: You may only put up to (\d+) points? in each score\.)?")
+
+
+def race_ability_increase(text: str) -> tuple[list[dict], list[dict]]:
+    """The effects and the pick for a race's Ability Score Increase; both empty when the wording is not one of these."""
+    effects: list[dict] = []
+    if EVERY_SCORE in text:
+        effects = [{"type": "ability", "ability": a, "value": 1} for a in ABILITY_IDS.values()]
+    for names, way, amount in SCORE_CHANGE.findall(text):
+        for name in names.split(" and "):
+            effects.append({"type": "ability", "ability": ABILITY_IDS[name], "value": int(amount) * (1 if way == "increase" else -1)})
+    pick = {"id": "ability", "kind": "ability"}
+    raise_picked = {"type": "ability", "pick": "ability", "value": 1}
+    if ONE_OTHER in text:
+        named = [e["ability"] for e in effects]
+        return effects + [raise_picked], [{**pick, "count": 1, "label": "Ability score (+1)", "from": [a for a in ABILITY_IDS.values() if a not in named]}]
+    if TWO_DIFFERENT in text:
+        return effects + [raise_picked], [{**pick, "count": 2, "label": "Ability scores (+1 each)", "maxEach": 1}]
+    points = POINTS.search(text)
+    if points:
+        each = points.group(2)
+        label = f"Ability score points (+1 each{f', up to {each} in one score' if each else ''})"
+        return effects + [raise_picked], [{**pick, "count": int(points.group(1)), "label": label, **({"maxEach": int(each)} if each else {})}]
+    return effects, []
+
+
 def apply_feat_structure(version: str, feat: dict, problems: list[str]) -> None:
     fields = FEAT_STRUCTURE.get(feat["name"])
     if fields and fields["expect"] not in feat["text"]:

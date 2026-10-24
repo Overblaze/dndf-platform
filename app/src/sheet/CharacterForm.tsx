@@ -124,7 +124,8 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
     };
     if (!initial) {
       const built = newCharacter(shared, rules);
-      const doc: CharacterDoc = { ...built, languages: languages.length ? languages : undefined, customClasses, notes, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
+      // Made after the sheet began adding racial and feat increases: nothing typed in to take out.
+      const doc: CharacterDoc = { ...built, abilityIncreasesChecked: true, languages: languages.length ? languages : undefined, customClasses, notes, scoreOrigin, classes: [...built.classes, ...otherClasses], expertise, armor, shield, weapons, willpower: { strengthenSelf: version === 'dndf-10' ? strengthenSelf : 0 } };
       doc.state.hp = deriveSheet(doc, rules).maxHp.value;
       return doc;
     }
@@ -394,6 +395,7 @@ export function CharacterForm({ initial, onSave, onCancel, onCompare }: { initia
       {show('scores') && (
         <>
       <AbilityScoresField origin={scoreOrigin} book={HANDBOOKS[version]} onChange={(next, origin) => { setScores(next); setScoreOrigin(origin); }} />
+      {draftSheet.addedIncreases.length > 0 && <p className="page-ref">Added by the sheet, on top of these: {draftSheet.addedIncreases.join(', ')}.</p>}
         </>
       )}
       {show('class') && (
